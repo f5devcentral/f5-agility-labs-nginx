@@ -1,9 +1,8 @@
 Incrementally More Useful Configurations
-----------------------------------------
+========================================
 
 The basic configuration was missing several crucial directives needed for a useful reverse proxy.
 This lab will incrementally build a more advanced and useful configuration which takes advantage of NGINX Plus features.
-
 
 Upstream Features: Selection Algorithm, Weight
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -12,24 +11,24 @@ Upstream Features: Selection Algorithm, Weight
 
 .. code:: shell
 
-  sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
-  upstream f5App { 
-      least_conn;
-      server docker.nginx-udf.internal:8080 weight=25;  
-      server docker.nginx-udf.internal:8081 weight=5;  
-      server docker.nginx-udf.internal:8082 weight=5;
-  }
+   sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
+   upstream f5App { 
+       least_conn;
+       server docker.nginx-udf.internal:8080 weight=25;  
+       server docker.nginx-udf.internal:8081 weight=5;  
+       server docker.nginx-udf.internal:8082 weight=5;
+   }
 
-  server {
-    listen 80;
-    error_log /var/log/nginx/f5App.error.log info;  
-    access_log /var/log/nginx/f5App.access.log combined;
+   server {
+     listen 80;
+     error_log /var/log/nginx/f5App.error.log info;  
+     access_log /var/log/nginx/f5App.access.log combined;
 
-    location / {
-        proxy_pass http://f5App;
-    }
-  }
-  EOF
+     location / {
+         proxy_pass http://f5App;
+     }
+   }
+   EOF
 
 .. note:: Reload the NGINX Configuration (``sudo nginx -t && sudo nginx -s reload``)
 
@@ -56,32 +55,32 @@ This lab will end up using several upstreams. In order to keep the configuration
 
 .. code:: shell
 
-    sudo bash -c 'cat > /etc/nginx/conf.d/labUpstream.conf' <<EOF
-    upstream f5App { 
-        least_conn;
-        zone f5App 64k;
-        server docker.nginx-udf.internal:8080;  
-        server docker.nginx-udf.internal:8081;  
-        server docker.nginx-udf.internal:8082;
+   sudo bash -c 'cat > /etc/nginx/conf.d/labUpstream.conf' <<EOF
+   upstream f5App { 
+       least_conn;
+       zone f5App 64k;
+       server docker.nginx-udf.internal:8080;  
+       server docker.nginx-udf.internal:8081;  
+       server docker.nginx-udf.internal:8082;
 
-    }
+   }
 
-    upstream nginxApp { 
-        least_conn;
-        zone nginxApp 64k;
-        server docker.nginx-udf.internal:8083;  
-        server docker.nginx-udf.internal:8084;  
-        server docker.nginx-udf.internal:8085;
-    }
+   upstream nginxApp { 
+       least_conn;
+       zone nginxApp 64k;
+       server docker.nginx-udf.internal:8083;  
+       server docker.nginx-udf.internal:8084;  
+       server docker.nginx-udf.internal:8085;
+   }
 
-    upstream nginxApp-text {
-        least_conn;
-        zone nginxApp 64k;
-        server docker.nginx-udf.internal:8086;  
-        server docker.nginx-udf.internal:8087;  
-        server docker.nginx-udf.internal:8088;
-    }
-    EOF
+   upstream nginxApp-text {
+       least_conn;
+       zone nginxApp 64k;
+       server docker.nginx-udf.internal:8086;  
+       server docker.nginx-udf.internal:8087;  
+       server docker.nginx-udf.internal:8088;
+   }
+   EOF
 
 .. warning:: Do *not* reload the configuration until after the next step.
 
@@ -94,34 +93,33 @@ Next, the advanced configuration will define multiple server blocks (and some wi
 
 .. code:: shell
 
-    sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
-    server {
-        listen 80 default_server;
-        server_name f5-app.nginx-udf.internal bigip-app.nginx-udf.internal;
-        error_log /var/log/nginx/f5App.error.log info;  
-        access_log /var/log/nginx/f5App.access.log combined;
- 
-        location / {
-            proxy_pass http://f5App;
+   sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
+   server {
+       listen 80 default_server;
+       server_name f5-app.nginx-udf.internal bigip-app.nginx-udf.internal;
+       error_log /var/log/nginx/f5App.error.log info;  
+       access_log /var/log/nginx/f5App.access.log combined;
 
-        }
-    }
+       location / {
+           proxy_pass http://f5App;
+       }
+   }
 
-    server {
-        listen 80;
-        server_name nginx-app.nginx-udf.internal;
-        error_log /var/log/nginx/nginxApp.error.log info;  
-        access_log /var/log/nginx/nginxApp.access.log combined;
-        status_zone nginxApp;
+   server {
+       listen 80;
+       server_name nginx-app.nginx-udf.internal;
+       error_log /var/log/nginx/nginxApp.error.log info;  
+       access_log /var/log/nginx/nginxApp.access.log combined;
+       status_zone nginxApp;
 
-        location /text {
-            proxy_pass http://nginxApp-text;
-        }
-        location / {
-            proxy_pass http://nginxApp;
-        }
-    }
-    EOF
+       location /text {
+           proxy_pass http://nginxApp-text;
+       }
+       location / {
+           proxy_pass http://nginxApp;
+       }
+   }
+   EOF
 
 .. note:: Reload the NGINX Configuration (``sudo nginx -t && sudo nginx -s reload``)
 
@@ -133,8 +131,6 @@ In the last server block, there are multiple locations defined.
 NGINX matches the URI against the most specific ``location`` and then proxies the request to the defined upstream.
 
 The ``status_zone`` directive allow workers to collect and aggregate server block statistics. Multiple ``server`` blocks could be part of the same ``status_zone``.
-
-
 
 .. _`Round Robin`: https://www.nginx.com/blog/choosing-nginx-plus-load-balancing-techniques/#round-robin
 .. _`Hash`: https://www.nginx.com/blog/choosing-nginx-plus-load-balancing-techniques/#hash

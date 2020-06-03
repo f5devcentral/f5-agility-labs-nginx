@@ -1,5 +1,5 @@
 Dynamic Upstream Configuration
-------------------------------
+==============================
 
 Changes to upstream servers can be made through the Dashboard or through the API. 
 *Performing an upstream change through the Dashboard or API only updates the shared memory zone -- configuration files are not updated.*
@@ -10,35 +10,35 @@ NGINX Plus provides a mechanism for keeping upstream state between reloads.
 
 .. code:: 
 
-    sudo bash -c 'cat > /etc/nginx/conf.d/labUpstream.conf' <<EOF
-    upstream f5App { 
-        least_conn;
-        zone f5App 64k;
-        state /var/lib/nginx/state/f5App.conf;
+   sudo bash -c 'cat > /etc/nginx/conf.d/labUpstream.conf' <<EOF
+   upstream f5App { 
+       least_conn;
+       zone f5App 64k;
+       state /var/lib/nginx/state/f5App.conf;
 
-        sticky learn
-        create=\$upstream_cookie__nginxPlusLab
-        lookup=\$cookie__nginxPlusLab
-        timeout=1h
-        zone=client_sessions:1m sync;
-    }
+       sticky learn
+       create=\$upstream_cookie__nginxPlusLab
+       lookup=\$cookie__nginxPlusLab
+       timeout=1h
+       zone=client_sessions:1m sync;
+   }
 
-    upstream nginxApp { 
-        least_conn;
-        zone nginxApp 64k;
-        server docker.nginx-udf.internal:8083;  
-        server docker.nginx-udf.internal:8084;  
-        server docker.nginx-udf.internal:8085;
-    }
+   upstream nginxApp { 
+       least_conn;
+       zone nginxApp 64k;
+       server docker.nginx-udf.internal:8083;  
+       server docker.nginx-udf.internal:8084;  
+       server docker.nginx-udf.internal:8085;
+   }
 
-    upstream nginxApp-text {
-        least_conn;
-        zone nginxApp 64k;
-        server docker.nginx-udf.internal:8086;  
-        server docker.nginx-udf.internal:8087;  
-        server docker.nginx-udf.internal:8088;
-    }
-    EOF
+   upstream nginxApp-text {
+       least_conn;
+       zone nginxApp 64k;
+       server docker.nginx-udf.internal:8086;  
+       server docker.nginx-udf.internal:8087;  
+       server docker.nginx-udf.internal:8088;
+   }
+   EOF
 
 .. note:: Reload the NGINX Configuration (``sudo nginx -t && sudo nginx -s reload``)
 
@@ -73,7 +73,3 @@ Perform the same task for the ``nginxApp`` upstream.
 **Go back to the Dashboard and check the status of the "f5App" and "nginxApp" upstream groups.**
 
 Notice the upstream group not using the ``state`` directive reverted to the defined configuration.
-
-
-
-

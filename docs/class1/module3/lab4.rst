@@ -1,5 +1,5 @@
 NGINX Plus Caching
--------------------
+==================
 
 NGINX and NGINX Plus are commonly deployed as a caching tier between a load balancing tier and the application server tier.
 
@@ -18,51 +18,51 @@ Add a cache
 
 .. code:: shell
 
-    sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
-    proxy_cache_path /tmp/cache keys_zone=f5AppCache:10m inactive=60m;
+   sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
+   proxy_cache_path /tmp/cache keys_zone=f5AppCache:10m inactive=60m;
 
-    map \$request_method \$purge_method {
-        PURGE 1;
-        default 0;
-    }
+   map \$request_method \$purge_method {
+       PURGE 1;
+       default 0;
+   }
 
-    server {
-        listen 80 default_server;
-        server_name f5-app.nginx-udf.internal bigip-app.nginx-udf.internal;
-        error_log /var/log/nginx/f5App.error.log info;  
-        access_log /var/log/nginx/f5App.access.log combined;
-        status_zone f5App;
+   server {
+       listen 80 default_server;
+       server_name f5-app.nginx-udf.internal bigip-app.nginx-udf.internal;
+       error_log /var/log/nginx/f5App.error.log info;  
+       access_log /var/log/nginx/f5App.access.log combined;
+       status_zone f5App;
 
-        location / {
-            proxy_pass http://f5App;
-            health_check match=f5_ok;
-            add_header X-Lab-NGINX \$hostname;
+       location / {
+           proxy_pass http://f5App;
+           health_check match=f5_ok;
+           add_header X-Lab-NGINX \$hostname;
 
-            proxy_cache f5AppCache;
-            proxy_cache_purge \$purge_method;
+           proxy_cache f5AppCache;
+           proxy_cache_purge \$purge_method;
 
-            proxy_ignore_headers Set-Cookie;
-            add_header X-Proxy-Cache \$upstream_cache_status;
-        }
-    }
+           proxy_ignore_headers Set-Cookie;
+           add_header X-Proxy-Cache \$upstream_cache_status;
+       }
+   }
 
-    server {
-        listen 80;
-        server_name nginx-app.nginx-udf.internal;
-        error_log /var/log/nginx/nginxApp.error.log info;  
-        access_log /var/log/nginx/nginxApp.access.log combined;
-        status_zone nginxApp;
+   server {
+       listen 80;
+       server_name nginx-app.nginx-udf.internal;
+       error_log /var/log/nginx/nginxApp.error.log info;  
+       access_log /var/log/nginx/nginxApp.access.log combined;
+       status_zone nginxApp;
 
-        location /text {
-            proxy_pass http://nginxApp-text;
-            health_check match=nginx_ok;
-        }
-        location / {
-            proxy_pass http://nginxApp;
-            health_check match=nginx_ok;
-        }
-    }
-    EOF
+       location /text {
+           proxy_pass http://nginxApp-text;
+           health_check match=nginx_ok;
+       }
+       location / {
+           proxy_pass http://nginxApp;
+           health_check match=nginx_ok;
+       }
+   }
+   EOF
 
 .. note:: Reload the NGINX Configuration (``sudo nginx -t && sudo nginx -s reload``)
 

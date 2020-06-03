@@ -1,5 +1,5 @@
 Share Zone information Across the Cluster
------------------------------------------------
+=========================================
 
 NGINX Plus can perform runtime state sharing within a cluster for the following directives:
 
@@ -21,37 +21,37 @@ Using runtime state sharing, this persistence information can be shared across t
 
 .. code:: 
 
-    sudo bash -c 'cat > /etc/nginx/conf.d/labUpstream.conf' <<EOF
-    upstream f5App { 
-        least_conn;
-        zone f5App 64k;
-        server docker.nginx-udf.internal:8080;  
-        server docker.nginx-udf.internal:8081;  
-        server docker.nginx-udf.internal:8082;
+   sudo bash -c 'cat > /etc/nginx/conf.d/labUpstream.conf' <<EOF
+   upstream f5App { 
+       least_conn;
+       zone f5App 64k;
+       server docker.nginx-udf.internal:8080;  
+       server docker.nginx-udf.internal:8081;  
+       server docker.nginx-udf.internal:8082;
 
-        sticky learn
-        create=\$upstream_cookie__nginxPlusLab
-        lookup=\$cookie__nginxPlusLab
-        timeout=1h
-        zone=client_sessions:1m sync;
-    }
+       sticky learn
+       create=\$upstream_cookie__nginxPlusLab
+       lookup=\$cookie__nginxPlusLab
+       timeout=1h
+       zone=client_sessions:1m sync;
+   }
 
-    upstream nginxApp { 
-        least_conn;
-        zone nginxApp 64k;
-        server docker.nginx-udf.internal:8083;  
-        server docker.nginx-udf.internal:8084;  
-        server docker.nginx-udf.internal:8085;
-    }
+   upstream nginxApp { 
+       least_conn;
+       zone nginxApp 64k;
+       server docker.nginx-udf.internal:8083;  
+       server docker.nginx-udf.internal:8084;  
+       server docker.nginx-udf.internal:8085;
+   }
 
-    upstream nginxApp-text {
-        least_conn;
-        zone nginxApp 64k;
-        server docker.nginx-udf.internal:8086;  
-        server docker.nginx-udf.internal:8087;  
-        server docker.nginx-udf.internal:8088;
-    }
-    EOF
+   upstream nginxApp-text {
+       least_conn;
+       zone nginxApp 64k;
+       server docker.nginx-udf.internal:8086;  
+       server docker.nginx-udf.internal:8087;  
+       server docker.nginx-udf.internal:8088;
+   }
+   EOF
 
 .. note:: Reload the NGINX Configuration (``sudo nginx -t && sudo nginx -s reload``)
 
@@ -88,9 +88,6 @@ This is because each NGINX Plus instance in the cluster has the necessary persis
 
 .. image:: /_static/stick2.png
    :width: 400pt
-
-
-
 
 .. _`sticky learn`: https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/#sticky
 .. _`request limit`: https://docs.nginx.com/nginx/admin-guide/security-controls/controlling-access-proxied-http/#limit_req

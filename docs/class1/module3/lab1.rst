@@ -1,5 +1,5 @@
 Base Configuration
------------------------------------------
+==================
 
 The UDF lab blueprint provides several containers running web applications on the ``Docker Host`` instance.
 These containers will be used as ``upstreams`` (or "pool members" in F5 terminology) throughout the lab.
@@ -16,7 +16,7 @@ Frequently throughout this lab you will be asked to "reload the NGINX configurat
 
 .. code:: shell
 
-  sudo nginx -t && sudo nginx -s reload
+   sudo nginx -t && sudo nginx -s reload
 
 The first command, ``nginx -t``, checks the configuration syntax. The second command, ``nginx -s reload``, reloads the configuration.
 
@@ -24,8 +24,8 @@ If successful, the command output will be:
 
 .. code:: shell
 
-  nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-  nginx: configuration file /etc/nginx/nginx.conf test is successful
+   nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+   nginx: configuration file /etc/nginx/nginx.conf test is successful
 
 .. image:: /_static/reload.png
    :width: 500pt
@@ -34,7 +34,6 @@ During the reload procedure, a ``SIGHUP`` is sent the kernel.
 The master NGINX process evaluates the new config and checks for ``emerg`` level errors.
 Lastly, new workers are forked while old workers gracefully shut down.
 This worker model is important to understand as some features require state sharing across the workers.
-
 
 Blocks and Directives
 ~~~~~~~~~~~~~~~~~~~~~
@@ -64,25 +63,25 @@ Start by creating a basic load balancing configuration.
 
 .. code:: 
   
-  sudo mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.old && \
-  sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
-  upstream f5App { 
-      server docker.nginx-udf.internal:8080;  
-      server docker.nginx-udf.internal:8081;  
-      server docker.nginx-udf.internal:8082;
-  }
+   sudo mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.old && \
+   sudo bash -c 'cat > /etc/nginx/conf.d/labApp.conf' <<EOF
+   upstream f5App { 
+       server docker.nginx-udf.internal:8080;  
+       server docker.nginx-udf.internal:8081;  
+       server docker.nginx-udf.internal:8082;
+   }
 
-  server {
-      listen 80;
-      error_log /var/log/nginx/f5App.error.log info;  
-      access_log /var/log/nginx/f5App.access.log combined;
+   server {
+       listen 80;
+       error_log /var/log/nginx/f5App.error.log info;  
+       access_log /var/log/nginx/f5App.access.log combined;
 
-      location / {
-          proxy_pass http://f5App;
+       location / {
+           proxy_pass http://f5App;
 
-      }
-  }
-  EOF
+       }
+   }
+   EOF
 
 .. note:: Reload the NGINX Configuration (``sudo nginx -t && sudo nginx -s reload``)
 
@@ -91,10 +90,10 @@ This configuration contained in this is part of the ``http`` context due to the 
 
 .. code::
 
-    http {
-    ##Content Removed##
-    include /etc/nginx/conf.d/*.conf;
-    }
+   http {
+   ##Content Removed##
+   include /etc/nginx/conf.d/*.conf;
+   }
 
 The following types of blocks are used in the basic configuration:
 
@@ -122,6 +121,3 @@ Click the bookmark titled ``F5 App`` from the bookmarks bar.
   :width: 400pt
 
 An F5 example application should load.
-
-
-

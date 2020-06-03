@@ -1,5 +1,5 @@
 Lab 2 - Log and Change Headers (EXAMPLE)
-########################################
+========================================
 
 Your iRule should:
 
@@ -84,4 +84,3 @@ Your iRule should:
    #. `Log the response headers <../../class1/module1/irules/lab2irule_4.html>`__
    #. `Now remove the HTTP::header named Server <../../class1/module1/irules/lab2irule_5.html>`__
    #. `Now you should have enough to understand and the majority of code to create the iRule.  If not here is the complete iRule. <../../class1/module1/irules/lab2irule_99.html>`__
-

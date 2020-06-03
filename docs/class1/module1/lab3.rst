@@ -1,5 +1,5 @@
 Lab 3 - HTTP to HTTPS Redirect (EXAMPLE)
-########################################
+========================================
 
 #. Create an iRule to redirect all traffic that arrives at an HTTP virtual server to be redirected to the same IP address but using an HTTPS port. 
 #. The full original HTTP request should be maintained when re-directing.  Example http://my.domain.com/app1/index1.html should redirect to https://my.domain.com/app1/inex.html
@@ -7,7 +7,6 @@ Lab 3 - HTTP to HTTPS Redirect (EXAMPLE)
 
 .. important::
    Estimated completion time: 20 minutes
-
 
 #. Open Chrome Browser
 #. Enter https://bigip1 into the address bar and hit Enter
@@ -92,4 +91,3 @@ Lab 3 - HTTP to HTTPS Redirect (EXAMPLE)
    #. `When HTTP_Request comes in <../../class1/module1/irules/lab3irule_1.html>`__
    #. `Redirect from HTTP to HTTPS <../../class1/module1/irules/lab3irule_2.html>`__
    #. `Now you should have enough to understand and the majority of code to create the iRule.  If not here is the complete iRule. <../../class1/module1/irules/lab3irule_99.html>`__
-

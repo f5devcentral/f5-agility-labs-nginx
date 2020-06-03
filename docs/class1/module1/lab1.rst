@@ -1,5 +1,5 @@
 Lab 1- Join UDF Course
-----------------------
+======================
 
 Welcome to NGINX – Intro to NGINX+ from BIG-IP! In this course we will learn the following:
 
@@ -14,14 +14,14 @@ Welcome to NGINX – Intro to NGINX+ from BIG-IP! In this course we will learn t
 This lab will go through initial setup and add you the agility class.  
 
 .. NOTE::
-    a  prerequisite for this exercise is having an RDP client on your machine such as remote desktop connection. 
-    If you do not have one, please download one, Some examples are  
+   a  prerequisite for this exercise is having an RDP client on your machine such as remote desktop connection. 
+   If you do not have one, please download one, Some examples are  
     
-    Remote desktop connection (macOS)
-    https://apps.apple.com/us/app/microsoft-remote-desktop/
+   Remote desktop connection (macOS)
+   https://apps.apple.com/us/app/microsoft-remote-desktop/
 
-    Chrome browser RDP 
-    https://remotedesktop.google.com/
+   Chrome browser RDP 
+   https://remotedesktop.google.com/
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -43,7 +43,7 @@ Follow these steps to complete this lab:
 
 #. After your workstation is deployed, click the 'Components' tab:
 
-    .. image:: /_static/components.png
+   .. image:: /_static/components.png
 
 **Exercise 2 - RDP to Windows Jumphost**
 
@@ -51,19 +51,18 @@ In this exercise, we will connect to the Windows Jumphost.
 
 #. Under the 'Systems' column, locate the 'Jumphost' block. 
 
-    .. image:: /_static/systems.png
+   .. image:: /_static/systems.png
 
 #. Click 'Access' -> 'RDP' and this will download a '.rdp' file to your local machine. 
 
-    .. image:: /_static/access.png
-
+   .. image:: /_static/access.png
 
 #. Once the RDP has downloaded, open the .rdp file and when prompted, select 'continue'. 
 
 #. When prompted for the login credentials, use username: user: password: user 
 
-    .. image:: /_static/loginrdp.png
+   .. image:: /_static/loginrdp.png
 
 #. You should now be in your windows Jumphost. 
 
-    .. image:: /_static/windows.png
+   .. image:: /_static/windows.png
