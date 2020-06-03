@@ -1,5 +1,5 @@
 Join UDF course
-=====================================================================
+===============
 
 In this module you will join udf course and open your windows jumphost
 
