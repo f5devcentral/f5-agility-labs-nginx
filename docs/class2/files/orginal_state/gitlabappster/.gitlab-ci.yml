@@ -1,0 +1,231 @@
+image: docker:19.03.1
+#
+# Best practices
+#
+# - Do not use “latest” nor “stable” images when using a CI because we want reproducibility,
+# on this pipeline for days, month or years. "Latest" images will break things. Always target a version
+#
+# - Speed up pipeline docker builds by pulling the “latest” image ($CI_REGISTRY_IMAGE:latest)
+# before building , and then build with --cache-from $CI_REGISTRY_IMAGE:latest.
+# This ensures the GitLab runner has the latest image and can leverage docker imagelayer caching.
+# Since changes are usually incremental layers and you did not change all layers,
+# the build process will be quite fast.
+#
+# - In the push jobs, instruct GitLab *not* to clone the source code with GIT_STRATEGY: none.
+# Since we are just playing with docker pull/push, we do not need the source code.
+# This will speed things
+
+# - Finally, keep Git tags in sync and consistent with your Docker tags.
+# Your pipeline can take care of this and through automation.
+# This will prevent the situation of wondering “which git tag is this image again?”
+# Use GitLab "tags" pipelines.
+
+variables:
+  # When using dind service, we need to instruct docker, to talk with
+  # the daemon started inside of the service. The daemon is available
+  # with a network connection instead of the default
+  # /var/run/docker.sock socket. docker:19.03.1 does this automatically
+  # by setting the DOCKER_HOST in
+  # https://github.com/docker-library/docker/blob/d45051476babc297257df490d22cbd806f1b11e4/19.03.1/docker-entrypoint.sh#L23-L29
+  #
+  # The 'docker' hostname is the alias of the service container as described at
+  # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#accessing-the-services.
+  #
+  # Note that if you're using the Kubernetes executor, the variable
+  # should be set to tcp://localhost:2376 because of how the
+  # Kubernetes executor connects services to the job container
+  # DOCKER_HOST: tcp://localhost:2376
+  #
+  # Specify to Docker where to create the certificates, Docker will
+  # create them automatically on boot, and will create
+  # `/certs/client` that will be shared between the service and job
+  # container, thanks to volume mount from config.toml
+  DOCKER_TLS_CERTDIR: "/certs"
+  # * Set specific docker images we have readily available
+  REGISTRY_URL: registry.gitlab.f5demolab.com
+  CROSSPLANE_IMAGE: $REGISTRY_URL/f5-demo-lab/nginx-plus-dockerfiles:ubuntu18.04_crossplane
+  # * Important - Use CI_COMMIT_SHA for reproducibility and consistency with git tags and docker tags
+  # * Define STAGING_HOST and PROD_HOST here or in Gitlab varaibles via UI for security, 
+  #   we do the later, but leave lines below as an example 
+  # STAGING_WEBSERVER: docker.f5demolab.com
+  # PROD_WEBSERVER: nginx.f5demolab.com
+
+services:
+  - name: docker:19.03.1-dind
+    alias: docker
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        'echo "10.1.1.5 registry.gitlab.f5demolab.com gitlab.f5demolab.com">>/etc/hosts && dockerd-entrypoint.sh',
+      ]
+
+before_script:
+  - docker info
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+# Run sequentially
+stages:
+  - build
+  - test
+  - push
+  - deploy
+  - clean_up
+
+build_nginx_container: # CI_JOB_NAME
+  stage: build
+  script:
+    # Keep NGINX Plus licenses on Gitlab as variables not the runner
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    # Fetches the latest image (*not failing if image is not found*)
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    # builds the project. We could pass variables such as and vcs vars for LABEL
+    # doing so (not used in this demo):
+    # --build-arg http_proxy=$http_proxy
+    # --build-arg https_proxy=$https_proxy
+    # --build-arg no_proxy=$no_proxy
+    # --build-arg VCS_REF=$CI_COMMIT_SHA
+    # --build-arg VCS_URL=$CI_PROJECT_URL
+    # The cache-from is going to use the image we just pulled locally
+    # the built image is tagged locally with the commit SHA, and then pushed to
+    # the GitLab registry
+    - >
+      docker build
+      --pull
+      --cache-from $CI_REGISTRY_IMAGE:latest
+      --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+
+build_crossplane_container:
+  stage: build
+  script:
+    # Pull our Crossplane docker image we have ready
+    - docker pull $CROSSPLANE_IMAGE
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+
+test_nginx_conf:
+  stage: test
+  script:
+    # Test this build
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker run $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA nginx -t
+
+test_crossplane_nginx_conf:
+  stage: test
+  script:
+    # Run the Crossplane config analyzer
+    - apk add jq
+    - docker run $CROSSPLANE_IMAGE crossplane parse /etc/nginx/nginx.conf | jq '.status, .errors[]'
+
+push_latest:
+  variables:
+    # We are just push and pulling with Docker here and do not need GitLab to
+    # clone the source code
+    GIT_STRATEGY: none
+  stage: push
+  only:
+    # Only "master" should be tagged "latest"
+    - master
+  script:
+    # Because we have no guarantee that this job will be picked up by the same runner
+    # that built the image in the previous step, we pull it again locally
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    # Then we tag it "latest"
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    # Lastly, we push it
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+# Finally, the goal here is to Docker tag with a Git tag, $CI_COMMIT_SHA
+# GitLab will start a new pipeline everytime a Git tag is created
+push_tag:
+  variables:
+    # We are just push and pulling with Docker here and do not need GitLab to
+    # clone the source code.
+    GIT_STRATEGY: none
+  stage: push
+  only:
+    # We want this job to be run on tags only.
+    - tags
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
+
+deploy_staging:
+  stage: deploy
+  before_script:
+    # We will deploy to STAGING by running some remote commands via SSH...
+    # Pull and deploy this specific commit ($CI_COMMIT_SHA) not "latest"
+    # For reproducibility, do not use “latest” nor “stable” images when using a CI
+    # Add SSH Key to run remote commands
+    - "which ssh-agent || ( apk add --update openssh )"
+    - eval "$(ssh-agent -s)"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh $STAGING_USER@$STAGING_WEBSERVER "docker stop appster-staging 2>/dev/null || true"
+    - ssh $STAGING_USER@$STAGING_WEBSERVER "docker rm -f appster-staging 2>/dev/null || true"
+  script:
+    # We will deploy to STAGING running some remote commands...
+    # Make sure you have entered $STAGING_USER and $STAGING_WEBSERVER Variables in Gitlab
+    - echo "Deploy to staging server"
+    - ssh $STAGING_USER@$STAGING_WEBSERVER "docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY"
+    # Pull and deploy this specific commit not "latest"
+    # Do not use “latest” nor “stable” images when using a CI. Why? Because you want reproducibility
+    - ssh $STAGING_USER@$STAGING_WEBSERVER "docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - ssh $STAGING_USER@$STAGING_WEBSERVER "docker run --name appster-staging -d --restart unless-stopped -p 81:80 -p 8081:8080 $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+  environment:
+    name: staging
+  only:
+    # We deploy the app only when a pipeline on master branch is run
+    - master
+
+deploy_prod:
+  stage: deploy
+  before_script:
+    # We will deploy to PRODUCTION running some remote commands via SSH...
+    # Pull and deploy this specific commit ($CI_COMMIT_SHA) not "latest"
+    # For reproducibility, do not use “latest” nor “stable” images when using a CI
+    - "which ssh-agent || ( apk add --update openssh )"
+    - eval "$(ssh-agent -s)"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh deployer@$PROD_WEBSERVER "docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY"
+    - ssh deployer@$PROD_WEBSERVER "docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+  script:
+    # We will deploy to PRODUCTION running some remote commands...
+    # Make sure you have entered $PROD_USER and $PROD_WEBSERVER Variables in Gitlab
+    # We deploy four containers to emulate four web servers
+    - echo "Deploy to production blue and yellow"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker stop appster-blue 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker rm appster-blue 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker run --name appster-blue -d --restart unless-stopped -p 81:80 -p 8081:8080 $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker stop appster-yellow 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker rm appster-yellow 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker run --name appster-yellow -d --restart unless-stopped -p 83:80 -p 8083:8080 $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - echo "Deploy to production green and red"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker stop appster-green 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker rm appster-green 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker run --name appster-green -d --restart unless-stopped -p 82:80 -p 8082:8080 $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker stop appster-red 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker rm appster-red 2>/dev/null || true"
+    - ssh $PROD_USER@$PROD_WEBSERVER "docker run --name appster-red -d --restart unless-stopped -p 84:80 -p 8084:8080 $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+  environment:
+    name: production
+  when: manual # Push a button manually to deploy to production!
+  only:
+    # We deploy the app only when a pipeline on master branch is run
+    - master
+
+# Running Clean up to avoid errors in UDF Lab environment
+clean_up:
+  stage: clean_up
+  script:
+    - docker system prune -f
+    - docker images
+  when: always # Run regardless of job failures

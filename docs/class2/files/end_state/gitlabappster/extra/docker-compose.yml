@@ -1,0 +1,16 @@
+version: "3"
+services:
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
+    command: --interval 30
+  web1:
+    image: registry.gitlab.com/armsultan/appster:latest
+    ports:
+      - '9090:80'
+  web2:
+    image: registry.gitlab.com/armsultan/appster:latest
+    ports:
+      - '9091:80'

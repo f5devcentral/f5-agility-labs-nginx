@@ -1,0 +1,193 @@
+image: docker:19.03.1
+#
+# Best practices
+#
+# - Do not use “latest” nor “stable” images when using a CI because we want reproducibility,
+# on this pipeline for days, month or years. "Latest" images will break things. Always target a version
+#
+# - Speed up pipeline docker builds by pulling the “latest” image ($CI_REGISTRY_IMAGE:latest)
+# before building , and then build with --cache-from $CI_REGISTRY_IMAGE:latest.
+# This ensures the GitLab runner has the latest image and can leverage docker imagelayer caching.
+# Since changes are usually incremental layers and you did not change all layers,
+# the build process will be quite fast.
+#
+# - In the push jobs, instruct GitLab *not* to clone the source code with GIT_STRATEGY: none.
+# Since we are just playing with docker pull/push, we do not need the source code.
+# This will speed things
+
+# - Finally, keep Git tags in sync and consistent with your Docker tags.
+# Your pipeline can take care of this and through automation.
+# This will prevent the situation of wondering “which git tag is this image again?”
+# Use GitLab "tags" pipelines.
+
+variables:
+  # When using dind service, we need to instruct docker, to talk with
+  # the daemon started inside of the service. The daemon is available
+  # with a network connection instead of the default
+  # /var/run/docker.sock socket. docker:19.03.1 does this automatically
+  # by setting the DOCKER_HOST in
+  # https://github.com/docker-library/docker/blob/d45051476babc297257df490d22cbd806f1b11e4/19.03.1/docker-entrypoint.sh#L23-L29
+  #
+  # The 'docker' hostname is the alias of the service container as described at
+  # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#accessing-the-services.
+  #
+  # Note that if you're using the Kubernetes executor, the variable
+  # should be set to tcp://localhost:2376 because of how the
+  # Kubernetes executor connects services to the job container
+  # DOCKER_HOST: tcp://localhost:2376
+  #
+  # Specify to Docker where to create the certificates, Docker will
+  # create them automatically on boot, and will create
+  # `/certs/client` that will be shared between the service and job
+  # container, thanks to volume mount from config.toml
+  DOCKER_TLS_CERTDIR: "/certs"
+  # * Set specific docker images we have readily available
+  REGISTRY_URL: registry.gitlab.f5demolab.com
+  CROSSPLANE_IMAGE: $REGISTRY_URL/f5-demo-lab/nginx-plus-dockerfiles:ubuntu18.04_crossplane
+  NGINX_IMAGE: $REGISTRY_URL/f5-demo-lab/nginx-plus-dockerfiles:centos7.6
+  # * Important - Use CI_COMMIT_SHA for reproducibility and consistency with git tags and docker tags
+  # * Define STAGING_HOST and PROD_HOST here or in Gitlab varaibles via UI for security, 
+  #   we do the later, but leave lines below as an example 
+  # STAGING_HOST: docker.f5demolab.com
+  # PROD_HOST: nginx.f5demolab.com
+
+
+services:
+  - name: docker:19.03.1-dind
+    alias: docker
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        'echo "10.1.1.5 registry.gitlab.f5demolab.com gitlab.f5demolab.com">>/etc/hosts && dockerd-entrypoint.sh',
+      ]
+
+before_script:
+  - docker info
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+# Run sequentially
+stages:
+  - build
+  - test
+  - deploy
+  - clean_up
+
+build_crossplane_container:
+  stage: build
+  script:
+    # Pull our Crossplane docker image we have ready
+    - docker pull $CROSSPLANE_IMAGE
+
+build_nginx_container:
+  stage: build
+  script:
+    # Pull our NGINX Plus docker image we have ready (Same distro as our live environment servers)
+    - docker pull $NGINX_IMAGE
+
+test_nginx_conf:
+  stage: test
+  script:
+    # *This is commented out, along with www2.appster.com.conf - we are not using SSL in our demo*
+    # Copy Self-signed cert and key stored in GITLAB. Required to test TLS
+    # - echo "$SELF_SIGNED_KEY" > "etc/ssl/appster.com.key"
+    # - echo "$SELF_SIGNED_CRT" > "etc/ssl/appster.com.crt"
+    # Copy test DHPARAMS stored in GITLAB.. Required to test TLS
+    # - echo "$DHPARAMS_2048" > "etc/ssl/dhparam_2048.pem"
+    # - echo "$DHPARAMS_4096" > "etc/ssl/dhparam_4096.pem"
+    # Point load balancing to test upstream (linux search and replace), and print (cat) for logging
+    - sed -i -e 's/#.*include.*\/etc\/nginx\/test_env\/\*.conf.*;/include \/etc\/nginx\/test_env\/*.conf;/g' ./etc/nginx/nginx.conf;
+    - find etc/nginx -type f -name "*.conf" -exec sed -i -e 's/\${appster_upstream}/http_appster_test/g' {} \;
+    - find ./etc/nginx/ -type f | xargs tail -n +1 || true # so wont fail
+    # "nginx -T": Output full NGINX config for debugging
+    - docker run --rm -t -a stdout --name nginx-plus-appster-lb --sysctl net.ipv4.ip_nonlocal_bind=1 -v "$(pwd)/etc/nginx/:/etc/nginx/" -v "$(pwd)/etc/ssl/:/etc/ssl/" $NGINX_IMAGE nginx -T
+    # "nginx -t": test NGINX config for config errors
+    - docker run --rm -t -a stdout --name nginx-plus-appster-lb --sysctl net.ipv4.ip_nonlocal_bind=1 -v "$(pwd)/etc/nginx/:/etc/nginx/" -v "$(pwd)/etc/ssl/:/etc/ssl/" $NGINX_IMAGE nginx -t
+    # replace back to the placeholder
+    - find etc/nginx -type f -name "*.conf" -exec sed -i -e 's/http_appster_test/\${appster_upstream}/g' {} \;
+
+test_crossplane_nginx_conf:
+  stage: test
+  script:
+    # Run the Crossplane config analyzer
+    - apk add jq
+    - docker run $CROSSPLANE_IMAGE crossplane parse /etc/nginx/nginx.conf | jq '.status, .errors[]'
+ 
+deploy_to_staging:
+  stage: deploy
+  script:
+    # Install rsync for copying files over to live environment
+    - apk add rsync
+    # Add SSH Key to run remote commands
+    - "which ssh-agent || ( apk add --update openssh )"
+    - eval "$(ssh-agent -s)"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # Point load balancing to PROD upstream (linux search and replace), and print (cat) for logging
+    - sed -i -e 's/include.*\/etc\/nginx\/test_env\/\*.conf.*;/#Removed reference to Test Env by CICD/g' ./etc/nginx/nginx.conf;
+    - find etc/nginx -type f -name "*.conf" -exec sed -i -e 's/\${appster_upstream}/http_appster_prod/g' {} \;
+    - find ./etc/nginx/ -type f | xargs tail -n +1 || true # so wont fail
+    # We will deploy to STAGING running some remote commands via RSYNC SSH and remote commands...
+    # Make sure you have entered $STAGING_USER and $STAGING_HOST Variables in Gitlab
+    # For rollback, we wont overwrite /etc/nginx but place files in another folder marked by the git commit SHA
+    # Exclude the test_env folder and in case of an destination override, delete files in destination not in source
+    - rsync -avrzI --exclude test_env/ --delete etc/nginx/ $STAGING_USER@$STAGING_HOST:/var/deploy/$CI_COMMIT_SHA
+    # Update /etc/nginx symlink to new nginx config
+    - ssh $STAGING_USER@$STAGING_HOST "sudo ln -sfn /var/deploy/$CI_COMMIT_SHA /etc/nginx"
+    - ssh $STAGING_USER@$STAGING_HOST "sudo ls -la /etc | grep nginx"
+    # Make sure NGINX has started
+    - ssh $STAGING_USER@$STAGING_HOST "sudo systemctl start nginx"
+    - ssh $STAGING_USER@$STAGING_HOST "sudo systemctl status nginx"
+    # reload nginx if config is good
+    - ssh $STAGING_USER@$STAGING_HOST "sudo nginx -t && sudo nginx -s reload"
+  environment:
+    name: staging
+  only:
+      # We deploy the app only when a pipeline on master branch is run
+      - master
+
+deploy_to_production:
+  stage: deploy
+  script:
+    # Install rsync for copying files over to live environment
+    - apk add rsync
+    # Add SSH Key to run remote commands
+    - "which ssh-agent || ( apk add --update openssh )"
+    - eval "$(ssh-agent -s)"
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    # Point load balancing to PROD upstream (linux search and replace), and print (cat) for logging
+    - sed -i -e 's/include.*\/etc\/nginx\/test_env\/\*.conf.*;/#Removed reference to Test Env by CICD/g' ./etc/nginx/nginx.conf;
+    - find etc/nginx -type f -name "*.conf" -exec sed -i -e 's/\${appster_upstream}/http_appster_prod/g' {} \;
+    - find ./etc/nginx/ -type f | xargs tail -n +1 || true # so wont fail
+    # We will deploy to PRODUCTION running some remote commands via RSYNC SSH...
+    # Make sure you have entered $PROD_USER and $PROD_HOST Variables in Gitlab
+    # For rollback, we wont overwrite /etc/nginx but place files in another folder marked by the git commit SHA
+    # Exclude the test_env folder and in case of an destination override, delete files in destination not in source
+    - rsync -avrzI --exclude test_env/ --delete etc/nginx/ $PROD_USER@$PROD_HOST:/var/deploy/$CI_COMMIT_SHA
+    # Update /etc/nginx symlink to new nginx config
+    - ssh $PROD_USER@$PROD_HOST "sudo ln -sfn /var/deploy/$CI_COMMIT_SHA /etc/nginx"
+    - ssh $PROD_USER@$PROD_HOST "sudo ls -la /etc | grep nginx"
+    # Make sure NGINX has started
+    - ssh $PROD_USER@$PROD_HOST "sudo systemctl start nginx"
+    - ssh $PROD_USER@$PROD_HOST "sudo systemctl status nginx"
+    # reload nginx if config is good
+    - ssh $PROD_USER@$PROD_HOST "sudo nginx -t && sudo nginx -s reload"
+  environment:
+    name: production
+  when: manual # Push a button manually to deploy to production!
+  only:
+    # We deploy the app only when a pipeline on master branch is run
+    - master
+
+# Running Clean up to avoid errors in UDF Lab environment
+clean_up:
+  stage: clean_up
+  script:
+    - docker system prune -f
+    - docker images
+  when: always # Run regardless of job failures

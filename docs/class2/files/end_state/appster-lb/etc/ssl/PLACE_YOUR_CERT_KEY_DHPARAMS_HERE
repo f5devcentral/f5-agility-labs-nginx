@@ -1,0 +1,5 @@
+This NGINX config expects the following:
+ * appster.com.crt
+ * appster.com.key
+ * dhparam_2048.pem
+ * dhparam_4096.pem

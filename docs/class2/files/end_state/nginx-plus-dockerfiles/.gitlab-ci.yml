@@ -1,0 +1,260 @@
+image: docker:19.03.1
+
+variables:
+  # When using dind service, we need to instruct docker, to talk with
+  # the daemon started inside of the service. The daemon is available
+  # with a network connection instead of the default
+  # /var/run/docker.sock socket. docker:19.03.1 does this automatically
+  # by setting the DOCKER_HOST in
+  # https://github.com/docker-library/docker/blob/d45051476babc297257df490d22cbd806f1b11e4/19.03.1/docker-entrypoint.sh#L23-L29
+  #
+  # The 'docker' hostname is the alias of the service container as described at
+  # https://docs.gitlab.com/ee/ci/docker/using_docker_images.html#accessing-the-services.
+  #
+  # Note that if you're using the Kubernetes executor, the variable
+  # should be set to tcp://localhost:2376 because of how the
+  # Kubernetes executor connects services to the job container
+  # DOCKER_HOST: tcp://localhost:2376
+  #
+  # Specify to Docker where to create the certificates, Docker will
+  # create them automatically on boot, and will create
+  # `/certs/client` that will be shared between the service and job
+  # container, thanks to volume mount from config.toml
+  DOCKER_TLS_CERTDIR: "/certs"
+
+services:
+  - docker:19.03.1-dind
+
+before_script:
+  - docker info
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+# Run sequentially
+stages:
+  - build
+  - clean_up
+
+alpine3.9: # CI_JOB_NAME
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID # Unique container name
+    TAG: $CI_JOB_NAME # CI_JOB_NAME is also the folder name where the dockerfile lives
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    # Keep NGINX Plus licenses on Gitlab not the runner
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME # Script to `docker run` with random ports and test nginx.conf
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+alpine3.9_tools:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME 
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+alpine3.10:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+alpine3.11:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+centos7:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+centos7.6:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+centos8:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+debian9:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+debian10:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+ubuntu16.04:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+ubuntu18.04:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+ubuntu18.04_crossplane:
+  stage: build
+  variables:
+    NAME: nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID
+    TAG: $CI_JOB_NAME
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - echo "$NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"
+    - echo "$NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
+    - cp -R etc/ Dockerfiles/$CI_JOB_NAME/
+    - docker build -t $NAME Dockerfiles/$CI_JOB_NAME
+    - chmod +x ./ci-build.sh
+    - ./ci-build.sh $NAME
+    - docker tag $NAME ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker push ${CI_REGISTRY}/${CI_PROJECT_PATH}:$TAG
+    - docker stop $NAME
+    - docker rm $NAME
+
+# Clean up phase not really required but for UDF demos it could help prevent errors
+clean_up:
+  stage: clean_up
+  script:
+    - docker system prune -f
+    - docker images
+  when: always # Run regardless of job failures
