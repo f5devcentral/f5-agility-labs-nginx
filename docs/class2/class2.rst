@@ -22,4 +22,3 @@ UDF Lab Maintainers:
 
    intro
    module*/module*
-   files/readme
