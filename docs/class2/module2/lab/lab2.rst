@@ -10,7 +10,7 @@ different perspective to application development!
     you see natively on Linux and Unix machines. If the git console font
     is too small to read, use **Ctrl+ “+”** to increase the font
 
-    .. image:: ../media/image19.png
+    .. image:: ../images/image19.png
 
 2.  Make sure you are in appster project root:
     ``~/Documents/Git/gitlabappster`` . To get there, type the following
@@ -21,7 +21,7 @@ different perspective to application development!
        cd ~/Documents/Git/gitlabappster
        ls
 
-    .. image:: ../media/image20.png
+    .. image:: ../images/image20.png
 
 3.  We can change the the subheader
     using \ `sed <https://www.gnu.org/software/sed/manual/sed.html>`__.
@@ -63,11 +63,11 @@ different perspective to application development!
     If prompted for credentials, enter our Gitlab username and password:
     ``udf`` / ``P@ssw0rd20``
 
-    .. image:: ../media/image21.png
+    .. image:: ../images/image21.png
 
     A successful push will look like the following:
 
-    .. image:: ../media/image22.png
+    .. image:: ../images/image22.png
 
 6.  We view the changes made in the new code deployment in a web
     browser. Remember that you may need to reload the webpage if you
@@ -75,7 +75,7 @@ different perspective to application development!
     incognito window** (**Ctrl + Shift + N**) to bypass browser cache
     and view updated changes
 
-    .. image:: ../media/image25.png
+    .. image:: ../images/image25.png
 
 7.  If you prefer a different subheader again, we can change it once
     again
@@ -112,19 +112,19 @@ different perspective to application development!
 
     Again, if prompted for credentials, use: ``udf`` / ``P@ssw0rd20``
 
-    .. image:: ../media/image21.png
+    .. image:: ../images/image21.png
 
     A successful push will look like the following:
 
-    .. image:: ../media/image22.png
+    .. image:: ../images/image22.png
 
 10. Browse back to the **Appster** repo on **Gitlab**, click the
     pipeline status icon to get back to the detailed pipeline progress
     page and watch the build process in real-time
 
-    .. image:: ../media/image23.png
+    .. image:: ../images/image23.png
 
-    .. image:: ../media/image24.png
+    .. image:: ../images/image24.png
 
 11. Once again, we can view the changes made in the new code deployment
     in a web browser. Remember that you may need to reload the webpage
@@ -132,4 +132,4 @@ different perspective to application development!
     a \ **New incognito window** (**Ctrl + Shift + N**) to bypass
     browser cache and view updated changes
 
-    .. image:: ../media/image17.png
+    .. image:: ../images/image17.png

@@ -55,12 +55,12 @@ CICD flowchart
 **Below is a diagram of a generic CICD Pipeline to deliver applications
 on NGINX Plus**
 
-.. image:: ./media/image1.png
+.. image:: ./images/image1.png
 
 Getting Started
 ---------------
 
-.. image:: ./media/image2.png
+.. image:: ./images/image2.png
 
 The infrastructure is all ready for you. GitLab-CE Server, Gitlab
 Runner, NGINX Plus, Client JumpHost, Staging, and Production environment
@@ -130,19 +130,19 @@ this lab
 To get started with the lab exercises, open an RDP session to the
 ``Windows server 2012 JumpHost > Access > RDP``
 
-.. image:: ./media/image3.png
+.. image:: ./images/image3.png
 
 To get an open a preset screen resolution RDP session click on
 ``Details > RDP > [Select an RDP screen resolution]``
 
-.. image:: ./media/image4.png
+.. image:: ./images/image4.png
 
 .. Note:: When prompted for your User Account details, enter: ``user``/``user``
 
-.. image:: ./media/image5.png
+.. image:: ./images/image5.png
 
 The Windows JumpHost is now ready for the lab
 
-.. image:: ./media/image6.png
+.. image:: ./images/image6.png
 
 .. Important:: **Run all lab activites from the Windows JumpHost**

@@ -9,7 +9,7 @@ we will enable Rate limiting to our Appster service
    repository** to **“appster-lb”.** From here we can open the Project
    using the “**Open in Visual Studio Code**” button
 
-   .. image:: ../media/image2.png
+   .. image:: ../images/image2.png
 
 2. Open ``www.appster.com.conf`` and enable rating limiting rule:
 
@@ -72,7 +72,7 @@ we will enable Rate limiting to our Appster service
       After changes made to ``www.appster.com.conf``, the configuration
       file will look the following:
 
-      .. image:: ../media/image3.png
+      .. image:: ../images/image3.png
 
 4. Once you have edited ``www.appster.com.conf`` and uncommented the
    rate limiting directives, go ahead and **save** the file. You can
@@ -93,9 +93,9 @@ we will enable Rate limiting to our Appster service
    next screen, press **“Push to Origin”** to push the new code commit
    to our git repository on Gitlab.
 
-   .. image:: ../media/image4.png
+   .. image:: ../images/image4.png
 
-   .. image:: ../media/image5.png
+   .. image:: ../images/image5.png
 
 6. Open up the \ **appster-lb** repository on Gitlab by the
    URI, \ `https://gitlab.f5demolab.com/f5-demo-lab.appster-lb <https://gitlab.f5demolab.com/f5-demo-lab.appster-lb>`__
@@ -106,9 +106,9 @@ we will enable Rate limiting to our Appster service
    progress by clicking the pipeline status icon on the main repo
    homepage and then pipeline status icon on the commit screen.
 
-   .. image:: ../media/image6.png
+   .. image:: ../images/image6.png
 
-   .. image:: ../media/image7.png
+   .. image:: ../images/image7.png
 
    The next screen shows a high-level view of the pipeline triggered for
    this commit. We can click on the pipeline status icon on this screen
@@ -136,7 +136,7 @@ we will enable Rate limiting to our Appster service
    deploy to Production or proceed to fix issues discovered and iterate
    on another code commit
 
-   .. image:: ../media/image9.png
+   .. image:: ../images/image9.png
 
 7.  Let’s play QA Engineering and do some testing on our Staging
     environment. View our **Staging** NGINX Plus service in a browser on
@@ -144,18 +144,18 @@ we will enable Rate limiting to our Appster service
     URI, \ `http://docker.f5demolab.com <http://nginx.f5demolab.com>`__,
     or use the shortcut, \ **STAGING LB - Appster**
 
-    .. image:: ../media/image10.png
+    .. image:: ../images/image10.png
 
     You will see that rate limiting ten request per second results in
     missing web page content and **broken UI**, worst you may even get a
     ``HTTP 429 Error page``! Not a something we would like to do in
     production obviously!
 
-    .. image:: ../media/image11.png
+    .. image:: ../images/image11.png
 
     Or perhaps the errors look more severe!
 
-    .. image:: ../media/image14.png
+    .. image:: ../images/image14.png
 
 8.  If you would like to see the rate limiting rule applied against a
     load test, Open an SSH session using **git bash for windows** to our
@@ -174,7 +174,7 @@ we will enable Rate limiting to our Appster service
 
        ssh centos@10.1.1.11
 
-    .. image:: ../media/image12.png
+    .. image:: ../images/image12.png
 
     On the Staging Server go ahead and run the following command to test
     1000 requests per second against the staging NGINX Plus instance
@@ -262,7 +262,7 @@ we will enable Rate limiting to our Appster service
        # Uncomment lines below to enable here
        limit_req_zone $binary_remote_addr zone=limit_me:1m rate=10000r/s;
 
-    .. image:: ../media/image15.png
+    .. image:: ../images/image15.png
 
 12. Once you have edited ``www.appster.com.conf`` and increased the rate
     limit, go ahead and **save** the file. You can navigate to ``file``
@@ -283,9 +283,9 @@ we will enable Rate limiting to our Appster service
     the next screen, press **“Push to Origin”** to push the new code
     commit to our git repository on Gitlab.
 
-    .. image:: ../media/image16.png
+    .. image:: ../images/image16.png
 
-    .. image:: ../media/image5.png
+    .. image:: ../images/image5.png
 
 14. Open up the **appster-lb** repository on Gitlab by the URI,
     `https://gitlab.f5demolab.com/f5-demo-lab.appster-lb <https://gitlab.f5demolab.com/f5-demo-lab.appster-lb>`__
@@ -296,9 +296,9 @@ we will enable Rate limiting to our Appster service
     progress by clicking the pipeline status icon on the main repo
     homepage and then pipeline status icon on the commit screen.
 
-    .. image:: ../media/image6.png
+    .. image:: ../images/image6.png
 
-    .. image:: ../media/image17.png
+    .. image:: ../images/image17.png
 
     Once our pipeline has completed, our new rate limiting configuration
     are automaticly deployed to our Staging server
@@ -315,7 +315,7 @@ we will enable Rate limiting to our Appster service
     A \ **green tick** on this stage indicates a successful deployment
     and we are now live in Production!
 
-    .. image:: ../media/image13.png
+    .. image:: ../images/image13.png
 
 .. attention::
 

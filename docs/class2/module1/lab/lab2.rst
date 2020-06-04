@@ -57,7 +57,7 @@ GitLab:
       `echo <https://linux.die.net/man/1/echo>`__ that value in any of
       the Pipeline logs
 
-   .. image:: ../media/image13.png
+   .. image:: ../images/image13.png
 
 2. Let’s take a look at that variable in action: Open a log output of a
    recent successful pipeline job from the sidebar menu, go to **CICD >
@@ -65,7 +65,7 @@ GitLab:
    image build stage, any stage with name with a linux distro name
    e.g. \ ``ubuntu18.04`` **(not ``clean_up``)**
 
-   .. image:: ../media/image25.png
+   .. image:: ../images/image25.png
 
 3. Use the web browser’s FIND (Ctrl + F) function to find ``$NGINX_REPO_CRT``
    and you will find the following output:
@@ -75,7 +75,7 @@ GitLab:
       echo "NGINX_REPO_CRT" > "etc/ssl/nginx/nginx-repo.crt"  
       echo "NGINX_REPO_KEY" > "etc/ssl/nginx/nginx-repo.key"
 
-   .. image:: ../media/image14.png
+   .. image:: ../images/image14.png
 
 4. **FYI and Troubleshooting only:** If the CI Pipeline fails due to
    invalid or expired licenses, we will expect
@@ -89,8 +89,8 @@ GitLab:
    **nginx-repo.crt**, in the value fields and then press the Save
    variables button.
 
-   .. image:: ../media/image15.png
+   .. image:: ../images/image15.png
 
-   .. image:: ../media/image26.png
+   .. image:: ../images/image26.png
 
-   .. image:: ../media/image27.png
+   .. image:: ../images/image27.png

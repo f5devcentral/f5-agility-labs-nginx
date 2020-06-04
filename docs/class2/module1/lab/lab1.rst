@@ -7,7 +7,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    on git repositories. \ **GitHub Desktop** is developed by GitHub,
    Inc. but can be used on any git-based project
 
-   .. image:: ../media/image2.png
+   .. image:: ../images/image2.png
 
 2. Once GitHub Desktop Client is open, verify in the upper left corner
    that **nginx-plus-dockerfiles** is selected as the **current
@@ -16,7 +16,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    selected, click on **Open in Visual Studio Code** on the right side
    of the application
 
-   .. image:: ../media/image3.png
+   .. image:: ../images/image3.png
 
 3. Inside the project folder, you will see many subfolders containing
    Dockerfiles to various builds of NGINX Plus on \ `supported Linux
@@ -24,7 +24,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    Take some time to inspect the Docker files in different folders found
    in the project
 
-   .. image:: ../media/image4.png
+   .. image:: ../images/image4.png
 
 4. Lets take a look a a ``Dockerfile``. For example, look at
    the \ **alpine3.10**  folder, and in here, you will find a the
@@ -45,9 +45,9 @@ Lab 1: Run a pipeline to build NGINX Plus images
 5. Create a new folder called ``alpine3.11`` in this project under the
    ``Dockerfiles`` root folder.
 
-   .. image:: ../media/image6.png
+   .. image:: ../images/image6.png
 
-   .. image:: ../media/image19.png
+   .. image:: ../images/image19.png
 
 6. Let’s use the **Alpine 3.10** ``Dockerfile`` as a template for our
    new **Alpine 3.11** build. Go ahead and copy the ``Dockerfile`` in
@@ -56,17 +56,17 @@ Lab 1: Run a pipeline to build NGINX Plus images
    ``Right Click over Alpine3.10 > **Dockerfile** > Copy``, then
    ``Right Click over Alpine3.11 Folder > Paste``.
 
-   .. image:: ../media/image5.png
+   .. image:: ../images/image5.png
 
-   .. image:: ../media/image20.png
+   .. image:: ../images/image20.png
 
 7. In order to build a **Alpine 3.11** image, we need to edit the copied
    ``Dockerfile`` in out ``alpine3.11`` folder, and update the
    ``FROM alpine:3.10`` command to ``FROM alpine:3.11``
 
-   .. image:: ../media/image21.png
+   .. image:: ../images/image21.png
 
-   .. image:: ../media/image22.png
+   .. image:: ../images/image22.png
 
 8. Once you have edited ``Dockerfile`` and replaced the
    ``FROM alpine:3.10`` command to ``FROM alpine:3.11``, go ahead and
@@ -88,7 +88,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    b. Lastly, edit the stage label ``alpine3.10`` to ``alpine3.11``
 
-   .. image:: ../media/image23.png
+   .. image:: ../images/image23.png
 
    .. important:: The correct indentation in a ``yaml`` file must be valid and
       make sure your ``.gitlab-ci.yml`` file looks like the example above.
@@ -119,9 +119,9 @@ Lab 1: Run a pipeline to build NGINX Plus images
     the next screen, press **“Push to Origin”** to push the new code
     commit to our git repository on Gitlab.
 
-    .. image:: ../media/image7.png
+    .. image:: ../images/image7.png
 
-    .. image:: ../media/image8.png
+    .. image:: ../images/image8.png
 
 13. Open up the \ **nginx-plus-dockerfiles** repository on
     Gitlab, \ `https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles>`__ or
@@ -129,7 +129,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
     will take us to the repository where we just pushed our modified
     Docker file to
 
-    .. image:: ../media/image9.png
+    .. image:: ../images/image9.png
 
 14. On this **nginx-plus-dockerfiles** repository page, you will see the
     pipeline status icon next to the latest \ **Commit SHA**. When the
@@ -139,13 +139,13 @@ Lab 1: Run a pipeline to build NGINX Plus images
     We can click on the pipeline status icon to view the pipeline
     progress
 
-    .. image:: ../media/image10.png
+    .. image:: ../images/image10.png
 
     The next screen shows a high-level view of the pipeline triggered
     for this commit. We can click on the pipeline status icon on this
     screen to view the pipeline progress in greater detail.
 
-    .. image:: ../media/image11.png
+    .. image:: ../images/image11.png
 
 15. After clicking on the pipeline status icon, we can view the full
     pipeline. As you can see, we can now see our
@@ -158,7 +158,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
     Docker images up to our Docker container registry on this
     repository.
 
-    .. image:: ../media/image12.png
+    .. image:: ../images/image12.png
 
 .. attention::
    Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles/-/blob/master/.gitlab-ci.yml>`__,
@@ -183,4 +183,4 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
     Here you should see your new **alpine3.11** image
 
-    .. image:: ../media/image24.png
+    .. image:: ../images/image24.png
