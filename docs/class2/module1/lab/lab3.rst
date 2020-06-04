@@ -25,8 +25,7 @@ and use volumes to persist data.
 
       ssh centos@10.1.1.11
 
-   .. figure:: ../media/image16.png
-      :alt: A screenshot of UDF
+   .. image:: ../media/image16.png
 
 2. The web shell will open as ``centos`` user. Make sure you are in in
    the provided project folder with NGINX Plus configurations in
@@ -48,8 +47,7 @@ and use volumes to persist data.
    from the Gitlab Container registry page from the
    **nginx-plus-dockerfiles** repository
 
-   .. figure:: ../media/image17.png
-      :alt: A screenshot of private docker registry
+   .. image:: ../media/image17.png
 
    .. code:: bash
 
@@ -135,5 +133,4 @@ and use volumes to persist data.
       "nginx -g 'daemon of..." 6 days ago Up 14 minutes 443/tcp,
       0.0.0.0:81->80/tcp, 0.0.0.0:8081->8080/tcp appster-staging
 
-   .. figure:: ../media/image18.png
-      :alt: A screenshot of docker commands
+   .. image:: ../media/image18.png

@@ -7,8 +7,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    on git repositories. \ **GitHub Desktop** is developed by GitHub,
    Inc. but can be used on any git-based project
 
-   .. figure:: ../media/image2.png
-      :alt: A screenshot of Github Desktop Client
+   .. image:: ../media/image2.png
 
 2. Once GitHub Desktop Client is open, verify in the upper left corner
    that **nginx-plus-dockerfiles** is selected as the **current
@@ -17,8 +16,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    selected, click on **Open in Visual Studio Code** on the right side
    of the application
 
-   .. figure:: ../media/image3.png
-      :alt: GitHub Desktop Client
+   .. image:: ../media/image3.png
 
 3. Inside the project folder, you will see many subfolders containing
    Dockerfiles to various builds of NGINX Plus on \ `supported Linux
@@ -26,8 +24,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    Take some time to inspect the Docker files in different folders found
    in the project
 
-   .. figure:: ../media/image4.png
-      :alt: Dockerfiles in the project folder
+   .. image:: ../media/image4.png
 
 4. Lets take a look a a ``Dockerfile``. For example, look at
    the \ **alpine3.10**  folder, and in here, you will find a the
@@ -91,8 +88,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    b. Lastly, edit the stage label ``alpine3.10`` to ``alpine3.11``
 
-   .. figure:: ../media/image23.png
-      :alt: A screenshot of the Dockerfile
+   .. image:: ../media/image23.png
 
    .. important:: The correct indentation in a ``yaml`` file must be valid and
       make sure your ``.gitlab-ci.yml`` file looks like the example above.
@@ -123,11 +119,9 @@ Lab 1: Run a pipeline to build NGINX Plus images
     the next screen, press **“Push to Origin”** to push the new code
     commit to our git repository on Gitlab.
 
-    .. figure:: ../media/image7.png
-       :alt: Commit to Master
+    .. image:: ../media/image7.png
 
-    .. figure:: ../media/image8.png
-       :alt: Push changes
+    .. image:: ../media/image8.png
 
 13. Open up the \ **nginx-plus-dockerfiles** repository on
     Gitlab, \ `https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles>`__ or
@@ -135,8 +129,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
     will take us to the repository where we just pushed our modified
     Docker file to
 
-    .. figure:: ../media/image9.png
-       :alt: nginx-plus-dockerfiles repository
+    .. image:: ../media/image9.png
 
 14. On this **nginx-plus-dockerfiles** repository page, you will see the
     pipeline status icon next to the latest \ **Commit SHA**. When the
@@ -146,15 +139,13 @@ Lab 1: Run a pipeline to build NGINX Plus images
     We can click on the pipeline status icon to view the pipeline
     progress
 
-    .. figure:: ../media/image10.png
-       :alt: nginx-plus-dockerfiles repository
+    .. image:: ../media/image10.png
 
     The next screen shows a high-level view of the pipeline triggered
     for this commit. We can click on the pipeline status icon on this
     screen to view the pipeline progress in greater detail.
 
-    .. figure:: ../media/image11.png
-       :alt: The Pipeline triggered
+    .. image:: ../media/image11.png
 
 15. After clicking on the pipeline status icon, we can view the full
     pipeline. As you can see, we can now see our
@@ -167,8 +158,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
     Docker images up to our Docker container registry on this
     repository.
 
-    .. figure:: ../media/image12.png
-       :alt: CICD Pipeline
+    .. image:: ../media/image12.png
 
 .. attention::
    Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles/-/blob/master/.gitlab-ci.yml>`__,
@@ -193,5 +183,4 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
     Here you should see your new **alpine3.11** image
 
-    .. figure:: ../media/image24.png
-       :alt: CICD Pipeline
+    .. image:: ../media/image24.png

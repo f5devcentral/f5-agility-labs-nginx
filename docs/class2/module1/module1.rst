@@ -31,8 +31,7 @@ exercise ends with pushing the docker image to the container registry
 but could easily be extended to deploy a container with new application
 code to a live environment
 
-.. figure:: ./media/image1.png
-   :alt: Workflow for a CICD for NGINX Plus
+.. image:: ./media/image1.png
 
 .. Important:: Run all lab activites from the Windows JumpHost
 

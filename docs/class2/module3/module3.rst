@@ -39,14 +39,12 @@ CICD flowchart
 
 Here is an overview of the entire CICD Pipeline
 
-.. figure:: ./media/image0.png
-   :alt: A screenshot of the CI Pipeline 1
+.. image:: ./media/image0.png
 
 Here is a closer look at **steps 5 and 6**, where we use ``rsync`` to
 deploy the new NGINX configuration files to live NGINX servers
 
-.. figure:: ./media/image1.png
-   :alt: A screenshot of the CI Pipeline actions
+.. image:: ./media/image1.png
 
 .. Important:: Run all lab activites from the Windows JumpHost
 

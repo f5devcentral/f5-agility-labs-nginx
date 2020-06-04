@@ -22,8 +22,7 @@ the next exercise
     From the same screen now click the **“Open in Visual Studio Code”**
     button to start editing our appster web application code
 
-    .. figure:: ../media/image2.png
-       :alt: Open in VS Code
+    .. image:: ../media/image2.png
 
     Now that Visual Studio Code is open, expand the tree under
     ``gitlabappster`` -> ``etc`` -> ``nginx`` -> ``html``. Once the tree
@@ -31,24 +30,21 @@ the next exercise
     menu will open up. Select: **“Reveal in File explorer”** to open it
     up in windows explorer.
 
-    .. figure:: ../media/image3.png
-       :alt: A screenshot of VS Code
+    .. image:: ../media/image3.png
 
 2.  Once \ **windows explorer** has opened at the location of the file,
     you will see the folder with ``index.html`` listed. Go ahead and
     double-click \ ``index.html`` to open that file in a browser (Google
     Chrome.)
 
-    .. figure:: ../media/image4.png
-       :alt: A screenshot of Windows explorer
+    .. image:: ../media/image4.png
 
 3.  After the double-click on \ ``index.html``, and opening the webpage
     in the web browser, you will see the current webpage displaying the
     Appster application with a dated iPhone 7 image. \ *Go ahead and
     leave this web browser page open.*
 
-    .. figure:: ../media/image5.png
-       :alt: A screenshot of a cell phone Description automatically generated
+    .. image:: ../media/image5.png
 
 4.  Go back to Visual Studio code editor to make edits to this file.
     This time, open that same ``index.html`` file (click to open it in
@@ -63,8 +59,7 @@ the next exercise
     Search and replace all instances of ``iphone_7.png`` to
     ``iphone_x.png``. Update all two instances of that image
 
-    .. figure:: ../media/image6.png
-       :alt: A screenshot of a search and replace
+    .. image:: ../media/image6.png
 
 5.  Once you have edited ``index.html`` and replaced both instances of
     ``iphone_7.png`` with ``iphone_x.png``, go ahead and **save** the
@@ -93,24 +88,21 @@ the next exercise
     the next screen, press **Push to Origin** to push the new code
     commit to our git repository on Gitlab.
 
-    .. figure:: ../media/image7.png
-       :alt: A screenshot of a Github Desktop Client
+    .. image:: ../media/image7.png
 
 8.  After you click on \ **Commit to Master**, you will be taken to the
     next page where we push our changes to our repository. Go and
     click \ **push origin**, which will now push our modified
     ``index.html`` file to our GitLab repository.
 
-    .. figure:: ../media/image8.png
-       :alt: A screenshot of a Github Desktop Client
+    .. image:: ../media/image8.png
 
 9.  Open up the Appster repo on Gitlab, using the
     URI \ `https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster>`__
     or using the **Appster** shortcut provided. This is our repository,
     where we just pushed our modified \ ``index.html`` file to.
 
-    .. figure:: ../media/image9.png
-       :alt: A screenshot of Appster shortcut
+    .. image:: ../media/image9.png
 
 10. In the middle of the Appster repository, you will see the pipeline
     status icon next to the latest Commit SHA. When the pipeline is
@@ -120,15 +112,13 @@ the next exercise
     pipeline has failed. We can click on the pipeline status icon to
     view the pipeline progress
 
-    .. figure:: ../media/image10.png
-       :alt: A screenshot of Pipeline status 
+    .. image:: ../media/image10.png
 
     The next screen shows a high-level view of the pipeline triggered
     for this commit. We can click on the pipeline status icon on this
     screen to view the pipeline progress in greater detail.
 
-    .. figure:: ../media/image11.png
-       :alt: A screenshot of Pipeline status
+    .. image:: ../media/image11.png
 
 11. After clicking on the pipeline status icon, we can view the full
     pipeline. As you can see, we can now see our pipeline: \ ``BUILD``,
@@ -137,8 +127,7 @@ the next exercise
     (when we clicked \ **push origin**.) and we can see at a high level
     the stages in the pipeline progressing
 
-    .. figure:: ../media/image12.png
-       :alt: A screenshot of Pipeline status
+    .. image:: ../media/image12.png
 
 .. attention:: Stop: This is a good time to inspect the **GitLab CI/CD Pipeline** file,
    `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__,
@@ -161,8 +150,7 @@ the next exercise
     automatic, and Production is manual: we have purposely injected a
     human trigger for a deployment to Production
 
-    .. figure:: ../media/image13.png
-       :alt: A screenshot of Pipeline status
+    .. image:: ../media/image13.png
 
 .. note:: Do not deploy to Production (play button) until code changes in staging have been validated!
 
@@ -173,13 +161,11 @@ the next exercise
     Open the webpage in a **New incognito window (Ctrl + Shift + N)** to
     bypass browser cache and view changes.
 
-    .. figure:: ../media/image15.png
-       :alt: A screenshot appster web app
+    .. image:: ../media/image15.png
 
     **After new code commit (notice the updated phone image):**
 
-    .. figure:: ../media/image18.png
-       :alt: A screenshot appster web app
+    .. image:: ../media/image18.png
 
 .. note:: Ignore the bookmarks ``STAGING LB - Appster`` and ``PROD LB - Appster`` for now - we will set this up in a later exercise.
 
@@ -192,11 +178,9 @@ the next exercise
     trigger will now deploy our new Docker image to Production, wih. the
     new code showing the updated image, \ ``iphone_x.png``.
 
-    .. figure:: ../media/image27.png
-       :alt: A screenshot of Pipeline status
+    .. image:: ../media/image27.png
 
-    .. figure:: ../media/image14.png
-       :alt: A screenshot of Pipeline status
+    .. image:: ../media/image14.png
 
 15. If our deployment to Production is successful you would now see the
     new web app code now deployed on \ **all four Production web
@@ -205,8 +189,6 @@ the next exercise
     ``PROD WEB - Appster-green`` and ``PROD WEB - Appster-blue`` under
     the \ **Production Servers** bookmark folder.
 
-    .. figure:: ../media/image16.png
-       :alt: A screenshot appster web app
+    .. image:: ../media/image16.png
        
-    .. figure:: ../media/image26.png   
-       :alt: A screenshot appster web app
+    .. image:: ../media/image26.png   

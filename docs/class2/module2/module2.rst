@@ -19,8 +19,7 @@ environment. We will see in this exercise that the push to Staging
 environment is automatic while the push to our production environment
 requires a human trigger
 
-.. figure:: ./media/image1.png
-   :alt: CICD of this lab
+.. image:: ./media/image1.png
 
 .. Important:: Run all lab activites from the Windows JumpHost
 
