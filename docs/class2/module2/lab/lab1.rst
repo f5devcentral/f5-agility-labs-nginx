@@ -114,12 +114,6 @@ the next exercise
 
     .. image:: ../images/image10.png
 
-    The next screen shows a high-level view of the pipeline triggered
-    for this commit. We can click on the pipeline status icon on this
-    screen to view the pipeline progress in greater detail.
-
-    .. image:: ../images/image11.png
-
 11. After clicking on the pipeline status icon, we can view the full
     pipeline. As you can see, we can now see our pipeline: \ ``BUILD``,
     ``TEST``, ``PUSH``, ``DEPLOY``, and \ ``CLEANUP``. This pipeline was
@@ -154,7 +148,7 @@ the next exercise
 
 .. note:: Do not deploy to Production (play button) until code changes in staging have been validated!
 
-13. Browse to the server bookmarked as ``STAGING LB - Appster`` under
+13. Browse to the server bookmarked as ``STAGING WEB - Appster`` under
     the **“Staging Servers”** bookmark folder to see the new web app
     code pushed to our Staging Server.
 

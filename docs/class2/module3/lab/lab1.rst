@@ -98,7 +98,7 @@ we will enable Rate limiting to our Appster service
    .. image:: ../images/image5.png
 
 6. Open up the \ **appster-lb** repository on Gitlab by the
-   URI, \ `https://gitlab.f5demolab.com/f5-demo-lab.appster-lb <https://gitlab.f5demolab.com/f5-demo-lab.appster-lb>`__
+   URI, \ `https://gitlab.f5demolab.com/f5-demo-lab/appster-lb <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb>`__
    or using the \ **Appster-lb** shortcut provided so we can view the
    pipeline in progress
 
@@ -130,7 +130,7 @@ we will enable Rate limiting to our Appster service
    #. In stages, ``deploy_to_staging:`` and ``deploy_to_production`` you can see: ``apk add rsync`` and ``rsync -avrzI ...`` which allow us install the remote sync tool and then later deploy the files
       to the remote servers
 
-6. Eventually, we will see the pipeline complete. At this stage, the
+7. Eventually, we will see the pipeline complete. At this stage, the
    build and tests have passed, and we are ready to test on our Staging
    server. After QA testing on our Staging environment, we can decide to
    deploy to Production or proceed to fix issues discovered and iterate
@@ -138,10 +138,10 @@ we will enable Rate limiting to our Appster service
 
    .. image:: ../images/image9.png
 
-7.  Let’s play QA Engineering and do some testing on our Staging
+8.  Let’s play QA Engineering and do some testing on our Staging
     environment. View our **Staging** NGINX Plus service in a browser on
     the
-    URI, \ `http://docker.f5demolab.com <http://nginx.f5demolab.com>`__,
+    URI, \ `http://docker.f5demolab.com <http://docker.f5demolab.com>`__,
     or use the shortcut, \ **STAGING LB - Appster**
 
     .. image:: ../images/image10.png
@@ -157,7 +157,7 @@ we will enable Rate limiting to our Appster service
 
     .. image:: ../images/image14.png
 
-8.  If you would like to see the rate limiting rule applied against a
+9.  If you would like to see the rate limiting rule applied against a
     load test, Open an SSH session using **git bash for windows** to our
     Staging server and run vegeta load tester running the following
     command.
@@ -200,7 +200,7 @@ we will enable Rate limiting to our Appster service
     We should see around ten ``HTTP200`` requests and the remainder of
     the request ``HTTP429`` ``"Too many requests"``
 
-9.  Play around with the rate-limiting settings until you feel
+10. Play around with the rate-limiting settings until you feel
     comfortable pushing new rate-limiting settings to Production:
 
     You can edit ``etc/nginx/conf.d/www.appster.com.conf`` live on the
@@ -242,7 +242,7 @@ we will enable Rate limiting to our Appster service
        nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
        nginx: configuration file /etc/nginx/nginx.conf test is successful
 
-10. We can now rerun the ``vegeta`` load generator test using the same
+11. We can now rerun the ``vegeta`` load generator test using the same
     command run in the previous step and view the user experience
     through the web browser
 
@@ -253,7 +253,7 @@ we will enable Rate limiting to our Appster service
        limited load Do not expect more that 800 request per second through
        the load balancer
 
-11. Open ``www.appster.com.conf`` and increase the 10 requests per
+12. Open ``www.appster.com.conf`` and increase the 10 requests per
     second to 10000 requests per second on our rating limiting rule:
 
     .. code:: ini
@@ -264,11 +264,11 @@ we will enable Rate limiting to our Appster service
 
     .. image:: ../images/image15.png
 
-12. Once you have edited ``www.appster.com.conf`` and increased the rate
+13. Once you have edited ``www.appster.com.conf`` and increased the rate
     limit, go ahead and **save** the file. You can navigate to ``file``
     -> ``save`` or you can use the shortcut, **CTRL+S**.
 
-13. We will see the tracked changes back on the \ **GitHub Desktop
+14. We will see the tracked changes back on the \ **GitHub Desktop
     Client**. In the lower-left of the GitHub, Desktop Client provide a
     **Commit title** and **note** before we can commit to master.
 
@@ -287,8 +287,8 @@ we will enable Rate limiting to our Appster service
 
     .. image:: ../images/image5.png
 
-14. Open up the **appster-lb** repository on Gitlab by the URI,
-    `https://gitlab.f5demolab.com/f5-demo-lab.appster-lb <https://gitlab.f5demolab.com/f5-demo-lab.appster-lb>`__
+15. Open up the **appster-lb** repository on Gitlab by the URI,
+    `https://gitlab.f5demolab.com/f5-demo-lab/appster-lb <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb>`__
     or using the **Appster-lb** shortcut provided so we can view the
     pipeline in progress
 
@@ -307,7 +307,7 @@ we will enable Rate limiting to our Appster service
     ``vegeta`` once again. Once you have validated the changes we can
     push to production!
 
-15. Remember we have purposely left deployment to Production to a human
+16. Remember we have purposely left deployment to Production to a human
     trigger, press the \ **Play button** to deploy the new code to
     Production. We can click on the title to the progress of the
     deployment stage in realtime.
@@ -321,4 +321,4 @@ we will enable Rate limiting to our Appster service
 
    **Congratulations on completing the lab!**
 
-   **Thank you for your interest in the F5/NGINX lab; we hope you have found this lab to be valuable. For more information on NGINX Plus, please visit our [Website](https://www.nginx.com)**
+   **Thank you for your interest in the F5/NGINX lab; we hope you have found this lab to be valuable. For more information on NGINX Plus, please visit www.nginx.com**
