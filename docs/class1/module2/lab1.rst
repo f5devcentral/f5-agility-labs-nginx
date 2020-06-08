@@ -14,9 +14,11 @@ For this lab the necessary cert and key have already been provided on the instan
 Install NGINX Plus
 ~~~~~~~~~~~~~~~~~~~~
 
-.. note:: Execute this command from the NGINX Plus Master instance.
+#. to access the  NGINX Plus Master instance locate the Putty application on the desktop and open it. You will see a shortcut for "NGINX Plus Master". click on it  and press open
 
-.. warning:: Do not perform these steps from the UDF 'Web Shell'. Use a native terminal client or Putty from the Windows Jump Host.
+  .. image:: /_static/9rdp.png
+  
+.. note:: Execute this command from the NGINX Plus Master instance.
 
 .. code:: shell
 
@@ -41,11 +43,10 @@ Verify NGINX Plus is running
    systemctl status nginx
 
 **Verify the output shows the service running:**
+you should see an output similar to this: 
 
-.. code:: shell
-
-   ● nginx.service - NGINX Plus - high performance web server
-    Active: active (running) since Fri 2019-05-10 12:08:14 UTC; 2min 18s ago
+nginx.service - NGINX Plus - high performance web server
+Active: active (running) since Fri 2019-05-10 12:08:14 UTC; 2min 18s ago
 
 **For an additional check, you should be able to curl to localhost port 80.**
 
@@ -54,14 +55,13 @@ Verify NGINX Plus is running
   curl http://localhost
 
 **Verify the output is the default NGINX placeholder page.**
+you should see an output similar to this: 
 
-.. code:: shell
-
-   # Content Removed
-   <h1>Welcome to nginx!</h1>
-   <p>If you see this page, the nginx web server is successfully installed and
-   working. Further configuration is required.</p>
-   # Content Removed
+# Content Removed
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+# Content Removed
 
 NGINX Plus is now installed and running on the NGINX Plus Master instance.
 

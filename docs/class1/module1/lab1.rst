@@ -31,19 +31,33 @@ Follow these steps to complete this lab:
 
 #. Open your web browser
 #. Navigate to https://udf.f5.com/courses
-#. login using your UDF credentials 
-#. go into courses tab 
-#. Click on the 'Details' tab within the Intro to NGINX+ from BIG-IP UDF block. You should see the following:
+#. login using your UDF credentials, you should have received an email from noreply@registration.udf.f5.com
 
-   (ADD THIS ONCE YOU LAUNCH CLASS TO MATCH WHAT STUDENT SEES)
+.. image:: /_static/1email.png
 
-   .. image:: /_static/start.jpg
+#. Upon first login, you will be prompted to change your password. 
 
-#. Click 'Start' to launch your workstation. 
+.. image:: /_static/2password.png
 
-#. After your workstation is deployed, click the 'Components' tab:
+#. Review and accept the terms for using UDF.
 
-   .. image:: /_static/components.png
+.. image:: /_static/3terms.png
+
+#. Locate the class "Nginx Plus  & integrating with BIG-IP" and click launch. 
+
+.. image:: /_static/4launch.png
+
+#. You will be given a overview the class, press join.
+
+.. image:: /_static/5join.png
+
+#. the link for the lab guide (in case you haven't already opened it) can be found in the description box
+
+.. image:: /_static/6guide.png
+
+#. click on the 'deployment' tab in the top left, notice your lab environment is spinning up. 
+
+.. image:: /_static/7spinning.png
 
 **Exercise 2 - RDP to Windows Jumphost**
 
@@ -51,17 +65,16 @@ In this exercise, we will connect to the Windows Jumphost.
 
 #. Under the 'Systems' column, locate the 'Jumphost' block. 
 
-   .. image:: /_static/systems.png
+  .. image:: /_static/8jumphost.png
+
 
 #. Click 'Access' -> 'RDP' and this will download a '.rdp' file to your local machine. 
-
-   .. image:: /_static/access.png
 
 #. Once the RDP has downloaded, open the .rdp file and when prompted, select 'continue'. 
 
 #. When prompted for the login credentials, use username: user: password: user 
 
-   .. image:: /_static/loginrdp.png
+  .. image:: /_static/9rdp.png
 
 #. You should now be in your windows Jumphost. 
 
