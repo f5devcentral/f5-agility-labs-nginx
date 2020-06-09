@@ -16,8 +16,8 @@ Install NGINX Plus
 
 #. to access the  NGINX Plus Master instance locate the Putty application on the desktop and open it. You will see a shortcut for "NGINX Plus Master". click on it  and press open
 
-  .. image:: /_static/9rdp.png
-  
+  .. image:: /_static/10putty.png
+
 .. note:: Execute this command from the NGINX Plus Master instance.
 
 .. code:: shell
