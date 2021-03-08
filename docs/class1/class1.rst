@@ -1,5 +1,5 @@
-Class1 - Introduction to NGINX Plus & Integrating with BIG-IP
-=============================================================
+Class1 - Introduction to NGINX Plus
+===================================
 
 In this class we will cover the various NGINX Plus concepts -- focusing on load balancing functionality.
 
