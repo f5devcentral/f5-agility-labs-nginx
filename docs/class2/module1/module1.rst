@@ -16,7 +16,7 @@ for Docker because it is feature-rich, deployable on many Linux
 distributions and is less than 2.5mb in size.
 
 While NGINX open-source images are available on `Docker Hub <https://registry.hub.docker.com/>`__,
-the repository of Docker images, the repository of Docker images, you are required to build your
+the repository of Docker images, you are required to build your
 own NGINX Plus docker images and store them in your **private**
 container registry, due to License keys requirement activate NGINX Plus
 
