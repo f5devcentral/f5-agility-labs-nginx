@@ -31,14 +31,12 @@ different perspective to application development!
 
     Let’s search and replace the the existing subheader
     ``A beautiful fictitious app that you can trust on`` with ``A beautiful fictitious app that you can trust!``.
-    The following command will flip background colors - yellow to
-    purple, purple to yellow:
 
     .. code:: bash
 
        # Update "A beautiful fictitious app that you can trust on" 
        # with "A beautiful fictitious app that you can trust!" in the HTML
-       sed -i 's/app that you can trust on/app that you can trust!/g' etc/nginx/html/index.html
+       sed -i 's/can trust on/can trust!/g' etc/nginx/html/index.html
 
 4.  Let’s check that our changes were made by performing a ``grep`` text
     search on the ``index.html`` file
@@ -89,7 +87,6 @@ different perspective to application development!
 
     .. code:: bash
 
-       # Flip background colors - purple to yellow, yellow to purple:
        sed -i 's/<h2>A beautiful <span class=\"text-orange\">fictitious<\/span> app that you can trust!<\/h2>/<h2>A beautiful <span class=\"text-orange\">fictitious<\/span> app that you should download!<\/h2>/g' etc/nginx/html/index.html
 
 8.  Once again, let’s check that our changes were made by performing a
