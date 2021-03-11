@@ -1,14 +1,15 @@
 Class2 - NGINX Plus CICD Lab
 ============================
 
-.. note:: **Last Updated: 06/04/2020**
+.. note:: **Last Updated: 03/11/2021**
 
-Instructors at Agility 2020:
+Instructors at Agility 2021:
 
--  Jason Williams <`ja.williams@f5.com <mailto:%3cja.williams@f5.com>`__>
--  Armand Sultantono <`armand@f5.com <mailto:%3carmand@f5.com>`__>
--  Doug Gallarda <d.gallarda@f5.com>
--  Chris Akker <c.akker@f5.com>
+-  Michael O'Leary <mi.oleary@f5.com>
+-  Peter Maranian <p.maranian@f5.com>
+-  Garland Moore <ga.moore@f5.com>
+-  Kyle McKay <k.mckay@f5.com>
+-  Pierre Bonnain <n.bonnain@f5.com>
 
 UDF Lab Maintainers:
 
