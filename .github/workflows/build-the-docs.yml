@@ -7,7 +7,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      S3_DIR: containers
+      S3_DIR: nginx
 
     steps:
     - uses: actions/checkout@v2
