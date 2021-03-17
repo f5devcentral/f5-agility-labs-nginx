@@ -3,4 +3,7 @@ NGINX for F5 Agility
 
 Currently included classes:
 
-#. Introduction to NGINX Plus & Integrating with BIG-IP
+1. Introduction to NGINX Plus
+2. NGINX Plus CI/CD Lab
+3. NGINX Dataplane Scripting
+4. Introduction to NGINX Instance Manager
