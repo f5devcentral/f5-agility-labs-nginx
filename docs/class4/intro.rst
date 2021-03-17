@@ -65,3 +65,18 @@ reciever for the nginx-agent component on the NGINX instances.
 
 The NGINX machines are there to provide a cross section of installation 
 options.
+
+NGINX Instances:
+
++--------------+----------------------+--------------+-------------+
+| **Instance** | **FQDN**             | **OS**       | **NGINX**   |
++--------------+----------------------+--------------+-------------+
+| OSS-Centos   | nginx5.f5demolab.com | Centos 7     | Open Source |
++--------------+----------------------+--------------+-------------+
+| OSS-Ubuntu   | nginx6.f5demolab.com | Ubuntu 18.04 | Open Source |
++--------------+----------------------+--------------+-------------+
+| Plus-Ubuntu  | nginx7.f5demolab.com | Ubuntu 18.04 | Plus        |
++--------------+----------------------+--------------+-------------+
+| Plus-Centos  | nginx8.f5demolab.com | Centos 7     | Plus        |
++--------------+----------------------+--------------+-------------+
+
