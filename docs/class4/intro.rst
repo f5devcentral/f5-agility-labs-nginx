@@ -53,7 +53,15 @@ This Lab guide will help you complete the following:
 Getting Started
 ---------------
 
-The infrastructure is all ready for you but we are going to clear out everything 
-so we can practice the installation steps.  To do this, we will utilize ssh to
-connect to the nginx-manager server and run the `reset.sh` script in the home 
-directory of the centos user.
+The infrastructure is already setup for you; however, we are going to clear 
+out everything so we can practice the installation steps.  To do this, we 
+will utilize ssh to connect to the nginx-manager server and run the 
+`reset.sh` script in the home directory of the centos user.
+
+The **nginx-manager** is the instance that provides the NGINX Instance Manager 
+API, metrics endpoint and user interface to use.  It also functions as the 
+reciever for the nginx-agent component on the NGINX instances.
+**Run all lab activities from the nginx-manager unless specified**
+
+The NGINX machines are there to provide a cross section of installation 
+options.
