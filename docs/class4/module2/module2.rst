@@ -1,5 +1,5 @@
-Module 1: Installing NGINX Instance Manager
-===========================================
+Module 2: Installing NGINX Agent
+================================
 
 In this lab exercise, we will install and configure the NGINX Instance
 Manager (nginx-manager) and secure it using NGINX Plus.
