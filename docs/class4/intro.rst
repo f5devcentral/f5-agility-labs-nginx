@@ -63,6 +63,9 @@ API, metrics endpoint and user interface to use.  It also functions as the
 reciever for the nginx-agent component on the NGINX instances.
 **Run all lab activities from the nginx-manager unless specified**
 
+Lab Topology and Credentials
+----------------------------
+
 The NGINX machines are there to provide a cross section of installation 
 options.
 
