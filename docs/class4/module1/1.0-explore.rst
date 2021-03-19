@@ -6,150 +6,58 @@ Exercise 1.0: Exploring the lab environment
 Step 1
 ------
 
-Navigate to the ``networking-workshop`` directory.
+Navigate to the ``nginx-manager`` instance as ``centos`` and use the home directory.
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ cd networking-workshop/
-   [centos@ansible networking-workshop]$
+   [centos@nginx-manager ~]$ pwd
+   /home/centos
 
 Step 2
 ------
 
-Run the ``ansible`` command with the ``--version`` command to look at
-what is configured:
+Navigate to the UDF overview and note the instances we will use for the lab:
 
-.. code-block:: shell-session
+The infrastructure is already setup for you; however, we are going to clear 
+out everything so we can practice the installation steps.  To do this, we 
+will utilize ssh to connect to the nginx-manager server and run the 
+`reset.sh` script in the home directory of the centos user.
 
-   [centos@ansible networking-workshop]$ ansible --version
-   ansible 2.6.2
-     config file = /home/centos/.ansible.cfg
-     configured module search path = [u'/home/centos/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
-     ansible python module location = /usr/lib/python2.7/site-packages/ansible
-     executable location = /usr/bin/ansible
-     python version = 2.7.5 (default, May  3 2017, 07:55:04) [GCC 4.8.5 20150623 (Red Hat 4.8.5-14)]
+The **nginx-manager** is the instance that provides the NGINX Instance Manager 
+API, metrics endpoint and user interface to use.  It also functions as the 
+reciever for the nginx-agent component on the NGINX instances.
+**Run all lab activities from the nginx-manager unless specified**
 
-..
+The **dns** server is a nameserver and a repository server for the NGINX 
+Instance Manager packages.  It hosts a yum repository for RHEL/Centos-based 
+machines and an apt repository for debian/ubuntu-based machines.
 
-   Note: The Ansible version you see might differ from the above output
+The **docker** server is a Centos 7 instance with docker installed that 
+is used in an optional module for using containers with ``nginx-manager`` 
+and to host a test nginx instance that is outdated.
 
-This command gives you information about the version of Ansible,
-location of the executable, version of Python, search path for the
-modules and location of the ``ansible configuration file``.
+The NGINX machines are there to provide a cross section of installation 
+options.
 
-Step 3
-------
+NGINX Instances:
 
-Use the ``cat`` command to view the contents of the ``ansible.cfg``
-file.
-
-.. code-block:: shell-session
-   :emphasize-lines: 5,7
-
-   [centos@ansible networking-workshop]$ cat ~/.ansible.cfg
-   [defaults]
-   connection = smart
-   timeout = 60
-   inventory = /home/centos/networking-workshop/lab_inventory/hosts
-   host_key_checking = False
-   private_key_file = /home/centos/.ssh/aws-private.pem
-   [centos@ansible networking-workshop]$
-
-Note the following parameters within the ``ansible.cfg`` file:
-
--  ``inventory``: shows the location of the ansible inventory being used
--  ``private_key_file``: this shows the location of the private key used
-   to login to devices (this won’t be present for UDF, we will use the
-   default key)
-
-Step 4
-------
-
-The scope of a ``play`` within a ``playbook`` is limited to the groups
-of hosts declared within an Ansible **inventory**. Ansible supports
-multiple
-`inventory <http://docs.ansible.com/ansible/latest/intro_inventory.html>`__
-types. An inventory could be a simple flat file with a collection of
-hosts defined within it or it could be a dynamic script (potentially
-querying a CMDB backend) that generates a list of devices to run the
-playbook against.
-
-In this lab you will work with a file based inventory written in the
-**ini** format. Use the ``cat`` command to view the contents of your
-inventory:
-
-``[centos@ansible networking-workshop]$ cat lab_inventory/hosts``
-
-The output will look similar to as follows:
-
-.. code-block:: yaml
-
-   [all:vars]
-   ansible_user=centos
-   ansible_ssh_pass=f5ansible
-   ansible_ssh_private_key_file=/home/centos/.ssh/aws-private.pem
-
-   [lb]
-   f5 ansible_host=10.1.20.7 ansible_user=admin private_ip=10.1.1.7 destination_ip=10.1.20.100 ansible_ssh_pass=f5ansible
-
-   [control]
-   ansible ansible_host=10.1.1.4 ansible_user=centos
-
-   [webservers]
-   host1 ansible_host=10.1.20.5 ansible_user=centos private_ip=10.1.1.5
-   host2 ansible_host=10.1.20.6 ansible_user=centos private_ip=10.1.1.6
-
-..
-
-   Note that the IP addresses will be different in your environment.
-
-Step 5
-------
-
-In the above output every ``[ ]`` defines a group. For example
-``[webservers]`` is a group that contains the hosts ``host1`` and
-``host2``.
-
-   Note: A group called **all** always exists and contains all groups
-   and hosts defined within an inventory.
-
-We can associate variables to groups and hosts. Host variables are
-declared/defined on the same line as the host themselves. For example
-for the host ``f5``:
-
-.. code-block:: yaml
-
-   f5 ansible_host=10.1.20.7 ansible_user=admin private_ip=10.1.1.7 destination_ip=10.1.20.100 ansible_ssh_pass=f5ansible
-
--  ``f5`` - The name that Ansible will use. This can but does not have
-   to rely on DNS
--  ``ansible_host`` - The IP address that ansible will use, if not
-   configured it will default to DNS
--  ``ansible_user`` - The user ansible will use to login to this host,
-   if not configured it will default to the user the playbook is run
-   from
--  ``private_ip`` - This value is not reserved by ansible so it will
-   default to a `host
-   variable <http://docs.ansible.com/ansible/latest/intro_inventory.html#host-variables>`__.
-   This variable can be used by playbooks or ignored completely.
--  ``destination_ip`` - This value is not reserved either, we are
-   using it to define the Virtual Server IP we want.
--  ``ansible_ssh_pass`` - The password ansible will use to login to this
-   host, if not configured it will assume the user the playbook ran from
-   has access to this host through SSH keys.
-
-..
-
-   Does the password have to be in plain text? No, Red Hat Ansible Tower
-   can take care of credential management in an easy to use web GUI or a
-   user may use
-   `ansible-vault <https://docs.ansible.com/ansible/latest/network/getting_started/first_inventory.html#protecting-sensitive-variables-with-ansible-vault>`__
-
-Go back to the home directory
-
-.. code-block:: shell-session
-
-   [centos@ansible networking-workshop]$ cd ~
++------------------+-----------------------------+--------------+-------------+-----------+
+|   **Instance**   |             FQDN            |      OS      |    NGINX    |     IP    |
++==================+=============================+==============+=============+===========+
+| Instance Manager | nginx-manager.f5demolab.com | Centos 7     | Plus        | 10.1.1.4  |
++------------------+-----------------------------+--------------+-------------+-----------+
+| OSS-Centos       | nginx5.f5demolab.com        | Centos 7     | Open Source | 10.1.1.5  |
++------------------+-----------------------------+--------------+-------------+-----------+
+| OSS-Ubuntu       | nginx6.f5demolab.com        | Ubuntu 18.04 | Open Source | 10.1.1.6  |
++------------------+-----------------------------+--------------+-------------+-----------+
+| Plus-Ubuntu      | nginx7.f5demolab.com        | Ubuntu 18.04 | Plus        | 10.1.1.7  |
++------------------+-----------------------------+--------------+-------------+-----------+
+| Plus-Centos      | nginx8.f5demolab.com        | Centos 7     | Plus        | 10.1.1.8  |
++------------------+-----------------------------+--------------+-------------+-----------+
+| Docker           | docker.f5demolab.com        | Centos 7     | Open Source | 10.1.1.9  |
++------------------+-----------------------------+--------------+-------------+-----------+
+| DNS              | apt.f5demolab.com           | Centos 7     | Plus        | 10.1.1.10 |
++------------------+-----------------------------+--------------+-------------+-----------+
 
 You have finished this exercise. `Click here to return to the lab
 guide <..>`__

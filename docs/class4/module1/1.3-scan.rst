@@ -1,7 +1,7 @@
-.. _1.3-configure-server:
+.. _1.3-scan:
 
-Exercise 1.3: Configure nginx-manager
-#####################################
+Exercise 1.3: Discover new instances
+####################################
 
 Objective
 =========
@@ -23,7 +23,7 @@ Using your text editor of choice create a new file called
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ nano bigip-pool.yml
+   [centos@nginx-manager ~]$ nano bigip-pool.yml
 
 ..
 
@@ -116,7 +116,7 @@ and execute the following:
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-pool.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-pool.yml
 
 Playbook Output
 ===============
@@ -125,7 +125,7 @@ The output will look as follows.
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-pool.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-pool.yml
 
    PLAY [BIG-IP SETUP] ************************************************************
 

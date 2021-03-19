@@ -1,16 +1,13 @@
-.. _1.1-get-packages:
+.. _1.1-install-nginx-manager:
 
-Exercise 1.1: Obtaining NGINX Instance Manager Packages
-#######################################################
+Exercise 1.1: Installing NGINX Instance Manager
+###############################################
 
 Objective
 =========
 
-Demonstrate use of the `BIG-IP Facts
-module <https://docs.ansible.com/ansible/latest/modules/bigip_device_info_module.html>`__
-to grab facts (useful information) from a F5 BIG-IP device and display
-them to the terminal window using the `debug
-module <https://docs.ansible.com/ansible/latest/modules/debug_module.html>`__.
+Demonstrate how to install `NGINX Instance Manager <https://docs.nginx.com/nginx-instance-manager/getting-started/install/>`__ 
+and find NGINX instances in an environment using the Scanning function of NGINX Instance Manager.
 
 Guide
 =====
@@ -19,17 +16,31 @@ Make sure you are in the home directory
 
 .. code-block:: shell-session
 
-   [centos@ansible networking-workshop]$ cd ~
+   [centos@nginx-manager ~]$ cd ~
 
-Step 1:
--------
+Installation of `NGINX Instance Manager <https://docs.nginx.com/nginx-instance-manager/getting-started/install/>`__ 
+follows a process that is very similar to installing 
+`NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
 
-Using your text editor of choice create a new file called
-``bigip-facts.yml``.
+Step 1: Verify the repository is setup
+--------------------------------------
+
+In the Lab environment, we have already placed the license files in the correct locations.
+We are utilizing an internal repository server that mimics the public repo server.  You can 
+also download the rpm or deb file and install directly if desired or in offline environments.
+
+Let's look at the repository information for our Centos 7 server instance.
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ nano bigip-facts.yml
+   [centos@nginx-manager ~]$ sudo cat /etc/yum.repos.d/nginx-instance-manager.repo 
+   [nginx-manager]
+   name=NGINX Instance Manager repo
+   baseurl=https://apt.f5demolab.com/centos/
+   sslclientcert=/etc/ssl/nginx-manager/nginx-manager.crt
+   sslclientkey=/etc/ssl/nginx-manager/nginx-manager.key
+   gpgcheck=0
+   enabled=1
 
 ..
 
@@ -150,13 +161,13 @@ and execute the following:
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-facts.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-facts.yml
 
 The output will look as follows.
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-facts.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-facts.yml
 
    PLAY [GRAB F5 FACTS] *****************************************************************************************************************************************
 
@@ -251,7 +262,7 @@ and execute the following:
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-facts.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-facts.yml
 
 Playbook Output
 ===============
@@ -260,7 +271,7 @@ The output will look as follows.
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-facts.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-facts.yml
 
    PLAY [GRAB F5 FACTS] *****************************************************************************************************************************************
 
