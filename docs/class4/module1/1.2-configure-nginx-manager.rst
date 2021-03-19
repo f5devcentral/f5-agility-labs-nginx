@@ -1,7 +1,7 @@
-.. _1.2-install-server:
+.. _1.2-configure-nginx-manager:
 
-Exercise 1.2: Install nginx-manager
-###################################
+Exercise 1.2: Configure nginx-manager
+#####################################
 
 Objective
 =========
@@ -22,7 +22,7 @@ Using your text editor of choice create a new file called
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ nano bigip-node.yml
+   [centos@nginx-manager ~]$ nano bigip-node.yml
 
 ..
 
@@ -122,7 +122,7 @@ and execute the following:
 
 .. code-block:: shell-session
 
-   [centos@ansible ~]$ ansible-playbook bigip-node.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-node.yml
 
 Playbook Output
 ===============

@@ -4,18 +4,10 @@ Module 1: Installing NGINX Instance Manager
 In this lab exercise, we will install and configure the NGINX Instance
 Manager (nginx-manager) and secure it using NGINX Plus.
 
-nginx-manager flowchart
------------------------
-
-**The diagram below depicts NGINX Plus proxying traffic to NGINX Instance Manager.**
-
-.. image:: ./traffic.png
-
 .. toctree::
    :maxdepth: 1
 
    1.0-explore
-   1.1-get-packages
-   1.2-install-server
-   1.3-configure-server
-   1.4-test-server
+   1.1-install-nginx-manager
+   1.2-configure-nginx-manager
+   1.3-scan
