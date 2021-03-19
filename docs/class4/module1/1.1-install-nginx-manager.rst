@@ -22,7 +22,22 @@ Installation of `NGINX Instance Manager <https://docs.nginx.com/nginx-instance-m
 follows a process that is very similar to installing 
 `NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
 
-Step 1: Verify the repository is setup
+Step 1: Reset the environment
+-----------------------------
+
+The lab has a running and functioning NGINX Instance Manager already. We need to clean 
+house and present the environment as it would be without any components running.  Lucky 
+for us we have a script we can run (you can look into the script later if you want).
+
+The script just handles uninstall and install functions related to this environment. 
+
+As the centos user on ``nginx-manager`` run the following to clean out the environments.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ ./reset clean
+
+Step 2: Verify the repository is setup
 --------------------------------------
 
 In the Lab environment, we have already placed the license files in the correct locations.
@@ -47,7 +62,7 @@ Let's look at the repository information for our Centos 7 server instance.
    ``vim`` and ``nano`` are available on the control node, as well as
    Visual Studio and Atom via RDP
 
-Step 2:
+Step 3:
 -------
 
 Ansible playbooks are **YAML** files. YAML is a structured encoding
