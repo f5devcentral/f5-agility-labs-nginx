@@ -1,5 +1,5 @@
-Class 5 - NGINX APP Protect
-###########################
+Class5 - NGINX APP Protect
+##########################
 
 .. image:: NAP_index.png
    :align: center
