@@ -27,7 +27,7 @@ Step 1:
 Navigate to the UDF dashboard for the lab and open the NGINX Manager instance, selecting 
 the ``Instance Manager UI`` option under ``ACCESS``.
 
-.. image:: ./UDF-select-uipng
+.. image:: ./UDF-select-ui.png
 
 
 
