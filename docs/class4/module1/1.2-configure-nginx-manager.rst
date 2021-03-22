@@ -6,25 +6,31 @@ Exercise 1.2: Configure nginx-manager
 Objective
 =========
 
-Demonstrate use of the `BIG-IP node
-module <https://docs.ansible.com/ansible/latest/modules/bigip_node_module.html>`__
-to add two RHEL (Red Hat Enterprise Linux) web servers as nodes for the
-BIG-IP load balancer.
+Configure NGINX Instance Manager to run securely.  To secure ``nginx-manager`` 
+you will configure NGINX as a proxy server.  You can utilize all your NGINX 
+knowledge since ``nginx-manager`` is simply a web application.
+
+.. note::
+   
+   Don't worry if you are a little rusty with NGINX.  We will walk you through
+   all the steps here and also show you where some sample conf files are for 
+   when you use ``nginx-manager`` in your own environment.
+
 
 Guide
 =====
 
-Step 1:
--------
+Step 1: Edit the nginx-manager.conf file
+----------------------------------------
 
-Using your text editor of choice create a new file called
-``bigip-node.yml``.
+We need to open and edit the nginx-manager.conf file.  Use ``vim`` or your favorite 
+editor open the file ``nginx-manager.conf`` in the ``/etc/nginx-manager`` directory.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ nano bigip-node.yml
+   [centos@nginx-manager ~]$ sudo vim /etc/nginx-manager/nginx-manager.conf
 
-..
+.. note::
 
    ``vim`` and ``nano`` are available on the control node, as well as
    Visual Studio and Atom via RDP
@@ -32,63 +38,102 @@ Using your text editor of choice create a new file called
 Step 2:
 -------
 
-Enter the following play definition into ``bigip-node.yml``:
+Enter or edit the following options for ``nginx-manager.conf``:
 
 .. code-block:: yaml
 
-   ---
-   - name: BIG-IP SETUP
-     hosts: lb
-     connection: local
-     gather_facts: false
+   #
+   # /etc/nginx-manager/nginx-manager.conf
+   #
 
--  The ``---`` at the top of the file indicates that this is a YAML
-   file.
--  The ``hosts: lb``, indicates the play is run only on the lb group.
-   Technically there only one F5 device but if there were multiple they
-   would be configured simultaneously.
--  ``connection: local`` tells the Playbook to run locally (rather than
-   SSHing to itself)
--  ``gather_facts: false`` disables facts gathering. We are not using
-   any fact variables for this playbook.
+   # Configuration file for NGINX Compass Server
 
-Do not close the editor yet.
+   # bind address for all service ports (default "localhost")
+   bind-address: 127.0.0.1
+   # gRPC service port for agent communication (default "10000")
+   grpc-port: 10000
+   # gRPC-gateway service port for API and UI (default "11000")
+   gateway-port: 11000
 
-Step 3
-------
+   # SSL CN or servername for certs
+   server-name: nginx-manager.f5demolab.com
+   # path to x.509 certificate file (optional)
+   cert: /etc/ssl/nginx-manager/nginx-manager.crt
+   # path to x.509 certificate key file (optional)
+   key: /etc/ssl/nginx-manager/nginx-manager.key
 
-Next, append the first ``task`` to above playbook. This task will use
-the ``bigip_node`` module configure the two RHEL web servers as nodes on
-the BIG-IP F5 load balancer.
+   # set log level (panic, fatal, error, info, debug, trace; default: info) (default "info")
+   log:
+      level: info
+      path: /var/log/nginx-manager/
+   # Metrics default storage path (default "/tmp/metrics") (directory must be already present)
+   metrics:
+      storage-path: /var/nginx-manager/
+   # Path to license file
+   license: /etc/nginx-manager/nginx-manager.lic
+
+-  ``bind-address:`` is ``127.0.0.1`` by default but could be changed
+   to ``0.0.0.0`` to listen on all ports. This is insecure and provides no
+   protection though.
+-  ``grpc-port`:` is for the agent and server communication.
+-  ``gateway-port:`` is used by humans, API calls and the metrics. It is
+   the port you access the UI and API.
+
+-  ``server-name:`` is the server name presented to clients and is needed 
+   for proper TLS operations.  It should match the CN on the certificate 
+   used with ``nginx-manager``.
+-  The ``cert:`` and ``key:`` options are for the PEM encoded certifiate and 
+   private key for TLS encryption.
+
+-  ``level:`` under ``log:`` allows specifying the logging level for ``nginx-manager``.
+-  ``path:`` under ``log:`` is the location of the log files for ``nginx-manager``.
+
+-  ``storage-path:`` under ``metrics:`` is the location of the database and 
+   metrics directory.
+-  ``license:`` is the location of the ``nginx-manager`` license file.
+
+- ``audit-log:`` is not show by default.  Adding it with a path to the audit log file
+   will enable audit logging.  Every API call will be logged and ``nginx-manager``
+   uses headers to log the username and role.  This feature will be better explained once
+   a grouping mechanism is added.  For now, don't add the option unless you need audit 
+   logging.
+
+Confirm the nginx-manager.conf file is like the example above.  We have a public 
+certificate and key for use in the ``/etc/nginx-manager/`` directory.
+
+Step 3: Start and enable the service
+------------------------------------
+
+We are using systemd for the service management with ``nginx-manager``.  
+We actually use pleaserun to automatically detect the service manager at
+installation which helps reduce the packages we use (we only have 2 right
+now, amd64 for rpm and for deb).
+
+Let's take a look at the files included in the package we installed before
+we enable the service.
+
+.. code-block:: shell-session
 
 .. code-block:: yaml
 
      tasks:
 
-     - name: CREATE NODES
-       bigip_node:
+     - name: CREATE POOL
+       bigip_pool:
          provider:
            server: "{{private_ip}}"
            user: "{{ansible_user}}"
            password: "{{ansible_ssh_pass}}"
            server_port: 8443
            validate_certs: no
-         host: "{{hostvars[item].ansible_host}}"
-         name: "{{hostvars[item].inventory_hostname}}"
-       loop: "{{ groups['webservers'] }}"
+         name: "http_pool"
+         lb_method: "round-robin"
+         monitors: "/Common/http"
+         monitor_type: "and_list"
 
-..
-
-   A
-   `loop <https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html>`__
-   will repeat a task on a list provided to the task. In this case it
-   will loop twice, once for each of the two web servers.
-
--  ``name: CREATE NODES`` is a user defined description that will
-   display in the terminal output.
--  ``bigip_node:`` tells the task which module to use. Everything except
-   ``loop`` is a module parameter defined on the module documentation
-   page.
+-  ``name: CREATE POOL`` is a user defined description that will display
+   in the terminal output.
+-  ``bigip_pool:`` tells the task which module to use.
 -  The ``server: "{{private_ip}}"`` parameter tells the module to
    connect to the F5 BIG-IP IP address, which is stored as a variable
    ``private_ip`` in inventory
@@ -100,19 +145,20 @@ the BIG-IP F5 load balancer.
    the password to login to the F5 BIG-IP device with
 -  The ``server_port: 8443`` parameter tells the module the port to
    connect to the F5 BIG-IP device with
--  The ``host: "{{hostvars[item].ansible_host}}"`` parameter tells the
-   module to add a web server IP address already defined in our
-   inventory.
--  The ``name: "{{hostvars[item].inventory_hostname}}"`` parameter tells
-   the module to use the ``inventory_hostname`` as the name (which will
-   be host1 and host2).
+-  The ``name: "http_pool"`` parameter tells the module to create a pool
+   named http_pool
+-  The ``lb_method: "round-robin"`` parameter tells the module the load
+   balancing method will be round-robin. A full list of methods can be
+   found on the documentation page for bigip_pool.
+-  The ``monitors: "/Common/http"`` parameter tells the module the that
+   the http_pool will only look at http traffic.
+-  The ``monitor_type: "and_list"`` ensures that all monitors are
+   checked.
 -  The ``validate_certs: "no"`` parameter tells the module to not
    validate SSL certificates. This is just used for demonstration
    purposes since this is a lab.
--  ``loop:`` tells the task to loop over the provided list. The list in
-   this case is the group webservers which includes two RHEL hosts.
 
-Save the file and exit out of editor.
+Save the file and exit out of editor
 
 Step 4
 ------
@@ -122,7 +168,8 @@ and execute the following:
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ ansible-playbook bigip-node.yml
+   [centos@nginx-manager ~]$ ansible-playbook bigip-pool.yml
+
 
 Playbook Output
 ===============
