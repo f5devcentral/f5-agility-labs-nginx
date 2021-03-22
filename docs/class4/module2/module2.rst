@@ -14,8 +14,7 @@ nginx-manager flowchart
 .. toctree::
    :maxdepth: 1
 
-   1.0-explore
-   1.1-get-packages
-   1.2-install-server
-   1.3-configure-server
-   1.4-test-server
+   2.0-explore
+   2.1-install-agent
+   2.2-configure-agent
+   2.3-verify-agent

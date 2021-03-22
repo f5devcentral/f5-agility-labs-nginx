@@ -1,0 +1,132 @@
+.. _1.4-install-nginx-agent:
+
+Exercise 1.4: Installing NGINX Agent
+###############################################
+
+Objective
+=========
+
+Demonstrate how to install `NGINX Agent <https://docs.nginx.com/nginx-instance-manager/getting-started/agent/>`__ .
+
+Guide
+=====
+
+Installation of `NGINX Agent <https://docs.nginx.com/nginx-instance-manager/getting-started/agent/>`__ 
+follows a process that is very similar to installing 
+`NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
+
+Step 1: Verify the repository is setup
+--------------------------------------
+
+In the Lab environment, we are utilizing an internal repository server that 
+mimics the public repo server.  You can also download the rpm or deb file 
+and install directly if desired or in offline environments.
+
+Let's look at the repository information for our Centos 7 server instance.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo cat /etc/yum.repos.d/nginx-instance-manager.repo 
+   [nginx-manager]
+   name=NGINX Instance Manager repo
+   baseurl=https://apt.f5demolab.com/centos/
+   sslclientcert=/etc/ssl/nginx-manager/nginx5.crt
+   sslclientkey=/etc/ssl/nginx-manager/nginx5.key
+   gpgcheck=0
+   enabled=1
+
+.. note::
+
+   In production these files are downloaded from pkgs.nginx.com and would point to 
+   ``/etc/ssl/nginx/nginx-repo.crt`` and ``/etc/ssl/nginx/nginx-repo.key``
+
+Check that yum can pull from the repository we setup.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo yum repolist
+
+Step 2: Install nginx-agent
+-----------------------------
+
+We are going to use the yum repository manager for this.  We can also use yum 
+for updates, removal and package management functions.  With the repository setup 
+correctly, package management is simplified.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo yum install -y nginx-agent
+   Loaded plugins: fastestmirror
+   Loading mirror speeds from cached hostfile
+   * base: d36uatko69830t.cloudfront.net
+   * epel: mirrors.sonic.net
+   * extras: d36uatko69830t.cloudfront.net
+   * updates: d36uatko69830t.cloudfront.net
+   Resolving Dependencies
+   --> Running transaction check
+   ---> Package nginx-agent.x86_64 0:0.9.1-3047962 will be installed
+   --> Finished Dependency Resolution
+
+   Dependencies Resolved
+
+   ========================================================================================================================================
+   Package                         Arch                       Version                             Repository                         Size
+   ========================================================================================================================================
+   Installing:
+   nginx-agent                     x86_64                     0.9.1-3047962                       nginx-manager                     5.7 M
+
+   Transaction Summary
+   ========================================================================================================================================
+   Install  1 Package
+
+   Total download size: 5.7 M
+   Installed size: 5.9 M
+   Downloading packages:
+   nginx-agent-0.9.1-3047962.x86_64.rpm                                                                             | 5.7 MB  00:00:00     
+   Running transaction check
+   Running transaction test
+   Transaction test succeeded
+   Running transaction
+   Installing : nginx-agent-0.9.1-3047962.x86_64                                                                                     1/1 
+   Platform systemd (default) detected. Installing service.
+   To start this service, use: systemctl start nginx-agent
+   ----------------------------------------------------------------------
+
+   Thank you for using NGINX!
+
+      Product: nginx-agent
+      Version: 0.9.1
+         Build: 3047962
+
+   Please find the documentation for NGINX Agent here:
+   https://docs.nginx.com/nginx-instance-manager/install/agent/
+
+   NGINX Agent is proprietary software. EULA and License information:
+   /usr/share/doc/nginx-agent/
+
+   For support information, please see:
+   https://www.nginx.com/support/
+
+   Configuration settings can be adjusted here:
+   /etc/nginx-agent/nginx-agent.conf
+
+   ----------------------------------------------------------------------
+   Verifying  : nginx-agent-0.9.1-3047962.x86_64                                                                                     1/1 
+
+   Installed:
+   nginx-agent.x86_64 0:0.9.1-3047962                                                                                                    
+
+   Complete!
+
+Step 3: Configure nginx-agent
+-----------------------------
+
+The agent is installed but we need to configure the ``nginx-agent`` also. 
+By default, the agent points to ``127.0.0.1`` which isn't useful unless you 
+are also running the ``nginx-manager`` on the same instance.  Although
+we are doing that for this exercise, let's change the configuration as if 
+we were on a different instance.
+
+
+You have finished this exercise. `Click here to return to the lab
+guide <..>`__
