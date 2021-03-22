@@ -81,7 +81,8 @@ Enter or edit the following options for ``nginx-manager.conf``:
 
 -  ``server-name:`` is the server name presented to clients and is needed 
    for proper TLS operations.  It should match the CN on the certificate 
-   used with ``nginx-manager``.
+   used with ``nginx-manager``. For our lab we want to change this to 
+   ``nginx-manager.f5demolab.com``.
 -  The ``cert:`` and ``key:`` options are for the PEM encoded certifiate and 
    private key for TLS encryption.
 

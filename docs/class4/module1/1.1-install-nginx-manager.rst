@@ -78,6 +78,67 @@ correctly, package management is simplified.
 .. code-block:: shell-session
 
    [centos@nginx-manager ~]$ sudo yum install nginx-manager
+   Loaded plugins: fastestmirror
+   Loading mirror speeds from cached hostfile
+   * base: d36uatko69830t.cloudfront.net
+   * extras: d36uatko69830t.cloudfront.net
+   * updates: d36uatko69830t.cloudfront.net
+   Resolving Dependencies
+   --> Running transaction check
+   ---> Package nginx-manager.x86_64 0:0.9.1-3047962 will be installed
+   --> Finished Dependency Resolution
+
+   Dependencies Resolved
+
+   ========================================================================================================================================
+   Package                           Arch                       Version                           Repository                         Size
+   ========================================================================================================================================
+   Installing:
+   nginx-manager                     x86_64                     0.9.1-3047962                     nginx-manager                      29 M
+
+   Transaction Summary
+   ========================================================================================================================================
+   Install  1 Package
+
+   Total download size: 29 M
+   Installed size: 30 M
+   Is this ok [y/d/N]: y
+   Downloading packages:
+   nginx-manager-0.9.1-3047962.x86_64.rpm                                                                           |  29 MB  00:00:00     
+   Running transaction check
+   Running transaction test
+   Transaction test succeeded
+   Running transaction
+   Installing : nginx-manager-0.9.1-3047962.x86_64                                                                                   1/1 
+   Platform systemd (default) detected. Installing service.
+   To start this service, use: systemctl start nginx-manager
+   ----------------------------------------------------------------------
+
+   Thank you for using NGINX!
+
+      Product: nginx-manager
+      Version: 0.9.1
+         Build: 3047962
+
+   Please find the documentation for NGINX nginx-manager here:
+   https://docs.nginx.com/nginx-instance-manager/install/
+
+   NGINX Instance Manager is proprietary software. EULA and License information:
+   /usr/share/doc/nginx-manager/
+
+   For support information, please see:
+   https://www.nginx.com/support/
+
+   Configuration settings can be adjusted here:
+   /etc/nginx-manager/nginx-manager.conf
+
+   ----------------------------------------------------------------------
+   Verifying  : nginx-manager-0.9.1-3047962.x86_64                                                                                   1/1 
+
+   Installed:
+   nginx-manager.x86_64 0:0.9.1-3047962                                                                                                  
+
+   Complete!
 
 That's it, nginx-manager is now installed!
 
