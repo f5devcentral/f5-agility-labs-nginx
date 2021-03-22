@@ -1,16 +1,11 @@
-Welcome to NGINX APP Protect lab guide
-######################################
-
-Publish and protect modern applications
-***************************************
-
+Class 5 - NGINX APP Protect
+###########################
 
 .. image:: NAP_index.png
    :align: center
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
    :glob:
 
    module*/module*
