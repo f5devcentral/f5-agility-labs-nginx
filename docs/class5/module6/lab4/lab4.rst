@@ -22,11 +22,11 @@ High level lab steps:
 #. SSH (or WebSSH) to ``App Protect in CentOS``
 #. Configure NGINX to forward gRPC traffic.
 
-    .. code-block :: bash
+   .. code-block :: bash
 
         sudo vi /etc/nginx/nginx.conf
 
-    .. code-block :: nginx
+   .. code-block :: nginx
 
         user  nginx;
         worker_processes  auto;
@@ -63,26 +63,26 @@ High level lab steps:
         }
 #. Reload Nginx
 
-    .. code-block :: bash
+   .. code-block :: bash
 
         sudo nginx -s reload
 #. Download IDL file for Online-Boutique application
 
-    .. code-block :: bash
+   .. code-block :: bash
 
         wget https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/master/pb/demo.proto        
 #. Send a valid request and make sure that gRPC service is available and response comes back.
 
-    .. code-block :: bash
+   .. code-block :: bash
 
         grpcurl -insecure -proto demo.proto app-protect.online-boutique.arcadia-finance.io:443 hipstershop.AdService/GetAds
 #. Create a new NAP policy with gRPC profile
 
-    .. code-block:: bash
+   .. code-block:: bash
         
         sudo vi /etc/nginx/online-boutique-policy.json
 
-    .. code-block:: js
+   .. code-block:: js
 
         {
             "policy": {
@@ -152,11 +152,11 @@ High level lab steps:
         }
 #. Enable App Protect on the virtual server.
     
-    .. code-block :: bash
+   .. code-block :: bash
 
         sudo vi /etc/nginx/nginx.conf
 
-    .. code-block :: nginx
+   .. code-block :: nginx
 
         user  nginx;
         worker_processes  auto;
@@ -198,38 +198,38 @@ High level lab steps:
         }
 #. Reload Nginx
 
-    .. code-block :: bash
+   .. code-block :: bash
 
         sudo nginx -s reload
 #. Verify that legitimate request still passes
     
-    .. code-block :: bash
+   .. code-block :: bash
 
         grpcurl -insecure -proto demo.proto app-protect.online-boutique.arcadia-finance.io:443 hipstershop.AdService/GetAds
 #. Verify that invalid requests blocked
     
-    #. Request to non-existent service
+   #. Request to non-existent service
     
-        .. code-block :: bash
+      .. code-block :: bash
 
             curl -v -X POST -k --http2 -H "Content-Type: application/grpc" -H "TE: trailers" https://app-protect.online-boutique.arcadia-finance.io:443/hipstershop.DoesNotExist/GetAds
-    #. Request to non-existent method
+   #. Request to non-existent method
     
-        .. code-block :: bash
+      .. code-block :: bash
 
             curl -v -X POST -k --http2 -H "Content-Type: application/grpc" -H "TE: trailers" https://app-protect.online-boutique.arcadia-finance.io:443/hipstershop.AdService/DoesNotExist
-    #. Bad payload
+   #. Bad payload
     
-        .. code-block :: bash
+      .. code-block :: bash
 
             curl -v -X POST -k --http2 -H "Content-Type: application/grpc" -H "TE: trailers" https://app-protect.online-boutique.arcadia-finance.io:443/hipstershop.AdService/GetAds
-    #. Request with attack signature
+   #. Request with attack signature
     
-        .. code-block :: bash
+      .. code-block :: bash
 
             grpcurl -insecure -proto demo.proto -d '{"context_keys": "alert()"}' app-protect.online-boutique.arcadia-finance.io:443 hipstershop.AdService/GetAds
-    #. Request with too much data
+   #. Request with too much data
     
-        .. code-block :: bash
+      .. code-block :: bash
 
             grpcurl -insecure -proto demo.proto -d '{"context_keys": "datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadat"}' app-protect.online-boutique.arcadia-finance.io:443 hipstershop.AdService/GetAds

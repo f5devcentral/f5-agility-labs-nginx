@@ -22,23 +22,23 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 #. SSH or WebSSH to ``Docker App Protect + Docker repo`` machine
 #. Go to directory ``/home/ubuntu/awaf-policy``
 
-    .. code-block:: bash
+   .. code-block:: bash
 
       cd /home/ubuntu/awaf-policy
 
 #. You can see the ``sharepoint-awaf.xml`` policy file from A.WAF.
 #. Now, execute de Docker run command to convert this XML policy to JSON Declarative policy
 
-    .. code-block:: bash
+   .. code-block:: bash
 
       docker run --rm -v /home/ubuntu/awaf-policy/:/tmp/convert policy-converter:latest /opt/app_protect/bin/convert-policy -i /tmp/convert/sharepoint-awaf.xml -o /tmp/convert/sharepoint-nap.json | jq
 
-    .. note:: Look at the command. You can notice the ``input`` and the ``output``
+   .. note:: Look at the command. You can notice the ``input`` and the ``output``
 
 #. After few second, you can see the results. In YELLOW, the converter confirms what has been converted and what has NOT been converted (because not supported by NAP)
 
-    .. code-block:: js
-        :emphasize-lines: 2-29
+   .. code-block:: js
+       :emphasize-lines: 2-29
  
         {
           "warnings": [
@@ -77,7 +77,7 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 
 #. Look at the JSON policy generated
 
-    .. code-block:: bash
+   .. code-block:: bash
 
       more sharepoint-nap.json
 

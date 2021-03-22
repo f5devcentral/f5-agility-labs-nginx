@@ -31,18 +31,18 @@ Steps for the lab
     #. Go to ``cd /etc/nginx``
     #. ``ls`` and check the files created during the previous CI/CD pipeline job
 
-        .. code-block:: console
+       .. code-block:: console
 
             [centos@ip-10-1-1-7 nginx]$ ls
             app-protect-log-policy.json       conf.d          koi-utf  mime.types  NginxApiSecurityPolicy.json  nginx.conf.orig          NginxStrictPolicy.json  uwsgi_params
             app-protect-security-policy.json  fastcgi_params  koi-win  labs     nginx.conf                   NginxDefaultPolicy.json  scgi_params             win-utf   
 
-        .. note :: You can notice a NAP policy ``NginxApiSecurityPolicy.json`` exists. This is template for API Security. We will use it.
+       .. note :: You can notice a NAP policy ``NginxApiSecurityPolicy.json`` exists. This is template for API Security. We will use it.
 
     #. Edit ``sudo vi NginxApiSecurityPolicy.json`` and modify it with the ``link`` to the OAS file for Arcadia API. This file resides in SwaggerHub. Don't forget the {}
 
-        .. code-block:: js
-           :emphasize-lines: 11
+       .. code-block:: js
+          :emphasize-lines: 11
 
             {
             "policy" : {
@@ -65,8 +65,8 @@ Steps for the lab
     
     #. Now, edit ``sudo vi nginx.conf`` and modify it as below. We refer to the new WAF policy created previously
 
-        .. code-block:: nginx
-           :emphasize-lines: 31
+       .. code-block:: nginx
+          :emphasize-lines: 31
 
             user  nginx;
             worker_processes  auto;
@@ -121,28 +121,28 @@ Test your API
     #. Open ``Postman```
     #. Open Collection ``Arcadia API``
 
-        .. image:: ../pictures/lab1/collec.png
-            :align: center
-            :scale: 50%
+       .. image:: ../pictures/lab1/collec.png
+           :align: center
+           :scale: 50%
 
     #. Send your first API Call with ``Last Transactions``. You should see the last transactions. This is just a GET.
 
-        .. image:: ../pictures/lab1/last_trans.png
-            :align: center
-            :scale: 50%
+       .. image:: ../pictures/lab1/last_trans.png
+           :align: center
+           :scale: 50%
        Make sure the URL is ``http://app-protect-centos.arcadia-finance.io/trading/transactions.php``
        
     #. Now, send a POST, with ``POST Buy Stocks``. Check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
 
-        .. image:: ../pictures/lab1/buy.png
-            :align: center
-            :scale: 50%
+       .. image:: ../pictures/lab1/buy.png
+           :align: center
+           :scale: 50%
 
     #. Last test, send an attack. Send ``POST Buy Stocks XSS attack``. Your request will be blocked.
 
-        .. image:: ../pictures/lab1/buy_attack.png
-            :align: center
-            :scale: 50%
+       .. image:: ../pictures/lab1/buy_attack.png
+           :align: center
+           :scale: 50%
 
     #. Check in ELK the violation.
     #. You can make more tests with the other ``API calls``

@@ -8,9 +8,9 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
 
 **Uninstall the previous running NAP**
 
-    #. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` to the App Protect in CentOS
+    #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` to the App Protect in CentOS
 
-    #. Uninstall NAP in order to start from scratch
+    #.  Uninstall NAP in order to start from scratch
 
         .. code-block:: bash
 
@@ -20,7 +20,7 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
            :align: center
            :scale: 50%
 
-    #. Uninstall NGINX Plus packages
+    #.  Uninstall NGINX Plus packages
 
 
         .. code-block:: bash
@@ -31,7 +31,7 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
            :align: center
            :scale: 70%
 
-    #. Delete/rename the directories from the existing deployment
+    #.  Delete/rename the directories from the existing deployment
 
         .. code-block:: bash
 

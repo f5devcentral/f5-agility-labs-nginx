@@ -7,27 +7,27 @@ In this lab, we will manually install the NGINX Plus and NGINX App Protect labs 
 
 Steps:
 
-    #. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
+    #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
 
-    #. Add NGINX Plus repository by downloading the file ``nginx-plus-7.repo`` to ``/etc/yum.repos.d``:
+    #.  Add NGINX Plus repository by downloading the file ``nginx-plus-7.repo`` to ``/etc/yum.repos.d``:
 
         .. code-block:: bash
 
             sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
 
-    #. Install the most recent version of the NGINX Plus App Protect package (which includes NGINX Plus):
+    #.  Install the most recent version of the NGINX Plus App Protect package (which includes NGINX Plus):
 
         .. code-block:: bash
 
             sudo yum install -y app-protect
 
-    #. Check the NGINX binary version to ensure that you have NGINX Plus installed correctly:
+    #.  Check the NGINX binary version to ensure that you have NGINX Plus installed correctly:
 
         .. code-block:: bash
 
             sudo nginx -v
 
-    #. Configure the ``nginx.conf`` file. Rename the existing ``nginx.conf`` to ``nginx.conf.old`` and create a new one.
+    #.  Configure the ``nginx.conf`` file. Rename the existing ``nginx.conf`` to ``nginx.conf.old`` and create a new one.
 
         .. code-block:: bash
 
@@ -86,7 +86,7 @@ Steps:
                 }
             }
         
-    #. Create a log configuration file ``log_default.json`` (still in ``/etc/nginx/``)
+    #.  Create a log configuration file ``log_default.json`` (still in ``/etc/nginx/``)
 
         .. code-block:: bash
 
@@ -115,14 +115,14 @@ Steps:
 
             sudo setenforce 0
 
-    #. Start the NGINX service:
+    #.  Start the NGINX service:
 
         .. code-block:: bash
 
             sudo systemctl enable nginx.service
             sudo systemctl start nginx
 
-    #. Check everything is running 
+    #.  Check everything is running 
 
         .. code-block:: bash
 
@@ -163,13 +163,13 @@ Steps:
 
 Steps:
 
-    #. To add NGINX Plus App Protect signatures repository, download the file https://cs.nginx.com/static/files/app-protect-security-updates-7.repo to /etc/yum.repos.d:
+    #.  To add NGINX Plus App Protect signatures repository, download the file https://cs.nginx.com/static/files/app-protect-security-updates-7.repo to /etc/yum.repos.d:
 
         .. code-block:: bash
             
             sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
 
-    #. Update attack signatures:
+    #.  Update attack signatures:
 
         .. code-block:: bash
 
@@ -193,13 +193,13 @@ Steps:
 
             sudo yum downgrade app-protect-attack-signatures-2019.07.16
 
-    #. Reload NGINX process to apply the new signatures:
+    #.  Reload NGINX process to apply the new signatures:
 
         .. code-block:: bash
 
             sudo nginx -s reload
 
-    #. Check the **new** signatures package date:
+    #.  Check the **new** signatures package date:
 
         .. code-block:: bash
 
@@ -218,21 +218,21 @@ Steps:
 
 Steps :
 
-    #. As the repo has been already added, no need to add it. TC and Signatures use the same repo ``https://cs.nginx.com/static/files/app-protect-security-updates-7.repo``
+    #.  As the repo has been already added, no need to add it. TC and Signatures use the same repo ``https://cs.nginx.com/static/files/app-protect-security-updates-7.repo``
 
-    #. Install the package 
+    #.  Install the package 
 
         .. code-block :: bash
 
             sudo yum install app-protect-threat-campaigns
     
-    #. Reload NGINX process to apply the new signatures:
+    #.  Reload NGINX process to apply the new signatures:
 
         .. code-block:: bash
 
             sudo nginx -s reload
 
-    #. Check the **new** Threat Campaign package date:
+    #.  Check the **new** Threat Campaign package date:
 
         .. code-block:: bash
 

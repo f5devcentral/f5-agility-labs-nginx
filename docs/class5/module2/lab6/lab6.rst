@@ -63,17 +63,17 @@ In this lab, we will deploy deploy NAP with a CI/CD pipeline. NAP is tied to the
 
 Steps:
 
-    #. RDP to the Jumphost and open ``Edge Browser``
-    #. Open ``Gitlab``
+    #.  RDP to the Jumphost and open ``Edge Browser``
+    #.  Open ``Gitlab``
 
         #. If Gitlab is not available (502 error), restart the GitLab Docker container. SSH to the GitLab VM and run ``docker restart gitlab`` 
-    #. In GitLab, open ``NGINX App Protect / nap-docker-signature`` project
+    #.  In GitLab, open ``NGINX App Protect / nap-docker-signature`` project
 
         .. image:: ../pictures/lab6/gitlab_project_updated.png
            :align: center
            :scale: 50%
 
-    #. SSH from Jumpbox commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH) to ``CICD server (runner, Terraform, Ansible)``
+    #.  SSH from Jumpbox commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH) to ``CICD server (runner, Terraform, Ansible)``
 
         #. Run this command in order to determine the latest Signature Package date: ``yum info app-protect-attack-signatures``
         #. You may notice the version date. In my case, when I write this lab ``2020.06.30`` was the most recent version of the signatures package. We will use this date as a Docker tag, but this will be done automatically by the CI/CD pipeline.
@@ -95,13 +95,13 @@ Steps :
     #. At this moment, the ``Gitlab CI`` pipeline starts
     #. In Gitlab, in the ``signature-update`` repository, click ``CI / CD`` > ``Pipelines``
 
-        .. image:: ../pictures/lab6/github_cicd.png
-           :align: center   
+       .. image:: ../pictures/lab6/github_cicd.png
+          :align: center   
 
     #. Enter into the pipeline by clicking on the ``running or passed`` button. And wait for the pipeline to finish. You can click on every job/stage to check the steps
 
-        .. image:: ../pictures/lab6/github_pipeline.png
-           :align: center 
+       .. image:: ../pictures/lab6/github_pipeline.png
+          :align: center 
     
     #. Check if the new image created and pushed by the pipeline is available in the Docker Registry.
         #. In ``Edge Browser`` open bookmark ``Docker Registry UI`` which is inside the ``extras`` bookmark folder

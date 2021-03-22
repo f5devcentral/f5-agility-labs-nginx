@@ -10,14 +10,14 @@ Use a custom WAF policy and assign it per location
 
 Steps:
 
-    #. SSH to the Docker App Protect + Docker repo VM
-    #. In the ``/home/ubuntu`` directory, create a new folder ``policy-adv``
+    #.  SSH to the Docker App Protect + Docker repo VM
+    #.  In the ``/home/ubuntu`` directory, create a new folder ``policy-adv``
 
         .. code-block:: bash
 
             mkdir policy-adv
 
-    #. Create a new policy file named ``policy_base.json`` and paste the content below
+    #.  Create a new policy file named ``policy_base.json`` and paste the content below
         
         .. code-block:: bash
 
@@ -40,7 +40,7 @@ Steps:
                         ]
             }
 
-    #. Create another policy file named ``policy_mongo_linux_JSON.json`` and paste the content below
+    #.  Create another policy file named ``policy_mongo_linux_JSON.json`` and paste the content below
 
         .. code-block:: bash
 
@@ -158,7 +158,7 @@ Steps:
         .. note:: you can notice the difference between the ``base`` and the ``advanced`` policy.
 
 
-    #. Now, create a new ``nginx.conf`` in the ``policy-adv`` folder. Do not overwrite the existing ``/etc/nginx/nginx.conf`` file, we need it for the next labs.
+    #.  Now, create a new ``nginx.conf`` in the ``policy-adv`` folder. Do not overwrite the existing ``/etc/nginx/nginx.conf`` file, we need it for the next labs.
 
         .. code-block:: bash
 
@@ -229,14 +229,14 @@ Steps:
                 }
             }
 
-    #. Last step is to run a new container (and delete the previous one) referring to these 3 files.
+    #.  Last step is to run a new container (and delete the previous one) referring to these 3 files.
 
         .. code-block:: bash
 
             docker rm -f app-protect
             docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/policy-adv/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/policy-adv/policy_base.json:/etc/nginx/policy/policy_base.json -v /home/ubuntu/policy-adv/policy_mongo_linux_JSON.json:/etc/nginx/policy/policy_mongo_linux_JSON.json  app-protect:20200316
 
-    #. Check that the ``app-protect:20200316`` container is running 
+    #.  Check that the ``app-protect:20200316`` container is running 
 
         .. code-block:: bash
 
@@ -245,7 +245,7 @@ Steps:
         .. image:: ../pictures/lab5/docker-ps.png
            :align: center
 
-    #. RDP to the Jumhost as ``user:user`` and click on bookmark ``Arcadia NAP Docker`` Click Login and use matt:ilovef5
+    #.  RDP to the Jumhost as ``user:user`` and click on bookmark ``Arcadia NAP Docker`` Click Login and use matt:ilovef5
 
         .. image:: ../pictures/lab5/arcadia-adv.png
            :align: center
@@ -293,8 +293,8 @@ As a reminder, this is the base policy we created:
 
 Steps :
 
-#. RDP to ``Jumphost`` and connect to ``GitLab`` (root / F5twister$)
-#. Click on the project named ``NGINX App Protect / nap-reference-blocking-page``
+#.  RDP to ``Jumphost`` and connect to ``GitLab`` (root / F5twister$)
+#.  Click on the project named ``NGINX App Protect / nap-reference-blocking-page``
 
     .. image:: ../pictures/lab5/gitlab-1.png
        :align: center
@@ -302,7 +302,7 @@ Steps :
 
 
 
-#. Check the file ``blocking-custom-1.txt``
+#.  Check the file ``blocking-custom-1.txt``
 
     .. code-block :: js
 
@@ -315,23 +315,23 @@ Steps :
             }
         ]
 
-#. This is a custom Blocking Response config page. We will refer to it into the ``policy_base.json``
+#.  This is a custom Blocking Response config page. We will refer to it into the ``policy_base.json``
 
-#. SSH to ``Docker App Protect + Docker repo`` VM
+#.  SSH to ``Docker App Protect + Docker repo`` VM
 
-#. Delete the running docker
+#.  Delete the running docker
 
     .. code-block:: bash
 
             docker rm -f app-protect
 
-#. Modify the base policy created previously
+#.  Modify the base policy created previously
 
     .. code-block:: bash
 
        vi ./policy-adv/policy_base.json
 
-#. Modify the JSON as below
+#.  Modify the JSON as below
 
     .. code-block:: js
 
@@ -347,19 +347,19 @@ Steps :
 
     .. note :: You can notice the reference to the TXT file in Gitlab
 
-#. Run a new docker refering to this new JSON policy
+#.  Run a new docker refering to this new JSON policy
 
     .. code-block:: bash
 
         docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/policy-adv/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/policy-adv/policy_base.json:/etc/nginx/policy/policy_base.json -v /home/ubuntu/policy-adv/policy_mongo_linux_JSON.json:/etc/nginx/policy/policy_mongo_linux_JSON.json  app-protect:tc       
 
-#. In the ``Jumphost``, open ``Edge Browser`` and connect to ``Arcadia NAP Docker`` bookmark
+#.  In the ``Jumphost``, open ``Edge Browser`` and connect to ``Arcadia NAP Docker`` bookmark
 
-#. Enter this URL with a XSS attack ``http://app-protect.arcadia-finance.io/?a=<script>``
+#.  Enter this URL with a XSS attack ``http://app-protect.arcadia-finance.io/?a=<script>``
 
-#. You can see your new custom blocking page
+#.  You can see your new custom blocking page
 
-#. Extra lab if you have time - modify this page in Gitlab and run a new docker. The policy is modified accordingly without modifying the ``./policy-adv/policy_base.json`` file.
+#.  Extra lab if you have time - modify this page in Gitlab and run a new docker. The policy is modified accordingly without modifying the ``./policy-adv/policy_base.json`` file.
 
 |
 
@@ -371,14 +371,14 @@ The policy not 100% OWASP Top 10 as several attacks can't be blocked just with a
 
 Steps:
 
-    #. SSH to the Docker App Protect + Docker repo VM
-    #. In the ``/home/ubuntu`` directory, create a new folder ``policy_owasp_top10``
+    #.  SSH to the Docker App Protect + Docker repo VM
+    #.  In the ``/home/ubuntu`` directory, create a new folder ``policy_owasp_top10``
 
         .. code-block:: bash
 
             mkdir policy_owasp_top10
 
-    #. Create a new policy file named ``policy_owasp_top10.json`` and paste the content below
+    #.  Create a new policy file named ``policy_owasp_top10.json`` and paste the content below
         
         .. code-block:: bash
 
@@ -476,7 +476,7 @@ Steps:
 
         .. note:: Please have a quick look on this policy. You can notice several violations are enabled in order to cover the different OWASP categories
 
-    #. Now, create a new ``nginx.conf`` in the ``policy_owasp_top10`` folder. Do not overwrite the existing ``/etc/nginx/nginx.conf`` file, we need it for the next labs.
+    #.  Now, create a new ``nginx.conf`` in the ``policy_owasp_top10`` folder. Do not overwrite the existing ``/etc/nginx/nginx.conf`` file, we need it for the next labs.
 
         .. code-block:: bash
 
@@ -524,14 +524,14 @@ Steps:
  
         .. note:: You can notice we get back to a very simple policy. This is what DevOps and DevSecOps expect when they deploy NAP. Simple policy for OWASP Top10 attacks.
 
-    #. Last step is to run a new container (and delete the previous one) referring to these new files for OWASP Top 10 protection.
+    #.  Last step is to run a new container (and delete the previous one) referring to these new files for OWASP Top 10 protection.
 
         .. code-block:: bash
 
             docker rm -f app-protect
             docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/policy_owasp_top10/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/policy_owasp_top10/policy_owasp_top10.json:/etc/nginx/policy/policy_owasp_top10.json app-protect:20200316
 
-    #. Check that the ``app-protect:20200316`` container is running 
+    #.  Check that the ``app-protect:20200316`` container is running 
 
         .. code-block:: bash
 
@@ -540,7 +540,7 @@ Steps:
         .. image:: ../pictures/lab5/docker-ps-owasp.png
            :align: center
 
-    #. RDP to the Jumhost as ``user:user`` and click on bookmark ``Arcadia NAP Docker``
+    #.  RDP to the Jumhost as ``user:user`` and click on bookmark ``Arcadia NAP Docker``
 
         .. image:: ../pictures/lab5/arcadia-adv.png
            :align: center

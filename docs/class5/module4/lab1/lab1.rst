@@ -30,9 +30,9 @@ To do so, we will:
 
 **Steps**
 
-    #. SSH from Jumpbox commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to CICD Server
-    #. Run this command in order to delete the previous KIC ``kubectl delete -f /home/ubuntu/k8s_ingress/full_ingress_arcadia.yaml``
-    #. Run this command in order to pull and install NGINX KIC from NGINX Repo
+    #.  SSH from Jumpbox commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to CICD Server
+    #.  Run this command in order to delete the previous KIC ``kubectl delete -f /home/ubuntu/k8s_ingress/full_ingress_arcadia.yaml``
+    #.  Run this command in order to pull and install NGINX KIC from NGINX Repo
 
         .. code-block:: BASH
 
@@ -52,8 +52,8 @@ To do so, we will:
 
         .. note:: This command uses HELM in order to download all the required config files from Nginx repo (CRD ...). What's more, you can notice, it downloads the Ingress image (the NGINX Plus image with NAP) from a private repo in Gitlab.com
 
-    #. At this moment, the Ingress pod is up and running. But it is empty, there is no configuration (ingress, nap policy, logs).
-    #. Rune this commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
+    #.  At this moment, the Ingress pod is up and running. But it is empty, there is no configuration (ingress, nap policy, logs).
+    #.  Run this commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
 
         .. code-block:: BASH
 
@@ -62,10 +62,10 @@ To do so, we will:
 
         .. note:: This 2 commands will create the WAF policy and the log profile for Arcadia App, and will create the Ingress resource (the config to route the traffic to the right services/pods)
 
-    #. Open ``Kubernetes Dashboard`` bookmark in Edge Browser 
-    #. Scroll down on the left to ``Discovery and Load Balancing`` and click on ``Ingresses`` 
-    #. Check the Ingress ``arcadia-ingress`` (in the ``default`` namespace) by clicking on the 3 dots on the right and ``edit``
-    #. Scroll down and check the specs
+    #.  Open ``Kubernetes Dashboard`` bookmark in Edge Browser 
+    #.  Scroll down on the left to ``Discovery and Load Balancing`` and click on ``Ingresses`` 
+    #.  Check the Ingress ``arcadia-ingress`` (in the ``default`` namespace) by clicking on the 3 dots on the right and ``edit``
+    #.  Scroll down and check the specs
 
 .. image:: ../pictures/lab1/arcadia-ingress.png
    :align: center
