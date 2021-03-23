@@ -9,6 +9,5 @@ using the NGINX Agent (``nginx-agent``).
 
    2.0-install-agent
    2.1-conf-editor
-   2.2-analyze-conf
-   2.3-change-conf
-   2.4-show-metrics
+   2.2-change-conf
+   2.3-show-metrics
