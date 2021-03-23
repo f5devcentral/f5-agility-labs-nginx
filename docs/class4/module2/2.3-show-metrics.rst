@@ -91,9 +91,57 @@ navigating to ``Dashboards`` and ``Home``.
 Step 4: Interact with the grafana dashboard
 -------------------------------------------
 
+You may want to generate some 400 and 200 hits by using the UDF 
+dashboard and opening the websites the instance has.  This is optional 
+but if there was no activity, there won't be on the graph either.
 
+Let's use the drop down to select the Plus-Ubuntu instance.
 
+.. image:: ./GRAFANA-plus-ubuntu.png
 
+This dashboard is available during install and a sample file is placed 
+in the ``/usr/share/doc/nginx-manager/grafana/`` directory on ``nginx-manager``.
+
+.. code-block:: shell-session
+
+    [centos@nginx-manager ~]$ ls -la /usr/share/doc/nginx-manager/grafana/
+    total 28
+    drwxr-xr-x. 2 root root    32 Mar 22 13:02 .
+    drwxr-xr-x. 5 root root   149 Mar 22 13:02 ..
+    -rw-r--r--. 1 root root 25919 Mar 19 19:51 nginx-manager.json
+
+If you select the gear icon on top, you can see some of the properties we use.
+
+Select Annotations and click ``Annotations & Alerts`` to see where we set the data source.
+
+.. image:: ./GRAFANA-annotations.png
+
+Selecting ``Variables`` from the menu also shows the selection dropdown we use.
+
+.. image:: ./GRAFANA-variables.png
+
+Click the ``Go Back`` button to return to the dashboard.
+Try changing the time series and hostname.
+
+Step 5: Explore the PromQL behind the graph
+-------------------------------------------
+
+Select the ``2xx Responses`` graph and open the editor for it.
+
+.. image:: ./GRAFANA-edit-graph.png
+
+.. image:: ./GRAFNA-edit-2xx.png
+
+Look at the Queries used for the graph.
+Query A is for the Open Source NGINX instances and also adjusts the counts so they are formatted as per hour.
+Query B is the for NGINX Plus instances and pulls from the API without using the ``increase`` function.
+
+We are using the metrics without conversion so we do not affect performance.
+
+Click on the ``Metrics`` dropdown on query A to see other metrics.
+You can select additional metrics and create your own graphs as you desire.
+
+.. image:: ./GRAFANA-other-metrics.png
 
 You have finished this exercise. `Click here to return to the lab
 guide <..>`__
