@@ -49,12 +49,91 @@ Open the includes drop down by selecting the green downward arrow to show the in
 
 .. image:: ./UI-editor-includes.png
 
+The NGINX Instance Manager editor will list all the include files in your ``nginx.conf``. 
+This includes other conf files and mime.types.  It doesn't include certificates and key and ``js_includes`` for version ``0.9``.
+
+Select ``default.conf`` in the dropdown.  Notice how the editor changes to that file.
+
+.. image:: ./UI-editor-default.png
+
+Use the dropdown includes menu again and select ``nginx.conf``.
+
 
 Step 4: Make a mistake
 ----------------------
 
 A major feature of NGINX Instance Manager is the ability to find errors and promote best practices.
+Using the analyzer functionality from NGINX, the editor offers recommendations to help improve the 
+performance, reliability, and security of applications.
 
+To test analyzer, let's make a mistake by adding a server context outside the http context.
+
+Open the editor on the ``nginx.conf`` file in the dropdown. And click into the editor window.
+
+Add the following above the events context:
+
+.. code-block:: nginx
+    :emphasize-lines: 13,14
+
+    # For more information on configuration, see:
+    #   * Official English Documentation: http://nginx.org/en/docs/
+    #   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log;
+    pid /run/nginx.pid;
+
+    # Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+    #include /usr/share/nginx/modules/*.conf;
+
+    server {
+    }
+
+    events {
+        worker_connections 1024;
+    }
+
+    http {
+        log_format main '$remote_addr - $remote_user [$time_local] "$request" ' '$status $body_bytes_sent "$http_referer" ' '"$http_user_agent" "$http_x_forwarded_for"';
+
+        error_log /var/log/nginx/error3.log warn;
+
+        access_log /var/log/nginx/access.log main;
+
+        sendfile off;
+        tcp_nopush on;
+        tcp_nodelay on;
+        keepalive_timeout 65;
+        types_hash_max_size 2048;
+
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+
+        # Load modular configuration files from the /etc/nginx/conf.d directory.
+        # See http://nginx.org/en/docs/ngx_core_module.html#include
+        # for more information.
+        include /etc/nginx/conf.d/*.conf;
+    }
+
+The analyzer should find the error when you move off the line or click the ``Analyze`` button on the editor menu.
+
+.. image:: ./UI-editor-analyzer.png
+
+Step 5: Reset the configuration
+-------------------------------
+
+While on the page with the error.  Click the button ``Reset to current``.
+Notice the configuration file reverted back to the original one.
+
+.. image:: ./UI-editor-reset.png
+
+What happened here?  NGINX Instance Manager stores a copy of the configuration from 
+the ``nginx-agent`` at startup, but then uses a copy of the configuration in the database 
+to avoid adding actions on the NGINX instance that could impact performance (such as ``nginx -T`` 
+commands).  When we click ``Reset to current``, we tell ``nginx-agent`` to refresh the conf files 
+in the database.  Due to the gRPC communication between the server and agent, we can do this from 
+the server on-demand.
 
 You have finished this exercise. `Click here to return to the lab
 guide <..>`__
