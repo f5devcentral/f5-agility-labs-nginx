@@ -1,0 +1,146 @@
+.. _1.1-install-nginx-manager:
+
+Exercise 1.1: Installing NGINX Instance Manager
+###############################################
+
+Objective
+=========
+
+Demonstrate how to install `NGINX Instance Manager <https://docs.nginx.com/nginx-instance-manager/getting-started/install/>`__ 
+and find NGINX instances in an environment using the Scanning function of NGINX Instance Manager.
+
+Guide
+=====
+
+Make sure you are in the home directory
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ cd ~
+
+Installation of `NGINX Instance Manager <https://docs.nginx.com/nginx-instance-manager/getting-started/install/>`__ 
+follows a process that is very similar to installing 
+`NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
+
+Step 1: Reset the environment
+-----------------------------
+
+The lab has a running and functioning NGINX Instance Manager already. We need to clean 
+house and present the environment as it would be without any components running.  Lucky 
+for us we have a script we can run (you can look into the script later if you want).
+
+The script just handles uninstall and install functions related to this environment. 
+
+As the centos user on ``nginx-manager`` run the following to clean out the environments.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ ./reset clean
+
+Step 2: Verify the repository is setup
+--------------------------------------
+
+In the Lab environment, we have already placed the license files in the correct locations.
+We are utilizing an internal repository server that mimics the public repo server.  You can 
+also download the rpm or deb file and install directly if desired or in offline environments.
+
+Let's look at the repository information for our Centos 7 server instance.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo cat /etc/yum.repos.d/nginx-instance-manager.repo 
+   [nginx-manager]
+   name=NGINX Instance Manager repo
+   baseurl=https://apt.f5demolab.com/centos/
+   sslclientcert=/etc/ssl/nginx-manager/nginx-manager.crt
+   sslclientkey=/etc/ssl/nginx-manager/nginx-manager.key
+   gpgcheck=0
+   enabled=1
+
+.. note::
+
+   In production these files are downloaded from pkgs.nginx.com and would point to 
+   ``/etc/ssl/nginx/nginx-repo.crt`` and ``/etc/ssl/nginx/nginx-repo.key``
+
+Check that yum can pull from the repository we setup.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo yum repolist
+
+Step 3: Install nginx-manager
+-----------------------------
+
+We are going to use the yum repository manager for this.  We can also use yum 
+for updates, removal and package management functions.  With the repository setup 
+correctly, package management is simplified.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo yum install nginx-manager
+   Loaded plugins: fastestmirror
+   Loading mirror speeds from cached hostfile
+   * base: d36uatko69830t.cloudfront.net
+   * extras: d36uatko69830t.cloudfront.net
+   * updates: d36uatko69830t.cloudfront.net
+   Resolving Dependencies
+   --> Running transaction check
+   ---> Package nginx-manager.x86_64 0:0.9.1-3047962 will be installed
+   --> Finished Dependency Resolution
+
+   Dependencies Resolved
+
+   ========================================================================================================================================
+   Package                           Arch                       Version                           Repository                         Size
+   ========================================================================================================================================
+   Installing:
+   nginx-manager                     x86_64                     0.9.1-3047962                     nginx-manager                      29 M
+
+   Transaction Summary
+   ========================================================================================================================================
+   Install  1 Package
+
+   Total download size: 29 M
+   Installed size: 30 M
+   Is this ok [y/d/N]: y
+   Downloading packages:
+   nginx-manager-0.9.1-3047962.x86_64.rpm                                                                           |  29 MB  00:00:00     
+   Running transaction check
+   Running transaction test
+   Transaction test succeeded
+   Running transaction
+   Installing : nginx-manager-0.9.1-3047962.x86_64                                                                                   1/1 
+   Platform systemd (default) detected. Installing service.
+   To start this service, use: systemctl start nginx-manager
+   ----------------------------------------------------------------------
+
+   Thank you for using NGINX!
+
+      Product: nginx-manager
+      Version: 0.9.1
+         Build: 3047962
+
+   Please find the documentation for NGINX nginx-manager here:
+   https://docs.nginx.com/nginx-instance-manager/install/
+
+   NGINX Instance Manager is proprietary software. EULA and License information:
+   /usr/share/doc/nginx-manager/
+
+   For support information, please see:
+   https://www.nginx.com/support/
+
+   Configuration settings can be adjusted here:
+   /etc/nginx-manager/nginx-manager.conf
+
+   ----------------------------------------------------------------------
+   Verifying  : nginx-manager-0.9.1-3047962.x86_64                                                                                   1/1 
+
+   Installed:
+   nginx-manager.x86_64 0:0.9.1-3047962                                                                                                  
+
+   Complete!
+
+That's it, nginx-manager is now installed!
+
+You have finished this exercise. `Click here to return to the lab
+guide <..>`__

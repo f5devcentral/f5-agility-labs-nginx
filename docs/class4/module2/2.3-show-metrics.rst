@@ -1,0 +1,19 @@
+.. _2.3-show-metrics:
+
+Exercise 2.3: Show metrics for NGINX instances
+##############################################
+
+Objective
+=========
+
+
+Guide
+=====
+
+Step 1:
+-------
+
+
+
+You have finished this exercise. `Click here to return to the lab
+guide <..>`__
