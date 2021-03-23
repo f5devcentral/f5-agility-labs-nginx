@@ -1,5 +1,5 @@
-Class 1 - Deploy modern API for a modern app
-############################################
+Module 1 - Deploy modern API for a modern app
+#############################################
 
 In this class, we will deploy a modern API (API Sentence) in a modern environment (K3S with Rancher).
 
