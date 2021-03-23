@@ -1,6 +1,6 @@
-.. _2.4-test-server:
+.. _2.4-show-metrics:
 
-Exercise 2.4: Testing the nginx-manager server
+Exercise 2.4: Show metrics for NGINX instances
 ##############################################
 
 Objective

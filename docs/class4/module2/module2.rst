@@ -1,20 +1,14 @@
-Module 2: Installing NGINX Agent
-================================
+Module 2: Managing NGINX Instances
+==================================
 
-In this lab exercise, we will install and configure the NGINX Instance
-Manager (nginx-manager) and secure it using NGINX Plus.
-
-nginx-manager flowchart
------------------------
-
-**The diagram below depicts NGINX Plus proxying traffic to NGINX Instance Manager.**
-
-.. image:: ./traffic.png
+In this lab exercise, we will manage existing NGINX instances
+using the NGINX Agent (``nginx-agent``).
 
 .. toctree::
    :maxdepth: 1
 
-   2.0-explore
-   2.1-install-agent
-   2.2-configure-agent
-   2.3-verify-agent
+   2.0-install-agent
+   2.1-conf-editor
+   2.2-analyze-conf
+   2.3-change-conf
+   2.4-show-metrics

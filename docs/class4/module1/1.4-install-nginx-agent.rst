@@ -8,13 +8,6 @@ Objective
 
 Demonstrate how to install `NGINX Agent <https://docs.nginx.com/nginx-instance-manager/getting-started/agent/>`__ .
 
-Guide
-=====
-
-Installation of `NGINX Agent <https://docs.nginx.com/nginx-instance-manager/getting-started/agent/>`__ 
-follows a process that is very similar to installing 
-`NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
-
 Step 1: Verify the repository is setup
 --------------------------------------
 
@@ -254,7 +247,14 @@ Save the file.
       bin_path: /usr/sbin/nginx
       plus_api_url: "http://127.0.0.1:8080/api"
 
+.. note::
 
+   We are using the 10443 port because we are proxying traffic through an NGINX proxy.
+   Don't get confused but the nginx-agent is actually pointing to the NGINX proxy it
+   is managing. We will use nginx-manager to show the configurations we have for 
+   proxying NGINX Instance Manager traffic.  For now, ignore the complexity with that 
+   and realize we are using nginx-agent on the nginx-manager server to manage NGINX.
+      
 Step 4: Enable and start the service
 ------------------------------------
 
@@ -296,6 +296,11 @@ Check that the service is now enable and running.
    Mar 22 19:43:31 nginx-manager.f5demolab.com nginx-agent[4459]: time="2021-03-22T19:43:31Z" level=info msg="adding access log tai....log"
    Mar 22 19:43:31 nginx-manager.f5demolab.com nginx-agent[4459]: time="2021-03-22T19:43:31Z" level=info msg="collecting from: /var....log"
    Hint: Some lines were ellipsized, use -l to show in full.
+
+Open the UI for NGINX Instance Manager and navigate to the Instances Screen.  
+You should see nginx-manager listed now.
+
+.. image:: ./UI-inventory-nginx-manager.png
 
 
 You have finished this exercise. `Click here to return to the lab
