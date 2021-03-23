@@ -1,5 +1,5 @@
-Class 6 - Reporting
-###################
+Module 6 - Reporting
+####################
 
 In this class, we will go deeper in the APIm reporting.
 

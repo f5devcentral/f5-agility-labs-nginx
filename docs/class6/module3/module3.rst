@@ -1,5 +1,5 @@
-Class 3 - Publish the API
-#########################
+Module 3 - Publish the API
+##########################
 
 In this class, we will publish the API.
 
