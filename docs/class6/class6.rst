@@ -1,5 +1,5 @@
-Welcome to NGINX API Management and Security lab guide
-######################################################
+Class6 - NGINX API Management and Security
+##########################################
 
 .. image:: apim_archi.png
    :align: center
