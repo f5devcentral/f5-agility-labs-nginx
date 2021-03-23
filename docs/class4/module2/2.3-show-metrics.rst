@@ -6,12 +6,34 @@ Exercise 2.3: Show metrics for NGINX instances
 Objective
 =========
 
+Gather metrics for NGINX Instances and utilize
+an external grafana system to customize them.
+
+NGINX Instance Manager collects metrics from NGINX 
+instances and stores entries in the nginx-manager database.
+These metrics can be accessed externally by a grafana 
+dashboard or other systems since they are exposed as a 
+prometheus endpoint.  Further customization can be done 
+using PromQL to form queries.
 
 Guide
 =====
 
-Step 1:
--------
+Step 1: View metrics in the UI
+------------------------------
+
+For this step, open the user interface for ``nginx-manager`` in 
+the UDF dashboard.  You can select the ``ACCESS`` menu under 
+``NGINX Manager Server`` and the ``INSTANCE MANAGER UI`` selection.
+This will open the user interface in a new browser tab.
+
+Navigate to the Inventory section and select the metrics icon 
+on the far right for the ``Plus-Ubuntu`` instance.  The user 
+interface should open a page with graphs similar to the one below.
+
+.. image:: ./UI-nginx7-metrics.png
+
+
 
 
 
