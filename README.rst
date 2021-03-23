@@ -3,7 +3,7 @@ NGINX for F5 Agility
 
 Currently included classes:
 
-#. Introduction to NGINX Plus
-#. NGINX Plus CICD
-#. NGINX Dataplane Scripting
-#. NGINX Instance Manager Introduction
+1. Introduction to NGINX Plus
+2. NGINX Plus CICD
+3. NGINX Dataplane Scripting
+4. NGINX Instance Manager Introduction

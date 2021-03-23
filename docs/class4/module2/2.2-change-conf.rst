@@ -1,0 +1,18 @@
+.. _2.2-change-conf:
+
+Exercise 2.2: Pushing changes to NGINX Instances
+################################################
+
+Objective
+=========
+
+
+Guide
+=====
+
+Step 1:
+-------
+
+
+You have finished this exercise. `Click here to return to the lab
+guide <..>`__
