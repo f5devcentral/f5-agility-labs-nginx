@@ -7,3 +7,4 @@ Currently included classes:
 #. NGINX Plus CICD
 #. NGINX Dataplane Scripting
 #. NGINX Instance Manager Introduction
+#. NGINX App Protect
