@@ -34,6 +34,7 @@ Create the API Definition
 
    .. image:: ../pictures/lab1/api-definition.png
       :align: center
+      :class: with-border
 
 |
 
@@ -50,6 +51,7 @@ Create a Published API for v1.0
        
        .. image:: ../pictures/lab1/deployment.png
           :align: center
+          :class: with-shadow
 
 #. In Routing, we will create one ``component`` per ``micro-service``
     #. Click ``Add New`` to create a new component for ``GENERATOR``
