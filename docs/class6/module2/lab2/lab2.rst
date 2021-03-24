@@ -54,4 +54,4 @@ Steps:
 You API Gateway is created and we can use it now in every ADC or APIm configuration settings.
 
 .. image:: ../pictures/lab2/apigw.png
-:align: center
+   :align: center
