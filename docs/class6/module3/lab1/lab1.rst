@@ -3,7 +3,7 @@ Step 4 - Publish API v1.0
 
 Before publishing your first API, it is importnant to understand what the DevOps (or API dev) provided to us.
 
-They provided us an OpenAPI spec file (OASv3), and this specification file is available on ``swaggerhub``. You can consult it here : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0.0
+They provided us an OpenAPI spec file (OASv3), and this specification file is available on ``swaggerhub``. You can consult the ``version v1.0`` it here : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0.0
 
 .. image:: ../pictures/lab1/OASv1.0.png
    :align: center
@@ -12,11 +12,13 @@ They provided us an OpenAPI spec file (OASv3), and this specification file is av
 
 .. note:: the sentence will look like ``calm mouse of the mountain`` for instance.
 
-**Steps to publish the Version v1.0 ot the API:**
-
 |
 
-**Create the API Definition**
+Steps to publish the Version v1.0 of the API
+********************************************
+
+Create the API Definition
+=========================
 
 #. In the controller UI, in the menu ``APIs``, create an ``API Definition``
     #. Name: api-sentence
@@ -35,7 +37,8 @@ They provided us an OpenAPI spec file (OASv3), and this specification file is av
 
 |
 
-**Create a Published API for v1.0**
+Create a Published API for v1.0
+===============================
 
 #. Now, let's publish our API version v1.0. Click on ``Add Published API``
     #. API Definition: ``Select the previous created definition``
@@ -52,9 +55,9 @@ They provided us an OpenAPI spec file (OASv3), and this specification file is av
     #. Click ``Add New`` to create a new component for ``GENERATOR``
         #. Name: ``cp-generator``
         #. Click ``Next``
-        #. ``Add a new Workload Group``
+        #. Click ``Add a new Workload Group``
             #. Name: ``wl-generator``
-            #. ``Add BackEnd Workload URI``
+            #. Click ``Add BackEnd Workload URI``
                 #. URI: ``http://10.1.20.8:31200``
                 #. Click ``Done``
             #. Click ``Done``
@@ -107,7 +110,8 @@ They provided us an OpenAPI spec file (OASv3), and this specification file is av
 
 |
 
-**Test your API v1.0**
+Test your API v1.0
+==================
 
 Steps:
 
@@ -124,7 +128,7 @@ Steps:
       :align: center
 
 #. Open ``Postman`` and the collection ``API Sentence Generator``
-#. Send a request with the ``GET Locations`` call. The API GW will route the request to the ``Locations`` micro-services, and will return all the entries (all the words)
+#. Send a request with the ``GET Locations`` call. The FQDN is different (from the FrontEnd webapp) and reaching the API GW which will route the request to the ``Locations`` micro-services, and will return all the entries (all the words)
 
    .. code-block:: js
 
