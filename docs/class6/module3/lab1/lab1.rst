@@ -23,8 +23,8 @@ Create the API Definition
 #. In the controller UI, in the menu ``APIs``, create an ``API Definition``
     #. Name: api-sentence
     #. Select ``OpenAPI Specification`` and ``Copy and paste specification text``
-    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0.0
-    #. Verify the version set by the controller is ``v1.0.0``. This information is extracted from the Spec file
+    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
+    #. Verify the version set by the controller is ``1.0``. This information is extracted from the Spec file
     #. Click ``Next``, and you can notice the controller imported all ``PATH`` and ``METHODS`` from the spec file.
     #. click ``Submit``
 
