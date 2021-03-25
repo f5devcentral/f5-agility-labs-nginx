@@ -108,7 +108,7 @@ Test your API v2.0
 Steps:
 
 #. RDP to Win10 machine as ``user`` and password ``user``
-#. Open ``Postman`` and the collection ``API Sentence Generator``
+#. Open ``Postman`` and the collection ``API Sentence Generator v1 and v2``
 #. Send a request with the ``GET Colors`` call. The API GW will route the request to the ``Colors`` micro-services, and will return all the entries (all the words)
 
    .. code-block:: js
