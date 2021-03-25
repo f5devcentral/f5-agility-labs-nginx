@@ -129,7 +129,7 @@ Steps:
    .. image:: ../pictures/lab1/api-workflow.png
       :align: center
 
-#. Open ``Postman`` and the collection ``API Sentence Generator``
+#. Open ``Postman`` and the collection ``API Sentence Generator v1 and v2``
 #. Send a request with the ``GET Locations`` call. The FQDN is different (from the FrontEnd webapp) and reaching the API GW which will route the request to the ``Locations`` micro-services, and will return all the entries (all the words)
 
    .. code-block:: js

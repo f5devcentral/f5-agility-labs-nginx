@@ -87,4 +87,143 @@ Publish the version 3.0 of the API
       :align: center
 
 #. Start by setting the ``Base Path``. This is the path to differentiate the different Published API. Set with ``/v3`` and check the box ``Strip Base Path`` so tha the backend app does not receive this Path.
-#. Name : api-sentence
+#. Name : api-sentence-v3
+#. Click ``Next``
+#. Set the Environment, the App and the Gateway like the version v1.0
+
+   .. image:: ../pictures/lab3/deployment.png
+      :align: center
+
+#. Click ``Next``
+#. Configure the Routing like the version v1.0 except the ``Location`` Component which route the traffic to another micro-service in the k8s (listening on port 31303 instead of 31103 for v1.0)
+
+   .. list-table:: list of all micro-services and their component configuration
+      :header-rows: 1
+
+      * - Name
+        - Workload Group Name
+        - Backend Workload URI
+
+      * - cp-generator-v3
+        - wl-generator-v3
+        - http://10.1.20.8:31200
+
+      * - cp-locations-v3
+        - wl-locations-v3
+        - http://10.1.20.8:31303
+
+      * - cp-animals-v3
+        - wl-animals-v3
+        - http://10.1.20.8:31101
+
+      * - cp-adjectives-v3
+        - wl-adjectives-v3
+        - http://10.1.20.8:31100
+
+      * - cp-colors-v3
+        - wl-colors-v3
+        - http://10.1.20.8:31102
+
+#. Now, Drag and Drop each PATH to the right component.
+
+   .. image:: ../pictures/lab3/routingv3.png
+      :align: center
+
+#. Click ``Next`` and ``Submit`` 
+
+#. Check your ``Published API`` is green. If not, edit and re-submit.
+
+   .. image:: ../pictures/lab3/green.png
+      :align: center
+
+|
+
+Test the API v3.0 and v2.0
+==========================
+
+Steps:
+
+#. RDP to Win10 machine as ``user`` and password ``user``
+#. Open ``Postman`` and the collection ``API Sentence Generator v3``
+#. Send a request with the ``GET Colors v3`` call, but check the PATH. You can notice the path starts with ``/v3``. It means, the request is routed by the version 3 of the API Definition.
+
+   .. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "name": "red"
+            },
+            {
+                "id": 2,
+                "name": "blue"
+            },
+            {
+                "id": 3,
+                "name": "green"
+            },
+            {
+                "name": "black",
+                "id": 4
+            },
+            {
+                "name": "yellow",
+                "id": 5
+            }
+        ]
+    
+#. Send a request with the ``GET Locations v3``. This is our new version of the ``Location`` micro-service running in k8s
+
+   .. code-block:: js
+
+        [
+            {
+                "id": 2,
+                "name": "park",
+                "coordinates": [
+                    -142.28261413,
+                    53.28261413
+                ]
+            },
+            {
+                "id": 3,
+                "name": "mountain",
+                "coordinates": [
+                    -110.28261413,
+                    31.28261413
+                ]
+            },
+            {
+                "name": "valley",
+                "coordinates": [
+                    -123.10664756,
+                    49.28261413
+                ],
+                "id": 4
+            }
+        ]
+
+   .. note:: As you can notice, we now have the new JSON object ``coordinates`` coming form the new version of the micro-service
+
+#. Send a request with the ``GET Locations`` in the ``API Sentence Generator v1 and v2`` collecction in order to test if the version v2.0 is still up and running.
+
+   .. code-block:: js
+
+        [
+            {
+                "id": 1,
+                "name": "valley"
+            },
+            {
+                "id": 2,
+                "name": "park"
+            },
+            {
+                "id": 3,
+                "name": "mountain"
+            }
+        ]
+ 
+.. warning:: CONGRATS, you published the API v3.0 routing to a dedicated k8s service. And the version v2.0 is still available for the "current" clients. Only the Early Access clients reaching the path /v3 get access to this new API.
+
+
