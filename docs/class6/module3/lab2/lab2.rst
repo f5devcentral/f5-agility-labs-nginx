@@ -64,7 +64,7 @@ Update the API Definition with the Version v2.0
    .. image:: ../pictures/lab2/oasv2.png
       :align: center
 
-   .. note:: As you can notice, the version of the API Definition, didn't not change in the UI (still v0.1). This is a known bug, and will be fix in the next release to reflect the update (v2.0)
+   .. note:: As you can notice, the version of the API Definition, didn't not change in the UI (still v1.0). This is a known bug, and will be fix in the next release to reflect the update (v2.0)
 
 #. Click ``Next`` and ``Submit``
 
