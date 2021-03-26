@@ -26,8 +26,8 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    .. image:: ../images/image4.png
 
-4. Lets take a look a a ``Dockerfile``. For example, look at
-   the \ **alpine3.10**  folder, and in here, you will find a the
+4. Lets take a look at a ``Dockerfile``. For example, look at
+   the \ **alpine3.10**  folder, and in here, you will find the
    ``Dockerfile`` for a NGINX Plus build for `Alpine
    Linux <https://alpinelinux.org>`__ version 3.10. At the top of each
    ``Dockerfile``, there is a line starting with the command ``FROM``.
@@ -60,8 +60,8 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    .. image:: ../images/image20.png
 
-7. In order to build a **Alpine 3.11** image, we need to edit the copied
-   ``Dockerfile`` in out ``alpine3.11`` folder, and update the
+7. In order to build an **Alpine 3.11** image, we need to edit the copied
+   ``Dockerfile`` in our ``alpine3.11`` folder, and update the
    ``FROM alpine:3.10`` command to ``FROM alpine:3.11``
 
    .. image:: ../images/image21.png
@@ -77,7 +77,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
      create a new **Stage** in our GitLab CI/CD Pipeline Configuration file,
      `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
 
-9. In order to build a **Alpine 3.11** image, we also need to add a new
+9. In order to build an **Alpine 3.11** image, we also need to add a new
    stage to our ``.gitlab-ci.yml`` file for ``alpine3.11``. Open this
    project’s GitLab CI/CD Pipeline Configuration file,
    ``.gitlab-ci.yml`` and find the stage labeled ``alpine3.10`` (use
@@ -172,7 +172,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    #. Look at the **CI_JOB_NAME**, ``alpine3.9``, and here like other jobs, we have set
       a varible ``$NAME`` with ``nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID``: This uses the Job name (``alpine3.9``)
       and the unique Pipeline ID of this run as the docker image name. Having
-      a unique image name that references a build job allows us to roll back or deploy a previously
+      a unique image name that references a build job allows us to roll back or deploy to a previously
       know good build
 
 16. A Docker Container Registry is integrated into GitLab, and every
