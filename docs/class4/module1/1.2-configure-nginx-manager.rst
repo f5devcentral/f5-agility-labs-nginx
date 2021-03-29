@@ -182,6 +182,7 @@ restart periods by editing that file if desired.
 
 .. code-block:: shell-session
 
+   [centos@nginx-manager ~]$ pwd
    [centos@nginx-manager ~]$ sudo systemctl cat nginx-manager.service
       # /etc/systemd/system/nginx-manager.service
       [Unit]
@@ -212,6 +213,7 @@ restart periods by editing that file if desired.
       Restart=on-failure
       RestartSec=5
       TimeoutStopSec=15
+   [centos@nginx-manager ~]$
 
 Step 4: Enable and start the service
 ------------------------------------
