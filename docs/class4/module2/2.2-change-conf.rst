@@ -229,7 +229,7 @@ Let's select the ``nginx.conf`` file from the includes dropdown menu and add thi
 Click Save and notice how the editor is also running the analyzer before it let's you Publish.
 Click Publish.
 
-.. image:: ./UI-nginx-publish-test.png
+.. image:: ./UI-nginx5-publish-test.png
 
 You can also see it's in the dropdown for inclues if you want.
 
@@ -256,7 +256,7 @@ Now select the delete icon which resembles a trash can.
 
 Confirm the selection.
 
-.. image:: ./UI-nginx-delete-test.png
+.. image:: ./UI-nginx5-delete-test.png
 
 Now select ``nginx.conf`` in the include dropdown menu for ``nginx5`` and remove the line we just added for including test.conf.
 ``nginx.conf`` should look like the ``conf`` below.

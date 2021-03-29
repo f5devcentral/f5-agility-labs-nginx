@@ -73,7 +73,7 @@ NGINX Instance Manager functions as a pure replacement for Prometheus in
 regards to metrics.  To see the details of the configuration click on 
 the existing data source and look though the settings.
 
-.. image:: ./GRAFANA-datasource-settings.png
+.. image:: ./GRAFANA-datasource-details.png
 
 Close the datasource and navigate back to the Dashbaoard by 
 navigating to ``Dashboards`` and ``Home``.
@@ -122,7 +122,7 @@ Select the ``2xx Responses`` graph and open the editor for it.
 
 .. image:: ./GRAFANA-edit-graph.png
 
-.. image:: ./GRAFNA-edit-2xx.png
+.. image:: ./GRAFANA-edit-2xx.png
 
 Look at the Queries used for the graph.
 Query A is for the Open Source NGINX instances and also adjusts the counts so they are formatted as per hour.

@@ -302,5 +302,3 @@ You should see nginx-manager listed now.
 
 .. image:: ./UI-inventory-nginx-manager.png
 
-
-

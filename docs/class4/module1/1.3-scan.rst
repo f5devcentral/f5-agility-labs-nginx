@@ -113,7 +113,3 @@ the icon and a window will give you instructions on installing the agent for the
 Currently we do not automate this in the UI but you can use other tools to automate the 
 installation.  We will automate the install of the agent using a 
 `bash script <https://docs.nginx.com/nginx-instance-manager/tutorials/manage-instance/#automate-agent-bash>`__ .
-
-
-
-.. |f5pool| image:: pool.png

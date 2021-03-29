@@ -14,8 +14,7 @@ Guide
 
 NGINX Instance Manager leverages the NGINX proxy for any 
 authentication schemes.  Authentication can be setup using the 
-`NGINX Instance Manager documentation on authentication 
-https://docs.nginx.com/nginx-instance-manager/getting-started/auth/`__.
+`NGINX Instance Manager documentation on authentication <https://docs.nginx.com/nginx-instance-manager/getting-started/auth/>`__.
 
 Step 1
 ------
@@ -99,7 +98,7 @@ Step 3: Add users
 -----------------
 
 We will use the same proceedure listed in the `NGINX public documentation  
-https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/#creating-a-password-file`__
+<https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/#creating-a-password-file>`__
 
 Using the SSH session, create an ``.htpasswd`` file for use with the proxy.
 This file should be located in ``/etc/nginx/.htpasswd``.
