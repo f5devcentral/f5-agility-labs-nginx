@@ -1,0 +1,92 @@
+.. _2.0-install-agent:
+
+Exercise 2.0: Installing NGINX Agent
+####################################
+
+Objective
+=========
+
+Install the ``nginx-agent`` on multiple instances and configure 
+the agent to work with existing NGINX instances and ``nginx-manager``
+
+Guide
+=====
+
+Installation of `NGINX Agent <https://docs.nginx.com/nginx-instance-manager/getting-started/agent/>`__ 
+follows a process that is very similar to installing 
+`NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
+
+Step 1
+------
+
+Navigate to the ``nginx-manager`` instance as ``centos`` and use the home directory.
+
+Use the SSH menu option to beceome the centos user.  If you use the web-shell it 
+defaults to the root user.  To follow best practice, please use the centos user.
+
+.. image:: ../module1/UDF-select-ssh.png
+
+If prompted, select yes for trusting the ssh connection in your terminal.
+
+.. image:: ../module1/UDF-ssh.png
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ pwd
+   /home/centos
+
+Step 2: Investigate the automation script
+-----------------------------------------
+
+Look at the ``reset.sh`` script in the local directory.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ less reset.sh
+
+Look at the ``install-agent()`` section in particular.
+There are a number of activities going on.  We are looping through each 
+nginx instance by number and performing several actions
+
+- copying a custom ``nginx-agent.conf`` file to the home directory of the instance
+- creating ``/etc/ssl/nginx-manager`` if it doesn't exist
+- copying the CA certificate and the specific nginx certificate and key for mTLS
+- installing the ``nginx-agent`` package
+- moving the custom ``nginx-agent.conf`` to the correct location and name
+- moving the certificate and private key and saving them as ``agent.crt`` and ``agent.key`` in the ``/etc/ssl/nginx-manager/`` directory.
+- enabling the ``nginx-agent`` service and starting the ``nginx-agent`` service
+
+Step 3: Automate the installation of nginx-agent
+------------------------------------------------
+
+It's time to run the script.  From the centos home directory run the following and notice 
+how the script loops through each instance performing the functions from Step 2.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ ./reset.sh install-agent
+
+Wait for the script to end and the ``nginx-agent`` should be installed and running on four instances.
+
+Step 4: Navigate to NGINX Manager user interface in UDF
+-------------------------------------------------------
+
+Navigate to the Inventory page and look for the four instances we added in Exercise 2.0.
+
+.. image:: ./UI-inventory-list.png
+
+Notice how we have columns that show Hostname and Type. 
+Our instances are named according to the Operating System and NGINX type they run.
+
+Let's focus on ``OSS-Centos`` which is running NGINX Open Source and Centos 7.
+
+Step 5: Look at details of an NGINX instance 
+--------------------------------------------
+
+Click the Hostname of the instance ``OSS-Centos`` and a panel on the right side of the screen will appear with more information on the instance.
+
+.. image:: ./UI-details.png
+
+Click outside the window to return to the inventory list.
+
+

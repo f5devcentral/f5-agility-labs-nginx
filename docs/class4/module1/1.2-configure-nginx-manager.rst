@@ -1,0 +1,246 @@
+.. _1.2-configure-nginx-manager:
+
+Exercise 1.2: Configure nginx-manager
+#####################################
+
+Objective
+=========
+
+Configure NGINX Instance Manager to run securely.  To secure ``nginx-manager`` 
+you will configure NGINX as a proxy server.  You can utilize all your NGINX 
+knowledge since ``nginx-manager`` is simply a web application.
+
+.. note::
+   
+   Don't worry if you are a little rusty with NGINX.  We will walk you through
+   all the steps here and also show you where some sample conf files are for 
+   when you use ``nginx-manager`` in your own environment.
+
+
+Guide
+=====
+
+Step 1: Edit the nginx-manager.conf file
+----------------------------------------
+
+We need to open and edit the nginx-manager.conf file.  Use ``vim`` or your favorite 
+editor open the file ``nginx-manager.conf`` in the ``/etc/nginx-manager`` directory.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo vim /etc/nginx-manager/nginx-manager.conf
+
+.. note::
+
+   ``vim`` and ``nano`` are available on the control node, as well as
+   Visual Studio and Atom via RDP
+
+Step 2: Inspect the configuration file
+--------------------------------------
+
+Enter or edit the following options for ``nginx-manager.conf``:
+
+.. code-block:: yaml
+
+   #
+   # /etc/nginx-manager/nginx-manager.conf
+   #
+
+   # Configuration file for NGINX Compass Server
+
+   # bind address for all service ports (default "localhost")
+   bind-address: 127.0.0.1
+   # gRPC service port for agent communication (default "10000")
+   grpc-port: 10000
+   # gRPC-gateway service port for API and UI (default "11000")
+   gateway-port: 11000
+
+   # SSL CN or servername for certs
+   server-name: nginx-manager.f5demolab.com
+   # path to x.509 certificate file (optional)
+   cert: /etc/ssl/nginx-manager/nginx-manager.crt
+   # path to x.509 certificate key file (optional)
+   key: /etc/ssl/nginx-manager/nginx-manager.key
+
+   # set log level (panic, fatal, error, info, debug, trace; default: info) (default "info")
+   log:
+      level: info
+      path: /var/log/nginx-manager/
+   # Metrics default storage path (default "/tmp/metrics") (directory must be already present)
+   metrics:
+      storage-path: /var/nginx-manager/
+   # Path to license file
+   license: /etc/nginx-manager/nginx-manager.lic
+
+-  ``bind-address:`` is ``127.0.0.1`` by default but could be changed
+   to ``0.0.0.0`` to listen on all ports. This is insecure and provides no
+   protection though.
+-  ``grpc-port:`` is for the agent and server communication.
+-  ``gateway-port:`` is used by humans, API calls and the metrics. It is
+   the port you access the UI and API.
+
+-  ``server-name:`` is the server name presented to clients and is needed 
+   for proper TLS operations.  It should match the CN on the certificate 
+   used with ``nginx-manager``. For our lab we want to change this to 
+   ``nginx-manager.f5demolab.com``.
+-  The ``cert:`` and ``key:`` options are for the PEM encoded certifiate and 
+   private key for TLS encryption.
+
+-  ``level:`` under ``log:`` allows specifying the logging level for ``nginx-manager``.
+-  ``path:`` under ``log:`` is the location of the log files for ``nginx-manager``.
+
+-  ``storage-path:`` under ``metrics:`` is the location of the database and 
+   metrics directory.
+-  ``license:`` is the location of the ``nginx-manager`` license file.
+
+- ``audit-log:`` is not show by default.  Adding it with a path to the audit log file
+   will enable audit logging.  Every API call will be logged and ``nginx-manager``
+   uses headers to log the username and role.  This feature will be better explained once
+   a grouping mechanism is added.  For now, don't add the option unless you need audit 
+   logging.
+
+Confirm the nginx-manager.conf file is like the example above.  We have a public 
+certificate and key for use in the ``/etc/nginx-manager/`` directory.
+
+Step 3: Inspect the service
+---------------------------
+
+We are using systemd for the service management with ``nginx-manager``.  
+We actually use pleaserun to automatically detect the service manager at
+installation which helps reduce the packages we use (we only have 2 right
+now, amd64 for rpm and for deb).
+
+Let's take a look at the files included in the package we installed before
+we enable the service.  Note the various files included for the different 
+service managers.  We can also see includes that are placed in the 
+``/usr/share`` directory for examples, support and license information.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ rpm -qil nginx-manager
+      Name        : nginx-manager
+      Version     : 0.9.1
+      Release     : 3046527
+      Architecture: x86_64
+      Install Date: Fri 19 Mar 2021 08:18:55 PM UTC
+      Group       : base
+      Size        : 31145636
+      License     : Commercial
+      Signature   : RSA/SHA1, Fri 19 Mar 2021 02:34:42 PM UTC, Key ID 0ff4304347c76e8f
+      Source RPM  : nginx-manager-0.9.1-3046527.src.rpm
+      Build Date  : Fri 19 Mar 2021 12:02:38 PM UTC
+      Build Host  : runner-vy4fn5ao-project-15102-concurrent-0
+      Relocations : / 
+      Packager    : F5 Networks
+      Vendor      : NGINX, Inc.
+      URL         : "https://my.f5.com/manage/s/downloads"
+      Summary     : "NGINX Instance Manager - Management and Visualization quick, fast and easy."
+      Description :
+      "NGINX Instance Manager - Management and Visualization quick, fast and easy."
+      /etc/nginx-manager/nginx-manager.conf
+      /usr/sbin/nginx-manager
+      /usr/sbin/ngxscan
+      /usr/share/doc/nginx-manager/COPYRIGHT
+      /usr/share/doc/nginx-manager/EULA-SUBSCRIPTION
+      /usr/share/doc/nginx-manager/EULA-TRIAL
+      /usr/share/doc/nginx-manager/grafana/nginx-manager.json
+      /usr/share/doc/nginx-manager/lightning.swagger.json
+      /usr/share/doc/nginx-manager/nginx-plus/README.md
+      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-basicauth.conf
+      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-grpc.conf
+      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-jwt.conf
+      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-noauth.conf
+      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-oauth.conf
+      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-upstreams.conf
+      /usr/share/doc/nginx-manager/nginx-plus/status-api.conf
+      /usr/share/doc/nginx-manager/web-app-demo/README.md
+      /usr/share/doc/nginx-manager/web-app-demo/demo-index.html
+      /usr/share/doc/nginx-manager/web-app-demo/webapp-example.conf
+      /usr/share/man/man8/nginx-manager.8
+      /usr/share/nginx-manager/cve.xml
+      /usr/share/nginx-manager/support.sh
+      /usr/share/pleaserun/nginx-manager/generate-cleanup.sh
+      /usr/share/pleaserun/nginx-manager/install-path.sh
+      /usr/share/pleaserun/nginx-manager/install.sh
+      /usr/share/pleaserun/nginx-manager/launchd/10.9/files/Library/LaunchDaemons/nginx-manager.plist
+      /usr/share/pleaserun/nginx-manager/launchd/10.9/install_actions.sh
+      /usr/share/pleaserun/nginx-manager/systemd/default/files/etc/default/nginx-manager
+      /usr/share/pleaserun/nginx-manager/systemd/default/files/etc/systemd/system/nginx-manager.service
+      /usr/share/pleaserun/nginx-manager/systemd/default/install_actions.sh
+      /usr/share/pleaserun/nginx-manager/sysv/lsb-3.1/files/etc/default/nginx-manager
+      /usr/share/pleaserun/nginx-manager/sysv/lsb-3.1/files/etc/init.d/nginx-manager
+      /usr/share/pleaserun/nginx-manager/upstart/0.6.5/files/etc/default/nginx-manager
+      /usr/share/pleaserun/nginx-manager/upstart/0.6.5/files/etc/init/nginx-manager.conf
+      /usr/share/pleaserun/nginx-manager/upstart/1.5/files/etc/default/nginx-manager
+      /usr/share/pleaserun/nginx-manager/upstart/1.5/files/etc/init/nginx-manager.conf
+
+
+Centos 7 and most modern systems use systemd.  Systemd allows additional 
+settings to be made.  We can look at the systemd settings by using the 
+following command below.  Note the override settings.  You can adjust the 
+restart periods by editing that file if desired.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo systemctl cat nginx-manager.service
+      # /etc/systemd/system/nginx-manager.service
+      [Unit]
+      Description=nginx-manager
+
+      [Service]
+      Type=simple
+      User=root
+      Group=root
+      # Load env vars from /etc/default/ and /etc/sysconfig/ if they exist.
+      # Prefixing the path with '-' makes it try to load, but if the file doesn't
+      # exist, it continues onward.
+      EnvironmentFile=-/etc/default/nginx-manager
+      EnvironmentFile=-/etc/sysconfig/nginx-manager
+      ExecStart=/usr/sbin/nginx-manager "/usr/sbin/ngxscan"
+      Restart=always
+      WorkingDirectory=/var/nginx-manager/
+
+      # When stopping, how long to wait before giving up and sending SIGKILL?
+      # Keep in mind that SIGKILL on a process can cause data loss.
+      TimeoutStopSec=15
+
+      [Install]
+      WantedBy=multi-user.target
+
+      # /etc/systemd/system/nginx-manager.service.d/override.conf
+      [Service]
+      Restart=on-failure
+      RestartSec=5
+      TimeoutStopSec=15
+
+Step 4: Enable and start the service
+------------------------------------
+
+To enable the service to run at startup we will enable the systemd service.
+We can also start the service with one command at the same time.  The command 
+below is the equivalent of running ``systemctl enable nginx-manager`` followed 
+by ``systemctl start nginx-manager``.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo systemctl enable nginx-manager --now
+
+
+Step 5: Verify NGINX Instance Manager is running
+------------------------------------------------
+
+Check that the service is now enable and running.
+
+.. code-block:: shell-session
+
+   [centos@nginx-manager ~]$ sudo systemctl is-enabled nginx-manager
+   enabled
+   [centos@nginx-manager ~]$ sudo systemctl status nginx-manager
+   ● nginx-manager.service - nginx-manager
+      Loaded: loaded (/etc/systemd/system/nginx-manager.service; enabled; vendor preset: disabled)
+      Drop-In: /etc/systemd/system/nginx-manager.service.d
+               └─override.conf
+      Active: active (running) since Sat 2021-03-20 15:45:11 UTC; 1 day 20h ago
+      Main PID: 570 (nginx-manager)
+      CGroup: /system.slice/nginx-manager.service
+               └─570 /usr/sbin/nginx-manager /usr/sbin/ngxscan
