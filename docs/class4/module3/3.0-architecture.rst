@@ -1,20 +1,25 @@
-.. _2.0-install-agent:
+.. _3.0-architecture:
 
-Exercise 2.0: Installing NGINX Agent
-####################################
+Exercise 3.0: NGINX Instance Manager Architecture
+#################################################
 
 Objective
 =========
 
-Install the ``nginx-agent`` on multiple instances and configure 
-the agent to work with existing NGINX instances and ``nginx-manager``
+Understand how NGINX Instance Manager handles network traffic 
+and communications. Learn different options for securing traffic 
+externally and for agent and server communication.
 
 Guide
 =====
 
-Installation of `NGINX Agent <https://docs.nginx.com/nginx-instance-manager/getting-started/agent/>`__ 
-follows a process that is very similar to installing 
-`NGINX Plus <https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-plus/>`__.
+NGINX Instance Manager uses an agent and server communiction path for 
+managing NGINX Instances.  The ``nginx-agent`` communicates with the 
+``nginx-manager`` over gRPC.
+
+.. image:: ./arch-high-level.png
+
+
 
 Step 1
 ------

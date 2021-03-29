@@ -9,6 +9,4 @@ Instance Manager (``nginx-manager``).
 
    3.0-architecture
    3.1-encryption
-   3.2-mTLS
-   3.3-basic-auth
-   3.4-auditing
+   3.2-authentication
