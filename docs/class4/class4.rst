@@ -20,4 +20,5 @@ Expected time to complete: **1 hour, 30 minutes**
    :caption: Content:
    :glob:
 
+   intro
    module*/module*
