@@ -186,6 +186,7 @@ restart periods by editing that file if desired.
       # /etc/systemd/system/nginx-manager.service
       [Unit]
       Description=nginx-manager
+
       [Service]
       Type=simple
       User=root
@@ -198,11 +199,14 @@ restart periods by editing that file if desired.
       ExecStart=/usr/sbin/nginx-manager "/usr/sbin/ngxscan"
       Restart=always
       WorkingDirectory=/var/nginx-manager/
+
       # When stopping, how long to wait before giving up and sending SIGKILL?
       # Keep in mind that SIGKILL on a process can cause data loss.
       TimeoutStopSec=15
+
       [Install]
       WantedBy=multi-user.target
+
       # /etc/systemd/system/nginx-manager.service.d/override.conf
       [Service]
       Restart=on-failure
