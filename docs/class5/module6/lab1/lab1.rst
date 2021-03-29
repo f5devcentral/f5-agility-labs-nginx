@@ -147,7 +147,7 @@ An action can be configured for each bot class, or may also be configured per ea
 #. Now, go to ``ELK - Kibana`` from ``Edge Browser``, Click on Dashboards then ``Overview`` dashboard.
 #. You can notice Good and Bad request in the widgets, but let's focus on the logs at the bottom of the dashboard
 
-   .. image:: ../pictures/lab1/dashboard.png
+   .. image:: ../pictures/lab1/Dashboard.png
        :align: center
 
    .. note :: You can notice we were able to ``locate`` the source of the request because jmeter inject an XFF header. 
