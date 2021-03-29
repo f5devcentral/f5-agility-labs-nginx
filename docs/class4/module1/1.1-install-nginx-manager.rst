@@ -142,5 +142,4 @@ correctly, package management is simplified.
 
 That's it, nginx-manager is now installed!
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

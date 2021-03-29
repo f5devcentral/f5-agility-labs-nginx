@@ -228,5 +228,4 @@ Currently the audit log will record ALL API calls no matter what.  To use with
 other authentication forms, just pass the headers as username and role to the 
 upstream.
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

@@ -245,7 +245,6 @@ Check that the service is now enable and running.
       CGroup: /system.slice/nginx-manager.service
                └─570 /usr/sbin/nginx-manager /usr/sbin/ngxscan
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+
 
 .. |f5web| image:: nodes.png

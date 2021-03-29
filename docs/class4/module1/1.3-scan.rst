@@ -114,7 +114,6 @@ Currently we do not automate this in the UI but you can use other tools to autom
 installation.  We will automate the install of the agent using a 
 `bash script <https://docs.nginx.com/nginx-instance-manager/tutorials/manage-instance/#automate-agent-bash>`__ .
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+
 
 .. |f5pool| image:: pool.png

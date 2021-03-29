@@ -245,5 +245,4 @@ enable mTLS and verify locally.
    -rw-r-----. 1 centos centos 3.2K Mar  3 13:10 nginx-manager.key
    -rw-r--r--. 1 root   root    668 Mar  3 13:07 server.cnf
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

@@ -114,5 +114,4 @@ examples in the Exercises in Module 3.
 | 8080  | Plus API                   | -               | No  | No   |
 +-------+----------------------------+-----------------+-----+------+
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

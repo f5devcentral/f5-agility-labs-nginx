@@ -500,5 +500,4 @@ Let's look at the ssh session and see what the nginx instance is running now.
 We have published our change successfully.  This step demonstarted how we 
 can detect changes made outside of NGINX Instance Manager.
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

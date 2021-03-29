@@ -135,5 +135,4 @@ commands).  When we click ``Reset to current``, we tell ``nginx-agent`` to refre
 in the database.  Due to the gRPC communication between the server and agent, we can do this from 
 the server on-demand.
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

@@ -135,5 +135,4 @@ You can select additional metrics and create your own graphs as you desire.
 
 .. image:: ./GRAFANA-other-metrics.png
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

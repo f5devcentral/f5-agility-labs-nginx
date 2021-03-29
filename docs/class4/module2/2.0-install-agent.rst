@@ -89,5 +89,4 @@ Click the Hostname of the instance ``OSS-Centos`` and a panel on the right side 
 
 Click outside the window to return to the inventory list.
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+
