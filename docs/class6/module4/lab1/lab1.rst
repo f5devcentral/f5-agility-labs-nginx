@@ -180,7 +180,7 @@ Test your protected API with Authentication
 Add Conditional Access for Colors API endpoint
 ==============================================
 
-Now, we add Conditional Access for employee users only.
+Now, we add Conditional Access for employee users only. So that any JWT token without the claim ``groups`` and the value ``employee`` can't reach the Colors API Endpoint.
 
 #. In the Controller UI, edit your Published API ``api-sentence-v3``, like previously
 #. Edit the ``authentication`` of the component ``cp-colors-v3``
@@ -196,4 +196,30 @@ Now, we add Conditional Access for employee users only.
 
 #. Click ``Next`` ``Submit`` and ``submit`` again to push the config.
 
+|
 
+Test your protected API with Conditional Access
+===============================================
+
+#. RDP to Win10 as user / user
+#. In Postman, for the ``GET Colors v3`` request, ask for a new token with user ``matt`` and password ``matt``. Don't be surprised if you don't see the popup windows asking for the credentials. It means Postman still has a session up with Keycloak for ``matt``
+#. Use the token and send the request. So far so good, it passes.
+#. Now, try with another user not part of ``employee`` group.
+    #. Click on ``Clear cookies``
+
+       .. image:: ../pictures/lab1/clear_cookies.png
+          :align: center
+
+    #. Request a new token but with ``fouad`` as a user and ``fouad`` as password
+    #. Use the token and send the request. You receive a ``403 Forbidden``.
+       
+       .. note :: As you can notice, the response code ``403`` is different from the response code ``401`` received when the JWT token is wrong or not present.
+
+    #. You copy the generated token from postman, and paste it in http://jwt.io in order to see the content (bookmark in Edge Browser).
+
+       .. note :: As you can notice, Fouad is not part of the ``employee`` group, so the access is denied
+
+       .. image:: ../pictures/lab1/jwtio.png
+          :align: center
+
+.. warning :: Congrats, you enable first Authentication in front of Colors API endpoint, and you added a conditional access based on a JWT claim.
