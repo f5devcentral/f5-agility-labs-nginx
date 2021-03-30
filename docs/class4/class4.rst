@@ -1,4 +1,4 @@
-Class 4: Introduction to NGINX Instance Manager
+Class 4 - Introduction to NGINX Instance Manager
 ===============================================
 
 .. note:: **Last Updated: 03/16/2021**
