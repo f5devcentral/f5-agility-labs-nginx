@@ -1,5 +1,5 @@
-Class 7 - NGINX Kubernetes Ingress Controller and Rancher
-=================================================================
+Class7 - NGINX Kubernetes Ingress Controller and Rancher
+========================================================
 
 .. note:: **Last Updated: 03/24/2021**
 
