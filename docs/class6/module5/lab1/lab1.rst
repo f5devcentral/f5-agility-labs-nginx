@@ -31,7 +31,7 @@ Install the controller agent on the second Nginx Plus instance
 
 .. warning:: If the instance is stuck in ``Configuring`` state, restart the ``nginx`` and nginx ``controller agent`` services as below
    
-   .. code-block:: bach
+   .. code-block:: bash
       
       sudo service nginx restart
       sudo service controller-agent restart

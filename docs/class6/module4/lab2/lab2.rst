@@ -13,10 +13,15 @@ Steps to enable Rate Limiting protection on COLORS API Endpoint
 #. Enable Rate Limiting
     #. Key : ``Authenticated Client``
     #. Rate : ``5 requests per minutes``
-       .. note:: These 5 req/sec means the client will be allow to send a request every 12 secondes (60 / 5 = 12)
+
+       .. note::
+          These 5 req/sec means the client will be allow to send a request every 12 secondes (60 / 5 = 12)
+
           The client can not send 5 req the first 5 sec, and wait 55 seconds. This is not how the Rate Limiting works.
+
     #. Excess Request Processing : ``Reject Immediately``
     #. Click ``Next``
+
 #. Click ``Submit``
 
 .. image:: ../pictures/lab2/RL.png
