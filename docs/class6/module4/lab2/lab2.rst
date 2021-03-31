@@ -36,3 +36,19 @@ Simulate too many request from the client
       :align: center
 
 #. Re-Do the test, but wait 12 seconds between each request.
+
+|
+
+Improve the user experience with a delay
+****************************************
+
+.. note:: As you noticed, the second request sent is rejected evilly. There is an option to delay the response when the client sends to many request. You can find more doc here https://www.nginx.com/blog/rate-limiting-nginx/
+
+#. Edit your Rate Limiting policy, and change from ``Reject Immediately`` to ``Delay``. Add ``Ignore Initial N requests`` to 5.
+#. Click ``Next`` and ``Submit``, and ``Submit`` again to push the config.
+
+   .. image:: ../pictures/lab2/delay.png
+      :align: center
+
+#. Send 2 requests in Postman, and you can notice the second request is delayed but not dropped.
+
