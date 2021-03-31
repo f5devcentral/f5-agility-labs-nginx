@@ -68,5 +68,4 @@ NGINX Instances:
 | DNS              | apt.f5demolab.com           | Centos 7     | Plus        | 10.1.1.10 |
 +------------------+-----------------------------+--------------+-------------+-----------+
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

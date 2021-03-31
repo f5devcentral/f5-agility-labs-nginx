@@ -130,6 +130,7 @@ Test your API
        .. image:: ../pictures/lab1/last_trans.png
            :align: center
            :scale: 50%
+           
        Make sure the URL is ``http://app-protect-centos.arcadia-finance.io/trading/transactions.php``
        
     #. Now, send a POST, with ``POST Buy Stocks``. Check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.

@@ -302,6 +302,3 @@ You should see nginx-manager listed now.
 
 .. image:: ./UI-inventory-nginx-manager.png
 
-
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
