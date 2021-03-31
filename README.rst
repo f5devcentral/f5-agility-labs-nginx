@@ -8,3 +8,4 @@ Currently included classes:
 #. NGINX Dataplane Scripting
 #. NGINX Instance Manager Introduction
 #. NGINX App Protect
+#. NGINX Controller API Management
