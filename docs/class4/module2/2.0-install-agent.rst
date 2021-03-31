@@ -24,11 +24,11 @@ Navigate to the ``nginx-manager`` instance as ``centos`` and use the home direct
 Use the SSH menu option to beceome the centos user.  If you use the web-shell it 
 defaults to the root user.  To follow best practice, please use the centos user.
 
-.. image:: ./UDF-select-ssh.png
+.. image:: ../module1/UDF-select-ssh.png
 
 If prompted, select yes for trusting the ssh connection in your terminal.
 
-.. image:: ./UDF-ssh.png
+.. image:: ../module1/UDF-ssh.png
 
 .. code-block:: shell-session
 
@@ -89,5 +89,4 @@ Click the Hostname of the instance ``OSS-Centos`` and a panel on the right side 
 
 Click outside the window to return to the inventory list.
 
-You have finished this exercise. `Click here to return to the lab
-guide <..>`__
+

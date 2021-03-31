@@ -1,4 +1,4 @@
-Class 4: Introduction to NGINX Instance Manager
+Class4 - Introduction to NGINX Instance Manager
 ===============================================
 
 .. note:: **Last Updated: 03/16/2021**
@@ -20,4 +20,5 @@ Expected time to complete: **1 hour, 30 minutes**
    :caption: Content:
    :glob:
 
+   intro
    module*/module*
