@@ -29,7 +29,7 @@ Let's deploy LOCATIONS v3.0 micro-service like a DevOps.
    .. code-block:: bash
 
       sudo su
-      kubectl apply -f attributs_locations_v3.yaml -n api
+      kubectl apply -f /home/ubuntu/k3s/attributs_locations_v3.yaml -n api
 
    .. note:: As you can notice, this micro-service is deployed in the same NameSpace as other WORDS micro-service (api), and the previous version of the ``LOCATIONS`` is stil there, because currently used by the current clients.
 
@@ -87,7 +87,7 @@ Publish the version 3.0 of the API
       :align: center
 
 #. Start by setting the ``Base Path``. This is the path to differentiate the different Published API. Set with ``/v3`` and check the box ``Strip Base Path`` so tha the backend app does not receive this Path.
-#. Name : api-sentence-v3
+#. Name : ``api-sentence-v3``
 #. Click ``Next``
 #. Set the Environment, the App and the Gateway like the version v1.0
 

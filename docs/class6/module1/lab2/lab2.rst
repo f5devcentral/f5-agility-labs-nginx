@@ -50,7 +50,7 @@ I prepared a YAML manifest file ``attributs_without_colors.yaml``, and please se
 **Steps :**
 
 #. RDP to the Win10 Jumphost with ``user:user`` as credentials
-#. SSH from jumphost commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to Docker (k3s + Rancher)
+#. SSH to ``Docker (k3s + Rancher)`` VM
     #. Run ``sudo su``
     #. Run this command ``kubectl apply -f /home/ubuntu/k3s/attributs_without_colors.yaml -n api``
     #. Run this command ``kubectl apply -f /home/ubuntu/k3s/generator-direct.yaml -n api``

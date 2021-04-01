@@ -5,9 +5,9 @@ UDF Lab Maintainers:
 
    Matthieu Dierick <m.dierick@f5.com>
 
-   Jesse Goodier <j.goodier@f5.com>
+UDF Blueprint : 
 
-   Mikhail Fedorov <M.Fedorov@F5.com>
+   📖 API management and security - NGINX controller
 
 .. image:: apim_archi.png
    :align: center

@@ -36,7 +36,7 @@ Configure Keycloak as JWT OIDC token issuer
    .. image:: ../pictures/lab1/clients.png
       :align: center
 
-   .. note:: in order to avoid any mistake during this lab, we created in advance the ``client`` and the ``secret key``
+   .. note:: in order to avoid any mistake during this lab, we created in advance the ``client`` ``my-postman`` and the ``secret key``  ``9cabf36d-8eda-4cf8-a362-ccc982408ba7``
 
 #. In the ``My-postman`` client, click on ``Credentials``. You can notice the secret key we will use to ask for a JWT token in postman.
 #. Click on ``Users`` in the left menu, and click on ``View all users``
@@ -48,14 +48,16 @@ Configure Keycloak as JWT OIDC token issuer
 
 #. Click on ``matt`` user ID to edit it.
 #. In the ``Attributes`` tab, add a new key ``groups`` and value ``employee``
-#. Click ``Add`` and ``Save`` 
+#. Click ``Add`` and ``Save``
+
+   .. warning:: You have to click on ``Add`` to add the attribut, and on ``Save`` to save the user settings.
 
    .. image:: ../pictures/lab1/matt_attributes.png
       :align: center
 
 #. Now, we create our own scope ``groups`` so that a claim is added into every JWT token with the groups attribute value(s)
     #. Click on ``Client Scopes`` and ``Create``
-    #. Name it ``groups`` and click on ``Mappers`` tab
+    #. Name it ``groups``, click ``Save`` and click on ``Mappers`` tab
     #. Click ``Create`` in order to create a new mapper. Configure as below, the mapper type is ``User Attribute``
 
        .. image:: ../pictures/lab1/mapper.png
@@ -78,7 +80,7 @@ Configure Keycloak as JWT OIDC token issuer
 
        .. note:: As you can notice, there is no ``groups`` claim in this JWT token
 
-    #. Click on the ``Setup`` sub-meunu , and add the ``groups`` scope into the ``Assigned Default Client Scopes``
+    #. Click on the ``Setup`` sub-menu , and add the ``groups`` scope into the ``Assigned Default Client Scopes``
     #. Click on ``Evaluate`` sub-menu, and check the claim exists with the group attribute value ``employee``
 
 .. warning :: Congrats, we are good now to configure Nginx Controller in order to check the groups claim values to grant or not access to API endpoints.
