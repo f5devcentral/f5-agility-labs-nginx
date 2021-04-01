@@ -20,13 +20,15 @@ Steps to publish the Version v1.0 of the API
 Create the API Definition
 =========================
 
-#. In the controller UI, in the menu ``APIs``, create an ``API Definition``
-    #. Name: api-sentence
-    #. Select ``OpenAPI Specification`` and ``Copy and paste specification text``
-    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
-    #. Verify the version set by the controller is ``1.0``. This information is extracted from the Spec file
-    #. Click ``Next``, and you can notice the controller imported all ``PATH`` and ``METHODS`` from the spec file.
-    #. click ``Submit``
+#. In the controller UI, in the menu ``APIs``, create an ``API Version``
+   #. Click on ``Create API Version``
+   #. First, you need to create an ``API Definition``, to do so, click on ``CREATE NEW`` under the API Definition selection (which is empty)
+      #. Name: ``api-sentence``, and click ``Submit``
+   #. Select ``OpenAPI Specification`` and ``Copy and paste specification text``
+   #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
+   #. Verify the version set by the controller is ``1.0``. This information is extracted from the Spec file
+   #. Click ``Next``, and you can notice the controller imported all ``PATH`` and ``METHODS`` from the spec file.
+   #. click ``Submit``
 
    .. note:: At this moment of the configuration, the Controller knows the API paths and methods, but does not know where to proxy the traffic to.
 
@@ -42,8 +44,7 @@ Create a Published API for v1.0
 ===============================
 
 #. Now, let's publish our API version v1.0. Click on ``Add Published API``
-    #. API Definition: ``Select the previous created definition``
-    #. Click ``Next``
+    #. Name: ``api-sentence-v1``, click ``Next``
     #. Environment: ``env_prod``
     #. App: ``api-sentence-app`` (already created by me)
     #. Gateways: ``apigw``

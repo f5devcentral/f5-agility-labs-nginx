@@ -68,7 +68,7 @@ Update the API Definition with the Version v2.0
 
 #. Click ``Next`` and ``Submit``
 
-   .. note:: You can notice one more ``resource`` -> Resources : 10
+   .. note:: You can notice 2 more ``resource`` -> Resources : 10
 
       .. image:: ../pictures/lab2/10resources.png
          :align: center
