@@ -49,7 +49,7 @@ Configure Keycloak as JWT OIDC token issuer
 #. Click on ``matt`` user ID to edit it.
 #. In the ``Attributes`` tab, add a new key ``groups`` and value ``employee``
 #. Click ``Add`` and ``Save``
-#
+
    .. warning:: You have to click on ``Add`` to add the attribut, and on ``Save`` to save the user settings.
 
    .. image:: ../pictures/lab1/matt_attributes.png

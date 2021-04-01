@@ -21,9 +21,12 @@ Create the API Definition
 =========================
 
 #. In the controller UI, in the menu ``APIs``, create an ``API Version``
+
    #. Click on ``Create API Version``
    #. First, you need to create an ``API Definition``, to do so, click on ``CREATE NEW`` under the API Definition selection (which is empty)
+
       #. Name: ``api-sentence``, and click ``Submit``
+
    #. Select ``OpenAPI Specification`` and ``Copy and paste specification text``
    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
    #. Verify the version set by the controller is ``1.0``. This information is extracted from the Spec file
