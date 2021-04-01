@@ -11,7 +11,7 @@ Steps:
     #. Name: ``apigw``
     #. Environment: ``env_prod``
     #. Placement: ``select here your nginx1 instance``
-    #. Hostname: http://api.name-generator.com
+    #. Hostname: http://api.name-generator.com, and click ``Done``
     #. Click ``Submit``
 
     .. note:: The hostname value is the listener. This gateway will be dedicated for the API FQDN, so we set this FQDN at the Gateway level.
