@@ -9,3 +9,4 @@ Currently included classes:
 #. NGINX Instance Manager Introduction
 #. NGINX App Protect
 #. NGINX API Management and Security
+#. NGINX Kubernetes Ingress Controller and Rancher
