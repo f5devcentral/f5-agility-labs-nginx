@@ -10,6 +10,10 @@ Navigate to the ``nginx-manager`` instance as ``centos`` and use the home direct
 
 Use the SSH menu option to beceome the centos user.  If you use the web-shell it 
 defaults to the root user.  To follow best practice, please use the centos user.
+Either method will work for the lab.
+
+Option 1 - Direct SSH
+=====================
 
 .. image:: ./UDF-select-ssh.png
 
@@ -21,6 +25,22 @@ If prompted, select yes for trusting the ssh connection in your terminal.
 
    [centos@nginx-manager ~]$ pwd
    /home/centos
+
+Option 2 - Web Shell
+====================
+
+.. image:: ./UDF-select-webshell.png
+
+Once the web shell opens up enter the following commands to switch to the 
+``centos`` user and also to set the Terminal for editing.
+
+.. code-block:: shell-session
+
+   [root@nginx-manager /]# su centos                                                                                      
+   [centos@nginx-manager /]$ export TERM=xterm
+   [centos@nginx-manager /]$ 
+
+.. image:: ./UDF-webshell.png
 
 Step 2
 ------

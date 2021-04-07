@@ -33,7 +33,8 @@ editor open the file ``nginx-manager.conf`` in the ``/etc/nginx-manager`` direct
 .. note::
 
    ``vim`` and ``nano`` are available on the control node, as well as
-   Visual Studio and Atom via RDP
+   Visual Studio and Atom via RDP.  If you get an error about a 
+   ``terminal cm required`` ensure you input ``export TERM=xterm`` first.
 
 Step 2: Inspect the configuration file
 --------------------------------------

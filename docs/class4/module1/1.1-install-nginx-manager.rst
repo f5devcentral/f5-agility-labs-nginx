@@ -35,7 +35,7 @@ As the centos user on ``nginx-manager`` run the following to clean out the envir
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ ./reset clean
+   [centos@nginx-manager ~]$ ./reset.sh clean
 
 Step 2: Verify the repository is setup
 --------------------------------------
