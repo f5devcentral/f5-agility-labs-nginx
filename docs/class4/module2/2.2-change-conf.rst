@@ -34,6 +34,12 @@ Leave this webpage open in a tab and navigate back to the UDF environment.
 Open a terminal SSH connection to nginx5.  You can either use the SSH option in the ``ACCESS`` 
 menu or ssh to ``nginx5`` from the ``nginx-manager`` terminal as the ``centos`` user.
 
+.. note::
+
+    If you used the webshell and didn't switch to the ``centos`` user you won't 
+    be able to connect.  Run the following command to switch to the ``centos`` user 
+    before you run the ``ssh`` command: ``su centos``.
+
 Finally, make sure you have the NGINX Instance Manager user interface open. 
 Select the inventory list and click the editor icon on the right side for ``OSS-Centos``.
 You should see an editor pane and an ``nginx.conf`` file displayed.
