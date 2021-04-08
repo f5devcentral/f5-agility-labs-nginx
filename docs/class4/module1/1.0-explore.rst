@@ -36,7 +36,7 @@ Once the web shell opens up enter the following commands to switch to the
 
 .. code-block:: shell-session
 
-   [root@nginx-manager /]# su centos                                                                                      
+   [root@nginx-manager /]# su - centos                                                                                      
    [centos@nginx-manager /]$ export TERM=xterm
    [centos@nginx-manager /]$ 
 
