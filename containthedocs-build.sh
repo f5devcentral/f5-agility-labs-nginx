@@ -2,7 +2,7 @@
 
 set -x
 
-COMMAND=(/bin/bash -c "sudo pip install -U sphinx ; make -C docs clean ; make -C docs html")
+COMMAND=(/bin/bash -c "sudo pip install -U sphinx ; make -C docs clean html")
 
 . ./containthedocs-image
 
