@@ -14,7 +14,7 @@ First of all, it is important to understand how API Sentence app is split betwee
 To make it simple, a ``FrontEnd`` app reaches a ``Generator`` micro-service, that reaches 4 different ``Words`` micro-services. Each ``Words`` micro-service generates a Word (an adjective, an animal, a color and a location)
 
 Each ``Words`` microservice is a NodeJS API Server. It means, we can ``GET``, ``POST``, ``PATCH``, ``DELETE`` entries.
-The ``FronEnd`` is just a web interface representing the outcomes of the APIs. On purpose, this FrontEnd page has a background and logos in order to make it "heavy" for Volterra demonstrations.
+The ``FrontEnd`` is just a web interface representing the outcomes of the APIs. On purpose, this FrontEnd page has a background and logos in order to make it "heavy" for Volterra demonstrations.
 
 **And this is how the micro-services are meshed together**
 
