@@ -22,12 +22,12 @@ The ``FrontEnd`` is just a web interface representing the outcomes of the APIs. 
    :align: center
 
 As you can notice, we can ``Request`` all EndPoints
-   * FrontEnd -> will display the Web Interface with the sentence
-   * Generator -> will respond with a JSON payload and 4 words (one per ``Words`` micro-services)
-   * Adjectives -> will respond with an adjective word
-   * Animals -> will respond with an animal word
-   * Colors -> will respond with a color word
-   * Locations -> will respon with a location word
+   * FrontEnd -> display the Web Interface with the sentence
+   * Generator -> respond with a JSON payload and 4 words (one per ``Words`` micro-services)
+   * Adjectives -> respond with an adjective word
+   * Animals -> respond with an animal word
+   * Colors -> respond with a color word
+   * Locations -> respond with a location word
 
 A direct API call to a ``Words`` micro-service (like /locations) will provide a JSON response as below:
 
