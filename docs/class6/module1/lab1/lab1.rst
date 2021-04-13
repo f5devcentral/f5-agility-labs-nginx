@@ -14,7 +14,7 @@ First of all, it is important to understand how API Sentence app is split betwee
 To make it simple, a ``FrontEnd`` app reaches a ``Generator`` micro-service, that reaches 4 different ``Words`` micro-services. Each ``Words`` micro-service generates a Word (an adjective, an animal, a color and a location)
 
 Each ``Words`` microservice is a NodeJS API Server. It means, we can ``GET``, ``POST``, ``PATCH``, ``DELETE`` entries.
-The ``FronEnd`` is just a web interface representing the outcomes of the APIs. On purpose, this FrontEnd page has a background and logos in order to make it "heavy" for Volterra demonstrations.
+The ``FrontEnd`` is just a web interface representing the outcomes of the APIs. On purpose, this FrontEnd page has a background and logos in order to make it "heavy" for Volterra demonstrations.
 
 **And this is how the micro-services are meshed together**
 
@@ -22,12 +22,12 @@ The ``FronEnd`` is just a web interface representing the outcomes of the APIs. O
    :align: center
 
 As you can notice, we can ``Request`` all EndPoints
-   * FrontEnd -> will display the Web Interface with the sentence
-   * Generator -> will respond with a JSON payload and 4 words (one per ``Words`` micro-services)
-   * Adjectives -> will respond with an adjective word
-   * Animals -> will respond with an animal word
-   * Colors -> will respond with a color word
-   * Locations -> will respon with a location word
+   * FrontEnd -> display the Web Interface with the sentence
+   * Generator -> respond with a JSON payload and 4 words (one per ``Words`` micro-services)
+   * Adjectives -> respond with an adjective word
+   * Animals -> respond with an animal word
+   * Colors -> respond with a color word
+   * Locations -> respond with a location word
 
 A direct API call to a ``Words`` micro-service (like /locations) will provide a JSON response as below:
 
