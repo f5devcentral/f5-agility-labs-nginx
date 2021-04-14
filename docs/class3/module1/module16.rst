@@ -9,7 +9,7 @@ NGINX Javascript now provides a `js_body_filter` directive to modify the respons
 .. code-block:: shell
 
   EXAMPLE='http/response/to_lower_case'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 443:443 -d nginx
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 

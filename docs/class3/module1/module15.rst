@@ -8,7 +8,7 @@ NGINX Javascript uses the `js_header_filter` directive to modify headers sent by
 .. code-block:: shell
 
   EXAMPLE='http/response/modify_set_cookie'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 443:443 -d nginx
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 

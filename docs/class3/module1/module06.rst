@@ -8,7 +8,7 @@ With njs, NGINX is able to read and write files on disk.  In this example, data 
 .. code-block:: shell
 
   EXAMPLE='misc/file_io'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 443:443 -d nginx
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 
