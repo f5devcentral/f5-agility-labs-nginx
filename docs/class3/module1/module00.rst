@@ -47,7 +47,7 @@ The njs tool allows you to try out Javascript code outside of NGINX right from y
 The njs tool provides a prompt "**>>**" for its Javascript console.  Let's try some commands:
 
 .. code-block:: none
-  :emphasize-lines: 6,8,10
+  :emphasize-lines: 6,8,10,13
 
   interactive njs 0.5.3
 
