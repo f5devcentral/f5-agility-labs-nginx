@@ -1,15 +1,14 @@
-Extract JWT Payload into NGINX Variable [jwt]
-=====================================================
+Extract JWT Payload into NGINX Variable [http/authorization/jwt]
+================================================================
 
 JSON Web Tokens (JWT) are a common way to authenticate to web applications.  In addition to authentication, JWTs can also be used to pass information, called claims, about the user to the application.  The commercial version of NGINX, NGINX Plus, has built-in JWT handling features.  Using njs, we can parse JWTs and extract claim data even in the open source version of NGINX.
 
 **Step 1:** Use the following commands to start your NGINX container with this lab's files:
 
 .. code-block:: shell
-  :emphasize-lines: 1,2
 
-  EXAMPLE='jwt'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro  -v $(pwd)/njs/$EXAMPLE.js:/etc/nginx/example.js:ro -v $(pwd)/njs/utils.js:/etc/nginx/utils.js:ro -p 80:80 -p 8090:8090 -d nginx
+  EXAMPLE='http/authorization/jwt'
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 443:443 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 
@@ -21,17 +20,20 @@ JSON Web Tokens (JWT) are a common way to authenticate to web applications.  In 
 
   docker stop njs_example
 
-**Code Snippets**
+Code Snippets
+~~~~~~~~~~~~~
 
 This NGINX configuration uses `js_set` to invoke our JavaScript to extract the JWT claim into a variable we can return back to the user.
 
 .. code-block:: nginx
-  :caption: nginx.conf
   :linenos:
+  :caption: nginx.conf
 
   http {
+    js_path "/etc/nginx/njs/";
+
     js_import utils.js;
-    js_import main from example.js;
+    js_import main from http/authorization/jwt.js;
 
     js_set $jwt_payload_sub main.jwt_payload_sub;
 
@@ -46,12 +48,12 @@ This NGINX configuration uses `js_set` to invoke our JavaScript to extract the J
 In our JavaScript we are leveraging the string processing features of njs to decode and parse the JWT into a JSON object.  We then extract the claim we want called "sub."
 
 .. code-block:: js
-  :caption: example.js
   :linenos:
+  :caption: jwt.js
 
     function jwt(data) {
         var parts = data.split('.').slice(0,2)
-            .map(v=>String.bytesFrom(v, 'base64url'))
+            .map(v=>Buffer.from(v, 'base64url').toString())
             .map(JSON.parse);
         return { headers:parts[0], payload: parts[1] };
     }

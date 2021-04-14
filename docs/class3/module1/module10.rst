@@ -6,39 +6,46 @@ In this example we will use the stream module to inspect an incoming TCP connect
 **Step 1:** Use the following commands to start your NGINX container with this lab's files:
 
 .. code-block:: shell
-  :emphasize-lines: 1,2
 
   EXAMPLE='stream/detect_http'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro  -v $(pwd)/njs/$EXAMPLE.js:/etc/nginx/example.js:ro -v $(pwd)/njs/utils.js:/etc/nginx/utils.js:ro -p 80:80 -p 8090:8090 -d nginx
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 443:443 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 
 .. code-block:: shell
-  :emphasize-lines: 1,4,7
+  :emphasize-lines: 1,4,12
 
   curl http://localhost/
   HTTPBACK
 
-  echo 'ABC' | nc 127.0.0.1 80 -q1
+  telnet 127.0.0.1 80
+  Trying 127.0.0.1...
+  Connected to 127.0.0.1.
+  Escape character is '^]'.
+  TEST
   TCPBACK
+  Connection closed by foreign host.
 
   docker stop njs_example
 
 *Note: Remove the -q1 option from nc above if you get an error.*
 
-**Code Snippets**
+Code Snippets
+~~~~~~~~~~~~~
 
 This config uses `js_preread` to fetch incoming data into a buffer for inspection.
 
 .. code-block:: nginx
-  :caption: nginx.conf
   :linenos:
+  :caption: nginx.conf
 
   ...
 
   stream {
+    js_path "/etc/nginx/njs/";
+
     js_import utils.js;
-    js_import main from example.js;
+    js_import main from stream/detect_http.js;
 
     js_set $upstream main.upstream_type;
 
@@ -63,8 +70,8 @@ This config uses `js_preread` to fetch incoming data into a buffer for inspectio
 This code looks for "HTTP/1." in the incoming data stream to detect an HTTP connection.  It then sets the upstream to "httpback" for HTTP traffic and "tcpback" for everything else.
 
 .. code-block:: js
-  :caption: example.js
   :linenos:
+  :caption: detect_http.js
 
     var is_http = 0;
 

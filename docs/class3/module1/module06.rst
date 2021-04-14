@@ -1,4 +1,4 @@
-File IO [file_io]
+File IO [misc/file_io]
 =========================
 
 With njs, NGINX is able to read and write files on disk.  In this example, data is pushed to a file via HTTP POSTs.  We can then read the file using HTTP GET as well as erase the file and start over.
@@ -6,10 +6,9 @@ With njs, NGINX is able to read and write files on disk.  In this example, data 
 **Step 1:** Use the following commands to start your NGINX container with this lab's files:
 
 .. code-block:: shell
-  :emphasize-lines: 1,2
 
-  EXAMPLE='file_io'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro  -v $(pwd)/njs/$EXAMPLE.js:/etc/nginx/example.js:ro -v $(pwd)/njs/utils.js:/etc/nginx/utils.js:ro -p 80:80 -p 8090:8090 -d nginx
+  EXAMPLE='misc/file_io'
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 443:443 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 
@@ -39,18 +38,20 @@ With njs, NGINX is able to read and write files on disk.  In this example, data 
 
   docker stop njs_example
 
-**Code Snippets**
+Code Snippets
+~~~~~~~~~~~~~
 
 Notice how the push, flush, and read operations are triggered through NGINX location blocks.
 
 .. code-block:: nginx
-  :caption: nginx.conf
   :linenos:
-
+  :caption: nginx.conf
 
     http {
+      js_path "/etc/nginx/njs/";
+
       js_import utils.js;
-      js_import main from example.js;
+      js_import main from misc/file_io.js;
 
       server {
             listen 80;
@@ -75,8 +76,8 @@ Notice how the push, flush, and read operations are triggered through NGINX loca
 This njs code uses a file on the NGINX server's disk to provide persistent storage.
 
 .. code-block:: js
-  :caption: nginx.conf
   :linenos:
+  :caption: file_io.js
 
   var fs = require('fs');
   var STORAGE = "/tmp/njs_storage"
