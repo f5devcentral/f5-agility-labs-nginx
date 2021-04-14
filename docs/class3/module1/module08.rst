@@ -6,10 +6,9 @@ In this example we will use the stream module to inject a new header into an HTT
 **Step 1:** Use the following commands to start your NGINX container with this lab's files:
 
 .. code-block:: shell
-  :emphasize-lines: 1,2
 
   EXAMPLE='stream/inject_header'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro  -v $(pwd)/njs/$EXAMPLE.js:/etc/nginx/example.js:ro -v $(pwd)/njs/utils.js:/etc/nginx/utils.js:ro -p 80:80 -p 8080:8080 -d nginx
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 
@@ -21,19 +20,22 @@ In this example we will use the stream module to inject a new header into an HTT
 
   docker stop njs_example
 
-**Code Snippets**
+Code Snippets
+~~~~~~~~~~~~~
 
 Instead of an http block, this config uses a stream block so we can use the `js_filter` directive to call our njs code.
 
 .. code-block:: nginx
-  :caption: nginx.conf
   :linenos:
+  :caption: nginx.conf
 
   ...
 
   stream {
+      js_path "/etc/nginx/njs/";
+
       js_import utils.js;
-      js_import main from example.js;
+      js_import main from stream/inject_header.js;
 
 
       server {
@@ -49,8 +51,8 @@ Instead of an http block, this config uses a stream block so we can use the `js_
 This njs code uses a callback to read data from an incoming request until it sees the end of a line.  It then inserts the new "Foo" header at that point in the data stream before removing the callback.
 
 .. code-block:: js
-  :caption: example.js
   :linenos:
+  :caption: inject_header.js
 
     function inject_foo_header(s) {
         inject_header(s, 'Foo: my_foo');

@@ -1,15 +1,14 @@
-Complex redirects using njs file map. [complex_redirects]
+Complex redirects using njs file map. [http/complex_redirects]
 =================================================================
 
 In this example, we will use njs to use a online mapping table to transform a request's URI before proxing to the upstream.
 
-**Step 1:** Use the following commands to start your NGINX container with this lab's files:
+**Step 1:** Use the following commands to start your NGINX container with this lab's files: *Notice that we are now exposing port 8090*
 
 .. code-block:: shell
-  :emphasize-lines: 1,2
 
-  EXAMPLE='complex_redirects'
-  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro  -v $(pwd)/njs/$EXAMPLE.js:/etc/nginx/example.js:ro -v $(pwd)/njs/utils.js:/etc/nginx/utils.js:ro -p 80:80 -p 8090:8090 -d nginx
+  EXAMPLE='http/complex_redirects'
+  docker run --rm --name njs_example  -v $(pwd)/conf/$EXAMPLE.conf:/etc/nginx/nginx.conf:ro -v $(pwd)/njs/:/etc/nginx/njs/:ro -p 80:80 -p 8090:8090 -d nginx
 
 **Step 2:** Now let's use curl to test our NGINX server:
 
@@ -48,20 +47,22 @@ In this example, we will use njs to use a online mapping table to transform a re
 
   docker stop njs_example
 
-**Code Snippets**
+Code Snippets
+~~~~~~~~~~~~~
 
 This config uses `auth_request` to make a request to an "authentication server" before proxyingto the upstream server.  In this case, the "auth server" is an internal location that calls our njs code. The data returned by our code is put into the $route variable which is used to build a new URI to be proxied to the upstream server.
 
 .. code-block:: nginx
-  :caption: nginx.conf
   :linenos:
-
+  :caption: nginx.conf
 
       ...
 
    http {
+      js_path "/etc/nginx/njs/";
+
       js_import utils.js;
-      js_import main from example.js;
+      js_import main from http/complex_redirects.js;
 
       upstream backend {
         server 127.0.0.1:8080;
@@ -86,7 +87,7 @@ This config uses `auth_request` to make a request to an "authentication server" 
          location = /resolv {
              internal;
 
-             js_content resolv;
+             js_content main.resolv;
          }
       }
    }
@@ -94,8 +95,8 @@ This config uses `auth_request` to make a request to an "authentication server" 
 This njs code grabs the first element of the request URI to query the mapping table DB.  If an entry exists, the original URI is replaced with the new one.  The new URI is passed back to NGINX in a new "Route" header.
 
 .. code-block:: js
-  :caption: example.js
   :linenos:
+  :caption: complex_redirects.js
 
     ...
 
