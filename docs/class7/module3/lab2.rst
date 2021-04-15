@@ -3,6 +3,10 @@ Lab 3.2 - Adding the RKE cluster to the Management tool
 
 In this Lab you will use the information from the previous screen to add the RKE cluster to Rancher. You will use the provided cli clips along with information from the cluster's config file to complete the process.
 
+.. important::
+
+    You will only be using the FIRST and LAST options on the add cluster screen do not use the middle option.
+
 .. note::
 
     In line with the rest of this training, you will be using the bare minimum to complete adding the RKE cluster. In a full production environment, a few additional prerequisites would be required to ensure a secure deployment. Those can be found in the documentation on Rancher's website.
@@ -40,7 +44,11 @@ the quotes e.g. kube-admin-rke-cluster . It should look like the example below
 
 Next go back the the browser and click the copy button for the last cli
 option. We will not be using the middle option as we are running with self
-signed certs for this example. It should look similar to this
+signed certs for this example. It should look similar to this.
+
+.. important::
+
+    The cli below is for example only you must use the one provided in the last cli option on the add cluster screen. Each time you add a cluster this cli is uniquely generated.
 
 .. code-block:: bash
 
@@ -51,7 +59,7 @@ Once run, this will add the RKE cluster to the Rancher Management. Continue to
 wait, it will automatically go back to the Rancher main page. You should
 now see the RKE cluster in the list. When the cluster has been imported you should see an active indicator next to the cluster name.
 
-Once the RKE cluster has been added, you can now click on the link in the Global clusters page and have a look around the newly added cluster. 
+Once the RKE cluster has been added, you can now click on the "rke-cluster" link in the Global clusters page and have a look around the newly added cluster. 
 
 Recap
 -----

@@ -17,7 +17,7 @@ To access the UDF course for this class follow the instructions below.
    #. Select the Deploy option from the next page.
    #. select the Start option in the next window.
    #. In the next pop up window set the Autostop Duration to 4 hours.
-   #. Leave everthing else default and click start.
+   #. Leave everything else default and click start.
 
 .. note:: The UDF pattern will take a few minutes to stand up. In the meantime feel free to read through the description of the pattern.
 
