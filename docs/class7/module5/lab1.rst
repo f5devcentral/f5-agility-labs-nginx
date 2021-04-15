@@ -13,7 +13,7 @@ The Rancher Demo manifests
     #. Take some time to review the three provided manifests
 
 .. attention::
-   This lab will be instructor led and a narrated review of the provided manifests. There are no actual configuration steps to complete.
+   This lab will be a narrated review of the provided manifests. There are no actual configuration steps to complete.
 
 Recap
 -----
@@ -23,4 +23,4 @@ You now have the following:
 - Reviewed the service.yaml.
 - Reviewed the ingress.yaml.
 
-Next you will deploy the demo application.
+Next you will deploy the Rancher demo application.

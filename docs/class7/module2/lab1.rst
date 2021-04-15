@@ -1,10 +1,15 @@
 Lab 2.1 - Setting up the Cluster YAML file
 ==========================================
 
-To begin the installation, please locate the "cluster.yaml" in the rancher repo.
-It is recommended that you make a duplicate of the cluster yaml and name
-it something appropriate to the cluster, in this case it will be named
-"rke-cluster.yaml" which will be the name of the demo RKE cluster the the Rancher management tool.
+To begin the installation, please locate the "cluster.yaml" in the rancher repo. It is recommended that you make a duplicate of the cluster yaml and name it something appropriate to the cluster. In this case it will be named "rke-cluster.yaml" which will be the name of the demo RKE cluster the the Rancher management tool. This can be done with the command below via the terminal window in the lower part of the VSCode window, while in the rancher repo root dir.
+
+.. code-block:: bash
+
+   cp cluster.yaml rke-cluster.yaml
+
+.. important::
+
+    Ensure you are editing the rke-cluster.yaml not the cluster.yaml for this example.
 
 Complete the following
 ----------------------
@@ -74,4 +79,4 @@ You now have the following:
 - Created a new cluster.yaml named rke-cluster.yaml.
 - added the IP addressed to the rke-cluster.yaml file of our target nodes.
 
-Next you will deploy the RKE cluster using our new yamnl file.
+Next you will deploy the RKE cluster using our new yaml file.

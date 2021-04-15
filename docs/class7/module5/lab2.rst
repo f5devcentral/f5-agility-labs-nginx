@@ -1,7 +1,7 @@
 Lab 5.1 - Deploying the application
 ===================================
 
-In this lab you will issue a series of kubectl commands to deploy the rancher demo application. Once deployed you will access the application URL to view the application's page.
+In this lab you will issue a series of kubectl commands to deploy the Rancher demo application. Once deployed you will access the application URL to view the application's page.
 
 Deploy the Rancher demo application
 -----------------------------------
@@ -41,7 +41,7 @@ Get all in this namespace to view the application's elements.
 
     kubectl get all
 
-Once these manifests have deployed, you can now navigate to the app.bddemo.udf link to access the demo site. This is bookmarked already in the browser.
+Once these manifests have deployed, you can now navigate to the app.bddemo.udf link to access the demo site.
 
 .. note::
     If the site is not showing, use the command below to re-apply the netplan. Then refresh the site.
@@ -58,4 +58,4 @@ You now have the following:
 - Validated that you are able to access the demo site.
 - You are now done with the main body of the training, congratulations!.
 
-Next OPTIONAL deploy Prometheus and Grafana to our RKE cluster and add the Ingress Dash to Grafana.
+Next OPTIONAL deploy Prometheus and Grafana to our RKE cluster and add the Official NGINX Plus Ingress dashboard to Grafana.
