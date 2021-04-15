@@ -35,8 +35,9 @@ If prompted, select yes for trusting the ssh connection in your terminal.
 .. image:: ../module1/UDF-ssh.png
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ pwd
+   pwd
    /home/centos
 
 
@@ -47,8 +48,9 @@ Let's use netstat (you may need to install this on your own system) on the ``ngi
 instance.  We will list all ports and the processes, then use grep to filter the list.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1,21
 
-   [centos@nginx-manager ~]$ sudo netstat -tulpn
+   sudo netstat -tulpn
    Active Internet connections (only servers)
    Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
    tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1124/sshd           
@@ -68,7 +70,7 @@ instance.  We will list all ports and the processes, then use grep to filter the
    udp        0      0 0.0.0.0:68              0.0.0.0:*                           906/dhclient        
    udp        0      0 127.0.0.1:323           0.0.0.0:*                           553/chronyd         
    udp6       0      0 ::1:323                 :::*                                553/chronyd         
-   [centos@nginx-manager ~]$ sudo netstat -tulpn | grep nginx-manager
+   sudo netstat -tulpn | grep nginx-manager
    tcp        0      0 127.0.0.1:11000         0.0.0.0:*               LISTEN      1641/nginx-manager  
    tcp        0      0 127.0.0.1:10000         0.0.0.0:*               LISTEN      1641/nginx-manager 
 
@@ -83,8 +85,9 @@ this purpose with NGINX Instance Manager.
 Since we have NGINX already running on ``nginx-manager`` let's look at the ports it is using also.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ sudo netstat -tulpn | grep nginx:
+   sudo netstat -tulpn | grep nginx:
    tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      1328/nginx: master  
    tcp        0      0 0.0.0.0:444             0.0.0.0:*               LISTEN      1328/nginx: master  
    tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      1328/nginx: master  

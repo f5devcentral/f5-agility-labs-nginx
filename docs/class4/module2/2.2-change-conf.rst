@@ -242,8 +242,9 @@ You can also see it's in the dropdown for inclues if you want.
 Navigate to the nginx5 instance with SSH and see if the file is present.
 
 .. code-block:: shell-session
+    :emphasize-lines: 1
 
-    [centos@OSS-Centos ~]$ cat /etc/nginx/test.conf
+    cat /etc/nginx/test.conf
     # Use the include directive to start using this file: 
     # include test.conf;
 
@@ -318,8 +319,9 @@ Click ``Save`` and then click ``Publish``.  This should remove the include file.
 Navigate to the nginx5 instance with ssh and see if the files is still present.
 
 .. code-block:: shell-session
+    :emphasize-lines: 1
 
-    [centos@OSS-Centos ~]$ ls /etc/nginx/test.conf
+    ls /etc/nginx/test.conf
     ls: cannot access /etc/nginx/test.conf: No such file or directory
 
 Step 6: Change files outside nginx-manager
@@ -398,11 +400,12 @@ Go ahead and click the ``Save`` button but do NOT click ``Publish`` yet.
 SSH to ``nginx5`` and run the following command to see what changed.
 
 .. code-block:: shell-session
+    :emphasize-lines: 1,4
 
-    [centos@OSS-Centos ~]$ cat /etc/nginx/nginx.conf | grep error_log
+    cat /etc/nginx/nginx.conf | grep error_log
     error_log /var/log/nginx/error.log;
         error_log /var/log/nginx/error3.log warn;
-    [centos@OSS-Centos ~]$ sudo nginx -T | grep error_log
+    sudo nginx -T | grep error_log
     nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
     nginx: configuration file /etc/nginx/nginx.conf test is successful
     error_log /var/log/nginx/error.log;
@@ -463,9 +466,10 @@ Let's add some chaos now!  Open up nginx.conf and change the ``error_log`` filen
 Save the file and issue a reload to nginx so it loads the new configuration.
 
 .. code-block:: shell-session
+    :emphasize-lines: 1,2
 
-    [centos@OSS-Centos ~]$ sudo systemctl reload nginx
-    [centos@OSS-Centos ~]$ sudo nginx -T | grep error_log
+    sudo systemctl reload nginx
+    sudo nginx -T | grep error_log
     nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
     nginx: configuration file /etc/nginx/nginx.conf test is successful
     error_log /var/log/nginx/error5.log;
@@ -495,8 +499,9 @@ overwrite.  You should see the ``error2.log`` entry in the editor.
 Let's look at the ssh session and see what the nginx instance is running now.
 
 .. code-block:: shell-session
+    :emphasize-lines: 1
 
-    [centos@OSS-Centos ~]$ sudo nginx -T | grep error_log
+    sudo nginx -T | grep error_log
     nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
     nginx: configuration file /etc/nginx/nginx.conf test is successful
     error_log /var/log/nginx/error2.log;
