@@ -1,25 +1,22 @@
 Lab 2.2 - Deploying the Cluster
 ===============================
 
-In this lab we will be using the Rancher binary rke to bring up our cluster using the rke-cluster .yaml file we created in the last lab.
+In this lab we will be using the Rancher binary rke to bring up our cluster using the rke-cluster.yaml file we created in the last lab.
 
 Complete the following
 ----------------------
 
-When finished editing the "rke-cluster.yaml" run the following command
-to bring the baseline cluster up. This should take 2 - 5 minutes to
-complete depending on the hardware being used.
+When finished editing the "rke-cluster.yaml" run the following command to bring the baseline cluster up. This should take 2 - 3 minutes.
 
 .. code-block:: bash
 
    rke up --config=./rke-cluster.yaml
 
-After the install completes, copy over the config. This will allow you to
-use the local copy of kubectl to manipulate the cluster.
+After the install completes, copy over the config. This will allow you to use the local copy of kubectl to manipulate the cluster.
 
 .. code-block:: bash
 
-   cp kube_config_cluster.yaml /home/ubuntu/.kube/config
+   cp kube_config_rke-cluster.yaml /home/ubuntu/.kube/config
 
 .. note::
 

@@ -7,7 +7,7 @@ Complete the following
 
 After logging in or clicking on the Global > Clusters menu selections you should land on this page.
 
-    - Click on the rke-cluster link.
+    - Click on the "rke-cluster" link.
 
 .. image:: ../images/global.png
 
@@ -25,7 +25,7 @@ We are not going to spend a great deal of time on Metal LB. If you want to learn
 Complete the following
 ----------------------
 
-From the VSCode Rancher project terminal change directories to ensure you are in the Metal LB directory. from here run the following commands. These can also be found in the readme located in the Metal LB directory.
+From the VSCode Rancher project terminal change directories to ensure you are in the "metallb" directory. from here run the following commands. These can also be found in the readme located in the Metal LB directory.
 
 .. code-block:: bash
 

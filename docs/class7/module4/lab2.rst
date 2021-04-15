@@ -20,8 +20,6 @@ From the top bar...
 
 .. image:: ../images/apps.png
 
-...
-
 - Next select the launch button to expose the catalogs.
 
 .. image:: ../images/launch.png
@@ -35,33 +33,24 @@ Deploying NGINX KIC
 
 **Complete the following**
 
-First locate the Template Version drop down menu and set the template version. The image you select will be pulled from the public docker registry.
+First locate the Template Version drop down menu and set the template version. The image you select will be pulled from the private docker registry in this UDF pattern.
 
     - Please use version 0.7.1 = version 9
 
 .. image:: ../images/version.png
 
+.. important::
+
+    Due to an known issue you need to select 0.7.1 via the drop down list, go back to the dropdown and select any other version then, one last time go into the dropdown list and re-select the 0.7.1 version. This is a known issue and is being investigated.
+
 While you are able to deploy NGINX KIC into any namespace for this lab, you will be leaving the default namespace value of "nginx-ingress".
 
 .. image:: ../images/namespace.png
 
-In the first run you will deploy the OSS version. Scroll to the bottom of the page to locate the launch button you do not need to change anything in the template this time.
+Installing NGINX Plus KIC
+-------------------------
 
-    - Select launch
-
-This will launch the OSS version of the ingress controller. This step is to show how simple it is to get started for free with NGINX KIC OSS.  Next you will walk through an upgrade to illustrate the path from OSS to NGINX Plus.
-
-.. note::
-    The installation of the OSS version is not a required step. If desired the NGINX Plus version can be installed directly. We are going though this path merely as an exercise to show how it is done.
-
-When the deployment is complete it should look like the image below. The OSS ingress controller is now deployed.
-
-.. image:: ../images/installed.png
-
-Upgrading or Installing NGINX Plus
-----------------------------------
-
-Scrolling down a bit, locate the settings section of the config page. Looking at the provided screen cap ensure that all settings match what is pictured here. You will be changing the following items. All other items should be left at the defaults.
+Scrolling down a bit, locate the "SETTINGS" section of the config page. Using the provided screen cap ensure that all settings match what is pictured. You will be changing the following items. All other items should be left at the defaults.
 
     - Installation Kind
     - Use Default image
@@ -69,7 +58,7 @@ Scrolling down a bit, locate the settings section of the config page. Looking at
     - NGINX Ingress Controller Image Repository
 
 .. note::
-    As a helping hand the URL for the supplied Docker private repo can be found in the comments section of the cluster.yaml file in the Rancher VSCode project.
+    As a helping hand the URL for the supplied Docker private repo can be found in the comments section of the rke-cluster.yaml file in the Rancher VSCode project.
 
 .. image:: ../images/config.png
 
@@ -78,9 +67,7 @@ The last configuration item is to enable the prometheus metrics page and set its
 .. image:: ../images/prometheus.png
 
 
-- The final step is to simply click the launch button
-
-.. image:: ../images/launch.png
+- The final step is to simply click the launch button at the bottom of the page.
 
 When the deployment is complete it should look like the image below. The Plus ingress controller is now deployed.
 
@@ -95,4 +82,4 @@ You now have the following:
 - Enabled the Prometheus metrics page.
 - Launched the NGINX Plus Ingress Controller into the kube-system namespace.
 
-Next you will deploy a few simple pages running on NGINX webserver and Busybox.
+Next you will deploy a simple Rancher demo application to see the NGINX Plus Ingress in action.
