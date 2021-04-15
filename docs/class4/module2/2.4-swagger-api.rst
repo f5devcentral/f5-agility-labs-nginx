@@ -255,7 +255,7 @@ Open a new file called ``encode.txt`` on the ``nginx-manager`` command line.
 Paste in or make the changes and save the file as ``encode.txt``.  Then
 copy the output to use in the API call.
 
-.. code-block:: json
+.. code-block:: nginx
     :caption: encode.txt
     :name: encode.txt
 

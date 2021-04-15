@@ -202,7 +202,7 @@ restart periods by editing that file if desired.
       User=root
       Group=root
       # Load env vars from /etc/default/ and /etc/sysconfig/ if they exist.
-      # Prefixing the path with '-' makes it try to load, but if the file doesn't
+      # Prefixing the path with '-' makes it try to load, but if the file doesnt
       # exist, it continues onward.
       EnvironmentFile=-/etc/default/nginx-manager
       EnvironmentFile=-/etc/sysconfig/nginx-manager
