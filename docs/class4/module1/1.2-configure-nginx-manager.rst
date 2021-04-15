@@ -28,7 +28,7 @@ editor open the file ``nginx-manager.conf`` in the ``/etc/nginx-manager`` direct
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo vim /etc/nginx-manager/nginx-manager.conf
+   sudo vim /etc/nginx-manager/nginx-manager.conf
 
 .. note::
 
@@ -118,62 +118,65 @@ service managers.  We can also see includes that are placed in the
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ rpm -qil nginx-manager
-      Name        : nginx-manager
-      Version     : 0.9.1
-      Release     : 3046527
-      Architecture: x86_64
-      Install Date: Fri 19 Mar 2021 08:18:55 PM UTC
-      Group       : base
-      Size        : 31145636
-      License     : Commercial
-      Signature   : RSA/SHA1, Fri 19 Mar 2021 02:34:42 PM UTC, Key ID 0ff4304347c76e8f
-      Source RPM  : nginx-manager-0.9.1-3046527.src.rpm
-      Build Date  : Fri 19 Mar 2021 12:02:38 PM UTC
-      Build Host  : runner-vy4fn5ao-project-15102-concurrent-0
-      Relocations : / 
-      Packager    : F5 Networks
-      Vendor      : NGINX, Inc.
-      URL         : "https://my.f5.com/manage/s/downloads"
-      Summary     : "NGINX Instance Manager - Management and Visualization quick, fast and easy."
-      Description :
-      "NGINX Instance Manager - Management and Visualization quick, fast and easy."
-      /etc/nginx-manager/nginx-manager.conf
-      /usr/sbin/nginx-manager
-      /usr/sbin/ngxscan
-      /usr/share/doc/nginx-manager/COPYRIGHT
-      /usr/share/doc/nginx-manager/EULA-SUBSCRIPTION
-      /usr/share/doc/nginx-manager/EULA-TRIAL
-      /usr/share/doc/nginx-manager/grafana/nginx-manager.json
-      /usr/share/doc/nginx-manager/lightning.swagger.json
-      /usr/share/doc/nginx-manager/nginx-plus/README.md
-      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-basicauth.conf
-      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-grpc.conf
-      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-jwt.conf
-      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-noauth.conf
-      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-oauth.conf
-      /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-upstreams.conf
-      /usr/share/doc/nginx-manager/nginx-plus/status-api.conf
-      /usr/share/doc/nginx-manager/web-app-demo/README.md
-      /usr/share/doc/nginx-manager/web-app-demo/demo-index.html
-      /usr/share/doc/nginx-manager/web-app-demo/webapp-example.conf
-      /usr/share/man/man8/nginx-manager.8
-      /usr/share/nginx-manager/cve.xml
-      /usr/share/nginx-manager/support.sh
-      /usr/share/pleaserun/nginx-manager/generate-cleanup.sh
-      /usr/share/pleaserun/nginx-manager/install-path.sh
-      /usr/share/pleaserun/nginx-manager/install.sh
-      /usr/share/pleaserun/nginx-manager/launchd/10.9/files/Library/LaunchDaemons/nginx-manager.plist
-      /usr/share/pleaserun/nginx-manager/launchd/10.9/install_actions.sh
-      /usr/share/pleaserun/nginx-manager/systemd/default/files/etc/default/nginx-manager
-      /usr/share/pleaserun/nginx-manager/systemd/default/files/etc/systemd/system/nginx-manager.service
-      /usr/share/pleaserun/nginx-manager/systemd/default/install_actions.sh
-      /usr/share/pleaserun/nginx-manager/sysv/lsb-3.1/files/etc/default/nginx-manager
-      /usr/share/pleaserun/nginx-manager/sysv/lsb-3.1/files/etc/init.d/nginx-manager
-      /usr/share/pleaserun/nginx-manager/upstart/0.6.5/files/etc/default/nginx-manager
-      /usr/share/pleaserun/nginx-manager/upstart/0.6.5/files/etc/init/nginx-manager.conf
-      /usr/share/pleaserun/nginx-manager/upstart/1.5/files/etc/default/nginx-manager
-      /usr/share/pleaserun/nginx-manager/upstart/1.5/files/etc/init/nginx-manager.conf
+   rpm -qil nginx-manager
+
+.. code-block:: shell-session
+
+   Name        : nginx-manager
+   Version     : 0.9.1
+   Release     : 3046527
+   Architecture: x86_64
+   Install Date: Fri 19 Mar 2021 08:18:55 PM UTC
+   Group       : base
+   Size        : 31145636
+   License     : Commercial
+   Signature   : RSA/SHA1, Fri 19 Mar 2021 02:34:42 PM UTC, Key ID 0ff4304347c76e8f
+   Source RPM  : nginx-manager-0.9.1-3046527.src.rpm
+   Build Date  : Fri 19 Mar 2021 12:02:38 PM UTC
+   Build Host  : runner-vy4fn5ao-project-15102-concurrent-0
+   Relocations : / 
+   Packager    : F5 Networks
+   Vendor      : NGINX, Inc.
+   URL         : "https://my.f5.com/manage/s/downloads"
+   Summary     : "NGINX Instance Manager - Management and Visualization quick, fast and easy."
+   Description :
+   "NGINX Instance Manager - Management and Visualization quick, fast and easy."
+   /etc/nginx-manager/nginx-manager.conf
+   /usr/sbin/nginx-manager
+   /usr/sbin/ngxscan
+   /usr/share/doc/nginx-manager/COPYRIGHT
+   /usr/share/doc/nginx-manager/EULA-SUBSCRIPTION
+   /usr/share/doc/nginx-manager/EULA-TRIAL
+   /usr/share/doc/nginx-manager/grafana/nginx-manager.json
+   /usr/share/doc/nginx-manager/lightning.swagger.json
+   /usr/share/doc/nginx-manager/nginx-plus/README.md
+   /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-basicauth.conf
+   /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-grpc.conf
+   /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-jwt.conf
+   /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-noauth.conf
+   /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-oauth.conf
+   /usr/share/doc/nginx-manager/nginx-plus/nginx-manager-upstreams.conf
+   /usr/share/doc/nginx-manager/nginx-plus/status-api.conf
+   /usr/share/doc/nginx-manager/web-app-demo/README.md
+   /usr/share/doc/nginx-manager/web-app-demo/demo-index.html
+   /usr/share/doc/nginx-manager/web-app-demo/webapp-example.conf
+   /usr/share/man/man8/nginx-manager.8
+   /usr/share/nginx-manager/cve.xml
+   /usr/share/nginx-manager/support.sh
+   /usr/share/pleaserun/nginx-manager/generate-cleanup.sh
+   /usr/share/pleaserun/nginx-manager/install-path.sh
+   /usr/share/pleaserun/nginx-manager/install.sh
+   /usr/share/pleaserun/nginx-manager/launchd/10.9/files/Library/LaunchDaemons/nginx-manager.plist
+   /usr/share/pleaserun/nginx-manager/launchd/10.9/install_actions.sh
+   /usr/share/pleaserun/nginx-manager/systemd/default/files/etc/default/nginx-manager
+   /usr/share/pleaserun/nginx-manager/systemd/default/files/etc/systemd/system/nginx-manager.service
+   /usr/share/pleaserun/nginx-manager/systemd/default/install_actions.sh
+   /usr/share/pleaserun/nginx-manager/sysv/lsb-3.1/files/etc/default/nginx-manager
+   /usr/share/pleaserun/nginx-manager/sysv/lsb-3.1/files/etc/init.d/nginx-manager
+   /usr/share/pleaserun/nginx-manager/upstart/0.6.5/files/etc/default/nginx-manager
+   /usr/share/pleaserun/nginx-manager/upstart/0.6.5/files/etc/init/nginx-manager.conf
+   /usr/share/pleaserun/nginx-manager/upstart/1.5/files/etc/default/nginx-manager
+   /usr/share/pleaserun/nginx-manager/upstart/1.5/files/etc/init/nginx-manager.conf
 
 
 Centos 7 and most modern systems use systemd.  Systemd allows additional 
@@ -183,7 +186,13 @@ restart periods by editing that file if desired.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo systemctl cat nginx-manager.service
+   sudo systemctl cat nginx-manager.service
+
+.. code-block:: shell-session
+   :linenos:
+   :caption: nginx-manager.service
+   :name: nginx-manager.service
+
       # /etc/systemd/system/nginx-manager.service
       [Unit]
       Description=nginx-manager
@@ -224,7 +233,7 @@ by ``systemctl start nginx-manager``.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo systemctl enable nginx-manager --now
+   sudo systemctl enable nginx-manager --now
 
 
 Step 5: Verify NGINX Instance Manager is running
@@ -233,10 +242,11 @@ Step 5: Verify NGINX Instance Manager is running
 Check that the service is now enable and running.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1,3
 
-   [centos@nginx-manager ~]$ sudo systemctl is-enabled nginx-manager
+   sudo systemctl is-enabled nginx-manager
    enabled
-   [centos@nginx-manager ~]$ sudo systemctl status nginx-manager
+   sudo systemctl status nginx-manager
    ● nginx-manager.service - nginx-manager
       Loaded: loaded (/etc/systemd/system/nginx-manager.service; enabled; vendor preset: disabled)
       Drop-In: /etc/systemd/system/nginx-manager.service.d

@@ -178,9 +178,10 @@ value you copied from the response instead of using the one below (which may or 
 not match your default.conf contents).
 
 .. code-block:: shell-session
+    :emphasize-lines: 1,2
 
-    [centos@nginx-manager ~]$ contents="c2VydmVyIHsKICAgIGxpc3RlbiAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZXJfbmFtZSBkZWZhdWx0X3NlcnZlcjsKCiAgICAjQCBhcGkKICAgIGxvY2F0aW9uIC9hcGkvdjEgewogICAgICAgIHJldHVybiAyMDAgInt9XG4iOwogICAgfQoKICAgICNAIGNvcnAKICAgIGxvY2F0aW9uIC9jb3JwL21lZGlhIHsKICAgICAgICByZXR1cm4gNDAzICJUTEEgRlRXXG4iOwogICAgfQoKICAgICNAIHVuaW1wbGVtZW50ZWQKICAgIGxvY2F0aW9uIC91bmltcGxlbWVudGVkIHsKICAgICAgICByZXR1cm4gNTAwICJub3QgaW1wbGVtZW50ZWRcbiI7CiAgICB9CiAjQCBkZWZhdWx0CiAgICBsb2NhdGlvbiAvIHsKICAgICAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaHRtbDsKICAgICAgICAjIGluZGV4IGluZGV4Lmh0bWw7CiAgICAgICAgaW5kZXggc2FtcGxlLmh0bWw7ICMgIFBhZ2Ugd2l0aCBsb3RzIG9mIGluZm8KICAgIH0KCn0K"
-    [centos@nginx-manager ~]$ echo $contents | base64 --decode
+    contents="c2VydmVyIHsKICAgIGxpc3RlbiAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZXJfbmFtZSBkZWZhdWx0X3NlcnZlcjsKCiAgICAjQCBhcGkKICAgIGxvY2F0aW9uIC9hcGkvdjEgewogICAgICAgIHJldHVybiAyMDAgInt9XG4iOwogICAgfQoKICAgICNAIGNvcnAKICAgIGxvY2F0aW9uIC9jb3JwL21lZGlhIHsKICAgICAgICByZXR1cm4gNDAzICJUTEEgRlRXXG4iOwogICAgfQoKICAgICNAIHVuaW1wbGVtZW50ZWQKICAgIGxvY2F0aW9uIC91bmltcGxlbWVudGVkIHsKICAgICAgICByZXR1cm4gNTAwICJub3QgaW1wbGVtZW50ZWRcbiI7CiAgICB9CiAjQCBkZWZhdWx0CiAgICBsb2NhdGlvbiAvIHsKICAgICAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaHRtbDsKICAgICAgICAjIGluZGV4IGluZGV4Lmh0bWw7CiAgICAgICAgaW5kZXggc2FtcGxlLmh0bWw7ICMgIFBhZ2Ugd2l0aCBsb3RzIG9mIGluZm8KICAgIH0KCn0K"
+    echo $contents | base64 --decode
     server {
         listen 0.0.0.0:8081;
         server_name default_server;
@@ -207,7 +208,6 @@ not match your default.conf contents).
         }
 
     }
-    [centos@nginx-manager ~]$ 
 
 
 Step 5: Push a change to the configuration
@@ -255,10 +255,10 @@ Open a new file called ``encode.txt`` on the ``nginx-manager`` command line.
 Paste in or make the changes and save the file as ``encode.txt``.  Then
 copy the output to use in the API call.
 
-.. code-block:: shell-session
+.. code-block:: json
+    :caption: encode.txt
+    :name: encode.txt
 
-    [centos@nginx-manager ~]$ vim encode.txt
-    [centos@nginx-manager ~]$ cat encode.txt 
     server {
         listen 0.0.0.0:8081;
         server_name default_server;
@@ -286,7 +286,10 @@ copy the output to use in the API call.
 
     }
 
-    [centos@nginx-manager ~]$ base64 encode.txt 
+.. code-block:: shell-session
+    :emphasize-lines: 1
+
+    base64 encode.txt 
     c2VydmVyIHsKICAgIGxpc3RlbiAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZXJfbmFtZSBkZWZhdWx0
     X3NlcnZlcjsKCiAgICAjQCBhcGkKICAgIGxvY2F0aW9uIC9hcGkvdjEgewogICAgICAgIHJldHVy
     biAyMDAgInt9XG4iOwogICAgfQoKICAgICNAIGNvcnAKICAgIGxvY2F0aW9uIC9jb3JwL21lZGlh
@@ -296,7 +299,6 @@ copy the output to use in the API call.
     ICAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaHRtbDsKICAgICAgICBpbmRleCBpbmRleC5odG1s
     OwogICAgICAgICMgaW5kZXggc2FtcGxlLmh0bWw7ICMgIFBhZ2Ugd2l0aCBsb3RzIG9mIGluZm8K
     ICAgIH0KCn0KCg==
-    [centos@nginx-manager ~]$
 
 Keep the encoded base64 in a notepad or a way to copy and paste.  Click the copy button 
 on the results in the API call to copy the entire response for now.

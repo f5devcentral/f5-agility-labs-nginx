@@ -22,9 +22,9 @@ If prompted, select yes for trusting the ssh connection in your terminal.
 .. image:: ./UDF-ssh.png
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ pwd
-   /home/centos
+   pwd
 
 Option 2 - Web Shell
 ====================
@@ -36,9 +36,8 @@ Once the web shell opens up enter the following commands to switch to the
 
 .. code-block:: shell-session
 
-   [root@nginx-manager /]# su - centos                                                                                      
-   [centos@nginx-manager /]$ export TERM=xterm
-   [centos@nginx-manager /]$ 
+   su - centos                                                                                      
+   export TERM=xterm
 
 .. image:: ./UDF-webshell.png
 

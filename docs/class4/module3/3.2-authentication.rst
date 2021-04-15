@@ -90,8 +90,9 @@ If prompted, select yes for trusting the ssh connection in your terminal.
 .. image:: ../module1/UDF-ssh.png
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ pwd
+   pwd
    /home/centos
 
 Step 3: Add users
@@ -105,12 +106,13 @@ This file should be located in ``/etc/nginx/.htpasswd``.
 Create a new user with the password ``P@ssw0rd20`` or use your own password.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1,5
 
-   [centos@nginx-manager ~]$ sudo htpasswd -c /etc/nginx/.htpasswd user1
+   sudo htpasswd -c /etc/nginx/.htpasswd user1
    New password: 
    Re-type new password: 
    Adding password for user user1
-   [centos@nginx-manager ~]$ sudo htpasswd /etc/nginx/.htpasswd user2
+   sudo htpasswd /etc/nginx/.htpasswd user2
    New password: 
    Re-type new password: 
    Adding password for user user2
@@ -178,10 +180,15 @@ The last line will enable audit logging.
 Add the line and restart the service.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ echo 'audit-log: /var/log/nginx-manager/audit.log' | sudo tee -a /etc/nginx-manager/nginx-manager.conf
+   echo 'audit-log: /var/log/nginx-manager/audit.log' | sudo tee -a /etc/nginx-manager/nginx-manager.conf
    audit-log: /var/log/nginx-manager/audit.log
-   [centos@nginx-manager ~]$ sudo cat /etc/nginx-manager/nginx-manager.conf
+
+.. code-block:: yaml
+   :caption: nginx-manager.conf
+   :name: nginx-manager.conf
+
    #
    # /etc/nginx-manager/nginx-manager.conf
    #
@@ -213,13 +220,17 @@ Add the line and restart the service.
    license: /etc/nginx-manager/nginx-manager.lic
 
    audit-log: /var/log/nginx-manager/audit.log
-   [centos@nginx-manager ~]$ sudo systemctl restart nginx-manager.service 
+
+.. code-block:: shell-session
+
+   sudo systemctl restart nginx-manager.service 
 
 Open the basic auth website and login. Run a change or two and look at the audit log.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ sudo cat /var/log/nginx-manager/audit.log
+   sudo cat /var/log/nginx-manager/audit.log
    2021-03-29T16:35:28.722585023Z	user1	user1	GET	/api/v0/instances
    2021-03-29T16:35:28.805667148Z	user1	user1	GET	/api/v0/instances
 

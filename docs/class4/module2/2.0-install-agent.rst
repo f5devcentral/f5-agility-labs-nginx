@@ -31,8 +31,9 @@ If prompted, select yes for trusting the ssh connection in your terminal.
 .. image:: ../module1/UDF-ssh.png
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ pwd
+   pwd
    /home/centos
 
 Step 2: Investigate the automation script
@@ -42,7 +43,7 @@ Look at the ``reset.sh`` script in the local directory.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ less reset.sh
+   less reset.sh
 
 Look at the ``install-agent()`` section in particular.
 There are a number of activities going on.  We are looping through each 
@@ -64,7 +65,7 @@ how the script loops through each instance performing the functions from Step 2.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ ./reset.sh install-agent
+   ./reset.sh install-agent
 
 Wait for the script to end and the ``nginx-agent`` should be installed and running on four instances.
 
