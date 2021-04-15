@@ -161,8 +161,9 @@ to those locations.  These certificates are verified as being issued by the same
 certificate authority as the server before communication is allowed.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ ssh nginx5 cat /etc/nginx-agent/nginx-agent.conf
+   ssh nginx5 cat /etc/nginx-agent/nginx-agent.conf
    Warning: Permanently added 'nginx5.f5demolab.com,10.1.1.5' (ECDSA) to the list of known hosts.
    server: nginx-manager.f5demolab.com:10443
    tls:
@@ -194,8 +195,9 @@ If prompted, select yes for trusting the ssh connection in your terminal.
 .. image:: ../module1/UDF-ssh.png
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ pwd
+   pwd
    /home/centos
 
 Step 4
@@ -205,8 +207,9 @@ For extra credit, use the certificates in ``/etc/ssl/nginx-manager`` to
 enable mTLS and verify locally.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ sudo ls -lah /etc/ssl/nginx-manager/
+   sudo ls -lah /etc/ssl/nginx-manager/
    total 140K
    drwxr-xr-x. 2 root   root   4.0K Mar 18 18:56 .
    drwxr-xr-x. 6 root   root     82 Feb 27 11:13 ..

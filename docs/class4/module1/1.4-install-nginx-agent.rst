@@ -17,9 +17,12 @@ and install directly if desired or in offline environments.
 
 Let's look at the repository information for our Centos 7 server instance.
 
-.. code-block:: shell-session
+``sudo cat /etc/yum.repos.d/nginx-instance-manager.repo``
 
-   [centos@nginx-manager ~]$ sudo cat /etc/yum.repos.d/nginx-instance-manager.repo
+.. code-block:: ini
+   :caption: nginx-instance-manager.repo
+   :name: nginx-instance-manager.repo
+   
    [nginx-manager]
    name=NGINX Instance Manager repo
    baseurl=https://apt.f5demolab.com/centos/
@@ -36,8 +39,9 @@ Let's look at the repository information for our Centos 7 server instance.
 Check that yum can pull from the repository we setup.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ sudo yum repolist
+   sudo yum repolist
    Loaded plugins: fastestmirror
    Loading mirror speeds from cached hostfile
    * base: d36uatko69830t.cloudfront.net
@@ -61,8 +65,9 @@ for updates, removal and package management functions.  With the repository setu
 correctly, package management is simplified.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ sudo yum install -y nginx-agent
+   sudo yum install -y nginx-agent
    Loaded plugins: fastestmirror
    Loading mirror speeds from cached hostfile
    * base: d36uatko69830t.cloudfront.net
@@ -135,11 +140,12 @@ we were on a different instance.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo vim /etc/nginx-agent/nginx-agent.conf
+   sudo vim /etc/nginx-agent/nginx-agent.conf
 
 Enter or edit the following options for ``nginx-agent.conf``:
 
 .. code-block:: yaml
+   :caption: nginx-agent.conf
 
    #
    # /etc/nginx-agent/nginx-agent.conf
@@ -211,6 +217,8 @@ Enter or edit the following options for ``nginx-agent.conf``:
 Modify the file so it looks similar to the configuration below for this lab.
 
 .. code-block:: yaml
+   :caption: nginx-agent.conf
+   :name: nginx-agent.conf
 
    server: nginx-manager.f5demolab.com:10443
    tls:
@@ -230,8 +238,9 @@ Modify the file so it looks similar to the configuration below for this lab.
 Save the file.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ cat /etc/nginx-agent/nginx-agent.conf.rpmsave 
+   cat /etc/nginx-agent/nginx-agent.conf.rpmsave 
    server: nginx-manager.f5demolab.com:10443
    tls:
    enable: true
@@ -265,7 +274,7 @@ by ``systemctl start nginx-agent``.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo systemctl enable nginx-agent --now
+   sudo systemctl enable nginx-agent --now
 
 
 Step 5: Verify nginx-agent is running
@@ -274,8 +283,9 @@ Step 5: Verify nginx-agent is running
 Check that the service is now enable and running.
 
 .. code-block:: shell-session
+   :emphasize-lines: 1
 
-   [centos@nginx-manager ~]$ sudo systemctl status nginx-agent
+   sudo systemctl status nginx-agent
    ● nginx-agent.service - nginx-agent
       Loaded: loaded (/etc/systemd/system/nginx-agent.service; enabled; vendor preset: disabled)
    Drop-In: /etc/systemd/system/nginx-agent.service.d

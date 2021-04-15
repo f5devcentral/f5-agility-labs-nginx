@@ -16,7 +16,7 @@ Make sure you are in the home directory
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ cd ~
+   cd ~
 
 Installation of `NGINX Instance Manager <https://docs.nginx.com/nginx-instance-manager/getting-started/install/>`__ 
 follows a process that is very similar to installing 
@@ -35,7 +35,7 @@ As the centos user on ``nginx-manager`` run the following to clean out the envir
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ ./reset.sh clean
+   ./reset.sh clean
 
 Step 2: Verify the repository is setup
 --------------------------------------
@@ -48,7 +48,12 @@ Let's look at the repository information for our Centos 7 server instance.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo cat /etc/yum.repos.d/nginx-instance-manager.repo 
+   sudo cat /etc/yum.repos.d/nginx-instance-manager.repo
+
+.. code-block:: ini
+   :caption: nginx-instance-manager.repo
+   :name: nginx-instance-manager.repo
+   
    [nginx-manager]
    name=NGINX Instance Manager repo
    baseurl=https://apt.f5demolab.com/centos/
@@ -66,7 +71,7 @@ Check that yum can pull from the repository we setup.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo yum repolist
+   sudo yum repolist
 
 Step 3: Install nginx-manager
 -----------------------------
@@ -77,7 +82,10 @@ correctly, package management is simplified.
 
 .. code-block:: shell-session
 
-   [centos@nginx-manager ~]$ sudo yum install nginx-manager
+   sudo yum install nginx-manager
+
+.. code-block:: shell-session
+
    Loaded plugins: fastestmirror
    Loading mirror speeds from cached hostfile
    * base: d36uatko69830t.cloudfront.net
