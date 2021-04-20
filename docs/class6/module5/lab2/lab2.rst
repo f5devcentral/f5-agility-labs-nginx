@@ -1,4 +1,4 @@
-Step 10 - Push API documentation into the DevPortal
+Step 11 - Push API documentation into the DevPortal
 ###################################################
 
 Create the DevPortal
