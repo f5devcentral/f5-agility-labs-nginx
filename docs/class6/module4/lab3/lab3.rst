@@ -165,6 +165,8 @@ Test your API Firewall
 #. In Win10, open Edge Browser and click on ``Kibana`` bookmark
 #. You can see the NAP dashboard with the relevant violations metrics, and at the bottom, you can see the logs details. Extend the ``Blocked`` request.
 
+   .. warning:: In UDF, there is an issue with the Timezone sync. The Win10 synchronizes with your local timezone (instead of PST). But ELK is set with PST timezone. Don't be surprised if the time of the logs does not reflect your local time. Extend the time range in ELK to several hours.
+   
    .. image:: ../pictures/lab3/ELK1.png
       :align: center
 
