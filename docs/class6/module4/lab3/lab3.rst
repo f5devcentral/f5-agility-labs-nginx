@@ -140,8 +140,8 @@ Steps to configure Nginx App Protect as an API firewall
 
    .. note:: Wait till the prompt comes back. It can takes up to 10 seconds.
 
-Update BIG-IP config to route API request to NAP
-************************************************
+Update BIG-IP config to route API requests to NAP
+*************************************************
 
 #. Login to BIGIP TMUI as ``admin/admin``
 #. In ``Local Traffic > Virtual Servers``, edit the ``vs_api`` virtual server
