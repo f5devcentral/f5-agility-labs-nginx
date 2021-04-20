@@ -20,8 +20,8 @@ The NAP (Nginx App Protect) is already deloyed in front of the Nginx API Gateway
 
 .. note:: We will update the BIGIP pool member in order to forward the API traffic to the NAP instead of the Nginx API Gw. We will do it at the end of this lab.
 
-Steps to configure Nginx App Protect as an API firewal
-******************************************************
+Steps to configure Nginx App Protect as an API firewall
+*******************************************************
 
 #. SSH or WebSSH to ``Nginx App Protect`` virtual machine
 #. Go to ``nginx`` folder with ``cd /etc/nginx``
@@ -138,12 +138,20 @@ Steps to configure Nginx App Protect as an API firewal
      
       sudo nginx -s reload
 
+   .. note:: Wait till the prompt comes back. It can takes up to 10 seconds.
+
+Update BIG-IP config to route API request to NAP
+************************************************
+
 #. Login to BIGIP TMUI as ``admin/admin``
 #. In ``Local Traffic > Virtual Servers``, edit the ``vs_api`` virtual server
 #. Click on ``Resources`` tab, and select ``pool-nap`` as default pool
 #. Cick ``Update``
 
-#. RDP to Windows 1O machine as ``user/user``
+Test your API Firewall
+**********************
+
+#. RDP to Windows 10 machine as ``user/user``
 #. Open ``Postman`` and the collection ``API Sentence Generator v3``
 #. Send any call and check the NAP is forwarding traffic to the API gateway
 #. Now, send an attack with the call ``GET Locations v3 Attack``. The request is blocked and you can see the Violation Support ID.

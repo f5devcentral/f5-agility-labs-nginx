@@ -10,7 +10,7 @@ They provided us an OpenAPI spec file (OASv3), and this specification file is av
 
 .. note:: This is the version v1.0 of the API, and in this version, as you can notice, the ``COLORS`` micro-service is not yet available. It means, with this Specification File, we will publish the API Sentence application wihtout the COLORS.
 
-.. note:: the sentence will look like ``calm mouse of the mountain`` for instance.
+.. note:: The sentence will look like ``calm mouse of the mountain`` for example.
 
 |
 
@@ -22,7 +22,6 @@ Create the API Definition
 
 #. In the controller UI, in the menu ``APIs``, create an ``API Version``
 
-   #. Click on ``Create API Version``
    #. First, you need to create an ``API Definition``, to do so, click on ``CREATE NEW`` under the API Definition selection (which is empty)
 
       #. Name: ``api-sentence``, and click ``Submit``
@@ -65,6 +64,9 @@ Create a Published API for v1.0
             #. Name: ``wl-generator``
             #. Click ``Add BackEnd Workload URI``
                 #. URI: ``http://10.1.20.8:31200``
+                
+                .. note:: This URL is the FQDN and the NodePort used by the microservice running in the K3S.
+
                 #. Click ``Done``
             #. Click ``Done``
         #. Click ``Next``
