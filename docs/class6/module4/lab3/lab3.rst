@@ -1,5 +1,5 @@
-Step 9 - Add WAF protection
-###########################
+Step 9 - Add API WAF protection
+###############################
 
 So far, in the previous lab, the API Endpoint are not protected. There are published through a BIG-IP (hosting the Public IP addess and TLS certificates for instance).
 Now it is time to protect the API with a WAF. And we will use an ``Nginx App Protect``.
