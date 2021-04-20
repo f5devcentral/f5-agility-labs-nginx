@@ -8,6 +8,7 @@ Steps to enable Rate Limiting protection on COLORS API Endpoint
 
 #. Connect to the Controller UI, APIs, click on your API Definition and edit the Published API ``api-sentence-v3``
 #. In Routing, edit the security settings of the component ``cp-colors-v3``
+#. In the left menu, go to the sub-menu ``Rate Limiting``
 #. Enable Rate Limiting
     #. Key : ``Authenticated Client``
     #. Rate : ``5 requests per minutes``
@@ -32,7 +33,7 @@ Simulate too many requests from the client
 
 #. RDP to Win10 VM as user / user
 #. Open Postman and collection ``API Sentence Generator v3``, select the previous request ``GET Colors v3``
-#. Request a JWT token against Keycloak as ``matt`` and password ``matt`` 
+#. Request a JWT token against Keycloak as ``matt`` and password ``matt`` (to do so, clear the cookies in postman)
 #. Send the request, and don't wait more, send a second request. Your request is blocked because you are allowed to send one request every 12 seconds (5 req / minute)
 
    .. image:: ../pictures/lab2/429.png

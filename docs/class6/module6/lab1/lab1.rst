@@ -1,4 +1,4 @@
-Step 11 - API analytics
+Step 12 - API analytics
 #######################
 
 There are several ways to see API Analytics. Under the hood, an ``API Definition`` and ``Published API`` create an Application with Component. You can see analytics for all the them at different level.

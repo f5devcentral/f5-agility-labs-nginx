@@ -42,7 +42,10 @@ Let's deploy LOCATIONS v3.0 micro-service like a DevOps.
    .. image:: ../pictures/lab3/rancher-service-locationv3.png
       :align: center
 
-.. note:: Great, so now, the ``Location`` micro-service is running with 2 versions (v1.0) and (v3.0)
+.. note:: Great, so now, the ``Location`` micro-service is running with 2 versions (v1.0) and (v3.0). Both versions are published through NodePort on 2 different ports
+   
+   - Port 31103 for Locations v1/v2
+   - Port 31303 for Locations v3
 
 |
 
@@ -88,6 +91,10 @@ Publish the version 3.0 of the API
 
 #. Start by setting the ``Base Path``. This is the path to differentiate the different Published API. Set with ``/v3`` and check the box ``Strip Base Path`` so tha the backend app does not receive this Path.
 #. Name : ``api-sentence-v3``
+
+   .. image:: ../pictures/lab3/basepath.png
+      :align: center
+
 #. Click ``Next``
 #. Set the Environment, the App and the Gateway like the version v1.0
 
