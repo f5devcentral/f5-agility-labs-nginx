@@ -5,7 +5,6 @@ In this lab, we will add security in top of our API Gateway. To do so, we will:
 
 - Add JWT token validation
 - Add Claims authorization
-- Add a Rate Limiting policy
 
 .. image:: ../pictures/lab1/archi.png
    :align: center
@@ -23,7 +22,7 @@ Configure Keycloak as JWT OIDC token issuer
 ===========================================
 
 #. RDP to Win10 VM as user / user
-#. Open ``Edge Browser`` and click on ``Keycloak`` bookmark
+#. Open ``Edge Browser`` and click on ``Keycloak HTTPS`` bookmark
 #. Cick on ``Administration Console`` 
 
    .. image:: ../pictures/lab1/admin_console.png
@@ -44,7 +43,7 @@ Configure Keycloak as JWT OIDC token issuer
    .. image:: ../pictures/lab1/users.png
       :align: center
 
-   .. note:: As you can notice, we created ``matt`` with password ``matt``. At this stage, this user does not have any ``groups attribute`` assigned
+   .. note:: As you can notice, we created 2 users, ``matt`` with password ``matt``, and ``fouad`` with password ``fouad``. At this stage, this user does not have any ``groups attribute`` assigned
 
 #. Click on ``matt`` user ID to edit it.
 #. In the ``Attributes`` tab, add a new key ``groups`` and value ``employee``
@@ -65,7 +64,9 @@ Configure Keycloak as JWT OIDC token issuer
 
        .. note:: The configuration above says to add a claim with the name ``groups`` and assign the value from the user attribute ``groups``
 
-#. Come back to ``My-postman`` client and add this new scope into it
+    #. Click ``Save``
+
+#. Still in Keycloak UI, come back to ``My-postman`` client and add this new scope into it
     #. Click ``Clients`` > ``My-postman`` and select the tab ``Client Scopes``
     #. Before adding our new scope ``groups``, let's have a look on how the JWT token looks like. There is a great feature in Keycloak to see a generated token for a specific user
     #. Click on the sub-menu ``Evaluate`` and add the user ``matt`` at the bottom, then click ``Evaluate``
@@ -81,6 +82,10 @@ Configure Keycloak as JWT OIDC token issuer
        .. note:: As you can notice, there is no ``groups`` claim in this JWT token
 
     #. Click on the ``Setup`` sub-menu , and add the ``groups`` scope into the ``Assigned Default Client Scopes``
+
+       .. image:: ../pictures/lab1/scopes.png
+          :align: center
+
     #. Click on ``Evaluate`` sub-menu, and check the claim exists with the group attribute value ``employee``
 
 .. warning :: Congrats, we are good now to configure Nginx Controller in order to check the groups claim values to grant or not access to API endpoints.
@@ -207,7 +212,7 @@ Test your protected API with Conditional Access
 #. In Postman, for the ``GET Colors v3`` request, ask for a new token with user ``matt`` and password ``matt``. Don't be surprised if you don't see the popup windows asking for the credentials. It means Postman still has a session up with Keycloak for ``matt``
 #. Use the token and send the request. So far so good, it passes.
 #. Now, try with another user not part of ``employee`` group.
-    #. Click on ``Clear cookies``
+    #. Click on ``Clear cookies`` (scroll down)
 
        .. image:: ../pictures/lab1/clear_cookies.png
           :align: center
