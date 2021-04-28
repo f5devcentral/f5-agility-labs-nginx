@@ -1,5 +1,5 @@
 Step 10 - Deploy a DevPortal Instance
-####################################
+#####################################
 
 So far, we focused on API Gateway only. In API Management, there is a important topic for API Dev and API consumer : the ``Developper Portal``
 
