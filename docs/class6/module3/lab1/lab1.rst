@@ -3,7 +3,7 @@ Step 4 - Publish API v1.0
 
 Before publishing your first API, it is importnant to understand what the DevOps (or API dev) provided to us.
 
-They provided us an OpenAPI spec file (OASv3), and this specification file is available on ``swaggerhub``. You can consult the ``version v1.0`` it here : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0.0
+They provided us an OpenAPI spec file (OASv3), and this specification file is available on ``swaggerhub``. You can consult the ``version v1.0`` it here : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
 
 .. image:: ../pictures/lab1/OASv1.0.png
    :align: center
