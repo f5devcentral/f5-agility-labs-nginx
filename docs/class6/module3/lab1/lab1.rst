@@ -1,40 +1,39 @@
 Step 4 - Publish API v1.0
 #########################
 
-Before publishing your first API, it is importnant to understand what the DevOps (or API dev) provided to us.
+Before publishing our first API, it's important to understand what the DevOps (or API Dev) team provided us.
 
-They provided us an OpenAPI spec file (OASv3), and this specification file is available on ``swaggerhub``. You can consult the ``version v1.0`` it here : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
+They provided us an OpenAPI spec file (OASv3) via ``SwaggerHub``. You can consult ``version 1.0`` here: https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
 
 .. image:: ../pictures/lab1/OASv1.0.png
    :align: center
 
-.. note:: This is the version v1.0 of the API, and in this version, as you can notice, the ``COLORS`` micro-service is not yet available. It means, with this Specification File, we will publish the API Sentence application wihtout the COLORS.
-
-.. note:: The sentence will look like ``calm mouse of the mountain`` for example.
+.. note:: This is version 1.0 of the API, and in this version, as you can notice, the ``Colors`` micro-service is not yet available. This means that with this spec file we will publish the API Sentence application without the ``Colors`` micro-service (e.g. a sample sentence might look like ``calm mouse of the mountain``).
 
 |
 
-Steps to publish the Version v1.0 of the API
+Steps to publish version 1.0 of the API
 ********************************************
 
 Create the API Definition
 =========================
 
-#. In the controller UI, in the menu ``APIs``, create an ``API Version``
+#. In NGINX Controller, select ``Home`` (the NGINX logo on the top left corner) -> ``APIs`` -> ``Create API Version``:
 
-   #. First, you need to create an ``API Definition``, to do so, click on ``CREATE NEW`` under the API Definition selection (which is empty)
+   #. First, you will need to create an ``API Definition``. To do so, click on ``CREATE NEW`` under the API Definition box (which is empty):
 
-      #. Name: ``api-sentence``, and click ``Submit``
+      #. Name: ``api-sentence``
+      #. Click ``Submit``
 
-   #. Select ``OpenAPI Specification`` and ``Copy and paste specification text``
+   #. Select ``OpenAPI Specification`` -> ``Copy and paste specification text``.
    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
-   #. Verify the version set by the controller is ``1.0``. This information is extracted from the Spec file
-   #. Click ``Next``, and you can notice the controller imported all ``PATH`` and ``METHODS`` from the spec file.
-   #. click ``Submit``
+   #. Verify that the version set by NGINX Controller is ``1.0``. This information is extracted from the spec file.
+   #. Click ``Next``. You will notice NGINX Controller imported all the ``PATH`` and ``METHODS`` resources from the spec file.
+   #. Click ``Submit`.`
 
-   .. note:: At this moment of the configuration, the Controller knows the API paths and methods, but does not know where to proxy the traffic to.
+   .. note:: At this moment in the configuration process, NGINX Controller knows the API paths and methods, but does not know where to proxy the traffic to.
 
-#. Click on the API Definition created, and on the right side you can see the ``version`` and the number of ``resources``
+#. Click on the created API Definition. On the right side menu you can see the ``version`` and the number of ``resources``:
 
    .. image:: ../pictures/lab1/api-definition.png
       :align: center
@@ -45,29 +44,28 @@ Create the API Definition
 Create a Published API for v1.0
 ===============================
 
-#. Now, let's publish our API version v1.0. Click on ``Add Published API``
-    #. Name: ``api-sentence-v1``, click ``Next``
+#. Let's now publish version 1.0 of the API. Click on ``Add Published API``. Use the following values:
+    #. Name: ``api-sentence-v1``
+    #. Click ``Next``
     #. Environment: ``env_prod``
-    #. App: ``api-sentence-app`` (already created by me)
+    #. App: ``api-sentence-app`` (we automatically created this for you behind the scenes for this lab)
     #. Gateways: ``apigw``
     #. Click ``Next``
-       
+
        .. image:: ../pictures/lab1/deployment.png
           :align: center
           :class: with-shadow
 
-#. In Routing, we will create one ``component`` per ``micro-service``
-    #. Click ``Add New`` to create a new component for ``GENERATOR``
+#. In ``Routing``, we will create one ``component`` per ``micro-service``:
+    #. Click ``Add New`` to create a new component for the ``Generator`` micro-service:
         #. Name: ``cp-generator``
         #. Click ``Next``
-        #. Click ``Add a new Workload Group``
+        #. In ``Workload Groups``:
             #. Name: ``wl-generator``
-            #. Click ``Add BackEnd Workload URI``
-                #. URI: ``http://10.1.20.8:31200``
-                
-                .. note:: This URL is the FQDN and the NodePort used by the microservice running in the K3S.
-
-                #. Click ``Done``
+            #. In ``Backend Workload URIs``:
+               #. URI: ``http://10.1.20.8:31200``
+               .. note:: This URL is the FQDN and the NodePort used by the micro-service running in the K3S.
+               #. Click ``Done``
             #. Click ``Done``
         #. Click ``Next``
 
@@ -76,9 +74,9 @@ Create a Published API for v1.0
 
         #. Click ``Submit``
 
-    #. Now, we have to replicate the same steps for each micro-service (generator already done)
+    #. We now have to replicate the same steps for each other micro-service
 
-       .. list-table:: list of all micro-services and their component configuration
+       .. list-table:: List of all micro-services and their component configuration
           :header-rows: 1
 
           * - Name
@@ -102,43 +100,43 @@ Create a Published API for v1.0
             - http://10.1.20.8:31100
 
 
-    #. You should now have a list of 4 ``components`` but empty.
-    #. On the left side, you can see all ``PATH`` imported from the OAS spec file.
-    #. Drag and Drop each ``PATH`` to the right ``COMPONENT``
+    #. You should now have a list of 4 empty ``components``.
+    #. On the left side, under ``Unrouted`` you can see every API ``Path`` imported from the OAS spec file.
+    #. Drag and drop each unrouted API ``Path`` (shown as a ``resource`` here) to the right ``component``.
 
        .. image:: ../pictures/lab1/routing.png
           :align: center
 
 #. Click ``Submit``
 
-.. note:: Now, you API v1.0 is published and you can check if it is working as expected.
-
 .. image:: ../pictures/lab1/published-api-v1.0.png
    :align: center
 
 |
 
-Test your API v1.0
-==================
+.. note:: API v1.0 is now published, and we can now check if it is working as expected.
+
+Test the v1.0 API deployment
+============================
 
 Steps:
 
-#. RDP to Win10 machine as ``user`` and password ``user``
-#. Open ``Edge Browser`` and click on ``Random Name Generator`` bookmark
-#. The ``FrontEnd`` will display a sentence from ``words`` coming from the ``generator``
+#. RDP to the ``Win10`` VM (user/user).
+#. Open the ``Edge Browser`` and select the ``Random Name Generator`` bookmark.
+#. The ``Frontend`` will display a sentence with ``Words`` coming from the ``Generator``.
 
    .. image:: ../pictures/lab1/frontend-nocolors.png
       :align: center
 
-   .. note:: As you can notice, there is no COLORS in the sentence as we didn't deploy and publish any color micro-service. The Workflow in this lab is as below, and the flow is not passing through the API Gateway yet, because it is a Web traffic. All the web traffic is routed by the k8s ingress.
+   .. note:: As you can notice, there are no ``Colors`` in the sentence as we didn't deploy and publish the ``Color`` micro-service. This lab's traffic flow is shown below, and as you can see, the web traffic is not passing through the API Gateway yet. Instead, all the web traffic is routed through the k8s ingress.
 
    .. image:: ../pictures/lab1/api-workflow.png
       :align: center
 
-#. Open ``Postman`` and the collection ``API Sentence Generator v1 and v2``
-#. Send a request with the ``GET Locations`` call. The FQDN is different (from the FrontEnd webapp) and reaching the API GW which will route the request to the ``Locations`` micro-services, and will return all the entries (all the words)
+#. Open ``Postman`` and select the ``API Sentence Generator v1 and v2`` collection.
+#. Send a request with the ``GET Locations`` call. The FQDN is different from the ``Frontend`` web app, and reaches the API Gateway directly. The API Gateway will in turn route the request to the ``Locations`` micro-service, and will return all the entries (all the words).
 
-   .. code-block:: js
+   .. code-block:: JSON
 
         [
             {
@@ -154,10 +152,10 @@ Steps:
                 "name": "mountain"
             }
         ]
-    
-#. Send a request with the ``GET a sentence from Generator``. This request will ask generator to get one word per micro-service.
 
-   .. code-block:: js
+#. Send a request with the ``GET a Sentence from Generator`` call. This request will request the ``Generator`` micro-service to get one word per ``Word`` micro-service.
+
+   .. code-block:: JSON
 
         {
            "adjectives": "calm",
@@ -165,6 +163,6 @@ Steps:
            "locations": "park"
         }
 
-   .. note:: The above outcomes will generate the sentence ``calm whale of the park`` in the FrontEnd application
+   .. note:: The above results will generate the sentence ``calm whale of the park`` in the ``Frontend`` application.
 
-.. warning:: CONGRATS, you published the API v1.0 with Nginx Controller and an API Gateway
+.. warning:: Congrats! You just published your first API using NGINX Controller and NGINX Plus as an API Gateway!

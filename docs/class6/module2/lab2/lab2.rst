@@ -1,57 +1,58 @@
 Step 3 - Create an API Gateway
 ##############################
 
-The instance is adopted by controller, but it needs to be known as a ``Gateway`` to be used by the controller. A gateway is a controller object "grouping" instances.
+The instance is linked with NGINX Controller, but it needs to be configured as a ``Gateway`` to be used by NGINX Controller. A ``Gateway`` is an NGINX Controller object "grouping" instances (not to be confused with an API Gateway).
 
-In this lab, we will have only one instance per gateway. But we could have several instances for one gateway. For instance, I coudl have 3 Nginx Plus instances in front of my API app. All of these instances will have the same API definition configuration.
+.. note:: In this lab, we have only one instance per ``Gateway``, but we could have several instances per ``Gateway``. For instance, I could have 3 NGINX Plus instances in front of my API Sentence app. All of these instances would have the same API Definition config.
 
 Steps:
 
-#. In the controller UI, in the menu ``Services`` > ``Gateways``, create a new Gateway
+#. In NGINX Controller -> Select ``Home`` (the NGINX logo on the top left corner) -> ``Services`` -> ``Gateways`` -> ``Create Gateway``. Use the following values:
     #. Name: ``apigw``
     #. Environment: ``env_prod``
-    #. Placement: ``select here your nginx1 instance``
-    #. Hostname: http://api.name-generator.com, and click ``Done``
-    #. Click ``Submit``
+    #. Placement: ``<your nginx1 instance>``
+    #. Hostname: http://api.name-generator.com
+    #. Methods: ``POST``, ``GET``, ``PUT``, ``DELETE``, ``PATCH``
+#. Click ``Submit``
 
-    .. note:: The hostname value is the listener. This gateway will be dedicated for the API FQDN, so we set this FQDN at the Gateway level.
+    .. note:: The hostname value is the listener. This ``Gateway`` will be dedicated to the API FQDN, so we set this FQDN at the ``Gateway`` level.
 
-#. You can notice, before submitting, the API Spec call to create this Gateway (with a Postman for instance)
+#. You might notice before submitting that NGINX Controller also gives you the ``API Spec`` call to create this gateway (via Postman for example):
 
-.. code-block:: js
+.. code-block:: JSON
    :caption: PUT /api/v1/services/environments/env_prod/gateways/apigw
-   
+
     {
-    "metadata": {
+      "metadata": {
         "name": "apigw",
         "tags": []
-    },
-    "desiredState": {
+      },
+      "desiredState": {
         "ingress": {
-        "placement": {
-            "instanceRefs": [
-            {
-                "ref": "/infrastructure/locations/unspecified/instances/nginx1"
-            }
-            ]
-        },
-        "uris": {
+          "uris": {
             "http://api.name-generator.com": {}
-        },
-        "methods": [
+          },
+          "methods": [
             "POST",
             "GET",
             "PUT",
             "DELETE",
             "PATCH"
-        ]
+          ],
+          "placement": {
+            "instanceRefs": [
+              {
+                "ref": "/infrastructure/locations/unspecified/instances/nginx1"
+              }
+            ]
+          }
         }
-    }
+      }
     }
 
 |
 
-You API Gateway is created and we can use it now in every ADC or APIm configuration settings.
+#. Congrats! You have configured your NGINX Plus instance as a ``Gateway``, and we can now use it for ADC or API management (as an API Gateway) use cases.
 
 .. image:: ../pictures/lab2/apigw.png
    :align: center

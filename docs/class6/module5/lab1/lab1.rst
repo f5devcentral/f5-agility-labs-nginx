@@ -1,52 +1,54 @@
-Step 10 - Deploy a DevPortal Instance
-#####################################
+Step 10 - Deploy an API Developer Portal
+########################################
 
-So far, we focused on API Gateway only. In API Management, there is a important topic for API Dev and API consumer : the ``Developper Portal``
+So far, we have only focused on deploying and securing our API Gateway. In the API Management world, there is yet another important topic for both API developers and API consumers, the ``API Developer Portal (DevPortal)``.
+An API DevPortal includes documentation on how to use any given API (e.g. sample requests/responses for each available endpoint).
 
-In this lab, we will deploy a Nginx Plus instance as a DevPortal and push to this instance the Developper Portal with the API Sentence documentation.
+In this lab, we will deploy a dedicated NGINX Plus instance as an API DevPortal.
 
-The goal is to offer to ``consumers`` the documentation on how to use the API Sentence app.
+.. note:: The API DevPortal can be deployed in an existing API Gateway instance, or a dedicated instance.
+
+The goal is to offer to both ``API developers`` and ``API consumers`` documentation on how to use the API Sentence app.
 
 |
 
-Install the controller agent on the second Nginx Plus instance
-**************************************************************
-
-#. On one side, SSH or WebSSH to ``Nginx-2 - DevPortal``. This instance is a Nginx Plus instance, but not yet adopted by the controller.
-#. On the other side, connect to the Controller UI, and go to ``Infrastructure`` > ``Instances``
-#. Click ``Create``, ``Add an existing instance``, name ``devportal`` and check the box ``Allow unsecure server connections ...``
-#. Copy the ``curl commmand`` and enter ``y`` for each confirmation
-
+Install the NGINX Controller agent on the second NGINX Plus instance
+********************************************************************
+#. In NGINX Controller -> Select ``Home`` -> ``Infrastructure`` -> ``Instances``
+#. Click ``Create`` -> ``Add an existing instance``. Use the following values:
+#. Enter a ``Name``, e.g. ``devportal``.
+#. Check the box ``Allow insecure server connections to NGINX Controller using TLS``.
+#. Copy the ``curl commmand`` in the command box:
    .. code-block:: bash
 
       curl -k -sS -L https://10.1.20.4/install/controller-agent > install.sh && \
       API_KEY='8c8adf4b5966f517203e578d51b16059' sh ./install.sh -i devportal
 
-    
-#. In the SSH (or WebSSH), paste the curl command and enter ``y`` for each confirmation
-#. After few seconds, the instance will appear in the Controller UI
+#. SSH (or WebSSH) to the ``Nginx-2 - DevPortal`` instance. This instance is an NGINX Plus instance, but it's not yet linked to NGINX Controller.
+#. Paste the ``curl`` command and execute it. Enter ``y`` at every confirmation prompt.
+#. After few seconds, the command will succeed and the instance will appear in NGINX Controller.
 
    .. image:: ../pictures/lab1/instances.png
       :align: center
 
-.. warning:: If the instance is stuck in ``Configuring`` state, restart the ``nginx`` and nginx ``controller agent`` services as below
-   
+.. warning:: Wait till the status changes from ``Configuring`` to ``Running``. If the status is stuck in the ``Configuring`` state, force the NGINX Controller agent to restart in the ``Nginx-2`` as below:
+
    .. code-block:: bash
-      
+
       sudo service nginx restart
       sudo service controller-agent restart
 
 |
 
-Create the DevPortal Gateway
-****************************
+Create the NGINX DevPortal Gateway
+**********************************
 
-As a reminder, an instance can not be used alone. It needs to be part of a ``gateway``
+As a reminder, an instance cannot be used alone. It needs to be part of a NGINX Controller ``Gateway``.
 
-#. In the controller UI, create a new ``Gateway`` (Services > Gateway menu)
-    #. Name : ``devportal-gw``
-    #. Environement : ``env_prod``
-    #. Click ``Next``
-    #. Placement : select the ``devportal`` instance, and click ``Done`` and ``Next`` 
-    #. Hostnames : create a new hostname ``http://devportal.local``, and click ``Done`` and ``Next`` 
-    #. Click ``Submit``
+
+#. In NGINX Controller -> Select ``Home`` -> ``Services`` -> ``Gateways`` -> ``Create``. Use the following values:
+    #. Name: ``devportal-gw``
+    #. Environment: ``env_prod``
+    #. Placement: ``<your devportal instance>``
+    #. Hostnames: ``http://devportal.local``
+#. Click ``Submit``

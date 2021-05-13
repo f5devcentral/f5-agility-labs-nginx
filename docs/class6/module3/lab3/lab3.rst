@@ -1,40 +1,40 @@
-Step 6 - Update the API to v3.0
+Step 6 - Publish API v3.0
 ###############################
 
-Now, the API Dev modified an existing EndPoint. They modified the ``Locations`` micro-services in order to add a new JSON object for the coordinates of the location.
+The API Dev has now modified an existing endpoint. They modified the ``Locations`` micro-service in order to add a new JSON object for the coordinates of the location.
 
-To do so, they :
+To do so, they:
 
-- Created a new micro-service container image, with a new tag (v3.0) : registry.gitlab.com/sentence-application/locations/volterra:v3.0
-- Created a new version (v3.0) of the OAS spec file : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/3.0
+* Created a new micro-service container image, with a new tag (v3.0): registry.gitlab.com/sentence-application/locations/volterra:v3.0
+* Created a new version (v3.0) of the OAS spec file: https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/3.0
 
-As you can see in the OAS file version 3.0, the ``/locations`` PATH has a new JSON object.
+As you can see in the OAS file v3.0, the ``/locations`` endpoint has a new JSON object:
 
 .. image:: ../pictures/lab3/oasv3.png
    :align: center
 
-.. warning:: Modifying an existing API endpoint means this will break the API v2.0. Any mobile application or API client using the ``LOCATIONS`` will receive an error if we don't create a dedicated version for this new API version
+.. warning:: Modifying an existing API endpoint means the API v2.0 will break. Any mobile application or API client using the ``/locations`` endpoint will receive an error if we don't create a dedicated version for this new API version.
 
-Steps to publish the Version v3.0 of the API
-********************************************
+Steps to publish API v3.0
+*************************
 
-Deploy the new LOCATIONS v3.0 micro-service in k8s
-==================================================
+Deploy the new ``Locations`` v3.0 micro-service in k8s
+======================================================
 
-Let's deploy LOCATIONS v3.0 micro-service like a DevOps.
+Let's deploy the ``Locations`` v3.0 micro-service!
 
-#. SSH or WEBSSH to ``Docker (k3s + Rancher)`` VM
-#. Run the Kubectl command in order to deploy the COLORS micro-service and its k8s service
+#. SSH (or Web) to the ``Docker (k3s + Rancher + ELK)`` VM.
+#. Run the following ``kubectl`` command in order to deploy the ``Locations`` micro-service and its k8s service:
 
    .. code-block:: bash
 
       sudo su
       kubectl apply -f /home/ubuntu/k3s/attributs_locations_v3.yaml -n api
 
-   .. note:: As you can notice, this micro-service is deployed in the same NameSpace as other WORDS micro-service (api), and the previous version of the ``LOCATIONS`` is stil there, because currently used by the current clients.
+   .. note:: As you can notice, this micro-service is deployed in the same ``NameSpace`` as the other ``Words`` micro-services (api), and the previous version of the ``Locations`` micro-service is still there, because it's currently used by clients.
 
-#. RDP to Win10 (user/user)
-#. And check in Rancher (admin/admin) that the new deployment is deployed (deployment and service)
+#. RDP to the ``Win10`` VM (user/user).
+#. Check in ``Rancher`` (admin/admin) that the new ``Deployment`` has been successful (both the ``Deployment`` and ``Service``)
 
    .. image:: ../pictures/lab3/rancher-deploy-locationv3.png
       :align: center
@@ -42,69 +42,66 @@ Let's deploy LOCATIONS v3.0 micro-service like a DevOps.
    .. image:: ../pictures/lab3/rancher-service-locationv3.png
       :align: center
 
-.. note:: Great, so now, the ``Location`` micro-service is running with 2 versions (v1.0) and (v3.0). Both versions are published through NodePort on 2 different ports
-   
+.. note:: Great! So now, the ``Location`` micro-service is running with 2 versions (v1.0) and (v3.0). Both versions are published through ``NodePort`` on 2 different ports:
+
    - Port 31103 for Locations v1/v2
    - Port 31303 for Locations v3
 
 |
 
-Create a new version for the existing API Definition
+Create version 3.0 for the existing API Definition
 ====================================================
 
-#. In the controller UI, select your API Definition, and on the top right corner, create a new version.
+#. Connect to NGINX Controller, select your API Definition ``api-sentence``, and on the top right corner select ``Add Version``.
 
    .. image:: ../pictures/lab3/addversion.png
       :align: center
 
-#. Go to the SwaggerHub and copy the version 3 of the OAS spec file : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/3.0
-#. Select ``Copy and paste specification text`` and paste the OAS v3.0 spec file content
+#. Select ``OpenAPI Specification`` -> ``Copy and paste specification text``.
+#. Copy and paste the v2.0 OAS YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/3.0
 
    .. note:: You can notice the version is automatically set to ``3.0``
 
    .. image:: ../pictures/lab3/pasteoas.png
       :align: center
 
-#. Click ``Next`` and ``Submit``
+#. Click ``Submit``
 
-.. note:: You can see on the right sidebar, a new version ``3.0``
+.. note:: You should now see on the right sidebar the new ``3.0`` version
 
    It is time to publish this new version of the API for a sample of clients (early access, beta ...)
-   
+
    .. image:: ../pictures/lab3/version3.png
       :align: center
 
 |
 
-Publish the version 3.0 of the API
-==================================
+Publish version 3.0 of the API
+==============================
 
-.. note:: This new API version will listen on a specific path in order to differentiate the ``Production API (v2.0)`` from this ``Early Access API (v3.0)``
+.. note:: This new API version will listen on a specific path (``/v3/``) in order to differentiate the ``Production API (v2.0)`` from this ``Early Access API (v3.0)``.
 
-   We decided to use the PATH /v3/ for this Published API
-
-
-#. In the Version 3.0 section, add a new ``Published API``
+#. Select the 3.0 API Definition, click on ``Add Published API``. Use the following values:
 
    .. image:: ../pictures/lab3/add-publish-v3.png
       :align: center
 
-#. Start by setting the ``Base Path``. This is the path to differentiate the different Published API. Set with ``/v3`` and check the box ``Strip Base Path`` so tha the backend app does not receive this Path.
-#. Name : ``api-sentence-v3``
+   #. Start by setting the ``Base Path``. This is the path to differentiate the various Published APIs. Set it to ``/v3`` and check the box ``Strip Base Path`` so that the API Gateway does not use the path to connect to the backend micro-services.
 
    .. image:: ../pictures/lab3/basepath.png
       :align: center
 
-#. Click ``Next``
-#. Set the Environment, the App and the Gateway like the version v1.0
+   #. Name: ``api-sentence-v3``
+   #. Click ``Next``.
+   #. Set the Environment, the App and the Gateway as with version 1.0.
 
    .. image:: ../pictures/lab3/deployment.png
       :align: center
 
-#. Click ``Next``
-#. Configure the Routing like the version v1.0 except the ``Location`` Component which route the traffic to another micro-service in the k8s (listening on port 31303 instead of 31103 for v1.0)
+   #. Click ``Next``
+   #. Configure the ``Routing`` as with version 1.0 except for the ``location`` component which now routes the traffic to a different micro-service in k8s (listening on port 31303 instead of 31103 for v1.0).
 
-   .. list-table:: list of all micro-services and their component configuration
+   .. list-table:: List of all micro-services and their component configuration.
       :header-rows: 1
 
       * - Name
@@ -131,30 +128,30 @@ Publish the version 3.0 of the API
         - wl-colors-v3
         - http://10.1.20.8:31102
 
-#. Now, Drag and Drop each PATH to the right component.
+#. Drag and drop each ``Path`` resource to the right ``component``.
 
    .. image:: ../pictures/lab3/routingv3.png
       :align: center
 
-#. Click ``Next`` and ``Submit`` 
+#. Click ``Submit``
 
-#. Check your ``Published API`` is green. If not, edit and re-submit.
+#. Check if your ``Published API`` is green. If not, address any errors and re-submit.
 
    .. image:: ../pictures/lab3/green.png
       :align: center
 
 |
 
-Test the API v3.0 and v2.0
-==========================
+Test the v3.0 (and v2.0) API deployments
+========================================
 
 Steps:
 
-#. RDP to Win10 machine as ``user`` and password ``user``
-#. Open ``Postman`` and the collection ``API Sentence Generator v3``
-#. Send a request with the ``GET Colors v3`` call, but check the PATH. You can notice the path starts with ``/v3``. It means, the request is routed by the version 3 of the API Definition.
+#. RDP to the ``Win10`` VM (user/user).
+#. Open ``Postman`` and the ``API Sentence Generator v3`` collection.
+#. Send a request with the ``GET Colors v3`` call, and check the ``PATH``. Notice that the ``PATH`` starts with ``/v3``. It means the request is being routed by version 3 of the API Definition.
 
-   .. code-block:: js
+   .. code-block:: JSON
 
         [
             {
@@ -178,10 +175,10 @@ Steps:
                 "id": 5
             }
         ]
-    
-#. Send a request with the ``GET Locations v3``. This is our new version of the ``Location`` micro-service running in k8s
 
-   .. code-block:: js
+#. Send a request with the ``GET Locations v3`` call. This is the updated version of the ``location`` micro-service running in k8s.
+
+   .. code-block:: JSON
 
         [
             {
@@ -210,11 +207,11 @@ Steps:
             }
         ]
 
-   .. note:: As you can notice, we now have the new JSON object ``coordinates`` coming form the new version of the micro-service
+   .. note:: As you can see, we now have a new JSON object ``coordinates``, coming from the updated ``location`` micro-service.
 
-#. Send a request with the ``GET Locations`` in the ``API Sentence Generator v1 and v2`` collecction in order to test if the version v2.0 is still up and running.
+#. Send a request with the ``GET Locations`` call in the ``API Sentence Generator v1 and v2`` collection in order to test that version 2.0 is still up and running.
 
-   .. code-block:: js
+   .. code-block:: JSON
 
         [
             {
@@ -230,7 +227,5 @@ Steps:
                 "name": "mountain"
             }
         ]
- 
-.. warning:: CONGRATS, you published the API v3.0 routing to a dedicated k8s service. And the version v2.0 is still available for the "current" clients. Only the Early Access clients reaching the path /v3 get access to this new API.
 
-
+.. warning:: Congrats! You published v3.0 of your API and it's correctly being routed to the new ``locations`` micro-service! Furthermore, version 2.0 is still available for any "current" clients. Only the Early Access clients querying the ``/v3`` path get access to this new API.
