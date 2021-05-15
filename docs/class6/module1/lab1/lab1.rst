@@ -1,35 +1,34 @@
-Architecture of API Sentence Application
-########################################
+Architecture of the API Sentence app
+####################################
 
-You can use this application in your own environment if you want : https://github.com/fchmainy/nginx-aks-demo
+.. note:: If you want, you can deploy this application in your own environment: https://github.com/fchmainy/nginx-aks-demo
 
-First of all, it is important to understand how API Sentence app is split between micro-services
+First of all, before we delve into the lab, it is important to understand how the API Sentence app is split between micro-services.
 
-**This is what API Sentence FrontEnd looks like when all the microservices are up and running**
+**This is what the API Sentence website ``Frontend`` looks like when all the necessary micro-services are up and running:**
 
 .. image:: ../pictures/api-app-full.png
    :align: center
 
+Behind the scenes, the ``Frontend`` app reaches a ``Generator`` micro-service. In turn, the ``Generator`` micro-service reaches four distinct ``Words`` micro-services. Each ``Words`` micro-service generates a distinct **word** (an ``adjective``, an ``animal``, a ``color`` and a ``location``).
 
-To make it simple, a ``FrontEnd`` app reaches a ``Generator`` micro-service, that reaches 4 different ``Words`` micro-services. Each ``Words`` micro-service generates a Word (an adjective, an animal, a color and a location)
-
-Each ``Words`` microservice is a NodeJS API Server. It means, we can ``GET``, ``POST``, ``PATCH``, ``DELETE`` entries.
-The ``FrontEnd`` is just a web interface representing the outcomes of the APIs. On purpose, this FrontEnd page has a background and logos in order to make it "heavy" for Volterra demonstrations.
+Each ``Words`` micro-service is a ``NodeJS`` API server. This means we can ``GET``, ``POST``, ``PATCH``, and ``DELETE`` each respective ``Words`` micro-service.
+The ``Frontend`` is just a web interface representing the outcomes of the APIs. This ``Frontend`` page has a background and logos on purpose in order to make it "heavy" for Volterra demonstrations.
 
 **And this is how the micro-services are meshed together**
 
 .. image:: ../pictures/lab1/api-workflow.png
    :align: center
 
-As you can notice, we can ``Request`` all EndPoints
-   * FrontEnd -> display the Web Interface with the sentence
-   * Generator -> respond with a JSON payload and 4 words (one per ``Words`` micro-services)
-   * Adjectives -> respond with an adjective word
-   * Animals -> respond with an animal word
-   * Colors -> respond with a color word
-   * Locations -> respond with a location word
+We can request each endpoint separately:
+   * Frontend -> Displays the web interface with the generated sentence.
+   * Generator -> Responds with a JSON payload and 4 words (one for each ``Words`` micro-service).
+   * Adjectives -> Responds with an adjective.
+   * Animals -> Responds with an animal.
+   * Colors -> Responds with a color.
+   * Locations -> Responds with a location.
 
-A direct API call to a ``Words`` micro-service (like /locations) will provide a JSON response as below:
+A direct API call to a ``Words`` micro-service (like ``/animals``) will provide a JSON response as below:
 
 .. code-block:: JSON
 
@@ -59,12 +58,9 @@ A direct API call to the ``Generator`` micro-service will provide a JSON respons
       "locations": "park"
    }
 
-**This is how the micro-services are used on the FrontEnd page**
-
-From the previous example, this is how the sentence is generated when the ``Generator`` get the 4 words.
+From the previous example, this is how the sentence is generated when the ``Generator`` micro-service requests the 4 words:
 
 .. image:: ../pictures/lab1/webapp-containers.png
    :align: center
 
-**In this lab, we will publish the Words micro-services through an NGINX API Gateway managed by a controller. Then, we will check through the FrontEnd web interface the outcomes.**
-
+**In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NGINX Controller. Then, we will check the result through the ``Frontend`` web interface.**
