@@ -1,107 +1,114 @@
-Step 7 - Add Authentication and Authorization
-#############################################
+Step 7 - Set up authentication and authorization
+################################################
 
-In this lab, we will add security in top of our API Gateway. To do so, we will:
+In this lab, we will add a security layer in front of our API Gateway. To do so, we will:
 
-- Add JWT token validation
-- Add Claims authorization
+* Add JWT token validation
+* Add JWT claims authorization
 
 .. image:: ../pictures/lab1/archi.png
    :align: center
 
-.. note:: A JWT token need to be issued by an Oauth Authorization Server. There are several Oauth AS on the market. Some of same are IDaaS like Azure AD or Okta. Some others are opensource (or commercial) like **Keycloak**.
+.. note:: A JWT token needs to be issued by an OAuth Authorization Server (AS). There are several OAuth AS on the market. Some are IDaaS (Identity as a Service) like ``Azure AD`` or ``Okta``. Some others are OSS (Open Source Software) or commercial like **Keycloak**.
 
-   In this lab, we will use Keycloak as Oauth AS to issue the JWT tokens.
+   In this lab, we will use ``Keycloak`` as our OAuth AS to issue the JWT tokens.
 
 |
 
 Steps to enable JWT token validation and authorization
 ******************************************************
 
-Configure Keycloak as JWT OIDC token issuer
-===========================================
+Configure ``Keycloak`` as a JWT OIDC token issuer
+=================================================
 
-#. RDP to Win10 VM as user / user
-#. Open ``Edge Browser`` and click on ``Keycloak HTTPS`` bookmark
-#. Cick on ``Administration Console`` 
+#. RDP to the ``Win10`` VM (user/user).
+#. Open the ``Edge Browser`` and select the ``Keycloak HTTPS`` bookmark.
+#. Click on ``Administration Console``.
 
    .. image:: ../pictures/lab1/admin_console.png
       :align: center
 
-#. Login on Keycloak as admin / admin
-#. On the top left corner, check the realm selected ``Api-app`` and click on ``Client`` menu
-#. Then select ``my-postman``
+#. Login to Keycloak using ``admin`` as both the user and password.
+#. On the top left corner, check that the realm selected is ``Api-app`` and click on the ``Clients`` menu.
+#. Select ``my-postman``
 
    .. image:: ../pictures/lab1/clients.png
       :align: center
 
-   .. note:: in order to avoid any mistake during this lab, we created in advance the ``client`` ``my-postman`` and the ``secret key``  ``9cabf36d-8eda-4cf8-a362-ccc982408ba7``
+   .. note:: In order to avoid any mistakes during this lab, we created in advance the ``my-postman`` client and the ``secret key`` (``9cabf36d-8eda-4cf8-a362-ccc982408ba7``).
 
-#. In the ``My-postman`` client, click on ``Credentials``. You can notice the secret key we will use to ask for a JWT token in postman.
+#. In the ``my-postman`` client, click on ``Credentials``. You should be able to see the secret key we will use to ask for a JWT token in postman.
 #. Click on ``Users`` in the left menu, and click on ``View all users``
 
    .. image:: ../pictures/lab1/users.png
       :align: center
 
-   .. note:: As you can notice, we created 2 users, ``matt`` with password ``matt``, and ``fouad`` with password ``fouad``. At this stage, this user does not have any ``groups attribute`` assigned
+   .. note:: You should see 2 users, ``matt`` (password ``matt`)`, and ``fouad`` (password ``fouad``). At this stage, these users do not have any attributes assigned.
 
-#. Click on ``matt`` user ID to edit it.
-#. In the ``Attributes`` tab, add a new key ``groups`` and value ``employee``
-#. Click ``Add`` and ``Save``
+#. Click on the ``matt`` ID to edit it.
+#. In the ``Attributes`` tab, add a new key ``groups`` with value ``employee``.
+#. Click ``Add`` -> Click ``Save``
 
-   .. warning:: You have to click on ``Add`` to add the attribut, and on ``Save`` to save the user settings.
+   .. warning:: You need to click on ``Add`` to add the attribute, and on ``Save`` to save the user settings.
 
    .. image:: ../pictures/lab1/matt_attributes.png
       :align: center
 
-#. Now, we create our own scope ``groups`` so that a claim is added into every JWT token with the groups attribute value(s)
-    #. Click on ``Client Scopes`` and ``Create``
-    #. Name it ``groups``, click ``Save`` and click on ``Mappers`` tab
-    #. Click ``Create`` in order to create a new mapper. Configure as below, the mapper type is ``User Attribute``
+#. We will now create our own scope, ``groups``, so that a JWT claim is added into every JWT token with the respective attribute value(s):
+    #. Click on ``Client Scopes`` -> ``Create``
+    #. Name the scope ``groups`` -> Click ``Save`` -> Click the ``Mappers`` tab -> Click ``Create``
+    #. Create a new mapper. Use the following values:
+       #. Name: ``groups``
+       #. Mapper Type: ``User Attribute``
+       #. User Attribute: ``groups``
+       #. Token Claim Name: ``groups``
+       #. Claim JSON Type: ``String``
+       #. Add to ID token: ``ON``
+       #. Add to access token: ``ON``
+       #. Add to userinfo: ``ON``
+       #. Multivalued: ``OFF``
+       #. Aggregate attribute values: ``OFF``
 
        .. image:: ../pictures/lab1/mapper.png
           :align: center
 
-       .. note:: The configuration above says to add a claim with the name ``groups`` and assign the value from the user attribute ``groups``
+       .. note:: The configuration above says to add a claim with the name ``groups`` and assign it the value from the user attribute ``groups``
 
     #. Click ``Save``
 
-#. Still in Keycloak UI, come back to ``My-postman`` client and add this new scope into it
-    #. Click ``Clients`` > ``My-postman`` and select the tab ``Client Scopes``
-    #. Before adding our new scope ``groups``, let's have a look on how the JWT token looks like. There is a great feature in Keycloak to see a generated token for a specific user
-    #. Click on the sub-menu ``Evaluate`` and add the user ``matt`` at the bottom, then click ``Evaluate``
+#. Still in ``Keycloak``, add this new scope to the ``my-postman`` client:
+    #. Click ``Clients`` -> ``my-postman`` and select the ``Client Scopes`` tab
+    #. Before adding our new scope ``groups``, let's have a look in at how the generated JWT token looks like. Click on ``Evaluate`` and select ``matt`` as the ``user``, then click ``Evaluate``.
 
        .. image:: ../pictures/lab1/evaluate.png
           :align: center
 
-    #. Click on ``Generated Access Token``, and check the JWT content.
+    #. Click ``Generated Access Token``, and check the JWT content.
 
        .. image:: ../pictures/lab1/jwt_no_groups.png
           :align: center
 
-       .. note:: As you can notice, there is no ``groups`` claim in this JWT token
+       .. note:: As you can see, there is no ``groups`` claim in this JWT token
 
-    #. Click on the ``Setup`` sub-menu , and add the ``groups`` scope into the ``Assigned Default Client Scopes``
+    #. Click on the ``Setup`` sub-menu (next to the ``Evaluate`` sub-menu), select the ``groups`` scope under ``Available Client Scopes`` and click ``Add Selected`` to move the scope into the ``Assigned Default Client Scopes``.
 
        .. image:: ../pictures/lab1/scopes.png
           :align: center
 
-    #. Click on ``Evaluate`` sub-menu, and check the claim exists with the group attribute value ``employee``
+    #. Move back to the ``Evaluate`` sub-menu and check that ``matt`` now has a ``groups: employee`` attribute value
 
-.. warning :: Congrats, we are good now to configure Nginx Controller in order to check the groups claim values to grant or not access to API endpoints.
+.. warning :: Congrats! We are now ready to configure NGINX Controller to check the groups claim values and conditionally grant access to our API endpoints.
 
 |
 
-Create an Identity Provider in the Controller
-=============================================
+Create an Identity Provider in NGINX Controller
+===============================================
 
-The JWT token is a readable token signed by a public/private key workflow. Keycloak (or any other Oauth AS) provides with either a private secret key, or a JWKS url.
+A JWT token is a readable token signed by a public/private key workflow. ``Keycloak`` (or any other Oauth AS) provide you with either a private secret key or a JWKS url.
 
-For modern IDaaS or AS (like keycloak), a JWKS url is used. This is the public URL to retrieve and download the public keys used to sign the JWT token.
+A JWKS url is a public URL to retrieve and download the public keys used to sign the JWT token. The Keycloak JWKS url is http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs, and the content looks like:
 
-The Keycloak JWK url is http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs, and the content looks like 
-
-.. code-block:: js
+.. code-block:: JSON
 
     {
         "keys": [
@@ -119,13 +126,15 @@ The Keycloak JWK url is http://10.1.1.8:8080/auth/realms/api-app/protocol/openid
                 "x5t": "_qPH5MQIPZ4EmoWlTHv7Ciq28EY",
                 "x5t#S256": "V5zhNTYsKPltmTdF9j_LnZfaIgMHCnLJoiNwxpEBUc8"
             }
-            
         ]
-        
     }
 
-#. Connect to Controller UI, and in ``Service`` menu, and ``Identity Provider`` sub-menu, create a new ``Identity Provider``
-#. Copy / paste the JWKS URL http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs
+#. In NGINX Controller -> Select ```Services`` -> ``Identity Providers`` -> ``Create Identity Provider``. Use the following values:
+   #. Name: ``keycloak``
+   #. Environment: ``env_prod``
+   #. Type: ``JWT``
+   #. JWT Settings: ``Enter a URL for the file's location``
+   #. URL: ``http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs``
 #. Click ``Submit``
 
 .. image:: ../pictures/lab1/idp.png
@@ -133,15 +142,15 @@ The Keycloak JWK url is http://10.1.1.8:8080/auth/realms/api-app/protocol/openid
 
 |
 
-Add Authentication for Colors API endpoint
-==========================================
+Add authentication to the ``/colors`` API endpoint
+==================================================
 
-#. Connect to Controller UI, and edit the published API ``api-sentence-v3``
+#. In NGINX Controller -> Select ``APIs`` -> ``api-sentence`` -> Edit the ``api-sentence-v3`` published API
 
    .. image:: ../pictures/lab1/edit_auth_colors.png
       :align: center
 
-#. In the ``Routing`` menu, edit the ``Security Settings`` for ``cp-colors-v3`` component
+#. In the ``Routing`` menu, edit the ``Security Settings`` for the ``cp-colors-v3`` component
 
    .. image:: ../pictures/lab1/edit_sec_colors.png
       :align: center
@@ -151,82 +160,88 @@ Add Authentication for Colors API endpoint
    .. image:: ../pictures/lab1/add_auth.png
       :align: center
 
-#. Select ``Keycloak`` as ``Identity Provider`` (created previously)
-#. Select ``BEARER`` as Credential Location. This setting mens the JWT token will be present in the ``Authorization : Bearer`` header
-#. Click ``Done`` and ``Submit`` 
-#. Click ``Submit`` again to validate the config and push it to the nginx instance.
+#. Use the following values:
+   #. Identity Provider: ``Keycloak``
+   #. Credential Location: ``BEARER``
+   . note:: This setting means that the JWT token is expected to be present in the ``Authorization: Bearer`` HTTP header
+#. Click ``Submit`` -> ``Submit`` again to validate the config and push it to the NGINX instance.
 
-.. note:: As you can notice, we do not enable ``conditional access`` at the moment.
+.. note:: We have not enabled ``conditional access`` for now.
 
 |
 
-Test your protected API with Authentication
-===========================================
+Test the authentication protected API
+=====================================
 
-#. RDP to Win10 as user / user
-#. Open ``Postman``, collection ``API Sentence Generator v3``, and select the request ``GET Colors v3``
-#. Run the request, you should see a ``401 Authorization Required``. This is because there is no JWT token in the request
-#. Request a JWT token against Keycloak
-    #. In ``Authorization`` tab, select ``Oauth 2.0``. And ``Get New Access Token``
-      
-       .. note:: As you can notice, we already configured Postman as Oauth Client. You can retrieve the ``Client ID and secret`` from ``My-postman`` Keycloak client confguration
+#. RDP to the ``Win10`` VM (user/user).
+#. Open ``Postman``, select the ``API Sentence Generator v3`` collection, and select the ``GET Colors v3`` request.
+#. Run the request, you should get a ``401 Authorization Required`` response. This is because there is no JWT token in the request.
+#. Request a JWT token from Keycloak
+    #. In the ``Authorization`` tab, under ``Type``, select ``OAuth 2.0``, and click the orange ``Get New Access Token`` button (at the bottom of the right side menu).
+
+       .. note:: We already configured Postman as our OAuth client behind the scenes. You can retrieve the ``Client ID and secret`` from the ``my-postman`` Keycloak client configuration.
 
        .. image:: ../pictures/lab1/postman_client.png
           :align: center
 
-    #. Authentication as ``matt`` with password ``matt``
+    #. Authenticate as ``matt`` (password ``matt``).
 
        .. image:: ../pictures/lab1/auth.png
           :align: center
 
-    #. The JWT token is saved and can be used. Click on ``Use Token`` orange button.
-    #. Now, send the request again. It passes.
+    #. Click on ``Use Token`` orange button. The JWT token is now saved and ready to be used.
+    #. Send the request again. It should pass.
 
 |
 
-Add Conditional Access for Colors API endpoint
-==============================================
+Add conditional access to the ``/colors`` API endpoint
+======================================================
 
-Now, we add Conditional Access for employee users only. So that any JWT token without the claim ``groups`` and the value ``employee`` can't reach the Colors API Endpoint.
+The next step is to add Conditional Access for employee users only. This way, any JWT token without the claim ``groups`` and the value ``employee`` can't reach the ``/colors`` API Endpoint.
 
-#. In the Controller UI, edit your Published API ``api-sentence-v3``, like previously
-#. Edit the ``authentication`` of the component ``cp-colors-v3``
-#. Enable ``Conditional Access``
+#. In NGINX Controller -> Select ``APIs`` -> ``api-sentence`` -> Edit the ``api-sentence-v3`` published API.
+#. In the ``Routing`` menu, edit the ``Authentication`` setting for the ``cp-colors-v3`` component.
+#. Turn on ``Enable Conditional Access``.
 
    .. image:: ../pictures/lab1/cond_access1.png
       :align: center
 
-#. Configure it so that only JWT with ``employee`` group is allowed
+#. Configure it so that only a JWT with a ``group: employee`` claim is allowed. Use the following values:
+   #. Policy Type: ``Allow when``
+   #. Source Data Type: ``JWT claim``
+   #. Source Data Value: ``groups``
+   #. Comparison Type: ``Contains``
+   #. Value: ``employee``
+   #. Failure Response: ``403``
 
    .. image:: ../pictures/lab1/cond_access2.png
       :align: center
 
-#. Click ``Next`` ``Submit`` and ``submit`` again to push the config.
+#. Click ``Submit`` -> ``Submit`` again to validate the config and push it to the NGINX instance.
 
 |
 
-Test your protected API with Conditional Access
-===============================================
+Test the conditional access protected API
+=========================================
 
-#. RDP to Win10 as user / user
-#. In Postman, for the ``GET Colors v3`` request, ask for a new token with user ``matt`` and password ``matt``. Don't be surprised if you don't see the popup windows asking for the credentials. It means Postman still has a session up with Keycloak for ``matt``
-#. Use the token and send the request. So far so good, it passes.
-#. Now, try with another user not part of ``employee`` group.
-    #. Click on ``Clear cookies`` (scroll down)
+#. RDP to the ``Win10`` VM (user/user).
+#. Open ``Postman``, select the ``API Sentence Generator v3`` collection, and select the ``GET Colors v3`` request. If necessary, request a new token for user ``matt`` (password ``matt``).
+. note:: Don't be surprised if you don't see the popup window asking for the credentials. It means Postman still has a session opened with Keycloak for ``matt``.
+#. Use the token and send the request. It should pass.
+#. Now, try with another user that's not part of the ``employee`` group.
+    #. Click on ``Clear cookies`` (down next to the orange ``Get New Access Token`` button).
 
        .. image:: ../pictures/lab1/clear_cookies.png
           :align: center
 
-    #. Request a new token but with ``fouad`` as a user and ``fouad`` as password
-    #. Use the token and send the request. You receive a ``403 Forbidden``.
-       
-       .. note :: As you can notice, the response code ``403`` is different from the response code ``401`` received when the JWT token is wrong or not present.
+    #. Request a new token but with ``fouad`` (password ``fouad``).
+    #. Use the token and send the request. You will get a ``403 Forbidden``.
+    #. The response code/message should be ``403 Forbidden``. Note that this is different from the response code ``401 Authorization Required`` we received when the JWT was not present.
+    #. Go back to the ``Get New Access Token`` menu. Copy the token generated by Postman, and paste it in https://jwt.io (bookmark in ``Edge Browser``) in order to see the claims contained in the JWT.
 
-    #. You copy the generated token from postman, and paste it in http://jwt.io in order to see the content (bookmark in Edge Browser).
-
-       .. note :: As you can notice, Fouad is not part of the ``employee`` group, so the access is denied
+       .. note :: As you can see, ``fouad`` is not part of the ``employee`` group, so he can't access the ``/colors`` endpoint.
 
        .. image:: ../pictures/lab1/jwtio.png
           :align: center
 
-.. warning :: Congrats, you enable first Authentication in front of Colors API endpoint, and you added a conditional access based on a JWT claim.
+.. warning :: Congrats! You enabled authentication in front of the ``/colors`` API endpoint, and you then implemented conditional access based on a JWT claim!

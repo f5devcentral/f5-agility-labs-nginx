@@ -1,37 +1,37 @@
-Step 5 - Publish API v2.0
-#########################
+Step 5 - Update the API to v2.0
+###############################
 
-In the previous lab, we published the Version v1.0 of the API. As you noticed, the API Sentence application was not fully finsihed. The ``COLORS`` micro-service was not yet available.
+In the previous lab, we published version 1.0 of the API. As you noticed, the API Sentence application was not fully developed. The ``Colors`` micro-service was not yet available.
 
-Now, the API Dev finished the COLORS app, and they are going to push this app to the Kubernetes environment. They expect from the NetOps/SecOps to publish this new version of the API Sentence App.
+The API Dev team has finally finished the ``Colors`` micro-service app, and they want to push the app to the Kubernetes environment. They expect the DevOps team to publish this new version of the API Sentence app.
 
-The API Dev provided with a new version of the AOS spec file. This new version is available on SwaggerHub : https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/2.0
+The API Dev team provided us a new version of the OAS spec file. This new version is available here: https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/2.0
 
 .. image:: ../pictures/lab2/swaggerv2.png
    :align: center
 
-.. note:: You can notice the new PATH for ``COLORS``
+.. note:: You can notice a new PATH for ``Colors``
 
-Steps to publish the Version v2.0 of the API
-********************************************
+Steps to publish version 2.0 of the API
+***************************************
 
-Deploy the new COLORS micro-service in k8s
-==========================================
+Deploy the new ``Colors`` micro-service in k8s
+==============================================
 
-Let's deploy COLORS micro-service like a DevOps.
+Let's deploy the ``Colors`` micro-service!
 
-#. SSH or WEBSSH to ``Docker (k3s + Rancher)`` VM
-#. Run the Kubectl command in order to deploy the COLORS micro-service and its k8s service
+#. SSH (or WebSSH) to the ``Docker (k3s + Rancher + ELK)`` VM
+#. Run the following ``kubectl`` command in order to deploy the ``Colors`` micro-service and its k8s service:
 
    .. code-block:: bash
 
       sudo su
       kubectl apply -f /home/ubuntu/k3s/attribut_add_colors.yaml -n api
 
-   .. note:: As you can notice, this micro-service is deployed in the same NameSpace as other WORDS micro-service (api)
+   .. note:: As you can notice, this micro-service is deployed in the same ``NameSpace`` as the other ``Words`` micro-services (``api``)
 
-#. RDP to Win10 (user/user)
-#. And check in Rancher (admin/admin) that the new deployment is deployed (deployment and service)
+#. RDP to the ``Win10`` VM (user/user).
+#. Check in ``Rancher`` (admin/admin) that the new ``Deployment`` has been successful (both the ``Deployment`` and ``Service``)
 
    .. image:: ../pictures/lab2/rancher-deploy-colors.png
       :align: center
@@ -39,79 +39,83 @@ Let's deploy COLORS micro-service like a DevOps.
    .. image:: ../pictures/lab2/rancher-service-colors.png
       :align: center
 
-#. In Win10 browser, connect to the ``FrontEnd`` and check the new micro-service is providing a COLOR.
+#. Open the ``Edge Browser``, select the ``Random Name Generator`` bookmark, and check that the new micro-service is providing a ``color``.
 
    .. image:: ../pictures/lab2/frontend-color.png
       :align: center
 
-.. warning:: Why the FrontEnd is publishing the COLORS micro-service whereas the API Gateway is not yet configured with this new endpoint ? 
+.. warning:: Why is the Frontend publishing the ``Colors`` micro-service whereas the API Gateway is not yet configured with this new endpoint?
 
-   The reason is the FrontEnd is **directly connected** to all micro-serices k8s services. This is an East/West communication. Our Nginx API Gateway is publishing the API externally for other consumers (mobile app, partners ...)
+   The reason is that the Frontend is **directly connected** to all k8s micro-services. This is an East/West communication. Our NGINX API Gateway is publishing the API externally for other consumers (mobile app, partners...).
 
 |
 
-Update the API Definition with the Version v2.0
-===============================================
+Update the API Definition to version 2.0
+========================================
 
-#. Connect to the Controler UI, and edit your existing API Definition ``api-sentence-app``
+#. Connect to NGINX Controller, select your existing API Definition ``api-sentence``, and click ``Edit Version``:
 
    .. image:: ../pictures/lab2/edit-api-def.png
       :align: center
 
-#. Copy the OAS definition v2.0 from the Swaggerhub https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/2.0
-#. Click on ``Copy and paste specification text`` and paste the v2.0 of API spec
+#. Select ``OpenAPI Specification`` -> ``Copy and paste specification text``.
+#. Copy and paste the v2.0 OAS YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/2.0
 
    .. image:: ../pictures/lab2/oasv2.png
       :align: center
 
-   .. note:: As you can notice, the version of the API Definition, didn't not change in the UI (still v1.0). This is a known bug, and will be fix in the next release to reflect the update (v2.0)
+   .. note:: Note that the version of the API Definition did not change in the UI (it still shows as v1.0). This is a known bug, and will be fixed in the next release.
 
-#. Click ``Next`` and ``Submit``
+#. Click ``Submit``
 
-   .. note:: You can notice 2 more ``resource`` -> Resources : 10
+   .. note:: You should now see two more resources` -> ``Resources: 10``
 
       .. image:: ../pictures/lab2/10resources.png
          :align: center
 
-
 |
 
-Update the Published API with the new COLORS endpoint
+Update the Published API with the new ``Colors`` endpoint
 =====================================================
 
-#. The ``COLORS API`` endpoint is now known by our API Definition, it is time to publish it
-#. Edit the Published API
+#. The ``Colors`` API endpoint is now known by our API Definition, let's publish it!
+#. Select your existing API Definition ``api-sentence-app``, and click the edit button:
 
    .. image:: ../pictures/lab2/edit-published.png
       :align: center
 
-#. In ``Routing`` menu, you can see the ``PATH`` and ``METHODS`` for ``COLORS``
-#. Create a new component to route the requests to the right k8s COLORS service. Click ``Add New``
+#. In the ``Routing`` menu, you should now see the API ``Paths`` for the ``Colors`` endpoint.
+#. Click ``Add New`` to create a new component for the ``Colors`` micro-service.
     #. Name: ``cp-colors``
-    #. Workload Group Name: ``wl-colors``
-        #. Backend Workload URIs : http://10.1.20.8:31102
+    #. Click ``Next``
+    #. In ``Workload Groups``:
+        #. Name: ``wl-colors``
+        #. In ``Backend Workload URIs``:
+           #. URI: ``http://10.1.20.8:31102``
+           #. Click ``Done``
         #. Click ``Done``
-    #. Click ``Done``
-    #. Click ``Next`` and ``Submit``
+    #. Click ``Next``
 
    .. image:: ../pictures/lab2/workload.png
       :align: center
 
-#. Drag and Drop the 2 PATH for COLORS into the ``cp-colors`` component
-#. Click ``Next`` and ``Submit``
+    #. Click ``Submit``
+
+#. Drag and drop the two new unrouted ``Path`` resources for ``Colors`` into the ``cp-colors`` component
+#. Click ``Submit``
 
 |
 
-Test your API v2.0
-==================
+Test the v2.0 API deployment
+============================
 
 Steps:
 
-#. RDP to Win10 machine as ``user`` and password ``user``
-#. Open ``Postman`` and the collection ``API Sentence Generator v1 and v2``
-#. Send a request with the ``GET Colors`` call. The API GW will route the request to the ``Colors`` micro-services, and will return all the entries (all the words)
+#. RDP to the ``Win10`` VM (user/user).
+#. Open ``Postman`` and select the ``API Sentence Generator v1 and v2`` collection.
+#. Send a request with the ``GET Colors`` call. The API Gateway will route the request to the ``Colors`` micro-service, and will return all the entries (all the words):
 
-   .. code-block:: js
+   .. code-block:: JSON
 
         [
             {
@@ -135,10 +139,10 @@ Steps:
                 "id": 5
             }
         ]
-    
-#. Send a request with the ``GET a sentence from Generator``. This request will ask generator to get one word per micro-service. You can notice, there is a new entry for the ``color``
 
-   .. code-block:: js
+#. Send a request with the ``GET a Sentence from Generator`` call. This request will ask the ``generator`` to get one word per micro-service. As you can see, there is now a new entry for ``Colors``:
+
+   .. code-block:: JSON
 
         {
            "adjectives": "calm",
@@ -147,11 +151,9 @@ Steps:
            "locations": "park"
         }
 
-   .. note:: The above outcomes will generate the sentence ``calm whale of the yellow park`` in the FrontEnd application.
+   .. note:: The above entries will generate the sentence ``calm whale of the yellow park`` in the ``Frontend`` application.
 
-.. warning:: CONGRATS, you updated the published API to v2.0 with Nginx Controller and an API Gateway
-   As this v2.0 does not break the v1.0, we haven't created a dedicated v2.0 published API. We updated the v1.0.
+.. warning:: Congrats! You updated the published API to v2.0 with NGINX Controller and NGINX Plus as an API Gateway!
+   As v2.0 does not break v1.0, we haven't created a dedicated v2.0 published API. We simply updated v1.0.
 
-   In the next lab, we will update the API to v3.0, and this upgrade will break the v2.0 as we will create a new parameter for an existing EndPoint.
-
-   
+   In the next lab, we will update the API to v3.0, and this upgrade will break v2.0 as we will create a new parameter for an existing endpoint.
