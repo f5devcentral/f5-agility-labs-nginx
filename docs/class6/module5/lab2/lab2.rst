@@ -6,7 +6,7 @@ Create the API DevPortal
 
 #. Select ``APIs`` -> ``Dev Portals`` -> ``Create Dev Portal``. Use the following values:
    
-   #. Name: portal-api-sentence
+   #. Name: ``portal-api-sentence``
    #. Environment: ``env-prod``
    #. Gateways: ``devportal-gw``
    #. Published APIs: ``Select All``

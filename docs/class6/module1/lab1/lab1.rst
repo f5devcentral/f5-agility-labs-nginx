@@ -63,4 +63,4 @@ From the previous example, this is how the sentence is generated when the ``Gene
 .. image:: ../pictures/lab1/webapp-containers.png
    :align: center
 
-**In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NGINX Controller. Then, we will check the result through the ``Frontend`` web interface.**
+.. note :: In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NGINX Controller. Then, we will check the result through the ``Frontend`` web interface.
