@@ -5,6 +5,7 @@ Architecture of the API Sentence app
 
 First of all, before we delve into the lab, it is important to understand how the API Sentence app is split between micro-services.
 
+
 **This is what the API Sentence website ``Frontend`` looks like when all the necessary micro-services are up and running:**
 
 .. image:: ../pictures/api-app-full.png
