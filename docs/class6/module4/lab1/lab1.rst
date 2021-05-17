@@ -226,7 +226,9 @@ Test the conditional access protected API
 
 #. RDP to the ``Win10`` VM (user/user).
 #. Open ``Postman``, select the ``API Sentence Generator v3`` collection, and select the ``GET Colors v3`` request. If necessary, request a new token for user ``matt`` (password ``matt``).
-. note:: Don't be surprised if you don't see the popup window asking for the credentials. It means Postman still has a session opened with Keycloak for ``matt``.
+
+   .. note:: Don't be surprised if you don't see the popup window asking for the credentials. It means Postman still has a session opened with Keycloak for ``matt``.
+
 #. Use the token and send the request. It should pass.
 #. Now, try with another user that's not part of the ``employee`` group.
     #. Click on ``Clear cookies`` (down next to the orange ``Get New Access Token`` button).
@@ -244,4 +246,4 @@ Test the conditional access protected API
        .. image:: ../pictures/lab1/jwtio.png
           :align: center
 
-.. warning :: Congrats! You enabled authentication in front of the ``/colors`` API endpoint, and you then implemented conditional access based on a JWT claim!
+.. attention:: Congrats! You enabled authentication in front of the ``/colors`` API endpoint, and you then implemented conditional access based on a JWT claim!

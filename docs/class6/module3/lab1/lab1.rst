@@ -29,7 +29,7 @@ Create the API Definition
    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
    #. Verify that the version set by NGINX Controller is ``1.0``. This information is extracted from the spec file.
    #. Click ``Next``. You will notice NGINX Controller imported all the ``PATH`` and ``METHODS`` resources from the spec file.
-   #. Click ``Submit`.`
+   #. Click ``Submit``
 
    .. note:: At this moment in the configuration process, NGINX Controller knows the API paths and methods, but does not know where to proxy the traffic to.
 
