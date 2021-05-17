@@ -76,7 +76,7 @@ Update the API Definition to version 2.0
 |
 
 Update the Published API with the new ``Colors`` endpoint
-=====================================================
+=========================================================
 
 #. The ``Colors`` API endpoint is now known by our API Definition, let's publish it!
 #. Select your existing API Definition ``api-sentence-app``, and click the edit button:
@@ -86,20 +86,23 @@ Update the Published API with the new ``Colors`` endpoint
 
 #. In the ``Routing`` menu, you should now see the API ``Paths`` for the ``Colors`` endpoint.
 #. Click ``Add New`` to create a new component for the ``Colors`` micro-service.
-    #. Name: ``cp-colors``
-    #. Click ``Next``
-    #. In ``Workload Groups``:
-        #. Name: ``wl-colors``
-        #. In ``Backend Workload URIs``:
-           #. URI: ``http://10.1.20.8:31102``
-           #. Click ``Done``
-        #. Click ``Done``
-    #. Click ``Next``
+
+   #. Name: ``cp-colors``
+   #. Click ``Next``
+   #. In ``Workload Groups``:
+
+      #. Name: ``wl-colors``
+      #. In ``Backend Workload URIs``:
+         #. URI: ``http://10.1.20.8:31102``
+         #. Click ``Done``
+      #. Click ``Done``
+
+   #. Click ``Next``
 
    .. image:: ../pictures/lab2/workload.png
       :align: center
 
-    #. Click ``Submit``
+   #. Click ``Submit``
 
 #. Drag and drop the two new unrouted ``Path`` resources for ``Colors`` into the ``cp-colors`` component
 #. Click ``Submit``
