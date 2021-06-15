@@ -1,10 +1,9 @@
-Module 2 - Protect Arcadia with NGINX App Protect in Docker
-###########################################################
+Module 2 - Protect Arcadia with NGINX App Protect in Linux host
+###############################################################
 
-In this class, we will deploy App Protect with several methods. We will start with a manual method building the Docker images, and we will finish with a full CI/CD pipeline workflow.
+In this class, we will deploy NGINX App Protect in CentOS host by installing the RPM packages from the official NGINX Plus Repo.
 
-.. note:: At the moment, this lab does not cover the deployment of NAP in a Linux host. It covers only Docker deployment. You can use Frida's UDF blueprint to know how to deploy NAP in Linux host.
-
+.. warning:: In this lab, there are cert + keys to download the packages from official NGINX repo. It is forbidden to share them with anyone.
 
 .. toctree::
    :maxdepth: 1
