@@ -1,98 +1,92 @@
-Step 10 - Deploy App Protect via CI/CD pipeline
-###############################################
+Step 6 - Update the Docker image with the latest WAF signatures
+###############################################################
 
-In this lab, we will install NGINX Plus and App Protect packages on CentOS with a CI/CD toolchain. NGINX teams created Ansible labs to deploy it easily in a few seconds.
+In this lab, we will update the signature package in the Docker image.
 
-.. note:: The official Ansible NAP role is available here https://github.com/nginxinc/ansible-role-nginx-app-protect and the NGINX Plus role here https://github.com/nginxinc/ansible-role-nginx 
+.. warning:: There are several ways to update the signatures. All of them have pros and cons. In this lab, I decided to create a new Docker image with the new signature package to preserve immutability. And then destroy and run a new Docker container from this new image in front of Arcadia App.
 
+The signatures are provided by F5 with an RPM package. The best way to update the image is to build a new image from a new Dockerfile referring to this signature package (and change the image tag). We will use the Dockerfile below:
 
-**Uninstall the previous running NAP**
+.. code-block:: bash
 
-    #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` to the App Protect in CentOS
+   #For CentOS 7
+   FROM centos:7.4.1708
 
-    #.  Uninstall NAP in order to start from scratch
+   # Download certificate and key from the customer portal (https://cs.nginx.com)
+   # and copy to the build context
+   COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
 
-        .. code-block:: bash
+   # Install prerequisite packages
+   RUN yum -y install wget ca-certificates epel-release
 
-            sudo yum remove -y app-protect*
+   # Add NGINX Plus repo to yum
+   RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
+   RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
 
-        .. image:: ../pictures/lab2/yum-remove-app-protect.png
-           :align: center
-           :scale: 50%
+   # Install NGINX App Protect
+   RUN yum -y install app-protect app-protect-attack-signatures\
+      && yum clean all \
+      && rm -rf /var/cache/yum \
+      && rm -rf /etc/ssl/nginx
 
-    #.  Uninstall NGINX Plus packages
+   # Forward request logs to Docker log collector
+   #RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+   #    && ln -sf /dev/stderr /var/log/nginx/error.log
 
+   # Copy configuration files
+   COPY nginx.conf log-default.json /etc/nginx/
+   COPY entrypoint.sh  ./
 
-        .. code-block:: bash
-
-            sudo yum remove -y nginx-plus*
-
-        .. image:: ../pictures/lab2/yum-remove-nginx-plus.png
-           :align: center
-           :scale: 70%
-
-    #.  Delete/rename the directories from the existing deployment
-
-        .. code-block:: bash
-
-            sudo rm -rf /etc/nginx
-            sudo rm -rf /var/log/nginx
-
-**Run the CI/CD pipeline from Jenkins**
-
-Steps:
-
-    #. RDP to the Jumphost with credentials ``user:user``
-
-    #. Open ``Edge Browser`` and open ``Gitlab`` (if not already opened)
-
-    #. Select the repository ``nap-deploy-centos`` and go to ``CI /CD``
+   CMD ["sh", "/entrypoint.sh"]
 
 
-    .. image:: ../pictures/lab2/gitlab_pipeline.png
-       :align: center
-       :scale: 50%
+.. note:: You may notice one more package versus the previous Dockerfile in Step 3. I added the package installation ``app-protect-attack-signatures``
 
 
-The pipeline is as below:
+**Follow the steps below to build the new Docker image:**
 
-.. code-block:: yaml
+   #. SSH from jumphost commandline ``ssh ubuntu@10.1.1.12`` to Docker App Protect + Docker repo VM
+   #. Run the command ``docker build -t app-protect:20200316 -f Dockerfile-sig .`` <-- Be careful, there is a "." (dot) at the end of the command
+   #. Wait until you see the message: ``Successfully tagged app-protect:20200316``
 
-    stages:
-        - Requirements
-        - Deploy_nap
-        - Workaround_dns
-
-    Requirements:
-        stage: Requirements
-        script:
-            - ansible-galaxy install -r requirements.yml --force
-
-    Deploy_nap:
-        stage: Deploy_nap
-        script:
-            - ansible-playbook -i hosts app-protect.yml
-
-    Workaround_dns:
-        stage: Workaround_dns
-        script:
-            - ansible-playbook -i hosts copy-nginx-conf.yml
+.. note:: Please take time to understand what we ran. You may notice 2 changes. We ran the build with a new Dockerfile ``Dockerfile-sig`` and with a new tag ``20200316`` (date of the signature package when I built this lab). You can put any tag you want, for instance the date of today. Because we don't know the date of the latest Attack Signature package.
 
 
-.. note:: As you can notice, the ``Requirements`` stage installs the ``requirements``. We use the parameter ``--force`` in order to be sure we download and install the latest version of the lab.
+**Destroy the previous running NAP container and run a new one based on the new image (tag 20200316)**
 
-.. note:: This pipeline executes 2 Ansible playbooks. 
-    
-    #. One playbook to install NAP (Nginx Plus included)
-    #. The last playbook is just there to fix an issue in UDF for the DNS resolver
+   1. Check if the new app-protect Docker image is available locally by running ``docker images``. You will notice the new image with a tag of ``20200316``.
 
+      .. image:: ../pictures/lab2/docker_images.png
+         :align: center
 
-.. image:: ../pictures/lab2/gitlab_pipeline_ok.png
-   :align: center
-   :scale: 40%
+|
 
+   2. Destroy the existing and running NAP container ``docker rm -f app-protect``
+   3. Run a new container with this image ``docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf app-protect:20200316``
 
-When the pipeline is finished executing, perform a browser test within ``Edge Browser`` using the ``Arcadia NAP CentOS`` bookmark
+      .. warning :: If you decided to change the tag ``20200316`` by another tag, change your command line accordingly
 
+   4. Check that the Docker container is running ``docker ps``
 
-.. note :: Congrats, you deployed ``NGINX Plus`` and ``NAP`` with a CI/CD pipeline. You can check the pipelines in ``GitLab`` if you are interested to see what has been coded behind the scenes. But it is straight forward as the Ansible labs are provided by F5/NGINX.
+      .. image:: ../pictures/lab2/docker_run.png
+         :align: center
+
+|
+
+   5. Check the signature package date included in this image (by default) ``docker logs app-protect -f`` wait while the docker image boots and you would see the log below.
+
+.. code-block:: bash
+      
+      2021/02/16 14:40:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.332.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2019-07-16T12:21:31Z"},"completed_successfully":true,"threat_campaigns_package":{}}
+
+.. note:: Congrats, you are running a new version of NAP with an updated signature package.
+
+**Video of this lab (force HD 1080p in the video settings)**
+
+.. note :: You can notice some differences between the video and the lab. When I did the video, the dockerfile was different. But the concept remains the same.
+
+.. raw:: html
+
+    <div style="text-align: center; margin-bottom: 2em;">
+    <iframe width="1120" height="630" src="https://www.youtube.com/embed/7o1g-nY2gNY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
