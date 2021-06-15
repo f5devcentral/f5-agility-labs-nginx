@@ -1,4 +1,4 @@
-Step 6 - Check logs in Kibana
+Step 8 - Check logs in Kibana
 #############################
 
 In this lab, we will check the logs in ELK (Elastic, Logstash, Kibana)

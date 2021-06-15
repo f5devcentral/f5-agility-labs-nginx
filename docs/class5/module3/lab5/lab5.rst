@@ -1,4 +1,4 @@
-Step 7 - Customize the WAF policy
+Step 9 - Customize the WAF policy
 #################################
 
 So far, we have been using the default NGINX App Protect policy. As you notices in the previous lab (Step 5), the ``nginx.conf`` does not file any reference to a WAF policy. It uses the default WAF policy.
