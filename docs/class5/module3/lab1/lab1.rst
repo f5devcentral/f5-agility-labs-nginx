@@ -72,7 +72,7 @@ Steps:
                     proxy_http_version 1.1;
 
                     app_protect_enable on;
-                    app_protect_policy_file "/etc/nginx/NginxDefaultPolicy.json";
+                    app_protect_policy_file "/etc/app_protect/conf/NginxDefaultPolicy.json";
                     app_protect_security_log_enable on;
                     app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
 
