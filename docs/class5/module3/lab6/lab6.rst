@@ -1,4 +1,4 @@
-Step 8 - Deploy NAP with a CI/CD toolchain
+Step 10 - Deploy NAP with a CI/CD toolchain
 ##########################################
 
 In this lab, we will deploy deploy NAP with a CI/CD pipeline. NAP is tied to the app, so when DevOps commits a new app (or a new version), the CI/CD pipeline has to deploy a new NAP component in front. In order to avoid repeating what we did previously, we will use a Signature package update as a trigger.

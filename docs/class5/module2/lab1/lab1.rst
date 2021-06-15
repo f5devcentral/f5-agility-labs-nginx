@@ -1,4 +1,4 @@
-Step 9 - Install the NGINX Plus and App Protect packages manually
+Step 3 - Install the NGINX Plus and App Protect packages manually
 #################################################################
 
 In this lab, we will manually install the NGINX Plus and NGINX App Protect labs in CentOS from the official repository.

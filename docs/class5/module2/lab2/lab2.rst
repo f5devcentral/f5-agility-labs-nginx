@@ -1,5 +1,5 @@
-Step 10 - Deploy App Protect via CI/CD pipeline
-###############################################
+Step 4 - Deploy App Protect via CI/CD pipeline
+##############################################
 
 In this lab, we will install NGINX Plus and App Protect packages on CentOS with a CI/CD toolchain. NGINX teams created Ansible labs to deploy it easily in a few seconds.
 

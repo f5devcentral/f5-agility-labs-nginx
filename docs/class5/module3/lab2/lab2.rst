@@ -1,4 +1,4 @@
-Step 4 - Update the Docker image with the latest WAF signatures
+Step 6 - Update the Docker image with the latest WAF signatures
 ###############################################################
 
 In this lab, we will update the signature package in the Docker image.
