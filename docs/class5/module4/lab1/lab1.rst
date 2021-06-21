@@ -131,5 +131,5 @@ Please a make a new test by clicking on ``Arcadia k8s`` Edge Browser bookmark.
         .. code-block:: BASH
 
             helm uninstall nginx-ingress -n nginx-ingress
-            kubectl apply -f /home/ubuntu/k8s_ingress/deploy_policy_and_logs.yaml
-            kubectl apply -f /home/ubuntu/k8s_ingress/ingress_arcadia_nap.yaml
+            kubectl delete -f /home/ubuntu/k8s_ingress/deploy_policy_and_logs.yaml
+            kubectl delete -f /home/ubuntu/k8s_ingress/ingress_arcadia_nap.yaml
