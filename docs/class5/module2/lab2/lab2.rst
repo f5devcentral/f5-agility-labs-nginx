@@ -1,98 +1,115 @@
-Step 4 - Deploy App Protect via CI/CD pipeline
-##############################################
+Step 4 - Check logs in Kibana
+#############################
 
-In this lab, we will install NGINX Plus and App Protect packages on CentOS with a CI/CD toolchain. NGINX teams created Ansible labs to deploy it easily in a few seconds.
+In this lab, we will check the logs in ELK (Elastic, Logstash, Kibana)
 
-.. note:: The official Ansible NAP role is available here https://github.com/nginxinc/ansible-role-nginx-app-protect and the NGINX Plus role here https://github.com/nginxinc/ansible-role-nginx 
-
-
-**Uninstall the previous running NAP**
-
-    #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` to the App Protect in CentOS
-
-    #.  Uninstall NAP in order to start from scratch
-
-        .. code-block:: bash
-
-            sudo yum remove -y app-protect*
-
-        .. image:: ../pictures/lab2/yum-remove-app-protect.png
-           :align: center
-           :scale: 50%
-
-    #.  Uninstall NGINX Plus packages
-
-
-        .. code-block:: bash
-
-            sudo yum remove -y nginx-plus*
-
-        .. image:: ../pictures/lab2/yum-remove-nginx-plus.png
-           :align: center
-           :scale: 70%
-
-    #.  Delete/rename the directories from the existing deployment
-
-        .. code-block:: bash
-
-            sudo rm -rf /etc/nginx
-            sudo rm -rf /var/log/nginx
-
-**Run the CI/CD pipeline from Jenkins**
+**Check how logs are sent and how to set the destination syslog server**
 
 Steps:
 
-    #. RDP to the Jumphost with credentials ``user:user``
+   #. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
+   #. In ``/home/ubuntu`` (the default home folder), list the files ``ls -al``
+   #. You can see 2 files ``log-default.json`` and ``nginx.conf`` you created previously in the Step 3.
+   #. Open log-default.json ``less log-default.json``. You will notice we log all requests.
 
-    #. Open ``Edge Browser`` and open ``Gitlab`` (if not already opened)
+      .. code-block:: js
+         :caption: log-default.json
 
-    #. Select the repository ``nap-deploy-centos`` and go to ``CI /CD``
+         {
+         "filter": {
+            "request_type": "all"
+               },
+         "content": {
+            "format": "default",
+            "max_request_size": "any",
+            "max_message_size": "5k"
+               }
+         }
+
+   #. Open nginx.conf ``less nginx.conf``
+
+      .. code-block:: nginx
+         :caption: nginx.conf
+         :emphasize-lines: 34 
+
+         user  nginx;
+         worker_processes  auto;
+        
+         error_log  /var/log/nginx/error.log notice;
+         pid        /var/run/nginx.pid;
+        
+         load_module modules/ngx_http_app_protect_module.so;
+        
+         events {
+             worker_connections 1024;
+         }
+        
+         http {
+             include          /etc/nginx/mime.types;
+             default_type  application/octet-stream;
+             sendfile        on;
+             keepalive_timeout  65;
+        
+             log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                             '$status $body_bytes_sent "$http_referer" '
+                             '"$http_user_agent" "$http_x_forwarded_for"';
+        
+             access_log  /var/log/nginx/access.log  main;
+        
+             server {
+             listen       80;
+                 server_name  localhost;
+                 proxy_http_version 1.1;
+        
+                 app_protect_enable on;
+                 app_protect_policy_file "/etc/app_protect/conf/NginxDefaultPolicy.json";
+                 app_protect_security_log_enable on;
+                 app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
+        
+                 location / {
+                     resolver 10.1.1.8:5353;
+                     resolver_timeout 5s;
+                     client_max_body_size 0;
+                     default_type text/html;
+                     proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
+                 }
+             }
+         }
 
 
-    .. image:: ../pictures/lab2/gitlab_pipeline.png
-       :align: center
-       :scale: 50%
+.. note:: You will notice in the ``nginx.conf`` file the refererence to ``log-default.json`` and the remote syslog server (ELK) ``10.1.20.11:5144``
 
 
-The pipeline is as below:
+**Open Kibana in the Jumphost or via UDF access**
 
-.. code-block:: yaml
+Steps:
 
-    stages:
-        - Requirements
-        - Deploy_nap
-        - Workaround_dns
+   #. In UDF, find the ELK VM and click Access > ELK
 
-    Requirements:
-        stage: Requirements
-        script:
-            - ansible-galaxy install -r requirements.yml --force
+      .. image:: ../pictures/lab2/ELK_access.png
+         :align: center
+         :scale: 50%
 
-    Deploy_nap:
-        stage: Deploy_nap
-        script:
-            - ansible-playbook -i hosts app-protect.yml
+|
 
-    Workaround_dns:
-        stage: Workaround_dns
-        script:
-            - ansible-playbook -i hosts copy-nginx-conf.yml
+   #. In Kibana, click on ``Dashboard > Overview``
 
+      .. image:: ../pictures/lab2/ELK_dashboard.png
+         :align: center
+         :scale: 50%
 
-.. note:: As you can notice, the ``Requirements`` stage installs the ``requirements``. We use the parameter ``--force`` in order to be sure we download and install the latest version of the lab.
+|
 
-.. note:: This pipeline executes 2 Ansible playbooks. 
-    
-    #. One playbook to install NAP (Nginx Plus included)
-    #. The last playbook is just there to fix an issue in UDF for the DNS resolver
+   #. At the bottom of the dashboard, you can see the logs. Select one of the log entries and check the content
 
+.. note:: You may notice the log content is similar to ASM and Adv. WAF
 
-.. image:: ../pictures/lab2/gitlab_pipeline_ok.png
-   :align: center
-   :scale: 40%
+.. note:: The default time window in this Kibana dashboard is **Last 15 minutes**. If you do not see any requests, you may need to extend the time window to a larger setting
 
+**Video of this lab (force HD 1080p in the video settings)**
 
-When the pipeline is finished executing, perform a browser test within ``Edge Browser`` using the ``Arcadia NAP CentOS`` bookmark
+.. raw:: html
 
-
-.. note :: Congrats, you deployed ``NGINX Plus`` and ``NAP`` with a CI/CD pipeline. You can check the pipelines in ``GitLab`` if you are interested to see what has been coded behind the scenes. But it is straight forward as the Ansible labs are provided by F5/NGINX.
+    <div style="text-align: center; margin-bottom: 2em;">
+    <iframe width="1120" height="630" src="https://www.youtube.com/embed/kWfRBhrH8k8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
