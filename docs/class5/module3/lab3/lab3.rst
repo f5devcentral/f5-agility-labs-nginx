@@ -1,4 +1,4 @@
-Step 7 - Update the Docker image with the Threat Campaign package
+Step 8 - Update the Docker image with the Threat Campaign package
 #################################################################
 
 In this lab, we will install the package Threat Campaign into a new Docker image.

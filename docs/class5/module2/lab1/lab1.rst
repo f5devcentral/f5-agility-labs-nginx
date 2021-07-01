@@ -9,6 +9,13 @@ Steps:
 
     #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
 
+    #.  Clean up any existing NGINX repo already installed :
+
+        .. code-block:: bash
+
+           sudo rm -f /etc/yum.repos.d/nginx-*
+           yum clean all
+
     #.  Add NGINX Plus repository by downloading the file ``nginx-plus-7.repo`` to ``/etc/yum.repos.d``:
 
         .. code-block:: bash
@@ -145,18 +152,23 @@ Steps:
 
 .. note:: Congrats, now your CentOS instance is protecting the Arcadia application
 
-.. note:: You may notice we used exactly the same ``log-default.json`` and ``nginx.conf`` files as in the Docker lab.
-
-
 **Now, try in the Jumphost**
 
 Steps:
 
     #. RDP to the Jumphost with credentials ``user:user``
-
-    #. Open Edge Browser and click ``Arcadia NAP CentOS``
-
-    #. Run the same tests as the Docker lab and check the logs in Kibana
+    #. Navigate in the app, and try some attacks like injections or XSS - I let you find the attacks :) ``tip - <script>`` 
+    #. You will be blocked and see the default Blocking page
+ 
+        .. code-block:: html
+        
+            The requested URL was rejected. Please consult with your administrator.
+        
+            Your support ID is: 14609283746114744748
+        
+            [Go Back]
+        
+        .. note:: Did you notice the blocking page is similar to ASM and Adv. WAF ?
 
 
 **Next step is to install the latest Signature Package**
@@ -211,7 +223,20 @@ Steps:
 
 **Last step is to install the Threat Campaign package**
 
+Threat Campaign is a **feed** from F5 Threat Intelligence team. This team is collecting 24/7 threats from internet and darknet. 
+They use several bots and honeypotting networks in order to know in advance what the hackers (humans or robots) will target and how.
+
+Unlike ``signatures``, Threat Campaign provides with ``ruleset``. A signature uses patterns and keywords like ``' or`` or ``1=1``. Threat Campaign uses ``rules`` that match perfectly an attack detected by our Threat Intelligence team.
+
 .. note :: The App Protect installation does not come with a built-in Threat campaigns package like Attack Signatures. Threat campaigns Updates are released periodically whenever new campaigns and vectors are discovered, so you might want to update your Threat campaigns from time to time. You can upgrade the Threat campaigns by updating the package any time after installing App Protect. We recommend you upgrade to the latest Threat campaigns version right after installing App Protect.
+
+
+For instance, if we notice a hacker managed to enter into our Struts2 system, we will do forensics and analyse the packet that used the breach. Then, this team creates the ``rule`` for this request.
+A ``rule`` **can** contains all the HTTP L7 payload (headers, cookies, payload ...)
+
+.. note :: Unlike signatures that can generate False Positives due to low accuracy patterns, Threat Campaign is very accurate and reduces drastically the False Positives. 
+
+.. note :: NAP provides with high accuracy Signatures + Threat Campaign ruleset. The best of bread to reduce FP.
 
 .. note :: After having updated the Threat campaigns package you have to reload the configuration in order for the new version of the Threat campaigns to take effect. Until then App Protect will run with the old version, if exists. This is useful when creating an environment with a specific tested version of the Threat campaigns.
 
@@ -236,14 +261,14 @@ Steps :
 
         .. code-block:: bash
 
-            less /var/log/nginx/error.log    
+            less /var/log/nginx/error.log
+    
+    #. Simulate a Threat Campaign attack
 
-.. note :: We don't spend more time on Threat Campaign in this lab as we did it already in the Docker lab (Class 2 - Step 5)
+        #. RDP to the ``Jumphost`` (user / user)
+        #. Open ``Postman`` and select the collection ``NAP - Threat Campaign``
+        #. Run the 2 calls. They will trigger 2 different Threat Campaign rules.
+        #. In the next lab, we will check the logs in Kibana.
 
-**Video of this lab (force HD 1080p in the video settings)**
 
-.. raw:: html
-
-    <div style="text-align: center; margin-bottom: 2em;">
-    <iframe width="1120" height="630" src="https://www.youtube.com/embed/xVmxWOeJ5Cc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+.. note:: Congrats, you are running a new version of NAP with the latest Threat Campaign package and ruleset.
