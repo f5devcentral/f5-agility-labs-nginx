@@ -13,8 +13,8 @@ Steps:
 
         .. code-block:: bash
 
-           sudo rm -f /etc/yum.repos.d/nginx-*
-           yum clean all
+            sudo rm -f /etc/yum.repos.d/nginx-* && sudo rm -f /etc/yum.repos.d/app-protect*
+            yum clean all
 
     #.  Add NGINX Plus repository by downloading the file ``nginx-plus-7.repo`` to ``/etc/yum.repos.d``:
 
