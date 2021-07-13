@@ -49,10 +49,11 @@ Steps:
     #. Select the repository ``nap-deploy-centos`` and go to ``CI /CD``
 
 
-    .. image:: ../pictures/lab3/gitlab_pipeline.png
-       :align: center
-       :scale: 50%
+        .. image:: ../pictures/lab3/gitlab_pipeline.png
+           :align: center
+           :scale: 50%
 
+    #. ``Run the Pipeline`` by clicking the green button.
 
 The pipeline is as below:
 
