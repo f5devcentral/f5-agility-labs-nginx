@@ -1,42 +1,33 @@
 Step 5 - Deploy App Protect via CI/CD pipeline
 ##############################################
 
-In this lab, we will install NGINX Plus and App Protect packages on CentOS with a CI/CD toolchain. NGINX teams created Ansible labs to deploy it easily in a few seconds.
+In this lab, we will install NGINX Plus and App Protect packages on CentOS with a CI/CD pipeline. F5 maintains the NGINX Ansible playbooks on Galaxy which allows customers to easily setup App Protect.
 
 .. note:: The official Ansible NAP role is available here https://github.com/nginxinc/ansible-role-nginx-app-protect and the NGINX Plus role here https://github.com/nginxinc/ansible-role-nginx 
 
 
 **Uninstall the previous running NAP**
 
-    #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` to the App Protect in CentOS
+    #.  SSH to the CentOS-VM
 
-    #.  Uninstall NAP in order to start from scratch
-
-        .. code-block:: bash
-
-            sudo yum remove -y app-protect*
-
-        .. image:: ../pictures/lab3/yum-remove-app-protect.png
-           :align: center
-           :scale: 50%
-
-    #.  Uninstall NGINX Plus packages
+    #.  Remove the existing installation NAP in order to start from scratch. App Protect depends on NGINX Plus, so simply removing it will also remove everything we need.
 
 
         .. code-block:: bash
 
-            sudo yum remove -y nginx-plus*
+sudo yum remove -y nginx-plus nginx-plus-module-appprotect app-protect-compiler app-protect-engine app-protect-plugin
+sudo rm -f /etc/yum.repos.d/nginx-* 
+sudo rm -f /etc/yum.repos.d/app-protect*
+sudo rm -rf /etc/nginx
+sudo rm -rf /etc/app_protect
+sudo rm -rf /opt/app_protect
+sudo rm -rf /var/log/app_protect
+sudo rm -rf /var/log/nginx
 
-        .. image:: ../pictures/lab3/yum-remove-nginx-plus.png
+        .. image:: ../pictures/lab3/remove-nap.png
            :align: center
            :scale: 70%
 
-    #.  Delete/rename the directories from the existing deployment
-
-        .. code-block:: bash
-
-            sudo rm -rf /etc/nginx
-            sudo rm -rf /var/log/nginx
 
 **Run the CI/CD pipeline from Jenkins**
 
@@ -44,7 +35,7 @@ Steps:
 
     #. RDP to the Jumphost with credentials ``user:user``
 
-    #. Open ``Edge Browser`` and open ``Gitlab`` (if not already opened)
+    #. Open Firefox and open ``Gitlab`` (if not already opened)
 
     #. Select the repository ``nap-deploy-centos`` and go to ``CI /CD``
 
@@ -53,7 +44,7 @@ Steps:
            :align: center
            :scale: 50%
 
-    #. ``Run the Pipeline`` by clicking the green button.
+    #. ``Run the Pipeline`` by clicking the green button. The installation can take up to 10 minutes as the install is very I/O intensive.
 
 The pipeline is as below:
 
@@ -72,7 +63,7 @@ The pipeline is as below:
     Deploy_nap:
         stage: Deploy_nap
         script:
-            - ansible-playbook -i hosts app-protect.yml
+            - ansible-playbook -i hosts ./ansible/nap32.yml
 
     Workaround_dns:
         stage: Workaround_dns
@@ -84,7 +75,7 @@ The pipeline is as below:
 
 .. note:: This pipeline executes 2 Ansible playbooks. 
     
-    #. One playbook to install NAP (Nginx Plus included)
+    #. One playbook to install NAP (which also installs NGINX Plus)
     #. The last playbook is just there to fix an issue in UDF for the DNS resolver
 
 
@@ -93,7 +84,7 @@ The pipeline is as below:
    :scale: 40%
 
 
-When the pipeline is finished executing, perform a browser test within ``Edge Browser`` using the ``Arcadia NAP CentOS`` bookmark
+When the pipeline is finished executing, perform a browser test within Firefox using the ``Arcadia NAP CentOS`` bookmark
 
 
-.. note :: Congrats, you deployed ``NGINX Plus`` and ``NAP`` with a CI/CD pipeline. You can check the pipelines in ``GitLab`` if you are interested to see what has been coded behind the scenes. But it is straight forward as the Ansible labs are provided by F5/NGINX.
+.. note :: Congrats, you have deployed ``NGINX Plus`` and ``NAP`` with a CI/CD pipeline. You can check the pipelines in ``GitLab`` if you are interested to see what has been coded behind the scenes.

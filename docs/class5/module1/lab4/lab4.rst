@@ -1,66 +1,30 @@
-Step 2 - Publish Arcadia app with a NGINX Plus Ingress Controller
+Step 2 - Publish Arcadia app with Kubernetes NodePort
 #################################################################
 
-It's time to publish Arcadia application externally from the Kubernetes cluster.
+It's time to make the Arcadia application available externally from the Kubernetes cluster.
 
+**Expose Arcadia with NodePort**
 
-**Deploy the NGINX Plus Ingress Controller**
+Now that the Arcadia App is running in the Kubernetes Cluster. We need a solution to expose it externally (using the Kubernetes nodes IP addresses) and routing the packets to the right pods (main, back, app2, app3)
 
-Now, Arcadia App is running in the Kubernetes Cluster. We need a solution to publish it externally (using Kubernetes front end IP addresses) and routing the packets to the right pods (main, back, app2, app3)
-
-To do so, I prepared a ``kubectl`` Kubernetes Deployment in YAML.
-
-**Steps:**
-
-    #. SSH from jumphost commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to CICD Server
-    #. Run this command ``kubectl apply -f /home/ubuntu/k8s_ingress/full_ingress_arcadia.yaml``
-    #. You should now see a new namespace ``nginx-ingress`` and a new ingress in the Kubernetes Dashboard on the Jumphost
-    #. Check the Ingress ``arcadia-ingress`` (in the ``default`` namespace) by clicking on the 3 dots on the right and ``edit``
-    #. Scroll down and check the specs
-
-
-.. image:: ../pictures/lab4/arcadia-ingress.png
-   :align: center
-
-.. code-block:: YAML
-
-    spec:
-    rules:
-        - host: k8s.arcadia-finance.io
-        http:
-            paths:
-            - path: /
-                pathType: ImplementationSpecific
-                backend:
-                serviceName: main
-                servicePort: 80
-            - path: /files
-                pathType: ImplementationSpecific
-                backend:
-                serviceName: backend
-                servicePort: 80
-            - path: /api
-                pathType: ImplementationSpecific
-                backend:
-                serviceName: app2
-                servicePort: 80
-            - path: /app3
-                pathType: ImplementationSpecific
-                backend:
-                serviceName: app3
-                servicePort: 80
-
-
-.. note:: You can see the Ingress is routing the packets to the right service based on the URI.
-
-.. note:: Now, Arcadia is available for customers.
+To do so, we have a yaml manifest to apply with ``kubectl``.
 
 **Steps:**
 
-    #. In Edge Browser, click on the bookmark ``Arcadia k8s``
+    #. Use the CICD VM in any of the provided tools (vscode / windows terminal (right click the shortcut on taskbar) / WebSSH and ``cd /home/ubuntu/``
+    #. Run this command ``kubectl apply -f /home/ubuntu/lab-files/arcadia-yaml/arcadia-deployments-and-services.yaml``
+
+.. note:: We have deployed the "main" service on NodePort 30511, which means that the application is accessible as http://k8s.arcadia-finance.io:30511/ (in this case, the fqdn is pointing to the IP of one of the nodes). Will we use this later as our target for the NGINX App Protect deployments on a VM and as a docker container.
+
+.. note:: Arcadia is now available via the NodePort, but not protected.
+
+**Steps:**
+
+    #. In the Browser, click on the bookmark ``Aracdia Links>Arcadia NodePort``
     #. Click on ``Login``
     #. Login with ``matt:ilovef5``
     #. You should see all the apps running (main, back, app2 and app3)
+    #. add "/?<script>" to the end of the URL in the address bar and see that it is not blocked
 
 
 .. image:: ../pictures/arcadia-app.png

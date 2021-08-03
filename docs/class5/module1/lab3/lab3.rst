@@ -5,8 +5,8 @@ It's time to deploy Arcadia Finance application :)
 
 **Deploy Arcadia Application with kubectl command**
 
-With Kubernetes, there are several ways to deploy containers (pods). One way is to use ``kubectl`` command with a YAML deployment file.
-I prepared this YAML file below (this is only for the main app container). You can have a look, and see it will deploy containers from my Gitlab.com repo.
+With Kubernetes, there are several ways to deploy containers (pods). One way is to use ``kubectl`` command with a YAML manifest file.
+I prepared this YAML file below (this is a portion of it below showing the main app container). You can have a look, and see it will deploy containers from my Gitlab.com repo.
 
 .. code-block:: YAML
 
@@ -60,27 +60,24 @@ I prepared this YAML file below (this is only for the main app container). You c
             protocol: TCP
     ---
 
-.. note:: To make it simple, it deploys the container from gitlab.com repo, and a service. The service is used later on by the NGINX Plus Ingress Controller.
+.. note:: This file contains all the deployments for the entire Arcadia appication. 
 
 **Steps :**
 
-    #. RDP to the jumphost with ``user:user`` as credentials
-    #. SSH from jumphost commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to CICD Server
-    #. Run this command ``kubectl apply -f /home/ubuntu/Arcadia_k8S/all_apps.yaml``
-    #. Open Edge Browser
+    #. RDP to the jumphost as ``user:user`` credentials
+    #. SSH to cicd VM. You can use vscode, Windows terminal, or UDF Web shell the command is ``ssh ubuntu@cicd`` (if you use use Web SSH, make sure to ``cd /home/ubuntu/``)
+    #. Run this command ``kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployments.yaml``
+    #. Open Firefox Browser
     #. Open Kubernetes Dashboard bookmark (if not already opened)
     #. Click ``skip`` on the logon page
-    #. You should see the services and the pods
+    #. You should see the  and the pods
 
 
-.. image:: ../pictures/lab3/pods.png
-   :align: center
-
-.. image:: ../pictures/lab3/services.png
+.. image:: ../pictures/lab3/arcadia-deployments.png
    :align: center
 
 
-.. warning:: Arcadia Application is running but not yet available for the customers. We need to publish it.
+.. warning:: Arcadia Application is running but not yet available for the customers. We need to create a Kubernetes service to expose it.
 
 **Video of this lab (force HD 1080p in the video settings)**
 

@@ -1,9 +1,11 @@
-Architecture of Arcadia Application
+Architecture of the Arcadia Application
 ###################################
 
-.. note:: This application is available in GitLab in case you want to build your own lab : https://gitlab.com/arcadia-application
+.. note:: This application is publically available in GitLab if you want to build your own lab: https://gitlab.com/arcadia-application
 
-First of all, it is important to understand how Arcadia app is split between micro-services
+The goal of this section is to understand the structure of the Arcadia Application, the commands needed to deploy it are on the next page.
+
+The Arcadia app is a micro-services based application. There are 4 services that comprise the application.
 
 
 **This is what Arcadia App looks like when the 4 microservices are up and running, and you can see how traffic is routed based on URI**
@@ -12,18 +14,18 @@ First of all, it is important to understand how Arcadia app is split between mic
    :align: center
    :scale: 50%
 
-**But you can deploy Arcadia Step by Step**
+**You can deploy Arcadia one microservice at a time. There will be a placeholder for that microservice until that service is available**
 
 If you deploy only ``Main App`` and ``Back End`` services.
 
 .. image:: ../pictures/lab1/MainApp.png
    :align: center
    :scale: 50%
-.. note:: You can see App2 (Money Transfer) and App3 (Refer Friend) are not available. There is dynamic content showing a WARNING instead of a 404 or blank frame.
+.. note:: You can see App2 (Money Transfer) and App3 (Refer Friend) are not available. There is dynamic content showing a placeholder instead of a 404 or blank frame.
 
 |
 
-If you deploy ``Main App``, ``Back End`` and ``Money Transfer`` services.
+And below if you deploy all the services: ``Main App``, ``Back End`` and ``Money Transfer``
 
 .. image:: ../pictures/lab1/app2.png
    :align: center

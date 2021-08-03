@@ -1,19 +1,18 @@
 Step 4 - Check logs in Kibana
 #############################
 
-In this lab, we will check the logs in ELK (Elastic, Logstash, Kibana)
+In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
 
-**Check how logs are sent and how to set the destination syslog server**
+**Understanding how to configure the destination syslog server**
 
 Steps:
 
-   #. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
-   #. In ``/home/ubuntu`` (the default home folder), list the files ``ls -al``
-   #. You can see 2 files ``log-default.json`` and ``nginx.conf`` you created previously in the Step 3.
-   #. Open log-default.json ``less log-default.json``. You will notice we log all requests.
+   #. With vscode or Windows Terminal ssh to the centos-vm
+   #. In ``/home/ubuntu/lab-files`` view t
+   #. View ``/etc/app_protect/conf/log_default.json`` which is installed with app-protect. By default, we log all requests.
 
       .. code-block:: js
-         :caption: log-default.json
+         :caption: log_default.json
 
          {
          "filter": {
@@ -71,7 +70,7 @@ Steps:
                      resolver_timeout 5s;
                      client_max_body_size 0;
                      default_type text/html;
-                     proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
+                     proxy_pass http://k8s.arcadia-finance.io:30511$request_uri;
                  }
              }
          }
@@ -80,7 +79,7 @@ Steps:
 .. note:: You will notice in the ``nginx.conf`` file the refererence to ``log-default.json`` and the remote syslog server (ELK) ``10.1.20.11:5144``
 
 
-**Open Kibana in the Jumphost or via UDF access**
+**Open Kibana via firefox on the jumphost or via UDF access**
 
 Steps:
 
@@ -102,9 +101,9 @@ Steps:
 
    #. At the bottom of the dashboard, you can see the logs. Select one of the log entries and check the content
 
-.. note:: You may notice the log content is similar to ASM and Adv. WAF
+.. note:: You may notice the log content is similar to F5 ASM and Adv. WAF
 
-.. note:: The default time window in this Kibana dashboard is **Last 15 minutes**. If you do not see any requests, you may need to extend the time window to a larger setting
+.. note:: The default time window in this Kibana dashboard is **Last 15 minutes**. If you do not see any requests, you may need to extend the time window to a larger setting. It can take a minute for logs to be processed into the graphs.
 
 **Video of this lab (force HD 1080p in the video settings)**
 
