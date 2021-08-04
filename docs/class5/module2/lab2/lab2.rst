@@ -8,7 +8,7 @@ In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
 Steps:
 
    #. With vscode or Windows Terminal ssh to the centos-vm
-   #. In ``/home/ubuntu/lab-files`` view t
+   #. In ``/home/centos/lab-files`` view t
    #. View ``/etc/app_protect/conf/log_default.json`` which is installed with app-protect. By default, we log all requests.
 
       .. code-block:: js
