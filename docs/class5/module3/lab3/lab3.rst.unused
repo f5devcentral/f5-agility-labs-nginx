@@ -62,7 +62,13 @@ In order to install this package, we need to update our ``Dockerfile``. I create
 **Follow the steps below to build the new Docker image:**
 
    #. SSH to Docker App Protect + Docker repo VM
-   #. Run the command ``docker build -t app-protect:tc -f Dockerfile-sig-tc .`` <-- Be careful, there is a "." (dot) at the end of the command
+   #. Run the command: 
+
+   .. code-block:: bash
+      docker build -t app-protect:tc -f Dockerfile-sig-tc .
+      
+   .. note: Be sure to copy the "." (dot) at the end of the command
+
    #. Wait until you see the message: ``Successfully tagged app-protect:tc``
 
 .. note:: Please take time to understand what we ran. You may notice 2 changes. We ran the build with a new Dockerfile ``Dockerfile-sig-tc`` and with a new tag ``tc``. You can choose another tag like ``tcdate`` where date is the date of today. We don't know yet the date of the TC package ruleset.
@@ -74,6 +80,7 @@ In order to install this package, we need to update our ``Dockerfile``. I create
 
       .. image:: ../pictures/lab3/docker_images.png
          :align: center
+         :alt: docker-images
 
 |
 
@@ -86,6 +93,7 @@ In order to install this package, we need to update our ``Dockerfile``. I create
 
       .. image:: ../pictures/lab3/docker_run.png
          :align: center
+         :alt: docker run
 
 |
 
@@ -104,7 +112,6 @@ In order to install this package, we need to update our ``Dockerfile``. I create
 
 **Simulate a Threat Campaign attack**
 
-   #. RDP to the ``Jumphost`` (user / user)
    #. Open ``Postman`` and select the collection ``NAP - Threat Campaign``
    #. Run the 2 calls. They will trigger 2 different Threat Campaign rules.
    #. In the next lab, we will check the logs in Kibana.

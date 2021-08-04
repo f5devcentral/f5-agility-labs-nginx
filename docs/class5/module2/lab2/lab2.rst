@@ -8,8 +8,8 @@ In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
 Steps:
 
    #. With vscode or Windows Terminal ssh to the centos-vm
-   #. In ``/home/centos/lab-files`` view t
-   #. View ``/etc/app_protect/conf/log_default.json`` which is installed with app-protect. By default, we log all requests.
+   #. In ``/home/centos/lab-files``
+   #. View ``cat /etc/app_protect/conf/log_default.json`` which is installed with app-protect. By default, we log all requests.
 
       .. code-block:: js
          :caption: log_default.json
@@ -27,9 +27,9 @@ Steps:
 
    #. Open nginx.conf ``less nginx.conf``
 
-      .. code-block:: nginx
-         :caption: nginx.conf
-         :emphasize-lines: 34 
+   .. code-block:: nginx
+      :caption: nginx.conf
+      :emphasize-lines: 33
 
          user  nginx;
          worker_processes  auto;
@@ -63,20 +63,10 @@ Steps:
                  app_protect_enable on;
                  app_protect_policy_file "/etc/app_protect/conf/NginxDefaultPolicy.json";
                  app_protect_security_log_enable on;
-                 app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
-        
-                 location / {
-                     resolver 10.1.1.8:5353;
-                     resolver_timeout 5s;
-                     client_max_body_size 0;
-                     default_type text/html;
-                     proxy_pass http://k8s.arcadia-finance.io:30511$request_uri;
-                 }
-             }
-         }
+                 app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
 
 
-.. note:: You will notice in the ``nginx.conf`` file the refererence to ``log-default.json`` and the remote syslog server (ELK) ``10.1.20.11:5144``
+.. note:: You will notice in the ``nginx.conf`` file the refererence to ``log_default.json`` and the remote syslog server (ELK) ``10.1.1.11:5144``
 
 
 **Open Kibana via firefox on the jumphost or via UDF access**
@@ -88,6 +78,7 @@ Steps:
       .. image:: ../pictures/lab2/ELK_access.png
          :align: center
          :scale: 50%
+         :alt: ELK
 
 |
 
@@ -96,6 +87,7 @@ Steps:
       .. image:: ../pictures/lab2/ELK_dashboard.png
          :align: center
          :scale: 50%
+         :alt: dashboard
 
 |
 

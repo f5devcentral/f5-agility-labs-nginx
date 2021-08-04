@@ -10,7 +10,7 @@ Use a custom WAF policy and assign it per location
 
 Steps:
 
-    #.  SSH to the Docker App Protect + Docker repo VM (feel free to use vscode on jump host if you find it easier to use than vim)
+    #.  From the docker vm, perform the below steps. We suggest using vscode for the below excercise, but feel free to use the tool of your choice.
     #.  In the ``/home/ubuntu/lab-files`` directory, create a new folder ``arcadia-waf-policy``
 
         .. code-block:: bash
@@ -199,7 +199,7 @@ Steps:
                         client_max_body_size 0;
                         default_type text/html;
                         app_protect_policy_file "/etc/nginx/policy/policy_base.json";
-                        proxy_pass http://k8s.arcadia-finance.io:30511$request_uri;
+                        proxy_pass http://k8s.arcadia-finance.io:30585$request_uri;
                     }
                     location /files {
                         resolver 10.1.1.8:5353;
@@ -207,7 +207,7 @@ Steps:
                         client_max_body_size 0;
                         default_type text/html;
                         app_protect_policy_file "/etc/nginx/policy/policy_mongo_linux_JSON.json";
-                        proxy_pass http://k8s.arcadia-finance.io:30511$request_uri;
+                        proxy_pass http://k8s.arcadia-finance.io:30584$request_uri;
                     }
                     location /api {
                         resolver 10.1.1.8:5353;
@@ -215,7 +215,7 @@ Steps:
                         client_max_body_size 0;
                         default_type text/html;
                         app_protect_policy_file "/etc/nginx/policy/policy_mongo_linux_JSON.json";
-                        proxy_pass http://k8s.arcadia-finance.io:30511$request_uri;
+                        proxy_pass http://k8s.arcadia-finance.io:30586$request_uri;
                     }
                     location /app3 {
                         resolver 10.1.1.8:5353;
@@ -223,7 +223,7 @@ Steps:
                         client_max_body_size 0;
                         default_type text/html;
                         app_protect_policy_file "/etc/nginx/policy/policy_mongo_linux_JSON.json";
-                        proxy_pass http://k8s.arcadia-finance.io:30511$request_uri;
+                        proxy_pass http://k8s.arcadia-finance.io:30587$request_uri;
                     }
 
                 }
@@ -238,14 +238,15 @@ Steps:
                 -v /home/ubuntu/lab-files/arcadia-waf-policy/nginx.conf:/etc/nginx/nginx.conf \
                 -v /home/ubuntu/lab-files/arcadia-waf-policy/policy_base.json:/etc/nginx/policy/policy_base.json \
                 -v /home/ubuntu/lab-files/arcadia-waf-policy/policy_mongo_linux_JSON.json:/etc/nginx/policy/policy_mongo_linux_JSON.json \
-                app-protect:latest
+                app-protect:04-aug-2021-tc
 
     #.  Wait for the container to start, you should see: ``APP_PROTECT { "event": "waf_connected"`` in the output.
 
-    #.  RDP to the Jumhost as ``user:user`` and click on bookmark ``Arcadia Links>Arcadia NAP Docker`` Click Login and use matt:ilovef5
+    #.  From the jum host click on the ``Arcadia Links>Arcadia NAP Docker`` bookmark. Click Login and use matt:ilovef5
 
         .. image:: ../pictures/lab5/arcadia-adv.png
            :align: center
+           :alt: advanced policy
 
 
 .. note:: From this point on, NAP is using a different WAF policy based on the requested URI:
@@ -272,7 +273,7 @@ In this lab, we will create a ``custom blocking page`` and host this page in Git
 
 As a reminder, this is the base policy we created:
 
-    .. code-block:: js
+.. code-block:: js
 
             {
                 "name": "policy_name",
@@ -296,6 +297,7 @@ Steps :
     .. image:: ../pictures/lab5/gitlab-1.png
        :align: center
        :scale: 50%
+       :alt: gitlab1
 
 
 
@@ -314,21 +316,17 @@ Steps :
 
 #.  This is a custom Blocking Response config page. We will refer to it into the ``policy_base.json``
 
-#.  SSH to ``Docker App Protect + Docker repo`` VM
-
-#.  Delete the running docker
+#.  From the Docker VM, delete the running container with ``<ctrl-c>`` or
 
     .. code-block:: bash
 
-            <ctrl-c> 
-            or
             docker rm -f app-protect
 
 #.  Modify the base policy created previously
 
     .. code-block:: bash
 
-       vi ./arcadia-waf-policy/policy_base.json
+       /home/ubuntu/lab-files/arcadia-waf-policy/policy_base.json
 
 #.  Modify the JSON as below
 
@@ -381,7 +379,7 @@ Steps:
         
         .. code-block:: bash
 
-            vi ./policy_owasp_top10/policy_owasp_top10.json
+            vi /home/ubuntu/lab-files/policy_owasp_top10/policy_owasp_top10.json
 
         .. code-block:: js
            :caption: policy_owasp_top10.json

@@ -14,33 +14,34 @@ To do so, I prepared a ``kubectl`` Kubernetes Deployment in YAML.
 
 .. image:: ../pictures/lab4/arcadia-ingress.png
    :align: center
+   :alt: arcadia
 
 .. code-block:: YAML
 
-apiVersion: extensions/v1
-kind: Ingress
-metadata:
-  name: arcadia-ingress
-spec:
-  ingressClassName: "nginx"
-  rules:
-  - host: k8s.arcadia-finance.io
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: main
-            port:
-              number: 80
-      - path: /files
-        pathType: Prefix
-        backend:
-          service:
-            name: backend
-            port:
-              number: 80
+  apiVersion: extensions/v1
+  kind: Ingress
+  metadata:
+    name: arcadia-ingress
+  spec:
+    ingressClassName: "nginx"
+    rules:
+    - host: k8s.arcadia-finance.io
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: main
+              port:
+                number: 80
+        - path: /files
+          pathType: Prefix
+          backend:
+            service:
+              name: backend
+              port:
+                number: 80
 
 
 .. note:: You can see the Ingress is routing the packets to the right service based on the URI.

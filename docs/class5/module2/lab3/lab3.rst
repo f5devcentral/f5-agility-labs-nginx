@@ -15,18 +15,19 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
 
         .. code-block:: bash
 
-sudo yum remove -y nginx-plus nginx-plus-module-appprotect app-protect-compiler app-protect-engine app-protect-plugin
-sudo rm -f /etc/yum.repos.d/nginx-* 
-sudo rm -f /etc/yum.repos.d/app-protect*
-sudo rm -rf /etc/nginx
-sudo rm -rf /etc/app_protect
-sudo rm -rf /opt/app_protect
-sudo rm -rf /var/log/app_protect
-sudo rm -rf /var/log/nginx
+            sudo yum remove -y nginx-plus nginx-plus-module-appprotect app-protect-compiler app-protect-engine app-protect-plugin
+            sudo rm -f /etc/yum.repos.d/nginx-* 
+            sudo rm -f /etc/yum.repos.d/app-protect*
+            sudo rm -rf /etc/nginx
+            sudo rm -rf /etc/app_protect
+            sudo rm -rf /opt/app_protect
+            sudo rm -rf /var/log/app_protect
+            sudo rm -rf /var/log/nginx
 
         .. image:: ../pictures/lab3/remove-nap.png
            :align: center
            :scale: 70%
+           :alt: nap
 
 
 **Run the CI/CD pipeline from Jenkins**
@@ -40,9 +41,10 @@ Steps:
     #. Select the repository ``nap-deploy-centos`` and go to ``CI /CD``
 
 
-        .. image:: ../pictures/lab3/gitlab_pipeline.png
-           :align: center
-           :scale: 50%
+    .. image:: ../pictures/lab3/gitlab_pipeline.png
+        :align: center
+        :scale: 50%
+        :alt: gitlab
 
     #. ``Run the Pipeline`` by clicking the green button. The installation can take up to 10 minutes as the install is very I/O intensive.
 
@@ -82,6 +84,7 @@ The pipeline is as below:
 .. image:: ../pictures/lab3/gitlab_pipeline_ok.png
    :align: center
    :scale: 40%
+   :alt: pipeline
 
 
 When the pipeline is finished executing, perform a browser test within Firefox using the ``Arcadia NAP CentOS`` bookmark

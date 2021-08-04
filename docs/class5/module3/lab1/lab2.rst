@@ -7,11 +7,18 @@ In this lab, we will build the NAP Docker image via command line.
 
    #. SSH/vscode/webshell to the Docker App Protect + Docker repo VM
    #. Change directory to ``cd /home/ubuntu/lab-files``
-   #. Run the command ``docker build --tag app-protect .`` <-- Be careful, there is a "." (dot) at the end of the command (which is an alias for ``$PWD`` current directory)
+
+.. note:: Replace the date with the current date. 
+
+   #. Run the command 
+
+.. code-block:: bash
+   docker build --tag app-protect:04-aug-2021 .`` <-- Be careful, there is a "." (dot) at the end of the command (which is an alias for ``$PWD`` current directory)
+
 
 .. note:: By default, when you run the docker build command, it looks for a file named ``Dockerfile`` in the current directory. To target a different file, pass -f flag.
 
-   #. Wait until you see the message: ``Successfully tagged app-protect:latest``
+   #. Wait until you see the message: ``Successfully tagged app-protect:04-aug-2021``
 
 .. code-block:: Dockerfile
 
@@ -60,12 +67,18 @@ In this lab, we will build the NAP Docker image via command line.
 .. note:: Please take time to understand what we ran.
 
 
+**Start a container with the new image**
 
-   #. Create a container with the new image ``docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:latest``
+   #. To create a container with the image, run: 
+
+   .. code-block:: Dockerfile
+
+      docker run --interactive --tty --rm --name app-protect: -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021
+
 
 .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
 
-   #. We will leave this terminal running while we perform some tests. When debugging a container, it is often better to not run it detached (-d command) so we can see if it fails immediately. Many times when a container exists immediately it is because of a missing file.
+   #. We will leave this terminal running while we perform some tests. When debugging a container, it is often better to not run it detached (-d command) so we can see if it fails immediately. Many times when a container exists immediately it is because of a missing file, or an error in your NGINX configuration.
 
 .. note:: If you choose to run it detached, you can follow the logs with ``docker logs --follow app-protect``
 

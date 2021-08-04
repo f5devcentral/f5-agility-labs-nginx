@@ -1,75 +1,46 @@
-Step 1 - Deploy Arcadia Finance application in Kubernetes
+Using the UDF jump host
 #####################################################################
 
-It's time to deploy Arcadia Finance application :)
+This lab has a jump host with a number of tools provided. There are a number of ways to accomplish each task, use whichever tool you prefer.
 
-**Deploy Arcadia Application with kubectl**
+**Login to the jump host**
 
-With Kubernetes, there are several ways to deploy containers (pods). One way is to use ``kubectl`` command with a YAML manifest file.
-I prepared this YAML file below (this is a portion of it below showing the main app container). You can have a look, and see it will deploy containers from my Gitlab.com repo.
+Find the VM on the right hand side of the UDF Systems called Win10 and click details.
 
-.. code-block:: YAML
-
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-    name: backend
-    namespace: default
-    labels:
-        app: backend
-        version: v1
-    spec:
-    replicas: 1
-    selector:
-        matchLabels:
-        app: backend
-        version: v1
-    template:
-        metadata:
-        labels:
-            app: backend
-            version: v1
-        spec:
-        containers:
-        - env:
-            - name: service_name
-            value: backend
-            image: registry.gitlab.com/arcadia-application/back-end/backend:latest
-            imagePullPolicy: IfNotPresent
-            name: backend
-            ports:
-            - containerPort: 80
-            protocol: TCP
-            resources:
-            limits:
-                memory: "128Mi"
-                cpu: "500m"
-        ---
-
-.. note:: This file contains all the deployments for the entire Arcadia appication. 
-
-**Steps :**
-
-    #. RDP to the jumphost as ``user:user`` credentials
-    #. SSH to cicd VM. You can use vscode, Windows terminal, or UDF Web shell the command is ``ssh ubuntu@cicd`` (if you use use Web SSH, make sure to ``cd /home/ubuntu/``)
-    #. Run this command ``kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployments.yaml``
-    #. Open Firefox Browser
-    #. Open Kubernetes Dashboard bookmark (if not already opened)
-    #. Click ``skip`` on the logon page
-    #. You should see the  and the pods
-
-
-.. image:: ../pictures/lab3/arcadia-deployments.png
+.. image:: ../pictures/udf-jumphost.png
+   :alt: jumphost resolutions
    :align: center
+   :scale: 50%
 
+We recomend a resolution slightly smaller than your desktop. If you want full screen, just click the ``RDP`` button itself
 
-.. warning:: Arcadia Application is running but not yet available for the customers. We need to create a Kubernetes service to expose it.
+.. note:: The default username is ``Administrator``. You must change it to ``user`` with the password ``user``
 
-**Video of this lab (force HD 1080p in the video settings)**
+The jump host can have a little lag, though it generally will make finding all the lab resources easier. You can try the direct link to most resources under the VM you are using. For example, the ELK web dashboard is availble by clicking the ``Access`` link to the right of it.
 
-.. raw:: html
+.. image:: ../pictures/udf-elk-link.png
+   :alt: ELK Link
+   :align: center
+   :scale: 80%
 
-    <div style="text-align: center; margin-bottom: 2em;">
-    <iframe width="1120" height="630" src="https://www.youtube.com/embed/Qb5YyQrc7mk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+If you have a public key for SSH, we highly recomend adding it to UDF. Instructions for that are here (find: SSH Access): `UDF Guide
+<https://help.udf.f5.com/en/articles/3832340-f5-training-course-interface#:~:text=access%20and%20when.-,SSH%20Access,-Many%20courses%20leverage>`_.
 
+Once you add it, you can use the direct SSH access to each VM. Note that vscode does not work remotely, you must use the jump host.
+
+.. image:: ../pictures/udf-ssh-access.png
+   :alt: Windows Terminal
+   :align: center
+   :scale: 80%
+
+Once on the jump host, you can quickly access the VMs from either vscode or Windows Terminal by right clicking the icon on the taskbar.
+
+.. image:: ../pictures/udf-windows-terminal.png
+   :alt: Windows Terminal
+   :align: center
+   :scale: 80%
+
+.. image:: ../pictures/udf-vscode.png
+   :alt: vscode
+   :align: center
+   :scale: 80%

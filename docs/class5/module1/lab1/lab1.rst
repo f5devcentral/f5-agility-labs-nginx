@@ -11,6 +11,7 @@ The Arcadia app is a micro-services based application. There are 4 services that
 **This is what Arcadia App looks like when the 4 microservices are up and running, and you can see how traffic is routed based on URI**
 
 .. image:: ../pictures/lab1/arcadia-api.png
+   :alt: arcadia api
    :align: center
    :scale: 50%
 
