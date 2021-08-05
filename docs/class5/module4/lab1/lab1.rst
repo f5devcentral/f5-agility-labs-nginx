@@ -1,33 +1,28 @@
 Step 11 - Deploy NGINX Plus Ingress Controller
 ###################################################################
 
+If you have a Kubernetes cluster availible, it is logical to run all your containers in it, including App Protect. Kubernetes is desinged to orchestrate the creation, maintenance and availibility of our containers.
 
-Instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC).
+The previous excercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
 
-.. image:: ../pictures/lab1/nap_kic.png
+In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Acradia services.
+
+Generally, we would deploy KIC behind a L4/L7 load balancer to spread the load to all of the KIC PODs, as depicted on the right side of this image. In this lab, we will target the NodePort of the KIC directly (without the LTM/L4 LB in red).
+
+.. image:: ../pictures/arcadia-topology.png
    :align: center
 
 To do so, we will:
 
 #. Use helm to deploy the Ingress controller that has been saved to the registry running on our docker host
-#. Deploy a new Ingress configuration using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes Ingress Definition. This "VirtualServer" will tell the KIC pods to create the configurations 
+#. Deploy a new ingress configuration using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress Definition." This "VirtualServer" will tell the KIC pods to create the configuration neccessary to accces and protect our applications.
 
-.. note:: In this lab, we will not learn how to build the Nginx Ingress image. Follow the doc from docs.nginx.com to learn how to built the docker image. Straight forward, copy-paste the dockerfile and built it.
+.. note:: In this lab, we will not learn how to build the NGINX Ingress image. There are other labs that address that. You can follow the docs from docs.nginx.com to learn how to pull the docker image from the NGINX registry or build your own. 
 
-.. warning:: The NGINX Plus Ingress Controller image is available on my private Gitlab repo. Don't share the key.
-
-
-**Test Attack before NAP on ingress added**
-
-    #. Open ``Edge Browser``
-    #. Click on ``Arcadia k8s`` bookmark
-    #. Now, you are connecting to Arcadia App from a new KIC with NAP enabled
-    #. Send an attack (like a XSS in the address bar) by appending ``?a=<script>``
 
 **Steps**
 
-    #.  SSH from Jumpbox commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to CICD Server
-    #.  Run this command in order to delete the previous KIC ``kubectl delete -f /home/ubuntu/k8s_ingress/full_ingress_arcadia.yaml``
+    #.  SSH to the CICD VM
     #.  Run this command in order to pull and install NGINX KIC from NGINX Repo
 
         .. code-block:: BASH
@@ -48,6 +43,13 @@ To do so, we will:
 
         .. note:: This command uses HELM in order to download all the required config files from Nginx repo (CRD ...). What's more, you can notice, it downloads the Ingress image (the NGINX Plus image with NAP) from a private repo in Gitlab.com
 
+
+    #.  After running the command, we need to wait for the KIC pod to become availible. you can use a command like 
+
+        ..code-block:: BASH
+            ``kubectl get pods --all-namespaces --watch``
+
+    #.  Once it is "ready" you can press ``ctrl-c`` to stop the watch.
     #.  At this moment, the Ingress pod is up and running. But it is empty, there is no configuration (ingress, nap policy, logs).
     #.  Run this commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
 

@@ -1,7 +1,7 @@
 Step 10 - Deploy NAP with a CI/CD toolchain
 ###########################################
 
-In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is tied to the app, so when DevOps commits a new app (or a new version), the CI/CD pipeline will to deploy a new NAP container in front. In order to avoid repeating what we did previously, we will use a Signature package update as a trigger.
+In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is tied to the app, so when DevOps commits a new app (or a new version), the CI/CD pipeline will to deploy a new NAP container in front to protect it. In order to avoid repeating what we did previously, we will use a signature package update as a trigger.
 
 .. note:: When a new signature package is available, the CI/CD pipeline will build a new version of the Docker image and run it in front of the Arcadia Application.
 
@@ -72,7 +72,7 @@ Steps:
            :align: center
            :scale: 50%
 
-    #.  SSH ``CICD server (runner, Terraform, Ansible)``
+    #.  SSH to the ``CICD server (runner, Terraform, Ansible)`` VM
 
         #. Run this command in order to determine the latest Signature Package date: ``sudo yum --showduplicates list app-protect-attack-signatures`` 
         or for ubuntu: ``sudo apt-cache policy app-protect-attack-signatures|grep 2021``
@@ -120,4 +120,3 @@ Steps :
     #. You can create some traffic to the new container with Firefox>Arcadia Links>Arcadia NAP Docker favorite
     
 .. note:: Congratulations, you ran a CI/CD pipeline with a GitLab CI.
-

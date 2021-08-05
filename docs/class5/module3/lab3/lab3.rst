@@ -191,7 +191,7 @@ Steps:
 
                     app_protect_enable on;
                     app_protect_security_log_enable on;
-                    app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
+                    app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.20.11:5144;
 
                     location / {
                         resolver 10.1.1.8:5353;
@@ -352,7 +352,7 @@ Steps :
 
 #.  In the ``jump host``, open the browser and connect to ``Arcadia Links>Arcadia NAP Docker`` bookmark
 
-#.  Enter this URL with a XSS attack ``http://app-protect.arcadia-finance.io/?a=<script>``
+#.  Add this to the end of the URL to simulate an XSS attack ``?a=<script>``
 
 #.  You can see your new custom blocking page
 
@@ -363,13 +363,13 @@ Steps :
 Create an OWASP Top 10 policy for NAP
 *************************************
 
-So far, we created basic and custom policy (per location) and used external references. Now it is time to deploy an OWASP Top 10 policy.
-The policy not 100% OWASP Top 10 as several attacks can't be blocked just with a negative policy, we will cover a big part of OWASP Top 10.
+So far, we created basic and custom policies (per location) and used external references. Now it is time to deploy an OWASP Top 10 policy.
+The policy does not cover 100% OWASP Top 10 as several attacks can't be blocked just with a negative policy, but we will cover most of the OWASP Top 10.
 
 Steps:
 
     #.  SSH to the Docker App Protect + Docker repo VM
-    #.  In the ``/home/ubuntu`` directory, create a new folder ``policy_owasp_top10``
+    #.  In the ``/home/ubuntu/lab-files`` directory, create a new folder ``policy_owasp_top10``
 
         .. code-block:: bash
 
@@ -379,7 +379,7 @@ Steps:
         
         .. code-block:: bash
 
-            vi /home/ubuntu/lab-files/policy_owasp_top10/policy_owasp_top10.json
+            /home/ubuntu/lab-files/policy_owasp_top10/policy_owasp_top10.json
 
         .. code-block:: js
            :caption: policy_owasp_top10.json
@@ -477,7 +477,7 @@ Steps:
 
         .. code-block:: bash
 
-            vi ./policy_owasp_top10/nginx.conf
+            /home/ubuntu/lab-files/policy_owasp_top10/nginx.conf
 
         .. code-block:: nginx
            :caption: nginx.conf
@@ -507,7 +507,7 @@ Steps:
                     app_protect_enable on;
                     app_protect_security_log_enable on;
                     app_protect_policy_file "/etc/nginx/policy/policy_owasp_top10.json";
-                    app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.6:5144;
+                    app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.20.6:5144;
 
                     location / {
                         resolver 10.1.1.8:5353;
@@ -526,9 +526,9 @@ Steps:
         .. code-block:: bash
 
             docker rm -f app-protect
-            docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/policy_owasp_top10/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/policy_owasp_top10/policy_owasp_top10.json:/etc/nginx/policy/policy_owasp_top10.json app-protect:20200316
+            docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/lab-files/policy_owasp_top10/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/lab-files/policy_owasp_top10/policy_owasp_top10.json:/etc/nginx/policy/policy_owasp_top10.json app-protect:owasp
 
-    #.  Check that the ``app-protect:20200316`` container is running 
+    #.  Check that the ``app-protect:owasp`` container is running 
 
         .. code-block:: bash
 
