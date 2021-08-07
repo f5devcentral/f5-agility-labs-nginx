@@ -56,10 +56,11 @@ We have a YAML manifest file to deploy all the various API micro-services, ``att
        kubectl apply -f /home/ubuntu/k3s/generator-direct.yaml -n api
 
 #. RDP to the ``Win10`` VM. Login by using ``user`` as both the user and the password credentials (you will need to use an RDP client):
-   #. Open the ``Edge Browser`` and select the ``Rancher`` bookmark. If you get a ``Your connection isn't private`` warning, click ``Advanced`` -> ``Continue to <IP> (unsafe)``.
-   #. Login into the ``Rancher`` dashboard by using ``admin`` as both the user and the password credentials.
-   #. Click on the ``Cluster Explorer`` yellow button on the top right corner.
-   #. On the left menu, select ``Deployments``. From here, you can see the ``Deployments`` running in each ``NameSpace``:
+
+    * Open the ``Edge Browser`` and select the ``Rancher`` bookmark. If you get a ``Your connection isn't private`` warning, click ``Advanced`` -> ``Continue to <IP> (unsafe)``.
+    * Login into the ``Rancher`` dashboard by using ``admin`` as both the user and the password credentials.
+    * Click on the ``Cluster Explorer`` yellow button on the top right corner.
+    * On the left menu, select ``Deployments``. From here, you can see the ``Deployments`` running in each ``NameSpace``:
 
    .. image:: ../pictures/lab2/rancher-deployments.png
       :align: center

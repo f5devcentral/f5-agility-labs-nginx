@@ -1,5 +1,5 @@
 Step 6 - Publish API v3.0
-###############################
+#########################
 
 The API Dev has now modified an existing endpoint. They modified the ``Locations`` micro-service in order to add a new JSON object for the coordinates of the location.
 
@@ -52,13 +52,14 @@ Let's deploy the ``Locations`` v3.0 micro-service!
 Create version 3.0 for the existing API Definition
 ====================================================
 
-#. Connect to NGINX Controller, select your API Definition ``api-sentence``, and on the top right corner select ``Add Version``.
+#. Connect to NGINX Controller, and enter in the APIs configuration section (Top left Nginx Logo menu -> Services -> APIs)
+#. Select your API Definition ``api-sentence``, and on the top right corner select ``Add Version``.
 
    .. image:: ../pictures/lab3/addversion.png
       :align: center
 
 #. Select ``OpenAPI Specification`` -> ``Copy and paste specification text``.
-#. Copy and paste the v2.0 OAS YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/3.0
+#. Copy and paste the v3.0 OAS YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/3.0
 
    .. note:: You can notice the version is automatically set to ``3.0``
 
@@ -86,20 +87,21 @@ Publish version 3.0 of the API
    .. image:: ../pictures/lab3/add-publish-v3.png
       :align: center
 
-   #. Start by setting the ``Base Path``. This is the path to differentiate the various Published APIs. Set it to ``/v3`` and check the box ``Strip Base Path`` so that the API Gateway does not use the path to connect to the backend micro-services.
+#. Start by setting the ``Base Path``. This is the path to differentiate the various Published APIs. Set it to ``/v3`` and check the box ``Strip Base Path`` so that the API Gateway does not use the path to connect to the backend micro-services.
 
    .. image:: ../pictures/lab3/basepath.png
       :align: center
 
-   #. Name: ``api-sentence-v3``
-   #. Click ``Next``.
-   #. Set the Environment, the App and the Gateway as with version 1.0.
+   * Name: ``api-sentence-v3``
+   * Click ``Next``.
+   * Set the Environment, the App and the Gateway as with version 1.0.
 
-   .. image:: ../pictures/lab3/deployment.png
-      :align: center
+        .. image:: ../pictures/lab3/deployment.png
+           :align: center
 
-   #. Click ``Next``
-   #. Configure the ``Routing`` as with version 1.0 except for the ``location`` component which now routes the traffic to a different micro-service in k8s (listening on port 31303 instead of 31103 for v1.0).
+   * Click ``Next``
+
+#. Configure the ``Routing`` as with version 1.0 except for the ``location`` component which now routes the traffic to a different micro-service in k8s (listening on port 31303 instead of 31103 for v1.0).
 
    .. list-table:: List of all micro-services and their component configuration.
       :header-rows: 1
@@ -128,7 +130,7 @@ Publish version 3.0 of the API
         - wl-colors-v3
         - http://10.1.20.8:31102
 
-#. Drag and drop each ``Path`` resource to the right ``component``.
+#. Drag and drop each ``Path`` resource to the ``corresponding component``.
 
    .. image:: ../pictures/lab3/routingv3.png
       :align: center
@@ -136,6 +138,8 @@ Publish version 3.0 of the API
 #. Click ``Submit``
 
 #. Check if your ``Published API`` is green. If not, address any errors and re-submit.
+
+    .. note:: The flag can take some time to become GREEN (due to resources limitations in UDF). If the flag is RED, wait few seconds, and re-submit your changes (refresh the page too). 
 
    .. image:: ../pictures/lab3/green.png
       :align: center

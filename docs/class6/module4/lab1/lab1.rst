@@ -43,10 +43,13 @@ Configure ``Keycloak`` as a JWT OIDC token issuer
    .. image:: ../pictures/lab1/users.png
       :align: center
 
-   .. note:: You should see 2 users, ``matt`` (password ``matt`)`, and ``fouad`` (password ``fouad``). At this stage, these users do not have any attributes assigned.
+   .. note:: You should see 2 users, ``matt`` (password ``matt``), and ``fouad`` (password ``fouad``). At this stage, these users do not have any attributes assigned.
 
 #. Click on the ``matt`` ID to edit it.
 #. In the ``Attributes`` tab, add a new key ``groups`` with value ``employee``.
+
+   .. warning:: Don't miss the ``S`` at the end of ``groups``. 
+
 #. Click ``Add`` -> Click ``Save``
 
    .. warning:: You need to click on ``Add`` to add the attribute, and on ``Save`` to save the user settings.
@@ -58,16 +61,17 @@ Configure ``Keycloak`` as a JWT OIDC token issuer
     #. Click on ``Client Scopes`` -> ``Create``
     #. Name the scope ``groups`` -> Click ``Save`` -> Click the ``Mappers`` tab -> Click ``Create``
     #. Create a new mapper. Use the following values:
-       #. Name: ``groups``
-       #. Mapper Type: ``User Attribute``
-       #. User Attribute: ``groups``
-       #. Token Claim Name: ``groups``
-       #. Claim JSON Type: ``String``
-       #. Add to ID token: ``ON``
-       #. Add to access token: ``ON``
-       #. Add to userinfo: ``ON``
-       #. Multivalued: ``OFF``
-       #. Aggregate attribute values: ``OFF``
+
+       * Name: ``groups``
+       * Mapper Type: ``User Attribute``
+       * User Attribute: ``groups``
+       * Token Claim Name: ``groups``
+       * Claim JSON Type: ``String``
+       * Add to ID token: ``ON``
+       * Add to access token: ``ON``
+       * Add to userinfo: ``ON``
+       * Multivalued: ``OFF``
+       * Aggregate attribute values: ``OFF``
 
        .. image:: ../pictures/lab1/mapper.png
           :align: center
@@ -97,6 +101,9 @@ Configure ``Keycloak`` as a JWT OIDC token issuer
 
     #. Move back to the ``Evaluate`` sub-menu and check that ``matt`` now has a ``groups: employee`` attribute value
 
+       .. image:: ../pictures/lab1/claim_groups.png
+          :align: center
+
 .. warning :: Congrats! We are now ready to configure NGINX Controller to check the groups claim values and conditionally grant access to our API endpoints.
 
 |
@@ -104,7 +111,7 @@ Configure ``Keycloak`` as a JWT OIDC token issuer
 Create an Identity Provider in NGINX Controller
 ===============================================
 
-A JWT token is a readable token signed by a public/private key workflow. ``Keycloak`` (or any other Oauth AS) provide you with either a private secret key or a JWKS url.
+A JWT token is a readable token signed by a public/private key workflow. ``Keycloak`` (or any other Oauth AS) provides you with either a private secret key or a JWKS url.
 
 A JWKS url is a public URL to retrieve and download the public keys used to sign the JWT token. The Keycloak JWKS url is http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs, and the content looks like:
 
@@ -129,12 +136,14 @@ A JWKS url is a public URL to retrieve and download the public keys used to sign
         ]
     }
 
-#. In NGINX Controller -> Select ```Services`` -> ``Identity Providers`` -> ``Create Identity Provider``. Use the following values:
-   #. Name: ``keycloak``
-   #. Environment: ``env_prod``
-   #. Type: ``JWT``
-   #. JWT Settings: ``Enter a URL for the file's location``
-   #. URL: ``http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs``
+#. In NGINX Controller -> Select ``Services`` -> ``Identity Providers`` -> ``Create Identity Provider``. Use the following values:
+   
+   * Name: ``keycloak``
+   * Environment: ``env_prod``
+   * Type: ``JWT``
+   * JWT Settings: ``Enter a URL for the file's location``
+   * URL: ``http://10.1.1.8:8080/auth/realms/api-app/protocol/openid-connect/certs``
+
 #. Click ``Submit``
 
 .. image:: ../pictures/lab1/idp.png
@@ -145,7 +154,7 @@ A JWKS url is a public URL to retrieve and download the public keys used to sign
 Add authentication to the ``/colors`` API endpoint
 ==================================================
 
-#. In NGINX Controller -> Select ``APIs`` -> ``api-sentence`` -> Edit the ``api-sentence-v3`` published API
+#. In NGINX Controller -> Select ``Services`` (from top left Nginx menu) -> ``APIs`` -> ``api-sentence`` -> Edit the ``api-sentence-v3`` published API
 
    .. image:: ../pictures/lab1/edit_auth_colors.png
       :align: center
@@ -161,9 +170,13 @@ Add authentication to the ``/colors`` API endpoint
       :align: center
 
 #. Use the following values:
-   #. Identity Provider: ``Keycloak``
-   #. Credential Location: ``BEARER``
-   . note:: This setting means that the JWT token is expected to be present in the ``Authorization: Bearer`` HTTP header
+
+   * Identity Provider: ``keycloak``
+   * Credential Location: ``BEARER``
+   
+   .. note:: This setting means that the JWT token is expected to be present in the ``Authorization: Bearer`` HTTP header
+
+#. Click ``Done``
 #. Click ``Submit`` -> ``Submit`` again to validate the config and push it to the NGINX instance.
 
 .. note:: We have not enabled ``conditional access`` for now.
@@ -199,7 +212,7 @@ Add conditional access to the ``/colors`` API endpoint
 
 The next step is to add Conditional Access for employee users only. This way, any JWT token without the claim ``groups`` and the value ``employee`` can't reach the ``/colors`` API Endpoint.
 
-#. In NGINX Controller -> Select ``APIs`` -> ``api-sentence`` -> Edit the ``api-sentence-v3`` published API.
+#. In NGINX Controller -> Select ``Services`` (from top left Nginx menu) -> Select ``APIs`` -> ``api-sentence`` -> Edit the ``api-sentence-v3`` published API.
 #. In the ``Routing`` menu, edit the ``Authentication`` setting for the ``cp-colors-v3`` component.
 #. Turn on ``Enable Conditional Access``.
 
@@ -207,12 +220,13 @@ The next step is to add Conditional Access for employee users only. This way, an
       :align: center
 
 #. Configure it so that only a JWT with a ``group: employee`` claim is allowed. Use the following values:
-   #. Policy Type: ``Allow when``
-   #. Source Data Type: ``JWT claim``
-   #. Source Data Value: ``groups``
-   #. Comparison Type: ``Contains``
-   #. Value: ``employee``
-   #. Failure Response: ``403``
+
+   * Policy Type: ``Allow when``
+   * Source Data Type: ``JWT claim``
+   * Source Data Value: ``groups``
+   * Comparison Type: ``Contains``
+   * Value: ``employee``
+   * Failure Response: ``403``
 
    .. image:: ../pictures/lab1/cond_access2.png
       :align: center
