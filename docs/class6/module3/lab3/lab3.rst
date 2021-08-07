@@ -87,20 +87,21 @@ Publish version 3.0 of the API
    .. image:: ../pictures/lab3/add-publish-v3.png
       :align: center
 
-   #. Start by setting the ``Base Path``. This is the path to differentiate the various Published APIs. Set it to ``/v3`` and check the box ``Strip Base Path`` so that the API Gateway does not use the path to connect to the backend micro-services.
+#. Start by setting the ``Base Path``. This is the path to differentiate the various Published APIs. Set it to ``/v3`` and check the box ``Strip Base Path`` so that the API Gateway does not use the path to connect to the backend micro-services.
 
    .. image:: ../pictures/lab3/basepath.png
       :align: center
 
-   #. Name: ``api-sentence-v3``
-   #. Click ``Next``.
-   #. Set the Environment, the App and the Gateway as with version 1.0.
+   * Name: ``api-sentence-v3``
+   * Click ``Next``.
+   * Set the Environment, the App and the Gateway as with version 1.0.
 
-   .. image:: ../pictures/lab3/deployment.png
-      :align: center
+        .. image:: ../pictures/lab3/deployment.png
+           :align: center
 
-   #. Click ``Next``
-   #. Configure the ``Routing`` as with version 1.0 except for the ``location`` component which now routes the traffic to a different micro-service in k8s (listening on port 31303 instead of 31103 for v1.0).
+   * Click ``Next``
+
+#. Configure the ``Routing`` as with version 1.0 except for the ``location`` component which now routes the traffic to a different micro-service in k8s (listening on port 31303 instead of 31103 for v1.0).
 
    .. list-table:: List of all micro-services and their component configuration.
       :header-rows: 1

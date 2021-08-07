@@ -22,8 +22,8 @@ Create the API Definition
 
    #. First, you will need to create an ``API Definition``. To do so, click on ``CREATE NEW`` under the API Definition box (which is empty):
 
-      #. Name: ``api-sentence``
-      #. Click ``Submit``
+      * Name: ``api-sentence``
+      * Click ``Submit``
 
    #. Select ``OpenAPI Specification`` -> ``Copy and paste specification text``.
    #. Copy and paste the YAML content from https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence/1.0
@@ -45,16 +45,17 @@ Create a Published API for v1.0
 ===============================
 
 #. Let's now publish version 1.0 of the API. Click on ``Add Published API``. Use the following values:
-    #. Name: ``api-sentence-v1``
-    #. Click ``Next``
-    #. Environment: ``env_prod``
-    #. App: ``api-sentence-app`` (we automatically created this for you behind the scenes for this lab)
-    #. Gateways: ``apigw``
-    #. Click ``Next``
+    
+   * Name: ``api-sentence-v1``
+   * Click ``Next``
+   * Environment: ``env_prod``
+   * App: ``api-sentence-app`` (we automatically created this for you behind the scenes for this lab)
+   * Gateways: ``apigw``
+   * Click ``Next``
 
-       .. image:: ../pictures/lab1/deployment.png
-          :align: center
-          :class: with-shadow
+      .. image:: ../pictures/lab1/deployment.png
+         :align: center
+         :class: with-shadow
 
 #. In ``Routing``, we will create one ``component`` per ``micro-service``:
     #. Click ``Add New`` to create a new component for the ``Generator`` micro-service:
