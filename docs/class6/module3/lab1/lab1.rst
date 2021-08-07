@@ -18,7 +18,7 @@ Steps to publish version 1.0 of the API
 Create the API Definition
 =========================
 
-#. In NGINX Controller, select ``Home`` (the NGINX logo on the top left corner) -> ``APIs`` -> ``Create API Version``:
+#. In NGINX Controller, select ``Home`` (the NGINX logo on the top left corner) -> ``Services`` -> ``APIs`` -> ``Create API Version``:
 
    #. First, you will need to create an ``API Definition``. To do so, click on ``CREATE NEW`` under the API Definition box (which is empty):
 
@@ -61,12 +61,15 @@ Create a Published API for v1.0
         #. Name: ``cp-generator``
         #. Click ``Next``
         #. In ``Workload Groups``:
-            #. Name: ``wl-generator``
-            #. In ``Backend Workload URIs``:
-               #. URI: ``http://10.1.20.8:31200``
-               .. note:: This URL is the FQDN and the NodePort used by the micro-service running in the K3S.
-               #. Click ``Done``
-            #. Click ``Done``
+            * Name: ``wl-generator``
+            * In ``Backend Workload URIs``:
+            
+               * URI: ``http://10.1.20.8:31200``
+               
+                  .. note:: This URL is the FQDN and the NodePort used by the micro-service running in the K3S.
+               
+               * Click ``Done``
+            * Click ``Done``
         #. Click ``Next``
 
            .. image:: ../pictures/lab1/component-generator.png
@@ -74,7 +77,7 @@ Create a Published API for v1.0
 
         #. Click ``Submit``
 
-    #. We now have to replicate the same steps for each other micro-service
+    #. We now have to replicate the same steps for each other of the micro-services
 
        .. list-table:: List of all micro-services and their component configuration
           :header-rows: 1
@@ -102,7 +105,7 @@ Create a Published API for v1.0
 
     #. You should now have a list of 4 empty ``components``.
     #. On the left side, under ``Unrouted`` you can see every API ``Path`` imported from the OAS spec file.
-    #. Drag and drop each unrouted API ``Path`` (shown as a ``resource`` here) to the right ``component``.
+    #. Drag and drop each unrouted API ``Path`` (shown as a ``resource`` here) to the ``corresponding component``.
 
        .. image:: ../pictures/lab1/routing.png
           :align: center
@@ -115,6 +118,8 @@ Create a Published API for v1.0
 |
 
 .. note:: API v1.0 is now published, and we can now check if it is working as expected.
+
+|
 
 Test the v1.0 API deployment
 ============================

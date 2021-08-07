@@ -5,7 +5,7 @@ In order to link an NGINX Plus instance to NGINX Controller, we need to run the 
 
 Steps:
 
-#. Login to the NGINX Controller instance, use ``admin@nginx-udf.internal`` as your email and ``admin123!`` as your password.
+#. Login to the NGINX Controller instance by selecting ``Controller UI`` in UDF Access menu, use ``admin@nginx-udf.internal`` as your email and ``admin123!`` as your password.
 #. Select ``Add an existing instance``.
 
    .. note:: Your NGINX Plus instance already exists, we just need to link it with NGINX Controller.
