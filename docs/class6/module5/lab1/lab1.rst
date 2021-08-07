@@ -19,6 +19,7 @@ Install the NGINX Controller agent on the second NGINX Plus instance
 #. Enter a ``Name``, e.g. ``devportal``.
 #. Check the box ``Allow insecure server connections to NGINX Controller using TLS``.
 #. Copy the ``curl commmand`` in the command box:
+
    .. code-block:: bash
 
       curl -k -sS -L https://10.1.20.4/install/controller-agent > install.sh && \
@@ -47,8 +48,10 @@ As a reminder, an instance cannot be used alone. It needs to be part of a NGINX 
 
 
 #. In NGINX Controller -> Select ``Home`` -> ``Services`` -> ``Gateways`` -> ``Create``. Use the following values:
-    #. Name: ``devportal-gw``
-    #. Environment: ``env_prod``
-    #. Placement: ``<your devportal instance>``
-    #. Hostnames: ``http://devportal.local``
+
+    * Name: ``devportal-gw``
+    * Environment: ``env_prod``
+    * Placement: ``<your devportal instance>``
+    * Hostnames: ``http://devportal.local``
+
 #. Click ``Submit``

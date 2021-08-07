@@ -80,6 +80,8 @@ Steps to configure NGINX App Protect as an API firewall
 
 #. Now, we have to configure NGINX's ``nginx.conf`` to use this NAP policy
 
+   .. note:: We have 2 options here. Either we change the default NAP policy directive from ``NginxDefaultPolicy.json`` to ``api-sentence.json``, or you we comment the ``NginxDefaultPolicy.json`` directive and add ``api-sentence.json`` directive. In the lab, we will replace ``NginxDefaultPolicy.json`` by ``api-sentence.json``.
+
    .. code-block:: bash
 
       sudo vi nginx.conf
@@ -144,8 +146,8 @@ Update the BIG-IP config to route incoming requests to NAP
 **********************************************************
 
 #. Login to the BIG-IP TMUI using ``admin`` as both the user and the password.
-#. Select ``Local Traffic`` -> ``Virtual Servers`` -> Edit the ``vs_api`` virtual server.
-#. Click on ``Resources`` -> Select ``pool-nap`` as the default pool.
+#. Select ``Local Traffic`` -> ``Virtual Servers`` -> ``Virtual Server List`` -> Edit the ``vs_api`` virtual server.
+#. Click on ``Resources`` tab -> Select ``pool-nap`` as the default pool, instead of ``pool-api-gw``
 #. Click ``Update``.
 
 Test your API Firewall
@@ -154,7 +156,7 @@ Test your API Firewall
 #. RDP to the ``Win10`` VM (user/user).
 #. Open ``Postman`` and the ``API Sentence Generator v3`` collection.
 #. Send any call and check that NAP is forwarding traffic to the API gateway
-#. Now, send an attack using the ``GET Locations v3 Attack`` request. The request is blocked and you can see the Violation Support ID.
+#. Now, send an attack using the ``GET Locations v3 Attack`` request. The request is blocked and you can see the Violation Support ID (your Violation Support ID will diffear from the one below).
 
    .. code-block:: json
 
