@@ -82,7 +82,7 @@ Update the Published API with the new ``Colors`` endpoint
 =========================================================
 
 #. The ``Colors`` API endpoint is now known by our API Definition, let's publish it!
-#. Select your existing API Definition ``api-sentence-app``, and click the edit button:
+#. Select your existing API Definition ``api-sentence-v1``, and click the edit button:
 
    .. image:: ../pictures/lab2/edit-published.png
       :align: center
