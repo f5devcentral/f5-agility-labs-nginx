@@ -14,6 +14,7 @@ Steps:
   * Placement: ``<your nginx1 instance>``
   * Hostname: http://api.name-generator.com
   * Methods: ``POST``, ``GET``, ``PUT``, ``DELETE``, ``PATCH``
+
 #. Click ``Submit``
 
     .. note:: The hostname value is the listener. This ``Gateway`` will be dedicated to the API FQDN, so we set this FQDN at the ``Gateway`` level.
