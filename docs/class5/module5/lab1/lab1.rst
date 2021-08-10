@@ -1,4 +1,4 @@
-Step 12 - Protect Arcadia API
+Step 10 - Protect Arcadia API
 #############################
 
 Context
@@ -27,7 +27,7 @@ You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub
 Steps for the lab
 *****************
 
-    #. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to ``App Protect in CentOS``
+    #. SSH to the centos-vm
     #. Go to ``cd /etc/nginx``
     #. ``ls`` and check the files created during the previous CI/CD pipeline job
 

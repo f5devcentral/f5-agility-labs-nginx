@@ -1,7 +1,7 @@
 Step 3 - Install the NGINX Plus and App Protect packages manually
 #################################################################
 
-In this lab, we will manually install the NGINX Plus and NGINX App Protect labs on CentOS from the NGINX private repo.
+In this lab, we will manually install NGINX Plus and NGINX App Protect on CentOS from the NGINX private repo.
 
 .. note:: NGINX Plus repo keys are already copied to the CentOS VM. Normally you would need to put them in /etc/ssl/nginx.
 
@@ -157,32 +157,39 @@ Steps:
 
             systemctl status nginx
 
-.. note:: Congrats, now your CentOS instance is protecting the Arcadia application.
+        .. note:: Congrats, now your CentOS instance is protecting the Arcadia application.
 
-**Let's run some tests on the jumphost**
+    
+        **Access the Application and Test the WAF:**
+    
+    #. In the Browser, click on the bookmark ``Aracdia Links>Arcadia NAP Centos``
+    #. Click on ``Login``
+    #. Login with ``matt:ilovef5``
+    #. You should see all the apps running (main, back, app2 and app3)
 
-Steps:
+        .. image:: ../pictures/arcadia-app.png
+        :align: center
+        :alt: arcadia app
+    
+    #.  Try some attacks like injections or XSS: ``http://app-protect-centos.arcadia-finance.io/<script>`` 
 
-    #. On the browser favorites, open "Arcadia Links>Arcadia NAP Centos", and try some attacks like injections or XSS: ``http://app-protect-centos.arcadia-finance.io/<script>`` 
-
-.. note:: Other examples at the bottom of this page.
+        .. note:: Other examples at the bottom of this page.
 
     #. You will be blocked and see the default Blocking page
  
-    .. code-block:: html
-        
-            The requested URL was rejected. Please consult with your administrator.
-        
-            Your support ID is: 14609283746114744748
-        
-            [Go Back]
-        
-    .. note:: Did you notice the blocking page is similar to F5 ASM and Adv. WAF ?
+        .. code-block:: html
+            
+                The requested URL was rejected. Please consult with your administrator.
+            
+                Your support ID is: 14609283746114744748
+            
+                [Go Back]
+            
+        .. note:: Did you notice the blocking page is similar to F5 ASM and Adv. WAF ?
 
 
-**Next step is to install the latest Signature Package**
+        **Next step is to install the latest Signature Package**
 
-Steps:
 
     #.  Check the current installed signature package:
 
@@ -240,7 +247,7 @@ Steps:
 
             sudo nginx -s reload
 
-.. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
+            .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
 
     #.  Wait a few seconds and check the **new** signatures package date:
 
@@ -248,7 +255,7 @@ Steps:
 
             cat /var/log/nginx/error.log|grep signatures
 
-.. note:: Upgrading App Protect is independent from updating Attack Signatures. You will get the same Attack Signature release after upgrading App Protect. If you want to also upgrade the Attack Signatures, you will have to explicitly update them by the respective command above.
+    .. note:: Upgrading App Protect is independent from updating Attack Signatures. You will get the same Attack Signature release after upgrading App Protect. If you want to also upgrade the Attack Signatures, you will have to explicitly update them by the respective command above.
 
 |
 
@@ -303,28 +310,27 @@ Steps :
     .. note:: Congrats, you are running a new version of NAP with the latest Threat Campaign package and ruleset.
 
 
-        #. Optionally run some other attacks below.
+**Here are some optional attacks you can try**
 
+``SQL Injection - GET /?hfsagrs=-1+union+select+user%2Cpassword+from+users+--+``
 
-    ``SQL Injection - GET /?hfsagrs=-1+union+select+user%2Cpassword+from+users+--+``
+``Remote File Include - GET /?hfsagrs=php%3A%2F%2Ffilter%2Fresource%3Dhttp%3A%2F%2Fgoogle.com%2Fsearch``
 
-    ``Remote File Include - GET /?hfsagrs=php%3A%2F%2Ffilter%2Fresource%3Dhttp%3A%2F%2Fgoogle.com%2Fsearch``
+``Command Execution - GET /?hfsagrs=%2Fproc%2Fself%2Fenviron``
 
-    ``Command Execution - GET /?hfsagrs=%2Fproc%2Fself%2Fenviron``
+``HTTP Parser Attack - GET /?XDEBUG_SESSION_START=phpstorm``
 
-    ``HTTP Parser Attack - GET /?XDEBUG_SESSION_START=phpstorm``
+``Predictable Resource Location Path Traversal - GET /lua/login.lua?referer=google.com%2F&hfsagrs=%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd``
 
-    ``Predictable Resource Location Path Traversal - GET /lua/login.lua?referer=google.com%2F&hfsagrs=%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd``
+``Cross Site Scripting - GET /lua/login.lua?referer=google.com%2F&hfsagrs=+oNmouseoVer%3Dbfet%28%29+``
 
-    ``Cross Site Scripting - GET /lua/login.lua?referer=google.com%2F&hfsagrs=+oNmouseoVer%3Dbfet%28%29+``
+``Informtion Leakage - GET /lua/login.lua?referer=google.com%2F&hfsagrs=efw``
 
-    ``Informtion Leakage - GET /lua/login.lua?referer=google.com%2F&hfsagrs=efw``
+``HTTP Parser Attack Forceful Browsing - GET /dana-na/auth/url_default/welcome.cgi``
 
-    ``HTTP Parser Attack Forceful Browsing - GET /dana-na/auth/url_default/welcome.cgi``
+``Non-browser Client,Abuse of Functionality,Server Side Code Injection,HTTP Parser Attack - GET /index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=HelloThinkPHP``
 
-    ``Non-browser Client,Abuse of Functionality,Server Side Code Injection,HTTP Parser Attack - GET /index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=HelloThinkPHP``
-    
-    ``Cross Site Scripting - GET / HTTP/1.1\r\nHost: <ATTACKED HOST>\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0\r\nAccept: */*\r\nAccept-Encoding: gzip,deflate\r\nCookie: hfsagrs=%27%22%5C%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E\r\n\r\n"``
+``Cross Site Scripting - GET / HTTP/1.1\r\nHost: <ATTACKED HOST>\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0\r\nAccept: */*\r\nAccept-Encoding: gzip,deflate\r\nCookie: hfsagrs=%27%22%5C%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E\r\n\r\n"``
 
 
 .. code-block :: bash

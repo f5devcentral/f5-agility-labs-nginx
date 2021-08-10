@@ -8,7 +8,7 @@ They use several bots and honeypotting networks in order to know in advance what
 
 Unlike ``signatures``, Threat Campaign provides with ``ruleset``. A signature uses patterns and keywords like ``' or`` or ``1=1``. Threat Campaign uses ``rules`` that match perfectly an attack detected by our Threat Intelligence team.
 
-.. note :: The App Protect installation does not come with a built-in Threat campaigns package like Attack Signatures. Threat campaigns Updates are released periodically whenever new campaigns and vectors are discovered, so you might want to update your Threat campaigns from time to time. You can upgrade the Threat campaigns by updating the package any time after installing App Protect. We recommend you upgrade to the latest Threat campaigns version right after installing App Protect.
+.. note :: Threat campaign updates are released periodically whenever new campaigns and vectors are discovered. You can upgrade the Threat campaigns by updating the package any time after installing App Protect. We recommend you upgrade to the latest Threat campaign version right after installing App Protect.
 
 
 For instance, if we notice a hacker managed to enter into our Struts2 system, we will do forensics and analyse the packet that used the breach. Then, this team creates the ``rule`` for this request.
@@ -50,54 +50,54 @@ In order to install this package, we need to update our ``Dockerfile``. I create
       && ln -sf /dev/stderr /var/log/nginx/error.log
 
    # Copy configuration files:
-   COPY nginx.conf custom_log_format.json /etc/nginx/
+   COPY nginx.conf /etc/nginx/
    COPY entrypoint.sh  /root/
 
    CMD ["sh", "/root/entrypoint.sh"]
 
 
-.. note:: You may notice one more package versus the previous Dockerfile in Step 4. I added the package installation ``app-protect-threat-campaigns``
+.. note:: You may notice one more package versus the previous Dockerfile in Step 6. I added the package installation ``app-protect-threat-campaigns``
 
 
 **Follow the steps below to build the new Docker image:**
 
    #. SSH to Docker App Protect + Docker repo VM
-   #. Run the command
+   #. Run the command:
 
-.. code-block:: bash
+      .. code-block:: bash
 
-   docker build --tag app-protect:04-aug-2021-tc -f Dockerfile-sig-tc .
+         docker build --tag app-protect:04-aug-2021-tc -f Dockerfile-sig-tc .
 
-
-.... note:: <-- Be careful, there is a "." (dot) at the end of the command
+      .. note:: There is a "." (dot) at the end of the command
 
    #. Wait until you see the message: ``Successfully tagged app-protect:04-aug-2021-tc``
 
-.. note:: Please take time to understand what we ran. You may notice 2 changes. We ran the build with a new Dockerfile ``Dockerfile-sig-tc`` and with a new tag ``tc``. You can choose another tag like ``tcdate`` where date is the date of today. We don't know yet the date of the TC package ruleset.
+      .. note:: Please take time to understand what we ran. You may notice 2 changes. We ran the build with a new Dockerfile ``Dockerfile-sig-tc`` and with a new tag ``tc``. You can choose another tag like ``tcdate`` where date is the date of today. We don't know yet the date of the TC package ruleset.
 
 
-**Stop the previous running NAP container and run a new one based on the new image**
+      **Stop the previous running NAP container and run a new one based on the new image**
 
-   1. If the old container is still running, stop it with <ctrl-c>. Otherwise, kill it with ``docker rm -f app-protect``
+   #. If the old container is still running, stop it with <ctrl-c>. Otherwise, kill it with ``docker rm -f app-protect``
 
-   2. Run a new container with this image:
+   #. Run a new container with this image:
 
-   ..code-block: bash
+      .. code-block:: bash
 
-   docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021-tc
-
-.. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
-
-   1. Check the Threat Campaign ruleset date included in the new Docker container in the running logs by looking for  ``threat_campaigns_package``
-
-      .. code-block::
-
-      2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true,"threat_campaigns_package":{"revision_datetime":"2021-07-13T13:48:30Z","version":"2021.07.13"}}
+         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021-tc
 
 
-**Simulate a Threat Campaign attack**
+      .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
 
-   #. Open ``Postman`` and select the collection ``NAP - Threat Campaign``
+   #. Check the Threat Campaign ruleset date included in the new Docker container in the running logs by looking for  ``threat_campaigns_package``
+
+      .. code-block:: bash
+         2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true,"threat_campaigns_package":{"revision_datetime":"2021-07-13T13:48:30Z","version":"2021.07.13"}}
+
+
+
+      **Simulate a Threat Campaign attack**
+
+   #. On the Win10 jump host, ppen ``Postman`` and select the collection ``NAP - Threat Campaign``
    #. Run the 2 calls with ``docker`` in the name. They will trigger 2 different Threat Campaign rules.
    #. In the next lab, we will check the logs in Kibana.
 
