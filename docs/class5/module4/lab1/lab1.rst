@@ -1,135 +1,188 @@
-Step 11 - Deploy a new version of the NGINX Plus Ingress Controller
-###################################################################
+Step 9 - Deploy NGINX Plus Ingress Controller
+#############################################
 
-As a reminder, in ``Class 1 - Step 2 - Publish Arcadia App with a NGINX Plus Ingress Controller`` we deployed a NGINX Plus instance as an Ingress Controller in our Kubernetes cluster.
+If you have a Kubernetes cluster availible, it is logical to run all your containers in it- including App Protect. Kubernetes is desinged to orchestrate the creation, maintenance and availibility of our containers. And there are numerous ways to create traffic policies in k8s to make sure our application is secure. 
 
-.. image:: ../pictures/lab1/NAP_index.png
+It is not neccessary to maintain seperate infrastructure just for our WAF.
+
+The previous excercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
+
+In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Acradia services. A ClusterIP is only accessible internally to the cluster. By using the ClusterIP, we force all requests to go through the KIC.
+
+Generally, we would deploy KIC behind a L4/L7 load balancer to spread the load to all of the KIC PODs, as depicted on the right side of this image. In this lab, we will target the KIC Service NodePort directly with our browser (without the LTM/L4 LB in red).
+
+.. image:: ../pictures/arcadia-topology.png
    :align: center
 
-Now, with NAP v1.3, we can deploy this NGINX Plus instance with the NAP lab enabled. 
+At a high-level we will:
 
-.. image:: ../pictures/lab1/nap_kic.png
-   :align: center
+#. Use helm to deploy the Ingress controller that has been saved to the registry running on our docker host
+#. Deploy a new "ingress configuration" using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" will tell the KIC pods to create the configuration neccessary to accces and protect our applications.
 
-To do so, we will:
+.. note:: In this lab, we will not learn how to build the NGINX Ingress image. There are other labs that address that. You can follow the docs from docs.nginx.com to learn how to pull the docker image from the NGINX registry or build your own. 
 
-#. Deploy a new version of the Pod (NGINX r23 + NAP v1.10)
-#. Deploy a new Ingress configuration template (with NAP configuration files)
-
-.. note:: In this lab, we will not learn how to build the Nginx Ingress image. Follow the doc from docs.nginx.com to learn how to built the docker image. Straight forward, copy-paste the dockerfile and built it.
-
-.. warning:: The NGINX Plus Ingress Controller image is available on my private Gitlab repo. Don't share the key.
-
-
-**Test Attack before NAP on ingress added**
-
-    #. Open ``Edge Browser``
-    #. Click on ``Arcadia k8s`` bookmark
-    #. Now, you are connecting to Arcadia App from a new KIC with NAP enabled
-    #. Send an attack (like a XSS in the address bar) by appending ``?a=<script>``
 
 **Steps**
 
-    #.  SSH from Jumpbox commandline ``ssh ubuntu@10.1.1.8`` (or WebSSH and ``cd /home/ubuntu/``) to CICD Server
-    #.  Run this command in order to delete the previous KIC ``kubectl delete -f /home/ubuntu/k8s_ingress/full_ingress_arcadia.yaml``
-    #.  Run this command in order to pull and install NGINX KIC from NGINX Repo
+    #.  SSH to the CICD VM
+    #.  This is the contents of the ``/home/ubuntu/lab-files/helm/values-plus.yaml`` file:
+
+        .. code-block:: helm
+
+            controller:
+                nginxplus: true
+                image:
+                repository: docker.udf.nginx.rocks/debian-image-nap-plus
+                tag: "1.12.0"
+                setAsDefaultIngress: true
+                ingressClass: nginx
+                enableCustomResources: true
+                enablePreviewPolicies: true
+                healthStatus: true
+                ## Support for App Protect
+                appprotect:
+                ## Enable the App Protect module in the Ingress Controller.
+                enable: true
+                nginxStatus:
+                ## Enable the NGINX stub_status, or the NGINX Plus API.
+                enable: true
+                port: 8080
+                ## Add IPv4 IP/CIDR blocks to the allow list for NGINX stub_status or the NGINX Plus API. Separate multiple IP/CIDR by commas.
+                allowCidrs: "0.0.0.0/0"
+                ## A list of custom ports to expose on the NGINX ingress controller pod. Follows the conventional Kubernetes yaml syntax for container ports.
+                service:
+            
+                ## Creates a service to expose the Ingress controller pods.
+                create: true
+            
+                ## The type of service to create for the Ingress controller.
+                type: NodePort
+            
+                ## The externalTrafficPolicy of the service. The value Local preserves the client source IP.
+                externalTrafficPolicy: Cluster
+            
+                ## The annotations of the Ingress controller service.
+                annotations: {}
+            
+                ## The extra labels of the service.
+                extraLabels: {}
+            
+                ## The static IP address for the load balancer. Requires controller.service.type set to LoadBalancer. The cloud provider must support this feature.
+                loadBalancerIP: ""
+            
+                ## The list of external IPs for the Ingress controller service.
+                externalIPs: []
+            
+                ## The IP ranges (CIDR) that are allowed to access the load balancer. Requires controller.service.type set to LoadBalancer. The cloud provider must support this feature.
+                loadBalancerSourceRanges: []
+            
+                ## The name of the service
+                ## Autogenerated if not set or set to "".
+                # name: nginx-ingress
+            
+                httpPort:
+                    ## Enables the HTTP port for the Ingress controller service.
+                    enable: true
+            
+                    ## The HTTP port of the Ingress controller service.
+                    port: 80
+            
+                    ## The custom NodePort for the HTTP port. Requires controller.service.type set to NodePort.
+                    nodePort: "30274"
+            
+                    ## The HTTP port on the POD where the Ingress controller service is running.
+                    targetPort: 80
+            
+                httpsPort:
+                    ## Enables the HTTPS port for the Ingress controller service.
+                    enable: true
+            
+                    ## The HTTPS port of the Ingress controller service.
+                    port: 443
+            
+                    ## The custom NodePort for the HTTPS port. Requires controller.service.type set to NodePort.
+                    nodePort: "30275"
+            
+                    ## The HTTPS port on the POD where the Ingress controller service is running.
+                    targetPort: 443
+            
+                ## A list of custom ports to expose through the Ingress controller service. Follows the conventional Kubernetes yaml syntax for service ports.
+            
+                customPorts:
+                - name: dashboard
+                    targetPort: 8080
+                    protocol: TCP
+                    port: 8080
+                    nodePort: 30080
+                - name: prometheus
+                    targetPort: 9113
+                    protocol: TCP
+                    port: 9113
+                    nodePort: 30113
+            prometheus:
+                create: true
+                scheme: http
+                port: 9113
+
+        .. note:: Helm is a utility that allows application developers to package thier application and settings in a collection. We then use a values.yaml file to set values specific to our deployment. 
+
+
+    #.  Run the following commands to install the NGINX Plus KIC helm chart:
+
+        .. code-block:: bash
+          :caption: helm install
+
+            helm repo add nginx-stable https://helm.nginx.com/stable
+            helm repo update
+            helm install plus nginx-stable/nginx-ingress -f /home/ubuntu/lab-files/helm/values-plus.yaml --namespace nginx-plus --create-namespace
+        
+    #.  After running the command, we need to wait for the KIC pod to become availible. you can use a command like 
 
         .. code-block:: BASH
 
-            helm install nginx-ingress nginx-stable/nginx-ingress  \
-            --namespace nginx-ingress  \
-            --set controller.kind=deployment \
-            --set controller.replicaCount=2 \
-            --set controller.nginxplus=true \
-            --set controller.appprotect.enable=true \
-            --set controller.image.repository=registry.gitlab.com/mattdierick/nginxpluskic-nap \
-            --set controller.image.tag=1.10.0 \
-            --set controller.service.type=NodePort \
-            --set controller.service.httpPort.nodePort=30274 \
-            --set controller.service.httpsPort.nodePort=30275 \
-            --set controller.serviceAccount.imagePullSecretName=gitlab-token-auth \
-            --set controller.ingressClass=ingressclass1
+           kubectl get pods --all-namespaces --watch
 
-        .. note:: This command uses HELM in order to download all the required config files from Nginx repo (CRD ...). What's more, you can notice, it downloads the Ingress image (the NGINX Plus image with NAP) from a private repo in Gitlab.com
+    #.  Once it is "ready" you can press ``ctrl-c`` to stop the watch.
+    #.  At this moment, the Ingress pod is up and running. But it is empty, there is no configuration (Ingress, VirtualServer, nap policy, logs).
 
-    #.  At this moment, the Ingress pod is up and running. But it is empty, there is no configuration (ingress, nap policy, logs).
-    #.  Run this commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
+        .. note::  Earlier in the lab we created a NodePort service so that our docker instance could access the Arcadia services. Now that we have an ingress controller, we want to prevent anyone from access Arcadia without going through the ingress.
+
+        .. note::  Also note: If you came to this lab directly (without doing the previous labs), everything will still work (this can be a standalone lab).
+        
+    #.  To do so, we will change our services to ClusterIP:
+
+        .. code-block:: language
+
+            kaf /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployment.yaml
+            kaf /home/ubuntu/lab-files/arcadia-manifests/arcadia-services-cluster-ip.yaml
+
+        .. note:: ``kaf`` is an alias for ``kubectl apply -f``. That's too many keystrokes for such a commonly used command! Type ``alias | grep kubectl`` to see some others. ``kgp`` is a great one.
+
+    #.  Run these commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
 
         .. code-block:: BASH
 
-            kubectl apply -f /home/ubuntu/k8s_ingress/deploy_policy_and_logs.yaml
-            kubectl apply -f /home/ubuntu/k8s_ingress/ingress_arcadia_nap.yaml
+            kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/deploy_policy_and_logs.yaml
+            kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/waf-policy.yaml
+            kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-virtualserver.yaml
 
-        .. note:: This 2 commands will create the WAF policy and the log profile for Arcadia App, and will create the Ingress resource (the config to route the traffic to the right services/pods)
 
-    #.  Open ``Kubernetes Dashboard`` bookmark in Edge Browser 
-    #.  Scroll down on the left to ``Discovery and Load Balancing`` and click on ``Ingresses`` 
-    #.  Check the Ingress ``arcadia-ingress`` (in the ``default`` namespace) by clicking on the 3 dots on the right and ``edit``
-    #.  Scroll down and check the specs
+        .. note:: These commands will create the WAF policy and the log profile for Arcadia App, and will create the VirtualServer resource (the config to route the traffic to the right services/pods)
 
-.. image:: ../pictures/lab1/arcadia-ingress.png
+    #.  Open ``Kubernetes Dashboard`` bookmark in the browser.
+    #.  Scroll down on the left to ``Custom Resource Definitions`` and click it.
+    #.  See the various custom resources we've configured (VirtualServer, APPolicy, Policy, APLogConf)
+
+.. image:: ../pictures/CRDs.png
    :align: center
 
-As you can notice, we added few lines in our Ingress declaration. To do so, I followed the guide (https://docs.nginx.com/nginx-ingress-controller/app-protect/installation/)
-
-    #. I added NAP specifications (from the guide)
-
-
-    #. I added NAP annotations for Arcadia app (see below)
-
-.. code-block:: YAML
-
-    ---
-    apiVersion: extensions/v1beta1
-    kind: Ingress
-    metadata:
-    name: arcadia-ingress
-    annotations:
-        appprotect.f5.com/app-protect-policy: "default/dataguard-blocking"
-        appprotect.f5.com/app-protect-enable: "True"
-        appprotect.f5.com/app-protect-security-log-enable: "True"
-        appprotect.f5.com/app-protect-security-log: "default/logconf"
-        appprotect.f5.com/app-protect-security-log-destination: "syslog:server=10.1.20.11:5144"
-
-    spec:
-    rules:
-    - host: k8s.arcadia-finance.io
-        http:
-        paths:
-        - path: /
-            backend:
-            serviceName: main
-            servicePort: 80
-        - path: /files
-            backend:
-            serviceName: backend
-            servicePort: 80
-        - path: /api
-            backend:
-            serviceName: app2
-            servicePort: 80
-        - path: /app3
-            backend:
-            serviceName: app3
-            servicePort: 80
 
 Please a make a new test by clicking on ``Arcadia k8s`` Edge Browser bookmark.
 
-    #. Open ``Edge Browser``
-    #. Click on ``Arcadia k8s`` bookmark
+    #. In the browser, click ``Arcadia links>Arcadia k8s ingress node1`` bookmark
     #. Now, you are connecting to Arcadia App from a new KIC with NAP enabled
     #. Send an attack (like a XSS in the address bar) by appending ``?a=<script>``
-    #. Attack is blocked
     #. Open ``Kibana`` bookmark and click on ``Discover`` to find the log
 
 .. image:: ../pictures/lab1/kibana_WAF_log.png
    :align: center
-
-
-.. note:: if you want to delete/uninstall this Ingress Controller, you have to run this command ``helm uninstall nginx-ingress -n nginx-ingress`` This command will delete the Ingress Controller only. You have to delete the YAML deployments as well
-
-        .. code-block:: BASH
-
-            helm uninstall nginx-ingress -n nginx-ingress
-            kubectl delete -f /home/ubuntu/k8s_ingress/deploy_policy_and_logs.yaml
-            kubectl delete -f /home/ubuntu/k8s_ingress/ingress_arcadia_nap.yaml

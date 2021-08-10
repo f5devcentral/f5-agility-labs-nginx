@@ -1,28 +1,37 @@
 Step 3 - Install the NGINX Plus and App Protect packages manually
 #################################################################
 
-In this lab, we will manually install the NGINX Plus and NGINX App Protect labs in CentOS from the official repository.
+In this lab, we will manually install NGINX Plus and NGINX App Protect on CentOS from the NGINX private repo.
 
-.. warning:: NGINX Plus private key and cert are already installed on the CentOS. Don't share them.
+.. note:: NGINX Plus repo keys are already copied to the CentOS VM. Normally you would need to put them in /etc/ssl/nginx.
 
 Steps:
 
-    #.  SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
+    #.  Use vscode or Windows terminal or WebSSH to the CentOS VM.
 
-    #.  Clean up any existing NGINX repo already installed :
+    #.  There is a "cheat script" if you don't want to read through the steps, though it is recomended to follow the guide to learn what steps are needed. The script is ``sh /home/centos/lab-files/lab-script-cheat.sh``
+
+    #.  Clean up any existing NGINX repo/configurations already present:
 
         .. code-block:: bash
 
-            sudo rm -f /etc/yum.repos.d/nginx-* && sudo rm -f /etc/yum.repos.d/app-protect*
-            yum clean all
+            sudo yum remove -y nginx-plus
+            sudo rm -f /etc/yum.repos.d/nginx-* 
+            sudo rm -f /etc/yum.repos.d/app-protect*
+            sudo rm -rf /etc/nginx
+            sudo rm -rf /etc/app_protect
+            sudo rm -rf /opt/app_protect
+            sudo rm -rf /var/log/app_protect
+            sudo rm -rf /var/log/nginx
 
     #.  Add NGINX Plus repository by downloading the file ``nginx-plus-7.repo`` to ``/etc/yum.repos.d``:
 
         .. code-block:: bash
 
             sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
+            yum clean all
 
-    #.  Install the most recent version of the NGINX Plus App Protect package (which includes NGINX Plus):
+    #.  Install the most recent version of the NGINX Plus App Protect package (which includes NGINX Plus because it is a dependency):
 
         .. code-block:: bash
 
@@ -34,87 +43,101 @@ Steps:
 
             sudo nginx -v
 
-    #.  Configure the ``nginx.conf`` file. Rename the existing ``nginx.conf`` to ``nginx.conf.old`` and create a new one.
+    #.  Configure nginx
 
         .. code-block:: bash
 
-            cd /etc/nginx/
-            sudo mv nginx.conf nginx.conf.old
-            sudo vi nginx.conf
+            # vscode does not allow to you to write as root, must change permissions:
+            sudo chown -R centos:centos /etc/nginx
+            cp /home/centos/lab-files/nginx.conf /etc/nginx
 
-        If you get E427 terminal error quit vi by typing ``:q!`` then once back on commandline run ``export TERM=xterm``
-
-        Paste the below configuration into ``nginx.conf`` and save it ``:wq``
 
         .. code-block:: nginx
            :caption: nginx.conf
 
-            user  nginx;
-            worker_processes  auto;
-
-            error_log  /var/log/nginx/error.log notice;
-            pid        /var/run/nginx.pid;
-
-            load_module modules/ngx_http_app_protect_module.so;
-
-            events {
-                worker_connections 1024;
-            }
-
-            http {
-                include          /etc/nginx/mime.types;
-                default_type  application/octet-stream;
-                sendfile        on;
-                keepalive_timeout  65;
-
-                log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                                '$status $body_bytes_sent "$http_referer" '
-                                '"$http_user_agent" "$http_x_forwarded_for"';
-
-                access_log  /var/log/nginx/access.log  main;
-
-                server {
-                listen       80;
-                    server_name  localhost;
-                    proxy_http_version 1.1;
-
-                    app_protect_enable on;
-                    app_protect_policy_file "/etc/app_protect/conf/NginxDefaultPolicy.json";
-                    app_protect_security_log_enable on;
-                    app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
-
-                    location / {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
-                    }
-                }
-            }
-        
-    #.  Create a log configuration file ``log_default.json`` (still in ``/etc/nginx/``)
-
-        .. code-block:: bash
-
-            sudo vi log-default.json
-
-        Paste the configuration below into ``log-default.json`` and save it
-
-        .. code-block:: js
-           :caption: log-default.json
-
-            {
-                "filter": {
-                    "request_type": "all"
-                },
-                "content": {
-                    "format": "default",
-                    "max_request_size": "any",
-                    "max_message_size": "5k"
-                }
-            }
-
+           user  nginx;
+           worker_processes  auto;
+           
+           error_log  /var/log/nginx/error.log notice;
+           
+           # load the app protect module
+           load_module modules/ngx_http_app_protect_module.so;
+           
+           events {
+               worker_connections 1024;
+           }
+           
+           http {
+               include          /etc/nginx/mime.types;
+               default_type  application/octet-stream;
+               sendfile        on;
+               keepalive_timeout  65;
+           
+               log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                               '$status $body_bytes_sent "$http_referer" '
+                               '"$http_user_agent" "$http_x_forwarded_for"';
+           
+               # note that in the dockerfile, the logs are redirected to stdout and can be viewed with `docker logs`
+               access_log  /var/log/nginx/access.log  main;
+           
+               server {
+                   listen       80;
+                   server_name  localhost;
+                   proxy_http_version 1.1;
+                   proxy_cache_bypass  $http_upgrade;
+           
+                   proxy_set_header Host $host;
+           
+                   proxy_set_header X-Forwarded-Server $host;
+                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           
+                   proxy_set_header Upgrade $http_upgrade;
+                   proxy_set_header Connection "upgrade";
+                   proxy_ignore_client_abort on;
+           
+                   app_protect_enable on;
+                   app_protect_security_log_enable on;
+                   # send the logs to the logstash instance on our ELK stack.
+                   app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
+           
+                   # main service
+                   location / {
+                       resolver 10.1.1.8:5353;
+                       resolver_timeout 5s;
+                       client_max_body_size 0;
+                       default_type text/html;
+                       proxy_pass http://k8s.arcadia-finance.io:30585$request_uri;
+                   }
+           
+                   # backend service
+                   location /files {
+                       resolver 10.1.1.8:5353;
+                       resolver_timeout 5s;
+                       client_max_body_size 0;
+                       default_type text/html;
+                       proxy_pass http://k8s.arcadia-finance.io:30584$request_uri;
+                   }       
+           
+                   # app2 service
+                   location /api {
+                       resolver 10.1.1.8:5353;
+                       resolver_timeout 5s;
+                       client_max_body_size 0;
+                       default_type text/html;
+                       proxy_pass http://k8s.arcadia-finance.io:30586$request_uri;
+                   }       
+           
+                   # app2 service
+                   location /app3 {
+                       resolver 10.1.1.8:5353;
+                       resolver_timeout 5s;
+                       client_max_body_size 0;
+                       default_type text/html;
+                       proxy_pass http://k8s.arcadia-finance.io:30587$request_uri;
+                   }    
+               }
+           }
+           
 
     #.  Temporarily make SELinux permissive globally (https://www.nginx.com/blog/using-nginx-plus-with-selinux).
 
@@ -122,18 +145,57 @@ Steps:
 
             sudo setenforce 0
 
-    #.  Start the NGINX service:
+    #.  Enable and start the NGINX service:
 
         .. code-block:: bash
 
-            sudo systemctl enable nginx.service
-            sudo systemctl start nginx
+            sudo systemctl enable --now nginx.service
 
-    #.  Check everything is running 
+    #.  Check to see if everything is running:
 
         .. code-block:: bash
 
-            less /var/log/nginx/error.log
+            systemctl status nginx
+
+        .. note:: Congrats, now your CentOS instance is protecting the Arcadia application.
+
+    
+        **Access the Application and Test the WAF:**
+    
+    #. In the Browser, click on the bookmark ``Aracdia Links>Arcadia NAP Centos``
+    #. Click on ``Login``
+    #. Login with ``matt:ilovef5``
+    #. You should see all the apps running (main, back, app2 and app3)
+
+        .. image:: ../pictures/arcadia-app.png
+        :align: center
+        :alt: arcadia app
+    
+    #.  Try some attacks like injections or XSS: ``http://app-protect-centos.arcadia-finance.io/<script>`` 
+
+        .. note:: Other examples at the bottom of this page.
+
+    #. You will be blocked and see the default Blocking page
+ 
+        .. code-block:: html
+            
+                The requested URL was rejected. Please consult with your administrator.
+            
+                Your support ID is: 14609283746114744748
+            
+                [Go Back]
+            
+        .. note:: Did you notice the blocking page is similar to F5 ASM and Adv. WAF ?
+
+
+        **Next step is to install the latest Signature Package**
+
+
+    #.  Check the current installed signature package:
+
+        .. code-block:: bash
+
+            cat /var/log/nginx/error.log|grep signatures
 
         .. code-block:: console
 
@@ -148,32 +210,6 @@ Steps:
             2020/05/22 09:13:20 [notice] 6203#6203: start worker processes
             2020/05/22 09:13:20 [notice] 6203#6203: start worker process 6205
             2020/05/22 09:13:26 [notice] 6205#6205: APP_PROTECT { "event": "waf_connected", "enforcer_thread_id": 0, "worker_pid": 6205, "mode": "operational", "mode_changed": false}
-
-
-.. note:: Congrats, now your CentOS instance is protecting the Arcadia application
-
-**Now, try in the Jumphost**
-
-Steps:
-
-    #. RDP to the Jumphost with credentials ``user:user``
-    #. Navigate in the app, and try some attacks like injections or XSS - I let you find the attacks :) ``tip - <script>`` 
-    #. You will be blocked and see the default Blocking page
- 
-        .. code-block:: html
-        
-            The requested URL was rejected. Please consult with your administrator.
-        
-            Your support ID is: 14609283746114744748
-        
-            [Go Back]
-        
-        .. note:: Did you notice the blocking page is similar to ASM and Adv. WAF ?
-
-
-**Next step is to install the latest Signature Package**
-
-Steps:
 
     #.  To add NGINX Plus App Protect signatures repository, download the file https://cs.nginx.com/static/files/app-protect-security-updates-7.repo to /etc/yum.repos.d:
 
@@ -193,52 +229,53 @@ Steps:
 
             sudo yum --showduplicates list app-protect-attack-signatures
 
-        To upgrade to a specific version:
+        To upgrade to a specific version (optional):
 
         .. code-block:: bash
 
             sudo yum install -y app-protect-attack-signatures-2020.04.30
 
-        To downgrade to a specific version:
+        To downgrade to a specific version (optional):
 
         .. code-block:: bash
 
             sudo yum downgrade app-protect-attack-signatures-2019.07.16
 
-    #.  Reload NGINX process to apply the new signatures:
+    #.  Restart NGINX process to apply the new signatures:
 
         .. code-block:: bash
 
             sudo nginx -s reload
 
-    #.  Check the **new** signatures package date:
+            .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
+
+    #.  Wait a few seconds and check the **new** signatures package date:
 
         .. code-block:: bash
 
-            less /var/log/nginx/error.log
+            cat /var/log/nginx/error.log|grep signatures
 
-.. note:: Upgrading App Protect does not install new Attack Signatures. You will get the same Attack Signature release after upgrading App Protect. If you want to also upgrade the Attack Signatures, you will have to explicitly update them by the respective command above.
+    .. note:: Upgrading App Protect is independent from updating Attack Signatures. You will get the same Attack Signature release after upgrading App Protect. If you want to also upgrade the Attack Signatures, you will have to explicitly update them by the respective command above.
 
 |
 
-**Last step is to install the Threat Campaign package**
+**The last step is to install the Threat Campaign package**
 
-Threat Campaign is a **feed** from F5 Threat Intelligence team. This team is collecting 24/7 threats from internet and darknet. 
-They use several bots and honeypotting networks in order to know in advance what the hackers (humans or robots) will target and how.
+Threat Campaign is a **feed** from F5 Threat Intelligence team. The team identifies threats 24/7 and creates very specific signatures for these current threats. With these specific signatures, there is very low probability of false positives. 
 
 Unlike ``signatures``, Threat Campaign provides with ``ruleset``. A signature uses patterns and keywords like ``' or`` or ``1=1``. Threat Campaign uses ``rules`` that match perfectly an attack detected by our Threat Intelligence team.
 
-.. note :: The App Protect installation does not come with a built-in Threat campaigns package like Attack Signatures. Threat campaigns Updates are released periodically whenever new campaigns and vectors are discovered, so you might want to update your Threat campaigns from time to time. You can upgrade the Threat campaigns by updating the package any time after installing App Protect. We recommend you upgrade to the latest Threat campaigns version right after installing App Protect.
+.. note :: The App Protect installation does not come with a built-in Threat campaigns package like Attack Signatures. We recommend you upgrade to the latest Threat campaigns version right after installing App Protect.
 
 
-For instance, if we notice a hacker managed to enter into our Struts2 system, we will do forensics and analyse the packet that used the breach. Then, this team creates the ``rule`` for this request.
+For instance, if we notice a hacker managed to enter into our Struts2 system, we do forensics and analyse the packet that used the breach. This team then creates the ``rule`` for this request.
 A ``rule`` **can** contains all the HTTP L7 payload (headers, cookies, payload ...)
 
 .. note :: Unlike signatures that can generate False Positives due to low accuracy patterns, Threat Campaign is very accurate and reduces drastically the False Positives. 
 
-.. note :: NAP provides with high accuracy Signatures + Threat Campaign ruleset. The best of bread to reduce FP.
+.. note :: NAP provides a high accuracy signature + Threat Campaign ruleset. This can be used to create good threat coverage with very low false positives for developers.
 
-.. note :: After having updated the Threat campaigns package you have to reload the configuration in order for the new version of the Threat campaigns to take effect. Until then App Protect will run with the old version, if exists. This is useful when creating an environment with a specific tested version of the Threat campaigns.
+.. note :: After having updated the Threat campaigns package you have to reload the configuration in order for the new version of the Threat campaigns to take effect. Until then, App Protect continues to use the old version.
 
 
 Steps :
@@ -257,18 +294,79 @@ Steps :
 
             sudo nginx -s reload
 
-    #.  Check the **new** Threat Campaign package date:
+    #.  Wait a few seconds and check the **new** Threat Campaign package date:
 
         .. code-block:: bash
 
-            less /var/log/nginx/error.log
+            cat /var/log/nginx/error.log|grep attack_signatures_package
     
     #. Simulate a Threat Campaign attack
 
-        #. RDP to the ``Jumphost`` (user / user)
-        #. Open ``Postman`` and select the collection ``NAP - Threat Campaign``
-        #. Run the 2 calls. They will trigger 2 different Threat Campaign rules.
+        #. Open ``Postman`` (orange dot icon on taskbar) and select the collection ``NAP - Threat Campaign``
+        #. Run the 2 calls with ``centos`` in the name. They will trigger 2 different Threat Campaign rules.
         #. In the next lab, we will check the logs in Kibana.
 
 
-.. note:: Congrats, you are running a new version of NAP with the latest Threat Campaign package and ruleset.
+    .. note:: Congrats, you are running a new version of NAP with the latest Threat Campaign package and ruleset.
+
+
+**Here are some optional attacks you can try**
+
+``SQL Injection - GET /?hfsagrs=-1+union+select+user%2Cpassword+from+users+--+``
+
+``Remote File Include - GET /?hfsagrs=php%3A%2F%2Ffilter%2Fresource%3Dhttp%3A%2F%2Fgoogle.com%2Fsearch``
+
+``Command Execution - GET /?hfsagrs=%2Fproc%2Fself%2Fenviron``
+
+``HTTP Parser Attack - GET /?XDEBUG_SESSION_START=phpstorm``
+
+``Predictable Resource Location Path Traversal - GET /lua/login.lua?referer=google.com%2F&hfsagrs=%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2F..%2Fetc%2Fpasswd``
+
+``Cross Site Scripting - GET /lua/login.lua?referer=google.com%2F&hfsagrs=+oNmouseoVer%3Dbfet%28%29+``
+
+``Informtion Leakage - GET /lua/login.lua?referer=google.com%2F&hfsagrs=efw``
+
+``HTTP Parser Attack Forceful Browsing - GET /dana-na/auth/url_default/welcome.cgi``
+
+``Non-browser Client,Abuse of Functionality,Server Side Code Injection,HTTP Parser Attack - GET /index.php?s=/Index/\think\app/invokefunction&function=call_user_func_array&vars[0]=md5&vars[1][]=HelloThinkPHP``
+
+``Cross Site Scripting - GET / HTTP/1.1\r\nHost: <ATTACKED HOST>\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0\r\nAccept: */*\r\nAccept-Encoding: gzip,deflate\r\nCookie: hfsagrs=%27%22%5C%3E%3Cscript%3Ealert%28%27XSS%27%29%3C%2Fscript%3E\r\n\r\n"``
+
+
+.. code-block :: bash
+
+    #!/bin/bash
+    echo "------------------------------"
+    echo "Starting security testing..."
+    echo "------------------------------"
+    echo ""
+    echo ""
+    echo "---------------------------------------------------------------------"
+    echo "Multiple decoding"
+    echo "Sending: curl -k 'http://app-protect-centos.arcadia-finance.io/three_decodin%2525252567.html'"
+    echo "---------------------------------------------------------------------"
+    curl -k "http://app-protect-centos.arcadia-finance.io/three_decodin%2525252567.html"
+    sleep 3
+    echo "-----------------------------------------------------------------------------"
+    echo "Apache Whitespace"
+    echo "Sending: curl -k 'http://app-protect-centos.arcadia-finance.io/tab_escaped%09.html'"
+    echo "-----------------------------------------------------------------------------"
+    curl -k "http://app-protect-centos.arcadia-finance.io/tab_escaped%09.html"
+    sleep 3
+    echo "-----------------------------------------------------------------------------"
+    echo "IIS Backslashes"
+    echo "Sending: curl -k 'http://app-protect-centos.arcadia-finance.io/regular%5cescaped_back.html'"
+    echo "-----------------------------------------------------------------------------"
+    curl -k "http://app-protect-centos.arcadia-finance.io/regular%5cescaped_back.html"
+    sleep 3
+    echo "-----------------------------------------------------------------------------"
+    echo "Apache Whitespace"
+    echo "Sending: curl -k 'http://app-protect-centos.arcadia-finance.io/carriage_return_escaped%0d.html?x=1&y=2'"
+    echo "-----------------------------------------------------------------------------"
+    curl -k "http://app-protect-centos.arcadia-finance.io/carriage_return_escaped%0d.html?x=1&y=2"
+    sleep 3
+    echo "-----------------------------------------------------------------------------"
+    echo "Cross site scripting"
+    echo "Sending: curl -k 'http://app-protect-centos.arcadia-finance.io/%25%25252541PPDATA%25'"
+    echo "-----------------------------------------------------------------------------"
+    curl -k "http://app-protect-centos.arcadia-finance.io/%25%25252541PPDATA%25"    

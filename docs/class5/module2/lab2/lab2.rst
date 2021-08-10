@@ -1,19 +1,17 @@
 Step 4 - Check logs in Kibana
 #############################
 
-In this lab, we will check the logs in ELK (Elastic, Logstash, Kibana)
+In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
 
-**Check how logs are sent and how to set the destination syslog server**
+**Understanding how to configure the destination syslog server**
 
 Steps:
 
-   #. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to the App Protect in CentOS
-   #. In ``/home/ubuntu`` (the default home folder), list the files ``ls -al``
-   #. You can see 2 files ``log-default.json`` and ``nginx.conf`` you created previously in the Step 3.
-   #. Open log-default.json ``less log-default.json``. You will notice we log all requests.
+   #. With vscode or Windows Terminal ssh to the centos-vm
+   #. View ``/etc/app_protect/conf/log_default.json`` which is installed with app protect. By default, we log all requests.
 
       .. code-block:: js
-         :caption: log-default.json
+         :caption: log_default.json
 
          {
          "filter": {
@@ -26,61 +24,100 @@ Steps:
                }
          }
 
-   #. Open nginx.conf ``less nginx.conf``
+   #. Recall line 33 from the NGINX configuration we are using (Feel free to open ``/etc/nginx/nginx.conf``)
 
       .. code-block:: nginx
          :caption: nginx.conf
-         :emphasize-lines: 34 
+         :emphasize-lines: 33
 
-         user  nginx;
-         worker_processes  auto;
-        
-         error_log  /var/log/nginx/error.log notice;
-         pid        /var/run/nginx.pid;
-        
-         load_module modules/ngx_http_app_protect_module.so;
-        
-         events {
-             worker_connections 1024;
-         }
-        
-         http {
-             include          /etc/nginx/mime.types;
-             default_type  application/octet-stream;
-             sendfile        on;
-             keepalive_timeout  65;
-        
-             log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                             '$status $body_bytes_sent "$http_referer" '
-                             '"$http_user_agent" "$http_x_forwarded_for"';
-        
-             access_log  /var/log/nginx/access.log  main;
-        
-             server {
-             listen       80;
-                 server_name  localhost;
-                 proxy_http_version 1.1;
-        
-                 app_protect_enable on;
-                 app_protect_policy_file "/etc/app_protect/conf/NginxDefaultPolicy.json";
-                 app_protect_security_log_enable on;
-                 app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
-        
-                 location / {
-                     resolver 10.1.1.8:5353;
-                     resolver_timeout 5s;
-                     client_max_body_size 0;
-                     default_type text/html;
-                     proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
-                 }
-             }
-         }
+            user  nginx;
+            worker_processes  auto;
+
+            error_log  /var/log/nginx/error.log notice;
+
+            # load the app protect module
+            load_module modules/ngx_http_app_protect_module.so;
+
+            events {
+               worker_connections 1024;
+            }
+
+            http {
+               include          /etc/nginx/mime.types;
+               default_type  application/octet-stream;
+               sendfile        on;
+               keepalive_timeout  65;
+
+               log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                              '$status $body_bytes_sent "$http_referer" '
+                              '"$http_user_agent" "$http_x_forwarded_for"';
+
+               # note that in the dockerfile, the logs are redirected to stdout and can be viewed with `docker logs`
+               access_log  /var/log/nginx/access.log  main;
+
+               server {
+                  listen       80;
+                  server_name  localhost;
+                  proxy_http_version 1.1;
+                  proxy_cache_bypass  $http_upgrade;
+
+                  proxy_set_header Host $host;
+
+                  proxy_set_header X-Forwarded-Server $host;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+                  proxy_ignore_client_abort on;
+
+                  app_protect_enable on;
+                  app_protect_security_log_enable on;
+                  # send the logs to the logstash instance on our ELK stack.
+                  app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
+
+                  # main service
+                  location / {
+                        resolver 10.1.1.8:5353;
+                        resolver_timeout 5s;
+                        client_max_body_size 0;
+                        default_type text/html;
+                        proxy_pass http://k8s.arcadia-finance.io:30585$request_uri;
+                  }
+
+                  # backend service
+                  location /files {
+                        resolver 10.1.1.8:5353;
+                        resolver_timeout 5s;
+                        client_max_body_size 0;
+                        default_type text/html;
+                        proxy_pass http://k8s.arcadia-finance.io:30584$request_uri;
+                  }
+
+                  # app2 service
+                  location /api {
+                        resolver 10.1.1.8:5353;
+                        resolver_timeout 5s;
+                        client_max_body_size 0;
+                        default_type text/html;
+                        proxy_pass http://k8s.arcadia-finance.io:30586$request_uri;
+                  }
+
+                  # app2 service
+                  location /app3 {
+                        resolver 10.1.1.8:5353;
+                        resolver_timeout 5s;
+                        client_max_body_size 0;
+                        default_type text/html;
+                        proxy_pass http://k8s.arcadia-finance.io:30587$request_uri;
+                  }
+               }
+            }
 
 
-.. note:: You will notice in the ``nginx.conf`` file the refererence to ``log-default.json`` and the remote syslog server (ELK) ``10.1.20.11:5144``
+      .. note:: You will notice in the ``nginx.conf`` file the refererence to ``log_default.json`` and the remote syslog server (ELK) ``10.1.1.11:5144``
 
 
-**Open Kibana in the Jumphost or via UDF access**
+      **Open Kibana via firefox on the jumphost or via UDF access**
 
 Steps:
 
@@ -89,6 +126,7 @@ Steps:
       .. image:: ../pictures/lab2/ELK_access.png
          :align: center
          :scale: 50%
+         :alt: ELK
 
 |
 
@@ -97,14 +135,15 @@ Steps:
       .. image:: ../pictures/lab2/ELK_dashboard.png
          :align: center
          :scale: 50%
+         :alt: dashboard
 
 |
 
    #. At the bottom of the dashboard, you can see the logs. Select one of the log entries and check the content
 
-.. note:: You may notice the log content is similar to ASM and Adv. WAF
+.. note:: You may notice the log content is similar to F5 ASM and Adv. WAF
 
-.. note:: The default time window in this Kibana dashboard is **Last 15 minutes**. If you do not see any requests, you may need to extend the time window to a larger setting
+.. note:: The default time window in this Kibana dashboard is **Last 15 minutes**. If you do not see any requests, you may need to extend the time window to a larger setting. It can take a minute for logs to be processed into the graphs.
 
 **Video of this lab (force HD 1080p in the video settings)**
 
