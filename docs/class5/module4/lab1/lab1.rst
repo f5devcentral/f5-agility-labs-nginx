@@ -147,11 +147,13 @@ At a high-level we will:
 
         .. note::  Earlier in the lab we created a NodePort service so that our docker instance could access the Arcadia services. Now that we have an ingress controller, we want to prevent anyone from access Arcadia without going through the ingress.
 
+        .. note::  Also note: If you came to this lab directly (without doing the previous labs), everything will still work (this can be a standalone lab).
         
     #.  To do so, we will change our services to ClusterIP:
 
         .. code-block:: language
 
+            kaf /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployment.yaml
             kaf /home/ubuntu/lab-files/arcadia-manifests/arcadia-services-cluster-ip.yaml
 
         .. note:: ``kaf`` is an alias for ``kubectl apply -f``. That's too many keystrokes for such a commonly used command! Type ``alias | grep kubectl`` to see some others. ``kgp`` is a great one.
