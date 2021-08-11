@@ -20,13 +20,12 @@ An action can be configured for each bot class, or may also be configured per ea
 
 **Steps for the lab**
 
-#. SSH from Jumpbox commandline ``ssh centos@10.1.1.10`` (or WebSSH) to ``App Protect in CentOS``
+#. SSH the centos-vm
 #. Go to ``cd /etc/nginx``
 #. ``ls`` and check the files created during the previous CI/CD pipeline job (steps 10)
 
    .. code-block:: console
 
-        [centos@ip-10-1-1-7 nginx]$ ls
         app-protect-log-policy.json       conf.d          koi-utf  mime.types  NginxApiSecurityPolicy.json  nginx.conf.orig          NginxStrictPolicy.json  uwsgi_params
         app-protect-security-policy.json  fastcgi_params  koi-win  labs     nginx.conf                   NginxDefaultPolicy.json  scgi_params             win-utf   
 
@@ -73,51 +72,62 @@ An action can be configured for each bot class, or may also be configured per ea
             }
         }
 
-#. Modify the ``nginx.conf`` file is order to reference to this new policy json file. Just a new line to add.
+#. Modify the ``nginx.conf`` to reference this new policy json file.
 
    .. code-block :: bash
 
-        sudo vi /etc/nginx/nginx.conf
+        sudo cp /home/centos/lab-files/bot-policy/nginx.conf /etc/nginx/
 
    .. code-block:: nginx
-       :emphasize-lines: 24
 
-        user nginx;
+       user nginx;
 
-        worker_processes 1;
-        load_module modules/ngx_http_app_protect_module.so;
+       worker_processes 1;
+       load_module modules/ngx_http_app_protect_module.so;
 
-        error_log /var/log/nginx/error.log debug;
+       error_log /var/log/nginx/error.log debug;
 
-        events {
-            worker_connections  1024;
-        }
+       events {
+           worker_connections  1024;
+       }
 
-        http {
-            include       /etc/nginx/mime.types;
-            default_type  application/octet-stream;
-            sendfile        on;
-            keepalive_timeout  65;
+       http {
+           include       /etc/nginx/mime.types;
+           default_type  application/octet-stream;
+           sendfile        on;
+           keepalive_timeout  65;
 
-            server {
-                listen       80;
-                server_name  localhost;
-                proxy_http_version 1.1;
+            proxy_http_version 1.1;
+            proxy_cache_bypass  $http_upgrade;
 
-                app_protect_enable on;
-                app_protect_policy_file "/etc/nginx/policy_bots.json";
-                app_protect_security_log_enable on;
-                app_protect_security_log "/etc/nginx/app-protect-log-policy.json" syslog:server=10.1.20.6:5144;
+            proxy_set_header Host "k8s.arcadia-finance.io";
 
-                location / {
-                    resolver 10.1.1.9;
-                    resolver_timeout 5s;
-                    client_max_body_size 0;
-                    default_type text/html;
-                    proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
-                }
-            }
-        }
+            proxy_set_header X-Forwarded-Server $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_ignore_client_abort on;
+
+           server {
+               listen       80;
+               server_name  localhost;
+               proxy_http_version 1.1;
+
+               app_protect_enable on;
+               app_protect_policy_file "/etc/nginx/policy_bots.json";
+               app_protect_security_log_enable on;
+               app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
+
+               location / {
+                   resolver 10.1.1.8:5353;
+                   resolver_timeout 5s;
+                   client_max_body_size 0;
+                   default_type text/html;
+                   proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
+               }
+           }
+       }
 
 #. Reload Nginx
 
@@ -128,8 +138,7 @@ An action can be configured for each bot class, or may also be configured per ea
 
 **Generate simulated Bot traffic** 
 
-#. RDP to Windows ``Jumphost`` as ``user``:``user``
-#. Open ``Edge Browser`` and check your can acces Arcadia Web Application via the Bookmark ``Arcadia NAP CentOS``
+#. On the jump host browser ``Arcadia Links>Arcadia NAP CentOS``
 #. Now, on the ``Desktop``, launch ``Jmeter``
 #. In Jmeter, open the project in ``File`` >> ``Open Recent`` >> ``HTTP Request Bots.jmx``. This file is located in folder Desktop > lab-links > jmeter_files
 

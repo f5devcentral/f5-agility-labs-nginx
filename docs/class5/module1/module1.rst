@@ -3,18 +3,18 @@ Module 1 - Deploy modern application with modern tools
 
 In this class, we will deploy a modern application (Arcadia Finance app) with modern tools in a modern environment.
 
-What are modern tools:
+Modern tools:
    - Ansible
    - Terraform
    - Gitlab and Gitlab CI
 
-What is a modern environment:
+Modern environment:
    - Kubernetes
    - Docker containers with docker registry
 
-.. note:: Don't be afraid if you don't know those tools. The goal of the lab is not to learn how to deploy them, but how to use them.
+.. note:: The goal of the lab is not to learn how to deploy the tools, but to understand how they are used.
 
-**First of all, this is Arcadia Finance application**
+**This is Arcadia Finance application:**
 
 .. image:: ./pictures/arcadia-app.png
    :align: center

@@ -1,9 +1,8 @@
 Module 4 - Protect Arcadia with NGINX App Protect in Kubernetes Ingress Controller
 ##################################################################################
 
-In this class, we will deploy NGINX App Protect in KIC. To do so, we will deploy an NGINX+ instance in Kubernetes with NAP installed.
+In this class, we will deploy NGINX App Protect on an NGINX Kubernetes Ingress Controller (KIC). This will protect all applications running in the cluster with a specific policy per service.
 
-.. warning:: In this lab, there are cert + keys to download the packages from official NGINX repo. It is forbidden to share them with anyone.
 
 .. toctree::
    :maxdepth: 1

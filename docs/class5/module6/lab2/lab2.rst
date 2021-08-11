@@ -37,8 +37,7 @@ The variable ``fqdn`` will be replaced by the FQDN you will set in the pipeline.
 
 **Steps**
 
-#. RDP to Windows Jumphost with credentials ``user:user``
-#. In ``Edge Browser``, open ``Gitlab`` tab or bookmark, and click on ``NGINX App Protect`` > ``Cryptonice`` repository
+#. On the jump host browser``, open ``Gitlab`` tab or bookmark (the password is saved), and click on ``NGINX App Protect`` > ``Cryptonice`` repository
 #. If you want, you can check the Gitlab CI pipeline and the Ansible playbook. To make it simple, Gitlab CI pipeline runs the ansible playbook
 
    .. code-block:: yaml
@@ -93,17 +92,17 @@ The variable ``fqdn`` will be replaced by the FQDN you will set in the pipeline.
    .. image:: ../pictures/lab2/run_pipeline.png
       :align: center
 
-#. Click ``Run Pipeline`` and Wait :)
+#. Click ``Run Pipeline`` and wait :)
 
 |
 
-The outcomes
-************
+View the Result
+***************
 
-Now, it is time to see the results and what we can do with the information provided by ``Cryptonice``
+Now it is time to see the results and what we can do with the information provided by ``Cryptonice``
 
 #. You should still be connected to the Jumphost RDP
-#. In ``Edge Browser``, open ``Kibana`` or use the Remote Access ``ELK`` in UDF if you prefer to connect from your laptop.
+#. In the browser open ``Kibana`` or use the Remote Access ``ELK`` in UDF if you prefer to connect from your laptop.
 #. In ``ELK`` left menu, click on ``Discover``
 
    .. image:: ../pictures/lab2/discover.png

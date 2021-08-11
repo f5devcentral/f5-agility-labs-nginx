@@ -1,17 +1,11 @@
 Architecture of the Arcadia Application
 ###################################
 
-.. note:: This application is publically available in GitLab if you want to build your own lab: https://gitlab.com/arcadia-application
-
-The goal of this section is to understand the structure of the Arcadia Application, the commands needed to deploy it are on the next page.
-
-The Arcadia app is a micro-services based application. There are 4 services that comprise the application.
-
+This is a diagram of the various topologies we will be deploying as part of this lab. We will first deploy the Arcadia application with a NodePort service and use a Centos VM to load balance against the nodes in our cluster.
 
 **This is what Arcadia App looks like when the 4 microservices are up and running, and you can see how traffic is routed based on URI**
 
 .. image:: ../pictures/lab1/arcadia-api.png
-   :alt: arcadia api
    :align: center
    :scale: 50%
 
