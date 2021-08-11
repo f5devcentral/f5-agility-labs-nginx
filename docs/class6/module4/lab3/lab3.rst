@@ -54,7 +54,7 @@ Steps to configure NGINX App Protect as an API firewall
 
    Modify the NAP policy file by adding the OAS file URL:
 
-   .. code-block:: JSON
+   .. code-block:: json
       :emphasize-lines: 10, 11, 12
 
       {

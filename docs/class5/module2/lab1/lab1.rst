@@ -168,10 +168,10 @@ Steps:
     #. You should see all the apps running (main, back, app2 and app3)
 
         .. image:: ../pictures/arcadia-app.png
-        :align: center
-        :alt: arcadia app
-    
-    #.  Try some attacks like injections or XSS: ``http://app-protect-centos.arcadia-finance.io/<script>`` 
+           :align: center
+           :alt: arcadia app
+
+    #.  Try some attacks like injections or XSS: ``http://app-protect-centos.arcadia-finance.io/<script>``
 
         .. note:: Other examples at the bottom of this page.
 
