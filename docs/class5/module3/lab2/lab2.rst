@@ -91,9 +91,8 @@ In order to install this package, we need to update our ``Dockerfile``. I create
    #. Check the Threat Campaign ruleset date included in the new Docker container in the running logs by looking for  ``threat_campaigns_package``
 
       .. code-block:: bash
+
          2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true,"threat_campaigns_package":{"revision_datetime":"2021-07-13T13:48:30Z","version":"2021.07.13"}}
-
-
 
       **Simulate a Threat Campaign attack**
 
@@ -101,9 +100,7 @@ In order to install this package, we need to update our ``Dockerfile``. I create
    #. Run the 2 calls with ``docker`` in the name. They will trigger 2 different Threat Campaign rules.
    #. In the next lab, we will check the logs in Kibana.
 
-
 .. note:: Congrats, you are running a new version of NAP with the latest Threat Campaign package and ruleset.
-
 
 **Video of this lab (force HD 1080p in the video settings)**
 
