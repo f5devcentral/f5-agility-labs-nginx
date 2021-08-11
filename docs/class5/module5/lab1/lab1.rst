@@ -1,4 +1,4 @@
-Step 10 - Protect Arcadia API
+Step 12 - Protect Arcadia API
 #############################
 
 Context
