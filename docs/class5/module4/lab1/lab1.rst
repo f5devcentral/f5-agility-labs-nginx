@@ -1,10 +1,6 @@
 Step 9 - Deploy NGINX Plus Ingress Controller
 #############################################
 
-If you have a Kubernetes cluster availible, it is logical to run all your containers in it- including App Protect. Kubernetes is desinged to orchestrate the creation, maintenance and availibility of our containers. And there are numerous ways to create traffic policies in k8s to make sure our application is secure. 
-
-It is not neccessary to maintain seperate infrastructure just for our WAF.
-
 The previous excercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
 
 In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Acradia services. A ClusterIP is only accessible internally to the cluster. By using the ClusterIP, we force all requests to go through the KIC.
@@ -136,53 +132,18 @@ At a high-level we will:
             helm repo update
             helm install plus nginx-stable/nginx-ingress -f /home/ubuntu/lab-files/helm/values-plus.yaml --namespace nginx-plus --create-namespace
         
-    #.  After running the command, we need to wait for the KIC pod to become availible. you can use a command like 
+    #.  After running the command, we need to wait for the KIC pod to become availible. you can use a command like:
 
         .. code-block:: BASH
 
            kubectl get pods --all-namespaces --watch
 
     #.  Once it is "ready" you can press ``ctrl-c`` to stop the watch.
-    #.  At this moment, the Ingress pod is up and running. But it is empty, there is no configuration (Ingress, VirtualServer, nap policy, logs).
 
-        .. note::  Earlier in the lab we created a NodePort service so that our docker instance could access the Arcadia services. Now that we have an ingress controller, we want to prevent anyone from access Arcadia without going through the ingress.
+        .. note:: Tab completion is enable for all commands. In the below command, press tab at the end to complete the name of the pod.
 
-        .. note::  Also note: If you came to this lab directly (without doing the previous labs), everything will still work (this can be a standalone lab).
+    #. View the logs, you will notice that they are similar to previous lab excercises with additional logs regarding the Kubernetes environment.
         
-    #.  To do so, we will change our services to ClusterIP:
-
-        .. code-block:: language
-
-            kaf /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployment.yaml
-            kaf /home/ubuntu/lab-files/arcadia-manifests/arcadia-services-cluster-ip.yaml
-
-        .. note:: ``kaf`` is an alias for ``kubectl apply -f``. That's too many keystrokes for such a commonly used command! Type ``alias | grep kubectl`` to see some others. ``kgp`` is a great one.
-
-    #.  Run these commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
-
         .. code-block:: BASH
 
-            kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/deploy_policy_and_logs.yaml
-            kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/waf-policy.yaml
-            kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-virtualserver.yaml
-
-
-        .. note:: These commands will create the WAF policy and the log profile for Arcadia App, and will create the VirtualServer resource (the config to route the traffic to the right services/pods)
-
-    #.  Open ``Kubernetes Dashboard`` bookmark in the browser.
-    #.  Scroll down on the left to ``Custom Resource Definitions`` and click it.
-    #.  See the various custom resources we've configured (VirtualServer, APPolicy, Policy, APLogConf)
-
-.. image:: ../pictures/CRDs.png
-   :align: center
-
-
-Please a make a new test by clicking on ``Arcadia k8s`` Edge Browser bookmark.
-
-    #. In the browser, click ``Arcadia links>Arcadia k8s ingress node1`` bookmark
-    #. Now, you are connecting to Arcadia App from a new KIC with NAP enabled
-    #. Send an attack (like a XSS in the address bar) by appending ``?a=<script>``
-    #. Open ``Kibana`` bookmark and click on ``Discover`` to find the log
-
-.. image:: ../pictures/lab1/kibana_WAF_log.png
-   :align: center
+           kubectl logs --follow -n nginx-plus plus-nginx-ingress-
