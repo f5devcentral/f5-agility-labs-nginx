@@ -1,5 +1,5 @@
 Step 1 - Deploy Arcadia Finance application in Kubernetes
-================================
+=========================================================
 
 It's time to deploy Arcadia Finance application :)
 
@@ -45,16 +45,16 @@ I prepared this YAML file below (this is a portion of it below showing the main 
                 protocol: TCP
         ---
 
-.. note:: This file contains all the deployments for the entire Arcadia appication. 
+.. note:: This file contains all the deployments for the entire Arcadia appication.
 
 **Steps :**
 
     #. RDP to the jumphost as ``user:user`` credentials
     #. SSH to cicd VM. You can use vscode, Windows terminal, or UDF Web shell the command is ``ssh ubuntu@cicd`` The files we will be using are in: ``/home/ubuntu/lab-files``
-    #. Run this command 
+    #. Run this command
 
        .. code-block:: bash
-        
+
          kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployments.yaml
 
     #. Open the Firefox Browser
@@ -64,11 +64,9 @@ I prepared this YAML file below (this is a portion of it below showing the main 
 
 .. note:: If you are returning to this lab and any deployment is failed, you can try restarting it with ``kubectl rollout restart -n default``. Just replace "default" with the namespace of the failed deployment.
 
-
 .. image:: ../pictures/arcadia-deployments.png
    :align: center
    :alt: Arcadia Deployments
-
 
 .. warning:: Arcadia Application is running but not yet available for the customers. We need to create a Kubernetes service to expose it.
 
@@ -79,4 +77,3 @@ I prepared this YAML file below (this is a portion of it below showing the main 
     <div style="text-align: center; margin-bottom: 2em;">
     <iframe width="1120" height="630" src="https://www.youtube.com/embed/Qb5YyQrc7mk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
-

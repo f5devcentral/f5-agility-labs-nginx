@@ -8,11 +8,13 @@ The instance is linked with NGINX Controller, but it needs to be configured as a
 Steps:
 
 #. In NGINX Controller -> Select ``Home`` (the NGINX logo on the top left corner) -> ``Services`` -> ``Gateways`` -> ``Create Gateway``. Use the following values:
-    #. Name: ``apigw``
-    #. Environment: ``env_prod``
-    #. Placement: ``<your nginx1 instance>``
-    #. Hostname: http://api.name-generator.com
-    #. Methods: ``POST``, ``GET``, ``PUT``, ``DELETE``, ``PATCH``
+  
+  * Name: ``apigw``
+  * Environment: ``env_prod``
+  * Placement: ``<your nginx1 instance>``
+  * Hostname: http://api.name-generator.com
+  * Methods: ``POST``, ``GET``, ``PUT``, ``DELETE``, ``PATCH``
+
 #. Click ``Submit``
 
     .. note:: The hostname value is the listener. This ``Gateway`` will be dedicated to the API FQDN, so we set this FQDN at the ``Gateway`` level.

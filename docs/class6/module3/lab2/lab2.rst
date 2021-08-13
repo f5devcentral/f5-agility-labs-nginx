@@ -33,6 +33,9 @@ Let's deploy the ``Colors`` micro-service!
 #. RDP to the ``Win10`` VM (user/user).
 #. Check in ``Rancher`` (admin/admin) that the new ``Deployment`` has been successful (both the ``Deployment`` and ``Service``)
 
+   * Click on the ``Cluster Explorer`` yellow button on the top right corner.
+   * On the left menu, select ``Deployments``. From here, you can see the ``Deployments`` running in each ``NameSpace``
+
    .. image:: ../pictures/lab2/rancher-deploy-colors.png
       :align: center
 
@@ -46,7 +49,7 @@ Let's deploy the ``Colors`` micro-service!
 
 .. warning:: Why is the Frontend publishing the ``Colors`` micro-service whereas the API Gateway is not yet configured with this new endpoint?
 
-   The reason is that the Frontend is **directly connected** to all k8s micro-services. This is an East/West communication. Our NGINX API Gateway is publishing the API externally for other consumers (mobile app, partners...).
+   The reason is that the Frontend is **directly connected** to all k8s micro-services. This is an ``Front to Back`` communication. Our NGINX API Gateway is publishing the API externally for other consumers (mobile app, partners...).
 
 |
 
@@ -68,7 +71,7 @@ Update the API Definition to version 2.0
 
 #. Click ``Submit``
 
-   .. note:: You should now see two more resources` -> ``Resources: 10``
+   .. note:: You should now see two more resources -> ``Resources: 10``
 
       .. image:: ../pictures/lab2/10resources.png
          :align: center
@@ -79,7 +82,7 @@ Update the Published API with the new ``Colors`` endpoint
 =========================================================
 
 #. The ``Colors`` API endpoint is now known by our API Definition, let's publish it!
-#. Select your existing API Definition ``api-sentence-app``, and click the edit button:
+#. Select your existing API Definition ``api-sentence-v1``, and click the edit button:
 
    .. image:: ../pictures/lab2/edit-published.png
       :align: center
@@ -91,11 +94,11 @@ Update the Published API with the new ``Colors`` endpoint
    #. Click ``Next``
    #. In ``Workload Groups``:
 
-      #. Name: ``wl-colors``
-      #. In ``Backend Workload URIs``:
-         #. URI: ``http://10.1.20.8:31102``
-         #. Click ``Done``
-      #. Click ``Done``
+      * Name: ``wl-colors``
+      * In ``Backend Workload URIs``:
+         * URI: ``http://10.1.20.8:31102``
+         * Click ``Done``
+      * Click ``Done``
 
    #. Click ``Next``
 

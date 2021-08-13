@@ -38,7 +38,7 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 #. After few second, you can see the results. In YELLOW, the converter confirms what has been converted and what has NOT been converted (because not supported by NAP)
 
    .. code-block:: js
-       :emphasize-lines: 2-29
+      :emphasize-lines: 2-29
  
         {
           "warnings": [

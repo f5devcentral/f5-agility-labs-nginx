@@ -14,7 +14,8 @@ To do so, we have a yaml manifest to apply with ``kubectl``.
     #. Use the CICD VM in any of the provided tools (vscode / windows terminal (right click the shortcut on taskbar) / WebSSH)
     #. Run this command ``kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-services-nodeport.yaml``
 
-.. code-block:: YAML
+.. code-block:: yaml
+
     apiVersion: v1
     kind: Service
     metadata:
