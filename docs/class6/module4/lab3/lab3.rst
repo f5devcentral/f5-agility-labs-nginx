@@ -80,7 +80,7 @@ Steps to configure NGINX App Protect as an API firewall
 
 #. Now, we have to configure NGINX's ``nginx.conf`` to use this NAP policy
 
-   .. note:: We have 2 options here. Either we change the default NAP policy directive from ``NginxDefaultPolicy.json`` to ``api-sentence.json``, or you we comment the ``NginxDefaultPolicy.json`` directive and add ``api-sentence.json`` directive. In the lab, we will replace ``NginxDefaultPolicy.json`` by ``api-sentence.json``.
+   .. note:: We have 2 options here. Either we change the default NAP policy directive from ``NginxDefaultPolicy.json`` to ``api-sentence.json``, or you can comment out the ``NginxDefaultPolicy.json`` directive and add ``api-sentence.json`` directive. In the lab, we will replace ``NginxDefaultPolicy.json`` by ``api-sentence.json``.
 
    .. code-block:: bash
 
