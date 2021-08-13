@@ -56,7 +56,7 @@ Steps to configure NGINX App Protect as an API firewall
 
       .. note:: In VI, in order to edit, type ``i`` (like insert), then make the modifications. When OK, click ``ESC`` key, and type ``:wq`` to Write and Quit.
 
-   .. code-block:: JSON
+   .. code-block:: json
       :emphasize-lines: 10, 11, 12
 
       {
