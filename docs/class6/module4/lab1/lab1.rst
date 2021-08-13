@@ -80,6 +80,11 @@ Configure ``Keycloak`` as a JWT OIDC token issuer
 
     #. Click ``Save``
 
+#. Leave the ``Mappers`` window by clicking on the top left menu ``Client Scopes``
+
+   .. image:: ../pictures/lab1/mapper_quit.png
+      :align: center
+
 #. Still in ``Keycloak``, add this new scope to the ``my-postman`` client:
     #. Click ``Clients`` -> ``my-postman`` and select the ``Client Scopes`` tab
     #. Before adding our new scope ``groups``, let's have a look in at how the generated JWT token looks like. Click on ``Evaluate`` and select ``matt`` as the ``user``, then click ``Evaluate``.
@@ -99,7 +104,7 @@ Configure ``Keycloak`` as a JWT OIDC token issuer
        .. image:: ../pictures/lab1/scopes.png
           :align: center
 
-    #. Move back to the ``Evaluate`` sub-menu and check that ``matt`` now has a ``groups: employee`` attribute value
+    #. Move back to the ``Evaluate`` sub-menu, select ``matt`` as a user, now you can see a ``groups: employee`` attribute value in ``Generated Access Token`` for ``matt`` user
 
        .. image:: ../pictures/lab1/claim_groups.png
           :align: center

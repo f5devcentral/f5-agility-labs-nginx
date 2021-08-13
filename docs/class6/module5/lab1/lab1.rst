@@ -51,7 +51,7 @@ As a reminder, an instance cannot be used alone. It needs to be part of a NGINX 
 
     * Name: ``devportal-gw``
     * Environment: ``env_prod``
-    * Placement: ``<your devportal instance>``
+    * Placement > Instance Refs: ``<your devportal instance>``
     * Hostnames: ``http://devportal.local``
 
 #. Click ``Submit``
