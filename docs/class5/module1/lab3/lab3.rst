@@ -50,6 +50,8 @@ Once you add it, you can use the direct SSH access link under each VM. Depending
 
 Once on the jump host, you can quickly access the VMs from either vscode or Windows Terminal by right-clicking the icon on the taskbar.
 
+.. note:: All the web applications that require passwords are saved in the browser, just click in the fields and they should populate.
+
 .. image:: ../pictures/udf-windows-terminal.png
    :alt: Windows Terminal
    :align: center

@@ -1,4 +1,4 @@
-Step 7 - Customize the WAF policy
+Step 8 - Customize the WAF policy
 #################################
 
 So far, we have been using the default NGINX App Protect policy. As you notices in the previous lab (Step 5), the ``nginx.conf`` does not file any reference to a WAF policy. It uses the default WAF policy.
@@ -13,6 +13,8 @@ Steps:
     #.  From the docker vm, perform the below steps. We suggest using vscode for the below excercise, but feel free to use the tool of your choice.
     #.  In the ``/home/ubuntu/lab-files`` directory, create a new folder ``arcadia-waf-policy``
 
+        .. note:: The steps below assume you are using a terminal. If using vscode, you will not need to use ``vi``
+
         .. code-block:: bash
 
             mkdir arcadia-waf-policy
@@ -21,7 +23,7 @@ Steps:
         
         .. code-block:: bash
 
-            vi ./arcadia-waf-policy/policy_base.json
+            vi /home/ubuntu/lab-files/arcadia-waf-policy/policy_base.json
 
         .. code-block:: js
            :caption: policy_base.json
@@ -44,7 +46,7 @@ Steps:
 
         .. code-block:: bash
 
-            vi ./arcadia-waf-policy/policy_mongo_linux_JSON.json
+            vi /home/ubuntu/lab-files/arcadia-waf-policy/policy_mongo_linux_JSON.json
 
         .. code-block:: js
            :caption: policy_mongo_linux_JSON.json
@@ -162,7 +164,7 @@ Steps:
 
         .. code-block:: bash
 
-            vi ./arcadia-waf-policy/nginx.conf
+            vi /home/ubuntu/lab-files/arcadia-waf-policy/nginx.conf
 
         .. code-block:: nginx
             :emphasize-lines: 32,40,48,56
@@ -322,13 +324,11 @@ Steps :
 
             docker rm -f app-protect
 
-#.  Modify the base policy created previously
+#.  Replace the base policy per the code block below.
 
     .. code-block:: bash
 
-       /home/ubuntu/lab-files/arcadia-waf-policy/policy_base.json
-
-#.  Modify the JSON as below
+       vi /home/ubuntu/lab-files/arcadia-waf-policy/policy_base.json
 
     .. code-block:: js
 
@@ -526,13 +526,10 @@ Steps:
         .. code-block:: bash
 
             docker rm -f app-protect
-            docker run -dit --name app-protect -p 80:80 -v /home/ubuntu/lab-files/policy_owasp_top10/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/lab-files/policy_owasp_top10/policy_owasp_top10.json:/etc/nginx/policy/policy_owasp_top10.json app-protect:owasp
-
-    #.  Check that the ``app-protect:owasp`` container is running 
-
-        .. code-block:: bash
-
-            docker ps
+            docker run -it --name app-protect -p 80:80 \
+                -v /home/ubuntu/lab-files/policy_owasp_top10/nginx.conf:/etc/nginx/nginx.conf \
+                -v /home/ubuntu/lab-files/policy_owasp_top10/policy_owasp_top10.json:/etc/nginx/policy/policy_owasp_top10.json \
+                app-protect:04-aug-2021-tc
 
         .. image:: ../pictures/lab5/docker-ps-owasp.png
            :align: center

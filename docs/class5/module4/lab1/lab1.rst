@@ -1,4 +1,4 @@
-Step 9 - Deploy NGINX Plus Ingress Controller
+Step 11 - Deploy NGINX Plus Ingress Controller
 #############################################
 
 The previous excercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.

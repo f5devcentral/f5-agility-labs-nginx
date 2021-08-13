@@ -1,4 +1,4 @@
-Step 13 - Bot Protection
+Step 14 - Bot Protection
 ########################
 
 Bot signatures provide basic bot protection by detecting bot signatures in the ``User-Agent`` header and ``URI``. The bot-defense section in the policy is ``enabled`` by default. 
@@ -22,7 +22,7 @@ An action can be configured for each bot class, or may also be configured per ea
 
 #. SSH the centos-vm
 #. Go to ``cd /etc/nginx``
-#. ``ls`` and check the files created during the previous CI/CD pipeline job (steps 10)
+#. ``ls`` and check the files created during the previous CI/CD pipeline job. If you are jumping to this section, please run the pipeline in Module 2, Lab 3, Step 5.
 
    .. code-block:: console
 
