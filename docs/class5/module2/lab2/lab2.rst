@@ -8,7 +8,7 @@ In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
 Steps:
 
    #. With vscode or Windows Terminal ssh to the centos-vm
-   #. View ``/etc/app_protect/conf/log_default.json`` which is installed with app protect. By default, we log all requests.
+   #. View ``cat /etc/app_protect/conf/log_default.json`` (which is also pasted below) which is installed with app protect. By default, we log all requests.
 
       .. code-block:: js
          :caption: log_default.json
@@ -119,7 +119,6 @@ Steps:
 
       **Open Kibana via firefox on the jumphost or via UDF access**
 
-Steps:
 
    #. In UDF, find the ELK VM and click Access > ELK
 
@@ -128,8 +127,6 @@ Steps:
          :scale: 50%
          :alt: ELK
 
-|
-
    #. In Kibana, click on ``Dashboard > Overview``
 
       .. image:: ../pictures/lab2/ELK_dashboard.png
@@ -137,7 +134,6 @@ Steps:
          :scale: 50%
          :alt: dashboard
 
-|
 
    #. At the bottom of the dashboard, you can see the logs. Select one of the log entries and check the content
 

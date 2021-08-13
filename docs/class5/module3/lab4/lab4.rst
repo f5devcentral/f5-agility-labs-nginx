@@ -1,4 +1,4 @@
-Step 8 - Deploy NAP with a CI/CD toolchain
+Step 9 - Deploy NAP with a CI/CD toolchain
 ###########################################
 
 In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is tied to the app, so when DevOps commits a new app (or a new version), the CI/CD pipeline will to deploy a new NAP container in front to protect it. In order to avoid repeating what we did previously, we will use a signature package update as a trigger.

@@ -1,4 +1,4 @@
-Step 6 - Build your NAP (NGINX App Protect) Docker image
+Step 7 - Build your NAP (NGINX App Protect) Docker image
 #################################################################
 
 In this lab, we will install the package Threat Campaign into a new Docker image.
