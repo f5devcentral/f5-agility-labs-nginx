@@ -88,10 +88,7 @@ In this lab, we will build the NAP Docker image via command line.
       .. note:: If you choose to run it detached, you can follow the logs with ``docker logs --follow app-protect``
 
    #. Note the signature package date in the output logs.
-
-      .. code-block:: bash
-      
-         2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true}
+         ``2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true}``
 
 .. note:: Congratulations, you are running NGINX App Protect with the latest signaturte package.
 
