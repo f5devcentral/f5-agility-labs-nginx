@@ -23,7 +23,8 @@ At a high-level we will:
     #.  SSH to the CICD VM
     #.  This is the contents of the ``/home/ubuntu/lab-files/helm/values-plus.yaml`` file:
 
-        .. code-block:: helm
+        .. code-block:: yaml
+           :caption: values-plus.yaml
 
             controller:
                 nginxplus: true
