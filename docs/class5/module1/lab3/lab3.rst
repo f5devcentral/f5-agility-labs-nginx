@@ -1,7 +1,7 @@
 Using the UDF Tools
-#####################################################################
+###################
 
-This lab has a multiple tools provided. There are serveral ways to accomplish each task, use whichever tool you prefer. There is a video walk through at the bottom of this page, as well as many others in the guide.
+This lab has a multiple tools provided. There are serveral ways to accomplish each task, use whichever tool you prefer. Many will find vscode the easier tool to use for most tasks. There is a video walk through at the bottom of this page, as well as many others in the guide.
 
 .. note:: The videos may vary slightly from the lab guide- as it is much easier to update the guide than make new videos when there are minor changes. When in doubt, follow the lab guide. And please reach out to the authors if anything is not clear.
 

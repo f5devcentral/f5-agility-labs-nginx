@@ -85,9 +85,9 @@ Steps:
 
 
 
-**Trigger the CI/CD pipeline**
+        **Trigger the CI/CD pipeline**
 
-Steps :
+        Steps :
 
     #. In GitLab, click on ``Repository`` and ``Tags`` in the left menu
     #. Create a new tag and give it a name like ``Sig-2021.07.13`` where ideally ``<version_date>`` should be replaced by the package version information found in the result of the ``yum info`` step above. But it does not matter, you can put anything you want in this tag.
@@ -113,9 +113,9 @@ Steps :
 
     #. SSH to the Docker App Protect VM and check the signature package date running ``docker logs app-protect --follow``
     
-    .. code-block:: bash
-       
-       2021/02/24 13:59:24 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.332.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-01-28T20:04:14Z","version":"2021.01.28"},"completed_successfully":true,"threat_campaigns_package":{}}
+        .. code-block:: bash
+        
+            2021/02/24 13:59:24 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.332.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-01-28T20:04:14Z","version":"2021.01.28"},"completed_successfully":true,"threat_campaigns_package":{}}
 
     #. You can create some traffic to the new container with Firefox>Arcadia Links>Arcadia NAP Docker favorite
     

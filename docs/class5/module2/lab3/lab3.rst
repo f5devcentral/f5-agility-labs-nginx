@@ -30,9 +30,9 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
            :alt: nap
 
 
-**Run the CI/CD pipeline from Jenkins**
+        **Run the CI/CD pipeline from Jenkins**
 
-Steps:
+        Steps:
 
     #. RDP to the Jumphost with credentials ``user:user``
 
