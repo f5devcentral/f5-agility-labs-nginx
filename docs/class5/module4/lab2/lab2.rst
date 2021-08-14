@@ -1,4 +1,4 @@
-Step 10 - Configure the Arcadia App with NAP on the KIC
+Step 13 - Configure the Arcadia App with NAP on the KIC
 #######################################################
 
 Now that we have deployed the KIC, we need to configure the ingress definition.
@@ -19,8 +19,8 @@ Now that we have deployed the KIC, we need to configure the ingress definition.
 
 #.  Review the below manifests which contain the routes and policies for NAP and the KIC.
 
-  .. image:: ../pictures/kic-nap-config.png
-     :align: center
+    .. image:: ../pictures/kic-nap-config.png
+        :align: center
 
 #.  Run these commands in order to create the NAP policy, the log profile and the ingress object (the object routing the traffic to the right service)
 

@@ -23,8 +23,9 @@ In this lab, we will build the NAP Docker image via command line.
 
    #. Wait until you see the message: ``Successfully tagged app-protect:04-aug-2021``
 
-   Here is the code that docker will read and build the image from:
+      
       .. code-block:: Dockerfile
+         :caption: Here is the code that docker will read and build the image from:
 
          #For CentOS 7
          FROM centos:7.4.1708
@@ -59,9 +60,9 @@ In this lab, we will build the NAP Docker image via command line.
 
 
       .. code-block:: bash
+         :caption: entrypoint.sh
 
          #!/usr/bin/env bash
-         #entrypoint.sh
 
          /bin/su -s /bin/bash -c '/opt/app_protect/bin/bd_agent &' nginx
          /bin/su -s /bin/bash -c "/usr/share/ts/bin/bd-socket-plugin tmm_count 4 proc_cpuinfo_cpu_mhz 2000000 total_xml_memory 307200000 total_umu_max_size 3129344 sys_max_account_id 1024 no_static_config 2>&1 >> /var/log/app_protect/bd-socket-plugin.log &" nginx
@@ -72,11 +73,10 @@ In this lab, we will build the NAP Docker image via command line.
          .. note:: Please take time to understand what we ran.
 
 
-**Start a container with the new image**
 
-   #. To create a container with the image, run: 
+   #. Create a container with the image, run: 
 
-      .. code-block:: Dockerfile
+      .. code-block:: bash
 
          docker run --interactive --tty --rm --name app-protect: -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021
 
@@ -88,16 +88,13 @@ In this lab, we will build the NAP Docker image via command line.
       .. note:: If you choose to run it detached, you can follow the logs with ``docker logs --follow app-protect``
 
    #. Note the signature package date in the output logs.
-
-      .. code-block:: bash
-      
-         2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true}
+         ``2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true}``
 
 .. note:: Congratulations, you are running NGINX App Protect with the latest signaturte package.
 
 **Video of this lab (force HD 1080p in the video settings)**
 
-.. note :: You can notice some differences between the video and the lab. When I did the video, the Dockerfile was different. But the concept remains the same.
+.. note :: You may notice some differences between the video and the lab. When I did the video, the Dockerfile was different. But the concept remains the same.
 
 .. raw:: html
 

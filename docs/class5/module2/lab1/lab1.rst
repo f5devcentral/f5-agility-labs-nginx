@@ -255,30 +255,27 @@ Steps:
 
             cat /var/log/nginx/error.log|grep signatures
 
-    .. note:: Upgrading App Protect is independent from updating Attack Signatures. You will get the same Attack Signature release after upgrading App Protect. If you want to also upgrade the Attack Signatures, you will have to explicitly update them by the respective command above.
-
-|
-
-**The last step is to install the Threat Campaign package**
-
-Threat Campaign is a **feed** from F5 Threat Intelligence team. The team identifies threats 24/7 and creates very specific signatures for these current threats. With these specific signatures, there is very low probability of false positives. 
-
-Unlike ``signatures``, Threat Campaign provides with ``ruleset``. A signature uses patterns and keywords like ``' or`` or ``1=1``. Threat Campaign uses ``rules`` that match perfectly an attack detected by our Threat Intelligence team.
-
-.. note :: The App Protect installation does not come with a built-in Threat campaigns package like Attack Signatures. We recommend you upgrade to the latest Threat campaigns version right after installing App Protect.
+        .. note:: Upgrading App Protect is independent from updating Attack Signatures. You will get the same Attack Signature release after upgrading App Protect. If you want to also upgrade the Attack Signatures, you will have to explicitly update them by the respective command above.
 
 
-For instance, if we notice a hacker managed to enter into our Struts2 system, we do forensics and analyse the packet that used the breach. This team then creates the ``rule`` for this request.
-A ``rule`` **can** contains all the HTTP L7 payload (headers, cookies, payload ...)
+        **The last step is to install the Threat Campaign package**
 
-.. note :: Unlike signatures that can generate False Positives due to low accuracy patterns, Threat Campaign is very accurate and reduces drastically the False Positives. 
+        Threat Campaign is a **feed** from F5 Threat Intelligence team. The team identifies threats 24/7 and creates very specific signatures for these current threats. With these specific signatures, there is very low probability of false positives. 
 
-.. note :: NAP provides a high accuracy signature + Threat Campaign ruleset. This can be used to create good threat coverage with very low false positives for developers.
+        Unlike ``signatures``, Threat Campaign provides with ``ruleset``. A signature uses patterns and keywords like ``' or`` or ``1=1``. Threat Campaign uses ``rules`` that match perfectly an attack detected by our Threat Intelligence team.
 
-.. note :: After having updated the Threat campaigns package you have to reload the configuration in order for the new version of the Threat campaigns to take effect. Until then, App Protect continues to use the old version.
+        .. note :: The App Protect installation does not come with a built-in Threat campaigns package like Attack Signatures. We recommend you upgrade to the latest Threat campaigns version right after installing App Protect.
 
 
-Steps :
+        For instance, if we notice a hacker managed to enter into our Struts2 system, we do forensics and analyse the packet that used the breach. This team then creates the ``rule`` for this request.
+        A ``rule`` **can** contains all the HTTP L7 payload (headers, cookies, payload ...)
+
+        .. note :: Unlike signatures that can generate False Positives due to low accuracy patterns, Threat Campaign is very accurate and reduces drastically the False Positives. 
+
+        .. note :: NAP provides a high accuracy signature + Threat Campaign ruleset. This can be used to create good threat coverage with very low false positives for developers.
+
+        .. note :: After having updated the Threat campaigns package you have to reload the configuration in order for the new version of the Threat campaigns to take effect. Until then, App Protect continues to use the old version.
+
 
     #.  As the repo has been already added, no need to add it. TC and Signatures use the same repo ``https://cs.nginx.com/static/files/app-protect-security-updates-7.repo``
 

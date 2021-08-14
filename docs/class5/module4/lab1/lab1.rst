@@ -1,5 +1,5 @@
-Step 9 - Deploy NGINX Plus Ingress Controller
-#############################################
+Step 11 - Deploy NGINX Plus Ingress Controller
+##############################################
 
 The previous excercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
 
@@ -23,7 +23,8 @@ At a high-level we will:
     #.  SSH to the CICD VM
     #.  This is the contents of the ``/home/ubuntu/lab-files/helm/values-plus.yaml`` file:
 
-        .. code-block:: helm
+        .. code-block:: yaml
+           :caption: values-plus.yaml
 
             controller:
                 nginxplus: true
@@ -138,9 +139,11 @@ At a high-level we will:
 
            kubectl get pods --all-namespaces --watch
 
-    #.  Once it is "ready" you can press ``ctrl-c`` to stop the watch.
+    #.  Once it we have 1/1 ``plus-nginx-ingress`` ready. You can press ``ctrl-c`` to stop the watch.
 
-        .. note:: Tab completion is enable for all commands. In the below command, press tab at the end to complete the name of the pod.
+        .. image:: ../pictures/ingress-ready.png
+
+        .. note:: Tab completion is enabled for all commands. In the command below, press tab at the end to complete the name of the pod.
 
     #. View the logs, you will notice that they are similar to previous lab excercises with additional logs regarding the Kubernetes environment.
         

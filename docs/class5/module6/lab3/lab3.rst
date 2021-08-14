@@ -1,4 +1,4 @@
-Step 15 - A.WAF/ASM Policy Converter
+Step 16 - A.WAF/ASM Policy Converter
 ####################################
 
 What is the Policy Converter tool ?
@@ -19,7 +19,7 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 
 **Steps**
 
-#. SSH or WebSSH to ``Docker App Protect + Docker repo`` machine
+#. SSH to the docker VM
 #. Go to directory ``/home/ubuntu/awaf-policy``
 
    .. code-block:: bash
