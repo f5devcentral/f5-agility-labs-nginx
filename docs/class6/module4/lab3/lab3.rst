@@ -54,6 +54,8 @@ Steps to configure NGINX App Protect as an API firewall
 
    Modify the NAP policy file by adding the OAS file URL:
 
+      .. note:: In VI, in order to edit, type ``i`` (like insert), then make the modifications. When OK, click ``ESC`` key, and type ``:wq`` to Write and Quit.
+
    .. code-block:: json
       :emphasize-lines: 10, 11, 12
 
@@ -80,7 +82,7 @@ Steps to configure NGINX App Protect as an API firewall
 
 #. Now, we have to configure NGINX's ``nginx.conf`` to use this NAP policy
 
-   .. note:: We have 2 options here. Either we change the default NAP policy directive from ``NginxDefaultPolicy.json`` to ``api-sentence.json``, or you we comment the ``NginxDefaultPolicy.json`` directive and add ``api-sentence.json`` directive. In the lab, we will replace ``NginxDefaultPolicy.json`` by ``api-sentence.json``.
+   .. note:: We have 2 options here. Either we change the default NAP policy directive from ``NginxDefaultPolicy.json`` to ``api-sentence.json``, or you can comment out the ``NginxDefaultPolicy.json`` directive and add ``api-sentence.json`` directive. In the lab, we will replace ``NginxDefaultPolicy.json`` by ``api-sentence.json``.
 
    .. code-block:: bash
 
