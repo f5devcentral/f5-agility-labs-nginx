@@ -66,3 +66,11 @@ Once on the jump host, you can quickly access the VMs from either vscode or Wind
    :scale: 80%
 
 .. note:: The ``Pinned`` items in the vscode menu will bring you directly to the files intended for that system.
+
+**Demo video of the UDF RDP Jump Host**
+
+.. raw:: html
+
+    <div style="text-align: center; margin-bottom: 2em;">
+    <iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/2vrxd2TJcA4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
