@@ -348,7 +348,7 @@ Steps :
 
     .. code-block:: bash
 
-        docker run --interactive --tty --rm --name app-protect -p 80:80 -v /home/ubuntu/arcadia-waf-policy/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/arcadia-waf-policy/policy_base.json:/etc/nginx/policy/policy_base.json -v /home/ubuntu/arcadia-waf-policy/policy_mongo_linux_JSON.json:/etc/nginx/policy/policy_mongo_linux_JSON.json  app-protect:latest
+        docker run --interactive --tty --rm --name app-protect -p 80:80 -v /home/ubuntu/lab-files/arcadia-waf-policy/nginx.conf:/etc/nginx/nginx.conf -v /home/ubuntu/lab-files/arcadia-waf-policy/policy_base.json:/etc/nginx/policy/policy_base.json -v /home/ubuntu/lab-files/arcadia-waf-policy/policy_mongo_linux_JSON.json:/etc/nginx/policy/policy_mongo_linux_JSON.json  app-protect:latest
 
 #.  In the ``jump host``, open the browser and connect to ``Arcadia Links>Arcadia NAP Docker`` bookmark
 
