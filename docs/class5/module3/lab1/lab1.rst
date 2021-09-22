@@ -78,7 +78,7 @@ In this lab, we will build the NAP Docker image via command line.
 
       .. code-block:: bash
 
-         docker run --interactive --tty --rm --name app-protect: -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021
+         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021
 
 
       .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
