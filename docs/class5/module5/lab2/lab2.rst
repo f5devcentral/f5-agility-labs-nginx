@@ -1,13 +1,8 @@
 Step 12 - Protect Arcadia API
 #############################
 
-Context
-*******
 
-As a reminder, in ``Steps 9 and 10``, we deployed NAP in CentOS.
-
-    #. Step 9 manually
-    #. Step 10 via CI/CD pipelines
+As a reminder, in ``Module2``, we deployed NAP in CentOS.
 
 The Arcadia web application has several APIs in order to:
 
@@ -15,9 +10,11 @@ The Arcadia web application has several APIs in order to:
     #. Sell stocks
     #. Transfer money to friends
 
-In order to protect these APIs, we will push (or pull) an ``OpenAPI specification file`` into NAP so that it can build the WAF policy from this file.
+Because we have an ``OpenAPI specification file`` we can use this for a very accurate policy for protecting these APIs.
 
 You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub.com/apis/F5EMEASSA/Arcadia-OAS3/2.0.1-schema
+
+App Protect allows you to reference the file from an http server or deployed locally to the file system of the NGINX instance.
 
 .. image:: ../pictures/lab1/swaggerhub.png
    :align: center
@@ -27,19 +24,19 @@ You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub
 Steps for the lab
 *****************
 
-    #. SSH to the centos-vm
-    #. Go to ``cd /etc/nginx``
-    #. ``ls`` and check the files created during the previous CI/CD pipeline job
+.. warning :: Make sure App Protect is installed to centos-vm. There is a script on the centos-vsm in /home/centos/lab-files/lab-script-cheat.sh that you can use to easily install App Protect.
 
-       .. code-block:: console
+    #. Use vscode or SSH to the centos-vm
 
-            [centos@ip-10-1-1-7 nginx]$ ls
-            app-protect-log-policy.json       conf.d          koi-utf  mime.types  NginxApiSecurityPolicy.json  nginx.conf.orig          NginxStrictPolicy.json  uwsgi_params
-            app-protect-security-policy.json  fastcgi_params  koi-win  labs     nginx.conf                   NginxDefaultPolicy.json  scgi_params             win-utf   
+    #. ``curl localhost`` to verify NGINX is installed
 
-       .. note :: You can notice a NAP policy ``NginxApiSecurityPolicy.json`` exists. This is template for API Security. We will use it.
+    #. Copy our policy template to /etc/nginx
 
-    #. Edit ``sudo vi NginxApiSecurityPolicy.json`` and modify it with the ``link`` to the OAS file for Arcadia API. This file resides in SwaggerHub. Don't forget the {}
+       .. code-block:: bash
+
+           cp /etc/app_protect/conf/NginxApiSecurityPolicy.json /etc/nginx
+
+    #. Modify it with the ``link`` to the OAS file for Arcadia API. This file resides in SwaggerHub. Don't forget the {}
 
        .. code-block:: js
           :emphasize-lines: 11
@@ -62,8 +59,8 @@ Steps for the lab
                     "violations" : [
                         {
             ...
-    
-    #. Now, edit ``sudo vi nginx.conf`` and modify it as below. We refer to the new WAF policy created previously
+
+    #. Now, edit ``vi nginx.conf`` and modify it as below. We refer to the new WAF policy created previously
 
        .. code-block:: nginx
           :emphasize-lines: 31
@@ -112,7 +109,7 @@ Steps for the lab
                 }
             }
 
-    #. Now, restart the NGINX service ``sudo systemctl restart nginx``
+    #. Now, restart the NGINX service ``sudo nginx -s reload``
 
 Test your API
 *************
@@ -130,9 +127,9 @@ Test your API
        .. image:: ../pictures/lab1/last_trans.png
            :align: center
            :scale: 50%
-           
+
        Make sure the URL is ``http://app-protect-centos.arcadia-finance.io/trading/transactions.php``
-       
+
     #. Now, send a POST, with ``POST Buy Stocks``. Check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
 
        .. image:: ../pictures/lab1/buy.png

@@ -15,12 +15,13 @@ High level lab steps:
 
 **Steps for the lab**
 
-.. warning :: Make sure NGINX Ingress is deployed. Otherwise perform steps 2.1 - 2.5 from class 1 to install.
+.. warning :: Make sure App Protect is installed to centos-vm. There is a script on the centos-vsm in /home/centos/lab-files/lab-script-cheat.sh that you can use to easily install App Protect.
 
-.. warning :: Make sure App Protect is installed to CenOS host. Otherwise perform steps 9.1 - 9.9 from class 3 to install.
+#. Use vscode or SSH (or WebSSH) to ``App Protect in CentOS``
+#. Configure NGINX to forward gRPC traffic with the below config. 
 
-#. SSH (or WebSSH) to ``App Protect in CentOS``
-#. Configure NGINX to forward gRPC traffic.
+   .. note :: A copy of all files used in the this lab are in /home/centos/lab-files/grpc
+
 
    .. code-block :: bash
 
@@ -49,38 +50,47 @@ High level lab steps:
             server {
                 listen 443 http2 ssl;
                 server_name app-protect.online-boutique.arcadia-finance.io;
-                ssl_certificate /etc/nginx/ssl/nginx.crt;
-                ssl_certificate_key /etc/nginx/ssl/nginx.key;
+                ssl_certificate /home/centos/lab-files/grpc/fullchain1.pem;
+                ssl_certificate_key /home/centos/lab-files/grpc/privkey1.pem;
                 ssl_protocols TLSv1.2 TLSv1.3;
 
                 include conf.d/errors.grpc_conf;
                 default_type application/grpc;
+
+                app_protect_enable off;
+                app_protect_policy_file "/etc/nginx/online-boutique-policy.json";
+                app_protect_security_log_enable on;
+                app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
 
                 location /hipstershop {
                     grpc_pass grpcs://online-boutique.arcadia-finance.io:30275;
                 }
             }
         }
+
 #. Reload Nginx
 
    .. code-block :: bash
 
         sudo nginx -s reload
+
 #. Download IDL file for Online-Boutique application
 
    .. code-block :: bash
 
         wget https://raw.githubusercontent.com/GoogleCloudPlatform/microservices-demo/master/pb/demo.proto        
+
 #. Send a valid request and make sure that gRPC service is available and response comes back.
 
    .. code-block :: bash
 
         grpcurl -insecure -proto demo.proto app-protect.online-boutique.arcadia-finance.io:443 hipstershop.AdService/GetAds
+
 #. Create a new NAP policy with gRPC profile
 
    .. code-block:: bash
         
-        sudo vi /etc/nginx/online-boutique-policy.json
+        vi /etc/nginx/online-boutique-policy.json
 
    .. code-block:: js
 
@@ -150,11 +160,11 @@ High level lab steps:
                 ]
             }
         }
-#. Enable App Protect on the virtual server.
+#. Enable App Protect on the virtual server. (Just change the line app_protect_enable from off to on;)
     
    .. code-block :: bash
 
-        sudo vi /etc/nginx/nginx.conf
+        vi /etc/nginx/nginx.conf
 
    .. code-block :: nginx
 
@@ -179,8 +189,8 @@ High level lab steps:
             server {
                 listen 443 http2 ssl;
                 server_name app-protect.online-boutique.arcadia-finance.io;
-                ssl_certificate /etc/nginx/ssl/nginx.crt;
-                ssl_certificate_key /etc/nginx/ssl/nginx.key;
+                ssl_certificate /home/centos/lab-files/grpc/fullchain1.pem;
+                ssl_certificate_key /home/centos/lab-files/grpc/privkey1.pem;
                 ssl_protocols TLSv1.2 TLSv1.3;
 
                 include conf.d/errors.grpc_conf;
@@ -189,7 +199,7 @@ High level lab steps:
                 app_protect_enable on;
                 app_protect_policy_file "/etc/nginx/online-boutique-policy.json";
                 app_protect_security_log_enable on;
-                app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
+                app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
 
                 location /hipstershop {
                     grpc_pass grpcs://online-boutique.arcadia-finance.io:30275;
@@ -201,11 +211,13 @@ High level lab steps:
    .. code-block :: bash
 
         sudo nginx -s reload
+
 #. Verify that legitimate request still passes
     
    .. code-block :: bash
 
         grpcurl -insecure -proto demo.proto app-protect.online-boutique.arcadia-finance.io:443 hipstershop.AdService/GetAds
+
 #. Verify that invalid requests blocked
     
    #. Request to non-existent service
