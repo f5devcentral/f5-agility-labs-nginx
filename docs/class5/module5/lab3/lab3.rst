@@ -1,5 +1,5 @@
-Explore the lab tools for monintoring NGINX Plus
-################################################
+Explore the lab tools for monitoring NGINX Plus
+###############################################
 
 #. In the browser, click ``Arcadia links>WAF NGINX Ingress`` bookmark (you may have to refresh on the browser if you get an error)
 #. You are now connected to the Arcadia App through the Kubernetes Ingress Controller with NAP
@@ -36,4 +36,4 @@ Explore the lab tools for monintoring NGINX Plus
        kubectl scale deployment app2 --replicas 3
     
 
-    .. note:: When pods are scalled up and down, NGINX Plus does not have to reload as it uses an internal API call to update the upstreams- dramatically reducing overhead in dynamic environments.
+    .. note:: When pods are scaled up and down, NGINX Plus does not have to reload as it uses an internal API call to update the upstreams- dramatically reducing overhead in dynamic environments.

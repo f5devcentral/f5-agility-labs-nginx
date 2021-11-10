@@ -38,7 +38,7 @@ Steps for the lab
 
         cat /etc/app_protect/conf/NginxApiSecurityPolicy.json
 
-#. The requied edits have already been made in our file located in ``/lab-files/openAPI\NginxApiSecurityPolicy.json`` see the highlighed line below.
+#. The required edits have already been made in our file located in ``/lab-files/openAPI\NginxApiSecurityPolicy.json`` see the highlighted line below.
 
     .. code-block:: js
         :emphasize-lines: 11
@@ -73,7 +73,7 @@ Steps for the lab
             status_zone app3_service;
         }
 
-        # apply specifc policies to our API endpoints:
+        # apply specific policies to our API endpoints:
         location /trading/rest {
             proxy_pass http://arcadia_ingress_nodeports$request_uri;
             status_zone trading_service;

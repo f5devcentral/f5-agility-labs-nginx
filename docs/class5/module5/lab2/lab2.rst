@@ -62,7 +62,7 @@ Just like we did with the
 #.  Scroll down on the left to ``More Resources>k8s.nginx.org`` and ``More Resources>appprotect.f5.com``
 #.  See the various custom resources we've configured (VirtualServer, APPolicy, Policy, APLogConf)
 
-    .. note::  Other distributions of kubernetes dashboards may look different, just look for the CRDs or Custom Resources.
+    .. note::  Other distributions of Kubernetes dashboards may look different, just look for the CRDs or Custom Resources.
 
   .. image:: ../pictures/CRDs.png
      :align: center
