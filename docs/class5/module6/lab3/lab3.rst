@@ -20,11 +20,11 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 **Steps**
 
 #. SSH to the docker VM
-#. Go to directory ``/home/ubuntu/awaf-policy``
+#. Go to directory ``/home/ubuntu/lab-files/awaf-policy``
 
    .. code-block:: bash
 
-      cd /home/ubuntu/awaf-policy
+      cd /home/ubuntu/lab-files/awaf-policy
 
 #. You can see the ``sharepoint-awaf.xml`` policy file from A.WAF.
 #. Now, execute de Docker run command to convert this XML policy to JSON Declarative policy

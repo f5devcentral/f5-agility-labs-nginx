@@ -1,147 +1,69 @@
-Step 12 - Protect Arcadia API
-#############################
+Protect Arcadia API with Kubernetes Ingress Controller
+######################################################
 
+Just like we did with the
 
-As a reminder, in ``Module2``, we deployed NAP in CentOS.
+.. note::  Also: If you came to this lab directly (without doing the previous modules), everything will still work.
 
-The Arcadia web application has several APIs in order to:
+#.  Review the below color-coded manifest which contain the mappings between the configuration items required for NAP.
 
-    #. Buy stocks
-    #. Sell stocks
-    #. Transfer money to friends
+    .. image:: ../pictures/arcadia-complete-app-protect-config.png
+        :align: center
 
-Because we have an ``OpenAPI specification file`` we can use this for a very accurate policy for protecting these APIs.
+    In this manifest we have created 3 "Policies." We have a WAF policy for Threat Campaigns (1) and one for our API. The Threat Campaign policy is applied at the root of our site and the API policy(2) is applied to the appropriate URIs.
+    
+    We also created a rate limit policy (3) and applied to the /trading/rest URI. This will prevent bots and users from high-frequency trading! Rate-limiting is an important part of many API security strategies depending on the nature of the API. More detail on the configuration of this policy here: https://docs.nginx.com/nginx-ingress-controller/configuration/policy-resource/#ratelimit
 
-You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub.com/apis/F5EMEASSA/Arcadia-OAS3/2.0.1-schema
+#.  Open a terminal to the Rancher VM (rke1), vscode is recommended. See the "Terminal" menu at the top of the screen.
 
-App Protect allows you to reference the file from an http server or deployed locally to the file system of the NGINX instance.
+    .. image:: ../pictures/ingress-controller-configuration.png
+        :align: center
 
-.. image:: ../pictures/lab1/swaggerhub.png
-   :align: center
+#.  Run these commands to create the policies, the logging profile and the ingress (VirtualServer) objects
 
-.. note :: As you can notice, there are 4 URLs in this API. And a JSON schema has been created so that every JSON parameter is known.
+    .. note:: The Custom Resource Definitions (CRD) were created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" is very similar to a standard ingress definition with added fields to configure the additional functionality provided by NGINX Plus and App Protect.
 
-Steps for the lab
-*****************
+    .. code-block:: BASH
 
-.. warning :: Make sure App Protect is installed to centos-vm. There is a script on the centos-vsm in /home/centos/lab-files/lab-script-cheat.sh that you can use to easily install App Protect.
+        kubectl apply -n default -f /home/ubuntu/lab-files/arcadia-manifests/open-api/rate-limit.yaml
+        kubectl apply -n default -f /home/ubuntu/lab-files/arcadia-manifests/open-api/threat-campaign-policy.yaml
+        kubectl apply -n default -f /home/ubuntu/lab-files/arcadia-manifests/open-api/api-security-policy.yaml
+        kubectl apply -n default -f /home/ubuntu/lab-files/arcadia-manifests/open-api/virtualserver-with-policies.yaml
 
-    #. Use vscode or SSH to the centos-vm
+#.  Run some tests to validate the APIs are protected:
 
-    #. ``curl localhost`` to verify NGINX is installed
+    .. code-block:: BASH
 
-    #. Copy our policy template to /etc/nginx
+        /home/ubuntu/lab-files/arcadia-manifests/open-api/tests/01-post-money-transfer.sh
 
-       .. code-block:: bash
+    .. code-block:: BASH
 
-           cp /etc/app_protect/conf/NginxApiSecurityPolicy.json /etc/nginx
+        /home/ubuntu/lab-files/arcadia-manifests/open-api/tests/02-get-money-transfer.sh
 
-    #. Modify it with the ``link`` to the OAS file for Arcadia API. This file resides in SwaggerHub. Don't forget the {}
+    .. code-block:: BASH
+        
+        /home/ubuntu/lab-files/arcadia-manifests/open-api/tests/03-apache-struts2-rest-plugin-xstream-metasploit.sh
 
-       .. code-block:: js
-          :emphasize-lines: 11
+    .. code-block:: BASH
 
-            {
-            "policy" : {
-                "name" : "app_protect_api_security_policy",
-                "description" : "NGINX App Protect API Security Policy. The policy is intended to be used with an OpenAPI file",
-                "template": {
-                    "name": "POLICY_TEMPLATE_NGINX_BASE"
-                },
+        /home/ubuntu/lab-files/arcadia-manifests/open-api/tests/04-drupalgeddon2-rce-muhstik.sh
 
-                "open-api-files" : [
-                    {
-                        "link": "https://api.swaggerhub.com/apis/F5EMEASSA/Arcadia-OAS3/2.0.1-schema/swagger.json"
-                    }
-                ],
+    .. code-block:: BASH
 
-                "blocking-settings" : {
-                    "violations" : [
-                        {
-            ...
+        /home/ubuntu/lab-files/arcadia-manifests/open-api/tests/buy-stocks-post.sh
 
-    #. Now, edit ``vi nginx.conf`` and modify it as below. We refer to the new WAF policy created previously
+    .. code-block:: BASH
+        
+        /home/ubuntu/lab-files/arcadia-manifests/open-api/tests/buy-stocks-get.sh
 
-       .. code-block:: nginx
-          :emphasize-lines: 31
+    .. note:: Buy stocks GET fails because the API definition only allows a POST.
 
-            user  nginx;
-            worker_processes  auto;
+#.  Open the ``Rancher`` dashboard bookmark in the browser and login with admin/admin.
+#.  Scroll down on the left to ``More Resources>k8s.nginx.org`` and ``More Resources>appprotect.f5.com``
+#.  See the various custom resources we've configured (VirtualServer, APPolicy, Policy, APLogConf)
 
-            error_log  /var/log/nginx/error.log notice;
-            pid        /var/run/nginx.pid;
+    .. note::  Other distributions of kubernetes dashboards may look different, just look for the CRDs or Custom Resources.
 
-            load_module modules/ngx_http_app_protect_module.so;
-
-            events {
-                worker_connections 1024;
-            }
-
-            http {
-                include          /etc/nginx/mime.types;
-                default_type  application/octet-stream;
-                sendfile        on;
-                keepalive_timeout  65;
-
-                log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                                '$status $body_bytes_sent "$http_referer" '
-                                '"$http_user_agent" "$http_x_forwarded_for"';
-
-                access_log  /var/log/nginx/access.log  main;
-
-                server {
-                    listen 80;
-                    server_name localhost;
-                    proxy_http_version 1.1;
-
-                    app_protect_enable on;
-                    app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-                    app_protect_security_log_enable on;
-                    app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
-
-                    location / {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
-                    }
-                }
-            }
-
-    #. Now, restart the NGINX service ``sudo nginx -s reload``
-
-Test your API
-*************
-
-    #. RDP to Windows Jumphost with credentials ``user:user``
-    #. Open ``Postman```
-    #. Open Collection ``Arcadia API``
-
-       .. image:: ../pictures/lab1/collec.png
-           :align: center
-           :scale: 50%
-
-    #. Send your first API Call with ``Last Transactions``. You should see the last transactions. This is just a GET.
-
-       .. image:: ../pictures/lab1/last_trans.png
-           :align: center
-           :scale: 50%
-
-       Make sure the URL is ``http://app-protect-centos.arcadia-finance.io/trading/transactions.php``
-
-    #. Now, send a POST, with ``POST Buy Stocks``. Check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
-
-       .. image:: ../pictures/lab1/buy.png
-           :align: center
-           :scale: 50%
-
-    #. Last test, send an attack. Send ``POST Buy Stocks XSS attack``. Your request will be blocked.
-
-       .. image:: ../pictures/lab1/buy_attack.png
-           :align: center
-           :scale: 50%
-
-    #. Check in ELK the violation.
-    #. You can make more tests with the other ``API calls``
+  .. image:: ../pictures/CRDs.png
+     :align: center
 
