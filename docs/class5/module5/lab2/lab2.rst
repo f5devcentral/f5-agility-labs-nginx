@@ -10,9 +10,11 @@ Just like we did with the
     .. image:: ../pictures/arcadia-complete-app-protect-config.png
         :align: center
 
-    In this manifest we have created 3 "Policies." We have a WAF policy for Threat Campaigns (1) and one for our API. The Threat Campaign policy is applied at the root of our site and the API policy(2) is applied to the appropriate URIs.
+    In this manifest we have created 3 "Policies." We have a WAF policy for Threat Campaigns (1) that uses high accuracy signatures to block common threats. The Threat Campaign policy is applied at the root of the Arcadia site.
     
-    We also created a rate limit policy (3) and applied to the /trading/rest URI. This will prevent bots and users from high-frequency trading! Rate-limiting is an important part of many API security strategies depending on the nature of the API. More detail on the configuration of this policy here: https://docs.nginx.com/nginx-ingress-controller/configuration/policy-resource/#ratelimit
+    The API security policy (2) uses a reference to the OpenAPI json file that is hosted on our Source Control Management tool (github). The API policy is applied to the appropriate URIs. https://github.com/nginx-architects/kic-example-apps/blob/main/app-protect-openapi-arcadia/open-api-spec.json 
+    
+    We also create a rate-limit policy (3) and applied to the /trading/rest URI. This will prevent bots and users from high-frequency trading! Rate-limiting is an important part of many API security strategies depending on the nature of the API. More detail on the configuration of this policy here: https://docs.nginx.com/nginx-ingress-controller/configuration/policy-resource/#ratelimit
 
 #.  Open a terminal to the Rancher VM (rke1), vscode is recommended. See the "Terminal" menu at the top of the screen.
 
