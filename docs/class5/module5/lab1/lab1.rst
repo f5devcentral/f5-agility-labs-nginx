@@ -1,150 +1,121 @@
-Step 12 - Protect Arcadia API
-#############################
+Protect Arcadia API with NGINX App Protect on a centos VM
+#########################################################
 
-Context
-*******
 
-As a reminder, in ``Steps 9 and 10``, we deployed NAP in CentOS.
-
-    #. Step 9 manually
-    #. Step 10 via CI/CD pipelines
-
-The Arcadia web application has several APIs in order to:
+The Arcadia web application has several REST APIs in order to:
 
     #. Buy stocks
     #. Sell stocks
     #. Transfer money to friends
 
-In order to protect these APIs, we will push (or pull) an ``OpenAPI specification file`` into NAP so that it can build the WAF policy from this file.
+Because we have an ``OpenAPI specification file`` we can use this for a very accurate policy for protecting these APIs.
 
-You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub.com/apis/F5EMEASSA/Arcadia-OAS3/2.0.1-schema
+You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub.com/apis/nginx5/api-arcadia_finance/2.0.2-oas3
+
+App Protect allows you to reference the file on an external http server or locally on the file system of the NGINX instance.
 
 .. image:: ../pictures/lab1/swaggerhub.png
    :align: center
 
-.. note :: As you can notice, there are 4 URLs in this API. And a JSON schema has been created so that every JSON parameter is known.
+.. note :: Notice that the URI, method, and response type are all defined for each API. This also serves as a tool for developers to understand what the response should look like for a successful call.
 
 Steps for the lab
 *****************
 
-    #. SSH to the centos-vm
-    #. Go to ``cd /etc/nginx``
-    #. ``ls`` and check the files created during the previous CI/CD pipeline job
+.. note :: Make sure NGINX is installed on centos-vm. There is a script on the centos-vm in /home/centos/lab-files/lab-script-cheat.sh that you can use to easily install App Protect and continue on from here.
 
-       .. code-block:: console
+#. Use vscode or SSH to the centos-vm
 
-            [centos@ip-10-1-1-7 nginx]$ ls
-            app-protect-log-policy.json       conf.d          koi-utf  mime.types  NginxApiSecurityPolicy.json  nginx.conf.orig          NginxStrictPolicy.json  uwsgi_params
-            app-protect-security-policy.json  fastcgi_params  koi-win  labs     nginx.conf                   NginxDefaultPolicy.json  scgi_params             win-utf   
+#. Verify NGINX is installed (see info note above if it is not)
 
-       .. note :: You can notice a NAP policy ``NginxApiSecurityPolicy.json`` exists. This is template for API Security. We will use it.
+    .. code-block:: bash
 
-    #. Edit ``sudo vi NginxApiSecurityPolicy.json`` and modify it with the ``link`` to the OAS file for Arcadia API. This file resides in SwaggerHub. Don't forget the {}
+        curl 0
 
-       .. code-block:: js
-          :emphasize-lines: 11
+#. View our API policy template that is installed with app protect
 
-            {
-            "policy" : {
-                "name" : "app_protect_api_security_policy",
-                "description" : "NGINX App Protect API Security Policy. The policy is intended to be used with an OpenAPI file",
-                "template": {
-                    "name": "POLICY_TEMPLATE_NGINX_BASE"
-                },
+    .. code-block:: bash
 
-                "open-api-files" : [
-                    {
-                        "link": "https://api.swaggerhub.com/apis/F5EMEASSA/Arcadia-OAS3/2.0.1-schema/swagger.json"
-                    }
-                ],
+        cat /etc/app_protect/conf/NginxApiSecurityPolicy.json
 
-                "blocking-settings" : {
-                    "violations" : [
-                        {
-            ...
-    
-    #. Now, edit ``sudo vi nginx.conf`` and modify it as below. We refer to the new WAF policy created previously
+#. The required edits have already been made in our file located in ``/lab-files/openAPI\NginxApiSecurityPolicy.json`` see the highlighted line below.
 
-       .. code-block:: nginx
-          :emphasize-lines: 31
+    .. code-block:: js
+        :emphasize-lines: 11
 
-            user  nginx;
-            worker_processes  auto;
+        {
+        "policy" : {
+            "name" : "app_protect_api_security_policy",
+            "description" : "NGINX App Protect API Security Policy. The policy is intended to be used with an OpenAPI file",
+            "template": {
+                "name": "POLICY_TEMPLATE_NGINX_BASE"
+            },
 
-            error_log  /var/log/nginx/error.log notice;
-            pid        /var/run/nginx.pid;
-
-            load_module modules/ngx_http_app_protect_module.so;
-
-            events {
-                worker_connections 1024;
-            }
-
-            http {
-                include          /etc/nginx/mime.types;
-                default_type  application/octet-stream;
-                sendfile        on;
-                keepalive_timeout  65;
-
-                log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                                '$status $body_bytes_sent "$http_referer" '
-                                '"$http_user_agent" "$http_x_forwarded_for"';
-
-                access_log  /var/log/nginx/access.log  main;
-
-                server {
-                    listen 80;
-                    server_name localhost;
-                    proxy_http_version 1.1;
-
-                    app_protect_enable on;
-                    app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-                    app_protect_security_log_enable on;
-                    app_protect_security_log "/etc/nginx/log-default.json" syslog:server=10.1.20.11:5144;
-
-                    location / {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30274$request_uri;
-                    }
+            "open-api-files" : [
+                {
+                    "link": "https://raw.githubusercontent.com/nginx-architects/kic-example-apps/main/app-protect-openapi-arcadia/open-api-spec.json"
                 }
-            }
+            ],
 
-    #. Now, restart the NGINX service ``sudo systemctl restart nginx``
+            "blocking-settings" : {
+                "violations" : [
+                    {
+        ...
 
-Test your API
-*************
+#. See the new sections of the NGINX configuration below for the REST API locations that we will protect
 
-    #. RDP to Windows Jumphost with credentials ``user:user``
-    #. Open ``Postman```
-    #. Open Collection ``Arcadia API``
+    .. code-block:: nginx
+        :emphasize-lines: 11,17
 
-       .. image:: ../pictures/lab1/collec.png
-           :align: center
-           :scale: 50%
+        # app3 service
+        location /app3 {
+            proxy_pass http://arcadia_ingress_nodeports$request_uri;
+            status_zone app3_service;
+        }
 
+        # apply specific policies to our API endpoints:
+        location /trading/rest {
+            proxy_pass http://arcadia_ingress_nodeports$request_uri;
+            status_zone trading_service;
+            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
+        }
+
+        location /api/rest {
+            proxy_pass http://arcadia_ingress_nodeports$request_uri;
+            status_zone trading_service;
+            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
+        }
+
+#. Copy the configuration files into /etc/nginx:
+
+    .. code-block:: BASH
+    
+        cp ~/lab-files/openAPI/NginxApiSecurityPolicy.json ~/lab-files/openAPI/nginx.conf /etc/nginx
+
+
+#. Restart the NGINX service and then we will run some tests
+
+    .. code-block:: BASH
+
+         sudo nginx -s reload
+
+Test The Protections
+********************
+
+    #. RDP to the jumphost with credentials ``user:user``
+    #. Open ``Postman``
+    #. Open Collection ``Arcadia API`` (see image below for navigating Postman)
     #. Send your first API Call with ``Last Transactions``. You should see the last transactions. This is just a GET.
 
        .. image:: ../pictures/lab1/last_trans.png
            :align: center
-           :scale: 50%
-           
-       Make sure the URL is ``http://app-protect-centos.arcadia-finance.io/trading/transactions.php``
-       
-    #. Now, send a POST, with ``POST Buy Stocks``. Check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
+           :scale: 100%
 
-       .. image:: ../pictures/lab1/buy.png
+    #. If you look closely at the OAS3 (Open API Spec v3) file, you'll see that buy stocks expects a POST. Try running ``POST Buy Stocks`` and see that it returns success. If you change the method to ``GET`` and run it again you will notice it is blocked. You can check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
+
+       .. image:: ../pictures/lab1/buy_attack2.png
            :align: center
-           :scale: 50%
+           :scale: 100%
 
-    #. Last test, send an attack. Send ``POST Buy Stocks XSS attack``. Your request will be blocked.
-
-       .. image:: ../pictures/lab1/buy_attack.png
-           :align: center
-           :scale: 50%
-
-    #. Check in ELK the violation.
-    #. You can make more tests with the other ``API calls``
+We will view the logs in the Kibana dashboard in the next lab, or feel free to go to ``Firefox>Kibana>Dashboard>Overview`` now.
 
