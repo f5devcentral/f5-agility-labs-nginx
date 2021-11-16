@@ -15,14 +15,7 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
 
         .. code-block:: bash
 
-            sudo yum remove -y nginx-plus nginx-plus-module-appprotect app-protect-compiler app-protect-engine app-protect-plugin
-            sudo rm -f /etc/yum.repos.d/nginx-* 
-            sudo rm -f /etc/yum.repos.d/app-protect*
-            sudo rm -rf /etc/nginx
-            sudo rm -rf /etc/app_protect
-            sudo rm -rf /opt/app_protect
-            sudo rm -rf /var/log/app_protect
-            sudo rm -rf /var/log/nginx
+            /home/centos/lab-files/remove-app-protect-cleanup.sh
 
         .. image:: ../pictures/lab3/remove-nap.png
            :align: center

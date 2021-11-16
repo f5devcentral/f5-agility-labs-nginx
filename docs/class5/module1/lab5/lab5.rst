@@ -11,29 +11,39 @@ To do so, we have a yaml manifest to apply with ``kubectl``.
 
 **Steps:**
 
-    #. Use the CICD VM in any of the provided tools (vscode / windows terminal (right click the shortcut on taskbar) / WebSSH)
-    #. Run this command ``kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-services-nodeport.yaml``
+    #. Use the Rancher VM in any of the provided tools (vscode / windows terminal (right click the shortcut on taskbar) / WebSSH)
+    #. Run this command which will create a ClusterIP service for our Arcadia deployments 
 
-.. code-block:: yaml
+        .. code-block:: BASH
 
-    apiVersion: v1
-    kind: Service
-    metadata:
-    name: backend
-    namespace: default
-    labels:
-        app: backend
-        service: backend
-    spec:
-    type: NodePort
-    ports:
-    - port: 80
-        nodePort: 30584
-        protocol: TCP
-        targetPort: 80
-        name: backend-80
-    selector:
-        app: backend
-    ---
+            kubectl apply -f ~/lab-files/arcadia-manifests/arcadia-services-cluster-ip.yaml``
 
-.. note:: Arcadia is now available via the NodePorts for each service, but not protected. In the following steps we will create an NGINX instance to protect it.
+        .. code-block:: yaml
+
+            apiVersion: v1
+            kind: Service
+            metadata:
+            name: backend
+            namespace: default
+            labels:
+                app: backend
+                service: backend
+            spec:
+            type: ClusterIP
+            ports:
+            - port: 80
+                protocol: TCP
+                targetPort: 80
+                name: backend-80
+            selector:
+                app: backend
+            ---
+
+    #. Create an Ingress for the Arcadia Application:
+
+        .. code-block:: BASH
+
+            kubectl apply -f ~/lab-files/arcadia-manifests/arcadia-virtualserver-no-waf.yaml
+
+
+.. note:: Arcadia is now available via the hostname no-waf.arcadia-finance.io, but not protected. In the following steps we will use App Protect to protect it.

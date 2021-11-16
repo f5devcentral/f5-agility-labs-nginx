@@ -9,20 +9,13 @@ Steps:
 
     #.  Use vscode or Windows terminal or WebSSH to the CentOS VM.
 
-    #.  There is a "cheat script" if you don't want to read through the steps, though it is recomended to follow the guide to learn what steps are needed. The script is ``sh /home/centos/lab-files/lab-script-cheat.sh``
+    #.  There is a "cheat script" if you don't want to read through the steps, though it is recommended to follow the guide to learn what steps are needed. The script is ``sh /home/centos/lab-files/lab-script-cheat.sh``
 
     #.  Clean up any existing NGINX repo/configurations already present:
 
         .. code-block:: bash
 
-            sudo yum remove -y nginx-plus
-            sudo rm -f /etc/yum.repos.d/nginx-* 
-            sudo rm -f /etc/yum.repos.d/app-protect*
-            sudo rm -rf /etc/nginx
-            sudo rm -rf /etc/app_protect
-            sudo rm -rf /opt/app_protect
-            sudo rm -rf /var/log/app_protect
-            sudo rm -rf /var/log/nginx
+            /home/centos/lab-files/remove-app-protect-cleanup.sh
 
     #.  Add NGINX Plus repository by downloading the file ``nginx-plus-7.repo`` to ``/etc/yum.repos.d``:
 
@@ -55,89 +48,88 @@ Steps:
         .. code-block:: nginx
            :caption: nginx.conf
 
-           user  nginx;
-           worker_processes  auto;
+            user  nginx;
+            worker_processes  auto;
+
+            error_log  /var/log/nginx/error.log notice;
+
+            # load the app protect module
+            load_module modules/ngx_http_app_protect_module.so;
+
+            events {
+                worker_connections 1024;
+            }
+
+            http {
+                include          /etc/nginx/mime.types;
+                default_type  application/octet-stream;
+                sendfile        on;
+                keepalive_timeout  65;
+
+                log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                                '$status $body_bytes_sent "$http_referer" '
+                                '"$http_user_agent" "$http_x_forwarded_for"';
+
+                access_log  /var/log/nginx/access.log  main;
+
+                server {
+                    listen 80 default_server;
+                    proxy_http_version 1.1;
+                    proxy_cache_bypass  $http_upgrade;
+
+                    proxy_set_header X-Forwarded-Server $host;
+                    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                    proxy_set_header Upgrade $http_upgrade;
+                    proxy_set_header Connection "upgrade";
+                    proxy_ignore_client_abort on;
+
+                    client_max_body_size 0;
+                    default_type text/html;
+
+                    app_protect_enable on;
+                    app_protect_security_log_enable on;
+                    # send the logs to the logstash instance on our ELK stack.
+                    app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
+
+                    ## NGINX Plus API monitoring:
+                    status_zone arcadia_server;
+
+                    ## in this lab, there are 2 ingress definitions for arcadia
+                    ## no-waf is the ingress (virtualServer) without NAP enabled
+                    proxy_set_header Host no-waf.arcadia-finance.io;
+
+                    # main service
+                    location / {
+                        proxy_pass http://arcadia_ingress_nodeports$request_uri;
+                        status_zone main_service;
+                    }
+
+                    # backend service
+                    location /files {
+                        proxy_pass http://arcadia_ingress_nodeports$request_uri;
+                        status_zone backend_service;
+                    }
+
+                    # app2 service
+                    location /api {
+                        proxy_pass http://arcadia_ingress_nodeports$request_uri;
+                        status_zone app2_service;
+                    }
+
+                    # app3 service
+                    location /app3 {
+                        proxy_pass http://arcadia_ingress_nodeports$request_uri;
+                        status_zone app3_service;
+                    }
+                }
+
+                upstream arcadia_ingress_nodeports {
+                    zone arcadia_ingress_nodeports 128k;
+                    server rke1:80;
+                }
+            }
            
-           error_log  /var/log/nginx/error.log notice;
-           
-           # load the app protect module
-           load_module modules/ngx_http_app_protect_module.so;
-           
-           events {
-               worker_connections 1024;
-           }
-           
-           http {
-               include          /etc/nginx/mime.types;
-               default_type  application/octet-stream;
-               sendfile        on;
-               keepalive_timeout  65;
-           
-               log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                               '$status $body_bytes_sent "$http_referer" '
-                               '"$http_user_agent" "$http_x_forwarded_for"';
-           
-               # note that in the dockerfile, the logs are redirected to stdout and can be viewed with `docker logs`
-               access_log  /var/log/nginx/access.log  main;
-           
-               server {
-                   listen       80;
-                   server_name  localhost;
-                   proxy_http_version 1.1;
-                   proxy_cache_bypass  $http_upgrade;
-           
-                   proxy_set_header Host $host;
-           
-                   proxy_set_header X-Forwarded-Server $host;
-                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           
-                   proxy_set_header Upgrade $http_upgrade;
-                   proxy_set_header Connection "upgrade";
-                   proxy_ignore_client_abort on;
-           
-                   app_protect_enable on;
-                   app_protect_security_log_enable on;
-                   # send the logs to the logstash instance on our ELK stack.
-                   app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
-           
-                   # main service
-                   location / {
-                       resolver 10.1.1.8:5353;
-                       resolver_timeout 5s;
-                       client_max_body_size 0;
-                       default_type text/html;
-                       proxy_pass http://k8s.arcadia-finance.io:30585$request_uri;
-                   }
-           
-                   # backend service
-                   location /files {
-                       resolver 10.1.1.8:5353;
-                       resolver_timeout 5s;
-                       client_max_body_size 0;
-                       default_type text/html;
-                       proxy_pass http://k8s.arcadia-finance.io:30584$request_uri;
-                   }       
-           
-                   # app2 service
-                   location /api {
-                       resolver 10.1.1.8:5353;
-                       resolver_timeout 5s;
-                       client_max_body_size 0;
-                       default_type text/html;
-                       proxy_pass http://k8s.arcadia-finance.io:30586$request_uri;
-                   }       
-           
-                   # app2 service
-                   location /app3 {
-                       resolver 10.1.1.8:5353;
-                       resolver_timeout 5s;
-                       client_max_body_size 0;
-                       default_type text/html;
-                       proxy_pass http://k8s.arcadia-finance.io:30587$request_uri;
-                   }    
-               }
-           }
-           
+        .. note:: The line ``proxy_set_header Host no-waf.arcadia-finance.io;`` will tell the Ingress Controller the host name that we are accessing.
 
     #.  Temporarily make SELinux permissive globally (https://www.nginx.com/blog/using-nginx-plus-with-selinux).
 
@@ -168,8 +160,8 @@ Steps:
     #. You should see all the apps running (main, back, app2 and app3)
 
         .. image:: ../pictures/arcadia-app.png
-           :align: center
-           :alt: arcadia app
+            :align: center
+            :alt: arcadia app
 
     #.  Try some attacks like injections or XSS: ``http://app-protect-centos.arcadia-finance.io/<script>``
 

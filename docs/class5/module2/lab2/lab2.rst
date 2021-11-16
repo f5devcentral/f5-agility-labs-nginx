@@ -28,7 +28,7 @@ Steps:
 
       .. code-block:: nginx
          :caption: nginx.conf
-         :emphasize-lines: 33
+         :emphasize-lines: 43,44
 
             user  nginx;
             worker_processes  auto;
@@ -75,46 +75,9 @@ Steps:
                   # send the logs to the logstash instance on our ELK stack.
                   app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
 
-                  # main service
-                  location / {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30585$request_uri;
-                  }
-
-                  # backend service
-                  location /files {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30584$request_uri;
-                  }
-
-                  # app2 service
-                  location /api {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30586$request_uri;
-                  }
-
-                  # app2 service
-                  location /app3 {
-                        resolver 10.1.1.8:5353;
-                        resolver_timeout 5s;
-                        client_max_body_size 0;
-                        default_type text/html;
-                        proxy_pass http://k8s.arcadia-finance.io:30587$request_uri;
-                  }
-               }
-            }
 
 
-      .. note:: You will notice in the ``nginx.conf`` file the refererence to ``log_default.json`` and the remote syslog server (ELK) ``10.1.1.11:5144``
+      .. note:: You will notice in the ``nginx.conf`` file the reference to ``log_default.json`` and the remote syslog server (ELK) ``10.1.1.11:5144``
 
 
       **Open Kibana via firefox on the jumphost or via UDF access**

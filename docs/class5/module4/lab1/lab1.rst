@@ -1,16 +1,16 @@
 Step 11 - Optional NGINX Plus Ingress Controller Deployment
 ###########################################################
 
-This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specifc to configuring NGINX App Protect.
+This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specific to configuring NGINX App Protect.
 
 That said, if you are interested in the topology or deploying the ingress controller, please continue on with this step. Otherwise you can skip to module 5: protecting API workloads.
 
 
 
 
-The previous excercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
+The previous exercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
 
-In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Acradia services. A ClusterIP is only accessible internally to the cluster. By using the ClusterIP, we force all requests to go through the KIC.
+In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Arcadia services. A ClusterIP is only accessible internally to the cluster. By using the ClusterIP, we force all requests to go through the KIC.
 
 Generally, we would deploy the ingress controller behind a L4/L7 load balancer to spread the load to all of the ingress controller PODs, as depicted on the right side of this image. In this lab, we will target the KIC Service NodePort directly with our browser (without the L4 LB/LTM in red).
 
@@ -20,7 +20,7 @@ Generally, we would deploy the ingress controller behind a L4/L7 load balancer t
 At a high-level we will:
 
 #. Use helm to deploy the Ingress controller that has been saved to the registry running on our docker host
-#. Deploy a new "ingress configuration" using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" will tell the KIC pods to create the configuration neccessary to accces and protect our applications.
+#. Deploy a new "ingress configuration" using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" will tell the KIC pods to create the configuration necessary to access and protect our applications.
 
 .. note:: This is a single node cluster and we are using "hostNetwork" to allow the ingress controller to listen on 80 and 443.
 
@@ -54,6 +54,7 @@ At a high-level we will:
                     port: 8080
                     ## Add IPv4 IP/CIDR blocks to the allow list for the NGINX Plus API. Separate multiple IP/CIDR by commas.
                     allowCidrs: "0.0.0.0/0"
+                # for our single node cluster, we can listen on 80 and 443 via hostNetwork:                    
                 hostNetwork: true
                 service:
                     type: NodePort
@@ -104,7 +105,7 @@ At a high-level we will:
                 scheme: http
                 port: 9113
 
-        .. note:: Helm is a utility that allows application developers to package thier application and settings in a collection. We then use a values.yaml file to set values specific to our deployment. 
+        .. note:: Helm is a utility that allows application developers to package their application and settings in a collection. We then use a values.yaml file to set values specific to our deployment. 
 
     #.  To remove the existing ingress controller:
 
@@ -122,7 +123,7 @@ At a high-level we will:
             helm repo update
             helm install plus nginx-stable/nginx-ingress -f /home/ubuntu/lab-files/helm/values-plus-with-app-protect.yaml --namespace nginx-ingress --create-namespace
         
-    #.  After running the command, we need to wait for the KIC pod to become availible. you can use a command like:
+    #.  After running the command, we need to wait for the KIC pod to become available. you can use a command like:
 
         .. code-block:: BASH
 
@@ -134,7 +135,7 @@ At a high-level we will:
 
         .. note:: Tab completion is enabled for all commands. In the command below, press tab at the end to complete the name of the pod.
 
-    #. View the logs, you will notice that they are similar to previous lab excercises with additional logs regarding the Kubernetes environment.
+    #. View the logs, you will notice that they are similar to previous lab exercises with additional logs regarding the Kubernetes environment.
         
         .. code-block:: BASH
 
