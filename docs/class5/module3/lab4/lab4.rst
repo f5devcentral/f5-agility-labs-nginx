@@ -1,5 +1,5 @@
 Step 9 - Deploy NAP with a CI/CD toolchain
-###########################################
+##########################################
 
 In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is tied to the app, so when DevOps commits a new app (or a new version), the CI/CD pipeline will to deploy a new NAP container in front to protect it. In order to avoid repeating what we did previously, we will use a signature package update as a trigger.
 
@@ -35,6 +35,7 @@ In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is
         script:
             - TAG=`yum info app-protect-attack-signatures | grep Version | cut -d':' -f2`
             - echo $TAG
+            - export DOCKER_BUILDKIT=1
             - docker build -t 10.1.20.7:5000/app-protect:`echo $TAG` .
             - echo export TAG=`echo $TAG` > $CI_PROJECT_DIR/variables
         artifacts:

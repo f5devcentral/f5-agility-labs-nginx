@@ -1,7 +1,7 @@
 Architecture of the Arcadia Application
 #######################################
 
-.. note:: This application is publically available in GitLab if you want to build your own lab: https://gitlab.com/arcadia-application
+.. note:: This application is publicly available in GitLab if you want to build your own lab: https://gitlab.com/arcadia-application
 
 The goal of this section is to understand the structure of the Arcadia Application, the commands needed to deploy it are on the next page.
 

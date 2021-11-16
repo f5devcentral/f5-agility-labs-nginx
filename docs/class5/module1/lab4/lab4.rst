@@ -1,5 +1,7 @@
 Step 1 - Deploy Arcadia Finance application in Kubernetes
-=========================================================
+#########################################################
+
+This step is optional. The Arcadia application is already deployed so that each module could be done independently. It is still here in case you are interested in how it was deployed. You can run the commands below, it will not harm anything.
 
 It's time to deploy Arcadia Finance application :)
 
@@ -50,7 +52,7 @@ I prepared this YAML file below (this is a portion of it below showing the main 
 **Steps :**
 
     #. RDP to the jumphost as ``user:user`` credentials
-    #. SSH to cicd VM. You can use vscode, Windows terminal, or UDF Web shell the command is ``ssh ubuntu@cicd`` The files we will be using are in: ``/home/ubuntu/lab-files``
+    #. SSH to Rancher VM. You can use vscode, Windows terminal, or UDF Web shell. The files we will be using are in: ``/home/ubuntu/lab-files``
     #. Run this command
 
        .. code-block:: bash
@@ -58,9 +60,9 @@ I prepared this YAML file below (this is a portion of it below showing the main 
          kubectl apply -f /home/ubuntu/lab-files/arcadia-manifests/arcadia-deployments.yaml
 
     #. Open the Firefox Browser
-    #. Open Kubernetes Dashboard bookmark (if not already opened)
-    #. Click ``skip`` on the logon page
-    #. You should see the deployments and the pods
+    #. Open ``Rancher`` Dashboard bookmark (if not already opened)
+    #. Login with admin/admin (it should already be saved)
+    #. You should see the pods under Workload>Pods and select the default namespace. Feel free to click around in the GUI. 
 
 .. note:: If you are returning to this lab and any deployment is failed, you can try restarting it with ``kubectl rollout restart -n default``. Just replace "default" with the namespace of the failed deployment.
 

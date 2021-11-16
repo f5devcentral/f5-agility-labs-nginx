@@ -78,7 +78,7 @@ In this lab, we will build the NAP Docker image via command line.
 
       .. code-block:: bash
 
-         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021
+         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf --volume /home/ubuntu/lab-files/conf.d:/etc/nginx/conf.d app-protect:04-aug-2021
 
 
       .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
@@ -90,7 +90,7 @@ In this lab, we will build the NAP Docker image via command line.
    #. Note the signature package date in the output logs.
          ``2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true}``
 
-.. note:: Congratulations, you are running NGINX App Protect with the latest signaturte package.
+.. note:: Congratulations, you are running NGINX App Protect with the latest signature package.
 
 **Video of this lab (force HD 1080p in the video settings)**
 
