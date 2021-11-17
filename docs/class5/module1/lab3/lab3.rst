@@ -39,7 +39,7 @@ Optional: If you have a public key for SSH, we recommend adding it to UDF. Instr
 
 Once you add it, you can use the direct SSH access link under each VM. Depending on your browser's settings, the link may open your SSH client automatically. Otherwise copy the entire ssh command and paste into your client. On Windows, we recommend `Windows Terminal <https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab>`_. Note that vscode does not work remotely, you must use the jump host if you prefer vscode.
 
-.. note:: Hostnames have been configured on all systems. Once you have SSHed into the cicd server (in the first exercise), you can ``ssh docker`` or ``ssh centos`` to get to the other VMs.
+.. note:: Hostnames have been configured on all systems. Once you have SSHed into the rancher server (in the first exercise), you can ``ssh docker`` or ``ssh centos`` to get to the other VMs.
 
 .. image:: ../pictures/udf-ssh-access.png
    :alt: Windows Terminal
