@@ -23,38 +23,40 @@ In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is
 .. code-block:: yaml
 
     stages:
-        - Build_image
-        - Push_image
-        - Run_docker
+    - Build_image
+    - Push_image
+    - Run_docker
 
     before_script:
-        - docker info
+    - docker info
 
     Build_image:
-        stage: Build_image
-        script:
-            - TAG=`yum info app-protect-attack-signatures | grep Version | cut -d':' -f2`
-            - echo $TAG
-            - export DOCKER_BUILDKIT=1
-            - docker build -t 10.1.20.7:5000/app-protect:`echo $TAG` .
-            - echo export TAG=`echo $TAG` > $CI_PROJECT_DIR/variables
-        artifacts:
-            paths:
-            - variables
+    stage: Build_image
+    script:
+        - docker system prune --force
+        - TAG=`yum info app-protect-attack-signatures | grep Version | cut -d':' -f2`
+        - echo $TAG
+        - export DOCKER_BUILDKIT=1
+        - docker build --no-cache --secret id=nginx-crt,src=nginx-repo.crt --secret id=nginx-key,src=nginx-repo.key -t docker:443/app-protect:`echo $TAG` .
+        - echo export TAG=`echo $TAG` > $CI_PROJECT_DIR/variables
+    artifacts:
+        paths:
+        - variables
 
     Push_image:
-        stage: Push_image
-        script:
-            - source $CI_PROJECT_DIR/variables
-            - echo $TAG
-            - docker push 10.1.20.7:5000/app-protect:`echo $TAG`
+    stage: Push_image
+    script:
+        - source $CI_PROJECT_DIR/variables
+        - echo $TAG
+        - docker push docker:443/app-protect:`echo $TAG`
 
     Run_docker:
-        stage: Run_docker
-        script:
-            - source $CI_PROJECT_DIR/variables
-            - echo $TAG
-            - ansible-playbook -i hosts playbook.yaml --extra-var dockertag=`echo $TAG`
+    stage: Run_docker
+    script:
+        - source $CI_PROJECT_DIR/variables
+        - echo $TAG
+        - ansible-playbook -i hosts playbook.yaml --extra-var dockertag=`echo $TAG`
+
 
 
 
@@ -75,7 +77,7 @@ Steps:
 
     #.  SSH to the ``CICD server (runner, Terraform, Ansible)`` VM
 
-        #. Run this command in order to determine the latest Signature Package date: ``sudo yum --showduplicates list app-protect-attack-signatures`` 
+        #. Optional: Run this command in order to determine the latest Signature Package date: ``sudo yum --showduplicates list app-protect-attack-signatures`` 
         or for ubuntu: ``sudo apt-cache policy app-protect-attack-signatures|grep 2021``
         #. You will see all versions published. In my case, it is ``2021.07.13`` (2021.07.13-1.el7.ngx). We will use this date as a Docker tag, but this will be done automatically by the CI/CD pipeline.
 
@@ -83,15 +85,16 @@ Steps:
            :align: center
            :scale: 50%
 
-
-
-
         **Trigger the CI/CD pipeline**
 
         Steps :
 
     #. In GitLab, click on ``Repository`` and ``Tags`` in the left menu
-    #. Create a new tag and give it a name like ``Sig-2021.07.13`` where ideally ``<version_date>`` should be replaced by the package version information found in the result of the ``yum info`` step above. But it does not matter, you can put anything you want in this tag.
+
+        .. image:: ../pictures/lab6/gitlab-tag.png
+           :align: center
+
+    #. Create a new tag and give it a name (though the tag name is arbitrary and the job will run with any tag name) Example: ``Sig-2021.07.13`` where ideally ``<version_date>`` should be replaced by the package version information found in the result of the ``yum info`` step above. But it does not matter, you can put anything you want in this tag.
     #. Click ``Create tag``
     #. At this moment, the ``Gitlab CI`` pipeline starts
     #. In Gitlab, in the ``signature-update`` repository, click ``CI / CD`` > ``Pipelines``
@@ -112,7 +115,7 @@ Steps:
         .. image:: ../pictures/lab6/registry-ui.png
            :align: center 
 
-    #. SSH to the Docker App Protect VM and check the signature package date running ``docker logs app-protect --follow``
+    #. SSH to the Docker App Protect VM and check the signature package date running ``docker logs app-protect --follow``. Note it will take a few minutes for everything to start up in this lab environment with low IOPS.
     
         .. code-block:: bash
         
