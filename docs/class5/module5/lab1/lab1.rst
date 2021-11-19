@@ -38,7 +38,7 @@ Steps for the lab
 
         cat /etc/app_protect/conf/NginxApiSecurityPolicy.json
 
-#. The required edits have already been made in our file located in ``/lab-files/openAPI\NginxApiSecurityPolicy.json`` see the highlighted line below.
+#. The required edits have already been made in our file located in ``cat /home/centos/lab-files/openAPI/NginxApiSecurityPolicy.json`` see the highlighted line below.
 
     .. code-block:: js
         :emphasize-lines: 11

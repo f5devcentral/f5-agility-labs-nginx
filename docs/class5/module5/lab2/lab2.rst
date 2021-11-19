@@ -12,7 +12,9 @@ Just like we did with the
 
     In this manifest we have created 3 "Policies." We have a WAF policy for Threat Campaigns (1) that uses high accuracy signatures to block common threats. The Threat Campaign policy is applied at the root of the Arcadia site.
     
-    The API security policy (2) uses a reference to the OpenAPI json file that is hosted on our Source Control Management tool (github). The API policy is applied to the appropriate URIs. https://github.com/nginx-architects/kic-example-apps/blob/main/app-protect-openapi-arcadia/open-api-spec.json 
+    The API security policy (2) uses a reference to the OpenAPI json file that is hosted on our Source Control Management tool (github). The API policy is applied to the appropriate URIs. https://raw.githubusercontent.com/nginx-architects/kic-example-apps/udf-bp/app-protect-openapi-arcadia/open-api-spec.json 
+
+    .. note:: The Github repo contains the this entire example if you want to run it on your own cluster: https://github.com/nginx-architects/kic-example-apps 
     
     We also create a rate-limit policy (3) and applied to the /trading/rest URI. This will prevent bots and users from high-frequency trading! Rate-limiting is an important part of many API security strategies depending on the nature of the API. More detail on the configuration of this policy here: https://docs.nginx.com/nginx-ingress-controller/configuration/policy-resource/#ratelimit
 
