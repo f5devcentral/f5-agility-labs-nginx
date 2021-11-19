@@ -47,7 +47,7 @@ I prepared this YAML file below (this is a portion of it below showing the main 
                 protocol: TCP
         ---
 
-.. note:: This file contains all the deployments for the entire Arcadia appication.
+.. note:: This file contains all the deployments for the entire Arcadia application.
 
 **Steps :**
 
