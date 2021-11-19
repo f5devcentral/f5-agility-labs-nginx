@@ -5,6 +5,8 @@ In this lab, we will install NGINX Plus and App Protect packages on CentOS with 
 
 .. note:: The official Ansible NAP role is available here https://github.com/nginxinc/ansible-role-nginx-app-protect and the NGINX Plus role here https://github.com/nginxinc/ansible-role-nginx 
 
+.. note:: This example is available on Github: https://github.com/nginx-architects/UDF-App-Protect-cicd     
+
 
 **Uninstall the previous running NAP**
 
