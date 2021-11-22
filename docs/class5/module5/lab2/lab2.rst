@@ -1,9 +1,7 @@
 Protect Arcadia API with Kubernetes Ingress Controller
 ######################################################
 
-Just like we did with the
-
-.. note::  Also: If you came to this lab directly (without doing the previous modules), everything will still work.
+.. note::  If you came to this lab directly (without doing the previous modules), everything will still work.
 
 #.  Review the below color-coded manifest which contain the mappings between the configuration items required for NAP.
 
@@ -25,7 +23,15 @@ Just like we did with the
 
 #.  Run these commands to create the policies, the logging profile and the ingress (VirtualServer) objects
 
-    .. note:: The Custom Resource Definitions (CRD) were created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" is very similar to a standard ingress definition with added fields to configure the additional functionality provided by NGINX Plus and App Protect.
+    .. note:: The Custom Resource Definitions (CRD) were created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource.
+
+    - The **VirtualServer** resource is a new load balancing configuration, introduced in release 1.5 as an alternative to the Ingress resource. The resources enable use cases not supported with the Ingress resource, such as traffic splitting, advanced content-based routing, App Protect.
+
+    - The **APPolicy** resource defines the WAF policy for App Protect to apply. The WAF policy is a YAML version of the standalone App Protect JSON‑formatted policy.
+
+    - The **APLogConf** resource defines the logging behavior of the App Protect module.
+
+    - The **Policy** resource allows you to configure features like access control and rate-limiting, which you can add to your VirtualServer and VirtualServerRoute resources.
 
     .. code-block:: BASH
 
