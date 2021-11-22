@@ -11,7 +11,7 @@ Explore the lab tools for monitoring NGINX Plus
 
 #. View the dashboard in Kibana: ``Firefox>Kibana>Dashboard>Overview``
 
-    .. note:: While monitoring is not solely API an security concern, having a real-time dashboard is helpful in understanding current issues and traffic load. In the following steps, we will look at the NGINX Plus dashboard to see how it can help.
+    .. note:: While monitoring is not solely an API security concern, having a real-time dashboard is helpful in understanding current issues and traffic load. In the following steps, we will look at the NGINX Plus dashboard to see how it can help.
 
 #. In the browser, open ``NGINX Plus Dashboards>k8s NGINX+ Dashboard``
 
