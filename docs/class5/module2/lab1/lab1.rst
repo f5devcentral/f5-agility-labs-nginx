@@ -21,7 +21,8 @@ Steps:
 
         .. code-block:: bash
 
-            sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
+            sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.4.repo
+            sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-7.repo
             yum clean all
 
     #.  Install the most recent version of the NGINX Plus App Protect package (which includes NGINX Plus because it is a dependency):
@@ -48,13 +49,16 @@ Steps:
         .. code-block:: nginx
            :caption: nginx.conf
 
-            user  nginx;
+            user nginx;
             worker_processes  auto;
 
             error_log  /var/log/nginx/error.log notice;
 
             # load the app protect module
             load_module modules/ngx_http_app_protect_module.so;
+
+            # load njs module for prometheus exporter
+            load_module modules/ngx_http_js_module.so;
 
             events {
                 worker_connections 1024;
@@ -70,7 +74,30 @@ Steps:
                                 '$status $body_bytes_sent "$http_referer" '
                                 '"$http_user_agent" "$http_x_forwarded_for"';
 
-                access_log  /var/log/nginx/access.log  main;
+                log_format  main_ext    'remote_addr="$remote_addr", '
+                                '[time_local=$time_local], '
+                                'request="$request", '
+                                'status="$status", '
+                                'http_referer="$http_referer", '
+                                'body_bytes_sent="$body_bytes_sent", '
+                                'Host="$host", '
+                                'sn="$server_name", '
+                                'request_time=$request_time, '
+                                'http_user_agent="$http_user_agent", '
+                                'http_x_forwarded_for="$http_x_forwarded_for", '
+                                'request_length="$request_length", '
+                                'upstream_address="$upstream_addr", '
+                                'upstream_status="$upstream_status", '
+                                'upstream_connect_time="$upstream_connect_time", '
+                                'upstream_header_time="$upstream_header_time", '
+                                'upstream_response_time="$upstream_response_time", '
+                                'upstream_response_length="$upstream_response_length"';
+                # note that in the dockerfile, the logs are redirected to stdout and can be viewed with `docker logs`
+                access_log  /var/log/nginx/access.log  main_ext;
+
+                #for prometheus too big subrequest response errors
+                subrequest_output_buffer_size 32k;
+                js_import /usr/share/nginx-plus-module-prometheus/prometheus.js;
 
                 server {
                     listen 80 default_server;
@@ -125,7 +152,38 @@ Steps:
 
                 upstream arcadia_ingress_nodeports {
                     zone arcadia_ingress_nodeports 128k;
-                    server rke1:80;
+                    server 10.1.1.10:80;
+                }
+
+            # NGINX Plus API and real-time dashboard
+            map $request_method $loggable {
+                GET  0;
+                default 1;
+            }
+                server {
+                    listen 81;
+
+                    access_log /dev/stdout main_ext if=$loggable;
+
+                    location = /metrics {
+                            js_content prometheus.metrics;
+                        }
+                    location /api/ {
+                        api write=on;
+
+                    }
+                    location = /dashboard.html {
+                        root /usr/share/nginx/html;
+                    }
+                    location / {
+                        return 301 /dashboard.html;
+                    }
+                    location /status.html {
+                        return 301 /dashboard.html;
+                    }
+                    location /swagger-ui {
+                        root   /usr/share/nginx/html;
+                    }
                 }
             }
            
