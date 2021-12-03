@@ -3,6 +3,10 @@ Protect Arcadia API with Kubernetes Ingress Controller
 
 .. note::  If you came to this lab directly (without doing the previous modules), everything will still work.
 
+    A quick primer on Kubernetes extensibility and Custom Resource Definitions (CRD); (*)see links at the bottom of the page for more information-
+    
+    A CRD can be defined as a manifest that defines a collection of API objects to extend the K8s API beyond vanilla deployments. This allows configuration of extended functionality (like NGINX APP Protect) natively through kubectl.
+
 #.  Review the below color-coded manifest which contain the mappings between the configuration items required for NAP.
 
     .. image:: ../pictures/arcadia-complete-app-protect-config.png
@@ -77,3 +81,4 @@ Protect Arcadia API with Kubernetes Ingress Controller
   .. image:: ../pictures/CRDs.png
      :align: center
 
+(*) https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/
