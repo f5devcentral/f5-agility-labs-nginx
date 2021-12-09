@@ -37,13 +37,13 @@ I prepared this YAML file below (this is a portion of it below showing the main 
             spec:
             containers:
             - env:
-                - name: service_name
+              - name: service_name
                 value: backend
-                image: registry.gitlab.com/arcadia-application/back-end/backend:latest
-                imagePullPolicy: IfNotPresent
-                name: backend
-                ports:
-                - containerPort: 80
+              image: registry.gitlab.com/arcadia-application/back-end/backend:latest
+              imagePullPolicy: IfNotPresent
+              name: backend
+              ports:
+              - containerPort: 80
                 protocol: TCP
         ---
 
