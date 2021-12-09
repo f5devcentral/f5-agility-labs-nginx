@@ -27,7 +27,7 @@ If you deploy only ``Main App`` and ``Back End`` services.
 
 |
 
-And below if you deploy all the services: ``Main App``, ``Back End`` and ``Money Transfer``
+And below if you deploy following three services: ``Main App``, ``Back End`` and ``Money Transfer``
 
 .. image:: ../pictures/lab1/app2.png
    :align: center
