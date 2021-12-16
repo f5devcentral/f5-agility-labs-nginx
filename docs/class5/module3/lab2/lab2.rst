@@ -83,7 +83,7 @@ In order to install this package, we need to update our ``Dockerfile``. I create
 
       .. code-block:: bash
 
-         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf app-protect:04-aug-2021-tc
+         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf --volume /home/ubuntu/lab-files/conf.d:/etc/nginx/conf.d app-protect:04-aug-2021-tc
 
 
       .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
@@ -96,7 +96,7 @@ In order to install this package, we need to update our ``Dockerfile``. I create
 
       **Simulate a Threat Campaign attack**
 
-   #. On the Win10 jump host, ppen ``Postman`` and select the collection ``NAP - Threat Campaign``
+   #. On the Win10 jump host, open ``Postman`` and select the collection ``NAP - Threat Campaign``
    #. Run the 2 calls with ``docker`` in the name. They will trigger 2 different Threat Campaign rules.
    #. In the next lab, we will check the logs in Kibana.
 
