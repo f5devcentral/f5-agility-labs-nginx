@@ -26,11 +26,17 @@ Steps for the lab
 
 #. Use vscode or SSH to the centos-vm
 
-#. Verify NGINX is installed (see info note above if it is not)
+#. Verify NGINX is installed, if the below command returns some html, it is running
 
     .. code-block:: bash
 
         curl 0
+
+#. If curl is unable to connect, run this 
+
+    .. code-block:: bash
+        
+        /home/centos/lab-files/lab-script-cheat.sh
 
 #. View our API policy template that is installed with app protect
 
