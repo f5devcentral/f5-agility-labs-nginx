@@ -31,55 +31,66 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 
    .. code-block:: bash
 
-      docker run --rm -v /home/ubuntu/awaf-policy/:/tmp/convert policy-converter:latest /opt/app_protect/bin/convert-policy -i /tmp/convert/sharepoint-awaf.xml -o /tmp/convert/sharepoint-nap.json | jq
+      docker run --rm -v /home/ubuntu/lab-files/awaf-policy/:/tmp/convert app-protect:04-aug-2021-tc /opt/app_protect/bin/convert-policy -i /tmp/convert/sharepoint-awaf.xml -o /tmp/convert/sharepoint-nap.json|jq
 
    .. note:: Look at the command. You can notice the ``input`` and the ``output``
 
-#. After few second, you can see the results. In YELLOW, the converter confirms what has been converted and what has NOT been converted (because not supported by NAP)
+#. After few second, you can see the results. In the output, the converter confirms what has been converted and what has NOT been converted (because not supported by NAP). The policy json file will be in the ``/home/ubuntu/lab-files/awaf-policy`` directory.
 
    .. code-block:: js
-      :emphasize-lines: 2-29
  
-        {
-          "warnings": [
+         {
+         "warnings": [
             "Default header '*-bin' cannot be deleted.",
             "Traffic Learning, Policy Building, and staging are unsupported",
             "Element '/methods/actAsMethod' is unsupported.",
             "Element '/plain-text-profiles' is unsupported.",
+            "/csrf-urls/enforcementAction value 'verify-csrf-token' is unsupported.",
             "Element '/blocking-settings/web-services-securities' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_BLOCKING_CONDITION' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_BRUTE_FORCE' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_CONVICTION' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_CROSS_ORIGIN_REQUEST' is unsupported.",
-            "/blocking-settings/violations/name value 'VIOL_CSRF' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_GEOLOCATION' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_HOSTNAME_MISMATCH' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_MALICIOUS_DEVICE' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_MALICIOUS_IP' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_SESSION_AWARENESS' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_BAD_REQUEST' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_BINARY_MESSAGE_LENGTH' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_BINARY_MESSAGE_NOT_ALLOWED' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_EXTENSION' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAMES_PER_MESSAGE_COUNT' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAME_LENGTH' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAME_MASKING' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAMING_PROTOCOL' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_TEXT_MESSAGE_NOT_ALLOWED' is unsupported.",
+            "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_TEXT_NULL_VALUE' is unsupported.",
             "/blocking-settings/violations/name value 'VIOL_XML_SCHEMA' is unsupported.",
             "Element '/session-tracking' is unsupported.",
             "/data-guard/lastSsnDigitsToExpose must be '4' (was '0').",
             "/data-guard/lastCcnDigitsToExpose must be '4' (was '0').",
             "/general/enableEventCorrelation must be 'false' (was 'true').",
             "/xml-profiles/followSchemaLinks must be 'false' (was 'true').",
+            "Element '/websocket-urls' is unsupported.",
             "Element '/deception-settings' is unsupported.",
             "Element '/behavioral-enforcement' is unsupported.",
+            "/character-sets/characterSetType value 'plain-text-content' is unsupported.",
             "/cookies/performStaging value true is unsupported",
             "Element '/brute-force-attack-preventions' is unsupported.",
             "Element '/gwt-profiles' is unsupported.",
             "/signature-sets/learn value true is unsupported"
-          ],
-          "file_size": 50199,
-          "filename": "/tmp/convert/sharepoint-nap.json",
-          "completed_successfully": true
-        }
+         ],
+         "file_size": 50137,
+         "filename": "/tmp/convert/sharepoint-nap.json",
+         "completed_successfully": true
+         }
 
 #. Look at the JSON policy generated
 
    .. code-block:: bash
 
-      more sharepoint-nap.json
+      cat /home/ubuntu/lab-files/awaf-policy/sharepoint-nap.json 
 
 .. note:: Congratulations, you converted an XML ASM/AWAF policy to a Declarative NAP policy. You can assign this JSON policy to a NAP configuration.
 
