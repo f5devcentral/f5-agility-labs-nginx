@@ -1,126 +1,110 @@
-Step 9 - Deploy NAP with a CI/CD toolchain
-##########################################
+Step 9 - Use External References to make your policy dynamic
+############################################################
 
-In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is tied to the app, so when DevOps commits a new app (or a new version), the CI/CD pipeline will to deploy a new NAP container in front to protect it. In order to avoid repeating what we did previously, we will use a signature package update as a trigger.
+External references in policy are defined as any code blocks that can be used as part of the policy without being explicitly pasted within the policy file. This means that you can have a set of pre-defined configurations for parts of the policy, and you can incorporate them as part of the policy by simply referencing them. This reduces the complexity of having to concentrate everything into a single policy file.
 
-.. note:: When a new signature package is available, the CI/CD pipeline will build a new version of the Docker image and run it in front of the Arcadia Application.
+A perfect use case for external references is when you wish to build a dynamic policy that depends on moving parts. You can have code create and populate specific files with the configuration relevant to your policy, and then compile the policy to include the latest version of these files, ensuring that your policy is always up-to-date when it comes to a constantly changing environment.
 
-**This is the workflow we will run (the steps to run are later in this page)**
+.. note :: To use the external references capability, in the policy file the direct property is replaced by “xxxReference” property, where xxx defines the replacement text for the property. For example, “modifications” section is replaced by “modificationsReference”.
 
-    #. Check if a new Signature Package is available
-    #. Simulate a Commit in GitLab (goal is to simulate a full automated process checking signature package every day)
-    #. This commit triggers a webhook in Gitlab CI
-    #. Gitlab CI runs the pipeline:
-    
-        #. Build a new Docker NAP image with a new tag ``date of the signature package``
-        #. Destroy the previous running NAP container
-        #. Run a new NAP container with the new Signature Package
+In this lab, we will create a ``custom blocking page`` and host this page in Gitlab. 
 
-.. note:: The goal of this lab is not understand what is possible. Feel free to browse through GitLab to see how it all works.
+.. note :: In this configuration, we are completely satisfied with the basic base policy we created previously ``/arcadia-waf-policy/policy_base.json``, and we wish to use it as is. However, we wish to define a custom response page using an external file located on an HTTP web server (Gitlab). The external reference file contains our custom response page configuration.
 
-**Check the Gitlab CI file**
+In the last step, this is the ajax policy we created:
 
-.. code-block:: yaml
+.. code-block:: js
 
-    stages:
-    - Build_image
-    - Push_image
-    - Run_docker
+            {
+                "name": "policy_name",
+                "template": { "name": "POLICY_TEMPLATE_NGINX_BASE" },
+                "applicationLanguage": "utf-8",
+                "enforcementMode": "blocking",
+                "response-pages": [
+                        {
+                            "responsePageType": "ajax",
+                            "ajaxEnabled": true,
+                            "ajaxPopupMessage": "My customized popup message! Your support ID is: <%TS.request.ID()%><br>You can use this ID to find the reason your request was blocked in Kibana."
+                        }
+                        ]
+            }
 
-    before_script:
-    - docker info
+Steps :
 
-    Build_image:
-    stage: Build_image
-    script:
-        - docker system prune --force
-        - TAG=`yum info app-protect-attack-signatures | grep Version | cut -d':' -f2`
-        - echo $TAG
-        - export DOCKER_BUILDKIT=1
-        - docker build --no-cache --secret id=nginx-crt,src=nginx-repo.crt --secret id=nginx-key,src=nginx-repo.key -t docker:443/app-protect:`echo $TAG` .
-        - echo export TAG=`echo $TAG` > $CI_PROJECT_DIR/variables
-    artifacts:
-        paths:
-        - variables
+#.  RDP to ``jump host`` and connect to ``GitLab`` (root / F5twister$)
+#.  Click on the project named ``NGINX App Protect / nap-reference-blocking-page``
 
-    Push_image:
-    stage: Push_image
-    script:
-        - source $CI_PROJECT_DIR/variables
-        - echo $TAG
-        - docker push docker:443/app-protect:`echo $TAG`
-
-    Run_docker:
-    stage: Run_docker
-    script:
-        - source $CI_PROJECT_DIR/variables
-        - echo $TAG
-        - ansible-playbook -i hosts playbook.yaml --extra-var dockertag=`echo $TAG`
+    .. image:: ../pictures/lab5/gitlab-1.png
+       :align: center
+       :scale: 50%
+       :alt: gitlab1
 
 
 
+#.  Check the file ``blocking-custom-1.txt``
 
-.. note:: The challenge here was to retrieve the date of the package and tag the image with this date in order to have one image per signature package date. This is useful if you need to roll back to a previous version of the signatures.
+    .. code-block :: js
 
-**Simulate an automated task detecting a new Signature Package has been release by F5**
+        [
+            {
+                "responseContent": "<html><head><title>Custom Reject Page</title></head><body><p>This is a <strong>custom response page</strong>, it is supposed to overwrite the default page for the <strong>base NAP policy.&nbsp;</strong></p><p>This page can be <strong>modified</strong> by a <strong>dedicated</strong> team, which does not have access to the WAF policy.<br /><br /></p><p><img src=https://media.giphy.com/media/12NUbkX6p4xOO4/giphy.gif></p><br>Your support ID is: <%TS.request.ID()%><br><br><a href='javascript:history.back();'>[Go Back]</a></body></html>",
+                "responseHeader": "HTTP/1.1 302 OK\\r\\nCache-Control: no-cache\\r\\nPragma: no-cache\\r\\nConnection: close",
+                "responseActionType": "custom",
+                "responsePageType": "default"
+            }
+        ]
 
-Steps:
+#.  This is a custom Blocking Response config page. We will refer to it into the ``policy_base.json``
 
-    #.  On the jumphost, open Firefox > ``Gitlab``
 
-        #. If Gitlab is not available (502 error), restart the GitLab Docker container. SSH to the GitLab VM and run ``sudo docker restart gitlab`` 
-    #.  In GitLab, open ``Projects>NGINX App Protect / nap-docker-signature`` project
 
-        .. image:: ../pictures/lab6/gitlab_project_updated.png
-           :align: center
-           :scale: 50%
+#.  View our new policy file referencing the new blocking message on Gitlab.
 
-    #.  SSH to the ``CICD server (runner, Terraform, Ansible)`` VM
+    .. code-block:: bash
 
-        #. Optional: Run this command in order to determine the latest Signature Package date: ``sudo yum --showduplicates list app-protect-attack-signatures`` 
-        or for ubuntu: ``sudo apt-cache policy app-protect-attack-signatures|grep 2021``
-        #. You will see all versions published. In my case, it is ``2021.07.13`` (2021.07.13-1.el7.ngx). We will use this date as a Docker tag, but this will be done automatically by the CI/CD pipeline.
+       cat /home/ubuntu/lab-files/external-reference-policy/gitlab-reference-policy.json
 
-        .. image:: ../pictures/lab6/yum-date.png
-           :align: center
-           :scale: 50%
+    .. code-block:: js
 
-        **Trigger the CI/CD pipeline**
+        {
+            "name": "policy_name",
+            "template": { "name": "POLICY_TEMPLATE_NGINX_BASE" },
+            "applicationLanguage": "utf-8",
+            "enforcementMode": "blocking",
+            "responsePageReference": {
+                "link": "http://10.1.1.7/ngnix-app-protect/nap-reference-blocking-page/-/raw/master/blocking-custom-1.txt"
+            }
+        }
 
-        Steps :
+    .. note :: You can notice the reference to the TXT file in Gitlab
 
-    #. In GitLab, click on ``Repository`` and ``Tags`` in the left menu
+#.  From the Docker VM, delete the running container with ``<ctrl-c>`` and test our new policy.
 
-        .. image:: ../pictures/lab6/gitlab-tag.png
-           :align: center
+    .. code-block:: bash
 
-    #. Create a new tag and give it a name (though the tag name is arbitrary and the job will run with any tag name) Example: ``Sig-2021.07.13`` where ideally ``<version_date>`` should be replaced by the package version information found in the result of the ``yum info`` step above. But it does not matter, you can put anything you want in this tag.
-    #. Click ``Create tag``
-    #. At this moment, the ``Gitlab CI`` pipeline starts
-    #. In Gitlab, in the ``signature-update`` repository, click ``CI / CD`` > ``Pipelines``
+            docker rm -f app-protect
+            docker run --interactive --tty --rm --name app-protect -p 80:80 \
+                --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf \
+                --volume /home/ubuntu/lab-files/external-reference-policy:/etc/nginx/conf.d \ 
+                app-protect:04-aug-2021-tc
 
-       .. image:: ../pictures/lab6/github_cicd.png
-          :align: center   
+#.  In the ``jump host``, open the browser and connect to ``Arcadia Links>Arcadia NAP Docker`` bookmark
 
-    #. Enter into the pipeline by clicking on the ``running or passed`` button. And wait for the pipeline to finish. You can click on every job/stage to check the steps
+#.  Add this to the end of the URL to simulate an XSS attack ``?a=<script>``
 
-       .. image:: ../pictures/lab6/github_pipeline.png
-          :align: center 
-    
-    #. Check if the new image created and pushed by the pipeline is available in the Docker Registry.
-        #. In Firefox open bookmark ``Docker Registry UI`` 
-        #. Click on ``App Protect`` Repository
-        #. You can see your new image with the tag ``2021.07.13`` - or any other tag based on the latest package date.
+#.  You can see your new custom blocking page
 
-        .. image:: ../pictures/lab6/registry-ui.png
-           :align: center 
+    .. image:: ../pictures/lab4/custom-blocking-page.png
+       :align: center
 
-    #. SSH to the Docker App Protect VM and check the signature package date running ``docker logs app-protect --follow``. Note it will take a few minutes for everything to start up in this lab environment with low IOPS.
-    
-        .. code-block:: bash
-        
-            2021/02/24 13:59:24 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.332.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-01-28T20:04:14Z","version":"2021.01.28"},"completed_successfully":true,"threat_campaigns_package":{}}
 
-    #. You can create some traffic to the new container with Firefox>Arcadia Links>Arcadia NAP Docker favorite
-    
-.. note:: Congratulations, you ran a CI/CD pipeline with a GitLab CI.
+
+
+**Video of this lab (force HD 1080p in the video settings)**
+
+.. raw:: html
+
+    <div style="text-align: center; margin-bottom: 2em;">
+    <iframe width="1120" height="630" src="https://www.youtube.com/embed/gHaauG3E1kI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
