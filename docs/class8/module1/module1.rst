@@ -1,5 +1,5 @@
 Module 1 - HTTP/2 and GRPC DoS Attack on Unprotected Application
-######################################################
+################################################################
 
 | In this module you will generate **good** and malicious traffic.
 | The malicious traffic will cause the good traffic to error out. We

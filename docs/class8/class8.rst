@@ -1,5 +1,5 @@
 Class8 - NGINX App Protect Denial of Service (NAP DoS)
-##########################
+######################################################
 
 UDF Lab Maintainers:
 
