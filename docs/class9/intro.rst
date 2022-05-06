@@ -1,12 +1,11 @@
 Getting Started
 ---------------
 
-Please follow the instructions provided by the instructor to start your
-lab.
+Please follow the instructions provided by the instructor to start your lab.
+
 
 .. NOTE::
-	 All work for this lab will be performed exclusively from the udf session. No installation or interaction with your local system is
-	 required.
+	 All work for this lab will be performed exclusively from the udf session. No installation or interaction with your local system is required.
 
 Lab Topology
 ~~~~~~~~~~~~
@@ -57,7 +56,7 @@ High Level View of auth flow for the lab Environment
 ----------------------------------------------------
 
 .. image:: images/ualab01.svg
-  :width: 800
+
   
 This implementation assumes the following environment:
 
