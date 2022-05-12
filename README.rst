@@ -10,3 +10,4 @@ Currently included classes:
 #. NGINX App Protect
 #. NGINX API Management and Security
 #. NGINX Kubernetes Ingress Controller and Rancher
+#. NGINX App Protect Denial of Service (NAP DoS)
