@@ -12,14 +12,14 @@ To access the UDF course for this class follow the instructions below.
    #. Login with the provided Agility access.
    #. In the left navigation bar select Courses.
    #. Type "Rancher" in the search bar under the Content tab.
-   #. Select the Details button on the Intro to NGINX Kubernetes Ingress Controller and Rancher course.
+   #. Select the Details button on the title screen.
    #. Click the Details button on the blueprint in the lower right.
-   #. Select the Deploy option from the next page.
-   #. select the Start option in the next window.
-   #. In the next pop up window set the Autostop Duration to 4 hours.
+   #. Select the Deploy option.
+   #. Select the Start option.
+   #. In the pop up window set the Autostop Duration to 4 hours.
    #. Leave everything else default and click start.
 
-.. note:: The UDF pattern will take a few minutes to stand up. In the meantime feel free to read through the description of the pattern.
+.. note:: The UDF pattern will take a few minutes to stand up. In the meantime feel free to read through the Documentaion section of the pattern.
 
 Recap
 -----
