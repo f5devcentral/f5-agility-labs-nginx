@@ -1,4 +1,4 @@
-NGINX for F5 Agilit y
+NGINX for F5 Agility
 ====================
 
 Currently included classes:
