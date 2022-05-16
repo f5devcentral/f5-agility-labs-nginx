@@ -1,5 +1,18 @@
-Getting Started
----------------
+.. image:: images/AG-2021-light.jpg
+   :align: left
+
+
+Introduction
+------------
+
+Welcome to Access on NGINX+ - Authentication for Web Access. In this course we will learn the following:
+
+•	How to install Nginx Plus Module njs required for Authentication Proxy. 
+
+•   How to navigate and utilize the Nginx Plus configuration for OIDC authentication usecases 
+
+•   how to configure keycloak for use with nginx+
+
 
 Please follow the instructions provided by the instructor to start your lab.
 
@@ -53,10 +66,11 @@ Lab Setup
 
 
 High Level View of auth flow for the lab Environment
-----------------------------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: images/ualab01.svg
-
+.. image:: images/nginx_view.png
+  :width: 800
+  :alt: High Level Overview
   
 This implementation assumes the following environment:
 
@@ -66,5 +80,8 @@ NGINX Plus is configured as a relying party
 The IdP knows NGINX Plus as a confidential client or a public client using PKCE
 With this environment, both the client and NGINX Plus communicate directly with the IdP at different stages during the initial authentication event.
 
-.. image:: images/ualab02.svg
-  :width: 800
+.. image:: images/nginx_oidc_flow.png
+   :width: 800
+   :alt: Auth Flow
+
+.. note:: please note the for this lab IdP being used is keycloak and not Google.

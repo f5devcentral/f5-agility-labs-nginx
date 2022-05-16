@@ -1,9 +1,9 @@
 Class 9: Access on NGINX+ - Authentication for Web Access
 =========================================================
 
-.. note:: **Last Updated: 05/05/2022**
+.. note:: **Last Updated: 05/08/2022**
 
-Instructors at Agility 2021:
+Instructors at Agility 2022:
 
 -  David Clark <d.clark@f5.com>
 -  Matt Harmon <M.Harmon@f5.com>
@@ -23,5 +23,24 @@ Expected time to complete: **1 hour**
    :maxdepth: 1
    :glob:
 
-   intro*
+   intro
    module*/module*
+
+
+
+
+
+Getting Started
+===============
+
+.. important::
+   * **The Lab MC will provide the necessary details to connect to lab environment.**
+
+   * All work for this lab will be performed exclusively from the UDF Webshell and Firefox Container.
+
+   * No installation or interaction with your local system is required.
+
+.. attention::
+   * For anyone wishing to take this lab at a later date, the lab is hosted on
+     the F5 UDF Environment, and is called **"UA Nginx Class 9 Agility 2022"**. Please work with your F5 Account
+     Team for access.

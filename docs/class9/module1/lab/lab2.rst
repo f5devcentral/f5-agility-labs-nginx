@@ -1,5 +1,5 @@
-Installing Prerequisites:
-==================================
+Lab 1 - Installing Prerequisites:
+=================================
 
 1) Start by installing the NGINX JavaScript module (njs) whixh is required for handling the interaction between NGINX Plus and the OpenID Connect provider (IdP). Install the njs module after installing NGINX Plus by running one of the following:
 

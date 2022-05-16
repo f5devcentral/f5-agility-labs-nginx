@@ -1,17 +1,18 @@
-Config the IdP Keycloak
+Lab 2 - Configuring the IdP Keycloak:
+=====================================
    
-   1. Connect to container via udf connection methods
-
+1) Connect to container via udf connection methods
+   
 .. image:: images/ualab06.png
-   :width: 800
+  :width: 800 
 
-   2. Login to keycloak
+2) Login to keycloak
 
 .. image:: images/ualab07.png
    :width: 800
 
 Configuring Keycloak
-====================
+--------------------
   1) Create a Keycloak client for NGINX Plus in the Keycloak GUI:
 
       In the left navigation column, click Clients. On the Clients page that opens, click the Create button in the upper right corner.

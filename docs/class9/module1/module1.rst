@@ -9,6 +9,7 @@ In this module you will join udf course and open browser connections for webssh 
 
 .. toctree::
    :maxdepth: 1
+   :caption: Content:
    :glob:
 
-   lab*
+   lab/lab*
