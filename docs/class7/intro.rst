@@ -1,7 +1,7 @@
 Introduction
 ============
 
-**Rancher, Rancher Kubernters Engine (RKE), and NGINX Kubernetes Ingress
+**New Rancher Manager, Rancher Kubernters Engine 2 (RKE 2), and NGINX Kubernetes Ingress
 Controller (KIC) Demo Environment**
 
-The purpose of this Lab is to show how to start with a minimal set of pre-requisites in your environment and build out a solution platform using Rancher Kubernetes Engine for the Environment. NGINX Kubernetes Ingress Controller for ingress and the Rancher for managed Kubernetes cluster operations. Then deploy a small demo app to it on NGINX.
+The purpose of this Lab is to show how to start with a minimal set of pre-requisites and build out a solution platform using Rancher Kubernetes Engine 2, NGINX Kubernetes Ingress Controller and the new Rancher Manager for managing cluster operations.
