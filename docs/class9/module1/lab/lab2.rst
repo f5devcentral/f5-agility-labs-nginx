@@ -5,7 +5,9 @@ Lab 1 - Installing Prerequisites:
 
 **run the following on nginx box**
 
-$ sudo apt install nginx-plus-module-njs 
+.. code:: shell
+
+  sudo apt install nginx-plus-module-njs 
 
 .. image:: images/ualab03.png
   :width: 800
@@ -14,7 +16,9 @@ verify modules are loaded into nginx
 
 **run the following command**
 
-$ sudo ls /etc/ssl/modules
+.. code:: shell
+
+  sudo ls /etc/ssl/modules
 
 .. image:: images/ualab04.png
   :width: 800
@@ -25,9 +29,15 @@ The following directive included in the top-level (“main”) configuration con
 
 **run below command then copy the following command and place into nginx.conf file**
 
-nano /etc/nginx/nginx.conf
+.. code:: shell
 
-load_module modules/ngx_http_js_module.so;
+  nano /etc/nginx/nginx.conf
+
+line to copy into /etc/nginx/nginx.conf file
+
+.. code:: shell
+
+  load_module modules/ngx_http_js_module.so;
 
 .. image:: images/ualab05.png
   :width: 800
