@@ -32,8 +32,9 @@ Establish baseline
 
 7. Under Available Fields, Click **learning_confidence** 
 8. Click the '+' button to the right of learning_confidence 
-9. 
+9. Wait until learing confidence is **Ready** 
 
+.. image:: ../../_static_class8_module3_kibana_ready.png 
 
 10. Click Save
 11. 
