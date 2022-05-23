@@ -40,8 +40,6 @@ Install NGINX App Protect DOS
 
     All NGINX App Protect configurations have been previously commented out. 
 
-   1. Using Nano remove the comments '#' from the App Protect directives in the nginx.conf file
-
 .. code:: shell
 
     user nginx;
@@ -170,6 +168,8 @@ Install NGINX App Protect DOS
     ###################################################
         
 
+   1. Using Nano remove the comments '#' from the App Protect directives in the nginx.conf file
+
 
 .. code:: shell
 
@@ -177,7 +177,7 @@ Install NGINX App Protect DOS
 
    1. Save and Exit Nano ( Ctrl-X to save and exit )
 
-1. Restart NGINX   
+   2. Restart NGINX   
 
 .. code:: shell 
 
@@ -186,6 +186,6 @@ Install NGINX App Protect DOS
 
 If NGINX restarted successfully you should be returned to a shell prompt  
 
-4. Repeat steps 1 - 3 on NAP DOS 2
+   3. Repeat steps 1 - 3 on NAP DOS 2
 
 
