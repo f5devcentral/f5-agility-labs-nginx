@@ -63,6 +63,9 @@ Install Nginx+ njs module
 
    **save and exit file**
 
+   .. note:: 
+      To quit nano, use the Ctrl+X key combination. If the file you are working on has been modified since the last time you saved it, you will be prompted to save the file first. Type y to save the file then press enter to confirm.
+
 #. Verify nginx config is good and reload
      
     **verify configuration is good**
@@ -99,11 +102,17 @@ Create a clone of the nginx-openid-connect GitHub repository
         
         git clone --branch R26 https://github.com/nginxinc/nginx-openid-connect.git
 
-.. image:: ../images/ualab_verifyclone.png
-    :width: 800
+#. Verify the clone has completed by running the follow command.
 
-.. note:: 
-   Please note that you need to install git on your linux machine (https://github.com/git-guides/install-git) it has already been installed on this lab instance.
+	.. code:: shell
+
+		ls | grep nginx-openid-connect
+		
+**screenshot of output**
+	
+.. image:: ../images/ualab_verifyclone.png
+	:width: 800
+	:align: left
 
 
 
@@ -122,31 +131,153 @@ Configuring the IdP Keycloak:
 
 #. Login to keycloak
 
+url:
+http://idp.f5labs.com:8080
+
+	
+Click on Administration Console
+
+	.. image:: ../images/keycloak_admin_page.png
+		:width: 800
+
+Now enter credentials provided and sign in.
+
+.. note:: 
+	Username: admin
+	
+	Password: admin
+
+
    .. image:: ../images/ualab07.png
       :align: left
       :width: 800
 
 
-#. Create a Keycloak client for NGINX Plus in the Keycloak GUI:
 
-      In the left navigation column, click Clients. On the Clients page that opens, click the Create button in the upper right corner.
+Create a Keycloak client for NGINX Plus in the Keycloak GUI:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In the left navigation column, click Clients. On the Clients page that opens, click the Create button in the upper right corner.
 
-      On the Add Client page that opens, enter or select these values, then click the  Save  button.
+.. image:: ../images/keycloak_click_clients.png
+	:width: 800
 
-      **Client ID – agility2022**
+		
+On the Add Client page that opens
+		
+	.. image:: ../images/keycloak_click_create.png
+		:width: 800
+		
+		
+		
+Enter the below values then click the  Save  button.
 
-      **Client Protocol – openid-connect.**
+**Client ID – agility2022**
+
+**Client Protocol – openid-connect.**
 
    .. image:: ../images/ualab08.png
       :width: 800
 
-  2) On the NGINX Plus page that opens, enter or select these values on the Settings tab:
+  2) On the Agility2022 clients page that opens, enter or select these values on the Settings tab:
 
-      Access Type – confidential
-      Valid Redirect URIs – The URI of the NGINX Plus instance, including the port number, and ending in /_codexch (in this guide it is https://10.1.1.5:443/_codexch)
-      
-      *Notes: For production, we strongly recommend that you use SSL/TLS (port 443).*
-      *The port number is mandatory even when you’re using the default port for HTTP (80) or HTTPS (443).*
+Client ID - agility2022
+		
+Access Type – confidential
+
+Valid Redirect URIs - http://nginxdemo.f5lab.com:8010/_codexch
 
 .. image:: ../images/ualab09.png
-   :width: 800
+	:width: 800
+
+.. note::
+	For production, we strongly recommend that you use SSL/TLS (port 443).*
+   *The port number is mandatory even when you’re using the default port for HTTP (80) or HTTPS (443).*
+
+	Valid Redirect URIs – The URI of the NGINX Plus instance, including the port number, and ending in /_codexch
+
+Click the Credentials tab and make a note of the value in the Secret field. You will copy it into the NGINX Plus configuration file.
+
+.. image:: ../images/client_secret.png
+	:width: 800
+
+While still under the Agility2022 Clients Page Click the Roles tab, then click the Add Role button in the upper right corner of the page that opens.
+
+.. image:: ../images/keycloak_click_role.png
+	:width: 800
+
+On the Add Role page that opens, type a value in the Role Name field (here it is nginx-keycloak-role) and click the  Save  button.
+
+.. image:: ../images/keycloak_save_role.png
+	:width: 800
+
+In the left navigation column, click Users. On the Users page that opens, then click the Add user button in the upper right corner to create a new user.
+
+.. image:: ../images/keycloak_add_user.png
+	:width: 800
+
+Once create user is completed now click on the Credentials Tab at the top of the screen. 
+
+Enter New Password agility2022 and confirm
+
+Toggle Temporary to OFF
+
+.. image:: ../images/keycloak_cred.png
+	:width: 800
+	
+
+
+On the management page for the user (here, user01), click the Role Mappings tab. On the page that opens, select agility2022 on the Client Roles drop‑down menu. Click nginx-keycloak-role in the Available Roles box, then click the Add selected button below the box. The role then appears in the Assigned Roles and Effective Roles boxes, as shown in the screenshot.
+
+.. image:: ../images/keycloak_role_mappings.png
+	:width: 800
+
+
+Configure NGINX Plus as the OpenID Connect relying party
+========================================================
+
+Now go back to the Nginx Web Shell connection you have open. You are going to run a configuration script.
+
+Please copy and paste the below command into the webshell
+
+.. code:: shell
+
+	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com:8010 -k request -i agility2020 -s W0sBg99NMwag7ZPsegeluvKti9pjY8CM -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
+
+Output:
+
+.. image:: ../images/nginx_config_script.png
+	:width: 800
+
+.. note:: Information on switches being used in script
+
+	 echo " -h | --host <server_name>           # Configure for specific host (server FQDN)"
+    
+	 echo " -k | --auth_jwt_key <file|request>  # Use auth_jwt_key_file (default) or auth_jwt_key_request"
+    
+	 echo " -i | --client_id <id>               # Client ID as obtained from OpenID Connect Provider"
+	 
+	 echo " -s | --client_secret <secret>       # Client secret as obtained from OpenID Connect Provider"
+    
+	 echo " -p | --pkce_enable                  # Enable PKCE for this client"
+    
+	 echo " -x | --insecure                     # Do not verify IdP's SSL certificate"
+
+
+Change Directory
+
+.. code:: shell
+	cd /nginx-openid-connect/
+
+Now that you are in the nginx-openid-connect directory copy the below files.
+
+frontend.conf  openid_connect.js  openid_connect.server_conf  openid_connect_configuration.conf
+
+.. code:: shell
+
+	cp frontend.conf openid_connect.js openid_connect.server_conf openid_connect_configuration.conf /etc/nginx/conf.d/
+
+
+
+	
+	
+
