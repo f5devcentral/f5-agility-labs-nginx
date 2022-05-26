@@ -237,11 +237,11 @@ Configure NGINX Plus as the OpenID Connect relying party
 
 Now go back to the Nginx Web Shell connection you have open. You are going to run a configuration script.
 
-Please copy and paste the below command into the webshell
+Please copy and paste the below command into the webshell  **DON'T FORGET TO REPLACE THE CLIENT SECRET FOR THE CODE BELOW**
 
 .. code:: shell
 
-	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com:8010 -k request -i agility2022 -s W0sBg99NMwag7ZPsegeluvKti9pjY8CM -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
+	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com:8010 -k request -i agility2022 -s YOURCLIENTSECRET -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
 
 Output:
 
