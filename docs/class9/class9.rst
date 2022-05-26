@@ -20,20 +20,16 @@ This lab will show how to enable single sign-on (SSO) for applications being pro
 Expected time to complete: **1 hour**
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 4
    :glob:
 
    intro
+   module1/getting_started*
    module*/module*
 
 
-
-
-
-Getting Started
-===============
-
 .. important::
+
    * **The Lab MC will provide the necessary details to connect to lab environment.**
 
    * All work for this lab will be performed exclusively from the UDF Webshell and Firefox Container.
