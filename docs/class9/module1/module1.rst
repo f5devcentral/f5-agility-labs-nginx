@@ -241,7 +241,7 @@ Please copy and paste the below command into the webshell
 
 .. code:: shell
 
-	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com:8010 -k request -i agility2020 -s W0sBg99NMwag7ZPsegeluvKti9pjY8CM -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
+	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com:8010 -k request -i agility2022 -s W0sBg99NMwag7ZPsegeluvKti9pjY8CM -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
 
 Output:
 
@@ -266,6 +266,7 @@ Output:
 Change Directory
 
 .. code:: shell
+	
 	cd /nginx-openid-connect/
 
 Now that you are in the nginx-openid-connect directory copy the below files.
@@ -275,6 +276,95 @@ frontend.conf  openid_connect.js  openid_connect.server_conf  openid_connect_con
 .. code:: shell
 
 	cp frontend.conf openid_connect.js openid_connect.server_conf openid_connect_configuration.conf /etc/nginx/conf.d/
+
+After copying files change directory to /etc/nginx/conf.d/
+
+.. code:: shell 
+
+	cd /etc/nginx/cond.d/
+
+Using Nano edit the frontend.conf file
+
+.. code:: shell
+
+	nano frontend.conf
+
+Update the server to 10.1.1.4:8081
+
+.. image:: ../images/frontend_conf.png
+	:width: 800
+
+**save file and close**
+
+Using Nano edit the openid_connect.server_conf file
+
+.. code:: shell
+
+	nano openid_connect.server_conf
+
+Update the resolver to use local host file. 
+
+.. image:: ../images/host_lookup.png
+	:width: 800
+
+**save and close file**
+
+.. note:: 
+
+	using host file because this is a lab make sure to put in LDNS server for resolver.
+
+Using Nano edit the openid_connect_configuration.conf
+
+.. code:: shell
+
+	nano openid_connect_configuration.conf
+
+modify secret from 0 to "yourclientsecret"
+
+.. image:: ../images/save_secret.png
+	:width: 800
+
+**save and close file**
+
+Reload Nginx
+
+.. code:: shell
+
+	nginx -s reload
+
+Testing the config
+==================
+
+Now that everything is done lets test the config!
+
+Go back to firefox and open a new tab and put http://nginxdemo.f5lab.com:8010 into the browser url field and launch the page.
+
+.. image:: ../images/test_oidc.png
+	:width: 800
+
+Notice you'll be redirected to the IdP for login. 
+
+Once on the IdP page put in the credentials for the user you created. user01 with password agility2022
+
+.. image:: ../images/auth_login.png
+	:width: 800
+
+
+
+
+
+
+You should now see the webservice!!!!!! You've been logged in and the browser has been issued a JWT Token establishing identity!
+
+.. image:: ../images/verificaion_webservice.png
+	:width: 800
+
+
+
+
+
+
+
 
 
 
