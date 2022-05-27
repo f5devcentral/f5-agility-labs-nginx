@@ -29,7 +29,7 @@ The following components have been included in your lab environment:
 
   - firefox
   - keycloak
-  - juiceshop
+  - nginxhello
 
 - 1 x Linux Server (Ubuntu 20.04) running Nginx (nginx/1.21.5 (nginx-plus-r26))
 
@@ -48,20 +48,20 @@ Lab Setup
      - **IP-ADDR**
      - **Credentials**
    * - nginx
-     - 10.1.1.4
+     - 10.1.1.5
      - ubuntu/ubuntu
    * - infra
-     - 10.1.1.5
+     - 10.1.1.4
      - admin/admin
        root/default
    * - container/keycloak
-     - 10.1.1.5:8080
+     - 10.1.1.4:8080
      - admin/admin
-   * - container/juiceshop
-     - 10.1.1.5:3000
+   * - container/nginxhello
+     - 10.1.1.4:8081
      - 
    * - container/firefox
-     - 10.1.1.5:5180
+     - 10.1.1.4:5180
      -
 
 
