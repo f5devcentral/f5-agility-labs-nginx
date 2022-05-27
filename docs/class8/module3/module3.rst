@@ -37,4 +37,3 @@ Establish baseline
 .. image:: ../../_static/class8_module3_kibana_ready.png 
 
 10. Click Save
-11. 
