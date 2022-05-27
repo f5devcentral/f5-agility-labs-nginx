@@ -1,7 +1,7 @@
 Class 9: Access on NGINX+ - Authentication for Web Access
 =========================================================
 
-.. note:: **Last Updated: 05/08/2022**
+.. note:: **Last Updated: 05/27/2022**
 
 Instructors at Agility 2022:
 
