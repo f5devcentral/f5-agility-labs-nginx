@@ -1,4 +1,4 @@
-Module 3 - Protect HTTP Services from Application Layer DoS Attacks
+Module 3 - Establishing Application Traffic Baseline
 ###################################################################
 
 NGINX App Protect DoS is based on learning and analyzing all traffic to the web application. 
@@ -36,4 +36,4 @@ Establish baseline
 
 .. image:: ../../_static/class8_module3_kibana_ready.png 
 
-10. Click Save
+
