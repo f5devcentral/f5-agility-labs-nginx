@@ -40,26 +40,152 @@ Install NGINX App Protect DOS
 
     All NGINX App Protect configurations have been previously commented out. 
 
-   1. Using Nano remove the comments '#' from the App Protect directives in the nginx.conf file
+.. code:: shell
 
-.. image:: images/nginx.conf.png
+    user nginx;
+    worker_processes auto;
+    error_log /var/log/nginx/error.log debug;
+    pid /var/run/nginx.pid;
+    worker_rlimit_nofile 65535;
+    worker_rlimit_core 2000M;
+    #load_module modules/ngx_http_app_protect_dos_module.so;
+
+    events {
+        worker_connections 5535;
+    }
+
+    http {
+        include /etc/nginx/mime.types;
+        default_type application/octet-stream;
+        #log_format log_dos ', vs_name_al=$app_protect_dos_vs_name, ip=$remote_addr, tls_fp=$app_protect_dos_tls_fp, outcome=$app_protect_dos_outcome, reason=$app_protect_dos_outcome_reason, ip_tls=$remote_addr:$app_protect_dos_tls_fp, ';
+        sendfile on;
+        client_max_body_size 100M;
+        keepalive_timeout 600;
+        client_body_timeout 600s;
+        client_header_timeout 600s;
+        proxy_connect_timeout 600s;
+        proxy_send_timeout 600s;
+        proxy_read_timeout 600s;
+        send_timeout 600s;
+
+
+      upstream myapp1 {
+            server 10.1.1.13:3000;
+        }
+
+        server {
+            listen 50051 http2;
+            server_name grpc.example.com;
+            #app_protect_dos_security_log_enable on;
+            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.8:5261;
+            http2_max_concurrent_streams 100000;
+
+            ssl_certificate /etc/ssl/certs/cert.crt;
+            ssl_certificate_key /etc/ssl/certs/cert.key;
+            ssl_session_cache shared:SSL:10m;
+            ssl_session_timeout 5m;
+            ssl_ciphers AES128-GCM-SHA256;
+            ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+
+            location /routeguide. {
+                #app_protect_dos_monitor uri=http://grpc.example.com:50051/routeguide.RouteGuide/GetFeature protocol=grpc timeout=5;
+                #app_protect_dos_enable on;
+                #app_protect_dos_policy_file "/etc/app_protect_dos/BADOSDefaultPolicy.json";
+                #app_protect_dos_name "routeguide";
+                #set $loggable '0';
+                #access_log syslog:server=10.1.1.8:5561 log_dos if=$loggable;
+                grpc_pass grpc://routeguide_service;
+            }
+        }
+
+        upstream routeguide_service {
+            zone routeguide_service 64k;
+            server 10.1.1.9:10001;
+            server 10.1.1.9:10002;
+            server 10.1.1.9:10003;
+        }
+
+
+        server {
+            listen 8095 ssl http2;
+            keepalive_requests 100000;
+            client_max_body_size 2000M;
+            #app_protect_dos_security_log_enable on;
+            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.8:5261;
+            #set $loggable '0';
+            #access_log syslog:server=10.1.1.8:5561 log_dos if=$loggable;
+            http2_max_concurrent_streams 100000;
+            ssl_certificate /etc/ssl/certs/cert.crt;
+            ssl_certificate_key /etc/ssl/certs/cert.key;
+            ssl_session_cache shared:SSL:10m;
+            ssl_session_timeout 5m;
+            ssl_ciphers AES128-GCM-SHA256;
+            ssl_protocols SSLv3 TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+
+            location /monitor {
+                rewrite ^/monitor(.*)$ /routeguide.RouteGuide/GetFeature break;
+                grpc_pass grpc://10.1.1.9:10002;
+            }
+
+            location /testing {
+                rewrite ^/testing(.*)$ /routeguide.RouteGuide/RecordRoute break;
+                grpc_set_header te trailers;
+                #app_protect_dos_enable on;
+                #app_protect_dos_name "slowpost";
+                #app_protect_dos_monitor uri=https://10.1.1.7:8095/monitor protocol=grpc;
+                grpc_pass grpc://10.1.1.9:10002;
+            }
+        }
+
+        server {
+            listen 8080;
+            keepalive_requests 100000;
+            server_name juiceshop;
+            #app_protect_dos_security_log_enable on;
+            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.8:5261;
+            #set $loggable '0';
+            #access_log syslog:server=10.1.1.8:5561 log_dos if=$loggable;
+
+            location / {
+                #app_protect_dos_enable on;
+                #app_protect_dos_name "juiceshop";
+                #app_protect_dos_monitor uri=http://juiceshop:8080/ timeout=2;
+                proxy_pass http://myapp1;
+            }
+        }
+
+    ########  NAP DOS Live Activity Monitoring ########
+        #server {
+            #listen 80;
+            #location /api {
+                #app_protect_dos_api;
+            #}
+
+            #location = /dashboard-dos.html {
+            #    root /usr/share/nginx/html;
+            #}
+        #}
+    ###################################################
+        
+
+   1. Using Nano remove the comments '#' from the App Protect directives in the nginx.conf file
 
 
 .. code:: shell
 
     nano /etc/nginx/nginx.conf 
 
-
-   Example: In the above screen shot you will un-comment the load module and log_format lines. 
-
    1. Save and Exit Nano ( Ctrl-X to save and exit )
 
-3. Restart NGINX   
+   2. Restart NGINX   
 
 .. code:: shell 
 
     service nginx restart 
+    service nginx status
 
 If NGINX restarted successfully you should be returned to a shell prompt  
+
+   3. Repeat steps 1 - 3 on NAP DOS 2
 
 

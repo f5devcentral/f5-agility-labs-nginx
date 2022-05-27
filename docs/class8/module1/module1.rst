@@ -31,7 +31,7 @@ Output from the script:
 
 - Start HTTP/2 Flood attack
 
-   - Back in the UDF class Access on the Attacker VM and select WebShell
+   - Back in the UDF class Access on the **Attacker** VM and select WebShell
    - At CLI prompt start the HTTP/2 Flood: 
 
 .. code:: shell 
