@@ -8,7 +8,7 @@ In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
 Steps:
 
    #. With vscode or Windows Terminal ssh to the centos-vm
-   #. View ``cat /etc/app_protect/conf/log_default.json`` (which is also pasted below) which is installed with app protect. By default, we log all requests.
+   #. View ``cat /etc/app_protect/conf/log_default.json`` (which is also pasted below) which was edited in the previous lab.
 
       .. code-block:: js
          :caption: log_default.json
@@ -23,6 +23,8 @@ Steps:
             "max_message_size": "5k"
                }
          }
+      
+      .. note:: By default ``/etc/app_protect/conf/log_default.json`` which is installed with app protect, will only log illegal requests, it should have been edited by you to log all requests.
 
    #. Recall line 33 from the NGINX configuration we are using (Feel free to open ``/etc/nginx/nginx.conf``)
 
