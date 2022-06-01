@@ -137,7 +137,7 @@ An action can be configured for each bot class, or may also be configured per ea
 
         cp /home/centos/lab-files/bot-policy/nginx.conf /etc/nginx
         cp /home/centos/lab-files/bot-policy/conf.d/* /etc/nginx/conf.d
-        sudo nginx -s reload
+        sudo systemctl reload nginx
 
 
 **Generate simulated Bot traffic** 

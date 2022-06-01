@@ -152,7 +152,7 @@ High level lab steps:
 
    .. code-block :: bash
 
-        sudo nginx -s reload
+       sudo systemctl reload nginx
 
 #. Change directory to the location of our Interface Definition Language (IDL) file
 

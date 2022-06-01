@@ -316,6 +316,9 @@ Steps:
 
         .. code-block:: bash
 
+            sudo systemctl reload nginx
+
+            Alternatively, you can also use:
             sudo nginx -s reload
 
             .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
@@ -360,7 +363,7 @@ Steps:
 
         .. code-block:: bash
 
-            sudo nginx -s reload
+            sudo systemctl reload nginx
 
     #.  Wait a few seconds and check the **new** Threat Campaign package date:
 

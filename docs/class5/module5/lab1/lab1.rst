@@ -102,8 +102,8 @@ Steps for the lab
 #. Restart the NGINX service and then we will run some tests
 
     .. code-block:: BASH
-
-         sudo nginx -s reload
+        
+        sudo systemctl reload nginx
 
 Test The Protections
 ********************
