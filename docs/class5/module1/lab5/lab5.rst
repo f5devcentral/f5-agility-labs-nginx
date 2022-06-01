@@ -1,11 +1,11 @@
-Step 2 - Publish Arcadia app with Kubernetes NodePort
-#####################################################
+Step 2 - Publish Arcadia app with Kubernetes ClusterIP
+######################################################
 
 It's time to make the Arcadia application accessible outside of the Kubernetes cluster.
 
-**Expose Arcadia with NodePort**
+**Expose Arcadia with ClusterIP**
 
-Now that the Arcadia App is running in the Kubernetes Cluster. We need to expose it externally. In this example, we will make accessible directly (without an Ingress Controller) by using a Kubernetes NodePort.
+Now that the Arcadia App is running in the Kubernetes Cluster. We need to expose it externally. In this example, we will make accessible by using a Kubernetes ClusterIP Service.
 
 To do so, we have a yaml manifest to apply with ``kubectl``.
 
