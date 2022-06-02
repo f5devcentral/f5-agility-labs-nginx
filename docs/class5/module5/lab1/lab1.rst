@@ -1,5 +1,5 @@
-Protect Arcadia API with NGINX App Protect on a centos VM
-#########################################################
+Step 12 - Protect Arcadia API with NGINX App Protect on a centos VM
+###################################################################
 
 
 The Arcadia web application has several REST APIs in order to:

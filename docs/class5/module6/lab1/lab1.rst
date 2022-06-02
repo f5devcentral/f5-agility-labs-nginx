@@ -1,5 +1,5 @@
-Bot Protection
-##############
+Step 16 - Bot Protection
+########################
 
 Bot signatures provide basic bot protection by detecting bot signatures in the ``User-Agent`` header and ``URI``. The bot-defense section in the policy is ``enabled`` by default. 
 
