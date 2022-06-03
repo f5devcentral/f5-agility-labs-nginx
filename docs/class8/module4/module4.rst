@@ -1,2 +1,2 @@
-Module 4 - Protect gRPC Services from Application Layer DoS Attacks
+Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
 ###################################################################
