@@ -1,7 +1,7 @@
 Module 3: Continuous Deployment for NGINX Plus Load Balancers
 =============================================================
 
-In this exercise, we will be using a CICD pipeline to deploy NGINX Plus
+In this exercise, we will be using a CI/CD pipeline to deploy NGINX Plus
 Load balancer.
 
 Instead of deploying NGINX Plus as a container into our live
@@ -32,12 +32,12 @@ similarly. If the upgrade is successful, the old set of NGINX worker
 processes are signaled to terminate, and the new set takes over. For
 more information, please see: \ `Controlling NGINX <https://nginx.org/en/docs/control.html>`__
 
-CICD flowchart
+CI/CD flowchart
 --------------
 
 **The diagrams below depicts the workflow from code to deployment.**
 
-Here is an overview of the entire CICD Pipeline
+Here is an overview of the entire CI/CD Pipeline
 
 .. image:: ./images/image0.png
 

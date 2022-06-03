@@ -1,7 +1,7 @@
-Module 4 - Protect gRPC Services from Application Layer DoS Attacks
-######################################################
+Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
+###################################################################
 
-   **\********\* Launch HTTP Flood Attack**
+**\********\* Launch HTTP Flood Attack**
 
    We will be initiating a HTTP Flood Attack on the Juice Shop web site
    using Apache Benchmark.
