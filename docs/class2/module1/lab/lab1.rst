@@ -40,7 +40,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    .. note:: NGINX Plus now supports the newer ``3.11`` version of Alpine linux.
       Let’s create add the creation of a NGINX Plus build for Alpine Linux
-      version 3.11 to our CICD pipeline.
+      version 3.11 to our CI/CD pipeline.
 
 5. Create a new folder called ``alpine3.11`` in this project under the
    ``Dockerfiles`` root folder.

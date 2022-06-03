@@ -23,7 +23,7 @@ container registry, due to License keys requirement activate NGINX Plus
 For more information about Docker, see `What is Docker? <https://www.docker.com/whatisdocker/>`__
 or bookmark the full `Docker documentation <https://docs.docker.com/>`__ for reference
 
-CICD flowchart
+CI/CD flowchart
 --------------
 
 **The diagram below depicts the workflow from code to deployment.** Our
