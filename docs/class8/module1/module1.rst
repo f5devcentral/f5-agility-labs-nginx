@@ -12,8 +12,12 @@ Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected applicat
    
    - In UDF, Click on Access for the **legitimate traffic** VM and select WebShell 
    
+      We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
+
+
+
    - At the CLI prompt start the good shell script  
-  
+
  .. code:: shell
 
     ./good.sh
@@ -32,6 +36,15 @@ Output from the script:
 - Start HTTP/2 Flood attack
 
    - Back in the UDF class Access on the **Attacker** VM and select WebShell
+     The http2flood.sh script
+
+.. code:: shell 
+
+      #!/bin/sh
+      while true; do
+      h2load -n 10000 -c 1000 http://10.1.1.4:500/routeguide.RouteGuide/GetFeature
+      done
+
    - At CLI prompt start the HTTP/2 Flood: 
 
 .. code:: shell 

@@ -168,14 +168,15 @@ Install NGINX App Protect DOS
     ###################################################
         
 
-   1. Using Nano remove the comments '#' from the App Protect directives in the nginx.conf file
+   1. Using your favorite editor (nano or vim) remove the comments '#' from the App Protect directives in the nginx.conf file
 
 
 .. code:: shell
 
     nano /etc/nginx/nginx.conf 
+    vim /etc/nginx/nginx.conf
 
-   1. Save and Exit Nano ( Ctrl-X to save and exit )
+   1. Save and Exit 
 
    2. Restart NGINX   
 
