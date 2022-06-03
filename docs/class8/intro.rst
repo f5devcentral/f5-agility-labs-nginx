@@ -29,3 +29,4 @@ Backends
     - gRPC Application -- "RouteGuide" gRPC service running in a container environment -- 10.1.1.9
 Monitoring
     - ELK -- containerized ELK stack pre-configured to monitor NAP DoS instances -- 10.1.1.3
+.. image:: ../_static/intro_topology.png
