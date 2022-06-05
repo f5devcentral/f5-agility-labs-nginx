@@ -6,18 +6,22 @@ Introduction
 
 The `NGINX Plus
 API <https://www.nginx.com/products/nginx/live-activity-monitoring/>`__
-supports other features in addition to live activity monitoring,
-including dynamic configuration of upstream server groups and key‑value
-stores.
+supports other features in addition to live activity monitoring, including
+dynamic configuration of upstream server groups and key-value stores.
 
-Live examples:​ \* A `sample
-configuration <https://gist.github.com/nginx-gists/a51341a11ff1cf4e94ac359b67f1c4ae>`__
-file for the NGINX Plus API \* Example live dashboard:
-`demo.nginx.com <https://demo.nginx.com>`__ \* Raw JSON output:
-`demo.nginx.com/api​ <https://demo.nginx.com/api>`__ \* Swagger-UI:
-`demo.nginx.com/swagger-ui <https://demo.nginx.com/swagger-ui/>`__ \*
-API YAML:
-`demo.nginx.com/swagger-ui <https://demo.nginx.com/swagger-ui/nginx_api.yaml>`__
+Live examples:
+
+- A `sample configuration 
+  <https://gist.github.com/nginx-gists/a51341a11ff1cf4e94ac359b67f1c4ae>`__
+  file for the NGINX Plus API 
+- Live dashboard example:
+  `demo.nginx.com <https://demo.nginx.com>`__
+- Raw JSON output:
+  `demo.nginx.com/api <https://demo.nginx.com/api>`__
+- Swagger-UI:
+  `demo.nginx.com/swagger-ui <https://demo.nginx.com/swagger-ui/>`__
+- API YAML:
+  `demo.nginx.com/swagger-ui/nginx_api.yaml <https://demo.nginx.com/swagger-ui/nginx_api.yaml>`__
 
 Learning Objectives
 -------------------
@@ -28,106 +32,83 @@ By the end of the lab you will be able to:
 -  Use the NGINX Plus API to read live monitoring metrics on NGINX Plus
 -  Interact with the NGINX Plus API using both
    `Postman <https://www.postman.com>`__ and
-   ```cURL`` <https://curl.haxx.se>`__
+   `cURL <https://curl.haxx.se>`__
 
-Exercise 1: Explore the Live Activity Monitoring JSON Feed​ from demo.nginx.com using Postman:
-----------------------------------------------------------------------------------------------
+Exercise 1: Explore the Live Activity Monitoring JSON Feed from demo.nginx.com using Postman: 
+---------------------------------------------------------------------------------------------
 
-When you access the API, NGINX Plus returns a JSON‑formatted document
-containing the current statistics. You can request complete statistics
-at ``/api/[api-version]/``, where ``[api-version]`` is the version
-number of the NGINX Plus API.
+When you access the API, NGINX Plus returns a JSON formatted document containing
+the current statistics. You can request complete statistics at 
+**/api/[api-version]/**, where **[api-version]** is the version number of the 
+NGINX Plus API.
 
-Lets look at the Live Activity Monitoring JSON Feed​ in detail.
+Lets look at the Live Activity Monitoring JSON Feed in detail.
 
-In this section, we will use ``Postman`` to interact with the NGINX API.
+In this section, we will use **Postman** to interact with the NGINX API.
 In the Optional section below, we can reproduce the same steps using
-``curl``
+**curl**
 
-1. Open ``Postman`` tool found on the desktop
+1. Open **Postman** tool found on the desktop
 
-   .. figure:: images/Postman1_2020-08-26.png
-      :alt: Open Postman app
+   .. image:: images/Postman1_2020-08-26.png
 
-      Open Postman app
+2. Within the **Live Activity Monitoring** collection, open
+   **NGINX Info** request and then click on **Send** button.
+   **/api/api-version/nginx/** is used to retrieve basic version,
+   uptime, and identification information.
 
-2. Within the ``Live Activity Monitoring`` collection, open
-   ``NGINX Info`` request and then click on ``Send`` button.
-   \ ``/api/api-version/nginx/`` is used to retrieve basic version,
-   uptime, and identification information​.
+   .. image:: images/Postman2_2020-08-26.png
 
-   .. figure:: images/Postman2_2020-08-26.png
-      :alt: NGINX Info request
+3. Next open **NGINX Connections** request and then click on **Send** button. 
+  **/api/api-version/connections/`` is used to retrieve total active and idle
+  connections.
 
-      NGINX Info request
+   .. image:: images/Postman3_2020-08-26.png
 
-3. Next open ``NGINX Connections`` request and then click on ``Send``
-   button. \ ``/api/api-version/connections/`` is used to retrieve total
-   active and idle connections​.
+4. Open **NGINX Server Zones** request and then click on **Send** button.
+   **/api/api-version/http/server_zones/** is used to retrieve request and 
+   response counts for each HTTP status zone.
 
-   .. figure:: images/Postman3_2020-08-26.png
-      :alt: NGINX Info request
+   .. image:: images/Postman4_2020-08-26.png
 
-      NGINX Info request
+5. Open **NGINX Cache** request and then click on **Send** button.
+   **/api/api-version/http/caches/** is used to retrieve instrumentation for
+   each named cache zone.
 
-4. Open ``NGINX Server Zones`` request and then click on ``Send``
-   button. \ ``/api/api-version/http/server_zones/`` is used to retrieve
-   request and response counts for each HTTP status zone.
+   .. image:: images/Postman5_2020-08-26.png
 
-   .. figure:: images/Postman4_2020-08-26.png
-      :alt: NGINX Info request
+6. Open **NGINX Upstreams** request and then click on **Send** button.
+   **/api/api-version/stream/upstreams/** is used to retrieve request and 
+   response counts, response time, health-check status, and uptime statistics 
+   per server in each TCP/UDP upstream group.
 
-      NGINX Info request
+   .. image:: images/Postman6_2020-08-26.png
 
-5. Open ``NGINX Cache`` request and then click on ``Send`` button.
-   \ ``/api/api-version/http/caches/`` is used to retrieve
-   instrumentation for each named cache zone.
+7. Open **NGINX SSL** request and then click on **Send** button.
+   **/api/api-version/ssl/** is used to retrieve SSL/TLS statistics.
 
-   .. figure:: images/Postman5_2020-08-26.png
-      :alt: NGINX Info request
-
-      NGINX Info request
-
-6. Open ``NGINX Upstreams`` request and then click on ``Send`` button.
-   \ ``/api/api-version/stream/upstreams/`` is used to retrieve request
-   and response counts, response time, health‑check status, and uptime
-   statistics per server in each TCP/UDP upstream group.
-
-   .. figure:: images/Postman6_2020-08-26.png
-      :alt: NGINX Info request
-
-      NGINX Info request
-
-7. Open ``NGINX SSL`` request and then click on ``Send`` button.
-   \ ``/api/api-version/ssl/`` is used to retrieve SSL/TLS statistics.
-
-   .. figure:: images/Postman7_2020-08-26.png
-      :alt: NGINX Info request
-
-      NGINX Info request
+   .. image:: images/Postman7_2020-08-26.png
 
 Optional: Explore the Live Activity Monitoring JSON Feed​ from demo.nginx.com using cURL:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this section, we will use ``curl`` to interact with the NGINX API.
+In this section, we will use **curl** to interact with the NGINX API.
 
-1. In the ``SSH`` folder found on the desktop, open any Linux SSH
-   session found on here, e.g. ``NGINX-PLUS-1``
+1. In the **SSH** folder found on the desktop, open any Linux SSH
+   session found on here, e.g. **NGINX-PLUS-1**
 
-.. figure:: images/2020-06-29_22-06.png
-   :alt: Select ssh session
+.. image:: images/2020-06-29_22-06.png
 
-   Select ssh session
+2. In the Terminal Window, using **curl** and **jq** for JSON
+   formatting, make a request to the API endpoint, **/api/api-version/nginx/**
+   to retrieve basic version, uptime, and identification information.
 
-2. In the Terminal Window, using ``curl`` and ``jq`` for JSON
-   formatting, make a request to the API endpoint,
-   ``/api/api-version/nginx/`` to retrieve basic version, uptime, and
-   identification information​
+    .. code:: bash
 
-   .. code:: bash
+      curl -s https://demo.nginx.com/api/6/nginx/ | jq
 
-      $> curl -s https://demo.nginx.com/api/6/nginx/ | jq
-
+    .. note:: You shoudl see output similar to the following
+      
       {
         "version": "1.19.0",
         "build": "nginx-plus-r22",
@@ -139,13 +120,15 @@ In this section, we will use ``curl`` to interact with the NGINX API.
         "ppid": 61031
       }
 
-3. Using ``curl`` and ``jq``, make a request to the API endpoint,
-   ``/api/api-version/connections/`` to retrieve total active and idle
+3. Using **curl** and **jq**, make a request to the API endpoint,
+   **/api/api-version/connections/** to retrieve total active and idle
    connections​
 
-   .. code:: bash
+    .. code:: bash
 
-      $> curl -s https://demo.nginx.com/api/6/connections/ | jq
+      curl -s https://demo.nginx.com/api/6/connections/ | jq
+
+    .. note:: You shoudl see output similar to the following
 
       {
         "accepted": 32284461,
@@ -154,122 +137,128 @@ In this section, we will use ``curl`` to interact with the NGINX API.
         "idle": 55
       }
 
-4. Using ``curl`` and ``jq``, make a request to the API endpoint,
-   ``/api/api-version/http/server_zones/`` to retrieve request and
-   response counts for each HTTP status zone​
+4. Using **curl** and **jq**, make a request to the API endpoint,
+   **/api/api-version/http/server_zones/** to retrieve request and
+   response counts for each HTTP status zone.
 
-.. code:: bash
+    .. code:: bash
 
-   $> curl -s https://demo.nginx.com/api/6/http/server_zones/ | jq
+      curl -s https://demo.nginx.com/api/6/http/server_zones/ | jq
 
-   {
-     "hg.nginx.org": {
-       "processing": 0,
-       "requests": 0,
-       "responses": {
-         "1xx": 0,
-         "2xx": 0,
-         "3xx": 0,
-         "4xx": 0,
-         "5xx": 0,
-         "total": 0
-       },
-       "discarded": 0,
-       "received": 0,
-       "sent": 0
-     },
-     "trac.nginx.org": {
-       "processing": 0,
-       "requests": 0,
-       "responses": {
-         "1xx": 0,
-         "2xx": 0,
-         "3xx": 0,
-         "4xx": 0,
-         "5xx": 0,
-         "total": 0
-       },
-       "discarded": 0,
-       "received": 0,
-       "sent": 0
-     },
-     "lxr.nginx.org": {
-       "processing": 0,
-       "requests": 2635,
-       "responses": {
-         "1xx": 0,
-         "2xx": 2505,
-         "3xx": 17,
-         "4xx": 76,
-         "5xx": 37,
-         "total": 2635
-       },
-       "discarded": 0,
-       "received": 856154,
-       "sent": 62626264
-     }
-   }
-   # Trimmed
+    .. note:: You shoudl see output similar to the following
 
-5. Using ``curl`` and ``jq``, make a request to the API endpoint,
-   ``/api/api-version/http/caches/`` to retrieve instrumentation for
-   each named cache zone
+      {
+        "hg.nginx.org": {
+          "processing": 0,
+          "requests": 0,
+          "responses": {
+            "1xx": 0,
+            "2xx": 0,
+            "3xx": 0,
+            "4xx": 0,
+            "5xx": 0,
+            "total": 0
+          },
+          "discarded": 0,
+          "received": 0,
+          "sent": 0
+        },
+        "trac.nginx.org": {
+          "processing": 0,
+          "requests": 0,
+          "responses": {
+            "1xx": 0,
+            "2xx": 0,
+            "3xx": 0,
+            "4xx": 0,
+            "5xx": 0,
+            "total": 0
+          },
+          "discarded": 0,
+          "received": 0,
+          "sent": 0
+        },
+        "lxr.nginx.org": {
+          "processing": 0,
+          "requests": 2635,
+          "responses": {
+            "1xx": 0,
+            "2xx": 2505,
+            "3xx": 17,
+            "4xx": 76,
+            "5xx": 37,
+            "total": 2635
+          },
+          "discarded": 0,
+          "received": 856154,
+          "sent": 62626264
+        }
+      }
+      # Trimmed
 
-.. code:: bash
+5. Using **curl** and **jq**, make a request to the API endpoint,
+   **/api/api-version/http/caches/** to retrieve instrumentation for each 
+   named cache zone
 
-   $> curl -s https://demo.nginx.com/api/6/http/caches/ | jq
+    .. code:: bash
 
-   {
-     "http_cache": {
-       "size": 0,
-       "max_size": 536870912,
-       "cold": false,
-       "hit": {
-         "responses": 0,
-         "bytes": 0
-       },
-       "stale": {
-         "responses": 0,
-         "bytes": 0
-       },
-       "updating": {
-         "responses": 0,
-         "bytes": 0
-       },
-       "revalidated": {
-         "responses": 0,
-         "bytes": 0
-       },
-       "miss": {
-         "responses": 0,
-         "bytes": 0,
-         "responses_written": 0,
-         "bytes_written": 0
-       },
-       "expired": {
-         "responses": 0,
-         "bytes": 0,
-         "responses_written": 0,
-         "bytes_written": 0
-       },
-       "bypass": {
-         "responses": 0,
-         "bytes": 0,
-         "responses_written": 0,
-         "bytes_written": 0
-       }
-     }
-   }
+      curl -s https://demo.nginx.com/api/6/http/caches/ | jq
 
-6. Using ``curl`` and ``jq``, make a request to the API endpoint,
-   ``/api/api-version/stream/upstreams/`` to retrieve request and
-   response counts, response time, health‑check status, and uptime
+    .. note:: You shoudl see output similar to the following
+
+      {
+        "http_cache": {
+          "size": 0,
+          "max_size": 536870912,
+          "cold": false,
+          "hit": {
+            "responses": 0,
+            "bytes": 0
+          },
+          "stale": {
+            "responses": 0,
+            "bytes": 0
+          },
+          "updating": {
+            "responses": 0,
+            "bytes": 0
+          },
+          "revalidated": {
+            "responses": 0,
+            "bytes": 0
+          },
+          "miss": {
+            "responses": 0,
+            "bytes": 0,
+            "responses_written": 0,
+            "bytes_written": 0
+          },
+          "expired": {
+            "responses": 0,
+            "bytes": 0,
+            "responses_written": 0,
+            "bytes_written": 0
+          },
+          "bypass": {
+            "responses": 0,
+            "bytes": 0,
+            "responses_written": 0,
+            "bytes_written": 0
+          }
+        }
+      }
+
+6. Using **curl** and **jq**, make a request to the API endpoint,
+   **/api/api-version/stream/upstreams/** to retrieve request and
+   response counts, response time, health-check status, and uptime
    statistics per server in each TCP/UDP upstream group
 
-   .. code:: bash
+    .. code:: bash
 
-      $> curl -s https://demo.nginx.com/api/6/stream/upstreams/ | jq
+      curl -s https://demo.nginx.com/api/6/stream/upstreams/ | jq
 
+    .. note:: You shoudl see output similar to the following
+    
       {                                                                                                                                                           
         "postgresql_backends": {                                                                                                                                  
           "peers": [                                                                                                                                              
@@ -311,15 +300,17 @@ In this section, we will use ``curl`` to interact with the NGINX API.
 
               # Trimmed..
 
-7. Using ``curl`` and ``jq``, make a request to the API endpoint,
-   ``/api/api-version/ssl/`` to retrieve SSL/TLS statistics
+7. Using **curl** and **jq**, make a request to the API endpoint,
+   **/api/api-version/ssl/** to retrieve SSL/TLS statistics
 
-.. code:: bash
+    .. code:: bash
 
-   $> curl -s https://demo.nginx.com/api/6/ssl/ | jq
+      curl -s https://demo.nginx.com/api/6/ssl/ | jq
 
-   {
-     "handshakes": 784975,
-     "handshakes_failed": 70687,
-     "session_reuses": 122210
-   }
+    .. note:: You shoudl see output similar to the following
+
+      {
+        "handshakes": 784975,
+        "handshakes_failed": 70687,
+        "session_reuses": 122210
+      }
