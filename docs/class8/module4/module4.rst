@@ -1,7 +1,8 @@
 Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
-###################################################################
+###############################################################################
 
-**\********\* Launch HTTP Flood Attack**
+Launch HTTP Flood Attack
+========================
 
    We will be initiating a HTTP Flood Attack on the Juice Shop web site
    using Apache Benchmark.
@@ -35,7 +36,8 @@ Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
 
    Verify in ELK that attack ended. Wait for black line in ELK graphs.
 
-   **\********\* Perform Slow HTTP Attack with slowhttptest tool**
+Perform Slow HTTP Attack with slowhttptest tool
+===============================================
 
    Slow HTTP attacks rely on the fact that the HTTP protocol, by design,
    requires requests to be completely received by the server before they
@@ -93,7 +95,9 @@ Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
 
    Verify in ELK that attack ended. Wait for black line in ELK graphs.
 
-   | **\********\* HTTP/2 Flood attack on gRPC service**
+Launch HTTP/2 Flood attack on gRPC service
+==========================================
+   
    | We will be initiating a HTTP/2 Flood Attack on the "RouteGuide GRPC
      service" using h2load.
 
@@ -128,8 +132,11 @@ Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
 
    Verify in ELK that attack ended. Wait for black line in ELK graphs.
 
-   | **\********\* Message flood DoS by gRPC - Attacker sends requests
-     to heavy URLs**
+Launch Message flood DoS by gRPC
+================================
+
+   Attacker sends requests to heavy URLs
+     
    | We will be initiating a Message flood DoS by gRPC on the
      "RouteGuide GRPC service" using ghz tool.
 
@@ -173,9 +180,10 @@ Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
 
    Verify in ELK that attack ended. Wait for black line in ELK graphs.
 
-   **\********\* Slow gRPC POST - Attacker supplies a number of
-   concurrent slow POST gRPC requests that exceeds the server capacity
-   of concurrent requests.**
+Launch Slow gRPC POST
+=====================
+   
+   Attacker supplies a number of concurrent slow POST gRPC requests that exceeds the server capacity of concurrent requests.
 
    1. SSH (WebShell) into "Attacker (10.1.1.11)" VM.
 
