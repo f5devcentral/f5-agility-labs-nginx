@@ -24,7 +24,7 @@ NGINX Plus configuration file is reloaded.
 
 In this Module we will configure upstream servers and upstream server
 groups dynamically (on-the-fly) with the NGINX Plus REST API and use the
-``state`` directive so on-the-fly configurations persistent through
+**state** directive so on-the-fly configurations persistent through
 NGINX reloads.
 
 Learning Objectives
@@ -33,50 +33,42 @@ Learning Objectives
 By the end of the lab you will be able to:
 
 -  Use the NGINX Plus API to dynamicly configure NGINX upstreams groups
--  Persist dyanmic reconfigurations using a ``state`` file
+-  Persist dyanmic reconfigurations using a **state** file
 -  Interact with the NGINX Plus API using both
    `Postman <https://www.postman.com>`__ and
-   ```cURL`` <https://curl.haxx.se>`__
+   `cURL <https://curl.haxx.se>`__
 
 Exercise 1: Dynamic Configuration of an Upstream using the NGINX API using Postman
 ----------------------------------------------------------------------------------
 
-In this section, we will use ``Postman`` to interact with the NGINX API.
+In this section, we will use **Postman** to interact with the NGINX API.
 In the Optional section below, we can reproduce the same steps using
-``curl``
+**curl**
 
-1.  In the ``WORKSPACE`` folder found on the desktop, open
-    ``NGINX-PLUS-1`` in Visual Studio Code (VSCode)
+1. In the **WORKSPACE** folder found on the desktop, open
+    **NGINX-PLUS-1** in Visual Studio Code.
 
-    .. figure:: images/2020-06-29_15-55.png
-       :alt: Select workspace
+    .. image:: images/2020-06-29_15-55.png
 
-       Select workspace
+2. In the VSCode, open a **terminal window**, using **View > Terminal menu**
+   command. You will now be able to both run NGINX commands and edit NGINX Plus
+   configuration files via the VSCode Console and terminal.
 
-2.  In the VSCode, open a a **terminal window**, using
-    ``View > Terminal menu`` command. You will now be able to both run
-    NGINX commands and edit NGINX Plus configuration files via the
-    VSCode Console and terminal. (SSH access via Putty is also available
-    as a SSH remote terminal access option.)
+    .. image:: images/2020-06-29_16-02_1.png
 
-    .. figure:: images/2020-06-29_16-02_1.png
-       :alt: terminal inside vscode
+3. Now inspect the **/etc/nginx/conf.d/upstreams.conf** file. Note the
+   following:
 
-       terminal inside vscode
-
-3.  Now inspect the ``/etc/nginx/conf.d/upstreams.conf`` file. Note the
-    following:
-
-    -  The ``zone`` directive configures a zone in the shared memory and
+    -  The **zone** directive configures a zone in the shared memory and
        sets the zone name and size. The configuration of the server
        group is kept in this zone, so all worker processes use the same
-       configuration. In our example, the ``zone`` is also named
-       ``dynamic`` and is ``64k`` megabyte in size.
+       configuration. In our example, the **zone** is also named
+       **dynamic** and is **64k** megabyte in size.
 
-    -  The ``state`` directive configures Persistence of Dynamic
+    -  The **state** directive configures Persistence of Dynamic
        Configuration by writing the state information to a file that
        persists during a reload. The recommended path for Linux
-       distributions is ``/var/lib/nginx/state/``
+       distributions is **/var/lib/nginx/state/**
 
        .. code:: nginx
 
@@ -92,187 +84,160 @@ In the Optional section below, we can reproduce the same steps using
               keepalive 32;
           }
 
-4.  In the Terminal window, on the NGINX plus instance, ensure that the
-    ``state`` file is at a empty state for this demo. Delete the file
-    (if exists), then create an empty file:
+4. In the Terminal window, on the NGINX plus instance, ensure that the
+   **state** file is at a empty state for this demo. Delete the file
+   (if exists), then create an empty file:
 
-    .. code:: bash
+   .. code:: bash
 
-       $> rm /var/lib/nginx/state/servers.conf
-       rm: cannot remove '/var/lib/nginx/state/servers.conf': No such file or directory
+      rm /var/lib/nginx/state/servers.conf
+      
+   .. note:: You may receive the following if the file doesn't exist
+      
+      rm: cannot remove '/var/lib/nginx/state/servers.conf': 
+      No such file or directory
 
-    Then run:
+   Then run:
 
-    .. code:: bash
+   .. code:: bash
 
-       $> touch /var/lib/nginx/state/servers.conf
+      touch /var/lib/nginx/state/servers.conf
 
-5.  In a Web Browser, open the NGINX dashboard on
-    ```http://www.example.com:8080/dashboard.html`` <http://www.example.com:8080/dashboard.html>`__.
+5. In a Web Browser, open the NGINX dashboard on
+   `http://www.example.com:8080/dashboard.html <http://www.example.com:8080/dashboard.html>`__.
     There is a bookmark in the Chrome Web Browser. Navigate to
-    ``HTTP Upstreams``, and note that the ``dynamic`` is empty:
+    **HTTP Upstreams**, and note that the **dynamic** is empty:
 
-    .. figure:: images/2020-06-23_16-26.png
-       :alt: nginx plus dashboard showing the empty dynamic upstream
+    .. image:: images/2020-06-23_16-26.png
 
-       nginx plus dashboard showing the empty dynamic upstream
+6. Open **Postman** tool found on the desktop. For this demo we would
+   be making use of the **Dynamic Configuration** collection.
 
-6.  Open ``Postman`` tool found on the desktop. For this demo we would
-    be making use of the ``Dynamic Configuration`` collection.
+7. Open **Check dynamic servers** request and execute the call by
+   clicking on **Send** button. We can confirm from the empty state of our 
+   upstream, **dynamic**, from the response that we receive from the NGINX API.
 
-7.  Open ``Check dynamic servers`` request and execute the call by
-    clicking on ``Send`` button. We can confirm from the empty state of
-    our upstream, ``dynamic``, from the response that we receive from
-    the NGINX API.
+   .. image:: images/dc1_2020-08-26.png
 
-    .. figure:: images/dc1_2020-08-26.png
-       :alt: Check dynamic servers
-
-       Check dynamic servers
-
-8.  Lets now add a two servers, ``web1`` (``10.1.1.5:80``) and ``web2``
-    (``10.1.1.6:80``) to the ``dynamic`` upstream group using the API.
+8. Lets now add a two servers, **web1** (``10.1.1.5:80``) and **web2**
+    (``10.1.1.6:80``) to the **dynamic** upstream group using the API.
 
     Open ``Add web1 to dynamic`` and ``Add web2 to dynamic`` requests
     and run them as shown below.
 
     |Add web1 postman| |Add web2 postman|
 
-9.  Lets now add ``web3`` (``10.1.1.7:80``), **marked as down**, to the
-    ``dynamic`` upstream group using the API
+9. Lets now add **web3** (``10.1.1.7:80``), **marked as down**, to the
+   **dynamic** upstream group using the API
 
-    Using ``Postman`` tool:
+    Using **Postman** tool:
 
-    .. figure:: images/dc4_2020-08-26.png
-       :alt: Add web3 postman
+    .. image:: images/dc4_2020-08-26.png
 
-       Add web3 postman
-
-10. Once again list out the servers in our upstream, ``dynamic``, and
+10. Once again list out the servers in our upstream, **dynamic**, and
     view the changes made
 
-    Using ``Postman`` tool:
+    Using **Postman** tool:
 
-    .. figure:: media/dc5_2020-08-26.png
-       :alt: list servers postman
-
-       list servers postman
+    .. image:: media/dc5_2020-08-26.png
 
 11. We can also confirm that the state file has been updated:
 
-    .. code:: bash
+      .. code:: bash
 
-       $> cat /var/lib/nginx/state/servers.conf
+         cat /var/lib/nginx/state/servers.conf
+      
+      .. note:: You should see output similar to the following
 
-       $> cat /var/lib/nginx/state/servers.conf
-
-       server 10.1.1.5:80;
-       server 10.1.1.6:80;
-       server 10.1.1.7:80 slow_start=10s backup down;
+         server 10.1.1.5:80;
+         server 10.1.1.6:80;
+         server 10.1.1.7:80 slow_start=10s backup down;
 
 12. It is possible to also remove a server from the upstream group:
 
-    Using ``Postman`` tool:
+    Using **Postman** tool:
 
-    .. figure:: media/dc6_2020-08-26.png
-       :alt: remove server postman
+    .. image:: media/dc6_2020-08-26.png
 
-       remove server postman
+13. To modify our **down** server back to rotation and accept live
+    traffic, we need to change the server parameter from **down: true**
+    to **down: false**. We first must find the server ID:
 
-13. To modify our ``down`` server back to rotation and accept live
-    traffic, we need to change the server parameter from ``down: true``
-    to ``down: false``. We first must find the server ID:
+    Using **Postman** tool:
 
-    Using ``Postman`` tool:
+    Run the **Check dynamic servers** request to get the list of
+    servers. From the response body note down the **id** value for the
+    block that has the server parameter **down: true**
 
-    Run the ``Check dynamic servers`` request to get the list of
-    servers. From the response body note down the ``id`` value for the
-    block that has the server parameter ``down: true``
+    .. image:: media/dc7_2020-08-26.png
 
-    .. figure:: media/dc7_2020-08-26.png
-       :alt: List server postman
+14. Now that we have identified the server id, (e.g. **"id: 2"**) we can
+    modify the **down** parameter:
 
-       List server postman
+    Using **Postman** tool:
 
-14. Now that we have identified the server id, (e.g. ``"id: 2"``) we can
-    modify the ``down`` parameter:
+    .. image:: media/dc8_2020-08-26.png
+       
+15. Once again, list out servers in our upstream, **dynamic**
 
-    Using ``Postman`` tool:
+    Using **Postman** tool:
 
-    .. figure:: media/dc8_2020-08-26.png
-       :alt: List server postman
+    .. image:: media/dc10_2020-08-27.png
 
-       List server postman
-
-15. Once again, list out servers in our upstream, ``dynamic``
-
-    Using ``Postman`` tool:
-
-    .. figure:: media/dc10_2020-08-27.png
-       :alt: List server postman
-
-       List server postman
-
-16. We can check the that the ``state`` file are making our upstream
+16. We can check the that the **state** file are making our upstream
     changes persistent by reloading NGINX and checking the dashboard and
     API
 
-    .. code:: bash
+      .. code:: bash
 
-       # inspect the state of out state file:
-       $> cat /var/lib/nginx/state/servers.conf
+         cat /var/lib/nginx/state/servers.conf
 
-       $> server 10.1.1.6:80;
-       $> server 10.1.1.7:80 slow_start=10s backup;
+      .. note:: You should see output similar to the following
 
-       # Reload NGINX
-       $> nginx -s reload
+         server 10.1.1.6:80;
+         server 10.1.1.7:80 slow_start=10s backup;
 
-    **Note:** After a NGINX reload, the server ``id`` is reset to start
-    at ``0``:
+      # Reload NGINX
 
-    .. figure:: media/dc11_2020-08-26.png
-       :alt: List server postman
+      .. code:: bash
 
-       List server postman
+         nginx -s reload
+
+    **Note:** After a NGINX reload, the server **id** is reset to start
+    at **0**:
+
+    .. image:: media/dc11_2020-08-26.png
 
 Optional: Dynamic Configuration of an Upstream using the NGINX API using cURL
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this section, we will use ``curl`` to interact with the NGINX API.
+In this section, we will use **curl** to interact with the NGINX API.
 
-1. In the ``WORKSPACE`` folder found on the desktop, open
-   ``NGINX-PLUS-1`` in Visual Studio Code (VSCode)
+1. In the **WORKSPACE** folder found on the desktop, open
+   **NGINX-PLUS-1** in Visual Studio Code
 
-.. figure:: media/2020-06-29_15-55.png
-   :alt: Select workspace
-
-   Select workspace
+.. image:: media/2020-06-29_15-55.png
 
 2. In the VSCode, open a a **terminal window**, using
-   ``View > Terminal menu`` command. You will now be able to both run
+   **View > Terminal menu** command. You will now be able to both run
    NGINX commands and edit NGINX Plus configuration files via the VSCode
-   Console and terminal. (SSH access via Putty is also available as a
-   SSH remote terminal access option.)
+   Console and terminal.
 
-   .. figure:: media/2020-06-29_16-02_1.png
-      :alt: terminal inside vscode
+   .. image:: media/2020-06-29_16-02_1.png
 
-      terminal inside vscode
-
-3. Now inspect the ``/etc/nginx/conf.d/upstreams.conf`` file. Note the
+3. Now inspect the **/etc/nginx/conf.d/upstreams.conf** file. Note the
    following:
 
-   -  The ``zone`` directive configures a zone in the shared memory and
+   -  The **zone** directive configures a zone in the shared memory and
       sets the zone name and size. The configuration of the server group
       is kept in this zone, so all worker processes use the same
-      configuration. In our example, the ``zone`` is also named
-      ``dynamic`` and is ``64k`` megabyte in size.
+      configuration. In our example, the **zone** is also named
+      **dynamic** and is **64k** megabyte in size.
 
-   -  The ``state`` directive configures Persistence of Dynamic
+   -  The **state** directive configures Persistence of Dynamic
       Configuration by writing the state information to a file that
       persists during a reload. The recommended path for Linux
-      distributions is ``/var/lib/nginx/state/``
+      distributions is **/var/lib/nginx/state/**
 
       .. code:: nginx
 
@@ -289,115 +254,108 @@ In this section, we will use ``curl`` to interact with the NGINX API.
          }
 
 4. In the Terminal window, on the NGINX plus instance, ensure that the
-   ``state`` file is at a empty state for this demo. Delete the file (if
+   **state** file is at a empty state for this demo. Delete the file (if
    exists), then create an empty file:
 
    .. code:: bash
 
       $> rm /var/lib/nginx/state/servers.conf
-      rm: cannot remove '/var/lib/nginx/state/servers.conf': No such file or directory
+   
+   .. note:: You may receive the following if the file doesn't exist
+   
+   rm: cannot remove '/var/lib/nginx/state/servers.conf': 
+   No such file or directory
 
    Then run:
 
    .. code:: bash
 
-      $> touch /var/lib/nginx/state/servers.conf
+      touch /var/lib/nginx/state/servers.conf
 
 5. In a Web Browser, open the NGINX dashboard on
-   ```http://www.example.com:8080/dashboard.html`` <http://www.example.com:8080/dashboard.html>`__.
-   There is a bookmark in the Chrome Web Browser. Navigate to
-   ``HTTP Upstreams``, and note that the ``dynamic`` is empty:
+   `http://www.example.com:8080/dashboard.html <http://www.example.com:8080/dashboard.html>`__.
+   There is a bookmark in the Chrome Web Browser. Navigate to **HTTP Upstreams**
+   , and note that the **dynamic** is empty:
 
-.. figure:: media/2020-06-23_16-26.png
-   :alt: nginx plus dashboard showing the empty dynamic upstream
-
-   nginx plus dashboard showing the empty dynamic upstream
+.. image:: media/2020-06-23_16-26.png
 
 6. In the Terminal window, we can also confirm the empty state of our
-   upstream, ``dynamic``, using our a ``curl`` command to retrieve this
+   upstream, **dynamic**, using our a **curl** command to retrieve this
    information from the NGINX API
 
-.. code:: bash
+   .. code:: bash
 
-   $> curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq
+      curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq
 
-   []
+   .. note:: Am empty array should return
+   
+      []
 
-7.  Lets now add a two servers, ``web1`` (``10.1.1.5:80``) and ``web2``
-    (``10.1.1.6:80``) to the ``dynamic`` upstream group using the API
-
-    .. code:: bash
-
-       # Add web1 - 10.1.1.5:80
-       $> curl -s -X \
-       POST http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \
-       -H 'Content-Type: text/json; charset=utf-8' \
-       -d '{
-         "server": "10.1.1.5:80",
-         "weight": 1,
-         "max_conns": 0,
-         "max_fails": 1,
-         "fail_timeout": "10s",
-         "slow_start": "0s",
-         "route": "",
-         "backup": false,
-         "down": false
-       }'
-
-       # Add web2 - 10.1.1.6:80
-       $> curl -s -X \
-       POST http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \
-       -H 'Content-Type: text/json; charset=utf-8' \
-       -d '{
-         "server": "10.1.1.6:80",
-         "weight": 1,
-         "max_conns": 0,
-         "max_fails": 1,
-         "fail_timeout": "10s",
-         "slow_start": "0s",
-         "route": "",
-         "backup": false,
-         "down": false
-       }'
-
-    .. figure:: media/2020-06-29_21-52.png
-       :alt: add web1
-
-       add web1
-
-    .. figure:: media/2020-06-29_21-54.png
-       :alt: add web2
-
-       add web2
-
-8.  Lets now add ``web3`` (``10.1.1.7:80``), **marked as down**, to the
-    ``dynamic`` upstream group using the API
+7. Lets now add a two servers, **web1** (``10.1.1.5:80``) and **web2**
+   (``10.1.1.6:80``) to the **dynamic** upstream group using the API
 
     .. code:: bash
 
-       # Add web3 - 10.1.1.7:80
-       $> curl -s -X \
-       POST http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \
-       -H 'Content-Type: text/json; charset=utf-8' \
-       -d '{
-       "server": "10.1.1.7:80",
-       "weight": 1,
-       "max_conns": 0,
-       "max_fails": 1,
-       "fail_timeout": "10s",
-       "slow_start": "10s",
-       "route": "",
-       "backup": true,
-       "down": true
-       }'
+      curl -s -X \
+      POST http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \
+      -H 'Content-Type: text/json; charset=utf-8' \
+      -d '{
+        "server": "10.1.1.5:80",
+        "weight": 1,
+        "max_conns": 0,
+        "max_fails": 1,
+        "fail_timeout": "10s",
+        "slow_start": "0s",
+        "route": "",
+        "backup": false,
+        "down": false
+      }'
 
-    .. figure:: media/2020-06-29_21-56.png
-       :alt: add web3
+   .. code:: bash
 
-       add web3
+      curl -s -X \
+      POST http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \
+      -H 'Content-Type: text/json; charset=utf-8' \
+      -d '{
+        "server": "10.1.1.6:80",
+        "weight": 1,
+        "max_conns": 0,
+        "max_fails": 1,
+        "fail_timeout": "10s",
+        "slow_start": "0s",
+        "route": "",
+        "backup": false,
+        "down": false
+      }'
 
-9.  Once again list out the servers in our upstream, ``dynamic``, and
-    view the changes made
+   .. image:: media/2020-06-29_21-52.png
+      
+   .. image:: media/2020-06-29_21-54.png
+   
+8. Lets now add **web3** (``10.1.1.7:80``), **marked as down**, to the
+   **dynamic** upstream group using the API
+
+    .. code:: bash
+
+      curl -s -X \
+      POST http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \
+      -H 'Content-Type: text/json; charset=utf-8' \
+      -d '{
+      "server": "10.1.1.7:80",
+      "weight": 1,
+      "max_conns": 0,
+      "max_fails": 1,
+      "fail_timeout": "10s",
+      "slow_start": "10s",
+      "route": "",
+      "backup": true,
+      "down": true
+      }'
+
+    .. image:: media/2020-06-29_21-56.png
+      
+9. Once again list out the servers in our upstream, **dynamic**, and view the 
+   changes made
 
     .. code:: json
 
@@ -443,11 +401,11 @@ In this section, we will use ``curl`` to interact with the NGINX API.
 
 10. We can also confirm that the state file has been updated:
 
-    .. code:: bash
+   .. code:: bash
 
-       $> cat /var/lib/nginx/state/servers.conf
+      cat /var/lib/nginx/state/servers.conf
 
-       $> cat /var/lib/nginx/state/servers.conf
+   .. note:: You should receive output similar to the following
 
        server 10.1.1.5:80;
        server 10.1.1.6:80;
@@ -457,7 +415,7 @@ In this section, we will use ``curl`` to interact with the NGINX API.
 
     .. code:: bash
 
-       $> curl -X DELETE -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers/0 | jq
+       curl -X DELETE -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers/0 | jq
        [
          {
            "id": 1,
@@ -485,19 +443,15 @@ In this section, we will use ``curl`` to interact with the NGINX API.
          }
        ]
 
-    .. figure:: media/2020-06-29_21-58.png
-       :alt: remove server
+    .. image:: media/2020-06-29_21-58.png
 
-       remove server
-
-12. To modify our ``down`` server back to rotation and accept live
-    traffic, we need to change the server parameter from ``down: true``
-    to ``down: false``. We first must find the server ID:
+12. To modify our **down** server back to rotation and accept live
+    traffic, we need to change the server parameter from **down: true** to 
+    **down: false**. We first must find the server ID:
 
     .. code:: bash
 
-       # Find the ID of the down server i.e '"down": true', i.e. live
-       $> curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq '.[]  | select(.down==true)'
+       curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq '.[]  | select(.down==true)'
 
        {
          "id": 2,
@@ -512,55 +466,62 @@ In this section, we will use ``curl`` to interact with the NGINX API.
          "down": true
        }
 
-13. Now that we have identified the server id, (e.g. ``"id: 2"``) we can
-    modify the ``down`` parameter:
+13. Now that we have identified the server id, (e.g. **"id: 2"**) we can
+    modify the **down** parameter:
 
-    .. code:: bash
+   .. code:: bash
 
-       # Set server to '"down": false', i.e. live
-       $> curl -X PATCH -d '{ "down": false }' -s 'http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers/2'
+       curl -X PATCH -d '{ "down": false }' -s 'http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers/2'
 
        {"id":2,"server":"10.1.1.7:80","weight":1,"max_conns":0,"max_fails":1,"fail_timeout":"10s","slow_start":"10s","route":"","backup":true,"down":false}
 
 14. Once again, list out servers in our upstream, ``dynamic``
 
-    .. code:: bash
+   .. code:: bash
 
-       $> curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq
+       curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq
 
-.. figure:: media/2020-06-29_22-02.png
-   :alt: server list
+.. image:: media/2020-06-29_22-02.png
 
-   server list
-
-13. We can check the that the ``state`` file are making our upstream
+13. We can check the that the **state** file are making our upstream
     changes persistent by reloading NGINX and checking the dashboard and
     API
 
-    .. code:: bash
+   .. code:: bash
 
-       # inspect the state of out state file:
-       $> cat /var/lib/nginx/state/servers.conf
+       cat /var/lib/nginx/state/servers.conf
 
-       $> server 10.1.1.6:80;
-       $> server 10.1.1.7:80 slow_start=10s backup;
+   .. note:: You sould receive output similar to the following
 
-       # Reload NGINX
-       $> nginx -s reload
+       server 10.1.1.6:80;
+       server 10.1.1.7:80 slow_start=10s backup;
 
-    **Note:** After a NGINX reload, the server ``id`` is reset to start
-    at ``0``:
+   # Reload NGINX
+   
+   .. code:: bash
 
-    \`\`\ ``bash # Lastly, list out servers in our upstream,``\ dynamic\`
-    $> curl -s
-    http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \| jq
+      nginx -s reload
 
-    { “id”: 0, “server”: “10.1.1.6:80”, “weight”: 1, “max_conns”: 0,
-    “max_fails”: 1, “fail_timeout”: “10s”, “slow_start”: “0s”, “route”:
-    "“,”backup“: false,”down“: false }, {”id“:
-    1,”server“:”10.1.1.7:80“,”weight“: 1,”max_conns“: 0,”max_fails“:
-    1,”fail_timeout“:”10s“,”slow_start“:”10s“,”route“:”“,”backup“:
-    true,”down": false } ]
+   .. note:: After a NGINX reload, the server ``id`` is reset to start
+    at **0**:
 
-.. |Add web1 postman| image:: media/dc2_2020-08-26.png
-.. |Add web2 postman| image:: media/dc3_2020-08-26.png
+   Lastly, list out servers in our upstream, **dynamic**
+   
+   .. code:: bash
+   
+      curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers \| jq
+
+   .. note:: You should receive output similar to the following:
+
+      .. code:: json
+
+         { “id”: 0, “server”: “10.1.1.6:80”, “weight”: 1, “max_conns”: 0,
+         “max_fails”: 1, “fail_timeout”: “10s”, “slow_start”: “0s”, “route”:
+         "“,”backup“: false,”down“: false }, {”id“:
+         1,”server“:”10.1.1.7:80“,”weight“: 1,”max_conns“: 0,”max_fails“:
+         1,”fail_timeout“:”10s“,”slow_start“:”10s“,”route“:”“,”backup“:
+         true,”down": false }
+
+.. image:: media/dc2_2020-08-26.png
+
+.. image:: media/dc3_2020-08-26.png
