@@ -48,7 +48,7 @@ GitLab:
    -  ``NGINX_REPO_KEY``
 
    We have prepopulated the contents of both variables into the
-   ``VALUE`` field, and it is as a string in CICD Pipeline jobs.
+   ``VALUE`` field, and it is as a string in CI/CD Pipeline jobs.
 
    .. note:: We cannot set these values with a \ ``Masked`` type because
       our NGINX PEM files do not meet the Base64 alphabet (RFC4648) format
@@ -60,7 +60,7 @@ GitLab:
    .. image:: ../images/image13.png
 
 2. Let’s take a look at that variable in action: Open a log output of a
-   recent successful pipeline job from the sidebar menu, go to **CICD >
+   recent successful pipeline job from the sidebar menu, go to **CI/CD >
    Jobs** and click on a **status: passed** icon associated with a to a
    image build stage, any stage with name with a linux distro name
    e.g. \ ``ubuntu18.04`` **(not ``clean_up``)**

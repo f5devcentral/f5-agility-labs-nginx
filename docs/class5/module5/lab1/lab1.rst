@@ -1,5 +1,5 @@
-Protect Arcadia API with NGINX App Protect on a centos VM
-#########################################################
+Step 12 - Protect Arcadia API with NGINX App Protect on a centos VM
+###################################################################
 
 
 The Arcadia web application has several REST APIs in order to:
@@ -102,8 +102,8 @@ Steps for the lab
 #. Restart the NGINX service and then we will run some tests
 
     .. code-block:: BASH
-
-         sudo nginx -s reload
+        
+        sudo systemctl reload nginx
 
 Test The Protections
 ********************
