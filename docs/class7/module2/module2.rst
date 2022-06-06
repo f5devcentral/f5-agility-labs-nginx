@@ -1,10 +1,10 @@
-Module 2: Standing up the Rancher Kubernetes Engine (RKE)
+Module 2: Using the provided GitHub GIST you will Stand up the Rancher Kubernetes Engine 2 (RKE2) and deploy NGINX Ingress Controller
 =========================================================
 
-In this module you will walk through the configuration of the cluster.yaml and the deployment of Rancher's Kubernetes Engine. We will first cover the different parts of the cluster.yaml and then we will add a minimal set of changes to a new version of the file that will be used to stand up the RKE cluster.
+In this module you will follow the instructions in a GitHub GIST to configure and  deploy Rancher's Kubernetes Engine 2 (RKE 2). We will first cover the different parts of the Clusster Manager interface and then we will use the Rancher Manager to stand up the RKE 2 cluster. Once the cluster is active we will deploy a light weight load balancing solution and finally install the NGINX Kubernetes Ingress Controller.
 
 .. note::
-    This install is a bare bones installation of RKE. This will give us a solid foundation for our K8s cluster. For the purposes of this demo we will be leaving out components that are critical for a production cluster, however those can be layered in at any time in the future.
+    This install is a bare bones installation of RKE 2. This will give us a solid foundation for our K8s cluster.
 
 .. toctree::
    :maxdepth: 1

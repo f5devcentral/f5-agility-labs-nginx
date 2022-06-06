@@ -189,17 +189,38 @@ Steps:
            
         .. note:: The line ``proxy_set_header Host no-waf.arcadia-finance.io;`` will tell the Ingress Controller the host name that we are accessing.
 
+    #.  Configure nginx app protect logging to log all requests.
+    
+        Edit the file: ``/etc/app_protect/conf/log_default.json`` replace ``"request_type": "illegal"`` with  ``"request_type": "all"``
+
+        .. code-block:: js
+             :caption: log_default.json
+
+             {
+             "filter": {
+                "request_type": "all"
+                   },
+             "content": {
+                "format": "default",
+                "max_request_size": "any",
+                "max_message_size": "5k"
+                   }
+             }
+
+        .. note:: By default ``/etc/app_protect/conf/log_default.json`` which is installed with app protect, will only log illegal requests.
+
     #.  Temporarily make SELinux permissive globally (https://www.nginx.com/blog/using-nginx-plus-with-selinux).
 
         .. code-block:: bash
 
             sudo setenforce 0
 
-    #.  Enable and start the NGINX service:
+    #.  Enable NGINX service on boot and restart NGINX:
 
         .. code-block:: bash
 
             sudo systemctl enable --now nginx.service
+            sudo systemctl restart nginx
 
     #.  Check to see if everything is running:
 
@@ -295,6 +316,9 @@ Steps:
 
         .. code-block:: bash
 
+            sudo systemctl reload nginx
+
+            Alternatively, you can also use:
             sudo nginx -s reload
 
             .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
@@ -339,7 +363,7 @@ Steps:
 
         .. code-block:: bash
 
-            sudo nginx -s reload
+            sudo systemctl reload nginx
 
     #.  Wait a few seconds and check the **new** Threat Campaign package date:
 

@@ -1,5 +1,5 @@
-Protect gRPC Services
-#####################
+Step 15 - Protect gRPC Services
+###############################
 
 App Protect provides advanced protection for gRPC based services. Along with all kinds of existing features to protect traditional HTTP services, App protect can parse gRPC payload to enforce schema and look for inner threats.
 
@@ -152,7 +152,7 @@ High level lab steps:
 
    .. code-block :: bash
 
-        sudo nginx -s reload
+       sudo systemctl reload nginx
 
 #. Change directory to the location of our Interface Definition Language (IDL) file
 

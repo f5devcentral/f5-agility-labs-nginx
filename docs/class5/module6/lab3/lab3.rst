@@ -1,4 +1,4 @@
-Step 16 - A.WAF/ASM Policy Converter
+Step 18 - A.WAF/ASM Policy Converter
 ####################################
 
 What is the Policy Converter tool ?
