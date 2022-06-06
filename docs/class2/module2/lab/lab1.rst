@@ -164,12 +164,12 @@ the next exercise
 .. note:: Ignore the bookmarks ``STAGING LB - Appster`` and ``PROD LB - Appster`` for now - we will set this up in a later exercise.
 
 14. If our code changes pushed to staging are successful and the changes
-    are validated, we can can now deploy to Production:
+    are validated, we can now deploy to Production:
 
     Under the \ ``DEPLOY`` stage, we have the option to deploy to
     Production manually. Go ahead and click on the little \ **Play**
     button that is on the ``deploy_prod`` stage of the pipeline. This
-    trigger will now deploy our new Docker image to Production, wih. the
+    trigger will now deploy our new Docker image to Production, with. the
     new code showing the updated image, \ ``iphone_x.png``.
 
     .. image:: ../images/image27.png

@@ -5,15 +5,15 @@ This task will walkthrough steps to configuring and pushing new NGINX
 features to a live running NGINX Plus Virtual Machine. In this example
 we will enable Rate limiting to our Appster service
 
-1. Open **GitHub Desktop Client** and s◊itch to the **Current
+1. Open **GitHub Desktop Client** and switch to the **Current
    repository** to **“appster-lb”.** From here we can open the Project
    using the “**Open in Visual Studio Code**” button
 
    .. image:: ../images/image2.png
 
-2. Open ``www.appster.com.conf`` and enable rating limiting rule:
+2. Open ``www.appster.com.conf`` and enable the rating limiting rule:
 
-   A rate-limiting configuration has been preconfigured in this file and
+   Rate-limiting has been preconfigured in this file and is
    **commented out** (**disabled**). To enable rate-limiting, uncomment
    the following lines:
 
@@ -30,22 +30,22 @@ we will enable Rate limiting to our Appster service
 
    This line defines our rate-limiting rule:
 
-   - **key** - A parameter, generally a variable, used to differentiate
-     one client from another, typically a variable. This our case we are
-     using the client’s IP address, \ ``$binary_remote_addr`` note that
+   - **key** - A parameter used to differentiate
+     one client from another, typically stored as a variable. In this case we are
+     using the client’s IP address, \ ``$binary_remote_addr`` . Note that
      this variable holds the binary representation of an IP address which
-     is  *shorter than* ``$remote_addr``
-   - **shared memory zone** - The name and size of the zone that keeps the
-     states of these keys the “`leaky
-     bucket <https://en.wikipedia.org/wiki/Leaky_bucket>`__”, we have
-     called it ``limit_me`` with the size of 1 megabytes ``1m`` which can
+     is  *smaller than* ``$remote_addr``
+   - **shared memory zone** - The name and size of the zone that stores the
+     state of each key using the “`leaky
+     bucket <https://en.wikipedia.org/wiki/Leaky_bucket>`__”, algorithm. We have
+     named it ``limit_me`` with a size of 1 megabyte ``1m`` which can
      store about 16,000 IP addresses (4 bytes for IPv4 addresses, stored
      state occupies 128 bytes on 64-bit platforms.)
-   - **rate** - The request rate limit specified in requests per second
+   - **rate** - The number of requests per second
      (\`**r/s\`**) or requests per minute (\ ``r/m``). We have initially
-     set ``10 r/s``
+     set it to ``10 r/s``
 
-3. Now we can enable the rate-limiting url on the root location (``/``).
+3. Now we can enable the rate-limiting URL on the root location (``/``).
    In the same file, ``www.appster.com.conf`` , also uncomment the lines
    starting with ``limit_req_zone`` and ``limit_req_status``:
 
@@ -56,13 +56,13 @@ we will enable Rate limiting to our Appster service
       limit_req_zone=limit_me;
       limit_req_status 429;
 
-   The directives apply rate-limiting rule in this location context:
+   The directives above apply rate-limiting rules in this location context:
 
    -  ``limit_req`` - Applies the rate limiting class as defined the zone
       it references, at this location. In this case we enable the rate
       limiting class ``limit_me``
-   -  ``limit_conn_status`` - Sets the status code
-      ``HTTP 429 "Too many requests"`` to return in response to rejected
+   -  ``limit_conn_status`` - Sets the status code when the rate limit is exceeded.
+      ``HTTP 429 "Too many requests"`` will be returned in response to rejected
       requests.
 
       **Note:** For more info on Limiting Access to Proxied HTTP Resources
@@ -114,7 +114,7 @@ we will enable Rate limiting to our Appster service
    this commit. We can click on the pipeline status icon on this screen
    to view the pipeline progress in greater detail.
 
-.. attention:: Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, 
+.. attention:: Stop: This is a good time to inspect the **GitLab CI/CD pipeline file**, 
    `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb/-/blob/master/.gitlab-ci.yml>`__,
    while waiting for the pipeline to complete.
 
@@ -301,7 +301,7 @@ we will enable Rate limiting to our Appster service
     .. image:: ../images/image17.png
 
     Once our pipeline has completed, our new rate limiting configuration
-    are automaticly deployed to our Staging server
+    is automatically deployed to our Staging server.
 
     Once again have a quick check on staging or use the load test tool,
     ``vegeta`` once again. Once you have validated the changes we can

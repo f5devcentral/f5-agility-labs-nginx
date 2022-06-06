@@ -1,14 +1,9 @@
 Lab 2 (OPTIONAL): Made new code commit, push changes using command line tools, and deploy
 =========================================================================================
 
-In this task, we will run through a similar process, but this time
-achieve similar changes via a bash shell using Unix commands, a
-different perspective to application development!
+In this task, we will run through a similar process achieving similar results executing commands in a bash shell.
 
-1.  Open **git bash for windows** using the **Git Bash** icon on the
-    Windows desktop. Git Bash is a bash shell emulator, similar to what
-    you see natively on Linux and Unix machines. If the git console font
-    is too small to read, use **Ctrl+ “+”** to increase the font
+1.  Open **git bash for windows** using the **Git Bash** icon on the Windows desktop. Git Bash is a bash shell emulator, similar to what you see natively on Linux and Unix machines. If the git console font is too small to read, use **Ctrl+ “+”** to increase the font
 
     .. image:: ../images/image19.png
 
@@ -75,8 +70,7 @@ different perspective to application development!
 
     .. image:: ../images/image25.png
 
-7.  If you prefer a different subheader again, we can change it once
-    again
+7.  If you prefer a different subheader again, we can change it again
     using \ `sed <https://www.gnu.org/software/sed/manual/sed.html>`__
     this time performing a search and replace of the the HTML code
     containing ``A beautiful fictitious app that you can trust!`` with
@@ -89,7 +83,7 @@ different perspective to application development!
 
        sed -i 's/<h2>A beautiful <span class=\"text-orange\">fictitious<\/span> app that you can trust!<\/h2>/<h2>A beautiful <span class=\"text-orange\">fictitious<\/span> app that you should download!<\/h2>/g' etc/nginx/html/index.html
 
-8.  Once again, let’s check that our changes were made by performing a
+8.  Let’s check that our changes were made by performing a
     ``grep`` text search on the ``index.html`` file
 
     .. code:: bash
@@ -99,7 +93,7 @@ different perspective to application development!
 
        <h2>A beautiful <span class="text-orange">fictitious</span> app that you should download!</h2>
 
-9.  Once again, commit and push changes to code repository:
+9.  Commit and push the changes to the code repository:
 
     .. code:: bash
 
@@ -123,8 +117,8 @@ different perspective to application development!
 
     .. image:: ../images/image24.png
 
-11. Once again, we can view the changes made in the new code deployment
-    in a web browser. Remember that you may need to reload the webpage
+11. We can view the changes made in the new code deployment
+    using a web browser. Remember that you may need to reload the webpage
     if you currently have the webpage open, or open the webpage in
     a \ **New incognito window** (**Ctrl + Shift + N**) to bypass
     browser cache and view updated changes
