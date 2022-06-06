@@ -143,7 +143,7 @@ Steps:
             }
 
 
-    #.  We will modify the NGINX Arcadia configuration with the new policies. See the ``/home/ubuntu/lab-files/customized-policy/arcadia.conf``
+    #.  We will modify the NGINX Arcadia configuration with the new policies. Now edit the file ``/home/ubuntu/lab-files/customized-policy/arcadia.conf`` to make the changes shown below:
 
         .. code-block:: nginx
             :emphasize-lines: 31,38,45,52

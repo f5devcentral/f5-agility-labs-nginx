@@ -4,18 +4,22 @@ NGINX Plus HTTP Load balancing
 Introduction
 ------------
 
-Both NGINX Open Source and NGINX Plus can load balance HTTP, TCP, and
-UDP traffic. NGINX Plus extends NGINX Open Source with enterprise‑grade
-load balancing that includes session persistence, active health checks,
-dynamic reconfiguration of load‑balanced server groups without a server
-restart, and additional metrics.
+Both NGINX Open Source and NGINX Plus can load balance HTTP, TCP, and UDP 
+traffic. NGINX Plus extends NGINX Open Source with enterprise‑grade load
+balancing that includes session persistence, active health checks, dynamic
+reconfiguration of load‑balanced server groups without a server restart, and 
+additional metrics.
 
-**References:** \* `NGINX Command
-Line <https://www.nginx.com/resources/wiki/start/topics/tutorials/commandline/>`__
-\* `High-Performance Load
-Balancing <https://www.nginx.com/products/nginx/load-balancing/>`__ \*
-`HTTP Load
-Balancing <https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/>`__
+.. seealso:: Official installing NGINX documentation:
+
+   `NGINX Command Line
+   <https://www.nginx.com/resources/wiki/start/topics/tutorials/commandline/>`__
+   
+   `High-Performance Load Balancing 
+   <https://www.nginx.com/products/nginx/load-balancing/>`__
+
+   `HTTP Load Balancing 
+   <https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/>`__
 
 Learning Objectives
 -------------------
@@ -29,49 +33,40 @@ By the end of the lab you will be able to:
 Exercise 1: Inspect the NGINX configuration and rewrite logs
 ------------------------------------------------------------
 
-1. In the ``WORKSPACE`` folder found on the desktop, open
-   ``NGINX-PLUS-1.code-workspace`` in Visual Studio Code (VSCode)
+1. In the **WORKSPACE** folder found on the desktop, open
+   **NGINX-PLUS-1.code-workspace** in Visual Studio Code.
 
-   .. figure:: images/2020-06-29_15-55.png
-      :alt: Select workspace
+   .. image:: images/2020-06-29_15-55.png
 
-      Select workspace
+2. In the VSCode, open a **terminal window**, using **View > Terminal menu** 
+   command. You will now be able to both run NGINX commands and edit NGINX Plus
+   configuration files via the VSCode Console and terminal.
 
-2. In the VSCode, open a a **terminal window**, using
-   ``View > Terminal menu`` command. You will now be able to both run
-   NGINX commands and edit NGINX Plus configuration files via the VSCode
-   Console and terminal. (SSH access via Putty is also available as a
-   SSH remote terminal access option.)
+   .. image:: images/2020-06-29_16-02_1.png
+      
+3. Now inspect **/etc/nginx/nginx.conf**.
+   
+   .. note::
 
-   .. figure:: images/2020-06-29_16-02_1.png
-      :alt: terminal inside vscode
+      - **include /etc/nginx/conf.d/*.conf** statement for inclusion of further
+        NGINX Plus configuration files.
+    
+      - **TCP/UDP proxy and load balancing block** This is an example of using
+        the “stream” context for TCP and UDP load balancing.
 
-      terminal inside vscode
+   .. image:: images/2020-06-29_16-02.png
 
-3. Now inspect ``/etc/nginx/nginx.conf``. Note the following:
+4. Select the **etc/nginx/conf.d/example.com.conf** file in the VSCode Explorer
+   section. 
+   
+   .. note:: See the following entries in the server block:
 
-   -  ``include /etc/nginx/conf.d/*.conf`` statement for inclusion of
-      further NGINX Plus configuration files.
-   -  Note the commented out
-      ``# TCP/UDP proxy and load balancing block`` This is an example of
-      using the “stream” context for TCP and UDP load balancing.
-
-   .. figure:: images/2020-06-29_16-02.png
-      :alt: nginx.conf screenshot
-
-      nginx.conf screenshot
-
-4. Select the ``etc/nginx/conf.d/example.com.conf`` file in the VSCode
-   Explorer section. Note the following entries in the server block:
-
-   -  ``server_name www.example.com “"``, that will match
-      ``www.example.com``
-   -  ``location /``, that will match all or any uri
-   -  ``proxy_pass http://nginx_hello``, to proxy request to the
-      upstream group labeled ``nginx_hello`` (defined in
-      ``upstreams.conf``)
-   -  ``rewrite_log on`` directive, and the ``"301 MOVED PERMANENTLY"``
-      line . This allows for logging all rewrites to the error log.
+   -  **server_name www.example.com “"**, that will match **www.example.com**
+   -  **location /**, that will match all or any uri
+   -  **proxy_pass http://nginx_hello**, to proxy request to the upstream group
+      labeled **nginx_hello** (defined in **upstreams.conf**) 
+   -  **rewrite_log on** directive, and the **"301 MOVED PERMANENTLY"**
+      line. This allows for logging all rewrites to the error log.
 
    .. code:: nginx
 
@@ -101,41 +96,34 @@ Exercise 1: Inspect the NGINX configuration and rewrite logs
 
       }
 
-5. Open another Terminal in VSCode by selecting the **split terminal**
-   icon on the right. Alternatively, if you want to open a SSH session
-   in putty, you can open another terminal into the ``nginx-plus-1``
-   host.
+5. Open another Terminal in VSCode by selecting the **split terminal** icon on
+   the right. Alternatively, if you want to open a SSH session in putty, you
+   can open another terminal into the **nginx-plus-1** host.
 
-   .. figure:: images/2020-06-26_12-53.png
-      :alt: split terminal on VScode
-
-      split terminal on VScode
+   .. image:: images/2020-06-26_12-53.png
 
 6. In the terminal shell, run the following commands:
 
-a. On one terminal shell, ``tail`` the error logs for
-   ``www.example.com``:
+   a. On one terminal shell, ``tail`` the error logs for **www.example.com**:
 
-.. code:: bash
+      .. code:: bash
 
-   $> cd /var/log/nginx 
-   $> tail -f www.example.com_error.log 
+         cd /var/log/nginx 
+         tail -f www.example.com_error.log 
 
-b. In the other terminal shell, run the following ``curl`` command:
+   b. In the other terminal shell, run the following **curl** command:
 
-.. code:: bash
+      .. code:: bash
 
-   $> curl -I -L http://localhost/old-url
+         curl -I -L http://localhost/old-url
 
-Note the entry in the ``www.example.com_error.log`` printed in the first
-terminal
+   Note the entry in the **www.example.com_error.log** printed in the first terminal
 
 Exercise 2: HTTP Load Balancing
 -------------------------------
 
-1. In the VS ode Explorer select the ``upstreams.conf`` file. Observe
-   the following configuration entries to the ``upstream nginx_hello``
-   block:
+1. In the VS code Explorer select the **upstreams.conf** file. Observe the
+   following configuration entries to the **upstream nginx_hello** block:
 
    .. code:: nginx
 
@@ -156,27 +144,24 @@ Exercise 2: HTTP Load Balancing
 
 2. In a Web Browser, open http://www.example.com
 
-   You should see something similar to the web page below Reload the
-   page several times and ensure that the ``Server Name:`` changes from
-   ``web1``, to ``web2`` and ``web3`` in a load balancing fashion.
+   You should see something similar to the web page below Reload the page
+   several times and ensure that the **Server Name:** changes from **web1**, to
+   **web2** and **web3** in a load balancing fashion.
 
-   .. figure:: images/2020-06-26_13-04.png
-      :alt: NGINX hello test page
-
-      NGINX hello test page
+   .. image:: images/2020-06-26_13-04.png
 
 Exercise 3: HTTPS Load Balancing
 --------------------------------
 
-1. In VSCode Explorer open ``www2.example.conf`` and observe the
-   following configuration entries:
+1. In VSCode Explorer open ``www2.example.conf`` and observe the following
+   configuration entries:
 
-   -  ``server_name www2.example.com``, to listen on all
-      ``www2.example.com`` requests
-   -  ``return 301 https://$host$request_uri``, to perform a
-      ``HTTP 301`` redirect to HTTPS service
-   -  ``ssl_certificate`` and ``ssl_certificate_key`` directives that
-      specific the PEM files used for TLS
+   -  **server_name www2.example.com**, to listen on all
+      **www2.example.com** requests
+   -  **return 301 https://$host$request_uri**, to perform a **HTTP 301**
+      redirect to HTTPS service
+   -  **ssl_certificate** and **ssl_certificate_key** directives that specific
+      the PEM files used for TLS
 
    .. code:: nginx
 
@@ -201,13 +186,8 @@ Exercise 3: HTTPS Load Balancing
 
 2. In your lab browser, open https://www2.example.com
 
-   You should see something similar to the above web page below.
+   You should see something similar to the web page below. Reload the page
+   several times and ensure that the **Server Name:** changes from **web1**, to
+   **web2** and **web3** in a load balancing fashion.
 
-   You should see something similar to the web page below Reload the
-   page several times and ensure that the ``Server Name:`` changes from
-   ``web1``, to ``web2`` and ``web3`` in a load balancing fashion.
-
-   .. figure:: images/2020-06-26_13-04.png
-      :alt: NGINX hello test page
-
-      NGINX hello test page
+   .. image:: images/2020-06-26_13-04.png

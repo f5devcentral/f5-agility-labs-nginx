@@ -40,19 +40,19 @@ artifact of a CI/CD process to be:
 
 This Lab guide will help you complete the following:
 
-1. Creating NGINX Plus Docker container images through a CICD process
+1. Creating NGINX Plus Docker container images through a CI/CD process
    and using a private repository for NGINX Plus container images
 
 2. Deploying `NGINX Plus <https://www.nginx.com/products/nginx/>`__ Web
-   Server through a CICD process
+   Server through a CI/CD process
 
 3. Deploying `NGINX Plus <https://www.nginx.com/products/nginx/>`__ Load
-   Balancer server through a CICD process
+   Balancer server through a CI/CD process
 
-CICD flowchart
+CI/CD flowchart
 --------------
 
-**Below is a diagram of a generic CICD Pipeline to deliver applications
+**Below is a diagram of a generic CI/CD Pipeline to deliver applications
 on NGINX Plus**
 
 .. image:: ./images/image1.png
