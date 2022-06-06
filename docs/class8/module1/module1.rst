@@ -42,6 +42,7 @@ Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected applicat
       URI=${array[$(( RANDOM % 3 ))]}
       curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3" -H "X-Forwarded-For: 3.3.3.3" http://${IP}:${PORT}/${URI} &
 
+
    - At the CLI prompt start the good shell script  
 
 .. code-block:: bash 
