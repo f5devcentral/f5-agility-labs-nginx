@@ -94,6 +94,10 @@ graphviz_dot_args = [
      "-Efontname='%s'" % graphviz_font
 ]
 
+html_context = {
+  "github_url":github_repo
+}
+
 diag_fontpath = '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf'
 diag_html_image_format = 'SVG'
 diag_latex_image_format = 'PNG'
@@ -119,13 +123,17 @@ if found:
   spelling_ignore_importable_modules=True
   spelling_filters=[]
 
+source_parsers = {
+   '.md': 'recommonmark.parser.CommonMarkParser',
+}
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-source_suffix = ['.rst']
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
