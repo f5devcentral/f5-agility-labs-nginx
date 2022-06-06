@@ -51,7 +51,12 @@ and use volumes to persist data.
 
    .. code:: bash
 
-      $ docker pull registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+        $ docker pull registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+
+Which should produce the following output:
+
+   .. code:: bash
+
       alpine3.10: Pulling from f5-demo-lab/nginx-plus-dockerfiles
       4167d3e14976: Already exists
       d515ef1b2c63: Pull complete
@@ -75,7 +80,6 @@ and use volumes to persist data.
       $ docker run --name test -d -p 9000:80 -p 9080:8080 -v $PWD/etc/nginx:/etc/nginx \
       registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
-      c3dbc2f22505bf7e7eb863ff9f548121b1daa5eb18b1279b656e8c034dc540f2
 
 5. You can see the container is running on the mapped ports. When
    running ``docker ps`` you may see it running alongside other
@@ -86,11 +90,6 @@ and use volumes to persist data.
 
       $ docker ps
 
-      CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
-      c3dbc2f22505
-      registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
-      "nginx -g 'daemon of..." 50 seconds ago Up 49 seconds 443/tcp,
-      0.0.0.0:9000->80/tcp, 0.0.0.0:9080->8080/tcp test
 
 6. We can now test the NGINX Plus container by making a HTTP request
    using ``curl``. We should get our test reponse page back:
@@ -98,6 +97,11 @@ and use volumes to persist data.
    .. code:: bash
 
       $ curl http://127.0.0.1:9000 -L
+
+Which should produce the following output:
+
+   .. code:: bash
+
       Status code: 200
       Server address: 127.0.0.1:8096
       Server name: c3dbc2f22505
@@ -114,10 +118,10 @@ and use volumes to persist data.
 
    .. code:: bash
 
-      # Stop container named test
       $ docker stop test
 
-      # Delete the container named test
+   .. code:: bash
+
       $ docker rm test
 
 8. When we run ``docker ps`` again you will see that the container is no
@@ -126,11 +130,5 @@ and use volumes to persist data.
    .. code:: bash
 
       $ docker ps
-
-      CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
-      9964a8554e3c
-      registry.gitlab.f5demolab.com/f5-demo-lab/gitlabappster:780376076e8e7434fce680120cfd1e015863ac0c
-      "nginx -g 'daemon of..." 6 days ago Up 14 minutes 443/tcp,
-      0.0.0.0:81->80/tcp, 0.0.0.0:8081->8080/tcp appster-staging
 
    .. image:: ../images/image18.png
