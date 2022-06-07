@@ -1,4 +1,4 @@
-Class10: NGINX Plus 101: Intro to NGINX Plus
+Class1 - Intro to NGINX Plus
 ==============================================
 
 This class provides hands-on experience using NGINX plus.
@@ -19,6 +19,8 @@ section for details on how to connect to the lab environment.
 
 .. toctree::
    :maxdepth: 1
+   :caption: Content:
    :glob:
 
+   intro
    module*/module*
