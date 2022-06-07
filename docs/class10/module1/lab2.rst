@@ -5,9 +5,9 @@ Introduction
 ------------
 
 Both NGINX Open Source and NGINX Plus can load balance HTTP, TCP, and UDP 
-traffic. NGINX Plus extends NGINX Open Source with enterprise‑grade load
+traffic. NGINX Plus extends NGINX Open Source with enterprise-grade load
 balancing that includes session persistence, active health checks, dynamic
-reconfiguration of load‑balanced server groups without a server restart, and 
+reconfiguration of load-balanced server groups without a server restart, and 
 additional metrics.
 
 .. seealso:: Official installing NGINX documentation:
@@ -33,30 +33,30 @@ By the end of the lab you will be able to:
 Exercise 1: Inspect the NGINX configuration and rewrite logs
 ------------------------------------------------------------
 
-1. In the **WORKSPACE** folder found on the desktop, open
-   **NGINX-PLUS-1.code-workspace** in Visual Studio Code.
+#. In the **WORKSPACE** folder found on the desktop, open the
+   **NGINX-PLUS-1** workspace shortcut in Visual Studio Code.
 
    .. image:: images/2020-06-29_15-55.png
 
-2. In the VSCode, open a **terminal window**, using **View > Terminal menu** 
-   command. You will now be able to both run NGINX commands and edit NGINX Plus
+#. In the VSCode, open a terminal window by selecting **View > Terminal.** 
+   You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
 
    .. image:: images/2020-06-29_16-02_1.png
       
-3. Now inspect **/etc/nginx/nginx.conf**.
+#. Now inspect **/etc/nginx/nginx.conf**.
    
    .. note::
 
-      - **include /etc/nginx/conf.d/*.conf** statement for inclusion of further
-        NGINX Plus configuration files.
+      - The **include /etc/nginx/conf.d/*.conf** statement for inclusion of
+        further NGINX Plus configuration files.
     
-      - **TCP/UDP proxy and load balancing block** This is an example of using
-        the “stream” context for TCP and UDP load balancing.
+      - The **TCP/UDP proxy and load balancing block** This is an example of
+        using the “stream” context for TCP and UDP load balancing.
 
    .. image:: images/2020-06-29_16-02.png
 
-4. Select the **etc/nginx/conf.d/example.com.conf** file in the VSCode Explorer
+#. Select the **etc/nginx/conf.d/example.com.conf** file in the VSCode Explorer
    section. 
    
    .. note:: See the following entries in the server block:
@@ -96,13 +96,12 @@ Exercise 1: Inspect the NGINX configuration and rewrite logs
 
       }
 
-5. Open another Terminal in VSCode by selecting the **split terminal** icon on
-   the right. Alternatively, if you want to open a SSH session in putty, you
-   can open another terminal into the **nginx-plus-1** host.
+#. Open another Terminal in VSCode by selecting the **split terminal** icon on
+   the right.
 
    .. image:: images/2020-06-26_12-53.png
 
-6. In the terminal shell, run the following commands:
+#. In the terminal shell, run the following commands:
 
    a. On one terminal shell, ``tail`` the error logs for **www.example.com**:
 
@@ -117,12 +116,12 @@ Exercise 1: Inspect the NGINX configuration and rewrite logs
 
          curl -I -L http://localhost/old-url
 
-   Note the entry in the **www.example.com_error.log** printed in the first terminal
+   .. note:: the entry in the **www.example.com_error.log** printed in the first terminal
 
 Exercise 2: HTTP Load Balancing
 -------------------------------
 
-1. In the VS code Explorer select the **upstreams.conf** file. Observe the
+#. In the VS code Explorer select the **upstreams.conf** file. Observe the
    following configuration entries to the **upstream nginx_hello** block:
 
    .. code:: nginx
@@ -142,7 +141,7 @@ Exercise 2: HTTP Load Balancing
 
       }
 
-2. In a Web Browser, open http://www.example.com
+#. In a Web Browser, open http://www.example.com
 
    You should see something similar to the web page below Reload the page
    several times and ensure that the **Server Name:** changes from **web1**, to
@@ -153,7 +152,7 @@ Exercise 2: HTTP Load Balancing
 Exercise 3: HTTPS Load Balancing
 --------------------------------
 
-1. In VSCode Explorer open ``www2.example.conf`` and observe the following
+#. In VSCode Explorer open ``www2.example.conf`` and observe the following
    configuration entries:
 
    -  **server_name www2.example.com**, to listen on all
@@ -184,7 +183,13 @@ Exercise 3: HTTPS Load Balancing
 
       }
 
-2. In your lab browser, open https://www2.example.com
+#. In your lab browser, open https://www2.example.com
+
+   .. attention:: 
+      
+      If you receive the **Your connection is not private** warning
+      page, click **Advanced** then click the link
+      **Proceed to www2.example.com (unsafe).**
 
    You should see something similar to the web page below. Reload the page
    several times and ensure that the **Server Name:** changes from **web1**, to

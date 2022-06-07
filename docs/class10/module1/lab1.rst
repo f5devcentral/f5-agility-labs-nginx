@@ -8,21 +8,21 @@ NGINX Plus is supported on Amazon Linux, CentOS, Debian, FreeBSD, Oracle
 Linux, Red Hat Enterprise Linux (RHEL), SUSE Linux Enterprise Server
 (SLES), and Ubuntu.
 
-For Sizing guidance for Deploying NGINX Plus, see `Sizing Guide for
+For sizing guidance on Deploying NGINX Plus, see `Sizing Guide for
 Deploying NGINX Plus on Bare Metal
 Servers <https://www.nginx.com/resources/datasheets/nginx-plus-sizing-guide/>`__
 
 Prerequisites
 -------------
 
-Before begin able to use NGINX Plus you will need the following:
+Before being able to use NGINX Plus you will need the following:
 
 - An NGINX Plus subscription
 - A supported operating system 
 - Your credentials to the NGINX Plus Customer Portal
 - Your NGINX Plus certificate and public key
 
-.. note:: The prerequisites have been completed for you in the lab
+.. note:: The prerequisites have been completed for you in this lab
 
 .. seealso:: Official installing NGINX documentation:
    `Installing NGINX Plus 
@@ -45,8 +45,8 @@ By the end of the lab you will be able to:
 Exercise 1: Install NGINX Plus
 ------------------------------
 
-1. In the **WORKSPACE** folder found on the desktop, open
-   **NGINX-PLUS-3.code-workspace** in Visual Studio Code.
+#. In the **WORKSPACE** folder found on the desktop, open the
+   **NGINX-PLUS-3** workspace shortcut in Visual Studio Code.
 
    **Select Workspace**
 
@@ -57,19 +57,17 @@ Exercise 1: Install NGINX Plus
 
    .. image:: images/2020-06-29_20-57.png
 
-2. In the VSCode, open a terminal window, using **View > Terminal menu** 
-   command. You will now be able to both run NGINX commands and edit NGINX Plus
+#. In VSCode, open a terminal window by selecting **View > Terminal.** 
+   You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
-   
-   Open new terminal
 
    .. image:: images/2020-06-29_21-01.png
 
-   .. note:: Terminal will appear on the bottom portion of the VSCode screen
+   .. note:: Terminal will appear on the bottom portion of the VSCode window.
    
    .. image:: images/2020-06-26_12-27.png
 
-3. In the terminal run the following commands to install NGINX Plus
+#. In the terminal run the following commands to install NGINX Plus
 
    a. Confirm you are root
  
@@ -77,7 +75,8 @@ Exercise 1: Install NGINX Plus
 
          whoami
    
-   b. Move to the /root directory and check nginx-repo cert and key are here
+   b. Move to the /root directory and check that the nginx-repo.crt and 
+      nginx-repo.key files are present.
 
       .. code:: bash
 
@@ -97,13 +96,13 @@ Exercise 1: Install NGINX Plus
          apt-get update 
          apt-get -y install nginx-plus 
 
-4. Verify the version of NGINX Plus that was installed:
+#. Verify the version of NGINX Plus that was installed:
 
    .. code:: bash
 
       nginx -v
 
-5. Install the NGINX Plus GeoIP2 Dynamic Module
+#. Install the NGINX Plus GeoIP2 Dynamic Module
 
    .. code:: bash
 
@@ -118,27 +117,27 @@ Exercise 1: Install NGINX Plus
       To enable these modules, add the following to /etc/nginx/nginx.conf 
       and reload nginx:`` 
 
-      **load_module modules/ngx_http_geoip2_module.so; 
-         
-      load_module modules/ngx_stream_geoip2_module.so;**
+         **load_module modules/ngx_http_geoip2_module.so;** 
+            
+         **load_module modules/ngx_stream_geoip2_module.so;**
 
       Please refer to the module documentation for further details:
 
       https://github.com/leev/ngx_http_geoip2_module
 
-6. Start NGINX Plus
+#. Start NGINX Plus
 
    .. code:: bash
 
       systemctl start nginx 
 
-7. Verify that NGINX Plus has started
+#. Verify that NGINX Plus has started
 
    .. code:: bash
 
-      ps -eaf | grep nginx 
+      systemctl status nginx 
 
-8. Test the NGINX Plus instance in your browser. Open **Google Chrome** from 
+#. Test the NGINX Plus instance in your browser. Open **Google Chrome** from 
    your Desktop and enter the following URL, http://nginx-plus-3. 
    
    You should see the NGINX default page:
@@ -151,21 +150,20 @@ Exercise 2: NGINX Plus command line basics
 In this exercise, we will review configure NGINX Plus as a basic load
 balancer and test/verify configured functionality.
 
-1. If you have closed VSCode, once again, open **NGINX-PLUS-3code-workspace**
-   found in the **WORKSPACE** folder.
+#. If you have closed VSCode, once again, open the **WORKSPACE** folder found on
+   the desktop, open the **NGINX-PLUS-3** workspace shortcut in Visual Studio
+   Code.
 
    .. image:: images/2020-06-29_20-56.png
 
    .. image:: images/2020-06-26_12-27.png
 
-      VSCode
-
-2. In VSCode, open a **terminal window**, using **View > Terminal menu** 
+#. In VSCode, open a **terminal window**, using **View > Terminal menu** 
    command. You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
 
-3. In the terminal try running the following NGINX commands and inspect
-   the output (output won’t be listed in below):
+#. In the terminal try running the following NGINX commands and inspect
+   the output (output won't be listed in below):
 
    Print help for command-line parameters
 
@@ -175,7 +173,7 @@ balancer and test/verify configured functionality.
    
    Test the configuration file: 
    
-   nginx checks the configuration for correct syntax, and then tries to open 
+   NGINX checks the configuration for correct syntax, and then tries to open 
    files referred in the configuration.
       
    .. code:: bash
@@ -189,13 +187,13 @@ balancer and test/verify configured functionality.
       nginx -T 
       
       
-   print nginx version
+   print the NGINX version
 
    .. code:: bash
 
       nginx -v
       
-   print nginx version, compiler version, and configure parameters.
+   print the NGINX version, compiler version, and configure parameters.
       
    .. code:: bash
       
@@ -219,18 +217,18 @@ Exercise 3: Inspect NGINX Plus modules
 Now that NGINX Plus is installed, browse to the NGINX configuration root,
 **/etc/nginx**
 
-1. **File > Open Folder...**
+#. **File > Open Folder...**
 
    .. image:: images/2020-06-29_15-47.png
 
-2. Enter **/etc/nginx** in the open folder menu
+#. Enter **/etc/nginx** in the open folder menu the click **OK**
 
    .. image:: images/2020-06-29_21-07.png
 
 
-3. Select the **nginx.conf** file in the VSCode Explorer section.
+#. Select the **nginx.conf** file in the VSCode Explorer section.
 
-4. To enable the 3rd-party GeoIP2 dynamic modules for NGINX Plus that have been
+#. To enable the 3rd-party GeoIP2 dynamic modules for NGINX Plus that have been
    installed, add the following lines to **/etc/nginx/nginx.conf** in the
    **main context** and **reload nginx**:
 
@@ -243,18 +241,19 @@ Now that NGINX Plus is installed, browse to the NGINX configuration root,
 
    .. image:: images/2020-06-29_21-11.png
 
-7. In the terminal window using **View > Terminal menu** command, and in the 
-   terminal, run the following commands to reload nginx:
+#. In the terminal window select **File > Save** or use **ctrl+s** to save the
+   file.
+
+#. Open the terminal window again by selecting **View > Terminal** and in the 
+   terminal window, run the following commands to reload nginx:
 
    .. code:: bash
 
       nginx -t && nginx -s reload
 
    .. image:: images/2020-06-29_21-13.png
-      
-      reload nginx
 
-8. See which Dynamic modules are installed:
+#. See which Dynamic modules are installed:
 
    .. code:: bash
 
