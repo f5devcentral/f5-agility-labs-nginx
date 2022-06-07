@@ -20,13 +20,13 @@ we will enable Rate limiting to our Appster service
    Uncomment the line with
    the \ `limit_req_zone <https://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_zone>`__ directive,
    found near the top of the file, this is in the \ ``http`` context,
-   outside the ``server`` context:
+   outside the ``server`` context and change the ``10000`` to ``10``:
 
    .. code-block:: ini
 
       # Rate limit
       # Uncomment lines below to enable here
-      limit_req_zone $binary_remote_addr zone=limit_me:1m rate=10r/s;
+      limit_req_zone $binary_remote_addr zone=limit_me:1m rate=10000r/s;
 
    This line defines our rate-limiting rule:
 
@@ -42,8 +42,8 @@ we will enable Rate limiting to our Appster service
      store about 16,000 IP addresses (4 bytes for IPv4 addresses, stored
      state occupies 128 bytes on 64-bit platforms.)
    - **rate** - The number of requests per second
-     (\`**r/s\`**) or requests per minute (\ ``r/m``). We have initially
-     set it to ``10 r/s``
+     (\`**r/s\`**) or requests per minute (\ ``r/m``). It is initially
+     set to ``10000r/s`` but we changed it to ``10r/s``
 
 3. Now we can enable the rate-limiting URL on the root location (``/``).
    In the same file, ``www.appster.com.conf`` , also uncomment the lines
@@ -321,4 +321,4 @@ we will enable Rate limiting to our Appster service
 
    **Congratulations on completing the lab!**
 
-   **Thank you for your interest in the F5/NGINX lab; we hope you have found this lab to be valuable. For more information on NGINX Plus, please visit www.nginx.com**
+   **Thank you for your interest in the NGINX CI/CD lab. We hope you have found this lab to be valuable. For more information on NGINX Plus, please visit https://www.nginx.com**
