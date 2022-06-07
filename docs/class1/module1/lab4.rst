@@ -133,7 +133,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
       curl -s https://demo.nginx.com/api/6/connections/ | jq
 
-    .. note:: You shoudl see output similar to the following
+    .. note:: You should see output similar to the following
 
       .. code:: json
 
@@ -212,7 +212,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
       curl -s https://demo.nginx.com/api/6/http/caches/ | jq
 
-    .. note:: You shoudl see output similar to the following
+    .. note:: You should see output similar to the following
 
       .. code:: json
 
@@ -267,7 +267,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
       curl -s https://demo.nginx.com/api/6/stream/upstreams/ | jq
 
-    .. note:: You shoudl see output similar to the following
+    .. note:: You should see output similar to the following
     
       .. code:: json
 
@@ -319,7 +319,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
       curl -s https://demo.nginx.com/api/6/ssl/ | jq
 
-    .. note:: You shoudl see output similar to the following
+    .. note:: You should see output similar to the following
 
       .. code::
 
