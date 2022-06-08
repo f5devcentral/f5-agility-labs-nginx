@@ -1,5 +1,5 @@
-Protect Arcadia API with Kubernetes Ingress Controller
-######################################################
+Step 13 - Protect Arcadia API with Kubernetes Ingress Controller
+################################################################
 
 .. note::  If you came to this lab directly (without doing the previous modules), everything will still work.
 

@@ -1,42 +1,12 @@
-Getting Started
----------------
+Introduction
+============
 
-Please follow the instructions provided by the instructor to start your
-lab and access your jump host.
+The purpose of this Lab is to introduce NGINX Plus. NGINX Plus brings you
+everything you love about NGINX Open Source, adding enterprise-grade features
+like high availability, active health checks, DNS system discovery, session
+persistence, and a RESTful API. NGINX Plus is a cloud-native, easy-to-use
+reverse proxy, load balancer, and API gateway. Whether you need to integrate
+advanced monitoring, strengthen security controls, or orchestrate Kubernetes
+containers, NGINX Plus delivers with the five-star support you expect from NGINX.
 
-.. NOTE::
-	 All work for this lab will be performed exclusively from the Windows
-	 jumphost. No installation or interaction with your local system is
-	 required.
-
-Lab Topology
-~~~~~~~~~~~~
-
-The following components have been included in your lab environment:
-
-- 2 x F5 BIG-IP VE (v12.1)
-- 1 x F5 iWorkflow VE (v2.1)
-- 1 x Linux LAMP Webserver (xubuntu 14.04)
-- 1 x Windows Jumphost
-
-Lab Components
-^^^^^^^^^^^^^^
-
-The following table lists VLANS, IP Addresses and Credentials for all
-components:
-
-.. list-table::
-    :widths: 20 40 40
-    :header-rows: 1
-    :stub-columns: 1
-
-    * - **Component**
-      - **VLAN/IP Address(es)**
-      - **Credentials**
-    * - Sample Host
-      - - **Management:** 10.1.1.250
-        - **Internal:** 10.1.10.250
-        - **External:** 10.1.20.250
-      - ``admin``/``admin``
-
-
+In this lab we will explore a few of the capabilities listed above.

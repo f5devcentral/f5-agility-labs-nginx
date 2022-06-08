@@ -1,5 +1,5 @@
-Bot Protection
-##############
+Step 16 - Bot Protection
+########################
 
 Bot signatures provide basic bot protection by detecting bot signatures in the ``User-Agent`` header and ``URI``. The bot-defense section in the policy is ``enabled`` by default. 
 
@@ -137,7 +137,7 @@ An action can be configured for each bot class, or may also be configured per ea
 
         cp /home/centos/lab-files/bot-policy/nginx.conf /etc/nginx
         cp /home/centos/lab-files/bot-policy/conf.d/* /etc/nginx/conf.d
-        sudo nginx -s reload
+        sudo systemctl reload nginx
 
 
 **Generate simulated Bot traffic** 

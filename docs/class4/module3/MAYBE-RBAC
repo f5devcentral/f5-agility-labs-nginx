@@ -1,0 +1,97 @@
+Set Up RBAC
+
+Follow the steps in this tutorial to limit access to features using role-based access control (RBAC).
+
+This documentation applies to NGINX Instance Manager 2.1.0 and later.
+
+Overview 
+NGINX Instance Manager RBAC, or Role-Based Access Control, helps you control who has access to Instance Manager resources, what they can do, and what areas they have access to.
+
+Instance Manager RBAC is an authorization system built around three core objects:
+
+Roles: A role definition, or role for short, is a collection of permissions for one or more features. A role definition lists the actions that can be performed for each feature: create, read, update, or delete. NGINX Instance Manager includes an admin built-in role with full access.
+Users: A user account is a username with a set of credentials. You can create users directly in NGINX Instance Manager, or you can add an external identity provider.
+Groups: A group is a collection of users. Groups in NGINX Instance Manager are used only with external identity providers. Users from an external identity provider can’t be assigned roles directly in NGINX Instance Manager, but they inherit roles through group memberships.
+Users can, and often will, have multiple roles. When this happens, permissions are additive, that is, the sum of the role assignments. For example, a user with two roles, the first role granting read access to all NGINX instances and one role granting create, update, and delete access to a specific instance, will be able to read all instances and create, update, or delete only the single instance she has permission for.
+
+A feature is a grouping of functionality in NGINX Instance Manager.
+
+The following table lists the features you can assign roles to:
+
+Feature	Area	Description
+Analytics	Core	Allows access to the analytics endpoints, including metrics, catalogs, and events
+Licensing	Core	Allows access to view and manage licenses
+User Management	Core	Allows access to view and manage roles, users, and user groups
+Certs	Platform	Allows access to view and manage certs for NGINX instances
+Staged Configs	Platform	Allows access to view and manage staged NGINX configurations
+Instance Groups	Platform	Allows access to view and manage NGINX instance groups
+Instance Management	Platform	Allows access to view and manage NGINX instances
+Scan	Platform	Allows access to scan for NGINX Instances
+
+
+Create a Role 
+The default admin user or any user with CREATE permission for the User Management feature can create a role.
+
+To create a role, take the following steps:
+
+Open the NGINX Instance Manager web interface and log in.
+
+Select the Settings gear icon.
+
+In the Settings menu, select Roles.
+
+Select Create.
+
+On the Create Role form, enter information for the role:
+
+Name: Required. A name for the role.
+Display Name: A friendly display name for the role.
+Description: A brief summary of the role.
+To add permissions:
+
+In the Permissions section, select a Feature in the list.
+Select Create.
+In the Access Types list, select the permissions the role requires for the feature.
+Repeat step 6 to add more permissions for other features.
+
+When you’ve added all the necessary permissions, select Save to create the role.
+
+
+
+Assign Roles 
+To assign roles, take the following steps:
+
+Open the NGINX Instance Manager web interface and log in.
+Select the Settings gear icon.
+In the Settings menu, select Users.
+Select a user in the list or select Create to add a new user.
+Select Edit User.
+In the Roles list, select the one or more roles to assign to the user.
+Select Save to update the user.
+
+
+Create a Group 
+Important:
+Groups are used only with external identity providers configured to use OpenID Connect (OIDC) authentication, following the steps in the Set Up Authentication Guide.
+Users from an external identity provider can’t be assigned roles directly in NGINX Instance Manager, but they inherit roles through group memberships.
+
+The default admin user or any user with CREATE permission for the User Management feature can create a role.
+
+To create a group, take the following steps:
+
+Open the NGINX Instance Manager web interface and log in.
+
+Select the Settings gear icon.
+
+In the Settings menu, select User Groups.
+
+Select Create.
+
+On the Create Group form, enter information for the group:
+
+Group Name: Required. The name for the group must match the group name in the external identity provider. A group can reference only a single identity provider.
+Display Name: A friendly display name for the group.
+Description: A brief summary of the group.
+In the Roles list, select one or more roles to assign to the group.
+
+Select Save to create the group.

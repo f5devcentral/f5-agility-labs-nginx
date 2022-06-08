@@ -1,5 +1,5 @@
-Explore the lab tools for monitoring NGINX Plus
-###############################################
+Step 14 - Explore the lab tools for monitoring NGINX Plus
+#########################################################
 
 #. In the browser, click ``Arcadia links>WAF NGINX Ingress`` bookmark (you may have to refresh on the browser if you get an error)
 #. You are now connected to the Arcadia App through the Kubernetes Ingress Controller with NAP

@@ -3,14 +3,14 @@ Lab 1: Make new code commit, push changes and deploy to Staging and Production
 
 In this example, we will make a simple change in updating the phone
 image on the homepage. We will then commit our changes and push the new
-code to our Gitlab repository; this will automatically trigger a CICD
+code to our Gitlab repository; this will automatically trigger a CI/CD
 pipeline.
 
 A successful build will result in storing the Docker container artifact
 in a private Container Registry; this is the new stable build of NGINX
 Plus containing the new web application code.
 
-The last phase of the CICD Pipeline will deploy the new container to our
+The last phase of the CI/CD Pipeline will deploy the new container to our
 Staging Server automatically but wait for a human trigger to deploy the
 containers to Production. Note that we will deploy four instances (four
 containers) to Production to illustrate NGINX Plus as a Load Balancer in
@@ -164,12 +164,12 @@ the next exercise
 .. note:: Ignore the bookmarks ``STAGING LB - Appster`` and ``PROD LB - Appster`` for now - we will set this up in a later exercise.
 
 14. If our code changes pushed to staging are successful and the changes
-    are validated, we can can now deploy to Production:
+    are validated, we can now deploy to Production:
 
     Under the \ ``DEPLOY`` stage, we have the option to deploy to
     Production manually. Go ahead and click on the little \ **Play**
     button that is on the ``deploy_prod`` stage of the pipeline. This
-    trigger will now deploy our new Docker image to Production, wih. the
+    trigger will now deploy our new Docker image to Production, with. the
     new code showing the updated image, \ ``iphone_x.png``.
 
     .. image:: ../images/image27.png

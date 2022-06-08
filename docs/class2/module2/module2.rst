@@ -1,23 +1,14 @@
-Module 2: Deploying `NGINX Plus <https://www.nginx.com/products/nginx/>`__ web server with CICD
+Module 2: Deploying `NGINX Plus <https://www.nginx.com/products/nginx/>`__ web server with CI/CD
 ===============================================================================================
 
-This lab exercise will guide us through deploying an NGINX Plus Web
-server through a CICD Pipeline, a best practices for DevOps teams to
-implement, for delivering code changes more frequently and reliably.
+This lab exercise will guide you through deploying an NGINX Plus web server through a CI/CD pipeline to help deliver code changes more frequently and reliably with as few manual steps as possible.
 
-We will be making simple changes to our web application and rapidly push
-the new code to live environments. For this use case, we will again be
-building and pushing Docker containers as our deployment artifact.
+We will be making simple changes to our web application and rapidly push the new code to the staging and production environments. For this use case, we will build and push the updated Docker containers to the registry which is followed by a deployment to the staging environment. Deploying to production is a manual step executed after a human validates that everything looks good.
 
-CICD flowchart
+CI/CD flowchart
 --------------
 
-**The diagram below depicts the workflow from code to deployment.** Our
-CICD Pipeline docker image to the container registry but could easily be
-extended to deploy a container with a new application code to a live
-environment. We will see in this exercise that the push to Staging
-environment is automatic while the push to our production environment
-requires a human trigger
+The diagram below depicts the workflow from code to deployment as described above.
 
 .. image:: ./images/image1.png
 
