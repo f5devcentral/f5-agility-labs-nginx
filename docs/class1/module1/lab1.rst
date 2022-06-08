@@ -50,22 +50,22 @@ Exercise 1: Install NGINX Plus
 
    **Select Workspace**
 
-   .. image:: images/2020-06-29_20-56.png
+   .. image:: ../images/2020-06-29_20-56.png
 
    If you are prompted **Are you sure you want to continue?** Select
    **continue**
 
-   .. image:: images/2020-06-29_20-57.png
+   .. image:: ../images/2020-06-29_20-57.png
 
 #. In VSCode, open a terminal window by selecting **View > Terminal.** 
    You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
 
-   .. image:: images/2020-06-29_21-01.png
+   .. image:: ../images/2020-06-29_21-01.png
 
    .. note:: Terminal will appear on the bottom portion of the VSCode window.
    
-   .. image:: images/2020-06-26_12-27.png
+   .. image:: ../images/2020-06-26_12-27.png
 
 #. In the terminal run the following commands to install NGINX Plus
 
@@ -142,21 +142,21 @@ Exercise 1: Install NGINX Plus
    
    You should see the NGINX default page:
 
-   .. image:: images/2020-06-26_12-33.png
+   .. image:: ../images/2020-06-26_12-33.png
 
 Exercise 2: NGINX Plus command line basics
 ------------------------------------------
 
-In this exercise, we will review configure NGINX Plus as a basic load
+In this exercise, we will review and configure NGINX Plus as a basic load
 balancer and test/verify configured functionality.
 
 #. If you have closed VSCode, once again, open the **WORKSPACE** folder found on
    the desktop, open the **NGINX-PLUS-3** workspace shortcut in Visual Studio
    Code.
 
-   .. image:: images/2020-06-29_20-56.png
+   .. image:: ../images/2020-06-29_20-56.png
 
-   .. image:: images/2020-06-26_12-27.png
+   .. image:: ../images/2020-06-26_12-27.png
 
 #. In VSCode, open a **terminal window**, using **View > Terminal menu** 
    command. You will now be able to both run NGINX commands and edit NGINX Plus
@@ -219,11 +219,11 @@ Now that NGINX Plus is installed, browse to the NGINX configuration root,
 
 #. **File > Open Folder...**
 
-   .. image:: images/2020-06-29_15-47.png
+   .. image:: ../images/2020-06-29_15-47.png
 
 #. Enter **/etc/nginx** in the open folder menu the click **OK**
 
-   .. image:: images/2020-06-29_21-07.png
+   .. image:: ../images/2020-06-29_21-07.png
 
 
 #. Select the **nginx.conf** file in the VSCode Explorer section.
@@ -239,7 +239,7 @@ Now that NGINX Plus is installed, browse to the NGINX configuration root,
 
    For example, it may look like this:
 
-   .. image:: images/2020-06-29_21-11.png
+   .. image:: ../images/2020-06-29_21-11.png
 
 #. In the terminal window select **File > Save** or use **ctrl+s** to save the
    file.
@@ -251,7 +251,7 @@ Now that NGINX Plus is installed, browse to the NGINX configuration root,
 
       nginx -t && nginx -s reload
 
-   .. image:: images/2020-06-29_21-13.png
+   .. image:: ../images/2020-06-29_21-13.png
 
 #. See which Dynamic modules are installed:
 

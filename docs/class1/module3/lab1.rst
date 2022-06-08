@@ -50,45 +50,45 @@ In the Optional section below, we can reproduce the same steps using
 
 #. Open **Postman** using the shortcut found on the desktop.
 
-   .. image:: images/Postman1_2020-08-26.png
+   .. image:: ../images/Postman1_2020-08-26.png
 
 #. Within the **Live Activity Monitoring** collection, click on the
    **NGINX Info** request and then click on the **Send** button. The
    **/api/api-version/nginx/** API endpoint is used to retrieve basic version,
    uptime, and identification information.
 
-   .. image:: images/Postman2_2020-08-26.png
+   .. image:: ../images/Postman2_2020-08-26.png
 
 #.  Next click on **NGINX Connections** request and then click on the **Send**
     button. The **/api/api-version/connections/** API endpoint is used to
     retrieve total active and idle connections.
 
-   .. image:: images/Postman3_2020-08-26.png
+   .. image:: ../images/Postman3_2020-08-26.png
 
 #. Click on the **NGINX Server Zones** request and then click on the **Send**
    button. The **/api/api-version/http/server_zones/** API endpoint is used to
    retrieve request and response counts for each HTTP status zone.
 
-   .. image:: images/Postman4_2020-08-26.png
+   .. image:: ../images/Postman4_2020-08-26.png
 
 #. Click on the **NGINX Cache** request and then click on the **Send** button.
    The **/api/api-version/http/caches/** API endpoint is used to retrieve
    instrumentation for each named cache zone.
 
-   .. image:: images/Postman5_2020-08-26.png
+   .. image:: ../images/Postman5_2020-08-26.png
 
 #. Click on the **NGINX Upstreams** request and then click on the **Send** 
    button. The **/api/api-version/stream/upstreams/** API endpoint is used to
    retrieve request and response counts, response time, health-check status,
    and uptime statistics per server in each TCP/UDP upstream group.
 
-   .. image:: images/Postman6_2020-08-26.png
+   .. image:: ../images/Postman6_2020-08-26.png
 
 #. Click on the **NGINX SSL** request and then click on the **Send** button.
    The **/api/api-version/ssl/** API endpoint is used to retrieve SSL/TLS 
    statistics.
 
-   .. image:: images/Postman7_2020-08-26.png
+   .. image:: ../images/Postman7_2020-08-26.png
 
 Optional: Explore the Live Activity Monitoring JSON Feed from demo.nginx.com using cURL:
 -----------------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
 #.  In the **SSH** folder found on the desktop, open the **NGINX-PLUS-1** session.
 
-    .. image:: images/2020-06-29_22-06.png
+    .. image:: ../images/2020-06-29_22-06.png
 
     .. attention::
       If you receive the PuTTY Seurity Alert click **Yes** to continue

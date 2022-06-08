@@ -1,4 +1,4 @@
-Module 1: Introduction to NGINX Concepts
+Module 1: Introduction to NGINX Plus Concepts
 ===============================================================================
 
 The purpose of this module is to introduce the concepts of NGINX Plus at a 

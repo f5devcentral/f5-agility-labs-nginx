@@ -36,13 +36,13 @@ Exercise 1: Inspect the NGINX configuration and rewrite logs
 #. In the **WORKSPACE** folder found on the desktop, open the
    **NGINX-PLUS-1** workspace shortcut in Visual Studio Code.
 
-   .. image:: images/2020-06-29_15-55.png
+   .. image:: ../images/2020-06-29_15-55.png
 
 #. In the VSCode, open a terminal window by selecting **View > Terminal.** 
    You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
 
-   .. image:: images/2020-06-29_16-02_1.png
+   .. image:: ../images/2020-06-29_16-02_1.png
       
 #. Now inspect **/etc/nginx/nginx.conf**.
    
@@ -54,7 +54,7 @@ Exercise 1: Inspect the NGINX configuration and rewrite logs
       - The **TCP/UDP proxy and load balancing block** This is an example of
         using the “stream” context for TCP and UDP load balancing.
 
-   .. image:: images/2020-06-29_16-02.png
+   .. image:: ../images/2020-06-29_16-02.png
 
 #. Select the **etc/nginx/conf.d/example.com.conf** file in the VSCode Explorer
    section. 
@@ -99,7 +99,7 @@ Exercise 1: Inspect the NGINX configuration and rewrite logs
 #. Open another Terminal in VSCode by selecting the **split terminal** icon on
    the right.
 
-   .. image:: images/2020-06-26_12-53.png
+   .. image:: ../images/2020-06-26_12-53.png
 
 #. In the terminal shell, run the following commands:
 
@@ -147,7 +147,7 @@ Exercise 2: HTTP Load Balancing
    several times and ensure that the **Server Name:** changes from **web1**, to
    **web2** and **web3** in a load balancing fashion.
 
-   .. image:: images/2020-06-26_13-04.png
+   .. image:: ../images/2020-06-26_13-04.png
 
 Exercise 3: HTTPS Load Balancing
 --------------------------------
@@ -195,4 +195,4 @@ Exercise 3: HTTPS Load Balancing
    several times and ensure that the **Server Name:** changes from **web1**, to
    **web2** and **web3** in a load balancing fashion.
 
-   .. image:: images/2020-06-26_13-04.png
+   .. image:: ../images/2020-06-26_13-04.png
