@@ -24,12 +24,10 @@ can also be deployed on many different form factors and integrates
 well into CI/CD pipelines.
 
 NGINX has become a very popular application and is the most used web server 
-on the internet today.  NGINX Instance Manager extends the existing 
+on the internet today. NGINX Instance Manager extends the existing 
 functionality of NGINX by adding an API, metrics and Analyzer functionality. 
 It is a native NGINX management solution.
-
-NGINX Controller exists for application-centric deployments and where you 
-may want a full solution that handles the data plane configuration for you. 
+ 
 NGINX Instance Manager is NGINX centric and the same skills and terms you 
 use for NGINX are applied to NGINX Instance Manager.
 
@@ -38,32 +36,27 @@ Overview
 
 This Lab guide will help you complete the following:
 
-1. Install, enable and configure NGINX Instance Manager using native linux tools.
+1. Utilize the scanner function in NGINX Instance Manager to discover new instances.
 
-2. Utilize the scanner function in NGINX Instance Manager to discover new instances.
+2. Deploy the nginx-agent to existing NGINX instances.
 
-3. Deploy the nginx-agent to existing NGINX instances.
+3. Manage configurations of NGINX instances and utilize NGINX Analyzer for suggestions.
 
-4. Manage configurations of NGINX instances and utilize NGINX Analyzer for suggestions.
+4. Explore the metrics of NGINX instances.
 
-5. Use grafana to display the metrics of NGINX instances.
-
-6. Explore the API of NGINX Instance Manager.
+5. Explore the API of NGINX Instance Manager.
 
 Getting Started
 ---------------
 
-The infrastructure is already setup for you; however, we are going to clear 
-out everything so we can practice the installation steps.  To do this, we 
-will utilize ssh to connect to the nginx-manager server and run the 
-`reset.sh` script in the home directory of the centos user.
+The infrastructure is already setup for you.
 
 The **nginx-manager** is the instance that provides the NGINX Instance Manager 
 API, metrics endpoint and user interface to use.  It also functions as the 
 reciever for the nginx-agent component on the NGINX instances.
 **Run all lab activities from the nginx-manager unless specified**
 
-Lab Topology and Credentials
+Lab Topology 
 ----------------------------
 
 The NGINX machines are there to provide a cross section of installation 
@@ -72,14 +65,13 @@ options.
 NGINX Instances:
 
 +--------------+----------------------+--------------+-------------+
-| **Instance** | **FQDN**             | **OS**       | **NGINX**   |
+| **Instance** | **IP Address**       | **OS**       | **NGINX**   |
 +--------------+----------------------+--------------+-------------+
-| OSS-Centos   | nginx5.f5demolab.com | Centos 7     | Open Source |
+| NGINX Plus   | 10.1.1.5             | Ubuntu 20.04 | Plus        |
 +--------------+----------------------+--------------+-------------+
-| OSS-Ubuntu   | nginx6.f5demolab.com | Ubuntu 18.04 | Open Source |
+| NGINX OSS    | 10.1.1.7             | Centos 7     | Open Source |
 +--------------+----------------------+--------------+-------------+
-| Plus-Ubuntu  | nginx7.f5demolab.com | Ubuntu 18.04 | Plus        |
+| NGINX OSS 2  | 10.1.1.8             | Centos 7     | Open Source |
 +--------------+----------------------+--------------+-------------+
-| Plus-Centos  | nginx8.f5demolab.com | Centos 7     | Plus        |
+| NGINX Plus 3 | 10.1.1.9             | Ubuntu 20.04 | Plus        |
 +--------------+----------------------+--------------+-------------+
-

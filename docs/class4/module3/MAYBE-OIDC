@@ -1,0 +1,146 @@
+Set up OIDC Authentication with Azure AD
+
+This guide explains how to configure OpenID Connect (OIDC) with Azure Active Directory as the identity provider.
+
+This documentation applies to NGINX Instance Manager 2.1.0 and later.
+
+Overview 
+Complete the steps in this guide to secure NGINX Instance Manager with OpenID Connect (OIDC) using Azure Active Directory (AD) as the identity provider. As an administrator, when you integrate OpenID authentication with Instance Manager, you can use role-based access control (RBAC) to limit user access to NGINX instances.
+
+There are five steps to configuring Instance Manager to use OIDC and Azure Active Directory:
+
+Add users, including their email addresses, to Azure Active Directory.
+Add groups and assign user membership in Azure Active Directory.
+Create an Application Registration for the NGINX Management Suite.
+Add groups to Instance Manager, using the same Azure Active Directory group names configured in step 2.
+Configure NGINX Plus in Instance Manager to use Azure Active Directory as the designated identity provider.
+Before You Begin 
+To complete the instructions in this guide, you’ll need to perform the following tasks:
+
+Create an Azure Active Directory developer account.
+Install NGINX Instance Manager on NGINX Plus R25 or later.
+Install the NGINX JavaScript module (njs). This module is required for handling interactions between NGINX Plus and the identity provider.
+Set up Azure Active Directory 
+To set up Azure Active Directory as the identity provider, take the following steps:
+
+Note:
+The steps to configure Azure Active Directory require a premium account. If you have a free or standard account, you’ll need to upgrade.
+Register an Application 
+
+If you don’t already use Azure, create an account.
+
+Log in to the Azure portal.
+
+Select Azure Active Directory from the list of Azure services.
+
+On the left navigation menu, in the Manage section, select App registrations.
+
+Select New registration.
+
+Complete the following:
+
+In the Name box, type the name of the application. For example, “NGINX Instance Manager”.
+In the list of account types, select Account in this organizational directory only.
+In the Redirect URI section, select Web and then type the redirect URI. For example, https://<my-nginx-instance-manager>/_codexch.
+Azure: register an application.
+
+Select Register.
+
+On the confirmation page, make a note of the following information. You’ll need to provide this information later to complete the setup.
+
+Application (client) ID
+Directory (tenant) ID
+Create Client Secret 
+
+On the left navigation menu, in the Manage section, select Certificates & secrets.
+
+Select New client secret.
+
+In the Description box, type a description for the client secret.
+
+Select Add. The client secret is added to the list with a secret string value and ID.
+
+Copy the Value for the client secret.
+
+Important:
+Save the client secret value in a safe location for future reference. Once you leave the page, you won’t be able to retrieve this value again.
+Add Owners 
+
+On the left navigation menu, in the Manage section, select Owners.
+
+Select Add owners.
+
+Search for the user you want to add, then select Select. Repeat this step for each user you’re adding.
+
+Warning:
+Make sure to add at least one user with administrative privileges. Failure to do so may lock admin users out of Instance Manager. If that happens, revert to Basic Auth to restore access.
+Add Group Claim to Token 
+
+Azure Active Directory can provide the user’s group membership information to the token for authentication and authorization.
+
+On the left navigation menu, in the Manage section, select Token configuration.
+
+Select Add groups claim.
+
+Select Groups assigned to the application.
+
+Select Add.
+
+Important:
+The only supported group claim format for groups created in Azure Active Directory are Azure AD group ObjectId.
+Assign Group to Application 
+
+By assigning a group to the application you can grant all members of that group the same access to the NMS application.
+
+On the left navigation menu, in the Manage section, select Overview.
+In the Essentials section, select the link to the right of Managed application in local directory.
+In the Getting Started section, select the Assign users and groups.
+Select Add user/group
+On the Add Assignment form, in the Users and groups section, select None Selected.
+On the Users and groups drawer, in the Search box, type the name of the group you want to assoicate with the application.
+Select the group from the list of names, and select Select.
+Select Assign.
+Create User Groups in Instance Manager 
+Create user groups in Instance Manager using the same group names you created in Azure Active directory.
+
+Log in to NGINX Instance Manager as admin using a Basic Auth account.
+Select the Settings gear icon.
+In the Settings menu, select User Groups.
+Select Create.
+On the Create Group form, in the Group Name box, type the Object ID of the group with associated users you created in Azure Active Directory.
+In the Display Name box, type the group name.
+Select Save.
+Repeat steps 5–6 until you’ve recreated all the groups you want to provide access for.
+
+Set Up NGINX Plus to Interact with the Identity Provider 
+Configure NGINX Plus to use Azure Active Directory as the identity provider.
+
+Run the following command for your distribution to install the NGINX JavaScript module (njs), which is required to handle the interaction between NGINX Plus and the identity provider.
+
+CENTOS, RHEL
+DEBIAN, UBUNTU
+sudo yum install nginx-plus-module-njs
+On the NGINX Instance Manager server, open the /etc/nginx/nginx.conf file for editing and add the following directive to the top-level (“main”) section to load the NGINX JavaScript module:
+
+load_module modules/ngx_http_js_module.so;
+Open the /etc/nms/nginx/oidc/openid_configuration.conf file for editing. Using the example openid_configuration.conf below as a reference, replace the following variables in the file with the values you saved when configuring Azure Active Directory.
+
+{tenant_key}: The Directory (tenant) ID (see Register an Application, Step 8)
+{client_key}: The Application (client) ID (see Register an Application, Step 8)
+{client_secret}: The encoded client secret (see Create Client Secret, Step 5)
+
+example openid_configuration.conf
+
+Open the /etc/nginx/conf.d/nms-http.conf file for editing. Using the example nms-http.conf below as a reference, uncomment each of the OIDC settings and comment out the settings for Basic Auth.
+
+
+example nms-http.conf
+
+Run sudo nginx -t to verify the config has no errors.
+
+Run sudo nginx -s reload to reload and apply the config.
+
+Try It Out 
+Open NGINX Instance Manager by going to https://<your-nginx-instance-manager>/ui.
+
+You should be redirected to Azure Active Directory. Log in with your Azure Active Directory email and password.
