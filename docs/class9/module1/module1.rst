@@ -251,7 +251,7 @@ frontend.conf  openid_connect.js  openid_connect.server_conf  openid_connect_con
 
 .. code:: shell 
 
-	cd /etc/nginx/cond.d/
+	cd /etc/nginx/conf.d/
 
 5. Using Nano edit the frontend.conf file
 
