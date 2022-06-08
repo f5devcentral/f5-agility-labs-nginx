@@ -13,33 +13,37 @@ externally and for agent and server communication.
 Guide
 =====
 
-NGINX Instance Manager uses an agent and server communiction path for 
+NGINX Instance Manager (NIM) uses an agent and server communication path for 
 managing NGINX Instances.  The ``nginx-agent`` communicates with the 
-``nginx-manager`` over gRPC.
+``nginx-manager`` over gRPC (TCP 443).
 
-.. image:: ./arch-high-level.png
+NIM uses ClickHouse as an analytics time-series database.
+ClicHouse can be installed with NIM in the same server, or can be accessed in an external installation.
+
+Various Automation and CI/CD pipelines can use the NIM API to perform various actions.
+
+NIM offers options to feed data and metrics to external platforms like Prometheus and visualization tools like Grafana.
+
+.. image:: ./NIM-diagram.jpeg
 
 
 Step 1
 ------
 
-Navigate to the ``nginx-manager`` instance as ``centos`` and use the home directory.
+Navigate to the ``nginx-manager`` instance as ``ubuntu`` and use the home directory.
 
-Use the SSH menu option to beceome the centos user.  If you use the web-shell it 
-defaults to the root user.  To follow best practice, please use the centos user.
+Use the SSH menu option to beceome the ubuntu user.  If you use the web-shell it 
+defaults to the root user.  To follow best practice, please use the ubuntu user.
 
-.. image:: ../module1/UDF-select-ssh.png
+.. image:: ./Access-SSH.jpg
 
 If prompted, select yes for trusting the ssh connection in your terminal.
 
-.. image:: ../module1/UDF-ssh.png
+.. image:: ./Add-SSH.png
 
-.. code-block:: shell-session
-   :emphasize-lines: 1
+``NOTE: If you haven't added SSH keys to UDF - Use the WebShell``
 
-   pwd
-   /home/centos
-
+.. image:: ./Access-SSH-2.jpg
 
 Step 2: Review the ports used
 -----------------------------
@@ -47,74 +51,18 @@ Step 2: Review the ports used
 Let's use netstat (you may need to install this on your own system) on the ``nginx-manager`` 
 instance.  We will list all ports and the processes, then use grep to filter the list.
 
-.. code-block:: shell-session
-   :emphasize-lines: 1,21
+  sudo netstat -tulpn | grep nginx
 
-   sudo netstat -tulpn
-   Active Internet connections (only servers)
-   Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
-   tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1124/sshd           
-   tcp        0      0 127.0.0.1:11000         0.0.0.0:*               LISTEN      1641/nginx-manager  
-   tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      1123/master         
-   tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:444             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:446             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:10080           0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:10443           0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 127.0.0.1:10000         0.0.0.0:*               LISTEN      1641/nginx-manager  
-   tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp6       0      0 :::22                   :::*                    LISTEN      1124/sshd           
-   tcp6       0      0 ::1:25                  :::*                    LISTEN      1123/master         
-   tcp6       0      0 :::47100                :::*                    LISTEN      1295/udf-shell      
-   udp        0      0 0.0.0.0:68              0.0.0.0:*                           906/dhclient        
-   udp        0      0 127.0.0.1:323           0.0.0.0:*                           553/chronyd         
-   udp6       0      0 ::1:323                 :::*                                553/chronyd         
-   sudo netstat -tulpn | grep nginx-manager
-   tcp        0      0 127.0.0.1:11000         0.0.0.0:*               LISTEN      1641/nginx-manager  
-   tcp        0      0 127.0.0.1:10000         0.0.0.0:*               LISTEN      1641/nginx-manager 
+  tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      726/nginx: master p::
 
-In the list above, we can see ``nginx-manager`` is listening on ports 10000 and 11000.  11000 is 
-used by the API, UI, and metrics listener externally.  10000 is used by the agent and server to 
-communicate over gRPC.
+Nginx Instance Manager ingests data from the agents and exposes the UI via TCP 443.
 
-Note that the server is listening to 127.0.0.1 only.  This is because we do not authenticate traffic 
-natively (not yet anyway). NGINX is a great solution for web applications and we are using NGINX for 
-this purpose with NGINX Instance Manager.
+For documentation see: https://docs.nginx.com/nginx-instance-manager/about/technical-specifications/
 
-Since we have NGINX already running on ``nginx-manager`` let's look at the ports it is using also.
+Nginx Instance Manager also uses ClickHouse as an analytics time-series database. 
 
-.. code-block:: shell-session
-   :emphasize-lines: 1
+For documentation on ClickHouse see here: https://docs.nginx.com/nginx-instance-manager/admin-guide/configure-clickhouse/
 
-   sudo netstat -tulpn | grep nginx:
-   tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:444             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:446             0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:10080           0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:10443           0.0.0.0:*               LISTEN      1328/nginx: master  
-   tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN      1328/nginx: master  
 
-The ports above are from NGINX and are briefly described in the table below.  We will use them for the 
-examples in the Exercises in Module 3.
-
-+-------+----------------------------+-----------------+-----+------+
-|  Port |           Purpose          |     Upstream    | SSL | Auth |
-+=======+============================+=================+=====+======+
-| 443   | UI and API with http2      | 127.0.0.1:11000 | Yes | No   |
-+-------+----------------------------+-----------------+-----+------+
-| 444   | UI and API with basic auth | 127.0.0.1:11000 | Yes | Yes  |
-+-------+----------------------------+-----------------+-----+------+
-| 445   | UI and API with JWT        | 127.0.0.1:11000 | Yes | Yes  |
-+-------+----------------------------+-----------------+-----+------+
-| 446   | swaggerui rewrite for UDF  | 127.0.0.1:11000 | Yes | No   |
-+-------+----------------------------+-----------------+-----+------+
-| 10080 | gRPC listener for agent    | 127.0.0.1:10000 | No  | No   |
-+-------+----------------------------+-----------------+-----+------+
-| 10443 | gRPC listener for agent    | 127.0.0.1:10000 | Yes | No   |
-+-------+----------------------------+-----------------+-----+------+
-| 8080  | Plus API                   | -               | No  | No   |
-+-------+----------------------------+-----------------+-----+------+
 
 
