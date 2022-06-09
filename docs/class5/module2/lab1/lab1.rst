@@ -190,8 +190,14 @@ Steps:
         .. note:: The line ``proxy_set_header Host no-waf.arcadia-finance.io;`` will tell the Ingress Controller the host name that we are accessing.
 
     #.  Configure nginx app protect logging to log all requests.
-    
-        Edit the file: ``/etc/app_protect/conf/log_default.json`` replace ``"request_type": "illegal"`` with  ``"request_type": "all"``
+
+        Replace the file: ``/etc/app_protect/conf/log_default.json`` an updated file that replaces ``"request_type": "illegal"`` with  ``"request_type": "all"``
+
+        .. code-block:: bash
+
+            # vscode does not allow to you to write as root, must change permissions:
+            sudo chown -R centos:centos /etc/app_protect
+            cp /home/centos/lab-files/log-default.json /etc/app_protect/conf/log_default.json
 
         .. code-block:: js
              :caption: log_default.json
@@ -321,7 +327,7 @@ Steps:
             Alternatively, you can also use:
             sudo nginx -s reload
 
-            .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
+        .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
 
     #.  Wait a few seconds and check the **new** signatures package date:
 
