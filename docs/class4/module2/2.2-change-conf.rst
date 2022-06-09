@@ -19,29 +19,26 @@ Step 1: Preparations
 
 To follow this Exercise we need to open a few windows in the browser and terminal.
 
-Navigate to the UDF Instances and look for ``nginx5 - NGINX OSS Centos``.  Select 
+Navigate to the UDF Instances and look for ``NGINX Plus - 3``.  Select 
 the ``ACCESS`` dropdown and open the ``SAMPLE WEB PAGE`` selection.
 
 .. image:: ./UDF-nginx5-sample.png
 
-A default web page that says ``Welcome to CentOS`` should appear.  This is the default 
-web page added by NGINX when you install the version provided by CentOS 7.
+A default web page that says ``Welcome to CentOS`` should appear.
 
 .. image:: ./UDF-nginx5-welcome.png
 
 Leave this webpage open in a tab and navigate back to the UDF environment.
 
-Open a terminal SSH connection to nginx5.  You can either use the SSH option in the ``ACCESS`` 
-menu or ssh to ``nginx5`` from the ``nginx-manager`` terminal as the ``centos`` user.
-
-.. note::
-
-    If you used the webshell and didn't switch to the ``centos`` user you won't 
-    be able to connect.  Run the following command to switch to the ``centos`` user 
-    before you run the ``ssh`` command: ``su centos``.
 
 Finally, make sure you have the NGINX Instance Manager user interface open. 
-Select the inventory list and click the editor icon on the right side for ``OSS-Centos``.
+
+.. image:: ./UI-home.png
+
+Click under modules, then instances and click under actions edit config on Ubuntu.
+
+.. image:: ./UI-instances.png
+
 You should see an editor pane and an ``nginx.conf`` file displayed.
 
 .. image:: ./UI-editor.png
@@ -50,36 +47,20 @@ Step 2: Change the default website
 ----------------------------------
 
 We want to change the default website for the Sample web page shown above.
-Using the editor in the user interface, select the dropdown include menu and 
-navigate to ``default.conf``.
+Using the editor in the user interface navigate to ``default.conf``.
 
 .. image:: ./UI-editor-default.png
 
-Scroll to the bottom of the conf file look for the default location block and 
+Scroll to the default location block and look for
 the ``index index.html;`` line.
 
 .. code-block:: nginx
-    :emphasize-lines: 22,23
+    :emphasize-lines: 8,9
 
     server {
         listen 0.0.0.0:8081;
         server_name default_server;
 
-        #@ api
-        location /api/v1 {
-            return 200 "{}\n";
-        }
-
-        #@ corp
-        location /corp/media {
-            return 403 "TLA FTW\n";
-        }
-
-        #@ unimplemented
-        location /unimplemented {
-            return 500 "not implemented\n";
-        }
-    #@ default
         location / {
             root /usr/share/nginx/html;
             index index.html;
@@ -100,27 +81,12 @@ We want to comment the ``index index.html;`` line and uncomment the
 The ``default.conf`` should look like this
 
 .. code-block:: nginx
-    :emphasize-lines: 22,23
+    :emphasize-lines: 8,9
 
     server {
         listen 0.0.0.0:8081;
         server_name default_server;
 
-        #@ api
-        location /api/v1 {
-            return 200 "{}\n";
-        }
-
-        #@ corp
-        location /corp/media {
-            return 403 "TLA FTW\n";
-        }
-
-        #@ unimplemented
-        location /unimplemented {
-            return 500 "not implemented\n";
-        }
-    #@ default
         location / {
             root /usr/share/nginx/html;
             # index index.html;
@@ -129,7 +95,7 @@ The ``default.conf`` should look like this
 
     }
 
-Click the ``Save`` button at the top.
+Click the ``Save as`` button at the top then save.
 
 .. image:: ./UI-nginx5-save.png
 
@@ -167,19 +133,19 @@ then publishing them in two different actions.
     Try to revert and redo the change and see if you can refresh the page before 
     the change is made.  With the default polling at 1s, you need to be very quick.
     NGINX Instance Manager will likely be much faster at making changes than 
-    existing automation tools but you do not have to use NGINX Instnace Manager to 
+    existing automation tools but you do not have to use NGINX Instance Manager to 
     make changes, you can use your own tooling or a combination of the two.
 
 Step 4: Adding files
 --------------------
 
-For this step, we are going to use the editor and the ssh session to ``nginx5``.
+For this step, we are going to use the editor and the Web Shell for ``NGINX Plus - 3``.
 
-In the editor click the icon with the ``plus`` symbol on a sheet of paper to add a new file.
+In the editor click the icon ``Add File``.
 
 .. image:: ./UI-nginx5-add.png
 
-Add a new file called ``test.conf`` in the window and click ``Add``.
+Add a new file called ``test.conf`` in the window and click ``Create``.
 
 .. image:: ./UI-nginx5-add-test.png
 
@@ -187,7 +153,7 @@ Notice we have a new editor window that has our new file ``test.conf`` shown.
 
 .. image:: ./UI-nginx5-test.png
 
-There is a default comment added explaining you must add the include directive.
+You must add the include directive to start using this file.
 Let's select the ``nginx.conf`` file from the includes dropdown menu and add this.
 
 .. code-block:: nginx
@@ -239,14 +205,13 @@ Click Publish.
 
 You can also see it's in the dropdown for inclues if you want.
 
-Navigate to the nginx5 instance with SSH and see if the file is present.
+Navigate to the NGINX Plus - 3 instance using the Web Shell and see if the file is present.
 
 .. code-block:: shell-session
     :emphasize-lines: 1
 
-    cat /etc/nginx/test.conf
-    # Use the include directive to start using this file: 
-    # include test.conf;
+    ls /etc/nginx/test.conf
+    # conf.d  fastcgi_params  mime.types  modules  nginx.conf  scgi_params  test.conf  uwsgi_params
 
 You can see we have successfully added a file.
 
@@ -255,7 +220,7 @@ Step 5: Remove a file
 
 Since this file is useless, let's remove it. 
 
-Navigate to the editor for ``nginx5`` in the user interface 
+Navigate to the editor for ``ubuntu`` in the user interface 
 and use the drop-down menu to select ``test.conf``.
 Now select the delete icon which resembles a trash can.
 
@@ -265,7 +230,7 @@ Confirm the selection.
 
 .. image:: ./UI-nginx5-delete-test.png
 
-Now select ``nginx.conf`` in the include dropdown menu for ``nginx5`` and remove the line we just added for including test.conf.
+Now select ``nginx.conf`` in the include dropdown menu for ``NGINX Plus - 3`` and remove the line we just added for including test.conf.
 ``nginx.conf`` should look like the ``conf`` below.
 
 .. code-block:: nginx
@@ -316,7 +281,7 @@ Click ``Save`` and then click ``Publish``.  This should remove the include file.
     If you have existing automation tools, the removal of files is usually 
     easy to incorporate already.
 
-Navigate to the nginx5 instance with ssh and see if the files is still present.
+Navigate to the NGINX Plus - 3 instance using the Web Shell and see if the files is still present.
 
 .. code-block:: shell-session
     :emphasize-lines: 1
@@ -329,16 +294,17 @@ Step 6: Change files outside nginx-manager
 
 We build NGINX Instance Manager with the belief that you will use other tools and 
 already have something that defines the ``single source of truth`` for your NGINX 
-conf files.  This means NGINX Instance Manager must respond to changes that occur 
+conf files. This means NGINX Instance Manager must respond to changes that occur 
 outside of it.
 
-This step tests this assumption by change a file in the ssh terminal and in the 
+This step tests this assumption by changing a file in the web shell and in the 
 editor at the same time to see what happens if we have multiple edits occur.
 
-Let's use a simple example and focus on the ``nginx.conf`` file and ``nginx5``. 
+Let's use a simple example and focus on the ``nginx.conf`` file and ``NGINX Plus - 3``. 
+
 We can simply change the error.log name by inserting a value.
 
-Click the ``Reset to current`` in the editor and make sure you are using ``OSS-Centos``.
+Click the ``Revert`` button in the editor.
 
 .. image:: ./UI-nginx5-reset-current.png
 
@@ -390,14 +356,14 @@ Change the ``error_log`` line to a new name ``error2.log``.
         # for more information.
         include /etc/nginx/conf.d/*.conf;
 
-Go ahead and click the ``Save`` button but do NOT click ``Publish`` yet.
+Go ahead and click the ``Save as`` button but do NOT click ``Publish`` yet.
 
 .. note::
 
     If you did, simply change the line back to ``error.log`` and Save and Publish.
     Then change it to ``error2.log`` and click ``Save``.
 
-SSH to ``nginx5`` and run the following command to see what changed.
+Use the Web Shell for ``NGINX Plus-2`` and run the following command to see what changed.
 
 .. code-block:: shell-session
     :emphasize-lines: 1,4
@@ -477,7 +443,7 @@ Save the file and issue a reload to nginx so it loads the new configuration.
         error_log /var/log/nginx/app-server-error.log notice;
 
 .. note::
-    
+
     We use ``systemctl reload nginx`` to make the change as opposed to
     ``nginx -s reload``.  This is because systemd handles our ``pid`` for 
     us and running the ``nginx -s reload`` command does not.  Now you know 
@@ -496,7 +462,9 @@ NGINX Instance Manager detects changes made while editing and asks if you want t
 cancel the publish or overwrite what is there.  Since we know what is there, select 
 overwrite.  You should see the ``error2.log`` entry in the editor.
 
-Let's look at the ssh session and see what the nginx instance is running now.
+.. image:: ./UI-nginx5-overwrite2.png
+
+Let's look the Web Shell and see what the nginx instance is running now.
 
 .. code-block:: shell-session
     :emphasize-lines: 1
@@ -511,4 +479,4 @@ Let's look at the ssh session and see what the nginx instance is running now.
 We have published our change successfully.  This step demonstarted how we 
 can detect changes made outside of NGINX Instance Manager.
 
-
+.. image:: ./UI-nginx5-overwrite3.png

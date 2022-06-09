@@ -8,5 +8,3 @@ Instance Manager (``nginx-manager``).
    :maxdepth: 1
 
    3.0-architecture
-   3.1-encryption
-   3.2-authentication

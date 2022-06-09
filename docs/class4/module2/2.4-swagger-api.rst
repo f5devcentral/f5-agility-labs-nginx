@@ -24,35 +24,30 @@ Step 1: Explore the Swagger UI API Page
 
 For this step, open the user interface for ``nginx-manager`` in 
 the UDF dashboard.  You can select the ``ACCESS`` menu under 
-``NGINX Manager Server`` and the ``INSTANCE MANAGER UI`` selection.
+``NGINX Manager Server`` and the ``NGINX INSTANCE MANAGER UI`` selection.
 This will open the user interface in a new browser tab.
 
-Navigate to the Settings section and select the API top-level 
-selection to navigate to the ``Settings - API`` page.  Your window 
+Navigate to the Docs module under the drop down menu.  Your window 
 should look similar to the one below.
 
 .. image:: ./UI-settings-API.png
 
-On this page select the ``Open Swagger`` button and you should 
-see a page similar to one below display.  We will use this page 
-for the majority of the lesson.
-
-.. image:: ./UI-swagger-ui.png
+We will use this page for the majority of the lesson.
 
 Step 2: Get information on the system
 -------------------------------------
 
 The swagger-ui page is an easy way to test the API on your ``nginx-manager`` 
-instance.  Let's explore the ``AboutService`` section first.
+instance.  Let's explore the ``Catalogs`` section first.
 
-Click on the ``GET`` button for ``/api/v0/about/system``
+Click on the ``GET`` button for ``/analytics/catalogs/metrics``
 
 .. image:: ./API-try.png
 
 This action just explains the API that is there and the sample information 
 it provides.  We can also use this page to make real API calls.
 
-Click on ``Try it out`` at the top right part of the API section.
+Click on the try it button then click the ``Execute`` button and scroll down to see if we captured some results.
 
 .. image:: ./API-execute.png
 
@@ -60,17 +55,13 @@ Notice we have a curl command example.  You can copy and paste that line
 into an instance with ``curl`` installed and try it yourself.  The page 
 allows us to try it also.
 
-Click on ``execute`` and scroll down to see if we captured some results.
-
-.. image:: ./API-about-results.png
-
 Notice how we now see information in the details pane.  If you look closely 
 you can see this is actual data from our installed instance.
 
 .. note::
 
     The UDF environment is proxying traffic through a strange long URL. 
-    In your environment, this should URL won't be present in the same way 
+    In your environment, this URL won't be present in the same way 
     and should come across as ``nginx-manager.f5demolab.com`` or similar.
 
     If you want, try copying the curl command and replacing the URL with 
@@ -79,34 +70,25 @@ you can see this is actual data from our installed instance.
 Step 3: Get a list of instances
 -------------------------------
 
-Let's move on to something more useful.  In the current version we need 
-to call every instance using an ``instance_id``.  
-
-Every instance has an ``instance_id`` assigned by ``nginx-manager`` when 
-first contact is made between the agent and the server.  The ``instance_id`` 
-is unique for each instance managed.  We are going to find the ``instance_id`` 
-for the ``Centos-OSS`` server using the API.
+Let's move on to something more useful. Every instance has a ``systemUid`` assigned by ``nginx-manager`` when 
+first contact is made between the agent and the server. The ``systemUid`` 
+is unique for each instance managed.  We are going to find the ``systemUid`` ``uid``
+for the ``Ubuntu`` server using the API.
 
 .. note::
 
-    You can write your own methods to use the hostname to extract the ``instance_id`` 
-    but for this exercise we will use the actual value for ``instance_id``
+    You can write your own methods to use the hostname to extract the ``systemUid`` 
+    but for this exercise we will use the actual value for ``systemUid``
 
-Scroll to the ``InventoryService`` section and find the API call for 
-``GET /api/v0/instances``.  Expand that call and push the ``Try it out`` 
+Scroll to the ``NGINX Instances`` section and find the API call for 
+``GET /instances``.  Expand that call and click the ``Try it out`` 
 button.
 
-.. image:: ./API-instances-get.png
-
-We can leave the fields ``limit`` and ``offset`` blank for now.  They can be 
-used to limit the amount of data returned in case you manage thousands of 
-instances (which you can do).
-
-Click ``Execute`` and examine the results for the ``OSS-Centos`` instance.
-When you find it, copy the ``instance_id`` value down and we will use it 
+Click ``Execute`` and examine the results for the ``ubuntu`` instance.
+When you find it, copy the ``systemUid`` and ``uid`` value down and we will use it 
 for the Step 4.
 
-.. image:: ./API-instances-id.png
+.. image:: ./API-instances-get.png
 
 .. note::
 
@@ -116,19 +98,19 @@ for the Step 4.
 Step 4: Get the configuration of an instance
 --------------------------------------------
 
-Make sure you have the ``instance_id`` from Step 3 for ``OSS-Centos``.
+Make sure you have the ``systemUid`` and ``uid`` from Step 3 for ``ubuntu``.
 
-Scroll down on the Swagger-UI page in the ``InventoryService`` section 
-to ``GET /api/v0/instances/{instance_id}/config``.  Expand that API 
+Scroll down on the Swagger-UI page in the ``NGINX Instances`` section 
+to ``GET /systems/{systemUid}/instances/{nginxUid}/config``. Expand that API 
 and push the ``Try it out`` button.
 
 .. image:: ./API-config-try.png
 
-In the parameters section, the field ``instance_id`` is in bold and 
-has a red ``*`` indicating it is required.  The GET command requires 
-we enter the ``instance_id``.
+In the parameters section, the field ``systemUid`` and ``uid`` are in bold and 
+have a red ``*`` indicating it is required.  The GET command requires 
+we enter the ``systemUid`` and ``uid``.
 
-Paste or type in the ``instance_id`` from Step 3 and select ``Execute``
+Paste or type in the ``systemUid`` and ``uid`` from Step 3 and select ``Execute``
 
 .. note::
 
@@ -157,23 +139,23 @@ In the response body section, find the ``name:`` that says
 .. image:: ./API-config-default-copy.png
 
 Let's use the contents to see if the base64 string makes sense. We can use a 
-website or go on the ``nginx-manager`` shell CLI to do this.
+website or go on the ``nginx-manager`` Web Shell CLI to do this.
 
-Option 1: website
+Option 1: Use website
 =================
 
 Open a new window 
 and navigate to https://www.base64decode.org/
 
-Paste the value of the contents into the window and slect the ``< DEVODE >`` button. 
+Paste the value of the contents into the window and select the ``< DECODE >`` button. 
 The results in the bottom panel should show the default.conf we worked with earlier.
 
 .. image:: ./API-base64-decode.png
 
-Option 2: shell
+Option 2: Use Web Shell CLI
 ===============
 
-As the ``centos`` user on ``nginx-manager`` run the following command.  Put in the 
+As the ``ubuntu`` user on ``nginx-manager`` run the following command. Put in the 
 value you copied from the response instead of using the one below (which may or may 
 not match your default.conf contents).
 
@@ -186,21 +168,6 @@ not match your default.conf contents).
         listen 0.0.0.0:8081;
         server_name default_server;
 
-        #@ api
-        location /api/v1 {
-            return 200 "{}\n";
-        }
-
-        #@ corp
-        location /corp/media {
-            return 403 "TLA FTW\n";
-        }
-
-        #@ unimplemented
-        location /unimplemented {
-            return 500 "not implemented\n";
-        }
-    #@ default
         location / {
             root /usr/share/nginx/html;
             # index index.html;
@@ -214,12 +181,11 @@ Step 5: Push a change to the configuration
 ------------------------------------------
 
 Using notepad or some editor, copy the decoded values of the 
-``default.conf`` file and make an edit. Something you might notice.  
+``default.conf`` file and make an edit, something you might notice.  
 
 The index lines under the  default location ``/`` can be used. 
-If the ``sample.html`` is uncommented, a sample web page will have 
-some garbage data on the ``OSS-Centos`` instance.  If it is commented 
-but the ``index.html`` is uncommented, the sample web page will 
+If the ``sample.html`` is uncommented, a sample web page will be on the ``ubuntu`` instance. 
+If it is commented but the ``index.html`` is uncommented, the sample web page will 
 have a default ``Welcome to CentOS`` page instead.
 
 You can check which page is there by going to the UDF Dashboard and 
@@ -231,7 +197,7 @@ The custom page using ``sample.html`` looks like this:
 
 .. image:: ./UDF-nginx5-custom.png
 
-The ``Welcome to CentOS`` page looks like this:
+The ``Welcome to CentOS page looks`` like this:
 
 .. image:: ./UDF-nginx5-welcome.png
 
@@ -248,7 +214,7 @@ API call.
 
 .. image:: ./API-base64-encode.png
 
-Option 2: Use CLI
+Option 2: Use Web Shell CLI
 =================
 
 Open a new file called ``encode.txt`` on the ``nginx-manager`` command line.
@@ -263,26 +229,18 @@ copy the output to use in the API call.
         listen 0.0.0.0:8081;
         server_name default_server;
 
-        #@ api
-        location /api/v1 {
-            return 200 "{}\n";
-        }
-
-        #@ corp
-        location /corp/media {
-            return 403 "TLA FTW\n";
-        }
-
-        #@ unimplemented
-        location /unimplemented {
-            return 500 "not implemented\n";
-        }
-    #@ default
         location / {
             root /usr/share/nginx/html;
             index index.html;
             # index sample.html; #  Page with lots of info
         }
+ 
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+  
+        
 
     }
 
@@ -290,31 +248,49 @@ copy the output to use in the API call.
     :emphasize-lines: 1
 
     base64 encode.txt 
-    c2VydmVyIHsKICAgIGxpc3RlbiAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZXJfbmFtZSBkZWZhdWx0
-    X3NlcnZlcjsKCiAgICAjQCBhcGkKICAgIGxvY2F0aW9uIC9hcGkvdjEgewogICAgICAgIHJldHVy
-    biAyMDAgInt9XG4iOwogICAgfQoKICAgICNAIGNvcnAKICAgIGxvY2F0aW9uIC9jb3JwL21lZGlh
-    IHsKICAgICAgICByZXR1cm4gNDAzICJUTEEgRlRXXG4iOwogICAgfQoKICAgICNAIHVuaW1wbGVt
-    ZW50ZWQKICAgIGxvY2F0aW9uIC91bmltcGxlbWVudGVkIHsKICAgICAgICByZXR1cm4gNTAwICJu
-    b3QgaW1wbGVtZW50ZWRcbiI7CiAgICB9CiAjQCBkZWZhdWx0CiAgICBsb2NhdGlvbiAvIHsKICAg
-    ICAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaHRtbDsKICAgICAgICBpbmRleCBpbmRleC5odG1s
-    OwogICAgICAgICMgaW5kZXggc2FtcGxlLmh0bWw7ICMgIFBhZ2Ugd2l0aCBsb3RzIG9mIGluZm8K
-    ICAgIH0KCn0KCg==
+    c2VydmVyIHsKICAgIGxpc3RlbiAgICAgICAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZX
+    JfbmFtZSAgZGVmYXVsdF9zZXJ2ZXI7CgogICAgI2FjY2Vzc19sb2cgIC92YXIvbG9n
+    L25naW54L2hvc3QuYWNjZXNzLmxvZyAgbWFpbjsKCiAgICBsb2NhdGlvbiAvIHsKIC
+    AgICAgICByb290ICAgL3Vzci9zaGFyZS9uZ2lueC9odG1sOyAKCSAgICBpbmRleCBp
+    bmRleC5odG1sOyAKCSAgICAjaW5kZXggc2FtcGxlLmh0bWw7ICAjICBQYWdlIHdpdG
+    ggbG90cyBvZiBpbmZvCiAgICB9CgogICAgI2Vycm9yX3BhZ2UgIDQwNCAgICAgICAg
+    ICAgICAgLzQwNC5odG1sOwoKICAgICMgcmVkaXJlY3Qgc2VydmVyIGVycm9yIHBhZ2
+    VzIHRvIHRoZSBzdGF0aWMgcGFnZSAvNTB4Lmh0bWwKICAgICMKICAgIGVycm9yX3Bh
+    Z2UgICA1MDAgNTAyIDUwMyA1MDQgIC81MHguaHRtbDsKICAgIGxvY2F0aW9uID0gLz
+    UweC5odG1sIHsKICAgICAgICByb290ICAgL3Vzci9zaGFyZS9uZ2lueC9odG1sOwog
+    ICAgfQoKICAgICMgcHJveHkgdGhlIFBIUCBzY3JpcHRzIHRvIEFwYWNoZSBsaXN0ZW
+    5pbmcgb24gMTI3LjAuMC4xOjgwCiAgICAjCiAgICAjbG9jYXRpb24gfiBcLnBocCQg
+    ewogICAgIyAgICBwcm94eV9wYXNzICAgaHR0cDovLzEyNy4wLjAuMTsKICAgICN9Cg
+    ogICAgIyBwYXNzIHRoZSBQSFAgc2NyaXB0cyB0byBGYXN0Q0dJIHNlcnZlciBsaXN0
+    ZW5pbmcgb24gMTI3LjAuMC4xOjkwMDAKICAgICMKICAgICNsb2NhdGlvbiB+IFwucG
+    hwJCB7CiAgICAjICAgIHJvb3QgICAgICAgICAgIGh0bWw7CiAgICAjICAgIGZhc3Rj
+    Z2lfcGFzcyAgIDEyNy4wLjAuMTo5MDAwOwogICAgIyAgICBmYXN0Y2dpX2luZGV4IC
+    BpbmRleC5waHA7CiAgICAjICAgIGZhc3RjZ2lfcGFyYW0gIFNDUklQVF9GSUxFTkFN
+    RSAgL3NjcmlwdHMkZmFzdGNnaV9zY3JpcHRfbmFtZTsKICAgICMgICAgaW5jbHVkZS
+    AgICAgICAgZmFzdGNnaV9wYXJhbXM7CiAgICAjfQoKICAgICMgZGVueSBhY2Nlc3Mg
+    dG8gLmh0YWNjZXNzIGZpbGVzLCBpZiBBcGFjaGUncyBkb2N1bWVudCByb290CiAgIC
+    AjIGNvbmN1cnMgd2l0aCBuZ2lueCdzIG9uZQogICAgIwogICAgI2xvY2F0aW9uIH4g
+    L1wuaHQgewogICAgIyAgICBkZW55ICBhbGw7CiAgICAjfQoKICAgICMgZW5hYmxlIC
+    9hcGkvIGxvY2F0aW9uIHdpdGggYXBwcm9wcmlhdGUgYWNjZXNzIGNvbnRyb2wgaW4g
+    b3JkZXIKICAgICMgdG8gbWFrZSB1c2Ugb2YgTkdJTlggUGx1cyBBUEkKICAgICMKIC
+    AgICNsb2NhdGlvbiAvYXBpLyB7CiAgICAjICAgIGFwaSB3cml0ZT1vbjsKICAgICMg
+    ICAgYWxsb3cgMTI3LjAuMC4xOwogICAgIyAgICBkZW55IGFsbDsKICAgICN9CgogIC
+    AgIyBlbmFibGUgTkdJTlggUGx1cyBEYXNoYm9hcmQ7IHJlcXVpcmVzIC9hcGkvIGxv
+    Y2F0aW9uIHRvIGJlCiAgICAjIGVuYWJsZWQgYW5kIGFwcHJvcHJpYXRlIGFjY2Vzcy
+    Bjb250cm9sIGZvciByZW1vdGUgYWNjZXNzCiAgICAjCiAgICAjbG9jYXRpb24gPSAv
+    ZGFzaGJvYXJkLmh0bWwgewogICAgIyAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaH
+    RtbDsKICAgICN9Cn0K
 
 Keep the encoded base64 in a notepad or a way to copy and paste.  Click the copy button 
 on the results in the API call to copy the entire response for now.
 
 .. image:: ./API-base64-copyall.png
 
-Navigate to the ``POST /api/v0/isntances/{instance_id}/config`` API call and expand it. 
-Click the ``Try it out`` button and paste in the ``instance_id`` from before and also 
+Navigate to the ``POST /systems/{systemUid}/instances/{nginxUid}/config`` API call and expand it. 
+Click the ``Try it out`` button and paste in the ``systemUid`` and ``uid`` from before and also 
 the entire contents of the ``GET`` command.
 
 .. image:: ./API-post-paste.png
-
-Scroll down and notice the results are simple a blank ``err:`` if it succeeded.  All 
-we did was push the same config to the instance.
-
-.. image:: ./API-post-err.png
 
 Now go into the ``body`` parameter and change the value for ``contents:`` under 
 ``default.conf`` with the value we encoded.
@@ -323,16 +299,14 @@ Now go into the ``body`` parameter and change the value for ``contents:`` under
 
 Hit ``Execute`` and check there is no ``error``.
 
-This saves the new configuration in the database but it isn't published yet. To 
-publish the new configuration we will use the publish API.
+.. image:: ./API-post-execute.png
 
-Scroll down to the API ``POST /api/v0/instances/{instance_id}/config/publish`` and 
-click ``Try it out``.
-Paste in the ``instance_id`` and hit ``Execute``.
+Now the new configuration is deployed, let's make sure it was applied successfully. Lets copy the deploymentUID and paste into the /systems/instances/deployments/{deploymentsUid}
+endpoint and hit ``Execute``
 
-.. image:: ./API-publish.png
+.. image:: ./API-post-deploy.png
 
-Now the new configuration is published.
+Now the new configuration is successfully deployed.
 
 Hit refresh on the sample web page  we opened earlier (likely in another tab) 
 and notice the page should now display the ``Welcome to CentOS`` page.

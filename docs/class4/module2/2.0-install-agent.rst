@@ -6,8 +6,7 @@ Exercise 2.0: Installing NGINX Agent
 Objective
 =========
 
-Install the ``nginx-agent`` on multiple instances and configure 
-the agent to work with existing NGINX instances and ``nginx-manager``
+Install the ``nginx-agent`` and configure it to work with existing NGINX instance.
 
 Guide
 =====
@@ -18,76 +17,50 @@ follows a process that is very similar to installing
 
 Step 1
 ------
+We are going to use NGINX Plus - 3 Server 10.1.1.9 and install the nginx-agent to manage the NGINX instances running on this host. Access the deployment tab and select the NGINX Plus – 3 Server Access menu then click WEB SHELL.
 
-Navigate to the ``nginx-manager`` instance as ``centos`` and use the home directory.
+.. image:: ./UDF-nginx5-sample.png
 
-Use the SSH menu option to beceome the centos user.  If you use the web-shell it 
-defaults to the root user.  To follow best practice, please use the centos user.
+Copy the below command syntax which you will use to install the nginx-agent:
 
-.. image:: ../module1/UDF-select-ssh.png
+..note::
 
-If prompted, select yes for trusting the ssh connection in your terminal.
+   This command has been adjusted around this lab’s unique network environment. Please use the command below and not the command (with the UDF FQDN URL) from the NIM UI Status page.
+   ``sudo curl -k https://10.1.1.4/install/nginx-agent | sudo sh``
 
-.. image:: ../module1/UDF-ssh.png
+Once the script has completed you should see the following output which indicates the agent was successfully installed and instructions on how to start the software:
 
-.. code-block:: shell-session
-   :emphasize-lines: 1
+.. image:: ../module2/agent_complete.png
 
-   pwd
-   /home/centos
 
-Step 2: Investigate the automation script
------------------------------------------
-
-Look at the ``reset.sh`` script in the local directory.
-
-.. code-block:: shell-session
-
-   less reset.sh
-
-Look at the ``install-agent()`` section in particular.
-There are a number of activities going on.  We are looping through each 
-nginx instance by number and performing several actions
-
-- copying a custom ``nginx-agent.conf`` file to the home directory of the instance
-- creating ``/etc/ssl/nginx-manager`` if it doesn't exist
-- copying the CA certificate and the specific nginx certificate and key for mTLS
-- installing the ``nginx-agent`` package
-- moving the custom ``nginx-agent.conf`` to the correct location and name
-- moving the certificate and private key and saving them as ``agent.crt`` and ``agent.key`` in the ``/etc/ssl/nginx-manager/`` directory.
-- enabling the ``nginx-agent`` service and starting the ``nginx-agent`` service
-
-Step 3: Automate the installation of nginx-agent
+Step 2: Enable and start the service
 ------------------------------------------------
 
-It's time to run the script.  From the centos home directory run the following and notice 
-how the script loops through each instance performing the functions from Step 2.
+Run the following command ``sudo systemctl start nginx-agent``
+Once that is executed confirm the service is running by executing the following command :
+``sudo systemctl status nginx-agent``. 
 
-.. code-block:: shell-session
+.. image:: ../module2/enable_agent.png
 
-   ./reset.sh install-agent
 
-Wait for the script to end and the ``nginx-agent`` should be installed and running on four instances.
+Step 3: Look at details of an NGINX instance 
+--------------------------------------------
 
-Step 4: Navigate to NGINX Manager user interface in UDF
--------------------------------------------------------
+Run another scan test and notice 10.1.1.9 is in a managed status.
 
-Navigate to the Inventory page and look for the four instances we added in Exercise 2.0.
+.. image:: ./UI-managed.png
+
+Navigate to the Instances page and look for the instance we added.
 
 .. image:: ./UI-inventory-list.png
 
 Notice how we have columns that show Hostname and Type. 
 Our instances are named according to the Operating System and NGINX type they run.
 
-Let's focus on ``OSS-Centos`` which is running NGINX Open Source and Centos 7.
-
-Step 5: Look at details of an NGINX instance 
---------------------------------------------
-
-Click the Hostname of the instance ``OSS-Centos`` and a panel on the right side of the screen will appear with more information on the instance.
+Let's focus on the instance ``ubuntu`` which is running NGINX 1.21.3. Click the Hostname and more information on the instance will appear, scroll down to Network Interface and notice this is our 10.1.1.9 instance.
 
 .. image:: ./UI-details.png
 
-Click outside the window to return to the inventory list.
+Click the instances tab to return to the instances list.
 
 

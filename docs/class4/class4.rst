@@ -1,15 +1,15 @@
 Class4 - Introduction to NGINX Instance Manager
 ===============================================
 
-.. note:: **Last Updated: 03/16/2021**
+.. note:: **Last Updated: 06/8/2022**
 
 During this lab you will make use of NGINX Instance Manager 
 to discover, manage and produce metrics for NGINX Open Source 
 and NGINX Plus instances.
 
-Instructors at Agility 2021:
+Instructors at Agility 2022:
 
--  Tom Gamull <t.gamull@f5.com>
+-  Eliezer Marte <e.marte@f5.com>
 
 Expected time to complete: **1 hour, 30 minutes**
 
