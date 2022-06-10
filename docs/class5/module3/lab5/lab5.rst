@@ -18,7 +18,7 @@ In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is
 
 .. note:: The goal of this lab is not understand what is possible. Feel free to browse through GitLab to see how it all works.
 
-**Check the Gitlab CI file**
+**Review the following Gitlab CI file**
 
 .. code-block:: yaml
 
@@ -66,9 +66,14 @@ In this lab, we will deploy a Docker NAP container with a CI/CD pipeline. NAP is
 
 Steps:
 
-    #.  On the jumphost, open Firefox > ``Gitlab``
+    #.  From the Docker VM, delete any running app-protect containers prior to proceeding.
 
+        .. code-block:: bash
+            docker rm -f app-protect
+
+    #.  On the jumphost, open Firefox > ``Gitlab``
         #. If Gitlab is not available (502 error), restart the GitLab Docker container. SSH to the GitLab VM and run ``sudo docker restart gitlab`` 
+
     #.  In GitLab, open ``Projects>NGINX App Protect / nap-docker-signature`` project
 
         .. image:: ../pictures/lab6/gitlab_project_updated.png
@@ -77,17 +82,14 @@ Steps:
 
     #.  SSH to the ``CICD server (runner, Terraform, Ansible)`` VM
 
-        #. Optional: Run this command in order to determine the latest Signature Package date: ``sudo yum --showduplicates list app-protect-attack-signatures`` 
-        or for ubuntu: ``sudo apt-cache policy app-protect-attack-signatures|grep 2021``
-        #. You will see all versions published. In my case, it is ``2021.07.13`` (2021.07.13-1.el7.ngx). We will use this date as a Docker tag, but this will be done automatically by the CI/CD pipeline.
+        #. Optional: Run this command in order to determine the latest Signature Package date:
+            .. code-block:: bash
+                # On CICD/centos:
+                sudo yum --showduplicates list app-protect-attack-signatures
+                # On Ubuntu:
+                sudo apt-cache policy app-protect-attack-signatures|grep 2022
 
-        .. image:: ../pictures/lab6/yum-date.png
-           :align: center
-           :scale: 50%
-
-        **Trigger the CI/CD pipeline**
-
-        Steps :
+        #. You will see all versions published. In my case, it is ``2022.06.08`` (2022.06.08-1.el7.ngx). We will use this date as a Docker tag, but this will be done automatically by the CI/CD pipeline.
 
     #. In GitLab, click on ``Repository`` and ``Tags`` in the left menu
 

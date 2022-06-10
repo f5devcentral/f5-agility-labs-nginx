@@ -178,7 +178,7 @@ Steps:
                     location / {
                         proxy_pass http://arcadia_nodeports$request_uri;
                         status_zone main_service;
-                        app_protect_policy_file /etc/app_protect/conf/NginxDefaultPolicy.json;
+                        app_protect_policy_file "/etc/nginx/conf.d/ajax_popup.json";
                     }
 
                     # backend service

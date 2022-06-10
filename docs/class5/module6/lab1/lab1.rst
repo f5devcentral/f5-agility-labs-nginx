@@ -134,10 +134,12 @@ An action can be configured for each bot class, or may also be configured per ea
 #. Copy our files and reload NGINX
 
    .. code-block :: bash
-
-        cp /home/centos/lab-files/bot-policy/nginx.conf /etc/nginx
-        cp /home/centos/lab-files/bot-policy/conf.d/* /etc/nginx/conf.d
-        sudo systemctl reload nginx
+       setopt rmstarsilent
+       rm -f /etc/nginx/conf.d/*
+       cp /home/centos/lab-files/bot-policy/nginx.conf /etc/nginx
+       cp /home/centos/lab-files/bot-policy/policy_bots.json /etc/nginx/
+       cp /home/centos/lab-files/bot-policy/conf.d/* /etc/nginx/conf.d
+       sudo systemctl restart nginx
 
 
 **Generate simulated Bot traffic** 
@@ -157,14 +159,8 @@ An action can be configured for each bot class, or may also be configured per ea
 
 #. THe project is sending HTTP requests to the NAP with a public IP address (known as ``bad reputation``) and with a Bot ``User-Agent``. We will simulate bots by changing the user agent.
 #. You can expand ``Thread Group`` and click on ``View Results Tree`` to see each request sent.
-#. Now, go to ``ELK - Kibana`` from ``Edge Browser``, Click on Dashboards then ``Overview`` dashboard.
+#. Now, go to ``Kibana`` from ``Firefox Browser``, Click on Dashboards then ``Overview`` dashboard.
 #. You can notice Good and Bad request in the widgets, but let's focus on the logs at the bottom of the dashboard
-
-   .. image:: ../pictures/lab1/Dashboard.png
-       :align: center
-
-   .. note :: You can notice we were able to ``locate`` the source of the request because jmeter inject an XFF header. 
-
 #. Open the logs in full screen
 
    .. image:: ../pictures/lab1/full_screen.png
