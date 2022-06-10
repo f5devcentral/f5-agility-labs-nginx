@@ -41,7 +41,7 @@ Steps :
 
 
 
-#.  Check the file ``blocking-custom-1.txt``
+#.  Review the file ``blocking-custom-1.txt``
 
     .. code-block :: js
 

@@ -16,7 +16,7 @@ To do so, we have a yaml manifest to apply with ``kubectl``.
 
         .. code-block:: BASH
 
-            kubectl apply -f ~/lab-files/arcadia-manifests/arcadia-services-cluster-ip.yaml``
+            kubectl apply -f ~/lab-files/arcadia-manifests/arcadia-services-cluster-ip.yaml
 
         .. code-block:: yaml
 
