@@ -11,7 +11,7 @@ Understand the API behind NGINX Instance Manager.
 NGINX Instance Manager uses a simple API for almost all 
 functions it provides.  We look to provide an API first 
 in existing and new features.  This Exercise explores the 
-provided API but does not exhaust options for the API.
+provided API but does not exhaust all options for the API.
 
 You are highly encouraged to explore the API further and 
 adapt the use of it for your own needs.
@@ -47,7 +47,11 @@ Click on the ``GET`` button for ``/analytics/catalogs/metrics``
 This action just explains the API that is there and the sample information 
 it provides.  We can also use this page to make real API calls.
 
-Click on the try it button then click the ``Execute`` button and scroll down to see if we captured some results.
+Click on the try it out button 
+
+.. image:: ./API-try2.png
+
+then click the ``Execute`` button and scroll down to see if we captured some results.
 
 .. image:: ./API-execute.png
 
@@ -63,9 +67,6 @@ you can see this is actual data from our installed instance.
     The UDF environment is proxying traffic through a strange long URL. 
     In your environment, this URL won't be present in the same way 
     and should come across as ``nginx-manager.f5demolab.com`` or similar.
-
-    If you want, try copying the curl command and replacing the URL with 
-    ``nginx-manager.f5demolab.com:443`` on the command line to verify.
 
 Step 3: Get a list of instances
 -------------------------------
@@ -84,6 +85,8 @@ Scroll to the ``NGINX Instances`` section and find the API call for
 ``GET /instances``.  Expand that call and click the ``Try it out`` 
 button.
 
+.. image:: ./API-instances-try.png
+
 Click ``Execute`` and examine the results for the ``ubuntu`` instance.
 When you find it, copy the ``systemUid`` and ``uid`` value down and we will use it 
 for the Step 4.
@@ -98,11 +101,14 @@ for the Step 4.
 Step 4: Get the configuration of an instance
 --------------------------------------------
 
-Make sure you have the ``systemUid`` and ``uid`` from Step 3 for ``ubuntu``.
+Make sure you have copied down ``systemUid`` and ``uid`` from Step 3 for ``ubuntu``.
 
-Scroll down on the Swagger-UI page in the ``NGINX Instances`` section 
-to ``GET /systems/{systemUid}/instances/{nginxUid}/config``. Expand that API 
-and push the ``Try it out`` button.
+Scroll down the Swagger-UI page in the ``NGINX Instances`` section 
+and click on ``GET /systems/{systemUid}/instances/{nginxUid}/config``. 
+
+.. image:: ./API-config.png
+
+then click the ``Try it out`` button.
 
 .. image:: ./API-config-try.png
 
@@ -139,10 +145,7 @@ In the response body section, find the ``name:`` that says
 .. image:: ./API-config-default-copy.png
 
 Let's use the contents to see if the base64 string makes sense. We can use a 
-website or go on the ``nginx-manager`` Web Shell CLI to do this.
-
-Option 1: Use website
-=================
+website to do this.
 
 Open a new window 
 and navigate to https://www.base64decode.org/
@@ -152,36 +155,11 @@ The results in the bottom panel should show the default.conf we worked with earl
 
 .. image:: ./API-base64-decode.png
 
-Option 2: Use Web Shell CLI
-===============
-
-As the ``ubuntu`` user on ``nginx-manager`` run the following command. Put in the 
-value you copied from the response instead of using the one below (which may or may 
-not match your default.conf contents).
-
-.. code-block:: shell-session
-    :emphasize-lines: 1,2
-
-    contents="c2VydmVyIHsKICAgIGxpc3RlbiAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZXJfbmFtZSBkZWZhdWx0X3NlcnZlcjsKCiAgICAjQCBhcGkKICAgIGxvY2F0aW9uIC9hcGkvdjEgewogICAgICAgIHJldHVybiAyMDAgInt9XG4iOwogICAgfQoKICAgICNAIGNvcnAKICAgIGxvY2F0aW9uIC9jb3JwL21lZGlhIHsKICAgICAgICByZXR1cm4gNDAzICJUTEEgRlRXXG4iOwogICAgfQoKICAgICNAIHVuaW1wbGVtZW50ZWQKICAgIGxvY2F0aW9uIC91bmltcGxlbWVudGVkIHsKICAgICAgICByZXR1cm4gNTAwICJub3QgaW1wbGVtZW50ZWRcbiI7CiAgICB9CiAjQCBkZWZhdWx0CiAgICBsb2NhdGlvbiAvIHsKICAgICAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaHRtbDsKICAgICAgICAjIGluZGV4IGluZGV4Lmh0bWw7CiAgICAgICAgaW5kZXggc2FtcGxlLmh0bWw7ICMgIFBhZ2Ugd2l0aCBsb3RzIG9mIGluZm8KICAgIH0KCn0K"
-    echo $contents | base64 --decode
-    server {
-        listen 0.0.0.0:8081;
-        server_name default_server;
-
-        location / {
-            root /usr/share/nginx/html;
-            # index index.html;
-            index sample.html; #  Page with lots of info
-        }
-
-    }
-
-
 Step 5: Push a change to the configuration
 ------------------------------------------
 
 Using notepad or some editor, copy the decoded values of the 
-``default.conf`` file and make an edit, something you might notice.  
+``default.conf`` file and lets make an edit.  
 
 The index lines under the  default location ``/`` can be used. 
 If the ``sample.html`` is uncommented, a sample web page will be on the ``ubuntu`` instance. 
@@ -202,52 +180,18 @@ The ``Welcome to CentOS page looks`` like this:
 .. image:: ./UDF-nginx5-welcome.png
 
 Now in the editor, change the line so that ``index.html`` is now 
-uncommented and ``sample.html`` is commented.  Copy the contents of 
+uncommented and ``sample.html`` is commented. Copy the contents of 
 the file so we can encode the results.
 
-Option 1: Use website
-=====================
-
 You can open https://www.base64encode.org/ and paste the contents 
-into the form.  Hit ``> ENCODE <`` and copy the results to use in the 
-API call.
+into the form.  Hit ``> ENCODE <``. 
 
 .. image:: ./API-base64-encode.png
 
-Option 2: Use Web Shell CLI
-=================
-
-Open a new file called ``encode.txt`` on the ``nginx-manager`` command line.
-Paste in or make the changes and save the file as ``encode.txt``.  Then
-copy the output to use in the API call.
-
-.. code-block:: nginx
-    :caption: encode.txt
-    :name: encode.txt
-
-    server {
-        listen 0.0.0.0:8081;
-        server_name default_server;
-
-        location / {
-            root /usr/share/nginx/html;
-            index index.html;
-            # index sample.html; #  Page with lots of info
-        }
- 
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-            root   /usr/share/nginx/html;
-        }
-  
-        
-
-    }
+..note:: For convenience we have saved the output here 
 
 .. code-block:: shell-session
-    :emphasize-lines: 1
 
-    base64 encode.txt 
     c2VydmVyIHsKICAgIGxpc3RlbiAgICAgICAwLjAuMC4wOjgwODE7CiAgICBzZXJ2ZX
     JfbmFtZSAgZGVmYXVsdF9zZXJ2ZXI7CgogICAgI2FjY2Vzc19sb2cgIC92YXIvbG9n
     L25naW54L2hvc3QuYWNjZXNzLmxvZyAgbWFpbjsKCiAgICBsb2NhdGlvbiAvIHsKIC
@@ -281,19 +225,24 @@ copy the output to use in the API call.
     ZGFzaGJvYXJkLmh0bWwgewogICAgIyAgICByb290IC91c3Ivc2hhcmUvbmdpbngvaH
     RtbDsKICAgICN9Cn0K
 
-Keep the encoded base64 in a notepad or a way to copy and paste.  Click the copy button 
-on the results in the API call to copy the entire response for now.
+Set aside the ``new`` encoded base64 in a notepad or copy and paste the above output in a few moments.  
+
+Now go back and click the copy button 
+from the results of ``GET /systems/{systemUid}/instances/{nginxUid}/config`` click the copy button.
 
 .. image:: ./API-base64-copyall.png
 
-Navigate to the ``POST /systems/{systemUid}/instances/{nginxUid}/config`` API call and expand it. 
-Click the ``Try it out`` button and paste in the ``systemUid`` and ``uid`` from before and also 
-the entire contents of the ``GET`` command.
+Navigate to the ``POST /systems/{systemUid}/instances/{nginxUid}/config`` API call.
+
+.. image:: ./API-post.png
+
+Click the ``Try it out`` button and paste in the contents from the previous GET request into the body
+also type in the ``systemUid`` and ``uid`` from before.
 
 .. image:: ./API-post-paste.png
 
 Now go into the ``body`` parameter and change the value for ``contents:`` under 
-``default.conf`` with the value we encoded.
+``default.conf`` with the ``new`` encoded value we had set aside earlier.
 
 .. image:: ./API-post-update.png
 
@@ -301,8 +250,19 @@ Hit ``Execute`` and check there is no ``error``.
 
 .. image:: ./API-post-execute.png
 
-Now the new configuration is deployed, let's make sure it was applied successfully. Lets copy the deploymentUID and paste into the /systems/instances/deployments/{deploymentsUid}
-endpoint and hit ``Execute``
+Now the new configuration is deployed, let's make sure it was applied successfully. Lets copy the deploymentUID.
+
+.. image:: ./API-post-execute-id.png
+
+Let go to the /systems/instances/deployments/{deploymentsUid} endpoint.
+
+.. image:: ./API-post-deploy-id.png
+
+and click try it out and paste deploymentsUid.
+
+.. image:: ./API-post-deploy-try.png
+
+Then hit ``Execute``.
 
 .. image:: ./API-post-deploy.png
 
