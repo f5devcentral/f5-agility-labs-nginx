@@ -11,7 +11,7 @@ Instructors at Agility 2022:
 
 -  Eliezer Marte <e.marte@f5.com>
 
-Expected time to complete: **1 hour, 30 minutes**
+Expected time to complete: **1 hour**
 
 *A listing of the modules for this class is listed below.  This same list is also available on the left column of every page for direct access.*
 
