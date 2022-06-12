@@ -126,7 +126,7 @@ Exercise 1: Cache proxy for web content
 
    .. code:: bash
 
-      $> curl -I http://www.example.com/smile.png
+      curl -I http://www.example.com/smile.png
    
    ::
 
@@ -149,7 +149,7 @@ Exercise 1: Cache proxy for web content
 
    .. code:: bash
 
-      $> curl -I http://www.example.com/smile.png
+      curl -I http://www.example.com/smile.png
    
    ::
 

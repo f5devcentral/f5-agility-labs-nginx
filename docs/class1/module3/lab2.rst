@@ -262,6 +262,12 @@ In this section, we will use **curl** to interact with the NGINX API.
       rm: cannot remove '/var/lib/nginx/state/servers.conf': 
       No such file or directory
 
+   Next, lets restart NGINX to make sure changes are reflected in the UI:
+
+   .. code:: bash
+
+      nginx -s reload
+
    Then run:
 
    .. code:: bash

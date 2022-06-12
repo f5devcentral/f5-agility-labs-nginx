@@ -25,3 +25,46 @@ well into CI/CD pipelines.
 
 NGINX has become a very popular application and is the most used web server 
 on the internet today!
+
+Getting Started
+----------------
+
+The infrastructure is pre-built in UDF for your use and includes the following
+components:
+
+    - NGINX Plus Instance
+    - NGINX Open Source Instances
+    - Windows JumpHost
+
+The Jumphost (Windows) is already setup with all the tools required to complete
+the lab. **Run all lab activities from the JumpHost**. When using the web Browser
+on the JumpHost be sure to use Chrome. In the interest of time, the NGINX Plus
+image creation and deployment process has already been completed for you.
+
+Lab Topology and Credentials
+-----------------------------
+
+You will be required to access the JumpHost during this lab:
+
++---------------------------------+-------------------+----------------+
+| **Component**                   | **Access**        | **Credentials**|
+|                                 |                   |                |
++=================================+===================+================+
+| **JumpHost Windows Server 2019  | RDP Access        | ``user`` /     |
+| R2**                            |                   | ``user``       |
++---------------------------------+-------------------+----------------+
+
+To get started with the lab exervises, open an RDP session to the ``Windows
+server 2019 JumpHost > Access > RDP``
+
+.. image:: images/rdp_jumphost.png
+
+The RDP file should be downloaded to your local mahcine. Launch the RDP file and
+once you are prompted for credential, enter the credentials from above.
+
+.. image:: images/rdp_credentials_jumphost.png
+
+The Windows JumpHost is now ready for the lab
+
+.. image:: images/lab_desktop.png
+
