@@ -188,7 +188,7 @@ into the form.  Hit ``> ENCODE <``.
 
 .. image:: ./API-base64-encode.png
 
-..note:: For convenience we have saved the output here 
+.. note:: For convenience we have saved the output here 
 
 .. code-block:: shell-session
 

@@ -23,7 +23,7 @@ We are going to use NGINX Plus - 3 Server 10.1.1.9 and install the nginx-agent t
 
 Copy or type in the below command which you will use to install the nginx-agent:
 
-..note::
+.. note::
 
    This command has been adjusted around this lab's unique network environment. Please use the command below and not the command (with the UDF FQDN URL) from the NIM UI Status page.
 
