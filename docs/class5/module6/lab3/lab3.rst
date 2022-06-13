@@ -20,6 +20,22 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 **Steps**
 
 #. SSH to the docker VM
+
+#. If you didn't build a docker image of app-protect in Module 3, then follow these steps to build a docker image of app protect:
+   #. Change directory to ``cd /home/ubuntu/lab-files``
+
+      .. note:: Feel free to replace the date with the current date, but be sure to be consistent or commands will fail.
+
+   #. Run the command:
+
+      .. code-block:: bash
+       
+         docker build --tag app-protect:04-aug-2021 .
+
+      .. note:: There is a "." (dot) at the end of the command (which is an alias for ``$PWD`` current directory). This tells docker the that the resources for building the image are in the current directory.
+
+      .. note:: By default, when you run the docker build command, it looks for a file named ``Dockerfile`` in the current directory. To target a different file, pass -f flag.
+
 #. Go to directory ``/home/ubuntu/lab-files/awaf-policy``
 
    .. code-block:: bash
@@ -31,7 +47,7 @@ This converter tool is not a bash or shell utility. It a docker image we will ru
 
    .. code-block:: bash
 
-      docker run --rm -v /home/ubuntu/lab-files/awaf-policy/:/tmp/convert app-protect:04-aug-2021-tc /opt/app_protect/bin/convert-policy -i /tmp/convert/sharepoint-awaf.xml -o /tmp/convert/sharepoint-nap.json|jq
+      docker run --rm -v /home/ubuntu/lab-files/awaf-policy/:/tmp/convert app-protect:04-aug-2021 /opt/app_protect/bin/convert-policy -i /tmp/convert/sharepoint-awaf.xml -o /tmp/convert/sharepoint-nap.json|jq
 
    .. note:: Look at the command. You can notice the ``input`` and the ``output``
 
