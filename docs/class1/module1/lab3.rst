@@ -1,253 +1,421 @@
-Custom Access Logs
-==================
+Cache Proxy
+===========
 
 Introduction
 ------------
 
-The NGINX logging facility is highly customizable and allows you to add custom
-`variables <http://nginx.org/en/docs/varindex.html>`__ into your logs for
-purposes of verbose debugging, troubleshooting or analysis of what unfolds 
-within your applications served by NGINX
+One of the most popular use cases for NGINX Plus is acting as a content cache.
+The NGINX content cache sits in between a client and an “Origin server.”
+NGINX Plus is commonly deployed as a reverse proxy or load balancer in an 
+application stack to both accelerate local origin servers and to create edge 
+servers for content delivery networks (CDNs). Caching can reduce the load on
+your origin servers by a huge factor, depending on the cacheability of your
+content and the profile of user traffic.
 
-.. seealso::
+**References:** 
 
-   `Configuring Logging 
-   <https://docs.nginx.com/nginx/admin-guide/monitoring/logging>`__
+`NGINX Content
+Caching <https://docs.nginx.com/nginx/admin-guide/content-cache/content-caching>`__
+
+`NGINX caching
+Guide <https://www.nginx.com/blog/nginx-caching-guide/>`__
 
 Learning Objectives
 -------------------
 
 By the end of the lab you will be able to:
 
--  Configure `Access logs 
-   <http://nginx.org/en/docs/http/ngx_http_log_module.html#access_log>`__
-   using custom log formats
--  Configure Server specific Access logs and Error Logs
+-  Configure a basic Proxy Cache
+-  Visualize cache status on the live activity monitoring dashboard
+-  Add a custom HTTP header to upstream cache status
+-  Purge cached objects using the Cache Purge API
 
-Exercise 1: Enable virtual server specific Error and Access logs for www.example.com
------------------------------------------------------------------------------------
+Exercise 1: Cache proxy for web content
+---------------------------------------
 
-A best practice is to set up individual log files for each of your virtual
-servers in order to reduce the size of each log file. This makes troubleshooting
-easier and log rotation less frequent.
+#. In the **WORKSPACE** folder found on the desktop, open the
+   **NGINX-PLUS-1** workspace shortcut in Visual Studio Code
 
-#. In the **WORKSPACE** folder found on the desktop, open **NGINX-PLUS-1** in
-   Visual Studio Code.
+   .. image:: ../images/2020-06-29_15-55.png
 
-   .. image:: images/2020-06-29_15-55.png
-
-#. In VSCode, open a **terminal window**, by selecting **View > Terminal menu**.
+#. In VSCode, open a terminal window by selecting **View > Terminal.** 
    You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
 
-   .. image:: images/2020-06-29_16-02_1.png
+   .. image:: ../images/2020-06-29_16-02_1.png
 
-#. Now inspect the **/etc/nginx/conf.d/example.com.conf** file. Note the 
-   specific **access_log** and **error_log** definitions in the server block. 
-   Access and Error logs are written into their own files:
-
-   .. code:: nginx
-
-      # Server specific logging
-      access_log  /var/log/nginx/www.example.com.log  main_cache; 
-      error_log   /var/log/nginx/www.example.com_error.log notice; 
-
-#. Now inspect the custom log format defined as **main_cache** in
-   **/etc/nginx/includes/log_formats/ext_log_formats.conf**
+#. Inspect **/etc/nginx/conf.d/proxy_cache_global.conf** and inspect the
+   proxy caches configured on NGINX.
 
    .. code:: nginx
 
-      # Cache metrics for Controller
-      log_format  main_cache  'remote_addr="$remote_addr", '
-                              '[time_local=$time_local], '
-                              'request="$request", '
-                              'status="$status", '
-                              'http_referer="$http_referer", '
-                              'body_bytes_sent="$body_bytes_sent", '
-                              'gzip_ratio="$gzip_ratio", '
-                              'http_user_agent="$http_user_agent", '
-                              'http_x_forwarded_for="$http_x_forwarded_for", '
-                              'Host="$host", '
-                              'sn="$server_name", '
-                              'request_time=$request_time, '
-                              'request_length="$request_length", '
-                              'upstream_address="$upstream_addr", '
-                              'upstream_status="$upstream_status", '
-                              'upstream_connect_time="$upstream_connect_time", '
-                              'upstream_header_time="$upstream_header_time", '
-                              'upstream_response_time="$upstream_response_time", '
-                              'upstream_response_length="$upstream_response_length", '
-                              'upstream_cache_status="$upstream_cache_status", '
-                              'http_range="$http_range", '
-                              'slice_range="$slice_range" ';
 
-#. In the VSCode, open a **terminal window**, by selecting **View > Terminal 
-   menu**.
+      # /etc/nginx/conf.d/proxy_cache_global.conf
 
-   .. image:: images/2020-06-29_21-25.png
+      #
+      # Cache proxies
+      #
+      proxy_cache_path /var/cache/nginx
+                      levels=1:2
+                      keys_zone=image_cache:10m
+                      max_size=100m
+                      inactive=60m
+                      use_temp_path=off;
 
-   .. note:: The terminal window will open at the bottom of the VSCode editor
+#. Now, inspect **/etc/nginx/conf.d/example.com.conf** and note the
+   following:
 
-   .. image:: images/2020-06-29_21-26.png
-
-#. On the terminal, on the NGINX Plus server, use **tail** command to output the
-   access logs for **www.example.com** as they are written:
-
-   .. code:: bash
-
-      tail -f /var/log/nginx/www.example.com.log
-
-#. Run some traffic to `http://www.example.com <http://www.example.com>`__
-   From a web browser, open another Terminal in VSCode by selecting the **split
-   terminal** icon on the right and run a **curl** command:
-
-   .. code:: bash
-
-      curl http://www.example.com
-
-   .. image:: images/2020-06-29_21-29.png
-
-#. We now can see our custom access log written to file
-
-   .. code:: bash
-
-      tail -f /var/log/nginx/www.example.com.log
-
-   .. note:: You should see output similar to the following:
-
-      remote_addr="127.0.0.1", [time_local=30/Jun/2020:03:28:55 +0000], 
-      request="GET / HTTP/1.1", status="200", http_referer="-", 
-      body_bytes_sent="7221", gzip_ratio="-", http_user_agent="curl/7.58.0",
-      http_x_forwarded_for="-", Host="www.example.com", sn="www.example.com",
-      request_time=0.001, request_length="79", upstream_address="10.1.1.5:80",
-      upstream_status="200", upstream_connect_time="0.000",
-      upstream_header_time="0.000", upstream_response_time="0.000",
-      upstream_response_length="7221", upstream_cache_status="MISS",
-      http_range="-", slice_range="-" 
-
-Exercise 2: Enable JSON format Access logs for www2.example.com
----------------------------------------------------------------
-
-We can also configure NGINX to write logs in **JSON** format. This may
-be a requirement or preference for popular log collectors and log
-servers.
-
-We can use **escape=json** parameter that sets JSON valid character escaping.
-You need to have all non-word characters in JSON escaped with unicode style like
-this: ``\uNNNN``.
-
-#. Inspect the **/etc/nginx/conf.d/www2.example.com.conf** file. Note the 
-   specific **access_log** and **error_log** definitions in the server block.
-   Access and Error logs are written into their own files:
+   -  The **location** block matching image file extentions where we
+      have enabled our cache proxy **image_cache**
+   -  We have put all specific cache settings for image files in its own
+      configuration file called **image_cache.conf**
 
    .. code:: nginx
 
-      # /etc/nginx/conf.d/www2.example.com.conf 
+      # /etc/nginx/conf.d/example.com.conf
 
-      # Server specific logging
-      access_log  /var/log/nginx/www2.example.com.log  json_ext; 
-      error_log   /var/log/nginx/www2.example.com_error.log error; 
+          # Cache Proxy example for images only
+          # Match common Image files
+          location ~* \.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webp|webm|htc)$ {
 
-#. You can see the custom log format defined as **json_ext** in
-   **/etc/nginx/includes/log_formats/json_log_formats.conf**
+            ## Proxy cache settings
+            include includes/proxy_cache/image_cache.conf;
+
+            # etc
+
+          }
+
+#. Now, inspect **/etc/nginx/includes/proxy_cache/image_cache.conf** and
+   note the following:
 
    .. code:: nginx
 
-      log_format json_ext escape=json
-         '{'
-               '"proxy_protocol_addr": "$proxy_protocol_addr",'
-               '"remote_user": "$remote_user",'
-               '"remote_addr": "$remote_addr",'
-               '"time_local": "$time_local",'
-               '"request" : "$request",'
-               '"status": "$status",'
-               '"body_bytes_sent": "$body_bytes_sent",'
-               '"http_referer": "$http_referer",'
-               '"http_user_agent": "$http_user_agent",'
-               '"http_x_forwarded_for": "$http_x_forwarded_for",'
-               '"proxy_add_x_forwarded_for": "$proxy_add_x_forwarded_for",'
-               '"host": "host",'
-               '"server_name": "$server_name",'
-               '"request_length" : "$request_length",'
-               '"request_time" : "$request_time",'
-               '"proxy_host": "$proxy_host",'
-               '"upstream_addr": "$upstream_addr",'
-               '"upstream_response_length": "$upstream_response_length",'
-               '"upstream_response_time": "$upstream_response_time",'
-               '"upstream_status": "$upstream_status"'
-         '}';
 
-#. In the Terminal window, on the NGINX Plus server, use **tail** to output the
-access logs for **www2.example.com** as they are written:
+      # /etc/nginx/includes/proxy_cache/image_cache.conf
 
-   .. code:: bash
+      #
+      # Required
+      #
+      proxy_cache image_cache;
 
-      tail -f /var/log/nginx/www2.example.com.log
+      #
+      # Extra
+      #
+      # Set caching time for different response codes
+      proxy_cache_valid 200 1h;
+      proxy_cache_valid 301 302 10m;
+      proxy_cache_valid 404 1m;
+      proxy_cache_valid any 10s;
 
-#. Run some traffic to `https://www2.example.com <http://www.example.com>`__ 
-   From a web browser. You can also open another Terminal in VSCode by selecting
-   the **split terminal** icon on the right and run a **curl** command:
+      # Override cache headers
+      proxy_ignore_headers X-Accel-Expires Expires Cache-Control Set-Cookie;
+      expires 365d;
+      add_header Cache-Control "public";
 
-   .. code:: bash
+      # Cache status
+      add_header X-Cache-Status $upstream_cache_status;
 
-      curl -k https://www2.example.com
+      # Enable Cache Purge API here
+      proxy_cache_purge $purge_method;
 
-   .. note::  We are using a self-signed certificate and you may safely ignore
-      the security error for this website
+      # etc...
 
-   .. image:: images/2020-06-29_21-36.png
-
-#. In the Terminal window, We now can see our custom access log written to file
+#. Lets see our cache proxy in action. In the Terminal window, request
+   **smile.png** using **curl**. We will see that the **inital request** is 
+   served from the origin server and is not cached by NGINX.
 
    .. code:: bash
 
-      tail -f /var/log/nginx/www2.example.com.log
+      curl -I http://www.example.com/smile.png
+   
+   ::
 
-   .. note:: You should see output similar to the following:
+      HTTP/1.1 200 OK
+      Server: nginx/1.19.0
+      Date: Wed, 24 Jun 2020 17:45:16 GMT
+      Content-Type: image/png
+      Content-Length: 107753
+      Connection: keep-alive
+      Last-Modified: Wed, 24 Jun 2020 15:46:05 GMT
+      ETag: "5ef3753d-1a4e9"
+      Expires: Thu, 24 Jun 2021 17:45:16 GMT
+      Cache-Control: max-age=31536000 # <-- Cache-Control Override for a year
+      X-Cache-Status: MISS # <-- Inital hit served from Origin server
+      Cache-Control: public # <-- Cache-Control Override to public
+      Accept-Ranges: bytes
 
-      {"proxy_protocol_addr": "","remote_user": "","remote_addr": "10.1.1.9",
-      "time_local": "30/Jun/2020:03:38:20 +0000","request" : "GET / HTTP/1.1",
-      "status": "200","body_bytes_sent": "7221","http_referer": "",
-      "http_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) 
-      AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36"
-      ,"http_x_forwarded_for": "","proxy_add_x_forwarded_for": "10.1.1.9",
-      "host": "host","server_name": "www2.example.com","request_length" : "548",
-      "request_time" : "0.001","proxy_host": "nginx_hello","upstream_addr": 
-      "10.1.1.6:80","upstream_response_length": "7221","upstream_response_time":
-      "0.000","upstream_status": "200"}
-
-#. Alternatively we can **tail** and pipe the log output into **jq** for fancy
-   JSON formating. In the Terminal window, Exit the current **tail** command
-   with a **Ctrl+C** and run another **tail** command:
+#. Request **smile.png** again, using **curl**. We will see that the 
+   subsequent requests are served from the NGINX cache and not the origin server.
 
    .. code:: bash
 
-      tail -f /var/log/nginx/www2.example.com.log | jq '.'
+      curl -I http://www.example.com/smile.png
+   
+   ::
 
-   .. note:: You should see output similar to the following:
+      HTTP/1.1 200 OK
+      Server: nginx/1.19.0
+      Date: Wed, 24 Jun 20V20 17:29:43 GMT
+      Content-Type: image/png
+      Content-Length: 107753
+      Connection: keep-alive
+      Last-Modified: Wed, 24 Jun 2020 15:46:05 GMT
+      ETag: "5ef3753d-1a4e9"
+      Expires: Thu, 24 Jun 2021 17:29:43 GMT
+      Cache-Control: max-age=31536000 # <-- Cache-Control Override for a year
+      X-Cache-Status: HIT # <-- Subsequent requests served from Proxy cache
+      Cache-Control: public # <-- Cache-Control Override to public
+      Accept-Ranges: bytes
 
-      .. code:: json
+.. note:: 
+   Alternatively, using Chrome developer tools, we can see those HTTP headers.
 
-         {
-            "proxy_protocol_addr": "",
-            "remote_user": "",
-            "remote_addr": "10.1.1.9",
-            "time_local": "30/Jun/2020:03:42:02 +0000",
-            "request": "GET / HTTP/1.1",
-            "status": "200",
-            "body_bytes_sent": "7221",
-            "http_referer": "",
-            "http_user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) 
-            AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36",
-            "http_x_forwarded_for": "",
-            "proxy_add_x_forwarded_for": "10.1.1.9",
-            "host": "host",
-            "server_name": "www2.example.com",
-            "request_length": "548",
-            "request_time": "0.001",
-            "proxy_host": "nginx_hello",
-            "upstream_addr": "10.1.1.5:80",
-            "upstream_response_length": "7221",
-            "upstream_response_time": "0.000",
-            "upstream_status": "200"
+   When you want to inspect web pages network activity:
+
+   -  **right-click** on the webpage and select **Inspect** to open the
+      Chrome DevTools
+   -  Select the **Network tab**
+   -  Check **Disable Cache**
+   -  Reload the webpage > (the webpage and webpage content wil reload)
+   -  Find the web content to inspect (e.g. **smile.png**)
+   -  Look at the **Headers** tab for **Reponse Headers** and **Request Headers**
+
+   When inspecting the response headers in Chrome DevTools, you will see
+   the HTTP headers we saw using **curl**
+
+   .. image:: ../images/2020-06-24_11-27.png
+
+Exercise 2: Visualize cache status on the live activity monitoring dashboard
+----------------------------------------------------------------------------
+
+#. In a Web Browser, we can visualize cache status on the live activity
+   monitoring dashboard: Navigate to out NGINX Plus dashboard
+   `http://www.example.com:8080/dashboard.html#caches <http://www.example.com:8080/dashboard.html#caches>`__
+
+   The Cache Hit Ratio shown for the zone, **image_cache**, will increase
+   as we repeatedly request cached content.
+
+#. On another tab in your Web Browser, navigate to
+   `www.example.com/img/test.html <http://www.example.com/img/test.html>`__
+   to load images served from the NGINX cache. Hit the Web Browser's
+   refresh button multiple times to simulate multiple requests
+
+   .. image:: ../images/2020-06-25_11-26.png
+
+#. Alternatively you can copy, paste the commands below to execute the 
+   **curl** commands in your terminal.
+
+   .. code:: bash
+
+      curl -s -I http://www.example.com/img/500x500.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/500x500.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/500x500.webp | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.png | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.webp | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.png | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.webp | grep "X-Cache-Status:"
+
+   .. note:: You should receive output similar to the following:
+
+   ::
+
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+       X-Cache-Status: HIT
+
+#. Go back to the previous tab where you opened the dashboard. If you closed it,
+   navigate to `http://www.example.com:8080/dashboard.html#caches <http://www.example.com:8080/dashboard.html#caches>`__. 
+   You will see the Cache Hit Ratio increase as most of your requests
+   are now served from the NGINX cache, eliminating the the need for
+   requests to your Origin Servers
+
+   .. image:: ../images/2020-06-25_14-53.png
+
+Exercise 3: Restricting Access to the Purge Command and using Cache purge API
+------------------------------------------------------------------------------
+
+#. Inspect **/etc/nginx/conf.d/proxy_cache_global.conf** again, and find
+   the **geo** and **map** blocks that identifies requests that use the
+   HTTP **PURGE** method and deletes objects in the cache matching those
+   URLs.
+
+   -  The **geo** block sets a custom variable, **$purge_allowed**, to
+      **1** only on select client IP addresses
+   -  The **map** block sets another custom variable, **$purge_method**
+      to the value of **$purge_allowed** (**0** or **1**)
+
+   In this example, NGINX checks if the **PURGE** method is used in a
+   request, and, if so, analyzes the client IP address. If the IP
+   address is whitelisted, then the **$purge_method** is set to
+   **$purge_allowed**: **1**, which permits purging. Alternatively,
+   **purge_allowed**: **0** denies purging.
+
+   .. code:: nginx
+
+      # /etc/nginx/conf.d/proxy_cache_global.conf
+
+      # Trimmed...
+
+      # Use geo to allow specific subnets to access purge API. 
+      # $purge_allowed is set 1 when request is made from allowed-listed IP
+         geo $purge_allowed {
+            127.0.0.1     1; # allow from localhost
+            172.19.0.0/24 1; # allow a private subnet
+            10.1.1.9      1; # allow from selected IP i.e jumphost
+            default       0; # deny from other
          }
+
+      # $request_method is set to the value of $purge_allowed (0 or 1)
+      # depending if the Client iP is on the allowed-list or deny-list
+
+      map $request_method $purge_method {
+         PURGE $purge_allowed; 
+         default 0;
+      }
+
+#. Inspect **example.com.conf**, and find in the main location block
+   **/**. We have enabled cache purge calls here when **$purge_method**
+   exists (**1**)
+
+   .. code:: nginx
+
+      # /etc/nginx/conf.d/example.conf
+
+      location / {
+
+          # Enable Cache Purge API here
+          # Note: No cache rules, just allow purge on all other '/' URLs
+          proxy_cache image_cache;
+          proxy_cache_purge $purge_method;
+
+          # etc..
+      }
+
+#. Lets see our cache purge API in action. In the Terminal window, make
+   a **curl** request to purge a single object, **smile.png**, using the
+   HTTP method **PURGE**. Note that the expected reponse code for a
+   successful purge is a **HTTP 204**
+
+   First make sure the test image is in the cache:
+
+   .. code:: bash
+
+      curl -I http://www.example.com/smile.png
+
+   Now, we can Purge that specific object from the cache
+   
+   .. code:: bash
+
+      curl -I -X PURGE "http://www.example.com/smile.png"
+
+   .. note:: You should receive output similar to the following:
+
+      ::
+
+         HTTP/1.1 204 No Content
+         Server: nginx/1.19.0
+         Date: Thu, 25 Jun 2020 17:09:26 GMT
+         Connection: keep-alive
+         Expires: Fri, 25 Jun 2021 17:09:26 GMT
+         Cache-Control: max-age=31536000
+         Cache-Control: public
+
+#. We can also do a wild card purge using * in our URL. First, in a Web Browser,
+   navigate to
+   `www.example.com/img/test.html <http://www.example.com/img/test.html>`__
+   and make sure our test images are in the cache
+
+   .. image:: ../images/2020-06-25_11-26.png
+
+#. Lets confirm all the images are in the cache. Paste the below commands into
+   your terminal.
+
+   .. code:: bash
+
+      curl -s -I http://www.example.com/img/500x500.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/500x500.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/500x500.webp | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.png | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.webp | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.png | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.webp | grep "X-Cache-Status:"
+
+   .. note:: You should receive output similar to the following:
+
+      ::
+      
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+         X-Cache-Status: HIT
+
+6. Now we can do a wildcard cache purge
+
+   Wildcard Purge all objects in the URL path prefix e.g. /img/
+
+   .. code:: bash
+
+      curl -I -X PURGE "http://www.example.com/img/*"
+      
+   Wildcard Purge everything i.e. all objects in the '/' URL path prefix 
+
+   .. code:: bash
+
+      curl -I -X PURGE "http://www.example.com/*"
+
+7. Lets confirm wildcard cache purge has evicted all out cached images.
+   The next request for these images should serve the image from the
+   Origin Servers, as it is not available in the NGINX cache yet.
+
+   .. code:: bash
+
+      curl -s -I http://www.example.com/img/500x500.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/500x500.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/500x500.webp | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.png | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/1000x1000.webp | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.gif | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.jpg | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.png | grep "X-Cache-Status:"
+      curl -s -I http://www.example.com/img/picture.webp | grep "X-Cache-Status:"
+
+   .. note:: You should receive output similar to the following:
+
+      ::
+      
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS
+         X-Cache-Status: MISS

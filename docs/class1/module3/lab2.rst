@@ -48,13 +48,13 @@ In the Optional section below, we can reproduce the same steps using
 #. In the **WORKSPACE** folder found on the desktop, open the
    **NGINX-PLUS-1** workspace shortcut in Visual Studio Code
 
-    .. image:: images/2020-06-29_15-55.png
+    .. image:: ../images/2020-06-29_15-55.png
 
 #. In the VSCode, open a **terminal window**, by selecting **View > Terminal**.
    You will now be able to both run NGINX commands and edit NGINX Plus
    configuration files via the VSCode Console and terminal.
 
-    .. image:: images/2020-06-29_16-02_1.png
+    .. image:: ../images/2020-06-29_16-02_1.png
 
 #. Now inspect the **/etc/nginx/conf.d/upstreams.conf** file. Note the
    following:
@@ -108,7 +108,7 @@ In the Optional section below, we can reproduce the same steps using
    There is a bookmark in the Chrome Web Browser **Nginx+ Dashboard**.
    Navigate to **HTTP Upstreams**, and note that the **dynamic** is empty.
 
-    .. image:: images/2020-06-23_16-26.png
+    .. image:: ../images/2020-06-23_16-26.png
 
 #. Open **Postman** found on the desktop. For this demo we would will make use
    of the **Dynamic Configuration** collection.
@@ -117,7 +117,7 @@ In the Optional section below, we can reproduce the same steps using
    clicking on the **Send** button. We can confirm the empty state of our 
    upstream, **dynamic**, from the response that we receive from the NGINX API.
 
-   .. image:: images/dc1_2020-08-26.png
+   .. image:: ../images/dc1_2020-08-26.png
 
 #. Let's add two servers, **web1** (``10.1.1.5:80``) and **web2**
     (``10.1.1.6:80``) to the **dynamic** upstream group using the API.
@@ -125,20 +125,20 @@ In the Optional section below, we can reproduce the same steps using
     Open **Add web1 to dynamic** and **Add web2 to dynamic** requests
     and run them as shown below.
 
-   .. image:: images/dc2_2020-08-26.png
+   .. image:: ../images/dc2_2020-08-26.png
 
-   .. image:: images/dc3_2020-08-26.png
+   .. image:: ../images/dc3_2020-08-26.png
 
 #. Lets now add **web3** (``10.1.1.7:80``), **marked as down**, to the
    **dynamic** upstream group using the API.
 
-    .. image:: images/dc4_2020-08-26.png
+    .. image:: ../images/dc4_2020-08-26.png
 
 #. Once again, we can list the servers in our upstream, **dynamic**, and
     view the changes made.  Run the **Check dynamic servers** collection in
     **Postman** to view the changes.
 
-    .. image:: images/dc5_2020-08-26.png
+    .. image:: ../images/dc5_2020-08-26.png
 
 #. We can also confirm that the state file has been updated:
 
@@ -154,7 +154,7 @@ In the Optional section below, we can reproduce the same steps using
 
 #. It is possible to also remove a server from the upstream group:
 
-    .. image:: images/dc6_2020-08-26.png
+    .. image:: ../images/dc6_2020-08-26.png
 
 #. To add our **down** server back to the rotation and accept live
     traffic, we need to change the server parameter from **down: true**
@@ -164,21 +164,21 @@ In the Optional section below, we can reproduce the same steps using
     servers. From the response body note down the **id** value for the
     block that has the server parameter **down: true**
 
-    .. image:: images/dc7_2020-08-26.png
+    .. image:: ../images/dc7_2020-08-26.png
 
 #. Now that we have identified the server id, (e.g. **"id: 2"**) we can
    modify the **down** parameter:
 
-   Click the **Check dynamic servers** request> Before sending the request
+   Click the **Update web3** patch request. Before sending the request
    take a look at the **Body** of the request in Postman by clicking the **Body**
    link just below the **PATCH** request. Afterweards, click **Send** to modify
    the **Down** parameter.
 
-    .. image:: images/dc8_2020-08-26.png
+    .. image:: ../images/dc8_2020-08-26.png
        
 #. Once again, list our servers in our upstream, **dynamic**
 
-    .. image:: images/dc10_2020-08-27.png
+    .. image:: ../images/dc10_2020-08-27.png
 
 #. We can check that the **state** file is making our upstream changes
    persistent by reloading NGINX and checking the dashboard and API.
@@ -203,7 +203,7 @@ In the Optional section below, we can reproduce the same steps using
 
    .. note:: After a NGINX reload, the server **id** is reset to start at **0**:
 
-   .. image:: images/dc11_2020-08-26.png
+   .. image:: ../images/dc11_2020-08-26.png
 
 Optional: Dynamic Configuration of an Upstream using the NGINX API using cURL
 ------------------------------------------------------------------------------
@@ -213,13 +213,13 @@ In this section, we will use **curl** to interact with the NGINX API.
 #. In the **WORKSPACE** folder found on the desktop, open
    **NGINX-PLUS-1** in Visual Studio Code
 
-.. image:: images/2020-06-29_15-55.png
+.. image:: ../images/2020-06-29_15-55.png
 
 #. In VSCode, open a **terminal window** by selecting **View > Terminal**
    command. You will now be able to both run NGINX commands and edit NGINX
    Plus configuration files via the VSCode Console and terminal.
 
-   .. image:: images/2020-06-29_16-02_1.png
+   .. image:: ../images/2020-06-29_16-02_1.png
 
 #. Now inspect the **/etc/nginx/conf.d/upstreams.conf** file. Note the
    following:
@@ -262,6 +262,12 @@ In this section, we will use **curl** to interact with the NGINX API.
       rm: cannot remove '/var/lib/nginx/state/servers.conf': 
       No such file or directory
 
+   Next, lets restart NGINX to make sure changes are reflected in the UI:
+
+   .. code:: bash
+
+      nginx -s reload
+
    Then run:
 
    .. code:: bash
@@ -273,7 +279,7 @@ In this section, we will use **curl** to interact with the NGINX API.
    There is a bookmark in the Chrome Web Browser **Nginx+ Dashboard**.
    Navigate to **HTTP Upstreams**, and note that the **dynamic** is empty.
 
-    .. image:: images/2020-06-23_16-26.png
+    .. image:: ../images/2020-06-23_16-26.png
 
 #. In the Terminal window, we can also confirm the empty state of our
    upstream, **dynamic**, using a **curl** command to retrieve this information
@@ -324,9 +330,9 @@ In this section, we will use **curl** to interact with the NGINX API.
         "down": false
       }'
 
-   .. image:: images/2020-06-29_21-52.png
+   .. image:: ../images/2020-06-29_21-52.png
       
-   .. image:: images/2020-06-29_21-54.png
+   .. image:: ../images/2020-06-29_21-54.png
    
 #. Lets now add **web3** (``10.1.1.7:80``), **marked as down**, to the
    **dynamic** upstream group using the API.
@@ -348,7 +354,7 @@ In this section, we will use **curl** to interact with the NGINX API.
       "down": true
       }'
 
-    .. image:: images/2020-06-29_21-56.png
+    .. image:: ../images/2020-06-29_21-56.png
       
 #. Once again, we can list the servers in our upstream, **dynamic**, and
    view the changes made.
@@ -445,7 +451,7 @@ In this section, we will use **curl** to interact with the NGINX API.
          }
       ]
 
-   .. image:: images/2020-06-29_21-58.png
+   .. image:: ../images/2020-06-29_21-58.png
 
 #. To add our **down** server back to the rotation and accept live
     traffic, we need to change the server parameter from **down: true**
@@ -487,7 +493,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
        curl -s http://nginx-plus-1:8080/api/6/http/upstreams/dynamic/servers | jq
 
-.. image:: images/2020-06-29_22-02.png
+.. image:: ../images/2020-06-29_22-02.png
 
 #. We can check that the **state** file is making our upstream changes
    persistent by reloading NGINX and checking the dashboard and API.
