@@ -25,7 +25,7 @@ By the end of the lab you will be able to:
 -  Configure Server specific Access logs and Error Logs
 
 Exercise 1: Enable virtual server specific Error and Access logs for www.example.com
------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 
 A best practice is to set up individual log files for each of your virtual
 servers in order to reduce the size of each log file. This makes troubleshooting

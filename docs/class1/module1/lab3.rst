@@ -190,7 +190,7 @@ Exercise 2: Visualize cache status on the live activity monitoring dashboard
 
 #. In a Web Browser, we can visualize cache status on the live activity
    monitoring dashboard: Navigate to out NGINX Plus dashboard
-   `http://www.example.com:8080/dashboard.html#caches <http://www.example.com:8080/dashboard.html#caches>`__ >
+   `http://www.example.com:8080/dashboard.html#caches <http://www.example.com:8080/dashboard.html#caches>`__
 
    The Cache Hit Ratio shown for the zone, **image_cache**, will increase
    as we repeatedly request cached content.
@@ -235,7 +235,9 @@ Exercise 2: Visualize cache status on the live activity monitoring dashboard
        X-Cache-Status: HIT
        X-Cache-Status: HIT
 
-#. You will see the Cache Hit Ratio increase as most of your requests
+#. Go back to the previous tab where you opened the dashboard. If you closed it,
+   navigate to `http://www.example.com:8080/dashboard.html#caches <http://www.example.com:8080/dashboard.html#caches>`__. 
+   You will see the Cache Hit Ratio increase as most of your requests
    are now served from the NGINX cache, eliminating the the need for
    requests to your Origin Servers
 

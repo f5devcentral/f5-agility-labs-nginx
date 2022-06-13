@@ -169,7 +169,7 @@ In the Optional section below, we can reproduce the same steps using
 #. Now that we have identified the server id, (e.g. **"id: 2"**) we can
    modify the **down** parameter:
 
-   Click the **Check dynamic servers** request> Before sending the request
+   Click the **Update web3** patch request. Before sending the request
    take a look at the **Body** of the request in Postman by clicking the **Body**
    link just below the **PATCH** request. Afterweards, click **Send** to modify
    the **Down** parameter.
