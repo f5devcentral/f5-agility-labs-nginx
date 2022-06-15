@@ -23,9 +23,11 @@ Output:
    
    ``JUICESHOP HTTP Code:000``
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA" Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 .. image:: access-kibana.jpg
+
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
 After success mitigation service is available and reports
 
@@ -94,6 +96,9 @@ Slowhttptest will report that NAP DOS is closing the connection: slow HTTP test 
    service available: YES::
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
 Stop the attack. Use Ctrl+C.
@@ -134,6 +139,9 @@ Output:
   Finished trip with 10 points::
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
 Stop the attack. Use Ctrl+C.
@@ -186,6 +194,8 @@ GHZ tool will report HTTP status code 403 which indicates traffic is blocked by 
     [150] rpc error: code = Unavailable desc = transport is closing::
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
 
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
