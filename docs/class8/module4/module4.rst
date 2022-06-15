@@ -58,7 +58,9 @@ Slow POST attack: Slowing down the HTTP message body, making the server wait unt
 2. Launch Slow POST Attack
 !!!!!Make sure previous attack ended before launching Attack
    
-``slowhttptest -c 50000 -B -g -o my_body_stats -l 600 -i 5 -r 1000 -s 8192 -u -x 10 p 3''
+   ``cd /scripts``
+   
+   ``./slow_post_http1.sh``
 
 Wait 2 mins until tool established 10k connection.
 
