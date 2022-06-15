@@ -12,7 +12,7 @@ Generate legitimate traffic
    2. We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
 
 .. code-block:: bash 
-   :caption: Contents of the good.sh bash script
+   :caption: /good.sh
 
    #!/bin/bash
    cd /grpc/examples/python/route_guide/
@@ -21,10 +21,7 @@ Generate legitimate traffic
    PORT=600
    URI='good_path.html'
 
-
    declare -a array=("/#/login" "/#/about" "/assets/public/images/products/apple_pressings.jpg" "/#/search")
-
-
 
    while true; do
    echo

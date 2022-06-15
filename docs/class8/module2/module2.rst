@@ -166,13 +166,13 @@ Install NGINX App Protect DOS
     ###################################################
         
 
+
 4. Restart NGINX
 
 ``service nginx restart``
+
 ``service nginx status``
 
 If NGINX restarted successfully, the restart command will complete successfully and status will return that NGINX is online.
 
 5. Repeat steps 1 - 4 on the "NAP DOS 2" VM
-
-
