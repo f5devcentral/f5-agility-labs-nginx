@@ -66,7 +66,7 @@ Start HTTP/2 Flood attack
 
 2. Run the http2 flood script:
 
- ``. /scripts/http2flood.sh``
+``. /scripts/http2flood.sh``
 
 Attack script Output
 
