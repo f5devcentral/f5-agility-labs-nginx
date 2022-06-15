@@ -25,6 +25,8 @@ Output:
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA" Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
+.. image:: access-kibana.jpg
+
 After success mitigation service is available and reports
 
 Output:
