@@ -37,7 +37,7 @@ Finally, make sure you have the NGINX Instance Manager user interface open.
 
 Click under modules, then instances and click under actions edit config on Ubuntu.
 
-.. image:: ./UI-instances.png
+.. image:: ./UI-edit.png
 
 You should see an editor pane and an ``nginx.conf`` file displayed.
 
@@ -95,7 +95,7 @@ The ``default.conf`` should look like this
 
     }
 
-Click the ``Save as`` button at the top then save.
+Click the ``Save as`` button at the top then use ubuntu as the name then click save.
 
 .. image:: ./UI-nginx5-save.png
 
@@ -198,7 +198,8 @@ Let's select the ``nginx.conf`` file from the includes dropdown menu and add thi
         include /etc/nginx/test.conf;
     }
 
-Click Save and notice how the editor is also running the analyzer before it let's you Publish.
+Click Save as and notice how the editor is also running the analyzer before it let's you Publish.
+
 Click Publish.
 
 .. image:: ./UI-nginx5-publish-test.png
@@ -210,7 +211,7 @@ Navigate to the NGINX Plus - 3 instance using the Web Shell and see if the file 
 .. code-block:: shell-session
     :emphasize-lines: 1
 
-    ls /etc/nginx/test.conf
+    ls /etc/nginx
     # conf.d  fastcgi_params  mime.types  modules  nginx.conf  scgi_params  test.conf  uwsgi_params
 
 You can see we have successfully added a file.
@@ -273,7 +274,7 @@ Now select ``nginx.conf`` in the include dropdown menu for ``NGINX Plus - 3`` an
         include /etc/nginx/conf.d/*.conf;
     }
 
-Click ``Save`` and then click ``Publish``.  This should remove the include file.
+Click ``Save as`` and use ubuntu as the name then click ``Publish``. This should remove the include file.
 
 .. note::
 
@@ -363,7 +364,7 @@ Go ahead and click the ``Save as`` button but do NOT click ``Publish`` yet.
     If you did, simply change the line back to ``error.log`` and Save and Publish.
     Then change it to ``error2.log`` and click ``Save``.
 
-Use the Web Shell for ``NGINX Plus-2`` and run the following command to see what changed.
+Use the Web Shell for ``NGINX Plus-3`` and run the following command to see what changed.
 
 .. code-block:: shell-session
     :emphasize-lines: 1,4

@@ -81,6 +81,8 @@ You should also notice there is an outdated NGINX server on ``10.1.1.8`` running
 The CVEs icon shows an exclamation point within a yellow circle.  This indicates the instance has 
 security vulnerabilities. At the time of this writing, it should show ``4`` next to the icon.
 
+.. image:: ./UI-scan-cve.png
+
 The CVE list isn't meant to replace other security tools.  It is meant to alert you to possible 
 vulnerabilities in your environment.
 
@@ -94,7 +96,11 @@ vulnerabilities in your environment.
 Step 5: View install instructions
 ---------------------------------
 
-Under the status column there are two states “Managed” and “Unmanaged” .  Click on any of the “Unmanaged” instances and a slide out dialog box will provide you with instructions on how to install the nginx-agent on the server. 
+Under the status column there are two states “Managed” and “Unmanaged”.  
+
+.. image:: ./UI-install-steps.png
+
+Click on any of the “Unmanaged” instances and a slide out dialog box will provide you with instructions on how to install the nginx-agent on the server. 
 
 .. image:: ./UI-scan-install.png
 

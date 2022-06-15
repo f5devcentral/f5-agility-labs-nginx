@@ -21,12 +21,13 @@ We are going to use NGINX Plus - 3 Server 10.1.1.9 and install the nginx-agent t
 
 .. image:: ./UDF-nginx5-sample.png
 
-Copy the below command syntax which you will use to install the nginx-agent:
+Copy or type in the below command which you will use to install the nginx-agent:
 
-..note::
+.. note::
 
-   This command has been adjusted around this lab’s unique network environment. Please use the command below and not the command (with the UDF FQDN URL) from the NIM UI Status page.
-   ``sudo curl -k https://10.1.1.4/install/nginx-agent | sudo sh``
+   This command has been adjusted around this lab's unique network environment. Please use the command below and not the command (with the UDF FQDN URL) from the NIM UI Status page.
+
+``sudo curl -k https://10.1.1.4/install/nginx-agent | sudo sh``
 
 Once the script has completed you should see the following output which indicates the agent was successfully installed and instructions on how to start the software:
 

@@ -121,7 +121,7 @@ Configuring the IdP Keycloak:
 2. Login to keycloak
 
 url:
-http://idp.f5labs.com:8080
+http://idp.f5lab.com:8080
 
 3. Click on Administration Console
 
