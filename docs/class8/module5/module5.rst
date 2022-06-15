@@ -1,9 +1,13 @@
 Module 5 - Reporting and Monitoring NAP DoS using ELK Stack
 ###########################################################
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+1. Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link
+.. image:: access-kibana.jpg
+
+2. Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link
+
+.. image:: access-dashboard1.jpg
 
 Once the attack begins the NGINX App Protect Dos will switch into attack mode due to the server health deteriorating - almost immediately. ( Dashboard : AP_DOS: Server_stress_level )
 
