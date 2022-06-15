@@ -5,8 +5,6 @@ UDF Lab Maintainers:
 
    Artie Jurgenson <artie@f5.com> (Creator)
 
-   Pedro Haoa <p.haoa@f5.com>
-
    Ivan Tirado <i.tirado@f5.com>
 
    Tony Torzillo <a.torzillo@f5.com>
