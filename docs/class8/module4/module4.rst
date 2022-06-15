@@ -218,6 +218,9 @@ Attacker supplies a number of concurrent slow POST gRPC requests that exceeds th
   ``./slow_post_http2.sh``
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
 Stop the attack. Use Ctrl+C.
