@@ -23,24 +23,22 @@ NGINX App Protect DoS directives:
 
 Install NGINX App Protect DOS 
 -----------------------------
-
-1. Install NGINX AppProtect DoS
    
-  1. Open the WebShell of NAP DOS VM
-   
-  2. Install NGINX App Protect 
-  
-.. code:: shell 
+1. Open the WebShell of "NAP DOS 1" VM
 
-      apt install -y app-protect-dos 
+2. Install NGINX App Protect 
 
-2. Enable NGINX App Protect 
+``apt install -y app-protect-dos``
+
+3. Enable NGINX App Protect configuration
    
 .. Note:: 
 
-    All NGINX App Protect configurations have been previously commented out. 
+    All NGINX App Protect configurations are commented out.  Go through with vim/nano and uncomment all the lines in /etc/nginx/nginx.conf
 
-.. code:: shell
+.. code-block:: nginx
+    :linenos:
+    :caption: /etc/nginx/nginx.conf
 
     user nginx;
     worker_processes auto;
@@ -168,25 +166,13 @@ Install NGINX App Protect DOS
     ###################################################
         
 
-   1. Using your favorite editor (nano or vim) remove the comments '#' from the App Protect directives in the nginx.conf file
+4. Restart NGINX
 
+``service nginx restart``
+``service nginx status``
 
-.. code:: shell
+If NGINX restarted successfully, the restart command will complete successfully and status will return that NGINX is online.
 
-    nano /etc/nginx/nginx.conf 
-    vim /etc/nginx/nginx.conf
-
-   1. Save and Exit 
-
-   2. Restart NGINX   
-
-.. code:: shell 
-
-    service nginx restart 
-    service nginx status
-
-If NGINX restarted successfully you should be returned to a shell prompt  
-
-   3. Repeat steps 1 - 3 on NAP DOS 2
+5. Repeat steps 1 - 4 on the "NAP DOS 2" VM
 
 

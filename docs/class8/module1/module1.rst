@@ -8,8 +8,8 @@ Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected applicat
 -----------------------------------------------------------------------------------
 
 Generate legitimate traffic 
-   - In UDF, Click on Access for the **legitimate traffic** VM and select WebShell (or ssh into the box if you set that up)
-   - We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
+   1. In UDF, Click on Access for the **legitimate traffic** VM and select WebShell (or ssh into the box if you set that up)
+   2. We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
 
 .. code-block:: bash 
    :caption: Contents of the good.sh bash script
@@ -40,7 +40,7 @@ Generate legitimate traffic
    curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3" -H "X-Forwarded-For: 3.3.3.3" http://${IP}:${PORT}/${URI} &
 
 
-Run the good traffic shell script:
+3. Run the good traffic shell script:
 
 ``./good.sh``
     
@@ -56,7 +56,7 @@ Output from the script:
 
 
 Start HTTP/2 Flood attack
-   - Back in the UDF, click 'Access' on the **Attacker** VM and select WebShell
+   1. Back in the UDF, click 'Access' on the **Attacker** VM and select WebShell
 
 .. code-block:: bash
    caption: http2flood.sh
@@ -67,7 +67,7 @@ Start HTTP/2 Flood attack
    done
 
 
- Run the http2 flood script:
+2. Run the http2 flood script:
 
  ``. /scripts/http2flood.sh``
 
@@ -98,7 +98,7 @@ Attack script Output
   progress: 90% done
   progress: 100% done
 
-Click back on to the WebShell on the legitimate VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
+3. Click back on to the WebShell on the legitimate VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
 
 .. code:: shell
 
@@ -106,6 +106,4 @@ Click back on to the WebShell on the legitimate VM. Did the output from the scri
         details = "Received http2 header with status: 502"
         debug_error_string = "{"created":"@1650395963.222837020","description":"Received http2 :status header with non-200 OK status","file":"src/core/ext/filters/http/client/http_client_filter.cc","file_line":134,"grpc_message":"Received http2 header with status: 502","grpc_status":14,"value":"502"}"
 
-Stop the HTTP2Flood attack, by pressing Ctrl-C
-
-
+4. Stop the HTTP2Flood attack, by pressing Ctrl-C
