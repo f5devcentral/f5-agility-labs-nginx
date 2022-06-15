@@ -23,7 +23,13 @@ Output:
    
    ``JUICESHOP HTTP Code:000``
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA" Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard1.jpg
 
 After success mitigation service is available and reports
 
@@ -58,7 +64,9 @@ Slow POST attack: Slowing down the HTTP message body, making the server wait unt
 2. Launch Slow POST Attack
 !!!!!Make sure previous attack ended before launching Attack
    
-``slowhttptest -c 50000 -B -g -o my_body_stats -l 600 -i 5 -r 1000 -s 8192 -u -x 10 p 3''
+   ``cd /scripts``
+   
+   ``./slow_post_http1.sh``
 
 Wait 2 mins until tool established 10k connection.
 
@@ -90,7 +98,12 @@ Slowhttptest will report that NAP DOS is closing the connection: slow HTTP test 
    service available: YES::
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard1.jpg
 
 Stop the attack. Use Ctrl+C.
 
@@ -130,7 +143,12 @@ Output:
   Finished trip with 10 points::
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard1.jpg
 
 Stop the attack. Use Ctrl+C.
 
@@ -183,7 +201,11 @@ GHZ tool will report HTTP status code 403 which indicates traffic is blocked by 
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard1.jpg
 
 Stop the attack. Use Ctrl+C.
 
@@ -204,7 +226,12 @@ Attacker supplies a number of concurrent slow POST gRPC requests that exceeds th
   ``./slow_post_http2.sh``
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+
+.. image:: access-kibana.jpg
+
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard1.jpg
 
 Stop the attack. Use Ctrl+C.
 
