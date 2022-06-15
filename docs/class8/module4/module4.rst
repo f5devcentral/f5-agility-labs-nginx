@@ -29,6 +29,8 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
+.. image:: access-dashboard.jpg
+
 After success mitigation service is available and reports
 
 Output:
@@ -101,6 +103,8 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
+.. image:: access-dashboard.jpg
+
 Stop the attack. Use Ctrl+C.
 
 Verify in ELK that attack ended. Wait for black line in ELK graphs.
@@ -143,6 +147,8 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 .. image:: access-kibana.jpg
 
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard.jpg
 
 Stop the attack. Use Ctrl+C.
 
@@ -199,6 +205,8 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
 
+.. image:: access-dashboard.jpg
+
 Stop the attack. Use Ctrl+C.
 
 Verify in ELK that attack ended. Wait for black line in ELK graphs.
@@ -222,6 +230,8 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 .. image:: access-kibana.jpg
 
 Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+
+.. image:: access-dashboard.jpg
 
 Stop the attack. Use Ctrl+C.
 
