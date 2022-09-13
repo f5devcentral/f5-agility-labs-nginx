@@ -1,4 +1,4 @@
-Class1 - Intro to NGINX Plus
+Class01 - Intro to NGINX Plus
 ==============================================
 
 This class provides hands-on experience using NGINX plus.
