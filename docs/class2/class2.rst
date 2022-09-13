@@ -1,5 +1,5 @@
-Class02 - NGINX Plus CI/CD Lab
-=============================
+Class 2 - NGINX Plus CI/CD Lab
+==============================
 
 .. note:: **Last Updated: May 18, 2022**
 
