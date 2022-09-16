@@ -1,10 +1,7 @@
 Architecture of the API Sentence app
 ####################################
 
-.. note:: If you want, you can deploy this application in your own environment: https://github.com/fchmainy/nginx-aks-demo
-
 First of all, before we delve into the lab, it is important to understand how the API Sentence app is split between micro-services.
-
 
 **This is what the API Sentence website Frontend looks like when all the necessary micro-services are up and running:**
 
@@ -64,4 +61,6 @@ From the previous example, this is how the sentence is generated when the ``Gene
 .. image:: ../pictures/lab1/webapp-containers.png
    :align: center
 
-.. note :: In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NGINX Controller. Then, we will check the result through the ``Frontend`` web interface.
+.. note :: In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NMS ACM. Then, we will check the result through the ``Frontend`` web interface.
+
+.. note :: In this lab, in order to simplify steps not related to NMS ACM, the Sentence App is already up and running.

@@ -1,5 +1,5 @@
-Class 10 - NGINX NMS API Connectivity Manager
-=============================================
+Class 10 - NMS API Connectivity Manager
+=======================================
 
 UDF Lab Maintainers:
 
