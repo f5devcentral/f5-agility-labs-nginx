@@ -20,7 +20,7 @@ The NMS UI
     #. API Connectivity Manager (ACM) - installed from the official Nginx repo and licensed
 
     .. image:: ../pictures/lab1/nms-home.png
-    :align: center
+       :align: center
 
 Connect to ACM and create the infrastructure environment
 ========================================================
@@ -29,7 +29,7 @@ Connect to ACM and create the infrastructure environment
 #. Create a ``Workspace`` and name it ``team-sentence``
 
     .. image:: ../pictures/lab1/acm-infra-workspace.png
-    :align: center
+       :align: center
 
 #. Create an ``environment``
 
@@ -46,12 +46,12 @@ Connect to ACM and create the infrastructure environment
         #. Hostname : dev.sentence.com
 
             .. image:: ../pictures/lab1/acm-infra-env.png
-            :align: center
+               :align: center
 
     #. The environment is now created and you can see the commands to execute to ``link`` NGINX instances to your NMS.
 
         .. image:: ../pictures/lab1/acm-infra-env-created.png
-        :align: center
+           :align: center
 
     #. Click on ``Go to sentence-env``
 
