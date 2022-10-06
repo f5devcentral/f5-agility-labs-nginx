@@ -11,7 +11,7 @@ Link the API-GW instance
 #. In NMS UI, click on the ``API Cluster Gateway`` row (not the name link) to pop out the right frame with the commands to execute
 
     .. image:: ../pictures/lab2/api-cluster-curl.png
-    :align: center
+       :align: center
 
 #. Copy the CURL command, it should looks like this
 
@@ -88,15 +88,15 @@ Check instances connectivity with NMS
 #. In ``API Gateway Clusters`` section, click on name ``api-cluster``
 
     .. image:: ../pictures/lab2/env-overview.png
-    :align: center
+       :align: center
 
 #. Scroll down and check your API-GW instance is linked and green
 
     .. image:: ../pictures/lab2/api-gateway.png
-    :align: center
+       :align: center
 
 #. Switch to the ``Dev-Portal`` by clicking on the cluster top menu
 
     .. image:: ../pictures/lab2/switch-devportal.png
-    :align: center
+       :align: center
 
