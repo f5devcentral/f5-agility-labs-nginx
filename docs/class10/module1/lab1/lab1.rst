@@ -63,4 +63,4 @@ From the previous example, this is how the sentence is generated when the ``Gene
 
 .. note :: In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NMS ACM. Then, we will check the result through the ``Frontend`` web interface.
 
-.. note :: In this lab, in order to simplify steps not related to NMS ACM, the Sentence App is already up and running.
+.. note :: In this lab, in order to simplify steps not related to NMS ACM, the Sentence App is already up and running in version 1 (color WORD is not deployed).
