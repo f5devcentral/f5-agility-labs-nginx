@@ -19,8 +19,8 @@ The NMS UI
    * Instance Manager - included and licensed by default
    * API Connectivity Manager (ACM) - installed from the official Nginx repo and licensed
 
-    .. image:: ../pictures/lab1/nms-home.png
-       :align: center
+   .. image:: ../pictures/lab1/nms-home.png
+      :align: center
 
 Connect to ACM and create the infrastructure environment
 ********************************************************
@@ -28,30 +28,30 @@ Connect to ACM and create the infrastructure environment
 #. Click on ``API Connectivity Mananger`` and ``Infrastructure``
 #. Create a ``Workspace`` and name it ``team-sentence``
 
-    .. image:: ../pictures/lab1/acm-infra-workspace.png
-       :align: center
+   .. image:: ../pictures/lab1/acm-infra-workspace.png
+      :align: center
 
 #. Create an ``environment``
 
-    #. Name : sentence-env
-    #. Type : Non-Prod
-    #. Add an ``API Gateway cluster``
+   #. Name : sentence-env
+   #. Type : Non-Prod
+   #. Add an ``API Gateway cluster``
 
-       * Name : api-cluster
-       * Hostname : api.sentence.com
+      * Name : api-cluster
+      * Hostname : api.sentence.com
 
-    #. Add an ``Developper portal cluster``
+   #. Add an ``Developper portal cluster``
 
-       * Name : devportal-cluster
-       * Hostname : dev.sentence.com
+      * Name : devportal-cluster
+      * Hostname : dev.sentence.com
 
-            .. image:: ../pictures/lab1/acm-infra-env.png
-               :align: center
+         .. image:: ../pictures/lab1/acm-infra-env.png
+            :align: center
 
-    #. The environment is now created and you can see the commands to execute to ``link`` NGINX instances to your NMS.
+   #. The environment is now created and you can see the commands to execute to ``link`` NGINX instances to your NMS.
 
-        .. image:: ../pictures/lab1/acm-infra-env-created.png
-           :align: center
+      .. image:: ../pictures/lab1/acm-infra-env-created.png
+         :align: center
 
-    #. Click on ``Go to sentence-env``
+   #. Click on ``Go to sentence-env``
 
