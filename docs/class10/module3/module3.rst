@@ -1,7 +1,9 @@
 Module 3 - API Team - Publish API v1.0
 ######################################
 
-In this class, we will publish the version 1.0 of API Sentence App.
+In this class, we will publish the version 1.0 of API Sentence App. 
+
+.. note :: This is done by the ``API Team``. API team expose API publiched by API Dev.
 
 .. note :: As a reminder, this version 1 does not include ``colors`` API endpoint.
 
