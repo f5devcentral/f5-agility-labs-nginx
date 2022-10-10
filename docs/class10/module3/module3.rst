@@ -13,6 +13,7 @@ https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v1
 
 .. image:: ./pictures/swaggerhub.png
    :align: center
+   :scale: 50%
 
 **Module 3 - All sections**
 

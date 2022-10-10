@@ -100,3 +100,8 @@ Check instances connectivity with NMS
    .. image:: ../pictures/lab2/switch-devportal.png
       :align: center
 
+#. You can see your Nginx DevPortal instance GREEN, but also a way to customize the DevPortal
+
+   .. image:: ../pictures/lab2/dev-portal-cluster.png
+      :align: center
+

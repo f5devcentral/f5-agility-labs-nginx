@@ -64,6 +64,44 @@ Expose the API proxy
 
    * Click ``Publish``
 
+   * Click ``Edit Advanced Configurations``
+
 .. image:: ../pictures/lab1/publish-api.png
    :align: center
 
+.. image:: ../pictures/lab1/edit-adv-config.png
+   :align: center
+
+Customize and finalize the configuration
+========================================
+
+The configuration is not yet finished
+
+   * We have to specify the ``Port`` used by the K8S NodePort exposing the API
+   * Define how the API Gateway will ``route`` the API req per ``Version``
+
+#. Edit the API Proxy just created (sentence-api) by clicking on the 3 dots on the top right of the row.
+
+   .. image:: ../pictures/lab1/edit-proxy.png
+      :align: center
+
+#. As you can notice, the first page (configuration) is what we just created previously. Click on ``Next``
+#. Configure the ``Ingress`` as below
+
+   * Append Rule : version/basepath
+   * Strip Base Path and Version before proxying the request : YES
+   * Select Status : Latest
+
+      .. image:: ../pictures/lab1/edit-proxy.png
+         :align: center
+
+   * Click ``Next``
+
+#. In ``Backend``, modify the ``sentence-svc`` backend by clicking on the 3 dots on the top right of the row
+
+   * Change the Listener Port to ``30511``. This is the port used on K3S to expose the Ingress Node Port.
+   * Click ``Save``
+
+#. Click ``Next`` > ``Next`` then ``Save and Publish``
+
+.. note :: Congrats, your first API is exposed on Nginx API Gateway and Documented in Developer Portal.
