@@ -35,6 +35,18 @@ Steps
             }
        ]
 
+#. Now, send the request for ``Colors``. As a reminder, this API Endpoint is not yet published by API Team, and not part of the OpenAPI File.
+
+   * You should receive a ``404`` from the API Gateway
+
+   .. code-block :: JSON
+
+    {
+        "message": "Not Found",
+        "status": "404"
+    }
+
+
 
 What did happen and what did we do
 ==================================
