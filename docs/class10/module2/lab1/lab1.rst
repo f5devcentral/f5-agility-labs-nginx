@@ -52,6 +52,7 @@ Connect to ACM and create the infrastructure environment
 
       .. image:: ../pictures/lab1/acm-infra-env-created.png
          :align: center
+         :scale: 50%
 
    #. Click on ``Go to sentence-env``
 
