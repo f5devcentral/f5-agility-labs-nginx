@@ -71,6 +71,7 @@ Expose the API proxy
 
 .. image:: ../pictures/lab1/edit-adv-config.png
    :align: center
+   :scale: 50%
 
 Customize and finalize the configuration
 ========================================

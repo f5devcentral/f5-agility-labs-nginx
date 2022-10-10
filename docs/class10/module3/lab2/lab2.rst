@@ -12,7 +12,7 @@ Steps
 
   * Look the request : http://api.sentence.com/v1/api/adjectives
   * Endpoint FQDN is the Nginx API Proxy (api.sentence.com) configured by the ``Infra team``
-  * The version is ``v1``coming from the OpenAPI File
+  * The version is ``v1`` coming from the OpenAPI File
   * The base path is ``api`` coming from the OpenAPI File
   * As a reminder, from the previous configuation, we chose to ``strip`` the version and the basepath before forwarding the request to the backend. It means the backend server will receive ``/adjectives``and not ``/v1/api/adjectives``
 
@@ -34,6 +34,18 @@ Steps
                 "name": "calm"
             }
        ]
+
+#. Now, send the request for ``Colors``. As a reminder, this API Endpoint is not yet published by API Team, and not part of the OpenAPI File.
+
+   * You should receive a ``404`` from the API Gateway
+
+   .. code-block :: JSON
+
+    {
+        "message": "Not Found",
+        "status": "404"
+    }
+
 
 
 What did happen and what did we do
