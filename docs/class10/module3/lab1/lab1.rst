@@ -58,7 +58,7 @@ Expose the API proxy
 
    * Developper Portal
 
-      * Check the box "Also publish API to developper portal"
+      * Check the box "Also publish API to developper portal" - **This will push documentation in Developer Portal**
       * Portal Proxy Hostname : dev.sentence.com
       * No Category
 
