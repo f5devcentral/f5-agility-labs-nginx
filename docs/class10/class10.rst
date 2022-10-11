@@ -11,6 +11,7 @@ UDF Blueprint :
    
 .. image:: archi-home.png
    :align: center
+   :scale: 50%
 
 .. toctree::
    :maxdepth: 2
