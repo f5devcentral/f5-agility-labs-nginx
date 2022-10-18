@@ -64,7 +64,7 @@ Expose the API proxy
 
    * Click ``Publish``
 
-   * Click ``Edit Advanced Configurations``
+   * Click ``Back to workspace``
 
 .. image:: ../pictures/lab1/publish-api.png
    :align: center
@@ -93,7 +93,7 @@ The configuration is not yet finished
    * Strip Base Path and Version before proxying the request : YES
    * Select Status : Latest
 
-      .. image:: ../pictures/lab1/edit-proxy.png
+      .. image:: ../pictures/lab1/ingress.png
          :align: center
 
    * Click ``Next``
@@ -102,6 +102,9 @@ The configuration is not yet finished
 
    * Change the Listener Port to ``30511``. This is the port used on K3S to expose the Ingress Node Port.
    * Click ``Save``
+
+      .. image:: ../pictures/lab1/listener-port.png
+         :align: center
 
 #. Click ``Next`` > ``Next`` then ``Save and Publish``
 

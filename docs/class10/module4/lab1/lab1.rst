@@ -24,6 +24,7 @@ Steps
 
       .. image:: ../pictures/lab1/portal-home.png
          :align: center
+         :scale: 50%
 
    * Click on ``sentence-api`` documentation
    * Navigate in the doc (POST /adjectives for instance). You can notice the doc provides with
@@ -34,6 +35,7 @@ Steps
 
       .. image:: ../pictures/lab1/post-adjectives.png
          :align: center
+         :scale: 50%
 
 .. note :: As you can notice, you have all the endpoints doc to use the API Version 1.
 
