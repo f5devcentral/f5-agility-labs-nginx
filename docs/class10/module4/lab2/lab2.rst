@@ -129,3 +129,37 @@ The developer portal has one more capability. He can ``test / try out`` the API.
 
    .. image:: ../pictures/lab2/api-doc.png
       :align: center
+
+#. Click on ``sentence-api`` doc, select one GET call (GET /adjectives for i.e)
+#. Click on ``Try it out`` and select the API Key created previously
+#. Click ``Send``
+
+   .. image:: ../pictures/lab2/try-it-out-fail.png
+      :align: center
+
+   .. warning :: It should not work. Nothing should happen. The reason is the Developer Portal inserts CORS. So we have to enable CORS policy on the API Gateway.
+
+#. Connect to NMS ACM and edit our API Proxy (in Services menu)
+
+   .. image:: ../pictures/lab2/edit-proxy.png
+      :align: center
+
+#. In ``Policies``, on ``CORS`` click on ``add policy``
+
+   .. image:: ../pictures/lab2/cors-edit.png
+      :align: center
+
+#. And add the header ``apikey`` into the allow list. Start by typping akikey, and then in the field enter ``apikey`` and click ``Add Header``
+
+   .. image:: ../pictures/lab2/add-header.png
+      :align: center
+
+#. Click Save, Save and Publish
+
+   .. note :: Now, the API Gateway will accept request from the Developer Portal
+
+#. Reconnect and re-login on Developer Portal, and re-test.
+#. You will see the response from the API Gateway in the Developer Portal
+
+   .. image:: ../pictures/lab2/try-it-out-ok.png
+      :align: center
