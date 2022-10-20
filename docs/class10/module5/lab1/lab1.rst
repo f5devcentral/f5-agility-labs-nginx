@@ -11,6 +11,9 @@ Upload OpenAPI Spec file Version 2
 
    .. note :: You can now see 2 OpenAPI specification files
 
+      .. image:: ../pictures/lab1/doc-v2.png
+         :align: center
+
 #. In ``API Proxies``, notice the version of the existing proxy ``sentence-api``. It is ``version v1``.
 
    .. image:: ../pictures/lab1/proxy-v1.png

@@ -1,3 +1,3 @@
-Step 14 - JWT authorization
+Step 13 - JWT authorization
 ###########################
 

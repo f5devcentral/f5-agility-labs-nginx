@@ -1,4 +1,4 @@
-Step 11 - Check the doc pushed by API Team
+Step 10 - Check the doc pushed by API Team
 ##########################################
 
 
@@ -6,7 +6,7 @@ Check the doc for Version 2
 ===========================
 
 #. Connect to the Developer Portal
-#. Click on ``APIs`` and select the ``sentence-api. 
+#. Click on ``APIs`` and select the ``sentence-api``. 
 
    .. note :: You can notice the 2 versions for the same API (v1 and V2)
       
