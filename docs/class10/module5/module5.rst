@@ -10,6 +10,8 @@ https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v2
    :align: center
    :scale: 50%
 
+.. warning :: All actions in the NMS UI must be done from the Win10 Jumphost RDP session
+
 **Module 5 - All sections**
 
 .. toctree::

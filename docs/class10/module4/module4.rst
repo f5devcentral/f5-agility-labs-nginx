@@ -5,6 +5,8 @@ In this class, a Developper wants to consume and test API Sentence version 1.0. 
 
 .. note :: As a reminder, this version 1 does not include ``colors`` API endpoint.
 
+.. warning :: All actions in the NMS UI must be done from the Win10 Jumphost RDP session
+
 **Module 4 - All sections**
 
 .. toctree::
