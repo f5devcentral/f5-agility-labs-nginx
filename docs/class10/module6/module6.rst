@@ -5,6 +5,8 @@ Now, it is time to test the new API published by API Team. To so so, the Develop
 
 .. note :: As a reminder, this version 2.0 includes ``colors`` API endpoint.
 
+.. warning :: All actions in the NMS UI must be done from the Win10 Jumphost RDP session
+
 **Module 6 - All sections**
 
 .. toctree::

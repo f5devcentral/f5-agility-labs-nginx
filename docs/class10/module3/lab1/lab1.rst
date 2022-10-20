@@ -35,9 +35,8 @@ Upload the OpenAPI Spec file
 
 #. Click on ``Add API Doc`` and drag drop the swagger file, then click ``Save``
 
-   .. note :: If you are connected on Win10 RDP Jumphost, the Swagger file located on the desktop (oas-sentence-v1.yaml)
+   .. note :: In Win10 RDP Jumphost, the Swagger file located on the desktop (oas-sentence-v1.yaml)
 
-   .. note :: If you are not connected on Win RDP Jumphost, but on your laptop's browser, download the OpenAPI Spec file from SwaggerHub https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v1
 
 Expose the API proxy
 ====================
