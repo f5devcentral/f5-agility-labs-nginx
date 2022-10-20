@@ -1,7 +1,13 @@
 Module 5 - API Team - Publish API v2.0
 ######################################
 
-In this class, a Developper wants to consume and test API Sentence version 1.0. To do so, he will connect to the Dev Portal and test the API.
+In this class, the API Team just get notified DevOps and API Dev pushed a new version (v2) of the API. This version add a new micro-service (/colors).
+A new swagger file has been provided by those teams.
+
+https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v2
+
+.. image:: ./pictures/swagger-v2.png
+   :align: center
 
 .. note :: As a reminder, this version 1 does not include ``colors`` API endpoint.
 

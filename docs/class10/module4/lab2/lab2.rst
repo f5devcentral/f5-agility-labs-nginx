@@ -149,7 +149,7 @@ The developer portal has one more capability. He can ``test / try out`` the API.
    .. image:: ../pictures/lab2/cors-edit.png
       :align: center
 
-#. And add the header ``apikey`` into the allow list. Start by typping akikey, and then in the field enter ``apikey`` and click ``Add Header``
+#. And add the header ``apikey`` into the allow list. Scroll down till the end, and then in the field enter ``apikey`` and click ``Add Header``
 
    .. image:: ../pictures/lab2/add-header.png
       :align: center
