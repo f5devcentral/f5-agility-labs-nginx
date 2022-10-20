@@ -8,8 +8,7 @@ https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v2
 
 .. image:: ./pictures/swagger-v2.png
    :align: center
-
-.. note :: As a reminder, this version 1 does not include ``colors`` API endpoint.
+   :scale: 50%
 
 **Module 5 - All sections**
 
