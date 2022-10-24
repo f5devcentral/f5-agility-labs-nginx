@@ -94,7 +94,7 @@ Request API keys
    * API : select ``sentence-api v1`` - This is the version v1 exposed on the API Gateway.
    * Click ``Generate``
 
-#. You can now expand your ``sentence1`` APIKey to see the value. Copy the value.
+#. You can now expand your ``sentence1`` APIKey to see the value (if not, refresh the page). Copy the value.
 
    .. image:: ../pictures/lab2/apikey-value.png
       :align: center
