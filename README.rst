@@ -12,3 +12,4 @@ Currently included classes:
 #. NGINX Kubernetes Ingress Controller and Rancher
 #. NGINX App Protect Denial of Service (NAP DoS)
 #. NGINX Access on F5 NGINX Plus – Authentication for Web Access
+#. NGINX API Connectivity Manager
