@@ -98,6 +98,6 @@ Test it out with Postman
    .. image:: ../pictures/lab2/send.png
       :align: center
 
-.. note :: Congratulation, you configured your API Gateway to validate JWT token from Keycloak.
+.. note :: Congratulations, you configured your API Gateway to validate JWT token from Keycloak.
 
     
