@@ -1,7 +1,7 @@
 Module 4 - Dev Team - Consume API v1.0
 ######################################
 
-In this class, a Developer wants to consume and test API Sentence version 1.0. To do so, he will connect to the Dev Portal and test the API.
+In this class, a Developer wants to consume and test API Sentence version 1.0. To do so, they will connect to the Dev Portal and test the API.
 
 .. note :: As a reminder, this version 1 does not include ``colors`` API endpoint.
 

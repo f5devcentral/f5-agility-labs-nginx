@@ -31,12 +31,12 @@ Steps
 
       * The Version selected
       * API host with version and base path : http://api.sentence.com:80/v1/api
-      * Request and Responses body
+      * Request and Response bodies
 
       .. image:: ../pictures/lab1/post-adjectives.png
          :align: center
          :scale: 50%
 
-.. note :: As you can notice, you have all the endpoints doc to use the API Version 1.
+.. note :: As you can notice, you have all the endpoints documented to use the API Version 1.
 
 .. note :: Next step is to use the Developer Portal to test the API without Postman.

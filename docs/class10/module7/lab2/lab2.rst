@@ -4,7 +4,7 @@ Step 13 - JWT authorization
 JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT token for developers.
 
-.. warning :: Currently, NMS ACM does not support multi authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
+.. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
 
 Clean-up APIKEY configuration
 =============================
@@ -26,7 +26,7 @@ Add JWT Policy on API-Proxy
 ===========================
 
 #. Edit ``API-Proxy`` ``v2`` like previously
-#. In ``Policies``, delete the APIKey policy
+#. In ``Policies``, remove the APIKey policy
 #. Add a new ``JSON Web Token Assertion`` policy
 #. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)``and paste the JSON below.
 
@@ -68,7 +68,7 @@ Add JWT Policy on API-Proxy
 #. Click ``Add``
 #. Click ``Save and Publish``
 
-Test it out with postman
+Test it out with Postman
 ========================
 
 #. In Postman, select the call ``GET Colors`` and check the version is ``v2`` http://api.sentence.com/v2/api/colors

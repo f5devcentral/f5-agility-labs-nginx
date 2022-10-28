@@ -40,7 +40,7 @@ Connect to ACM and create the infrastructure environment
       * Name : api-cluster
       * Hostname : api.sentence.com
 
-   #. Add an ``Developer portal cluster``
+   #. Add a ``Developer portal cluster``
 
       * Name : devportal-cluster
       * Hostname : dev.sentence.com

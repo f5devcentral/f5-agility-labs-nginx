@@ -1,7 +1,7 @@
 Step 6 - Test API v1.0
 ######################
 
-To test the API, we will use ``Postman``. In a real world, API is consumed by a mobile or modern application (or a machine).
+To test the API, we will use ``Postman``. In the real world, an API is consumed by a mobile or modern application (or a machine).
 
 Steps
 =====
@@ -10,7 +10,7 @@ Steps
 #. Open ``Postman``
 #. Open the collection ``Sentence API`` and run the call ``GET Adjectives``
 
-   * Look the request : http://api.sentence.com/v1/api/adjectives
+   * Look at the request : http://api.sentence.com/v1/api/adjectives
    * Endpoint FQDN is the Nginx API Proxy (api.sentence.com) configured by the ``Infra team``
    * The version is ``v1`` coming from the OpenAPI File
    * The base path is ``api`` coming from the OpenAPI File
@@ -35,7 +35,7 @@ Steps
             }
        ]
 
-#. Now, send the request for ``Colors``. As a reminder, this API Endpoint is not yet published by API Team, and not part of the OpenAPI File.
+#. Now, send the request for ``GET Colors``. As a reminder, this API Endpoint is not yet published by API Team, and not part of the OpenAPI File.
 
    * You should receive a ``404`` from the API Gateway
 

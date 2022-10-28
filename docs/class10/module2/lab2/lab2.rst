@@ -13,7 +13,7 @@ Link the API-GW instance
    .. image:: ../pictures/lab2/api-cluster-curl.png
       :align: center
 
-#. Copy the CURL command, it should looks like this
+#. Copy the cURL command, it should looks like this
 
    .. code-block:: bash
     
@@ -21,7 +21,7 @@ Link the API-GW instance
       
    .. warning:: check the FQDN is 10.1.1.6 and not the UDF public proxy FQDN
 
-#. On NGINX APIGW-1 SSH session, paste and execute the CURL command. You will see the below outcome at the end of the installation.
+#. In the ``NGINX Plus APIGW-1`` SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
 
    .. code-block:: bash
 
@@ -47,19 +47,19 @@ Link the Dev-Portal instance
 ============================
 
 #. In UDF, SSH or WEBSSH to ``Dev Portal``
-#. Similar to API-GW instance, click on the ``Developer Portal Clusters`` row and copy the CURL command.
+#. Similar to API-GW instance, click on the ``Developer Portal Clusters`` row and copy the cURL command.
 
    .. warning:: DO NOT CLICK ON ``Developer Portal Internal Clusters``
 
-#. The CURL command should looks like this
+#. The cURL command should looks like this
 
    .. code-block:: bash
 
       curl -k https://10.1.1.6/install/nginx-agent > install.sh && sudo sh install.sh -g devportal-cluster && sudo systemctl start nginx-agent
 
-   .. warning:: check the FQDN is 10.1.1.6 and not the UDF public proxy FQDN
+   .. warning:: Check that the FQDN is 10.1.1.6 and not the UDF public proxy FQDN
 
-#. On NGINX Dev-Portal SSH session, paste and execute the CURL command. You will see the below outcome at the end of the installation.
+#. On NGINX Dev-Portal SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
 
    .. code-block:: bash
 

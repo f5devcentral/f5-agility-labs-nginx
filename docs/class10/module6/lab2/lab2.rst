@@ -4,9 +4,10 @@ Step 11 - Test the API 2.0 as a Dev API
 Test API Version 2 with Postman
 ===============================
 
-#. Login as ``dev1`` (password dev1) - if the cookie is still there, authentication will be transparent (thanks to OIDC)
-#. Click on ``App Credentials`` and enter into your organization
-#. ``Create credential`` for the version ``v2``
+#. Login to the Developer Portal as ``dev1`` (password dev1) - if the cookie is still there, authentication will be transparent (thanks to OIDC)
+#. Click on ``App Credentials`` and click your organization (nginx)
+#. Click ``Create Credential``
+#. Use ``sentence2`` for the App name, and select ``sentence-api v2`` for the API.
 
    .. image:: ../pictures/lab2/cred-v2.png
       :align: center
