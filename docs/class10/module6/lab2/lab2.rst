@@ -27,7 +27,7 @@ Test API Version 2 with Postman
    .. image:: ../pictures/lab2/colors-ok.png
       :align: center
 
-#. Let make a try and send a request to ``/animals`` from version 1
+#. Let's try to send a request to ``/animals`` from version 1
 
    .. note :: It works because the gateway knows thanks to the /v1 or /v2 prefixes, which API Proxy to use. You can try to change /animals to v2. It will work as this endpoint exists also in v2.
 

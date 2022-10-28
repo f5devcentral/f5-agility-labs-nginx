@@ -72,7 +72,7 @@ Test it out with postman
 ========================
 
 #. In Postman, select the call ``GET Colors`` and check the version is ``v2`` http://api.sentence.com/v2/api/colors
-#. In Authorization, select type ``Oauth 2.0``
+#. In Authorization, select type ``OAuth 2.0``
 
    .. note :: As you can notice, the Postman OAuth v2.0 client is already set to request JWT against Keycloak
 

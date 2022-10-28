@@ -25,7 +25,7 @@ The NMS UI
 Connect to ACM and create the infrastructure environment
 ********************************************************
 
-#. Click on ``API Connectivity Mananger`` and ``Infrastructure``
+#. Click on ``API Connectivity Manager`` and ``Infrastructure``
 #. Create a ``Workspace`` and name it ``team-sentence``
 
    .. image:: ../pictures/lab1/acm-infra-workspace.png
@@ -40,7 +40,7 @@ Connect to ACM and create the infrastructure environment
       * Name : api-cluster
       * Hostname : api.sentence.com
 
-   #. Add an ``Developper portal cluster``
+   #. Add an ``Developer portal cluster``
 
       * Name : devportal-cluster
       * Hostname : dev.sentence.com
