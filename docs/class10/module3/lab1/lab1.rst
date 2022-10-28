@@ -55,9 +55,9 @@ Expose the API proxy
       * API Spec : api-sentence-generator-v1
       * Gateway Proxy Hostname : api.sentence.com
 
-   * Developper Portal
+   * Developer Portal
 
-      * Check the box "Also publish API to developper portal" - **This will push documentation in Developer Portal**
+      * Check the box "Also publish API to developer portal" - **This will push documentation in Developer Portal**
       * Portal Proxy Hostname : dev.sentence.com
       * No Category
 

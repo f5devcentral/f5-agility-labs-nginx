@@ -1,7 +1,7 @@
 Step 8 - Onboard as a Dev API
 #############################
 
-The goal of an Developer Portal is not only to provide with API Documentation. A Developer Portal offers the possiblity to ``try out`` the API directly from it.
+The goal of an Developer Portal is not only to provide with API Documentation. A Developer Portal offers the possibility to ``try out`` the API directly from it.
 It means the Developers will ask for API Keys from this portal, and use these keys to ``try out`` APIs. The Developer Portal will send request to the API Gateway with the API-KEY generated.
 
 In this lab, ``Infrastructure`` and ``API`` teams will modify the NMS ACM configurations in order to:
@@ -27,9 +27,9 @@ The infrastructure team must enable OIDC on DevPortal instance. To do so, follow
    .. image:: ../pictures/lab2/add-policy.png
       :align: center
 
-#. The Keycloak is already confgured to authenticate Developers with your Developer Portal listening on http://dev.sentence.com. Configure the policy as below:
+#. The Keycloak is already configured to authenticate Developers with your Developer Portal listening on http://dev.sentence.com. Configure the policy as below:
 
-   * Choose an Oauth Flow : ``PKCE``
+   * Choose an OAuth Flow : ``PKCE``
    * App Name : ``devportal``
    * Client ID : ``devportal``
    * Client secret : empty as we are using PKCE (no secret)
@@ -41,7 +41,7 @@ The infrastructure team must enable OIDC on DevPortal instance. To do so, follow
    * User Info : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/userinfo``
    * LogOff URI : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/logout``
 
-   .. note :: All those endpoints are provided bu Keycloack configuration console. We skip this part in this lab.
+   .. note :: All those endpoints are provided by Keycloack configuration console. We skip this part in this lab.
 
 #. Click ``add``
 #. Click ``Save and Submit``

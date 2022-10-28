@@ -5,7 +5,7 @@ Test API Version 2 with Postman
 ===============================
 
 #. Login as ``dev1`` (password dev1) - if the cookie is still there, authentication will be transparent (thanks to OIDC)
-#. Click on ``App Credentials`` and enter into your organisation
+#. Click on ``App Credentials`` and enter into your organization
 #. ``Create credential`` for the version ``v2``
 
    .. image:: ../pictures/lab2/cred-v2.png

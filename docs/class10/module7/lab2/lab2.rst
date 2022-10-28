@@ -1,10 +1,10 @@
 Step 13 - JWT authorization
 ###########################
 
-JWT is based on Oauth and OIDC. Keycloak is the Oauth Authorization Server.
+JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT token for developers.
 
-.. warning :: Currently, NMS ACM does not support multi authentication mecanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
+.. warning :: Currently, NMS ACM does not support multi authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
 
 Clean-up APIKEY configuration
 =============================
@@ -14,7 +14,7 @@ Clean-up APIKEY configuration
    .. image:: ../pictures/lab2/delete-key.png
       :align: center
 
-#. When all APIKeys are deleted, ``delete`` the organisation
+#. When all APIKeys are deleted, ``delete`` the organization
 
    .. image:: ../pictures/lab2/delete-org.png
       :align: center
@@ -74,7 +74,7 @@ Test it out with postman
 #. In Postman, select the call ``GET Colors`` and check the version is ``v2`` http://api.sentence.com/v2/api/colors
 #. In Authorization, select type ``Oauth 2.0``
 
-   .. note :: As you can notice, the Postman Oauth v2.0 client is already set to request JWT against keycloak
+   .. note :: As you can notice, the Postman OAuth v2.0 client is already set to request JWT against Keycloak
 
 #. Scroll down and click on ``Get New Access Token``
 

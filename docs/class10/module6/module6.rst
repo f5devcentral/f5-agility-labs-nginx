@@ -1,4 +1,4 @@
-Module 6 - Dev Team - Comsume API v2.0
+Module 6 - Dev Team - Consume API v2.0
 ######################################
 
 Now, it is time to test the new API published by API Team. To so so, the Developer needs to ask for a new API Key for this new version. API Keys are tied to the API version.

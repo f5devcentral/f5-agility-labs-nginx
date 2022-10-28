@@ -1,7 +1,7 @@
 Step 7 - Check the doc pushed by API Team
 #########################################
 
-In the previous lab, we used ``Postman`` to test our API version 1. App Developpers don't use Postman, but prefer to use Developer Portals.
+In the previous lab, we used ``Postman`` to test our API version 1. App Developers don't use Postman, but prefer to use Developer Portals.
 
 Developer Portal offers:
 
