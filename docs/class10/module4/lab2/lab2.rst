@@ -1,4 +1,4 @@
-Step 8 - Onboard as a Dev API
+Step 7 - Onboard as a Dev API
 #############################
 
 The goal of a Developer Portal is not only to provide API Documentation. A Developer Portal offers the possibility to ``try out`` the API directly from it.

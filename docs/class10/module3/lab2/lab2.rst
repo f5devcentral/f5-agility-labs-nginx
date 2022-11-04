@@ -1,4 +1,4 @@
-Step 6 - Test API v1.0
+Step 5 - Test API v1.0
 ######################
 
 To test the API, we will use ``Postman``. In the real world, an API is consumed by a mobile or modern application (or a machine).

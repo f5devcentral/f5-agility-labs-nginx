@@ -1,4 +1,4 @@
-Step 13 - JWT authorization
+Step 12 - JWT authorization
 ###########################
 
 JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.

@@ -1,5 +1,5 @@
-Step 10 - Check the doc pushed by API Team
-##########################################
+Step 9 - Check the doc pushed by API Team
+#########################################
 
 
 Check the doc for Version 2

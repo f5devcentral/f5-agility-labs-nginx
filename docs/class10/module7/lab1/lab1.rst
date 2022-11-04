@@ -1,4 +1,4 @@
-Step 12 - Rate Limiting
+Step 11 - Rate Limiting
 #######################
 
 API Team wants to limit to 5 Requests / minute / user on Version 2 of the API.
