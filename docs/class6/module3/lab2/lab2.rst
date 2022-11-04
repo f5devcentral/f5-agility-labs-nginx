@@ -23,6 +23,7 @@ Let's deploy the ``Colors`` micro-service!
 #. SSH (or WebSSH) to the ``Docker (k3s + Rancher + ELK)`` VM
 #. Run the following ``kubectl`` command in order to deploy the ``Colors`` micro-service and its k8s service:
 
+   
    .. code-block:: bash
 
       sudo su
