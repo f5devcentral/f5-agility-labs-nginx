@@ -18,13 +18,13 @@ Add a Rate Limit policy on API API-Proxy
    .. image:: ../pictures/lab1/rl-5req.png
       :align: center
 
-#. Click ``Add``, ``Add``, ``Save and Publish``
+#. Click ``Add``, ``Add``, ``Save & Publish``
 
 
 Test it out
 ===========
 
-#. In ``postman``, Re-use the ``/colors`` on ``v2`` endpoint. As a reminder, it is ``http://api.sentence.com/v2/api/colors``
+#. In ``Postman``, Re-use the ``/colors`` on ``v2`` endpoint. As a reminder, it is ``http://api.sentence.com/v2/api/colors``
 #. If the API Key is not there anymore, add it in Authorization
 #. Send many requests and after 5 requests, the others will be blocked
 

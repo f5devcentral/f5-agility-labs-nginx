@@ -33,7 +33,7 @@ Upload the OpenAPI Spec file
    .. image:: ../pictures/lab1/api-docs.png
       :align: center
 
-#. Click on ``Add API Doc`` and drag drop the swagger file, then click ``Save``
+#. Click on ``Add API Doc`` and drag drop the Swagger file, then click ``Save``
 
    .. note :: In Win10 RDP Jumphost, the Swagger file located on the desktop (oas-sentence-v1.yaml)
 
@@ -55,9 +55,9 @@ Expose the API proxy
       * API Spec : api-sentence-generator-v1
       * Gateway Proxy Hostname : api.sentence.com
 
-   * Developper Portal
+   * Developer Portal
 
-      * Check the box "Also publish API to developper portal" - **This will push documentation in Developer Portal**
+      * Check the box "Also publish API to developer portal" - **This will push documentation in Developer Portal**
       * Portal Proxy Hostname : dev.sentence.com
       * No Category
 
@@ -80,7 +80,7 @@ The configuration is not yet finished
    * We have to specify the ``Port`` used by the K8S NodePort exposing the API
    * Define how the API Gateway will ``route`` the API req per ``Version``
 
-#. Edit the API Proxy just created (sentence-api) by clicking on the 3 dots on the top right of the row.
+#. Edit the API Proxy just created (sentence-api) by clicking on the 3 dots on the top right of the row, then click ``Edit Proxy``.
 
    .. image:: ../pictures/lab1/edit-proxy.png
       :align: center
@@ -97,7 +97,7 @@ The configuration is not yet finished
 
    * Click ``Next``
 
-#. In ``Backend``, modify the ``sentence-svc`` backend by clicking on the 3 dots on the top right of the row
+#. In ``Backend``, modify the Listener Port for the only entry in the ``Service Targets`` table by clicking on its existing Listener Port value.
 
    * Change the Listener Port to ``30511``. This is the port used on K3S to expose the Ingress Node Port.
    * Click ``Save``
@@ -107,4 +107,4 @@ The configuration is not yet finished
 
 #. Click ``Next`` > ``Next`` then ``Save and Publish``
 
-.. note :: Congrats, your first API is exposed on Nginx API Gateway and Documented in Developer Portal.
+.. note :: Congrats, your first API is exposed on the Nginx API Gateway and Documented in the Developer Portal.

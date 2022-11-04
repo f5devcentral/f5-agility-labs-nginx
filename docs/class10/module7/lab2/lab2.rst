@@ -1,10 +1,10 @@
 Step 13 - JWT authorization
 ###########################
 
-JWT is based on Oauth and OIDC. Keycloak is the Oauth Authorization Server.
+JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT token for developers.
 
-.. warning :: Currently, NMS ACM does not support multi authentication mecanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
+.. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
 
 Clean-up APIKEY configuration
 =============================
@@ -14,7 +14,7 @@ Clean-up APIKEY configuration
    .. image:: ../pictures/lab2/delete-key.png
       :align: center
 
-#. When all APIKeys are deleted, ``delete`` the organisation
+#. When all APIKeys are deleted, ``delete`` the organization
 
    .. image:: ../pictures/lab2/delete-org.png
       :align: center
@@ -26,7 +26,7 @@ Add JWT Policy on API-Proxy
 ===========================
 
 #. Edit ``API-Proxy`` ``v2`` like previously
-#. In ``Policies``, delete the APIKey policy
+#. In ``Policies``, remove the APIKey policy
 #. Add a new ``JSON Web Token Assertion`` policy
 #. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)``and paste the JSON below.
 
@@ -68,13 +68,13 @@ Add JWT Policy on API-Proxy
 #. Click ``Add``
 #. Click ``Save and Publish``
 
-Test it out with postman
+Test it out with Postman
 ========================
 
 #. In Postman, select the call ``GET Colors`` and check the version is ``v2`` http://api.sentence.com/v2/api/colors
-#. In Authorization, select type ``Oauth 2.0``
+#. In Authorization, select type ``OAuth 2.0``
 
-   .. note :: As you can notice, the Postman Oauth v2.0 client is already set to request JWT against keycloak
+   .. note :: As you can notice, the Postman OAuth v2.0 client is already set to request JWT against Keycloak
 
 #. Scroll down and click on ``Get New Access Token``
 
@@ -98,6 +98,6 @@ Test it out with postman
    .. image:: ../pictures/lab2/send.png
       :align: center
 
-.. note :: Congratulation, you configured your API Gateway to validate JWT token from Keycloak.
+.. note :: Congratulations, you configured your API Gateway to validate JWT token from Keycloak.
 
     

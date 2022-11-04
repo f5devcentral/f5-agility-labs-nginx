@@ -9,7 +9,7 @@ The NMS UI
 #. Login to JumpHost Win10 RDP. Login is ``user`` and password is ``user``
 #. Open Chrome and click on NMS bookmark
 #. Sign in to NMS as ``admin`` and password ``admin``
-#. You can change the UI to Drak mode if you prefer it :)
+#. You can change the UI to Dark mode if you prefer it :)
 
    * Click on the ``profile`` icon on the top right
    * Change toggle to ``Dark Mode``
@@ -25,7 +25,7 @@ The NMS UI
 Connect to ACM and create the infrastructure environment
 ********************************************************
 
-#. Click on ``API Connectivity Mananger`` and ``Infrastructure``
+#. Click on ``API Connectivity Manager`` and ``Infrastructure``
 #. Create a ``Workspace`` and name it ``team-sentence``
 
    .. image:: ../pictures/lab1/acm-infra-workspace.png
@@ -40,7 +40,7 @@ Connect to ACM and create the infrastructure environment
       * Name : api-cluster
       * Hostname : api.sentence.com
 
-   #. Add an ``Developper portal cluster``
+   #. Add a ``Developer portal cluster``
 
       * Name : devportal-cluster
       * Hostname : dev.sentence.com
