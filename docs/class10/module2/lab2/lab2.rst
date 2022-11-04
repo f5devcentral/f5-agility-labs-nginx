@@ -109,6 +109,9 @@ Wait for the environment to be GREEN
 ====================================
 
 #. Switch back to your Infrastructure Environment screen. And check the ``Job Status``
+
+   .. note :: If you don't see the column ``Job Status``, scroll to the right, the column is hidden because of the Win10 RDP low résolution.
+
 #. Wait till it passes to ``Success``. This can take several minutes.
 
    .. image:: ../pictures/lab2/status-pending.png

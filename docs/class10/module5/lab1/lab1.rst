@@ -1,4 +1,4 @@
-Step 9 - Publish API v2.0
+Step 8 - Publish API v2.0
 #########################
 
 This action is done by the API Team.

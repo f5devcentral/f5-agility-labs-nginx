@@ -1,4 +1,4 @@
-Step 11 - Test the API 2.0 as a Dev API
+Step 10 - Test the API 2.0 as a Dev API
 #######################################
 
 Test API Version 2 with Postman

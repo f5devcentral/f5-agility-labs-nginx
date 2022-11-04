@@ -1,4 +1,4 @@
-Step 5 - Publish API v1.0
+Step 4 - Publish API v1.0
 #########################
 
 Before publishing our first API, it's important to understand what the DevOps (or API Dev) team provided us.
@@ -23,7 +23,7 @@ Create the API Services
 
 #. Click on ``Back to Workspaces`` and click on ``sentence-app`` workspace just created
 
-.. note :: We will exposed the API and document it on Dev-Portal at the same time.
+.. note :: We will expose the API and document it on Dev-Portal at the same time.
 
 Upload the OpenAPI Spec file
 ============================
@@ -88,7 +88,7 @@ The configuration is not yet finished
 #. As you can notice, the first page (configuration) is what we just created previously. Click on ``Next``
 #. Configure the ``Ingress`` as below
 
-   * Append Rule : version/basepath
+   * Append Rule : Prefix - version/basepath
    * Strip Base Path and Version before proxying the request : YES
    * Select Status : Latest
 
