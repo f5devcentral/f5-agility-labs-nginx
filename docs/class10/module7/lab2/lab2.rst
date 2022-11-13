@@ -1,6 +1,8 @@
 Step 12 - JWT authorization
 ###########################
 
+.. warning :: Due to a bug on API Key policy deletion, this lab can't be done. The workaround is to delete your API Proxy and recreate it without the API Key policy, and create the JWT policy.
+
 JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT token for developers.
 
