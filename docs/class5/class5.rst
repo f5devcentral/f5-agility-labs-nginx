@@ -3,11 +3,7 @@ Class5 - NGINX App Protect
 
 UDF Lab Maintainers:
 
-   Matthieu Dierick <m.dierick@f5.com> (Creator)
-
-   Jesse Goodier <j.goodier@f5.com> (primary maintainer)
-
-   Mikhail Fedorov <M.Fedorov@F5.com>
+   Matthieu Dierick <m.dierick@f5.com> 
 
 Please email the group with any issues or suggestions.
 
