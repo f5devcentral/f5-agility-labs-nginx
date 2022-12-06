@@ -1,8 +1,6 @@
 Step 11 - Optional NGINX Plus Ingress Controller Deployment
 ###########################################################
 
-.. warning:: This lab is under development. Please don't run through it.
-
 This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specific to configuring NGINX App Protect.
 
 That said, if you are interested in the topology or deploying the ingress controller, please continue on with this step. Otherwise you can skip to module 5: protecting API workloads.
@@ -24,107 +22,50 @@ At a high-level we will:
 #. Use helm to deploy the Ingress controller that has been saved to the registry running on our docker host
 #. Deploy a new "ingress configuration" using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" will tell the KIC pods to create the configuration necessary to access and protect our applications.
 
-.. note:: This is a single node cluster and we are using "hostNetwork" to allow the ingress controller to listen on 80 and 443.
-
 
 **Steps**
 
     #.  SSH to the k3s VM
-    #.  This is the contents of the ``/home/ubuntu/lab-files/helm/values-plus-with-app-protect.yaml`` file:
-
-        .. code-block:: yaml
-           :caption: values-plus-with-app-protect.yaml
-
-            controller:
-                nginxplus: true
-                image:
-                    repository: docker.udf.nginx.rocks/nginx-plus-ingress
-                    tag: 2.0.3-ubi-nap
-                setAsDefaultIngress: true
-                ingressClass: nginx
-                enableCustomResources: true
-                enablePreviewPolicies: true
-                enableSnippets: true
-                appprotect:
-                    ## Enable the App Protect module in the Ingress Controller.
-                    enable: true
-                healthStatus: true
-                enableLatencyMetrics: true
-                nginxStatus:
-                    ## Enable the NGINX stub_status, or the NGINX Plus API.
-                    enable: true
-                    port: 8080
-                    ## Add IPv4 IP/CIDR blocks to the allow list for the NGINX Plus API. Separate multiple IP/CIDR by commas.
-                    allowCidrs: "0.0.0.0/0"
-                # for our single node cluster, we can listen on 80 and 443 via hostNetwork:                    
-                hostNetwork: true
-                service:
-                    type: NodePort
-                    externalTrafficPolicy: Cluster
-                    extraLabels:
-                    # needs to match ServiceMonitor matchLabels
-                    app: nginx-ingress-controller
-                    httpPort:
-                    enable: true
-                    port: 80
-                    nodePort: 30274
-                    targetPort: 80
-                    httpsPort:
-                    enable: true
-                    port: 443
-                    nodePort: 30275
-                    targetPort: 443
-                    customPorts:
-                    - name: dashboard
-                    targetPort: 8080
-                    protocol: TCP
-                    port: 8080
-                    nodePort: 30080
-                    - name: prometheus
-                    targetPort: 9113
-                    protocol: TCP
-                    port: 9113
-                    nodePort: 30113
-                config:
-                    entries:
-                    # resolver-addresses: kube-dns.kube-system.svc.cluster.local
-                    http2: "true"
-                    resolver-valid: 5s
-                    # smarter LB method:
-                    lb-method: "least_time last_byte"
-                    # for debugging
-                    error-log-level: info
-                    # plus logging:
-                    log-format: |-
-                        $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent
-                        "$http_referer" "$http_user_agent" "$http_x_forwarded_for" "$Host" rn="$resource_name"
-                        "$resource_type" "$resource_namespace" svc="$service"
-                        "$request_id" rt=“$request_time” ua=“$upstream_addr”
-                        uct="$upstream_connect_time" uht="$upstream_header_time"
-                        urt="$upstream_response_time" uqt=“$upstream_queue_time“ cs=“$upstream_cache_status“
-                prometheus:
-                create: true
-                scheme: http
-                port: 9113
-
-        .. note:: Helm is a utility that allows application developers to package their application and settings in a collection. We then use a values.yaml file to set values specific to our deployment. 
-
-    #.  To remove the existing ingress controller:
+    #.  Check the existing ``ingress`` already deployed and running. It is a NGINX OSS ingress
 
         .. code-block:: bash
           :caption: helm removal
 
-            helm uninstall plus -n nginx-ingress
+            helm list
 
-    #.  Run the following commands to install the NGINX Plus KIC helm chart:
+            NAME         	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART               	APP VERSION
+            nginx-ingress	default  	8       	2022-12-05 14:01:51.734097641 +0000 UTC	deployed	nginx-ingress-0.15.2	2.4.2
+
+    #.  To remove the existing ingress controller (it is a Nginx OSS ingress):
+
+        .. code-block:: bash
+          :caption: helm removal
+
+            helm uninstall nginx-ingress
+
+    #.  Run the following commands to install the NGINX Plus KIC helm chart in a new NameSpace ``ingress``:
 
         .. code-block:: bash
           :caption: helm install
-
+ 
             helm repo add nginx-stable https://helm.nginx.com/stable
             helm repo update
-            helm install plus nginx-stable/nginx-ingress -f /home/ubuntu/lab-files/helm/values-plus-with-app-protect.yaml --namespace nginx-ingress --create-namespace
+            
+            helm install plus nginx-stable/nginx-ingress \
+            --namespace ingress \
+            --set controller.kind=deployment \
+            --set controller.replicaCount=1 \
+            --set controller.nginxplus=true \
+            --set controller.image.repository=private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress \
+            --set controller.image.tag=2.4.2 \
+            --set controller.appprotect.enable=true \
+            --set controller.serviceAccount.imagePullSecretName=regcred \
+            --set controller.service.type=NodePort \
+            --set controller.service.httpPort.nodePort=30080 \
+            --version 0.15.2
         
+        .. note:: As you can notice, with one helm command, the Ingress Controller pod will be deployed with all the required parameters (NAP enabled, NodePort 30080)
+
     #.  After running the command, we need to wait for the KIC pod to become available. you can use a command like:
 
         .. code-block:: BASH
@@ -135,10 +76,125 @@ At a high-level we will:
 
         .. image:: ../pictures/ingress-ready.png
 
-        .. note:: Tab completion is enabled for all commands. In the command below, press tab at the end to complete the name of the pod.
+    #. Now, it is time to configure the Ingress Controller with CRD ressources (WAF policy, Log profile, Ingress routing ...)
 
-    #. View the logs, you will notice that they are similar to previous lab exercises with additional logs regarding the Kubernetes environment.
-        
-        .. code-block:: BASH
+       #. Execute the following commands to deploy the different resources
 
-           kubectl logs --follow -n nginx-ingress plus-nginx-ingress-
+          .. code-block:: bash
+
+             cd /home/ubuntu/lab-files/ingress
+             
+             kubectl apply -f ap-dataguard-policy.yaml
+             kubectl apply -f ap-logconf.yaml
+             kubectl apply -f nap-waf.yaml
+             kubectl apply -f virtual-server-waf.yaml
+
+       #. The manifest ``ap-dataguard-policy.yaml`` creates the WAF policy
+
+          .. code-block:: yaml
+
+            apiVersion: appprotect.f5.com/v1beta1
+            kind: APPolicy
+            metadata:
+            name: dataguard-alarm
+            spec:
+            policy:
+                applicationLanguage: utf-8
+                blocking-settings:
+                violations:
+                - alarm: true
+                    block: false
+                    name: VIOL_DATA_GUARD
+                data-guard:
+                creditCardNumbers: true
+                enabled: true
+                enforcementMode: ignore-urls-in-list
+                enforcementUrls: []
+                lastCcnDigitsToExpose: 4
+                lastSsnDigitsToExpose: 4
+                maskData: true
+                usSocialSecurityNumbers: true
+                enforcementMode: blocking
+                name: dataguard-alarm
+                template:
+                name: POLICY_TEMPLATE_NGINX_BASE
+
+       #. The manifest ``ap-logconf.yaml`` creates the Log Profile to send logs to ELK
+
+
+          .. code-block:: yaml
+
+            apiVersion: appprotect.f5.com/v1beta1
+            kind: APLogConf
+            metadata:
+            name: logconf
+            spec:
+            content:
+                format: default
+                max_message_size: 64k
+                max_request_size: any
+            filter:
+                request_type: all
+
+       #. The manifest ``nap-waf.yaml`` creates the WAF config (policy + log)
+
+          .. code-block:: yaml
+
+            apiVersion: k8s.nginx.org/v1
+            kind: Policy
+            metadata:
+            name: waf-policy
+            spec:
+            waf:
+                enable: true
+                apPolicy: "default/dataguard-alarm"
+                securityLogs:
+                - enable: true
+                apLogConf: "default/logconf"
+                logDest: "syslog:server=10.1.1.11:5144"
+
+
+       #. The manifest ``virtual-server-waf.yaml`` creates the Ingress resource (to route the traffic and apply the WAF config)
+
+          .. code-block:: yaml
+
+            apiVersion: k8s.nginx.org/v1
+            kind: VirtualServer
+            metadata:
+            name: vs-arcadia-no-waf
+            spec:
+            host: k8s.arcadia-finance.io
+            policies:
+            - name: waf-policy
+            upstreams:
+                - name: main
+                service: main
+                port: 80
+                - name: backend
+                service: backend
+                port: 80
+                - name: app2
+                service: app2
+                port: 80
+                - name: app3
+                service: app3
+                port: 80
+            routes:
+                - path: /
+                action:
+                    pass: main
+                - path: /files
+                action:
+                    pass: backend
+                - path: /api
+                action:
+                    pass: app2
+                - path: /app3
+                action:
+                    pass: app3
+
+    #. Test the deployment with the Win10 Jumhost
+    #. In the Chrome Arcadia Link bookmark, select ``WAF NGINX Ingress``
+    #. Navigate and send attacks.
+
+
