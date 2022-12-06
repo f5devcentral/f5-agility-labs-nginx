@@ -27,7 +27,7 @@ At a high-level we will:
 
 **Steps**
 
-    #.  SSH to the rancher VM
+    #.  SSH to the k3s VM
     #.  This is the contents of the ``/home/ubuntu/lab-files/helm/values-plus-with-app-protect.yaml`` file:
 
         .. code-block:: yaml
