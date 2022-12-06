@@ -20,7 +20,7 @@ Step 13 - Protect Arcadia API with Kubernetes Ingress Controller
     
     We also create a rate-limit policy (3) and applied to the /trading/rest URI. This will prevent bots and users from high-frequency trading! Rate-limiting is an important part of many API security strategies depending on the nature of the API. More detail on the configuration of this policy here: https://docs.nginx.com/nginx-ingress-controller/configuration/policy-resource/#ratelimit
 
-#.  Open a terminal to the Rancher VM (rke1), vscode is recommended. See the "Terminal" menu at the top of the screen.
+#.  Open a terminal to the k3s VM, vscode is recommended. See the "Terminal" menu at the top of the screen.
 
     .. image:: ../pictures/ingress-controller-configuration.png
         :align: center

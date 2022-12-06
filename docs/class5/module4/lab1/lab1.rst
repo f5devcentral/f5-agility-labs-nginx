@@ -1,6 +1,8 @@
 Step 11 - Optional NGINX Plus Ingress Controller Deployment
 ###########################################################
 
+.. warning:: This lab is under development. Please don't run through it.
+
 This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specific to configuring NGINX App Protect.
 
 That said, if you are interested in the topology or deploying the ingress controller, please continue on with this step. Otherwise you can skip to module 5: protecting API workloads.
@@ -27,7 +29,7 @@ At a high-level we will:
 
 **Steps**
 
-    #.  SSH to the rancher VM
+    #.  SSH to the k3s VM
     #.  This is the contents of the ``/home/ubuntu/lab-files/helm/values-plus-with-app-protect.yaml`` file:
 
         .. code-block:: yaml
