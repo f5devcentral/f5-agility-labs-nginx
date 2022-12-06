@@ -3,7 +3,9 @@ Class5 - NGINX App Protect
 
 UDF Lab Maintainers:
 
-   Matthieu Dierick <m.dierick@f5.com> 
+   Matthieu Dierick - Sr Solutions Architect <m.dierick@f5.com>
+
+   Gee Chow - Solutions Architect <g.chow@f5.com>
 
 Please email the group with any issues or suggestions.
 
