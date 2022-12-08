@@ -7,7 +7,7 @@ UDF Lab Maintainers:
 
 UDF Blueprint : 
 
-   📖 NGINX NMS 2.4 ACM
+   📖 Nginx NMS API Connectivity Manager (ACM)
    
 .. image:: archi-home.png
    :align: center
