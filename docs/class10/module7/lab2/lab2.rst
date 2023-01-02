@@ -1,33 +1,15 @@
 Step 12 - JWT authorization
 ###########################
 
-.. warning :: Due to a bug on API Key policy deletion, this lab can't be done. The workaround is to delete your API Proxy and recreate it without the API Key policy. Then, create the JWT policy following this guide.
-
 JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT token for developers.
 
 .. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
 
-Clean-up APIKEY configuration
-=============================
-
-#. In the Developer Portal, ``delete`` all APIKeys
-
-   .. image:: ../pictures/lab2/delete-key.png
-      :align: center
-
-#. When all APIKeys are deleted, ``delete`` the organization
-
-   .. image:: ../pictures/lab2/delete-org.png
-      :align: center
-
-
-
-
 Add JWT Policy on API-Proxy
 ===========================
 
-#. Edit ``API-Proxy`` ``v2`` like previously
+#. Edit ``API-Proxy`` ``v2`` like previously (we will enabled JWT auth only on the Version 2, the Version remains with API Key authentication)
 #. In ``Policies``, remove the APIKey policy
 #. Add a new ``JSON Web Token Assertion`` policy
 #. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)``and paste the JSON below.
@@ -70,8 +52,19 @@ Add JWT Policy on API-Proxy
 #. Click ``Add``
 #. Click ``Save and Publish``
 
-Test it out with Postman
-========================
+
+Check what happened in the Dev Portal
+=====================================
+
+#. In the Dev Portal, check what happened for the API Key on Version 2
+#. As you can see, as the API Key policy has been deleted, the API Key for Version 2 has been removed from the Dev Portal and a warning is displayed
+
+   .. image:: ../pictures/lab2/key-deleted.png
+      :align: center
+
+
+Test JWT auth out with Postman
+==============================
 
 #. In Postman, select the call ``GET Colors`` and check the version is ``v2`` http://api.sentence.com/v2/api/colors
 #. In Authorization, select type ``OAuth 2.0``
@@ -100,6 +93,7 @@ Test it out with Postman
    .. image:: ../pictures/lab2/send.png
       :align: center
 
-.. note :: Congratulations, you configured your API Gateway to validate JWT token from Keycloak.
+.. note:: Congratulations, you configured your API Gateway to validate JWT token from Keycloak.
 
-    
+.. note:: Check your Version 1 is still using API Key authentication.
+
