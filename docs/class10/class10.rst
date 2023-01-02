@@ -5,6 +5,14 @@ UDF Lab Maintainers:
 
    Matthieu Dierick <m.dierick@f5.com>
 
+.. note:: 
+   
+   Last Update : Jan 2nd 2023
+   
+   * Update ACM v1.3.1
+   * Screenshots updated
+   * Lab JWT auth available
+
 UDF Blueprint : 
 
    📖 Nginx NMS API Connectivity Manager (ACM)
