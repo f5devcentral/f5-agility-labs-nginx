@@ -39,7 +39,6 @@ The infrastructure team must enable OIDC on the DevPortal instance. To do so, fo
    * Authorization : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/auth``
    * User Info : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/userinfo``
    * Logout URI : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/logout``
-   * Sign-Out Redirect URI (expand the sub-menu Endpoints for IDP): ``http://dev.sentence.com``
 
    .. note :: All those endpoints are provided by Keycloack configuration console. We skip this part in this lab.
 
