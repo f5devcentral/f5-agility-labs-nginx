@@ -8,10 +8,11 @@ UDF Lab Maintainers:
 .. note:: 
    
    Last Update : Jan 2nd 2023
-   
+
    * Update ACM v1.3.1
    * Screenshots updated
-   * Lab JWT auth available
+   * Lab JWT Token Validation
+   * Lab Oauth2 Instropection
 
 UDF Blueprint : 
 
