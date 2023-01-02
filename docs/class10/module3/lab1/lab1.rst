@@ -47,6 +47,8 @@ Expose the API proxy
 
       * Name : sentence-svc
       * Service Target Hostname : 10.1.20.7 (this is the K3S Ingress IP Address)
+      * Service Target Transport Protocol : HTTP
+      * Service Target Port : 30511 (K8S Node Port)
    
    * API Proxy
 
@@ -65,8 +67,9 @@ Expose the API proxy
 
    * Click ``Back to workspace``
 
-.. image:: ../pictures/lab1/publish-api.png
+.. image:: ../pictures/lab1/publish-api-v131.png
    :align: center
+   :scale: 50%
 
 .. image:: ../pictures/lab1/edit-adv-config.png
    :align: center
@@ -77,8 +80,7 @@ Customize and finalize the configuration
 
 The configuration is not yet finished
 
-   * We have to specify the ``Port`` used by the K8S NodePort exposing the API
-   * Define how the API Gateway will ``route`` the API req per ``Version``
+   * Define how the API Gateway will ``route`` the API requests per ``Version``
 
 #. Edit the API Proxy just created (sentence-api) by clicking on the 3 dots on the top right of the row, then click ``Edit Proxy``.
 
@@ -96,14 +98,6 @@ The configuration is not yet finished
          :align: center
 
    * Click ``Next``
-
-#. In ``Backend``, modify the Listener Port for the only entry in the ``Service Targets`` table by clicking on its existing Listener Port value.
-
-   * Change the Listener Port to ``30511``. This is the port used on K3S to expose the Ingress Node Port.
-   * Click ``Save``
-
-      .. image:: ../pictures/lab1/listener-port.png
-         :align: center
 
 #. Click ``Next`` > ``Next`` then ``Save and Publish``
 
