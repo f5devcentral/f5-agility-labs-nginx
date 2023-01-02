@@ -12,7 +12,7 @@ UDF Lab Maintainers:
    * Update ACM v1.3.1
    * Screenshots updated
    * Lab JWT Token Validation
-   * Lab Oauth2 Instropection
+   * Lab Oauth2 Introspection
 
 UDF Blueprint : 
 
