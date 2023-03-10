@@ -90,11 +90,18 @@ Exercise 1: Install NGINX Plus
          mkdir -p /etc/ssl/nginx 
          cp nginx-repo.* /etc/ssl/nginx 
          wget http://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key 
-         apt-get install apt-transport-https lsb-release ca-certificates 
-         printf "deb https://plus-pkgs.nginx.com/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-plus.list 
-         wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90nginx 
-         apt-get update 
-         apt-get -y install nginx-plus 
+         apt-get install apt-transport-https lsb-release ca-certificates wget gnupg2 ubuntu-keyring
+
+         wget -qO - https://cs.nginx.com/static/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+         wget -qO - https://cs.nginx.com/static/keys/app-protect-security-updates.key | gpg --dearmor | sudo tee /usr/share/keyrings/app-protect-security-updates.gpg >/dev/null
+
+         printf "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-plus.list
+
+         wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90pkgs-nginx
+
+         apt-get update
+
+         apt-get install -y nginx-plus
 
 #. Verify the version of NGINX Plus that was installed:
 
