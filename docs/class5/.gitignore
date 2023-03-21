@@ -1,4 +1,5 @@
 # Unneeded folders
-_retired-imgs
-_unused-imgs
-_unused-imgs/*
+_retired
+_retired/*
+_unused
+_unused/*

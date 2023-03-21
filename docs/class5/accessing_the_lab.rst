@@ -17,3 +17,9 @@ Clicking on the **Applications** drop-down in the menu bar will bring up a list 
 
 The steps to complete each lab in this class will begin with the assumption that you are connected via RDP and able to see the **Applications** menu.
 
+Remember these important tips:
+
+- Lab modules are independent; feel free to tackle the modules in any order
+- The username **lab** and password **Agility2023!** should work for every login
+- Traffic generators and attack generators will help generate statistics, events and attacks
+- All resources can be reached through the RDP Jump Host

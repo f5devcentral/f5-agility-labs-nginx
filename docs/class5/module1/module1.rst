@@ -5,6 +5,9 @@ In this module, you will review an existing NGINX Plus instance running NGINX Ap
 
 .. note:: The goal of this module is to allow an overview of the entire solution, along with features of centralized management. 
 
+
+.. image:: images/module_1_overview.png
+
 **Class 1 - All sections**
 
 .. toctree::
@@ -12,4 +15,4 @@ In this module, you will review an existing NGINX Plus instance running NGINX Ap
    :glob:
 
    lab*/lab*
-
+   recap

@@ -13,3 +13,14 @@ In this lab, you will perform the following tasks:
 - Deploy NGINX App Protect on an existing NGINX Ingress Controller instance serving an application using a CI/CD pipeline
 - Review NGINX App Protect API Security
 - Review NGINX App Protect Advanced Features, such as Bot Protection 
+
+Acronyms
+========
+
+- NAP – NGINX App Protect
+- NMS – NGINX Management Suite
+- NIM – NGINX Instance Manager (base NMS module)
+- NSM – NGINX Security Monitoring (optional NMS module)
+- ACM – API Connectivity Manager (optional NMS module)
+- ADM – App Delivery Manager (optional NMS module)
+- NIC – NGINX Ingress Controller

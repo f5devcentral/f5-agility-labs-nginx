@@ -1,5 +1,5 @@
-View the NGINX Plus Status in NMS
-#################################
+View the NGINX Plus Instance in NMS
+###################################
 
 1. Navigate to **Applications** on the menu bar and launch **Firefox**.
 
@@ -37,7 +37,7 @@ View the NGINX Plus Status in NMS
 
 .. image:: images/nim_instance_details.png
 
-10. In the *App Protect Details* section, you can clearly see that a WAF policy has been applied and is active.
+1.  In the *App Protect Details* section, you can clearly see that NGINX App Protect has been installed and is active.
 
 .. image:: images/nim_app_protect_details.png
 
