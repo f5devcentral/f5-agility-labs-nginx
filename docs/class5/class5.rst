@@ -1,16 +1,15 @@
 Class5 - NGINX App Protect
 ##########################
 
-UDF Lab Maintainers:
+Welcome to the NGINX App Protect hands-on lab!
+
+Lab Maintainers:
 
    Chad Wise - Senior Solutions Engineer <c.wise@f5.com>
 
    Greg Robinson - Senior Solutions Engineer <g.robinson@f5.com>
 
 Please email us with any issues or suggestions.
-
-.. image:: images/deployment_modes.png
-   :align: center
 
 .. toctree::
    :maxdepth: 1

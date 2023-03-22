@@ -15,7 +15,7 @@ Clicking on the **Applications** drop-down in the menu bar will bring up a list 
 
 .. image:: images/xrdp_app_menu.png
 
-The steps to complete each lab in this class will begin with the assumption that you are connected via RDP and able to see the **Applications** menu.
+The steps to complete each lab in this class will begin with the assumption that you are connected via RDP, able to navigate the **Applications** menu and familiar with the available applications.
 
 Remember these important tips:
 
