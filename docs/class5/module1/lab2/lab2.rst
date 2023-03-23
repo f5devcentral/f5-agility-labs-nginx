@@ -19,7 +19,7 @@ Review the NGINX Plus Configuration
 
 .. image:: images/nms_instance_config.png
 
-5. Click on the configuration file for the application that we're testing, *arcadia-finance.conf*, in the navigation pane. The file's contents will be presented in the editor.
+5. Click on the configuration file for the application that we're testing, **arcadia-finance.conf**, in the navigation pane. The file's contents will be presented in the editor.
 
 .. image:: images/nms_arcadia_config.png
 

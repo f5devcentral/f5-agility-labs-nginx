@@ -146,6 +146,7 @@ Please email us with any issues or suggestions.
 
 .. toctree::
    :maxdepth: 1
+   :caption: Content:
    :glob:
 
    module*/module*
