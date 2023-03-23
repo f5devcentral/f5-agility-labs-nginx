@@ -7,15 +7,15 @@ Review the NGINX Plus Configuration
 
 .. image:: images/nms_instance_manager_dropdown.png
 
-2. Click the first NGINX instance in the list that shows *Active* in the *Status* column. You will see the *Instance Detail* screen.
+2. Click the first NGINX instance in the list that shows **Active** in the **Status** column. You will see the **Instance Detail** screen.
 
 .. image:: images/nms_instance_details.png
 
-3. Let's review the configuration of this instance. Click on the **Edit Config** button on the *Instance Detail* page.
+3. Let's review the configuration of this instance. Click on the **Edit Config** button on the **Instance Detail** page.
 
 .. image:: images/nms_instance_detail_edit_config.png
 
-4. The *Instance Config* page will be presented. Notice that all of the relevant NGINX configuration files are present in the navigation pane, and the contents of the selected file are shown in the visual editor pane on the right.
+4. The **Instance Config** page will be presented. Notice that all of the relevant NGINX configuration files are present in the navigation pane, and the contents of the selected file are shown in the visual editor pane on the right.
 
 .. image:: images/nms_instance_config.png
 

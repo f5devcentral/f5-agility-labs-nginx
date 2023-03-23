@@ -58,7 +58,7 @@ The following are a few acronyms that you will encounter in this lab.
 - NAP – NGINX App Protect
 - NMS – NGINX Management Suite
 - NIM – NGINX Instance Manager (base NMS module)
-- NSM / NMS-SM – NGINX Security Monitoring (optional NMS module)
+- NMS-SM / NMS-SM – NGINX Security Monitoring (optional NMS module)
 - ACM – API Connectivity Manager (optional NMS module)
 - ADM – App Delivery Manager (optional NMS module)
 - NIC – NGINX Ingress Controller
@@ -77,7 +77,7 @@ Lab Inventory
   * - NGINX Management Suite
     - 10.1.1.4
     - Ubuntu 20.04 LTS
-    - NMS, NIM, NSM
+    - NMS, NIM, NMS-SM
     - SSH
   * - k3s Master Node
     - 10.1.1.5

@@ -1,7 +1,7 @@
 Modify the WAF Policy to Resolve an App Issue
 =============================================
 
-1. In *Firefox*, click the **Arcadia Finance (N+)** bookmark or novigate to https://nginx-plus.arcadia-finance.io/. You should see a partially blank page load as shown below.
+1. In **Firefox**, click the **Arcadia Finance (N+)** bookmark or novigate to https://nginx-plus.arcadia-finance.io/. You should see a partially blank page load as shown below.
 
 .. image:: images/arcadia_partial_load.png
 
@@ -15,51 +15,51 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/load_image_new_tab.png
 
-5. Click on the **Custom Reject Page** that loads in the new tab. NGINX App Protect redirected us to this page. Notice that a *support ID* is generated when the page loads. We can use this ID to identify the cause of the image block. Select and copy this value so that we can paste it into NSM.
+5. Click on the **Custom Reject Page** that loads in the new tab. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. We can use this ID to identify the cause of the image block. **Select and copy this value** so that we can search for it in NMS-SM.
 
 .. image:: images/custom_reject_page.png
 
 6. Return to NGINX Security Monitoring by clicking the **NMS** bookmark, logging in and selecting **Security Monitoring**.
 
-.. image:: images/nsm_overview.png
+.. image:: images/NMS-SM_overview.png
 
 7. On the left menu, select **Support ID Details**. You'll be prompted for your support ID.
 
-.. image:: images/nsm_support_id_prompt.png
+.. image:: images/NMS-SM_support_id_prompt.png
 
-8. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. Notice that the image URI is listed as */images/slider/slide-3.jpg*.
+8. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. Notice that the image URI is listed as **/images/slider/slide-3.jpg**.
 
-.. image:: images/nsm_support_id_details.png
+.. image:: images/NMS-SM_support_id_details.png
 
-9. If you scroll down to the *Attack Details* section, you can expand the individual sections showing *Violations*, *Subviolations*, *CVEs*, and *Threat Campaigns*. 
+9. If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Subviolations**, **CVEs**, and **Threat Campaigns**. 
 
-.. image:: images/nsm_support_id_attack_details.png
+.. image:: images/NMS-SM_support_id_attack_details.png
 
-10. Notice that the *Violations* section shows a single violation: *Illegal File Type*. 
+10. Notice that the **Violations** section shows a single violation: **Illegal File Type**. 
 
-.. image:: images/nsm_support_id_illegal_file_type.png
+.. image:: images/NMS-SM_support_id_illegal_file_type.png
 
-11. We need to allow JPG files to enable our application to operate properly. In order to do so, we need to modify our WAF policy. Let's start that process by navigating back to *Instance Manager* from the *Select module* drop-down at the top of the left menu bar.
+11. We need to allow JPG files to enable our application to operate properly. In order to do so, we need to modify our WAF policy. Let's start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
 
 .. image:: images/menu_drop_down_nim.png
 
-12. Inside of the *Instance Manager* dashboard, click on **App Protect** towards the bottom of the left menu bar.
+12. Inside of the **Instance Manager** dashboard, click on **App Protect** towards the bottom of the left menu bar.
 
 .. image:: images/nim_app_protect_menu.png
 
-13. Click on the *AgilityPolicy* in the policy list. 
+13. Click on the **AgilityPolicy** in the policy list. 
 
 .. image:: images/nim_app_protect_agilitypolicy.png
 
-14. Now, click on the **Policy Versions** sub-tab inside of the *Policy Detail* page.
+14. Now, click on the **Policy Versions** sub-tab inside of the **Policy Detail** page.
 
 .. image:: images/nim_app_protect_agilitypolicy_versions.png
 
-15. Click on the version name under the *Versions* column in the list. The JSON configuration of the policy will be displayed.
+15. Click on the version name under the **Versions** column in the list. The JSON configuration of the policy will be displayed.
 
 .. image:: images/nin_app_protect_agilitypolicy_version_view.png
 
-16. To modify the policy based on this version of the policy, click **Edit Version**. Provide a description of the changes you'll be making.
+16. To modify the policy based on this version of the policy, click **Edit Version**. Provide a description of the changes you'll be making in the **Description** field. 
 
 .. image:: images/nim_app_protect_agilitypolicy_version_edit.png
 
@@ -67,7 +67,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nim_app_protect_agilitypolicy_version_search.png
 
-18. Search for **"jpg"** and you'll find on line 240 that JPG files are not being allowed. Modify line 241 to change *"allowed": false* to *"allowed": true*. Note that false and true are not encapsulated in quotation marks.
+18. Search for **"jpg"** and you'll find on line 240 that JPG files are not being allowed. Modify line 241 to change **"allowed": false** to **"allowed": true**. Note that false and true are not encapsulated in quotation marks.
 
 .. image:: images/nim_app_protect_agilitypolicy_version_modified.png
 
@@ -91,11 +91,17 @@ Modify the WAF Policy to Resolve an App Issue
 
 24. On the top of the left menu bar, click **Instances**, then chose the active NGINX Plus instance from the list.
 
-25. Look for the deployment status in the *Last Deployment Details* section. You should see a status of *Finalized*. If not, wait a few moments for the deployment to commence and complete.
+25. Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Finalized**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
+
+**Deployment not finished**
+
+.. image:: images/deployment_status_unknown.png
+
+**Deployment finished**
 
 .. image:: images/deployment_status.png
 
-26. In a new tab in *Firefox*, open a new tab and click on the *Arcadia Finance (N+)* bookmark. Notice that the images are now loading successfully.
+26.  Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
 
 .. image:: images/successful_full_load.png
 
