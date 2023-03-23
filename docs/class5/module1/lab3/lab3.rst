@@ -1,5 +1,5 @@
 View NGINX App Protect in NMS
-#############################
+=============================
 
 There are two components to NGINX App Protect within NMS: 
 

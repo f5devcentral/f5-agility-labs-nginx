@@ -1,5 +1,5 @@
 View the NGINX Plus Instance in NMS
-###################################
+===================================
 
 1. Navigate to **Applications** on the menu bar and launch **Firefox**.
 

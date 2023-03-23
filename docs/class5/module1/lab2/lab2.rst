@@ -1,5 +1,5 @@
 Review the NGINX Plus Configuration
-###################################
+===================================
 
 .. note::  If not already connected to the jump host, connect via RDP and open Firefox.
 

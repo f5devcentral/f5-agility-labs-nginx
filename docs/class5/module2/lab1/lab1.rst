@@ -1,5 +1,5 @@
 Installing NGINX App Protect on an existing NGINX Plus instance
-###############################################################
+===============================================================
 
 .. note:: NGINX Plus repo keys are already copied to the Ubuntu VM. Normally you would need to put them in /etc/ssl/nginx.
 

@@ -1,16 +1,8 @@
-Class5 - NGINX App Protect
-##########################
+******************************
+Class5 - NGINX App Protect WAF
+******************************
 
-Welcome to the NGINX App Protect hands-on lab!
-
-Lab Maintainers
----------------
-
-   Chad Wise - Senior Solutions Engineer <c.wise@f5.com>
-
-   Greg Robinson - Senior Solutions Engineer <g.robinson@f5.com>
-
-Please email us with any issues or suggestions.
+Welcome to the NGINX App Protect WAF hands-on lab!
 
 NGINX App Protect Overview
 ==========================
@@ -61,7 +53,7 @@ Each of the modules in this lab are independent and can be performed in any orde
 Acronyms
 ========
 
-The following are a few acronyms that you will run into in this lab. 
+The following are a few acronyms that you will encounter in this lab. 
 
 - NAP – NGINX App Protect
 - NMS – NGINX Management Suite
@@ -135,17 +127,27 @@ Clicking on the **Applications** drop-down in the menu bar will bring up a list 
 
 .. image:: images/xrdp_app_menu.png
 
-The steps to complete each lab in this class will begin with the assumption that you are connected via RDP, able to navigate the **Applications** menu and familiar with the available applications.
+Each section in this lab will begin with the assumption that you are connected via RDP, able to navigate the **Applications** menu and familiar with the available applications.
 
 Remember these important tips:
 
 - Lab modules are independent; feel free to tackle the modules in any order
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted
 - Traffic and attack generators are running to help generate statistics, events and attacks
-- All resources can be reached through the RDP Jump Host
+
+Lab Maintainers
+===============
+
+   Chad Wise - Senior Solutions Engineer <c.wise@f5.com>
+
+   Greg Robinson - Senior Solutions Engineer <g.robinson@f5.com>
+
+Please email us with any issues or suggestions.
 
 .. toctree::
    :maxdepth: 1
    :glob:
 
    module*/module*
+
+.. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.

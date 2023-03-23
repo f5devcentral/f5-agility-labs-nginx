@@ -1,5 +1,5 @@
 Module Review - Test Driving NGINX Plus with App Protect and NGINX Management Suite 
-###################################################################################
+===================================================================================
 
 In this module, we have completed the following items:
 

@@ -1,12 +1,12 @@
 Step 8 - Customize the WAF policy
-#################################
+=================================
 
 To this point, we have been using the default NGINX App Protect policy. When we do not reference a policy, App Protect uses the default WAF policy which covers all the OWASP top 10 attack patterns.
 
 In this lab, we will customize the policy and test the new config with our docker container.
 
 Use a custom WAF policy and assign it per location
-**************************************************
+--------------------------------------------------
 
 Steps:
 

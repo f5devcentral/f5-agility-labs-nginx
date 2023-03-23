@@ -1,5 +1,5 @@
 Step 6 - Build your first NAP (NGINX App Protect) Docker image
-##############################################################
+==============================================================
 
 In this lab, we will build the NAP Docker image via command line.
 

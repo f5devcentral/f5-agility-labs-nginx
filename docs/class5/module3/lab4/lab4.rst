@@ -1,5 +1,5 @@
 Step 9 - Use External References to make your policy dynamic
-############################################################
+============================================================
 
 External references in policy are defined as any code blocks that can be used as part of the policy without being explicitly pasted within the policy file. This means that you can have a set of pre-defined configurations for parts of the policy, and you can incorporate them as part of the policy by simply referencing them. This reduces the complexity of having to concentrate everything into a single policy file.
 

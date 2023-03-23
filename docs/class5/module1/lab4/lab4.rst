@@ -1,5 +1,5 @@
 Modify the WAF Policy to Resolve an App Issue
-#############################################
+=============================================
 
 1. In *Firefox*, click the **Arcadia Finance (N+)** bookmark or novigate to https://nginx-plus.arcadia-finance.io/. You should see a partially blank page load as shown below.
 
