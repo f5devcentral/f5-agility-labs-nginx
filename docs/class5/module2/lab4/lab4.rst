@@ -11,9 +11,10 @@ Test a SQL Inject Attack against the Arcadia Finance App
 
 3. For the username, paste the following value:
 
-.. code-block:: bash
-  ' or 1=1--
+.. code-block:: sql
+  
+    ' or 1=1--
 
 and click **Log me in**. 
 
-4. While our injection was not successful, the attempt was not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as we progress through the lab.
+4. You should be immediately returned to the login prompt. While our SQL injection was not able to successfully bypass the login page, the attempt was not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as we progress through the lab.

@@ -3,7 +3,7 @@ Adding the NGINX Plus with App Protect Instance to NGINX Management Suite
 
 Since our lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
 
-.. warning:: If you're installing the NGINX Agent in your environment, a few steps are required before starting the installation process. See https://docs.nginx.com/nginx-management-suite/nginx-agent/install-nginx-agent/ for more information. In this lab, these have been checked for you.
+.. warning:: If you're installing the NGINX Agent outside of this lab environment, a few steps are required before starting the installation process. See https://docs.nginx.com/nginx-management-suite/nginx-agent/install-nginx-agent/ for more information. In this lab, these have been checked for you.
 
 1. Connect to the NGINX Plus 2 instance via SSH, if not already connected.
 
@@ -27,7 +27,7 @@ Load the file into a file editor:
 
 Add the following configuration block to the end of the file:
 
-.. code-block:: bash
+.. code-block:: nginx
 
   # Enable reporting NGINX App Protect details to the control plane.
   nginx_app_protect:
@@ -36,19 +36,21 @@ Add the following configuration block to the end of the file:
     # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
 
+Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
+
 4. Start the NGINX Agent:
 
 .. code-block:: bash
 
   sudo systemctl start nginx-agent
 
-1. Set the NGINX Agent to start at boot:
+5. Set the NGINX Agent to start at boot:
 
 .. code-block:: bash
 
   sudo systemctl enable nginx-agent
 
-6.  Create the Metrics service on NGINX. Return to the NMS Dashboard and click on **Instances** in the **Instance Manager** to view the instance list.
+6.  Create the Metrics service on NGINX. Navigate to **NMS** in **Firefox** and click on **Instances** in the **Instance Manager** to view the instance list.
 
 .. image:: images/nms_dashboard.png
 
@@ -70,7 +72,7 @@ Add the following configuration block to the end of the file:
 
 11.  Provide the filename **/etc/nginx/conf.d/metrics.conf**.
 
-.. image:: aimages/filename_prompt.png
+.. image:: images/filename_prompt.png
 
 12.  Click **Create**.
 
@@ -92,7 +94,7 @@ Add the following configuration block to the end of the file:
 
 .. image:: images/file_contents.png
 
-14. Click the **Publish** button.
+1.  Click the **Publish** button.
 
 .. image:: images/publish_button.png
 
@@ -107,23 +109,21 @@ Add the following configuration block to the end of the file:
 17. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
 
 .. code-block:: bash
-  sudo nginx -s reload
+    sudo nginx -s reload
 
-18. Start and Enable NGINX Agent
+1.  Start and Enable NGINX Agent
 
 To start the NGINX Agent on systemd systems, run the following command:
 
 .. code-block:: bash
-
-  sudo systemctl start nginx-agent
+    sudo systemctl start nginx-agent
 
 To enable the NGINX Agent to start on boot, run the following command:
 
 .. code-block:: bash
+    sudo systemctl enable nginx-agent
 
-  sudo systemctl enable nginx-agent
-
-19. Verifying NGINX Agent is Running and Registered
+1.  Verifying NGINX Agent is Running:
 
 Run the following command on your data plane to verify that the NGINX Agent process is running:
 
@@ -135,8 +135,4 @@ You should see output that looks similar to the following example:
 
 .. image:: images/nginx_agent_ps_aux_result.png
 
-20. Once you’ve verified the NGINX Agent is running on your data plane, you should confirm it’s registered with Instance Manager. Open the NGINX Management Suite web interface and log in. The registered instance is shown in the Instances list.
-
-.. image:: images/nginx_instances_result.png
-
-Once you see the **NGINX Plus 2** instance listed in the NMS Instances list, this section of the lab is complete.
+Now that your instance has NGINX App Protected and the NGINX Agent installed and running, and is appearing in the **NMS Management Suite** **Instance Manager** instances list, we can continue.

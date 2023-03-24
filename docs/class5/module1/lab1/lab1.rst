@@ -25,29 +25,31 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_instances_overview.png
 
-.. note:: Each instance of this lab runs in a virtual environement. Since new VMs are deployed for each instance, the operating system identifiers change, so each NGINX Plus instance is treated as a new instance. Thus, you may see previous instances listed. You may optionally delete these **Offline** instances by clicking the three dot icon under the **Actions** column and selecting **Delete**. They will not interfere with the lab.
+7. Each instance of this lab runs in a virtual environement. Since new VMs are deployed for each instance, the operating system identifiers change, so each NGINX Plus instance is treated as a new instance. Thus, you may see previous instances listed. You may optionally delete these **Offline** instances by clicking the three dot icon under the **Actions** column and selecting **Delete**. They will not interfere with the lab.
 
 .. image:: images/nim_instances_delete_offline.png
 
-7. Click on the **nginx-instance-1.agility.lab** instance in the list that shows **Online** under the **Status** column. The **Instance Detail** screen loads.
+8. Click on the **nginx-instance-1.agility.lab** instance in the list that shows **Online** under the **Status** column. The **Instance Detail** screen loads.
 
 .. image:: images/nim_instance_detail.png
 
-8. Notice that the **Details** is the default tab in this screen. Scroll through the contents of the **Details** tab. In the first section titled **Instance Details**, notice that you can see details about the NGINX Instance itself, including version, status, configuration path, and more. 
+9. Notice that the **Details** is the default tab in this screen. Scroll through the contents of the **Details** tab. In the first section titled **Instance Details**, notice that you can see details about the NGINX Instance itself, including version, status, configuration path, and more. 
 
 .. image:: images/nim_instance_details.png
 
-9.  In the **App Protect Details** section, you can clearly see that NGINX App Protect has been installed and is active.
+10.  In the **App Protect Details** section, you can clearly see that NGINX App Protect has been installed and is active.
 
 .. image:: images/nim_app_protect_details.png
 
-10. Scroll down through the **Host Details**, **Disk Partitions**, **Network Interfaces** and **Processors** sections to see additional details. 
+11. Scroll down through the **Host Details**, **Disk Partitions**, **Network Interfaces** and **Processors** sections to see additional details. 
 
-11. Next, click on the **Metrics Summary** tab. In this tab, you can see visualized metrics around instance resource utiliation, including CPU, memory, overall connection counts, HTTP connection counts and more.  
+12. Next, click on the **Metrics Summary** tab. In this tab, you can see visualized metrics around instance resource utiliation, including CPU, memory, overall connection counts, HTTP connection counts and more.  
+
+.. caution:: It may take several minutes after the lab is created for metrics to appear in this screen. 
 
 .. image:: images/nim_metrics_summary.png
 
-12. Finally, click on the **Metrics** tab to drill-down into the component-level, real-time values of all metrics available for the instance. Click through the sub-tabs, such as **System**, **HTTP Server Zones** and **HTTP Upstreams**. These graphs provide a quick way to identify anomalies in load and performance.
+1.  Finally, click on the **Metrics** tab to drill-down into the component-level, real-time values of all metrics available for the instance. Click through the sub-tabs, such as **System**, **HTTP Server Zones** and **HTTP Upstreams**. These graphs provide a quick way to identify anomalies in load and performance.
 
 .. image:: images/nim_metrics.png
 
