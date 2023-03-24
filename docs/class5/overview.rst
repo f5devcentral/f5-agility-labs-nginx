@@ -136,10 +136,10 @@ If you're installing NGINX Management Suite, make sure that:
  - you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
 
 If you're installing NGINX App Protect, make sure that:
-- you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
+ - you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
 
 If you're installing NGINX Plus only, make sure that:
-- you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
+ - you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
 
 .. caution:: NGINX App Protect supports fewer Linux distributions than NGINX Plus. You may need to migrate your NGINX configuration to a supported distro in order to install NAP.
 
