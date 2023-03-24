@@ -1,127 +1,49 @@
-Step 12 - Protect Arcadia API with NGINX App Protect on a centos VM
-###################################################################
+Advanced WAF/ASM Policy Converter
+=================================
 
+Conversion tools in NGINX App Protect WAF
+-----------------------------------------
 
-The Arcadia web application has several REST APIs in order to:
+The following section describes two tools available in the NGINX App Protect WAF compiler package. You can use them without a full installation of NGINX App Protect or NGINX Plus.
 
-    #. Buy stocks
-    #. Sell stocks
-    #. Transfer money to friends
+The BIG-IP Advanced WAF security policies conversion tool
+---------------------------------------------------------
 
-Because we have an ``OpenAPI specification file`` we can use this for a very accurate policy for protecting these APIs.
+One of the fastest ways to create a security policy is to start by already having one configured on a BIG-IP Advanced WAF system. NGINX App Protect WAF provides a conversion tool, convert-policy, to convert security policies exported from BIG-IP Advanced WAF in XML format to JSON format, to use in NGINX App Protect WAF. If you used the default installation settings, the file is saved as /opt/app_protect/bin/convert-policy. 
 
-You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub.com/apis/nginx5/api-arcadia_finance/2.0.2-oas3
+.. warning:: F5 recommends using the convert-policy tool that comes with the NGINX App Protect WAF installation to convert and deploy the security policy to the same NGINX App Protect WAF installation. You should not use the convert-policy tool from a different NGINX App Protect WAF version to do so.
 
-App Protect allows you to reference the file on an external http server or locally on the file system of the NGINX instance.
+To perform the conversion, use the following command syntax:
 
-.. image:: ../pictures/lab1/swaggerhub.png
-   :align: center
+.. code-block:: bash
+   /opt/app_protect/bin/convert-policy -i <filename of exported policy>.xml -o <filename of new policy>.json | jq
 
-.. note :: Notice that the URI, method, and response type are all defined for each API. This also serves as a tool for developers to understand what the response should look like for a successful call.
+You may observe output similar to the following, which displays a list of settings and entities that the tool removed, which are not supported on NGINX App Protect WAF.
 
-Steps for the lab
-*****************
+.. code-block:: json   
+   {
+   "file_size": 21364,
+   "completed_successfully": true,
+   "warnings": [
+      "Default header '*-bin' cannot be deleted.",
+      [...]
+      "Traffic Learning, Policy Building, and staging are unsupported",
+      [...]
+      "/blocking-settings/http-protocols/description value 'Bad host header value' is unsupported.",
+      "/whitelist-ips/trustedByPolicyBuilder must be '0' (was '1').",
+      "Element '/websocket-urls' is unsupported."
+   ],
+   "filename": "/root/nginx_base.json"
+   }
 
-.. note :: Make sure NGINX is installed on centos-vm. There is a script on the centos-vm in /home/centos/lab-files/lab-script-cheat.sh that you can use to easily install App Protect and continue on from here.
+The output file is based on the default security base template and is ready to use. You can retain all settings, saving them in the output file, including those not supported on NGINX App Protect WAF, by including the --keep-full-configuration switch. Note, however, that when you do so, the system reports unsupported features as errors when you attempt to load the resulting output policy into NGINX App Protect WAF and fail.
 
-#. Use vscode or SSH to the centos-vm
+The user-defined signatures conversion tool
+-------------------------------------------
 
-#. Verify NGINX is installed, if the below command returns some html, it is running
+When you have your own user-defined signatures in XML format, such as one exported from a BIG-IP Advanced WAF system, NGINX App Protect provides the user-defined signatures tool to convert your XML file to JSON format so you can incorporate the file into an App Protect security policy. If you used the default installation settings, the file is saved in /opt/app_protect/bin/convert-signatures. For more information, refer to User Defined Signatures Converter in the NGINX documentation.
 
-    .. code-block:: bash
+.. code-block:: bash
+   /opt/app_protect/bin/convert-signatures -i <filename of exported signatures>.xml -o <filename of new signature>.json | jq
 
-        curl 0
-
-#. If curl is unable to connect, run this 
-
-    .. code-block:: bash
-        
-        /home/centos/lab-files/lab-script-cheat.sh
-
-#. View our API policy template that is installed with app protect
-
-    .. code-block:: bash
-
-        cat /etc/app_protect/conf/NginxApiSecurityPolicy.json
-
-#. The required edits have already been made in our file located in ``cat /home/centos/lab-files/openAPI/NginxApiSecurityPolicy.json`` see the highlighted line below.
-
-    .. code-block:: js
-        :emphasize-lines: 11
-
-        {
-        "policy" : {
-            "name" : "app_protect_api_security_policy",
-            "description" : "NGINX App Protect API Security Policy. The policy is intended to be used with an OpenAPI file",
-            "template": {
-                "name": "POLICY_TEMPLATE_NGINX_BASE"
-            },
-
-            "open-api-files" : [
-                {
-                    "link": "https://raw.githubusercontent.com/nginx-architects/kic-example-apps/main/app-protect-openapi-arcadia/open-api-spec.json"
-                }
-            ],
-
-            "blocking-settings" : {
-                "violations" : [
-                    {
-        ...
-
-#. See the new sections of the NGINX configuration below for the REST API locations that we will protect
-
-    .. code-block:: nginx
-        :emphasize-lines: 11,17
-
-        # app3 service
-        location /app3 {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone app3_service;
-        }
-
-        # apply specific policies to our API endpoints:
-        location /trading/rest {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone trading_service;
-            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-        }
-
-        location /api/rest {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone trading_service;
-            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-        }
-
-#. Copy the configuration files into /etc/nginx:
-
-    .. code-block:: BASH
-    
-        cp ~/lab-files/openAPI/NginxApiSecurityPolicy.json ~/lab-files/openAPI/nginx.conf /etc/nginx
-
-
-#. Restart the NGINX service and then we will run some tests
-
-    .. code-block:: BASH
-        
-        sudo systemctl reload nginx
-
-Test The Protections
-********************
-
-    #. RDP to the jumphost with credentials ``user:user``
-    #. Open ``Postman``
-    #. Open Collection ``Arcadia API`` (see image below for navigating Postman)
-    #. Send your first API Call with ``Last Transactions``. You should see the last transactions. This is just a GET.
-
-       .. image:: ../pictures/lab1/last_trans.png
-           :align: center
-           :scale: 100%
-
-    #. If you look closely at the OAS3 (Open API Spec v3) file, you'll see that buy stocks expects a POST. Try running ``POST Buy Stocks`` and see that it returns success. If you change the method to ``GET`` and run it again you will notice it is blocked. You can check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
-
-       .. image:: ../pictures/lab1/buy_attack2.png
-           :align: center
-           :scale: 100%
-
-We will view the logs in the Kibana dashboard in the next lab, or feel free to go to ``Firefox>Kibana>Dashboard>Overview`` now.
-
+The process of converting a WAF policy from XML to JSON is not yet covered in this lab. 

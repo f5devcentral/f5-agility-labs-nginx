@@ -68,10 +68,10 @@ There are two components to NGINX App Protect within NMS:
 
 17. Finally, click on the **Events Log** tab to view the historical event list. 
 
-.. image:: images/nsm_dashboard_event_logs.png
+.. image:: images/NMS-SM_dashboard_event_logs.png
 
 18. You can click on any of the events in the list to view more details. Close the details box when finished.
 
-.. image:: images/nsm_dashboard_event_details.png
+.. image:: images/NMS-SM_dashboard_event_details.png
 
 Now that you've reviewed where WAF policies exist in NMS, how they are deployed at the application level and how to monitor security statistics and events in NMS, let's continue to the next section of the lab.
