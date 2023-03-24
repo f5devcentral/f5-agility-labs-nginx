@@ -1,200 +1,148 @@
-Step 11 - Optional NGINX Plus Ingress Controller Deployment
-###########################################################
+Protect Arcadia API with NGINX App Protect
+==========================================
 
-This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specific to configuring NGINX App Protect.
+The Arcadia micro-services offer several REST APIs in order to:
+ - Buy stocks
+ - Sell stocks
+ - Transfer money to friends
 
-That said, if you are interested in the topology or deploying the ingress controller, please continue on with this step. Otherwise you can skip to module 5: protecting API workloads.
+NGINX App Protect can secure APIs by importing an OpenAPI spec file. This type of file describes how an API works, lists the endpoints, accepted oeprations, etc. Think of it as a blueprint for an API. Because we have an **OpenAPI specification file**, we can create a very specific, secure App Protect policy. 
 
+App Protect allows you to reference the file on an external http server or locally on the file system of the NGINX instance. Since the **Arcadia Application OAS3** is available publicly at https://app.swaggerhub.com/apis/nginx5/api-arcadia_finance/2.0.2-oas3, we'll simply configure NGINX App Protect to pull the definition from the public source.
 
-
-
-The previous exercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
-
-In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Arcadia services. A ClusterIP is only accessible internally to the cluster. By using the ClusterIP, we force all requests to go through the KIC.
-
-Generally, we would deploy the ingress controller behind a L4/L7 load balancer to spread the load to all of the ingress controller PODs, as depicted on the right side of this image. In this lab, we will target the KIC Service NodePort directly with our browser (without the L4 LB/LTM in red).
-
-.. image:: ../pictures/arcadia-topology.png
+.. image:: images/swaggerhub.png
    :align: center
 
-At a high-level we will:
+.. note :: Notice that the URI, method, and response type are all defined for each API. This also serves as a tool for developers to understand what the response should look like for a successful call.
 
-#. Use helm to deploy the Ingress controller that has been saved to the registry running on our docker host
-#. Deploy a new "ingress configuration" using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" will tell the KIC pods to create the configuration necessary to access and protect our applications.
+Lab Tasks
+---------
 
+1. Log into the jump host via RDP and open Firefox. Click the **NMS** bookmark and log in using **lab** as the username and **Agility2023!** as the password.
 
-**Steps**
+.. image:: images/nms_dashboard.png
 
-    #.  SSH to the k3s VM
-    #.  Check the existing ``ingress`` already deployed and running. It is a NGINX OSS ingress
+2. Navigate to **Instance Manager** > **App Protect**.
 
-        .. code-block:: bash
-          :caption: helm removal
+.. image:: images/nms_app_protect_list.png
 
-            helm list
+3. Click the **Create** button.
 
-            NAME         	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART               	APP VERSION
-            nginx-ingress	default  	8       	2022-12-05 14:01:51.734097641 +0000 UTC	deployed	nginx-ingress-0.15.2	2.4.2
+.. image:: images/create_button.png
 
-    #.  To remove the existing ingress controller (it is a Nginx OSS ingress):
+4. Name the policy **arcadia-finance-api-policy** or something similar. Paste the text below into the policy editor:
 
-        .. code-block:: bash
-          :caption: helm removal
+  .. code-block:: js
+    :emphasize-lines: 11
 
-            helm uninstall nginx-ingress
+{
+    "policy": {
+        "name": "app_protect_api_security_policy",
+        "template": {
+            "name": "POLICY_TEMPLATE_NGINX_BASE"
+        },
+        "applicationLanguage": "utf-8",
+        "enforcementMode": "blocking",
+        "open-api-files": [{
+            "link": "https://raw.githubusercontent.com/nginx-architects/kic-example-apps/main/app-protect-openapi-arcadia/open-api-spec.json"
+        }],
+        "blocking-settings": {
+            "violations": [{
+                "name": "VIOL_THREAT_CAMPAIGN",
+                "alarm": true,
+                "block": true
+            }]
+        },
+        "signature-sets": [{
+            "name": "High Accuracy Signatures",
+            "block": false,
+            "alarm": false
+        }],
+        "bot-defense": {
+            "settings": {
+                "isEnabled": true
+            },
+            "mitigations": {
+                "classes": [{
+                        "name": "trusted-bot",
+                        "action": "alarm"
+                    },
+                    {
+                        "name": "untrusted-bot",
+                        "action": "block"
+                    },
+                    {
+                        "name": "malicious-bot",
+                        "action": "block"
+                    }
+                ]
+            }
+        }
+    }
+}
 
-    #.  Run the following commands to install the NGINX Plus KIC helm chart in a new NameSpace ``ingress``:
+Click **Save**.
 
-        .. code-block:: bash
-          :caption: helm install
- 
-            helm repo add nginx-stable https://helm.nginx.com/stable
-            helm repo update
-            
-            helm install plus nginx-stable/nginx-ingress \
-            --namespace ingress \
-            --set controller.kind=deployment \
-            --set controller.replicaCount=1 \
-            --set controller.nginxplus=true \
-            --set controller.image.repository=private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress \
-            --set controller.image.tag=2.4.2 \
-            --set controller.appprotect.enable=true \
-            --set controller.serviceAccount.imagePullSecretName=regcred \
-            --set controller.service.type=NodePort \
-            --set controller.service.httpPort.nodePort=30080 \
-            --version 0.15.2
-        
-        .. note:: As you can notice, with one helm command, the Ingress Controller pod will be deployed with all the required parameters (NAP enabled, NodePort 30080)
+**Result**
 
-    #.  After running the command, we need to wait for the KIC pod to become available. you can use a command like:
+.. image:: images/saved_policy.png
 
-        .. code-block:: BASH
+5. Navigate to **Instance Manager** > **Instances**. Click on the NGINX Ingress Controller instance.
 
-           kubectl get pods --all-namespaces --watch
+6. Click on **Edit Config**. 
 
-    #.  Once it we have 1/1 ``plus-nginx-ingress`` ready. You can press ``ctrl-c`` to stop the watch.
+.. image:: images/edit_config_button.png
 
-        .. image:: ../pictures/ingress-ready.png
+7. Modify the NGINX configuration file to add the WAF policy to the API endpoints:
 
-    #. Now, it is time to configure the Ingress Controller with CRD ressources (WAF policy, Log profile, Ingress routing ...)
+    .. code-block:: nginx
+        :emphasize-lines: 11,17
 
-       #. Execute the following commands to deploy the different resources
+        # app3 service
+        location /app3 {
+            proxy_pass http://arcadia_ingress_nodeports$request_uri;
+            status_zone app3_service;
+        }
 
-          .. code-block:: bash
+        # apply specific policies to our API endpoints:
+        location /trading/rest {
+            proxy_pass http://arcadia_ingress_nodeports$request_uri;
+            status_zone trading_service;
+            app_protect_enable on;
+            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
+        }
 
-             cd /home/ubuntu/lab-files/ingress
-             
-             kubectl apply -f ap-dataguard-policy.yaml
-             kubectl apply -f ap-logconf.yaml
-             kubectl apply -f nap-waf.yaml
-             kubectl apply -f virtual-server-waf.yaml
+        location /api/rest {
+            proxy_pass http://arcadia_ingress_nodeports$request_uri;
+            status_zone trading_service;
+            app_protect_enable on;
+            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
+        }
 
-       #. The manifest ``ap-dataguard-policy.yaml`` creates the WAF policy
+#. Restart the NGINX service:
 
-          .. code-block:: yaml
+.. code-block:: BASH
+    sudo nginx -s reload
 
-            apiVersion: appprotect.f5.com/v1beta1
-            kind: APPolicy
-            metadata:
-            name: dataguard-alarm
-            spec:
-            policy:
-                applicationLanguage: utf-8
-                blocking-settings:
-                violations:
-                - alarm: true
-                    block: false
-                    name: VIOL_DATA_GUARD
-                data-guard:
-                creditCardNumbers: true
-                enabled: true
-                enforcementMode: ignore-urls-in-list
-                enforcementUrls: []
-                lastCcnDigitsToExpose: 4
-                lastSsnDigitsToExpose: 4
-                maskData: true
-                usSocialSecurityNumbers: true
-                enforcementMode: blocking
-                name: dataguard-alarm
-                template:
-                name: POLICY_TEMPLATE_NGINX_BASE
+Test the App Protect Policy
+---------------------------
 
-       #. The manifest ``ap-logconf.yaml`` creates the Log Profile to send logs to ELK
+1. Connect to the Jump Host. Navigate to **Applications** > **Favorites** > **Terminal**. Maximize the window.
 
+.. image:: images/terminal.png
 
-          .. code-block:: yaml
+2. Pull a list of trading transactions by issuing a curl command from the terminal window:
 
-            apiVersion: appprotect.f5.com/v1beta1
-            kind: APLogConf
-            metadata:
-            name: logconf
-            spec:
-            content:
-                format: default
-                max_message_size: 64k
-                max_request_size: any
-            filter:
-                request_type: all
+.. code-block:: bash
+    curl http://k8s.arcadia-finance.io/trading/transactions.php
 
-       #. The manifest ``nap-waf.yaml`` creates the WAF config (policy + log)
+**Result**
 
-          .. code-block:: yaml
+.. image:: images/trading_transactions.png
 
-            apiVersion: k8s.nginx.org/v1
-            kind: Policy
-            metadata:
-            name: waf-policy
-            spec:
-            waf:
-                enable: true
-                apPolicy: "default/dataguard-alarm"
-                securityLogs:
-                - enable: true
-                apLogConf: "default/logconf"
-                logDest: "syslog:server=10.1.1.11:5144"
+3. Now, attempt an illegal GET operation against the buy_stocks API endpoint. Notice that the request is blocked.
 
+.. code-block:: bash
+    curl https://k8s.arcadia-finance.io/trading/rest/buy_stocks.php
 
-       #. The manifest ``virtual-server-waf.yaml`` creates the Ingress resource (to route the traffic and apply the WAF config)
-
-          .. code-block:: yaml
-
-            apiVersion: k8s.nginx.org/v1
-            kind: VirtualServer
-            metadata:
-            name: vs-arcadia-no-waf
-            spec:
-            host: k8s.arcadia-finance.io
-            policies:
-            - name: waf-policy
-            upstreams:
-                - name: main
-                service: main
-                port: 80
-                - name: backend
-                service: backend
-                port: 80
-                - name: app2
-                service: app2
-                port: 80
-                - name: app3
-                service: app3
-                port: 80
-            routes:
-                - path: /
-                action:
-                    pass: main
-                - path: /files
-                action:
-                    pass: backend
-                - path: /api
-                action:
-                    pass: app2
-                - path: /app3
-                action:
-                    pass: app3
-
-    #. Test the deployment with the Win10 Jumhost
-    #. In the Chrome Arcadia Link bookmark, select ``WAF NGINX Ingress``
-    #. Navigate and send attacks.
-
-
+Notice that the request is blocked. This shows that the NGINX App Protect WAF policy is protecting the API.

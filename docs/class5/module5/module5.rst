@@ -1,12 +1,11 @@
-Module 5 - API Security
-#######################
+Module 5 - Advanced features
+============================
 
-.. warning:: This lab requires updates. Please do not run through it, or if you have a specific request or emergency, please reach out to maintainers.
-
-In this class, we will protect the Arcadia API with NAP.
+In this class, we will advanced features offered by the latest NAP release.
 
 
 .. toctree::
+   :caption: Content:
    :maxdepth: 1
    :glob:
 

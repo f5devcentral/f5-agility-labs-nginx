@@ -1,76 +1,77 @@
-Using the UDF Tools
-###################
+View NGINX App Protect in NMS
+=============================
 
-This lab has a multiple tools provided. There are several ways to accomplish each task, use whichever tool you prefer. Many will find vscode the easier tool to use for most tasks. There is a video walk through at the bottom of this page, as well as many others in the guide.
+There are two components to NGINX App Protect within NMS: 
 
-.. note:: The videos may vary slightly from the lab guide- as it is much easier to update the guide than make new videos when there are minor changes. When in doubt, follow the lab guide. And please reach out to the authors if anything is not clear.
+- NAP configuration via Instance Manager extension
+- NAP monitoring via NGINX Security Monitoring (NMS-SM)
 
+1. Let's take a look at both of these components. First, load the NGINX Dashboard in Firefox and login, if not already.
 
-**RDP to the Win10 Jump Host**
+2. Click the **Select module** drop-down from the top of the left menu bar. Select **Instance Manager** from the drop-down.
 
-Find the Win10 VM on the right-hand side of the UDF Systems.
+.. image:: images/menu_drop_down_nim.png
 
-.. image:: ../pictures/udf-jumphost.png
-   :alt: jumphost resolutions
-   :align: center
-   :scale: 90%
+3. Let's take a look at the NGINX App Protect policies that exist in NMS. Navigate to **App Protect** towards the bottom of the **Instane Manager** menu bar. You should see a list of existing WAF policies.
 
-We recommend a resolution slightly smaller than your desktop. 
+.. image:: images/nim_app_protect_policy_list.png
 
-.. note:: You can edit the .rdp file that is downloaded and customize your settings. The file may automatically download to a temp location, depending on your browser settings.
+4. We can see three policies configured. Notice that only the **AgilityPolicy** is applied to an application. Click on the policy name to view more details.
 
-.. note:: The default username is ``Administrator``. You must change it to ``user`` with the password ``user``
+.. image:: images/nim_nap_agility_policy.png
 
-**Direct Links to Web Tools**
+5. Here we see that the policy is applied to an NGINX instance. The version of the policy that is applied is also shown. Click on the **Policy Versions** sub-tab to see existing versions of this policy. Currently, we see that there is only one version.
 
-The jump host can have a little lag, though it generally will make finding all the lab resources easier. 
+.. image:: images/nim_nap_agility_policy_versions.png
 
-As an alternative, you can use the direct links to the tools that have a browser UI. These links are under the VM you are using. For example, the ELK web dashboard is available by clicking the ``Access`` link to the right of it.
+1. Click on the version name of the policy version in the list. You will see the JSON configuration for this WAF policy. 
 
-.. image:: ../pictures/udf-elk-link.png
-   :alt: ELK Link
-   :align: center
-   :scale: 90%
+.. image:: images/nim_nap_agility_policy_json.png
 
-**Use Your Own SSH Client**
+7. Scroll through the WAF policy to briefly view the policy configuration. We can see actions configured for particular violations, blocked file types, HTTP verbs, and more. Let's not make any changes just yet.
 
-Optional: If you have a public key for SSH, we recommend adding it to UDF. Instructions for that are here (find: SSH Access): `UDF Guide
-<https://help.udf.f5.com/en/articles/3832340-f5-training-course-interface#:~:text=access%20and%20when.-,SSH%20Access,-Many%20courses%20leverage>`_.
+8. If you'd like to review the application configuration that includes the application of the WAF policy, navigate back to the **Instances** > **nginx-plus-1.agility.lab** > **Edit Config** page. In the left navigation pane, select the arcadia-finance.conf file to view the application configuration in the editor pane, including the App Protect configuration lines.
 
-Once you add it, you can use the direct SSH access link under each VM. Depending on your browser's settings, the link may open your SSH client automatically. Otherwise copy the entire ssh command and paste into your client. On Windows, we recommend `Windows Terminal <https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701?activetab=pivot:overviewtab>`_. Note that vscode does not work remotely, you must use the jump host if you prefer vscode.
+.. image:: images/nim_instance_config_arcadia_finance.png
 
-.. note:: Hostnames have been configured on all systems. Once you have SSHed into the k3s server (in the first exercise), you can ``ssh docker`` or ``ssh centos`` to get to the other VMs.
+9. Now let's view metrics surrounding the App Protect instance. Click the **Select module** drop-down from the top of the left menu bar. Select **Security monitoring** from the drop-down.
 
-.. image:: ../pictures/udf-ssh-access.png
-   :alt: Windows Terminal
-   :align: center
-   :scale: 80%
+.. image:: images/menu_drop_down_NMS-SM.png
 
-**Using the Win10 Jump Host**
+10. The **Security Dashboard** page will load, as shown below. 
 
-Once on the jump host, you can quickly access the VMs from either vscode or Windows Terminal by right-clicking the icon on the taskbar.
+.. image:: images/NMS-SM_security_dashboard.png
 
-.. note:: All the web applications that require passwords are saved in the browser, just click in the fields and they should populate.
+11. Scroll down through the **Main** tab to see statistics surrounding attack traffic types, IP addresses, violations, URIs, and more. 
 
-.. image:: ../pictures/udf-windows-terminal.png
-   :alt: Windows Terminal
-   :align: center
-   :scale: 80%
+.. image:: images/NMS-SM_dashboard_main.png
 
--------------------------------
+12. Click the **Bots** tab. This tab shows information around bot traffic detected by App Protect. 
 
+.. image:: images/NMS-SM_dashboard_bots.png
 
-.. image:: ../pictures/udf-vscode.png
-   :alt: vscode
-   :align: center
-   :scale: 80%
+13. Scroll down to the **Top Bot Classes**, **Top Bot Categories**, and **Top Bot Signatures**.
 
-.. note:: The ``Pinned`` items in the vscode menu will bring you directly to the files intended for that system.
+.. image:: images/NMS-SM_top_bot_lists.png
 
-**Demo video of the UDF RDP Jump Host**
+14. Click on any of the entries in the lists to show details around that entry. Close the details box when finished.
 
-.. raw:: html
+.. image:: images/NMS-SM_top_bot_details.png
 
-    <div style="text-align: center; margin-bottom: 2em;">
-    <iframe width="1120" height="630" src="https://www.youtube-nocookie.com/embed/2vrxd2TJcA4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+15. Click the **Advanced** tab. This tab shows data relating to attacks matching downloaded signatures. Since signatures have not yet been downloaded, this data is not populated.
+
+.. image:: images/NMS-SM_dashboard_advanced.png
+
+16. Click on an entry under the **Top Threat Campaigns** or **Top Attacked Instances** list to see additional details. Close the details box when finished.
+
+.. image:: images/NMS-SM_dashboard_advanced_details.png
+
+17. Finally, click on the **Events Log** tab to view the historical event list. 
+
+.. image:: images/NMS-SM_dashboard_event_logs.png
+
+18. You can click on any of the events in the list to view more details. Close the details box when finished.
+
+.. image:: images/NMS-SM_dashboard_event_details.png
+
+Now that you've reviewed where WAF policies exist in NMS, how they are deployed at the application level and how to monitor security statistics and events in NMS, let's continue to the next section of the lab.
