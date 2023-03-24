@@ -3,7 +3,7 @@ Test a SQL Inject Attack against the Arcadia Finance App
 
 1. Before we enable the App Protect service, let's attempt a SQL injection attack on the Acardia Finance app. In Firefox, click on the **Arcadia Finance (DIY)** bookmark or navigate to **https://diy.arcadia-finance.io/**. 
 
-.. image:: images/arcadia_diy.png
+.. image:: images/arcadia_diy_bookmark.png
 
 2. Click the **Login** button to load the login screen.
 

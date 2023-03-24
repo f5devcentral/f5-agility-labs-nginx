@@ -119,7 +119,13 @@ Once connected, you will see the desktop as shown below.
 
 Clicking on the **Applications** drop-down in the menu bar will bring up a list of applications you will need to finish this lab.
 
-.. image:: images/xrdp_app_menu.png
+**Favorites** includes Firefox, Visual Studio Code and Terminal.
+
+.. image:: images/desktop_favorites.png
+
+**SSH Shortcuts** open SSH terminal windows to the Linux prompt of all machines in the lab.
+
+.. image:: images/desktop_ssh.png
 
 Each section in this lab will begin with the assumption that you are connected via RDP, able to navigate the **Applications** menu and familiar with the available applications.
 
