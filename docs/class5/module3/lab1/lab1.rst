@@ -54,9 +54,15 @@ This screen shows how traffic flows to the containers running the micro-services
 
 .. image:: images/arcadia_application_network.png
 
-8. Now that you seen the power of Argo CD, lets review the manifest files for our infrastructure side of the lab.
+8. Now that you seen the power of Argo CD, lets review the manifest files for our infrastructure side of the lab. Under **Applications** look for the **nginx-plus-ingress** tile.
 
 .. image:: images/ic-app.png
+
+9. On the top right, click on the **List** icon: 
+    
+.. image:: images/list.png 
+
+10.  
 
 .. image:: images/ic-list.png
 
