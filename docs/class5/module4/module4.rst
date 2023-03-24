@@ -12,7 +12,6 @@ NGINX App Protect can protect APIs in several ways:
 
 .. image:: images/nap_api_deployments.png
 
-
 .. toctree::
    :caption: Content:
    :maxdepth: 1
