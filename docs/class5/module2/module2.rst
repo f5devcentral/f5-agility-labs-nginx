@@ -8,6 +8,7 @@ The goal of this module is to provide familiarity with the process of adding NGI
 .. image:: images/module_2_overview.gif
 
 .. toctree::
+   :caption: Content:
    :maxdepth: 1
    :glob:
 

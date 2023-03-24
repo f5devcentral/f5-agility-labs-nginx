@@ -7,6 +7,7 @@ In this class, we will protect the Arcadia API with NAP.
 
 
 .. toctree::
+   :caption: Content:
    :maxdepth: 1
    :glob:
 
