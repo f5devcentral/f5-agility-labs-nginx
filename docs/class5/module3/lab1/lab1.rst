@@ -58,4 +58,8 @@ This screen shows how traffic flows to the containers running the micro-services
 
 .. image:: images/ic-app.png
 
+.. image:: images/ic-list.png
+
+.. image:: images/ic-expand-crd.png
+
 
