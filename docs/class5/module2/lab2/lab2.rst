@@ -29,14 +29,6 @@ Add the following configuration block to the end of the file:
 
 .. code-block:: bash
 
-  metrics:
-    # specify the size of a buffer to build before sending metrics
-    bulk_size: 20
-    # specify metrics poll interval
-    report_interval: 1m
-    collection_interval: 15s
-    mode: aggregated
-
   # Enable reporting NGINX App Protect details to the control plane.
   nginx_app_protect:
     # Report interval for NGINX App Protect details - the frequency the NGINX Agent checks NGINX App Protect for changes.
@@ -44,23 +36,45 @@ Add the following configuration block to the end of the file:
     # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
 
-4.  Create the Metrics service on NGINX:
+4. Start the NGINX Agent:
 
-5.  Return to the NMS Dashboard. 
+.. code-block:: bash
 
-6.  Click on **Instances** in the **Instance Manager** to view the instance list.
+  sudo systemctl start nginx-agent
 
-7.  Click the **nginx-plus-2.agility.lab** instance in the list. 
+1. Set the NGINX Agent to start at boot:
 
-8.  Click the **Edit Config** button.
+.. code-block:: bash
 
-9.  Click on **Add File**. 
+  sudo systemctl enable nginx-agent
 
-10.  Provide the filename **/etc/nginx/conf.d/metrics.conf**.
+6.  Create the Metrics service on NGINX. Return to the NMS Dashboard and click on **Instances** in the **Instance Manager** to view the instance list.
 
-11.  Click **Create**.
+.. image:: images/nms_dashboard.png
 
-12.  Paste the following configuration into the editor:
+7. Click **Refresh** in the toolbar. The second instance should now appear in the list.
+
+.. image:: images/nms_refresh_result.png
+
+8.  Click the **nginx-plus-2.agility.lab** instance in the list. 
+
+.. image:: images/nginx_plus_2_detail.png
+
+9.  Click the **Edit Config** button.
+
+.. image:: images/edit_button.png
+
+10. Click on **Add File** button in the navigation pane.
+
+.. image:: images/add_file_button.png
+
+11.  Provide the filename **/etc/nginx/conf.d/metrics.conf**.
+
+.. image:: aimages/filename_prompt.png
+
+12.  Click **Create**.
+
+13.  Paste the following configuration into the editor:
 
 .. code-block:: bash
 
@@ -74,22 +88,28 @@ Add the following configuration block to the end of the file:
       }
   }
 
-13. Click the **Publish** button.
+**Result**
 
-14. Click **Publish** when presented with the confirmation prompt.
+.. image:: images/file_contents.png
+
+14. Click the **Publish** button.
+
+.. image:: images/publish_button.png
+
+15. Click **Publish** when presented with the confirmation prompt.
 
 .. image:: images/publish_confirm.png
 
-15.  You will see the Published notification shortly after. 
+16. You will see the Published notification shortly after. 
 
 .. image:: images/published_notification.png
 
-16.   Restart NGINX:
+17. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
 
 .. code-block:: bash
   sudo nginx -s reload
 
-17.  Start and Enable NGINX Agent
+18. Start and Enable NGINX Agent
 
 To start the NGINX Agent on systemd systems, run the following command:
 
@@ -103,7 +123,7 @@ To enable the NGINX Agent to start on boot, run the following command:
 
   sudo systemctl enable nginx-agent
 
-18. Verifying NGINX Agent is Running and Registered
+19. Verifying NGINX Agent is Running and Registered
 
 Run the following command on your data plane to verify that the NGINX Agent process is running:
 
@@ -115,7 +135,7 @@ You should see output that looks similar to the following example:
 
 .. image:: images/nginx_agent_ps_aux_result.png
 
-19. Once you’ve verified the NGINX Agent is running on your data plane, you should confirm it’s registered with Instance Manager. Open the NGINX Management Suite web interface and log in. The registered instance is shown in the Instances list.
+20. Once you’ve verified the NGINX Agent is running on your data plane, you should confirm it’s registered with Instance Manager. Open the NGINX Management Suite web interface and log in. The registered instance is shown in the Instances list.
 
 .. image:: images/nginx_instances_result.png
 

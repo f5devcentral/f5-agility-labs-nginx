@@ -15,7 +15,7 @@ We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finan
 
 .. image:: images/nms_instance_detail.png
 
-#. You can clearly see that NGINX App Protect is not enabled.
+#. Notice the NGINX App Protect WAF is now enabled.
 
 .. image:: images/nms_app_protect_status.png
 

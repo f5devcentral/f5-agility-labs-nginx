@@ -5,11 +5,11 @@ Test the WAF Policy by Replicating the SQL Injection Attack
 
 .. image:: images/arcadia_diy.png
 
-#. Click the **Login** button to load the login screen.
+2. Click the **Login** button to load the login screen.
 
 .. image:: images/arcadia_login_prompt.png
 
-#. For the username, paste the following value:
+3. For the username, paste the following value:
 
 .. code-block:: bash
   ' or 1=1--
