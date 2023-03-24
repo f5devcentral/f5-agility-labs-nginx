@@ -4,8 +4,9 @@ Class5 - NGINX App Protect WAF
 
 Welcome to the NGINX App Protect WAF hands-on lab!
 
+**************************
 NGINX App Protect Overview
-==========================
+**************************
 
 NGINX App Protect is a web application firewall (WAF) designed to protect web applications from a variety of threats such as DDoS attacks, SQL injection, cross-site scripting (XSS), and other common web application attacks.
 
