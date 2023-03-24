@@ -13,11 +13,13 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 
 .. image:: images/VSCode_selectArcadia.png
 
-4. 
+4. Now under the **manifest** directory, we can view the manifests **arcadia-deployment.yml**, **arcadia-svcs.yml**, and **arcadia-vs.yml** files.
 
 .. image:: images/arcadia_deployment.png
 
 .. image:: images/arcadia_svc.png
+
+.. image:: images/arcadia-vs.png
 
 
 .. image:: images/arcadia-ingres.png
