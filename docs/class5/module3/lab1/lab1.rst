@@ -66,8 +66,8 @@ This list shows all the configuration parts that make our ingress controller wor
 
 .. image:: images/ic-list.png
 
-Scroll to the bottom of the page to expand the items per page to 15 and take note of the **CRD's** installed with Nginx Plus Ingress. 
+10. Scroll to the bottom of the page to expand the items per page to 15 and take note of the **CRD's** installed with Nginx Plus Ingress. 
 
 .. image:: images/ic-expand-crd.png
 
-
+These Custom Resources Definitions power **VirtualServer**, **VirtualServerRoute**, **TransportServer**, and **Policies**.
