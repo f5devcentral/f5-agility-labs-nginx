@@ -21,10 +21,7 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 
 .. image:: images/arcadia-vs.png
 
-
 .. image:: images/arcadia-ingres.png
-
-.. image:: images/CRDs.png
 
 .. image:: images/grafana.png
 
