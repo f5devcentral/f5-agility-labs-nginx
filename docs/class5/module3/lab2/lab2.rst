@@ -1,5 +1,6 @@
 Install NGINX App Protect on the Arcadia App in Kubernetes
 ==========================================================
+.. image:: images/kubnic.PNG
 
 1. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
 
@@ -21,6 +22,8 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 
 .. image:: images/arcadia-vs.png
 
+5. You'll want to investigate the three new files we'll be moving into the manifest directory as this is the path Argo CD is monitoring for changes.
+   
 .. image:: images/arcadia-ingres.png
 
 .. image:: images/grafana.png
