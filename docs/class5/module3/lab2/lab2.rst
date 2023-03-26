@@ -1,42 +1,52 @@
 Install NGINX App Protect on the Arcadia App in Kubernetes
 ==========================================================
 .. image:: images/kubnic.PNG
+   :align: center
 
 Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress contorller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
 Navigating to our **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
 
-.. images:: images/gitlab_login.png 
+1. On the jump host, use the **Applications** menu bar to launch **FireFox Web Browser**. From the bookmark toolbar open **Gitlab**.
 
-.. images:: images/gitlab_project.png 
+.. image:: images/gitlab_login.png 
 
-Once inside the project, click on **charts**
+2. Now select the **ks3_infra** project repository. This repository houses all the infrastructure commponents used in this lab. All have been deployed with Helm and the help of Argo CD.
 
-.. images:: images/k3s_infra.png 
+.. image:: images/gitlab_project.png 
+
+Once inside the project, click on **charts** directory:
+
+.. image:: images/k3s_infra.png 
 
 Here you will find the two main files we'll discuss:
-- **Charts.yaml**
-- **values.yaml**
+ - **Charts.yaml**
+ - **values.yaml**
   
-.. images:: images/k3s_infra_ls.png 
-     
-.. images:: images/nic_Chart.png 
+.. image:: images/k3s_infra_ls.png 
+
+Our **Charts.yamml** contains information on what chart version to use and depdencies it relies on.    
+
+.. image:: images/nic_Chart.png 
 
 In the **values.yaml** file we define what options we want our ingress controller to have (app-protect, app-dos, snippets etc.), and what registry to pull our image.
-.. images:: images/nic_values.png
 
-1. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
+.. image:: images/nic_values.png
+
+Now that you can see how we've set up Nginx Ingress Controller, let's get back to securing our Arcadia app with App Protect.
+
+3. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
 
 .. caution:: It may take several seconds for Visual Studio Code to launch for the first time.
 
-2. In **Visual Studio Code**, navigate to **File** > **Open Folder**. 
+4. In **Visual Studio Code**, navigate to **File** > **Open Folder**. 
 
 .. image:: images/VSCode_openFolder.png
 
-3. Select **arcadia**, then click **Open** in the top-right corner of the navigation window.
+5. Select **arcadia**, then click **Open** in the top-right corner of the navigation window.
 
 .. image:: images/VSCode_selectArcadia.png
 
-4. Now under the **manifest** directory, we can view the manifests **arcadia-deployment.yml**, **arcadia-svcs.yml**, and **arcadia-vs.yml** files. For this lab we will be focused on the **arcaida-vs.yml** manifest file.
+6. Now under the **manifest** directory, we can view the manifests **arcadia-deployment.yml**, **arcadia-svcs.yml**, and **arcadia-vs.yml** files. For this lab we will be focused on the **arcaida-vs.yml** manifest file.
 
 .. image:: images/arcadia_deployment.png
 
@@ -44,10 +54,10 @@ In the **values.yaml** file we define what options we want our ingress controlle
 
 .. image:: images/arcadia-vs.png
 
-5. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
-   - waf-ap-policy.yml
-   - waf-ap-logconf.yml
-   - waf-policy.yml
+7. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
+ - waf-ap-policy.yml
+ - waf-ap-logconf.yml
+ - waf-policy.yml
 
 .. code-block:: yaml
    
@@ -66,6 +76,7 @@ In the **values.yaml** file we define what options we want our ingress controlle
           logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
 
 .. code-block:: yaml
+   :caption: waf-ap-logconf.yml 
 
    ---
    apiVersion: appprotect.f5.com/v1beta1
