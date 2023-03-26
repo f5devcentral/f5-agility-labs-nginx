@@ -32,6 +32,7 @@ Now we will be deploying our App Protect policy on the Ingress Controller and ex
 .. code-block:: yaml
    :linenos:
    :caption: waf-policy.yml 
+   
    ---
    apiVersion: k8s.nginx.org/v1
    kind: Policy
