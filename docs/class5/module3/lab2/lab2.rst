@@ -55,11 +55,13 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 .. image:: images/arcadia-vs.png
 
 7. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
- - waf-ap-policy.yml
- - waf-ap-logconf.yml
- - waf-policy.yml
+ - waf-policy.yml (this is the policy we attach to the VistualServer manifest)
+ - waf-ap-logconf.yml (this defines our logging filters)
+ - waf-ap-policy.yml (this is the declarative WAF policy with all our logic)
 
 .. code-block:: yaml
+   :caption: waf-policy.yml 
+   :emphasize-lines: 13
    
     ---
     apiVersion: k8s.nginx.org/v1
@@ -90,6 +92,34 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
        max_request_size: any
      filter:
        request_type: blocked
+
+.. code-block:: yaml 
+   :caption: waf-ap-policy.yaml 
+   
+   ### app-protect-policy.yaml ###
+    ---
+    apiVersion: appprotect.f5.com/v1beta1
+    kind: APPolicy
+    metadata:
+      name: dataguard-blocking
+    spec:
+      policy:
+        name: dataguard_blocking
+        template:
+          name: POLICY_TEMPLATE_NGINX_BASE
+        applicationLanguage: utf-8
+        enforcementMode: blocking
+        blocking-settings:
+          violations:
+          - name: VIOL_DATA_GUARD
+            alarm: true
+            block: true
+        data-guard:
+          enabled: true
+          maskData: true
+          creditCardNumbers: true
+          usSocialSecurityNumbers: true
+          enforcementMode: ignore-urls-in-list
 
 .. image:: images/arcadia-ingress.png
 
