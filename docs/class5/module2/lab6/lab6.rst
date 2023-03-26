@@ -11,7 +11,7 @@ Test the WAF Policy by Replicating the SQL Injection Attack
 
 3. For the username, paste the following value:
 
-.. code-block:: sql
+.. code-block:: bash
     
     ' or 1=1--
 
