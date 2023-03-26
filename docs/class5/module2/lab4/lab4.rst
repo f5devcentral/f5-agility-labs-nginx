@@ -11,7 +11,7 @@ Test a SQL Inject Attack against the Arcadia Finance App
 
 3. For the username, paste the following value:
 
-.. code-block:: sql
+.. code-block:: bash
   
     ' or 1=1--
 
