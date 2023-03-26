@@ -150,13 +150,19 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/elk.png 
 
-.. image:: images/grafana.png
 
-.. image:: images/kic-nap-config.png
+12. These two last section is optional showcasing the use of Nginx Dashboard (included with Nginx Plus). The additional detail provided in the Nginx Dashboard is provided via *Snippets* that we enabled in the **values.yaml** file and directives we called out in **arcadia-vs.yml** file.
 
 .. image:: images/nginx-plus-dashboard-upstreams.png
 
 .. image:: images/nginx-plus-dashboard.png
+
+13. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana.
+
+.. image:: images/grafana.png
+
+.. image:: images/kic-nap-config.png
+
 
 #This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specific to configuring NGINX App Protect.
 #
