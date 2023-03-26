@@ -1,5 +1,7 @@
 Install NGINX App Protect on the Arcadia App in Kubernetes
 ==========================================================
+Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress contorller has already been deployed.
+
 .. image:: images/kubnic.PNG
 
 1. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
@@ -22,8 +24,28 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 
 .. image:: images/arcadia-vs.png
 
-5. You'll want to investigate the three new files we'll be moving into the manifest directory as this is the path Argo CD is monitoring for changes.
-   
+5. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
+   - waf-ap-policy.yml
+   - waf-ap-logconf.yml
+   - waf-policy.yml
+
+.. code-block:: yaml
+   :linenos:
+   :caption: waf-policy.yml 
+   ---
+   apiVersion: k8s.nginx.org/v1
+   kind: Policy
+   metadata:
+     name: waf-policy
+   spec:
+     waf:
+       enable: true
+       apPolicy: "arcadia/brewz-api-security-policy"
+       securityLog:
+         enable: true
+         apLogConf: "arcadia/logconf"
+         logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
+
 .. image:: images/arcadia-ingres.png
 
 .. image:: images/grafana.png
