@@ -121,6 +121,28 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
           usSocialSecurityNumbers: true
           enforcementMode: ignore-urls-in-list
 
+8. We'll now copy the these files over to the **manifest** directory to Nginx App Protect can enforce the policy files.
+
+.. code-block:: bash 
+
+    cp waf-ap-logconf.yml waf-ap-policy.yml waf-policy.yml manifests/.
+    git add manifests/
+    git commit -m "add waf policies"
+
+9. Now it's time to edit the **arcadia-vs.yml** manifest to now include our App Protect policy.
+    
+.. image:: images/vs-policy.png 
+
+.. code-block:: bash 
+
+   git add manifest/arcadia-vs.yml
+   git commit -m "add waf policy"
+   git push 
+
+1.  To make certain our changes happen, we'll manually sync Argo with our Git repo. In your Firefox browser, Argo CD tab, click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**
+
+.. image:: images/sync-arcadia.png 
+
 .. image:: images/arcadia-ingress.png
 
 .. image:: images/grafana.png
