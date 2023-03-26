@@ -71,7 +71,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
     spec:
       waf:
         enable: true
-        apPolicy: "arcadia/brewz-api-security-policy"
+        apPolicy: "arcadia/dataguard-blocking"
         securityLog:
           enable: true
           apLogConf: "arcadia/logconf"
