@@ -148,7 +148,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 11. Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
 
-.. images/elk.png 
+.. image:: images/elk.png 
 
 .. image:: images/grafana.png
 
