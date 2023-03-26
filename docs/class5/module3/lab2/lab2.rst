@@ -1,8 +1,28 @@
 Install NGINX App Protect on the Arcadia App in Kubernetes
 ==========================================================
-Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress contorller has already been deployed.
-
 .. image:: images/kubnic.PNG
+
+Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress contorller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
+Navigating to our **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
+
+.. images:: images/gitlab_login.png 
+
+.. images:: images/gitlab_project.png 
+
+Once inside the project, click on **charts**
+
+.. images:: images/k3s_infra.png 
+
+Here you will find the two main files we'll discuss:
+- **Charts.yaml**
+- **values.yaml**
+  
+.. images:: images/k3s_infra_ls.png 
+     
+.. images:: images/nic_Chart.png 
+
+In the **values.yaml** file we define what options we want our ingress controller to have (app-protect, app-dos, snippets etc.), and what registry to pull our image.
+.. images:: images/nic_values.png
 
 1. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
 
@@ -30,24 +50,37 @@ Now we will be deploying our App Protect policy on the Ingress Controller and ex
    - waf-policy.yml
 
 .. code-block:: yaml
-   :linenos:
-   :caption: waf-policy.yml 
    
-   ---
-   apiVersion: k8s.nginx.org/v1
-   kind: Policy
-   metadata:
-     name: waf-policy
-   spec:
-     waf:
-       enable: true
-       apPolicy: "arcadia/brewz-api-security-policy"
-       securityLog:
-         enable: true
-         apLogConf: "arcadia/logconf"
-         logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
+    ---
+    apiVersion: k8s.nginx.org/v1
+    kind: Policy
+    metadata:
+      name: waf-policy
+    spec:
+      waf:
+        enable: true
+        apPolicy: "arcadia/brewz-api-security-policy"
+        securityLog:
+          enable: true
+          apLogConf: "arcadia/logconf"
+          logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
 
-.. image:: images/arcadia-ingres.png
+.. code-block:: yaml
+
+   ---
+   apiVersion: appprotect.f5.com/v1beta1
+   kind: APLogConf
+   metadata:
+     name: logconf
+   spec:
+     content:
+       format: default
+       max_message_size: 64k
+       max_request_size: any
+     filter:
+       request_type: blocked
+
+.. image:: images/arcadia-ingress.png
 
 .. image:: images/grafana.png
 
