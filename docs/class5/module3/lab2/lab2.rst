@@ -159,9 +159,4 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/grafana_menu_dashboard.png 
 
-.. image:: images/grafana.png
-
-
-    #. Test the deployment with the Win10 Jumhost
-    #. In the Chrome Arcadia Link bookmark, select ``WAF NGINX Ingress``
-    #. Navigate and send attacks.
+.. image:: images/grafana.png 
