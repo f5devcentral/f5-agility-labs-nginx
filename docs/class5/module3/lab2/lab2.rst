@@ -144,19 +144,28 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/sync-arcadia.png 
 
-1.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
+11.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
 
 .. image:: images/elk.png 
 
+12.  Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. 
 
-12. These two last sections are optional showcasing the use of Nginx Dashboard (included with Nginx Plus). The additional detail provided in the Nginx Dashboard is provided via *Snippets* that we enabled in the **values.yaml** file and directives we called out in **arcadia-vs.yml** file.
+.. image:: images/application_terminal.png 
 
-.. image:: images/nginx-plus-dashboard-upstreams.png
+When the terminal opens you'll run:
 
-.. image:: images/nginx-plus-dashboard.png
+.. code-block:: bash
 
-13. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana.
+   source k8s-attack
 
-.. image:: images/grafana_menu_dashboard.png 
+.. image:: images/soure_k8sAttack.png 
+  
+.. images:: images/kibana.png 
 
-.. image:: images/grafana.png 
+1.  Scrolling down to the Events section of the dashboard you can open the event by clicking on the `>` icon
+
+.. images:: images/kibana_events.png 
+
+14. Scroll down to **support_id** to match up the Support ID provided by App Protect.
+
+.. images:: images/kibana_supportID.png
