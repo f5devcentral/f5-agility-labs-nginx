@@ -12,7 +12,7 @@ There are two components to NGINX App Protect within NMS:
 
 .. image:: images/menu_drop_down_nim.png
 
-3. Let's take a look at the NGINX App Protect policies that exist in NMS. Navigate to **App Protect** towards the bottom of the **Instane Manager** menu bar. You should see a list of existing WAF policies.
+3. Let's take a look at the NGINX App Protect policies that exist in NMS. Navigate to **App Protect** towards the bottom of the **Instance Manager** menu bar. You should see a list of existing WAF policies.
 
 .. image:: images/nim_app_protect_policy_list.png
 

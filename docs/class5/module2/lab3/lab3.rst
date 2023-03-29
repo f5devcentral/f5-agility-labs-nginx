@@ -49,4 +49,3 @@ Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelli
 .. image:: images/agility_policy_overview.png
 
 You've now verified that threat and signature feeds are working. Continue to the next section of the lab.
-

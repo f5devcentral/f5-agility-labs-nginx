@@ -54,5 +54,3 @@ Your screen should look similar to below:
 #. Click on **Instances** in the left menubar to return to the list of instances. Click on **nginx-plus-2** to view the instance details. You should see under the **Last Deployment Details** and **App Protect Details** sections should show the WAF enabled.
 
 .. image:: images/instance_detail_result.png
-
-

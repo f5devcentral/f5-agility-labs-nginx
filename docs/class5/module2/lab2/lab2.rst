@@ -36,6 +36,7 @@ Add the following configuration block to the end of the file:
     # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
 
+
 4. Start the NGINX Agent:
 
 .. code-block:: bash
@@ -107,7 +108,8 @@ Add the following configuration block to the end of the file:
 17. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
 
 .. code-block:: bash
-  sudo nginx -s reload
+
+   sudo nginx -s reload
 
 18. Start and Enable NGINX Agent
 
@@ -115,13 +117,13 @@ To start the NGINX Agent on systemd systems, run the following command:
 
 .. code-block:: bash
 
-  sudo systemctl start nginx-agent
+   sudo systemctl start nginx-agent
 
 To enable the NGINX Agent to start on boot, run the following command:
 
 .. code-block:: bash
 
-  sudo systemctl enable nginx-agent
+   sudo systemctl enable nginx-agent
 
 19. Verifying NGINX Agent is Running and Registered
 
