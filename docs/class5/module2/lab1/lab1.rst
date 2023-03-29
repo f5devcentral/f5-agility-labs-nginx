@@ -7,13 +7,11 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 1. Connect to the jump host via RDP if not already.
 
-2. Installation of NGINX App Protect is performed on the CLI of the host. Click on the **Applications** menu, select **SSH Shortcuts** and select **nginx-plus-2**. 
-
-.. note:: This host has NGINX Plus installed and serving the Arcadia Finance app, but NGINX App Protect is not installed.
+2. Installation of NGINX App Protect is performed on the CLI of the host. Click on the **Applications** menu, select **SSH Shortcuts** and select **nginx-plus-2**. This host has NGINX Plus installed and serving the Arcadia Finance app, but NGINX App Protect is not installed.
 
 .. image:: images/nginx_plus_2_ssh_shortcut_menu.png
 
-1. First, let's backup the existing NGINX Plus configuration files and logs.
+3. First, let's backup the existing NGINX Plus configuration files and logs.
 
 .. code-block:: bash
 
@@ -78,7 +76,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. image:: images/add_nap_repo_result.png
   
-9. Download the apt configuration to ``etc/apt/apt.conf.d``:
+9. Download the apt configuration to :bash:`/etc/apt/apt.conf.d`:
 
 .. code-block:: bash
 
@@ -100,8 +98,6 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 .. image:: images/nap_install_result.png
   
 11.  Load the NGINX App Protect WAF module on the main context in the nginx.conf file:
-
-This is the configuration item that actually loads the NGINX App Protect module into NGINX Plus.
 
 Open the file in an editor:
 

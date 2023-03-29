@@ -12,8 +12,8 @@ Test the WAF Policy by Replicating the SQL Injection Attack
 3. For the username, paste the following value:
 
 .. code-block:: bash
-    
-    ' or 1=1--
+
+  ' or 1=1--
 
 and click **Log me in**. You should see the custom block page as shown below, showing that the attempt was blocked.
 

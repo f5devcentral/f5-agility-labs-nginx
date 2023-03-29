@@ -15,8 +15,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/load_image_new_tab.png
 
-5. Notice that a new tab has been created. 
-6. Click on the **Custom Reject Page** that loads in the new tab. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. We can use this ID to identify the cause of the image block. **Select and copy this value** so that we can search for it in NMS-SM.
+5. Click on the **Custom Reject Page** that loads in the new tab. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. We can use this ID to identify the cause of the image block. **Select and copy this value** so that we can search for it in NMS-SM.
 
 .. image:: images/custom_reject_page.png
 
@@ -80,11 +79,11 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nim_app_protect_new_version_listed.png
 
-21. Return to the the **Instances and Instance Groups** sub-tab. Now click on the **Assign Policy and Signature Versions** button above the instance list. Notice that the policy version listed is actually a drop-down that can be modified.
+21.  Return to the the **Instances and Instance Groups** sub-tab. Now click on the **Assign Policy and Signature Versions** button above the instance list. Notice that the policy version listed is actually a drop-down that can be modified.
 
 .. image:: images/assign_policy_version.png
 
-22. Change this to your newer version (compare timestamps) and click **Publish Changes**. A pop-up will confirm that you have changed the version.
+22. Change this to your newer version (compare timestamps) and click **Publish**. A pop-up will confirm that you have changed the version.
 
 .. image:: images/publish_confirmation.png
 
@@ -102,7 +101,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/deployment_status.png
 
-1.  Once the deployment has finished, open a new tab in **Firefox** and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully. **You may need to click several times for your browser to pick up the changes.**
+26.  Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
 
 .. image:: images/successful_full_load.png
 

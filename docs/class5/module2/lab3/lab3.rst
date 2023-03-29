@@ -1,15 +1,15 @@
 Enable NGINX App Protect Threat Campaigns and Signature Updates
 ===============================================================
 
-1. Log into the NGINX Plus 2 SSH terminal session, if not already connected.
+1. Log into the NGINX Plus 2 SSH terminal session.
 
 .. image:: images/nplus_2_ssh_login.png
 
 2. Add NGINX Plus App Protect signatures repository:
 
 .. code-block:: bash
-    
-    sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
+
+  sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
 
 **Result**
 
@@ -18,8 +18,7 @@ Enable NGINX App Protect Threat Campaigns and Signature Updates
 3. Install attack signature updates:
 
 .. code-block:: bash
-    
-    sudo apt install -y app-protect-attack-signatures
+  sudo apt install -y app-protect-attack-signatures
 
 **Result**
 
@@ -31,7 +30,7 @@ Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelli
   
 .. code-block:: bash
 
-    sudo apt install -y app-protect-threat-campaigns
+  sudo apt install -y app-protect-threat-campaigns
 
 5. Restart NGINX process to apply the new signatures:
 
@@ -41,5 +40,12 @@ Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelli
 
 .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
 
-You've now installed threat and signature feeds. Continue to the next section of the lab.
+6. Return to Firefox and click on the **NMS** bookmark. Log in using **lab** and **Agility2023!** as the credentials.
 
+.. image:: images/nms_dashboard.png
+
+7. Click on **App Protect** in the left menubar, then select the **AgilityPolicy**. You'll see that the Threat Campaigns and Attack Signatures columns are populated on NGINX Plus 2.
+
+.. image:: images/agility_policy_overview.png
+
+You've now verified that threat and signature feeds are working. Continue to the next section of the lab.
