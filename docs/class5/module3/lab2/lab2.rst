@@ -144,9 +144,15 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/sync-arcadia.png 
 
-1.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
+11.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
 
 .. image:: images/elk.png 
+
+.. images:: images/kibana.png 
+
+.. images:: images/kibana_events.png
+
+.. images:: images/kibana_supportID.png
 
 
 12. These two last sections are optional showcasing the use of Nginx Dashboard (included with Nginx Plus). The additional detail provided in the Nginx Dashboard is provided via *Snippets* that we enabled in the **values.yaml** file and directives we called out in **arcadia-vs.yml** file.
