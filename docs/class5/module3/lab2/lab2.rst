@@ -148,12 +148,18 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/elk.png 
 
-12.  Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. When the terminal opens you'll run:
+12.  Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. 
+
+.. image:: images/application_terminal.png 
+
+When the terminal opens you'll run:
 
 .. code-block:: bash
 
    source k8s-attack
 
+.. image:: images/soure_k8sAttack.png 
+  
 .. images:: images/kibana.png 
 
 1.  Scrolling down to the Events section of the dashboard you can open the event by clicking on the `>` icon
