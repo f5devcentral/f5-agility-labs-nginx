@@ -319,11 +319,19 @@ You should now see the webservice!!!!!! You've been logged in and the browser ha
 .. image:: ../images/verificaion_webservice.png
 
 
+Manage NGINX Plus with Instance Manager
+=======================================
+
+The OIDC autentication is working correctly. Now we will manage our NGINX Plus dpeloyment with Instance Manager
+
+1. Open firefox and open a new tab and put https://10.1.1.6 into the browser url field and launch the page.   
 
 
+.. image:: ../images/instance_manager_login.png
 
+2. Sign into Instance Manager as admin. The username/password are saved in the browser so the fields should autopopulate.
 
-
+.. image:: ../images/instance_manager_admin_login.png
 
 
 
