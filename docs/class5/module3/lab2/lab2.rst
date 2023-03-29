@@ -160,12 +160,12 @@ When the terminal opens you'll run:
 
 .. image:: images/soure_k8sAttack.png 
   
-.. images:: images/kibana.png 
+.. image:: images/kibana.png 
 
-1.  Scrolling down to the Events section of the dashboard you can open the event by clicking on the `>` icon
+13.  Scrolling down to the Events section of the dashboard you can open the event by clicking on the **>** icon
 
-.. images:: images/kibana_events.png 
+.. image:: images/kibana_events.png 
 
 14. Scroll down to **support_id** to match up the Support ID provided by App Protect.
 
-.. images:: images/kibana_supportID.png
+.. image:: images/kibana_supportID.png
