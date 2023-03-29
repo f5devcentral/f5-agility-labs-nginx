@@ -150,7 +150,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 12.  Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. 
 
-.. image:: images/application_terminal.png 
+.. image:: images/applications_terminal.png 
 
 When the terminal opens you'll run:
 
