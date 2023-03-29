@@ -11,9 +11,6 @@ Review the Grafana Dashboard Statistics
 
 2. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. 
 
-.. image:: images/grafana.png 
-
 .. image:: images/grafana_menu_dashboard.png
 
-.. image:: images/arcadia-api.png
-
+.. image:: images/grafana.png 
