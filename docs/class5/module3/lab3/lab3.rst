@@ -9,7 +9,7 @@ Review the Grafana Dashboard Statistics
  
 .. image:: images/nginx-plus-dashboard.png
 
-1. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. 
+2. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. 
 
 .. image:: images/grafana.png 
 
