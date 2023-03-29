@@ -9,7 +9,7 @@ Review the Grafana Dashboard Statistics
 
 .. image:: images/nginx-plus-dashboard.png
 
-3. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see [this](https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics) link.
+3. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see `this <https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics>`_ link.
 
 .. image:: images/grafana_menu_dashboard.png
 
