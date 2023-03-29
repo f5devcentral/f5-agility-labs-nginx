@@ -159,6 +159,8 @@ When the terminal opens you'll run:
    source k8s-attack
 
 .. image:: images/soure_k8sAttack.png 
+   :scale: 40%
+   :align: center 
   
 .. image:: images/kibana.png 
 
