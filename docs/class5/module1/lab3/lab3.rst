@@ -36,7 +36,7 @@ There are two components to NGINX App Protect within NMS:
 
 9. Now let's view metrics surrounding the App Protect instance. Click the **Select module** drop-down from the top of the left menu bar. Select **Security monitoring** from the drop-down.
 
-.. image:: images/menu_drop_down_NMS-SM.png
+.. image:: images/menu_drop_down_nms-sm.png
 
 10. The **Security Dashboard** page will load, as shown below. 
 
