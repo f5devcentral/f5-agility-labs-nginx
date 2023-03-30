@@ -53,7 +53,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
    - **arcadia-svcs.yml**
    - **arcadia-vs.yml** 
 
-For this lab we will be focused on the **arcaida-vs.yml** manifest file.
+For this lab we will be focused on the **arcaida-vs.yml** manifest file *after* we add the security policy files.
 
 .. image:: images/arcadia-vs.png
 
@@ -124,7 +124,7 @@ For this lab we will be focused on the **arcaida-vs.yml** manifest file.
           usSocialSecurityNumbers: true
           enforcementMode: ignore-urls-in-list
 
-8. We'll now copy the these files over to the **manifest** directory to Nginx App Protect can enforce the policy files.
+8. We'll now copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy.
 
 .. code-block:: bash 
 
@@ -132,7 +132,12 @@ For this lab we will be focused on the **arcaida-vs.yml** manifest file.
     git add manifests/
     git commit -m "add waf policies"
 
-9. Now it's time to edit the **arcadia-vs.yml** manifest to now include our App Protect policy.
+9. Now it's time to edit the **arcadia-vs.yml** manifest to now include our App Protect policy. Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
+    
+.. code-block:: yaml
+
+   policies:
+     - name: waf-policy
     
 .. image:: images/vs-policy.png 
 
@@ -144,15 +149,15 @@ Now that you've updated **arcadia-vs.yml** it's time to push the updates back to
    git commit -m "add waf policy"
    git push 
 
-10.  To make certain our changes happen, we'll manually sync Argo with our Git repo. In your Firefox browser, Argo CD tab, click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**
+1.   To make certain our changes happen, we'll manually sync Argo with our Git repo. In your Firefox browser, Argo CD tab, click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**
 
 .. image:: images/sync-arcadia.png 
 
-11.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
+1.   Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
 
 .. image:: images/elk.png 
 
-12.  Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. 
+1.   Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. 
 
 .. image:: images/applications_terminal.png 
 
@@ -162,7 +167,7 @@ When the terminal opens, you'll run the below command. Please be sure to leave y
 
    source k8s-attack
 
-13. Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
+1.  Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
 
 .. image:: images/kibana.png 
 
