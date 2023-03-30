@@ -134,6 +134,8 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
     
 .. image:: images/vs-policy.png 
 
+Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
+
 .. code-block:: bash 
 
    git add manifest/arcadia-vs.yml
@@ -152,22 +154,20 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/applications_terminal.png 
 
-When the terminal opens you'll run:
+When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
 
 .. code-block:: bash
 
    source k8s-attack
 
-.. image:: images/soure_k8sAttack.png 
-   :scale: 40%
-   :align: center 
-  
+13. Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
+
 .. image:: images/kibana.png 
 
-13.  Scrolling down to the Events section of the dashboard you can open the event by clicking on the **>** icon
+14.   To read deatils on blocked attack, scroll down to the *Events* section of the dashboard you can open the event by clicking on the **>** icon
 
 .. image:: images/kibana_events.png 
 
-14. Scroll down to **support_id** to match up the Support ID provided by App Protect.
+15.  Scroll down to **support_id** to match up the Support ID returned by App Protect in your terminal.
 
 .. image:: images/kibana_supportID.png
