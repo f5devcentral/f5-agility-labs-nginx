@@ -7,9 +7,13 @@ Review the Grafana Dashboard Statistics
 
 2. The additional detail provided in the Nginx Dashboard is provided via *Snippets* that we enabled in the **values.yaml** file and directives we called out in **arcadia-vs.yml** file.
 
-.. image:: images/nginx-plus-dashboard.png
+.. image:: images/status-zone.png
 
-3. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see `this <https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics>`_ link.
+3. Here is a small section showing how the *snippet* directive was used in **arcadia-vs.yml** file.
+
+.. image:: images/snippet.png
+
+4. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see `this <https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics>`_ link.
 
 .. image:: images/grafana_menu_dashboard.png
 
