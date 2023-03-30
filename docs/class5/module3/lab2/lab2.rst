@@ -47,15 +47,17 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/VSCode_selectArcadia.png
 
-6. Now under the **manifest** directory, we can view the manifests **arcadia-deployment.yml**, **arcadia-svcs.yml**, and **arcadia-vs.yml** files. For this lab we will be focused on the **arcaida-vs.yml** manifest file.
+6. Now under the **manifest** directory, we can view the manifests files.
 
-.. image:: images/arcadia_deployment.png
+   - **arcadia-deployment.yml**
+   - **arcadia-svcs.yml**
+   - **arcadia-vs.yml** 
 
-.. image:: images/arcadia_svc.png
+For this lab we will be focused on the **arcaida-vs.yml** manifest file.
 
 .. image:: images/arcadia-vs.png
 
-7. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
+1. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
  - waf-policy.yml (this is the policy we attach to the VistualServer manifest)
  - waf-ap-logconf.yml (this defines our logging filters)
  - waf-ap-policy.yml (this is the declarative WAF policy with all our logic)
