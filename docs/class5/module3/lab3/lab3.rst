@@ -12,6 +12,8 @@ Review the Grafana Dashboard Statistics
 3. Here is a small section showing how the *snippet* directive was used in **arcadia-vs.yml** file.
 
 .. image:: images/snippet.png
+   :scale: 50%
+   :align: center
 
 4. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see `this <https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics>`_ link.
 
