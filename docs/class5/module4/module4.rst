@@ -9,7 +9,6 @@ NGINX App Protect can protect APIs in several ways:
  - Authentication and authorization: NGINX App Protect can authenticate and authorize API requests based on various criteria, such as user credentials, IP address, or geographic location. It can also enforce rate limiting and access control policies to prevent API abuse.
  - Protocol validation: NGINX App Protect can validate the format and content of API requests and responses to ensure they comply with the expected protocol standards. This can prevent attacks that exploit protocol weaknesses or vulnerabilities.
  - Encryption and decryption: NGINX App Protect can encrypt and decrypt API traffic using industry-standard protocols, such as TLS/SSL, to prevent eavesdropping and tampering.
- - Overall, NGINX App Protect provides a comprehensive set of security features that can help protect APIs against a wide range of attacks, including OWASP Top 10 threats such as SQL injection, cross-site scripting (XSS), and API abuse.
 
 .. image:: images/nap_api_deployments.png
 

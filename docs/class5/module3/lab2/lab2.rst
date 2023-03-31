@@ -154,8 +154,10 @@ Finally, our WAF policy:
 
 .. image:: images/terminal_commands.png
 
-15. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
-    
+15. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. 
+
+.. warning:: Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
+
 .. code-block:: yaml
 
   policies:
@@ -163,7 +165,7 @@ Finally, our WAF policy:
     
 .. image:: images/vs-policy.png 
 
-16.  Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
+16.   Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
 
 .. code-block:: bash 
 
@@ -175,15 +177,15 @@ Finally, our WAF policy:
 
 .. image:: images/waf_policy_git_push.png
 
-17.  To make certain our changes are deployed, let's manually sync Argo with our Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
+17.   To make certain our changes are deployed, let's manually sync Argo with our Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
 
 .. image:: images/argo_bookmark.png
 
-18. Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes we submitted to Gitlab and deploy into Kubernetes.
+18.  Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes we submitted to Gitlab and deploy into Kubernetes.
 
 .. image:: images/sync-arcadia.png 
 
-1.  Before we launch attacks at the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. Since we are not sending traffic to the app, the dashboard will be empty.
+19.  Before we launch attacks at the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. Since we are not sending traffic to the app, the dashboard will be empty.
 
 .. image:: images/elk.png 
 
