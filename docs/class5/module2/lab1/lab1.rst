@@ -118,7 +118,7 @@ Your configuration file should look similar to below:
 
 Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
 
-12. Enable and start the NGINX service:
+12.  Start the NGINX service and set it to start at boot:
 
 .. code-block:: bash
 

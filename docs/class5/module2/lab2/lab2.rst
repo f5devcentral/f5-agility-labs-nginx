@@ -27,6 +27,8 @@ Load the file into a file editor:
 
 Add the following configuration block to the end of the file:
 
+.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces to ensure no errors occur.
+
 .. code-block:: bash
 
   # Enable reporting NGINX App Protect details to the control plane.
@@ -36,24 +38,34 @@ Add the following configuration block to the end of the file:
     # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
 
-
-4. Start the NGINX Agent:
-
-.. code-block:: bash
-
-  sudo systemctl start nginx-agent
-
-1. Set the NGINX Agent to start at boot:
+4. Start the NGINX Agent and set to start at boot:
 
 .. code-block:: bash
 
-  sudo systemctl enable nginx-agent
+  sudo systemctl enable --now nginx-agent
 
-6.  Create the Metrics service on NGINX. Return to the NMS Dashboard and click on **Instances** in the **Instance Manager** to view the instance list.
+Create the Metrics service on NGINX
+-----------------------------------
 
-.. image:: images/nms_dashboard.png
+The NGINX Agent is now configured and started. We'll need a few more configuration pieces to finish the installation.
 
-7. Click **Refresh** in the toolbar. The second instance should now appear in the list.
+5. Open **Firefox** by selecting **Applications** > **Favorites** > **Firefox** from the top menu bar.
+
+.. image:: images/firefox_launch.png
+
+6. Click the NMS bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
+
+.. image:: images/launch_nms.png
+
+7. Log into NMS using the username **lab** and the password **Agility2023!**.
+
+.. image:: images/login.png
+
+8. Click on the **Instance Manager** tile to launch NIM. 
+
+.. image:: images/nim_tile.png
+
+1. You should now see second instance in the list. Click **Refresh** in the toolbar if you do not see the new instance.
 
 .. image:: images/nms_refresh_result.png
 
@@ -69,13 +81,11 @@ Add the following configuration block to the end of the file:
 
 .. image:: images/add_file_button.png
 
-11.  Provide the filename **/etc/nginx/conf.d/metrics.conf**.
+11.  Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
 
-.. image:: aimages/filename_prompt.png
+.. image:: images/filename_prompt.png
 
-12.  Click **Create**.
-
-13.  Paste the following configuration into the editor:
+12.   Paste the following configuration into the editor:
 
 .. code-block:: bash
 
@@ -93,7 +103,7 @@ Add the following configuration block to the end of the file:
 
 .. image:: images/file_contents.png
 
-14. Click the **Publish** button.
+1.  Click the **Publish** button.
 
 .. image:: images/publish_button.png
 
@@ -111,21 +121,15 @@ Add the following configuration block to the end of the file:
 
    sudo nginx -s reload
 
-18. Start and Enable NGINX Agent
+18. Restart the NGINX Agent
 
 To start the NGINX Agent on systemd systems, run the following command:
 
 .. code-block:: bash
 
-   sudo systemctl start nginx-agent
+   sudo systemctl restart nginx-agent
 
-To enable the NGINX Agent to start on boot, run the following command:
-
-.. code-block:: bash
-
-   sudo systemctl enable nginx-agent
-
-19. Verifying NGINX Agent is Running and Registered
+19.  Verifying NGINX Agent is Running and Registered
 
 Run the following command on your data plane to verify that the NGINX Agent process is running:
 
@@ -137,8 +141,4 @@ You should see output that looks similar to the following example:
 
 .. image:: images/nginx_agent_ps_aux_result.png
 
-20. Once you’ve verified the NGINX Agent is running on your data plane, you should confirm it’s registered with Instance Manager. Open the NGINX Management Suite web interface and log in. The registered instance is shown in the Instances list.
-
-.. image:: images/nginx_instances_result.png
-
-Once you see the **NGINX Plus 2** instance listed in the NMS Instances list, this section of the lab is complete.
+This section of the lab is complete.
