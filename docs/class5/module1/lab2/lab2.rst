@@ -1,13 +1,21 @@
 Review the NGINX Plus Configuration
 ===================================
 
-.. note::  If not already connected to the jump host, connect via RDP and open Firefox.
+In this section of the lab, we'll review the NGINX Plus configuration for the instance front-ending the application and providing the NGINX App Protect service.
 
-1. In the NMS Dashboard, click the **Select Module** drop-down on the top of the left menu bar and select **Instance Manager**.
+1. In the NMS Dashboard, click the **Select Module** drop-down on the top of the left menu bar.
 
 .. image:: images/nms_instance_manager_dropdown.png
 
-2. Click the first NGINX instance in the list that shows **Active** in the **Status** column. You will see the **Instance Detail** screen.
+2. Select **Instance Manager**.
+
+.. image:: images/nms_instance_manager_dropdown_selection.png
+
+3. Click the first NGINX instance in the list that shows **Active** in the **Status** column. 
+
+.. image:: images/nms_instance_manager_active_instance.png
+
+4. You will see the **Instance Detail** screen.
 
 .. image:: images/nms_instance_details.png
 

@@ -9,19 +9,19 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/diy_pageload.png
 
-3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Management Suite. Let's take a look at NMS to view the configuration and instance/application metrics. Click on the **NMS** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NMS login page.
+3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Management Suite. Let's take a look at NMS to view the configuration and instance/application metrics. Click on the **NMS** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NMS login page. Click ***Sign In***.
 
 .. image:: images/nms_login.png
 
-4. Click **Sign In**. 
+4. You'll see the login prompt. Log in using ***lab*** as the username and ***Agility2023!*** as the password.
 
 .. image:: images/login_prompt.png
 
-5. Login using **lab** / **Agility2023!**. You will see the NGINX Management Suite Launchpad.
+1. You will see the NGINX Management Suite Launchpad. Click on the **Instance Manager** button.
 
 .. image:: images/launchpad.png
 
-6. Click on the **Instance Manager** button to enter the **Instance Manager** **Instances Overview** page.
+1. You will now see the the **Instance Manager** **Instances Overview** page.
 
 .. image:: images/nim_instances_overview.png
 
