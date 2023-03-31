@@ -40,7 +40,6 @@ This lab serves as an introduction to the NGINX App Protect WAF solution. In thi
 - deploy NGINX App Protect on an existing NGINX Plus instance 
 - deploy NGINX App Protect in Kubernetes using modern apps methodologies
 - Review NGINX App Protect API Security
-- Review NGINX App Protect Advanced Features, such as Bot Protection 
 
 Each of the modules in this lab are independent and can be performed in any order. 
 
@@ -52,7 +51,7 @@ The following are a few acronyms that you will encounter in this lab.
 - NAP – NGINX App Protect
 - NMS – NGINX Management Suite
 - NIM – NGINX Instance Manager (base NMS module)
-- NMS-SM / NMS-SM – NGINX Security Monitoring (optional NMS module)
+- NMS-SM – NGINX Security Monitoring (optional NMS module)
 - ACM – API Connectivity Manager (optional NMS module)
 - ADM – App Delivery Manager (optional NMS module)
 - NIC – NGINX Ingress Controller
@@ -107,7 +106,7 @@ Lab Inventory
 Accessing the Lab
 -----------------
 
-In this lab, you will access all resources by connecting to a Linux jump host running XRDP.
+In this lab, you will access all resources by connecting to a Linux jump host running XRDP. XRDP is an open-source version of the popular Remote Desktop Protocol and is compatible with all popular RDP clients.
 
 When you first connect to the Jump Host via RDP, you will be prompted to click **OK** to connect to the remote session.
 
@@ -123,7 +122,7 @@ Clicking on the **Applications** drop-down in the menu bar will bring up a list 
 
 .. image:: images/desktop_favorites.png
 
-**SSH Shortcuts** open SSH terminal windows to the Linux prompt of all machines in the lab.
+**SSH Shortcuts** open SSH terminal windows to the command prompt of all machines in the lab.
 
 .. image:: images/desktop_ssh.png
 
@@ -131,9 +130,10 @@ Each section in this lab will begin with the assumption that you are connected v
 
 Remember these important tips:
 
-- Lab modules are independent; feel free to tackle the modules in any order
-- The username **lab** and password **Agility2023!** will work for every login unless specifically noted
-- Traffic and attack generators are running to help generate statistics, events and attacks
+- Lab modules are independent; feel free to tackle the modules in any order.
+- The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
+- Traffic and attack generators are running to help generate statistics, events and attacks.
+- To paste into the RDP session, press SHIFT+CTRL+V or right-click and select **Paste**.
 
 Tips for Installing NGINX Management Suite, NGINX App Protect and/or NGINX Plus in Your Own Environment
 -------------------------------------------------------------------------------------------------------

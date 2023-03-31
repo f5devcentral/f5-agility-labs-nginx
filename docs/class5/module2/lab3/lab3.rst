@@ -1,11 +1,11 @@
 Enable NGINX App Protect Threat Campaigns and Signature Updates
 ===============================================================
 
-1. Log into the NGINX Plus 2 SSH terminal session.
+1. Log into the NGINX Plus 2 SSH terminal session, if not already connected.
 
 .. image:: images/nplus_2_ssh_login.png
 
-2. Add NGINX Plus App Protect signatures repository:
+2. Add NGINX Plus App Protect signatures repository by typing or pasting the following command:
 
 .. code-block:: bash
 
@@ -18,6 +18,7 @@ Enable NGINX App Protect Threat Campaigns and Signature Updates
 3. Install attack signature updates:
 
 .. code-block:: bash
+
   sudo apt install -y app-protect-attack-signatures
 
 **Result**
@@ -32,6 +33,10 @@ Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelli
 
   sudo apt install -y app-protect-threat-campaigns
 
+**Result**
+
+.. image:: images/threat_compaign_install_result.png
+
 5. Restart NGINX process to apply the new signatures:
 
 .. code-block:: bash
@@ -40,12 +45,4 @@ Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelli
 
 .. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
 
-6. Return to Firefox and click on the **NMS** bookmark. Log in using **lab** and **Agility2023!** as the credentials.
-
-.. image:: images/nms_dashboard.png
-
-7. Click on **App Protect** in the left menubar, then select the **AgilityPolicy**. You'll see that the Threat Campaigns and Attack Signatures columns are populated on NGINX Plus 2.
-
-.. image:: images/agility_policy_overview.png
-
-You've now verified that threat and signature feeds are working. Continue to the next section of the lab.
+We've now installed NGINX App Protect, the Attack Signatures and Threat Campaigns. Let's now enable security on our application.
