@@ -21,4 +21,4 @@ Test a SQL Inject Attack against the Arcadia Finance App
 
 and click **Log me in**. 
 
-4. You should be immediately returned to the empty login prompt. While our injection was not successful in logging into the system, the attempt was not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as we progress through the lab.
+5. You should be immediately returned to the empty login prompt. While our injection was not successful in logging into the system, the attempt was not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as we progress through the lab.

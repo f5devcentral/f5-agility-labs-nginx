@@ -66,6 +66,6 @@ Your screen should look similar to below:
 
 .. image:: images/agilitypolicy_select.png
 
-1.  On this screen, you can see that our policy is applied.
+13.  On this screen, you can see that our policy is applied.
 
 This concludes this portion of the lab. 
