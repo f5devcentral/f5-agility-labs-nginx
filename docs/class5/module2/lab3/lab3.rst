@@ -1,11 +1,11 @@
 Enable NGINX App Protect Threat Campaigns and Signature Updates
 ===============================================================
 
-1. Log into the NGINX Plus 2 SSH terminal session.
+1. Log into the NGINX Plus 2 SSH terminal session, if not already connected.
 
 .. image:: images/nplus_2_ssh_login.png
 
-2. Add NGINX Plus App Protect signatures repository:
+2. Add NGINX Plus App Protect signatures repository by typing or pasting the following command:
 
 .. code-block:: bash
 
@@ -18,6 +18,7 @@ Enable NGINX App Protect Threat Campaigns and Signature Updates
 3. Install attack signature updates:
 
 .. code-block:: bash
+
   sudo apt install -y app-protect-attack-signatures
 
 **Result**
@@ -31,6 +32,11 @@ Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelli
 .. code-block:: bash
 
   sudo apt install -y app-protect-threat-campaigns
+
+**Result**
+
+.. image:: images/threat_compaign_install_result
+
 
 5. Restart NGINX process to apply the new signatures:
 
