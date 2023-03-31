@@ -1,7 +1,6 @@
 Review the Arcadia Finance Micro-Services-Based App Deployment
 ==============================================================
 
-
 In this section, we'll review the Arcadia Finance application and then Nginx Plus Ingress Controller with App Protect deployment in Kubernetes.
 
 To visualize the application deployment, we've setup an open source utility named Argo Continuous Deployment, or Argo CD for short.
@@ -25,7 +24,7 @@ Argo CD offers the following key features and capabilities:
 
 .. image:: images/argo_bookmark.png
 
-3. Log into Argo using **admin** as the username and **Agility2023!** as the password.
+3. Log into Argo using **lab** as the username and **Agility2023!** as the password.
 
 .. image:: images/argo_login.png
 

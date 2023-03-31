@@ -4,14 +4,18 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 .. image:: images/kubnic.PNG
    :align: center
 
-Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress contorller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
+Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress controller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
 Navigating to our **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
 
 1. On the jump host, use the **Applications** menu bar to launch **FireFox Web Browser**. From the bookmark toolbar open **Gitlab**. Log into the site using the username **lab** and the password **Agility2023!**.
 
 .. image:: images/gitlab_login.png 
 
-2. Now select the **ks3_infra** project repository. This repository houses all the infrastructure commponents used in this lab. All have been deployed with Helm and the help of Argo CD.
+2. Log into the tool using the username **lab** and the password **Agility2023!**.
+
+.. image:: images/gitlab_login_filled.png
+
+3. Select the **ks3_infra** project repository. This repository houses all the infrastructure commponents used in this lab. All have been deployed with Helm and the help of Argo CD.
 
 .. image:: images/gitlab_project.png 
 
@@ -48,7 +52,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/VSCode_openFolder.png
 
-10. Select **arcadia**, then click **Open** in the top-right corner of the navigation window.
+10.  Click on the **Home** shortcut on the left. Then click the **Projects** folder, followed by the **arcadia** folder. Finally, click **Open** in the top-right corner of the navigation window.
 
 .. image:: images/VSCode_selectArcadia.png
 
@@ -56,7 +60,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/arcadia_folder_expand.png
 
-12. Now under the **manifest** directory, we can view the manifests files.
+12.  Now under the **manifest** directory, we can view the manifests files.
 
    - **arcadia-deployment.yml**
    - **arcadia-svcs.yml**
@@ -68,9 +72,11 @@ For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* 
 
 13. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
 
- - waf-policy.yml (this is the policy we attach to the VistualServer manifest)
- - waf-ap-logconf.yml (this defines our logging filters)
- - waf-ap-policy.yml (this is the declarative WAF policy with all our logic)
+- waf-policy.yml (this is the policy we attach to the VirtualServer manifest)
+- waf-ap-logconf.yml (this defines our logging filters)
+- waf-ap-policy.yml (this is the declarative WAF policy with all our logic)
+
+First, the policy we attach to the VirtualServer manifest:
 
 .. code-block:: yaml
 
@@ -91,6 +97,7 @@ For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* 
           apLogConf: "arcadia/logconf"
           logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
 
+Second, the policy for logging and filtering:
 
 .. code-block:: yaml
    :caption: waf-ap-logconf.yml 
@@ -108,11 +115,11 @@ For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* 
      filter:
        request_type: blocked
 
+Finally, our WAF policy:
 
 .. code-block:: yaml 
    :caption: waf-ap-policy.yaml 
    
-   ### app-protect-policy.yaml ###
     ---
     apiVersion: appprotect.f5.com/v1beta1
     kind: APPolicy
@@ -137,7 +144,7 @@ For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* 
           usSocialSecurityNumbers: true
           enforcementMode: ignore-urls-in-list
 
-14. Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
+14.  Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
 
 .. code-block:: bash 
 
@@ -172,11 +179,11 @@ For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* 
 
 .. image:: images/argo_bookmark.png
 
-18. Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**.
+18. Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes we submitted to Gitlab and deploy into Kubernetes.
 
 .. image:: images/sync-arcadia.png 
 
-19.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and retrieve the Support ID.
+1.  Before we launch attacks at the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. Since we are not sending traffic to the app, the dashboard will be empty.
 
 .. image:: images/elk.png 
 

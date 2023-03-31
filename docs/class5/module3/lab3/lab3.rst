@@ -1,5 +1,5 @@
-Review the Grafana Dashboard Statistics
-=======================================
+Review the NGINX Plus & Grafana Dashboard Statistics
+====================================================
 
 This section is optional and showcases the use of Nginx Dashboard (included with Nginx Plus). 
 
