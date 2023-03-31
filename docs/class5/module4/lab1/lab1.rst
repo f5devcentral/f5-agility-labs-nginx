@@ -30,99 +30,89 @@ Lab Tasks
 
 .. image:: images/create_button.png
 
-4. Name the policy **arcadia-finance-api-policy** or something similar. Paste the text below into the policy editor:
+1. Name the policy **NginxApiSecurityPolicy** or something similar. Paste the text below into the policy editor:
 
   .. code-block:: js
-    :emphasize-lines: 11
 
-{
-    "policy": {
-        "name": "app_protect_api_security_policy",
-        "template": {
-            "name": "POLICY_TEMPLATE_NGINX_BASE"
-        },
-        "applicationLanguage": "utf-8",
-        "enforcementMode": "blocking",
-        "open-api-files": [{
-            "link": "https://raw.githubusercontent.com/nginx-architects/kic-example-apps/main/app-protect-openapi-arcadia/open-api-spec.json"
-        }],
-        "blocking-settings": {
-            "violations": [{
-                "name": "VIOL_THREAT_CAMPAIGN",
-                "alarm": true,
-                "block": true
-            }]
-        },
-        "signature-sets": [{
-            "name": "High Accuracy Signatures",
-            "block": false,
-            "alarm": false
-        }],
-        "bot-defense": {
-            "settings": {
-                "isEnabled": true
+    {
+        "policy": {
+            "name": "app_protect_api_security_policy",
+            "template": {
+                "name": "POLICY_TEMPLATE_NGINX_BASE"
             },
-            "mitigations": {
-                "classes": [{
-                        "name": "trusted-bot",
-                        "action": "alarm"
-                    },
-                    {
-                        "name": "untrusted-bot",
-                        "action": "block"
-                    },
-                    {
-                        "name": "malicious-bot",
-                        "action": "block"
-                    }
-                ]
+            "applicationLanguage": "utf-8",
+            "enforcementMode": "blocking",
+            "open-api-files": [{
+                "link": "https://raw.githubusercontent.com/nginx-architects/kic-example-apps/main/app-protect-openapi-arcadia/open-api-spec.json"
+            }],
+            "blocking-settings": {
+                "violations": [{
+                    "name": "VIOL_THREAT_CAMPAIGN",
+                    "alarm": true,
+                    "block": true
+                }]
+            },
+            "signature-sets": [{
+                "name": "High Accuracy Signatures",
+                "block": false,
+                "alarm": false
+            }],
+            "bot-defense": {
+                "settings": {
+                    "isEnabled": true
+                },
+                "mitigations": {
+                    "classes": [{
+                            "name": "trusted-bot",
+                            "action": "alarm"
+                        },
+                        {
+                            "name": "untrusted-bot",
+                            "action": "block"
+                        },
+                        {
+                            "name": "malicious-bot",
+                            "action": "block"
+                        }
+                    ]
+                }
             }
         }
     }
-}
 
-Click **Save**.
+.. image:: images/json_policy_creation.png
+
+5. Click **Save**.
 
 **Result**
 
 .. image:: images/saved_policy.png
 
-5. Navigate to **Instance Manager** > **Instances**. Click on the NGINX Ingress Controller instance.
+1. Navigate to **Instances**. Click on the nginx-plus-2 instance.
 
-6. Click on **Edit Config**. 
+2. Click on **Edit Config**. 
 
 .. image:: images/edit_config_button.png
 
-7. Modify the NGINX configuration file to add the WAF policy to the API endpoints:
+7. Modify the NGINX configuration file **arcadia-finance.conf** to add the WAF policy to the API endpoints. Add this to the server block below the default location:
 
-    .. code-block:: nginx
-        :emphasize-lines: 11,17
+.. code-block:: text
 
-        # app3 service
-        location /app3 {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone app3_service;
-        }
+    location /trading/rest {
+        proxy_pass http://arcadia-finance$request_uri;
+        status_zone arcadia-api;
+        app_protect_enable on;
+        app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.tgz";
+    }
 
-        # apply specific policies to our API endpoints:
-        location /trading/rest {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone trading_service;
-            app_protect_enable on;
-            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-        }
+    location /api/rest {
+        proxy_pass http://arcadia-finance$request_uri;
+        status_zone arcadia-api;
+        app_protect_enable on;
+        app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.tgz";
+    }
 
-        location /api/rest {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone trading_service;
-            app_protect_enable on;
-            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-        }
-
-#. Restart the NGINX service:
-
-.. code-block:: BASH
-    sudo nginx -s reload
+8. Click **Publish** to deploy the changes. Click **Publish** again when prompted.
 
 Test the App Protect Policy
 ---------------------------
@@ -134,7 +124,8 @@ Test the App Protect Policy
 2. Pull a list of trading transactions by issuing a curl command from the terminal window:
 
 .. code-block:: bash
-    curl http://k8s.arcadia-finance.io/trading/transactions.php
+
+  curl http://k8s.arcadia-finance.io/trading/transactions.php
 
 **Result**
 
@@ -143,6 +134,7 @@ Test the App Protect Policy
 3. Now, attempt an illegal GET operation against the buy_stocks API endpoint. Notice that the request is blocked.
 
 .. code-block:: bash
-    curl https://k8s.arcadia-finance.io/trading/rest/buy_stocks.php
+
+  curl https://k8s.arcadia-finance.io/trading/rest/buy_stocks.php
 
 Notice that the request is blocked. This shows that the NGINX App Protect WAF policy is protecting the API.
