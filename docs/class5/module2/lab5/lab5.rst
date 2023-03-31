@@ -3,26 +3,27 @@ Enable NGINX App Protect on the Arcadia Finance App
 
 We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finance app.
 
-1. Open **Firefox** and click on the  **NMS** bookmark.
+1. Address known-issue in NGINX Agent.
 
-.. image:: images/nms_bookmark
+.. warning:: As of March 30th, 2023, a known issue is impacting this lab. 
+  
+To avoid the issue, SSH into nginx-plus-2 and issue the following command: 
 
+.. code-block:: bash
 
-2. portal using the username **lab** and password **Agility2023!**.
+  sudo sed -i 's/precompiled_publication: true/precompiled_publication: false/g' /etc/nginx-agent/nginx-agent.conf; sudo systemctl restart nginx-agent; sudo sed -i 's/precompiled_publication: false/precompiled_publication: true/g' /etc/nginx-agent/nginx-agent.conf; sudo systemctl restart nginx-agent
+
+2. Open **Firefox** and click on the  **NMS** bookmark.
+
+.. image:: images/nms_bookmark.png
+
+3. Log in using the username **lab** and password **Agility2023!**. Click on the **Instance Manager** tile.
 
 .. image:: images/nms_dashboard.png
 
-2. Click on **Instance Manager**. You'll see the list of instances managed by NMS.
+4. Click on **nginx-plus-2.agility.lab** instance in the list. 
 
-.. image:: images/nms_instances.png
-
-3. Click on **nginx-plus-2.agility.lab** in the list. 
-
-.. image:: images/nms_instance_detail.png
-
-4. Notice the NGINX App Protect WAF is now enabled.
-
-.. image:: images/nms_app_protect_status.png
+.. image:: images/nms_instance_select.png
 
 5. Click on the **Edit Config** button. 
 
@@ -53,10 +54,18 @@ Your screen should look similar to below:
 
 .. image:: images/publish_confirm.png
 
-10. After a few moments, you will see a notification that the configuration was successfully published:
+10. After a few moments, you will see a notification that the configuration was successfully published.
 
 .. image:: images/publish_notification.png
 
-11. Click on **Instances** in the left menubar to return to the list of instances. Click on **nginx-plus-2** to view the instance details. You should see under the **Last Deployment Details** and **App Protect Details** sections should show the WAF enabled.
+11. Click on **App Protect** from the menu. 
 
-.. image:: images/instance_detail_result.png
+.. image:: images/app_protect_nav.png
+
+12. On the list of policies, click on the name **AgilityPolicy**.
+
+.. image:: images/agilitypolicy_select.png
+
+13. On this screen, you can see that our policy is applied. You can also see the **Attack Signatures** and **Threat Campaigns** version in use by each instance.
+
+This concludes this portion of the lab. 
