@@ -62,7 +62,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
    - **arcadia-svcs.yml**
    - **arcadia-vs.yml** 
 
-For this lab we will be focused on the **arcaida-vs.yml** manifest file *after* we add the security policy files.
+For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* we add the security policy files.
 
 .. image:: images/arcadia-vs.png
 
@@ -91,6 +91,7 @@ For this lab we will be focused on the **arcaida-vs.yml** manifest file *after* 
           apLogConf: "arcadia/logconf"
           logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
 
+
 .. code-block:: yaml
    :caption: waf-ap-logconf.yml 
 
@@ -106,6 +107,7 @@ For this lab we will be focused on the **arcaida-vs.yml** manifest file *after* 
        max_request_size: any
      filter:
        request_type: blocked
+
 
 .. code-block:: yaml 
    :caption: waf-ap-policy.yaml 
@@ -135,15 +137,17 @@ For this lab we will be focused on the **arcaida-vs.yml** manifest file *after* 
           usSocialSecurityNumbers: true
           enforcementMode: ignore-urls-in-list
 
-14. We'll now copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy.
+14. Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
 
 .. code-block:: bash 
 
-    cp waf-ap-logconf.yml waf-ap-policy.yml waf-policy.yml manifests/.
-    git add manifests/
-    git commit -m "add waf policies"
+  cp waf-ap-logconf.yml waf-ap-policy.yml waf-policy.yml manifests/.
+  git add manifests/
+  git commit -m "add waf policies"
 
-15. Now it's time to edit the **arcadia-vs.yml** manifest to now include our App Protect policy. Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
+.. image:: images/terminal_commands.png
+
+15. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
     
 .. code-block:: yaml
 
@@ -152,40 +156,48 @@ For this lab we will be focused on the **arcaida-vs.yml** manifest file *after* 
     
 .. image:: images/vs-policy.png 
 
-Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
+16.  Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
 
 .. code-block:: bash 
 
-  git add manifest/arcadia-vs.yml
+  git add manifests/arcadia-vs.yml
   git commit -m "add waf policy"
   git push 
 
-16.   To make certain our changes happen, we'll manually sync Argo with our Git repo. In your Firefox browser, Argo CD tab, click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**
+**Result**
+
+.. image:: images/waf_policy_git_push.png
+
+17.  To make certain our changes are deployed, let's manually sync Argo with our Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
+
+.. image:: images/argo_bookmark.png
+
+18. Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**.
 
 .. image:: images/sync-arcadia.png 
 
-17.   Before you attempt sending attack data to the Arcadia site, let's open the **ELK** tab in Firefox so you can view the attacks and retrieve the Support ID 
+19.  Before you attempt sending attack data to the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and retrieve the Support ID.
 
 .. image:: images/elk.png 
 
-18.   Time to run some attacks against the Arcadia site. From **Applications** click the drop down and select **terminal**. 
+20.  Now, launch attacks against the Arcadia site. From **Applications**, click the drop down and select **Terminal**. 
 
 .. image:: images/applications_terminal.png 
 
-When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
+21.   When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
 
 .. code-block:: bash
 
-  source k8s-attack
+  source k8s-attacks
 
-19.  Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
+22. Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
 
 .. image:: images/kibana.png 
 
-20.   To read deatils on blocked attack, scroll down to the *Events* section of the dashboard you can open the event by clicking on the **>** icon
+23.  To read details on blocked attack, scroll down to the **Events** section of the dashboard you can open the event by clicking on the **>** icon
 
 .. image:: images/kibana_events.png 
 
-21.  Scroll down to **support_id** to match up the Support ID returned by App Protect in your terminal.
+24. Scroll down to **support_id** to match up the Support ID returned by App Protect in your terminal.
 
 .. image:: images/kibana_supportID.png
