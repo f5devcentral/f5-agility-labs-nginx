@@ -95,7 +95,7 @@ Modify the WAF Policy to Resolve an App Issue
   
 .. image:: images/nap_agilitypolicy_json.png
 
-21. . To modify the policy based on this version of the policy, click **Edit Version**. 
+21. To modify the policy based on this version of the policy, click **Edit Version**. 
 
 .. image:: images/nap_agilitypolicy_edit_version.png
 
@@ -182,6 +182,8 @@ Modify the WAF Policy to Resolve an App Issue
 .. image:: images/deployment_status.png
 
 30.  Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
+
+.. caution:: You may need to hold **Shift** and click the **Reload** icon in the browser to force the browser to fully reload the page.
 
 .. image:: images/successful_full_load.png
 

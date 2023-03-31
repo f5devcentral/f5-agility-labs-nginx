@@ -6,7 +6,7 @@ There are two components to NGINX App Protect within NMS:
 - NAP configuration via Instance Manager extension
 - NAP monitoring via NGINX Security Monitoring (NMS-SM)
 
-1. Let's take a look at both of these components. First, load the NGINX Dashboard in Firefox and login, if not already.
+1. Let's take a look at both of these components. First, load the **NMS** bookmark in **Firefox** and login using **lab/Agility2023!**, if not already.
 
 2. Click the **Select module** drop-down from the top of the left menu bar.
 

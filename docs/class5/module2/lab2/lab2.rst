@@ -65,27 +65,27 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/nim_tile.png
 
-1. You should now see second instance in the list. Click **Refresh** in the toolbar if you do not see the new instance.
+9. You should now see second instance in the list. Click **Refresh** in the toolbar if you do not see the new instance.
 
 .. image:: images/nms_refresh_result.png
 
-8.  Click the **nginx-plus-2.agility.lab** instance in the list. 
+10.  Click the **nginx-plus-2.agility.lab** instance in the list. 
 
 .. image:: images/nginx_plus_2_detail.png
 
-9.  Click the **Edit Config** button.
+11.  Click the **Edit Config** button.
 
 .. image:: images/edit_button.png
 
-10. Click on **Add File** button in the navigation pane.
+12. Click on **Add File** button in the navigation pane.
 
 .. image:: images/add_file_button.png
 
-11.  Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
+13.  Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
 
 .. image:: images/filename_prompt.png
 
-12.   Paste the following configuration into the editor:
+14.   Paste the following configuration into the editor:
 
 .. code-block:: bash
 
@@ -103,25 +103,25 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/file_contents.png
 
-1.  Click the **Publish** button.
+15.  Click the **Publish** button.
 
 .. image:: images/publish_button.png
 
-15. Click **Publish** when presented with the confirmation prompt.
+16. Click **Publish** when presented with the confirmation prompt.
 
 .. image:: images/publish_confirm.png
 
-16. You will see the Published notification shortly after. 
+17. You will see the Published notification shortly after. 
 
 .. image:: images/published_notification.png
 
-17. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
+18. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
 
 .. code-block:: bash
 
    sudo nginx -s reload
 
-18. Restart the NGINX Agent
+19. Restart the NGINX Agent
 
 To start the NGINX Agent on systemd systems, run the following command:
 
@@ -129,7 +129,7 @@ To start the NGINX Agent on systemd systems, run the following command:
 
    sudo systemctl restart nginx-agent
 
-19.  Verifying NGINX Agent is Running and Registered
+20.  Verifying NGINX Agent is Running and Registered
 
 Run the following command on your data plane to verify that the NGINX Agent process is running:
 

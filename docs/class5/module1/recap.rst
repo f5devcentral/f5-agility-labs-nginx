@@ -1,5 +1,5 @@
-Module Review - Test Driving NGINX Plus with App Protect and NGINX Management Suite 
-===================================================================================
+Module Review - Test Driving NGINX Plus with App Protect and NGINX Management Suite
+-----------------------------------------------------------------------------------
 
 In this module, we have completed the following items:
 
@@ -8,6 +8,6 @@ In this module, we have completed the following items:
 - Viewing NMS-SM events and statistics surrounding detected attacks
 - Viewing and modifying a NAP policy to remediate app issues caused by a false positive
 
-This concludes the "test drive" portion of NGINX App Protect (NAP), NGINX Management Suite (NMS) and NGINX Security Monitoring (NMS-SM).
+This concludes the “test drive” portion of NGINX App Protect (NAP), NGINX Management Suite (NMS) and NGINX Security Monitoring (NMS-SM).
 
 Please continue to the additional modules in this lab.
