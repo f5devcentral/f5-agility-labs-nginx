@@ -25,7 +25,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_instances_overview.png
 
-.. note:: Each instance of this lab runs in a virtual environement. Since new VMs are deployed for each instance, the operating system identifiers change, so each NGINX Plus instance is treated as a new instance. Thus, you may see previous instances listed. You may optionally delete these **Offline** instances by clicking the three dot icon under the **Actions** column and selecting **Delete**. They will not interfere with the lab.
+.. warning:: Each instance of this lab runs in a virtual environement. Since new VMs are deployed for each instance, the operating system identifiers change, so each NGINX Plus instance is treated as a new instance. Thus, you may see previous instances listed. You may optionally delete these **Offline** instances by clicking the three dot icon under the **Actions** column and selecting **Delete**, as shown in the image below. They will not interfere with the lab.
 
 .. image:: images/nim_instances_delete_offline.png
 
@@ -33,7 +33,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_instance_detail.png
 
-8. Notice that the **Details** is the default tab in this screen. Scroll through the contents of the **Details** tab. In the first section titled **Instance Details**, notice that you can see details about the NGINX Instance itself, including version, status, configuration path, and more. 
+1. Notice that the **Details** tab is loaded by default in this screen. Scroll through the contents of the **Details** tab. In the first section titled **Instance Details**, notice that you can see details about the NGINX Instance itself, including version, status, configuration path, and more. 
 
 .. image:: images/nim_instance_details.png
 
