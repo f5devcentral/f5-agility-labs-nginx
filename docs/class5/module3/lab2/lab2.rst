@@ -1,111 +1,212 @@
-Step 7 - Build your NAP (NGINX App Protect) Docker image
-########################################################
+Install NGINX App Protect on the Arcadia App in Kubernetes
+==========================================================
 
-In this lab, we will install the package Threat Campaign into a new Docker image.
+.. image:: images/kubnic.PNG
+   :align: center
 
-Threat Campaign is a **feed** from F5 Threat Intelligence team. This team is collecting 24/7 threats from internet and darknet. 
-They use several bots and honeypotting networks in order to know in advance what the hackers (humans or robots) will target and how.
+Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress controller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
+Navigating to our **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
 
-Unlike ``signatures``, Threat Campaign provides with ``ruleset``. A signature uses patterns and keywords like ``' or`` or ``1=1``. Threat Campaign uses ``rules`` that match perfectly an attack detected by our Threat Intelligence team.
+1. On the jump host, use the **Applications** menu bar to launch **FireFox Web Browser**. From the bookmark toolbar open **Gitlab**. Log into the site using the username **lab** and the password **Agility2023!**.
 
-.. note :: Threat campaign updates are released periodically whenever new campaigns and vectors are discovered. You can upgrade the Threat campaigns by updating the package any time after installing App Protect. We recommend you upgrade to the latest Threat campaign version right after installing App Protect.
+.. image:: images/gitlab_login.png 
 
+2. Log into the tool using the username **lab** and the password **Agility2023!**.
 
-For instance, if we notice a hacker managed to enter into our Struts2 system, we will do forensics and analyse the packet that used the breach. Then, this team creates the ``rule`` for this request.
-A ``rule`` **can** contains all the HTTP L7 payload (headers, cookies, payload ...)
+.. image:: images/gitlab_login_filled.png
 
-.. note :: Unlike signatures that can generate False Positives due to low accuracy patterns, Threat Campaigns are very accurate and nearly eliminates any False Positives.
+3. Select the **ks3_infra** project repository. This repository houses all the infrastructure commponents used in this lab. All have been deployed with Helm and the help of Argo CD.
 
-.. note :: NAP provides with high accuracy Signatures + Threat Campaign ruleset. The best of breed to reduce False Positives.
+.. image:: images/gitlab_project.png 
 
+3. Once inside the project, click on **charts** directory:
 
-Threat Campaign package is available with the ``app-protect-signatures-7.repo`` repository. It is provided with the NAP subscription.
+.. image:: images/k3s_infra.png 
 
-In order to install this package, we need to update our ``Dockerfile``. I created another Dockerfile named ``Dockerfile-sig-tc``
+4. Now click into the **nginx-ingress** directory:
+
+.. image:: images/nginx_ingress_directory.png
+
+5. Here you will find the two main files we'll discuss:
+
+ - **Charts.yaml**
+ - **values.yaml**
+  
+.. image:: images/k3s_infra_ls.png 
+
+6. The **Chart.yaml** contains information on what chart version to use and on which dependencies it relies.
+
+.. image:: images/nic_Chart.png 
+
+7. In the **values.yaml** file, we define what options we want our ingress controller to have (app-protect, app-dos, snippets etc.), and what registry to pull the relevant image(s).
+
+.. image:: images/nic_values.png
+
+Now that you can see how we've set up Nginx Ingress Controller, let's get back to securing our Arcadia app with App Protect.
+
+8. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
+
+.. caution:: It may take several seconds for Visual Studio Code to launch for the first time.
+
+9. In **Visual Studio Code**, navigate to **File** > **Open Folder**. 
+
+.. image:: images/VSCode_openFolder.png
+
+10.  Click on the **Home** shortcut on the left. Then click the **Projects** folder, followed by the **arcadia** folder. Finally, click **Open** in the top-right corner of the navigation window.
+
+.. image:: images/VSCode_selectArcadia.png
+
+11. Expand the **arcadia** folder by clicking **arcadia** in the top-left of the screen. 
+
+.. image:: images/arcadia_folder_expand.png
+
+12.  Now under the **manifest** directory, we can view the manifests files.
+
+   - **arcadia-deployment.yml**
+   - **arcadia-svcs.yml**
+   - **arcadia-vs.yml** 
+
+For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* we add the security policy files.
+
+.. image:: images/arcadia-vs.png
+
+13. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
+
+- waf-policy.yml (this is the policy we attach to the VirtualServer manifest)
+- waf-ap-logconf.yml (this defines our logging filters)
+- waf-ap-policy.yml (this is the declarative WAF policy with all our logic)
+
+First, the policy we attach to the VirtualServer manifest:
+
+.. code-block:: yaml
+
+  :caption: waf-policy.yml 
+  :emphasize-lines: 13
+
+    ---
+    apiVersion: k8s.nginx.org/v1
+    kind: Policy
+    metadata:
+      name: waf-policy
+    spec:
+      waf:
+        enable: true
+        apPolicy: "arcadia/dataguard-blocking"
+        securityLog:
+          enable: true
+          apLogConf: "arcadia/logconf"
+          logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
+
+Second, the policy for logging and filtering:
+
+.. code-block:: yaml
+   :caption: waf-ap-logconf.yml 
+
+   ---
+   apiVersion: appprotect.f5.com/v1beta1
+   kind: APLogConf
+   metadata:
+     name: logconf
+   spec:
+     content:
+       format: default
+       max_message_size: 64k
+       max_request_size: any
+     filter:
+       request_type: blocked
+
+Finally, our WAF policy:
+
+.. code-block:: yaml 
+   :caption: waf-ap-policy.yaml 
+   
+    ---
+    apiVersion: appprotect.f5.com/v1beta1
+    kind: APPolicy
+    metadata:
+      name: dataguard-blocking
+    spec:
+      policy:
+        name: dataguard_blocking
+        template:
+          name: POLICY_TEMPLATE_NGINX_BASE
+        applicationLanguage: utf-8
+        enforcementMode: blocking
+        blocking-settings:
+          violations:
+          - name: VIOL_DATA_GUARD
+            alarm: true
+            block: true
+        data-guard:
+          enabled: true
+          maskData: true
+          creditCardNumbers: true
+          usSocialSecurityNumbers: true
+          enforcementMode: ignore-urls-in-list
+
+14.  Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
+
+.. code-block:: bash 
+
+  cp waf-ap-logconf.yml waf-ap-policy.yml waf-policy.yml manifests/.
+  git add manifests/
+  git commit -m "add waf policies"
+
+.. image:: images/terminal_commands.png
+
+15. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. 
+
+.. warning:: Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
+
+.. code-block:: yaml
+
+  policies:
+    - name: waf-policy
+    
+.. image:: images/vs-policy.png 
+
+16.   Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
+
+.. code-block:: bash 
+
+  git add manifests/arcadia-vs.yml
+  git commit -m "add waf policy"
+  git push 
+
+**Result**
+
+.. image:: images/waf_policy_git_push.png
+
+17.   To make certain our changes are deployed, let's manually sync Argo with our Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
+
+.. image:: images/argo_bookmark.png
+
+18.  Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes we submitted to Gitlab and deploy into Kubernetes.
+
+.. image:: images/sync-arcadia.png 
+
+19.  Before we launch attacks at the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. Since we are not sending traffic to the app, the dashboard will be empty.
+
+.. image:: images/elk.png 
+
+20.  Now, launch attacks against the Arcadia site. From **Applications**, click the drop down and select **Terminal**. 
+
+.. image:: images/applications_terminal.png 
+
+21.   When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
 
 .. code-block:: bash
 
-   #For CentOS 7
-   FROM centos:7.4.1708
+  source k8s-attacks
 
-   # Download certificate and key from the customer portal (https://cs.nginx.com)
-   # and copy to the build context
-   COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
+22. Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
 
-   # Install prerequisite packages
-   RUN yum -y install wget ca-certificates epel-release
+.. image:: images/kibana.png 
 
-   # Add NGINX Plus repo to yum
-   RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
-   RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
+23.  To read details on blocked attack, scroll down to the **Events** section of the dashboard you can open the event by clicking on the **>** icon
 
-   # Install NGINX App Protect
-   RUN yum -y install app-protect app-protect-attack-signatures app-protect-threat-campaigns\
-      && yum clean all \
-      && rm -rf /var/cache/yum \
-      && rm -rf /etc/ssl/nginx
+.. image:: images/kibana_events.png 
 
-   # Forward request logs to Docker log collector:
-   RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-      && ln -sf /dev/stderr /var/log/nginx/error.log
+24. Scroll down to **support_id** to match up the Support ID returned by App Protect in your terminal.
 
-   # Copy configuration files:
-   COPY nginx.conf /etc/nginx/
-   COPY entrypoint.sh  /root/
-
-   CMD ["sh", "/root/entrypoint.sh"]
-
-
-.. note:: You may notice one more package versus the previous Dockerfile in Step 6. I added the package installation ``app-protect-threat-campaigns``
-
-
-**Follow the steps below to build the new Docker image:**
-
-   #. SSH to Docker App Protect + Docker repo VM
-   #. Run the command:
-
-      .. code-block:: bash
-
-         docker build --tag app-protect:04-aug-2021-tc -f Dockerfile-sig-tc .
-
-      .. note:: There is a "." (dot) at the end of the command
-
-   #. Wait until you see the message: ``Successfully tagged app-protect:04-aug-2021-tc``
-
-      .. note:: Please take time to understand what we ran. You may notice 2 changes. We ran the build with a new Dockerfile ``Dockerfile-sig-tc`` and with a new tag ``tc``. You can choose another tag like ``tcdate`` where date is the date of today. We don't know yet the date of the TC package ruleset.
-
-
-      **Stop the previous running NAP container and run a new one based on the new image**
-
-   #. If the old container is still running, stop it with <ctrl-c>. Otherwise, kill it with ``docker rm -f app-protect``
-
-   #. Run a new container with this image:
-
-      .. code-block:: bash
-
-         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf --volume /home/ubuntu/lab-files/conf.d:/etc/nginx/conf.d app-protect:04-aug-2021-tc
-
-
-      .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
-
-   #. Check the Threat Campaign ruleset date included in the new Docker container in the running logs by looking for  ``threat_campaigns_package``
-
-      .. code-block:: bash
-
-         2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true,"threat_campaigns_package":{"revision_datetime":"2021-07-13T13:48:30Z","version":"2021.07.13"}}
-
-      **Simulate a Threat Campaign attack**
-
-   #. On the Win10 jump host, open ``Postman`` and select the collection ``NAP - Threat Campaign``
-   #. Run the 2 calls with ``docker`` in the name. They will trigger 2 different Threat Campaign rules.
-   #. In the next lab, we will check the logs in Kibana.
-
-.. note:: Congrats, you are running a new version of NAP with the latest Threat Campaign package and ruleset.
-
-**Video of this lab (force HD 1080p in the video settings)**
-
-.. raw:: html
-
-    <div style="text-align: center; margin-bottom: 2em;">
-    <iframe width="1120" height="630" src="https://www.youtube.com/embed/fwHe0sp-5gA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+.. image:: images/kibana_supportID.png

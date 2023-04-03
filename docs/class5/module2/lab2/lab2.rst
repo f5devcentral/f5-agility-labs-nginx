@@ -1,115 +1,144 @@
-Step 4 - Check logs in Kibana
-#############################
+Adding the NGINX Plus with App Protect Instance to NGINX Management Suite
+=========================================================================
 
-In this lab we will check the logs in the ELK stack (Elastic, Logstash, Kibana)
+Since our lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
 
-**Understanding how to configure the destination syslog server**
+.. warning:: If you're installing the NGINX Agent in your environment, a few steps are required before starting the installation process. See https://docs.nginx.com/nginx-management-suite/nginx-agent/install-nginx-agent/ for more information. In this lab, these have been checked for you.
 
-Steps:
+1. Connect to the NGINX Plus 2 instance via SSH, if not already connected.
 
-   #. With vscode or Windows Terminal ssh to the centos-vm
-   #. View ``cat /etc/app_protect/conf/log_default.json`` (which is also pasted below) which was edited in the previous lab.
+2. The NGINX Agent will be pulled from the NGINX Management Suite server and installed:
 
-      .. code-block:: js
-         :caption: log_default.json
+.. code-block:: bash
 
-         {
-         "filter": {
-            "request_type": "all"
-               },
-         "content": {
-            "format": "default",
-            "max_request_size": "any",
-            "max_message_size": "5k"
-               }
-         }
-      
-      .. note:: By default ``/etc/app_protect/conf/log_default.json`` which is installed with app protect, will only log illegal requests, it should have been edited by you to log all requests.
+  curl -k https://nginx-mgmt-suite.agility.lab/install/nginx-agent | sudo sh
 
-   #. Recall line 33 from the NGINX configuration we are using (Feel free to open ``/etc/nginx/nginx.conf``)
+**Result**
 
-      .. code-block:: nginx
-         :caption: nginx.conf
-         :emphasize-lines: 43,44
+.. image:: images/nginx_agent_install_result.png
 
-            user  nginx;
-            worker_processes  auto;
+3. Configure the NGINX Agent
 
-            error_log  /var/log/nginx/error.log notice;
+Load the file into a file editor:
 
-            # load the app protect module
-            load_module modules/ngx_http_app_protect_module.so;
+.. code-block:: bash
 
-            events {
-               worker_connections 1024;
-            }
+  sudo nano /etc/nginx-agent/nginx-agent.conf
 
-            http {
-               include          /etc/nginx/mime.types;
-               default_type  application/octet-stream;
-               sendfile        on;
-               keepalive_timeout  65;
+Add the following configuration block to the end of the file:
 
-               log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                              '$status $body_bytes_sent "$http_referer" '
-                              '"$http_user_agent" "$http_x_forwarded_for"';
+.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces to ensure no errors occur.
 
-               # note that in the dockerfile, the logs are redirected to stdout and can be viewed with `docker logs`
-               access_log  /var/log/nginx/access.log  main;
+.. code-block:: bash
 
-               server {
-                  listen       80;
-                  server_name  localhost;
-                  proxy_http_version 1.1;
-                  proxy_cache_bypass  $http_upgrade;
+  # Enable reporting NGINX App Protect details to the control plane.
+  nginx_app_protect:
+    # Report interval for NGINX App Protect details - the frequency the NGINX Agent checks NGINX App Protect for changes.
+    report_interval: 15s
+    # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
+    precompiled_publication: true
 
-                  proxy_set_header Host $host;
+4. Start the NGINX Agent and set to start at boot:
 
-                  proxy_set_header X-Forwarded-Server $host;
-                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+.. code-block:: bash
 
-                  proxy_set_header Upgrade $http_upgrade;
-                  proxy_set_header Connection "upgrade";
-                  proxy_ignore_client_abort on;
+  sudo systemctl enable --now nginx-agent
 
-                  app_protect_enable on;
-                  app_protect_security_log_enable on;
-                  # send the logs to the logstash instance on our ELK stack.
-                  app_protect_security_log "/etc/app_protect/conf/log_default.json" syslog:server=10.1.1.11:5144;
+Create the Metrics service on NGINX
+-----------------------------------
 
+The NGINX Agent is now configured and started. We'll need a few more configuration pieces to finish the installation.
 
+5. Open **Firefox** by selecting **Applications** > **Favorites** > **Firefox** from the top menu bar.
 
-      .. note:: You will notice in the ``nginx.conf`` file the reference to ``log_default.json`` and the remote syslog server (ELK) ``10.1.1.11:5144``
+.. image:: images/firefox_launch.png
 
+6. Click the NMS bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
 
-      **Open Kibana via firefox on the jumphost or via UDF access**
+.. image:: images/launch_nms.png
 
+7. Log into NMS using the username **lab** and the password **Agility2023!**.
 
-   #. In UDF, find the ELK VM and click Access > ELK
+.. image:: images/login.png
 
-      .. image:: ../pictures/lab2/ELK_access.png
-         :align: center
-         :scale: 50%
-         :alt: ELK
+8. Click on the **Instance Manager** tile to launch NIM. 
 
-   #. In Kibana, click on ``Dashboard > Overview``
+.. image:: images/nim_tile.png
 
-      .. image:: ../pictures/lab2/ELK_dashboard.png
-         :align: center
-         :scale: 50%
-         :alt: dashboard
+9. You should now see second instance in the list. Click **Refresh** in the toolbar if you do not see the new instance.
 
+.. image:: images/nms_refresh_result.png
 
-   #. At the bottom of the dashboard, you can see the logs. Select one of the log entries and check the content
+10.  Click the **nginx-plus-2.agility.lab** instance in the list. 
 
-.. note:: You may notice the log content is similar to F5 ASM and Adv. WAF
+.. image:: images/nginx_plus_2_detail.png
 
-.. note:: The default time window in this Kibana dashboard is **Last 15 minutes**. If you do not see any requests, you may need to extend the time window to a larger setting. It can take a minute for logs to be processed into the graphs.
+11.  Click the **Edit Config** button.
 
-**Video of this lab (force HD 1080p in the video settings)**
+.. image:: images/edit_button.png
 
-.. raw:: html
+12. Click on **Add File** button in the navigation pane.
 
-    <div style="text-align: center; margin-bottom: 2em;">
-    <iframe width="1120" height="630" src="https://www.youtube.com/embed/kWfRBhrH8k8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>
+.. image:: images/add_file_button.png
+
+13.  Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
+
+.. image:: images/filename_prompt.png
+
+14.   Paste the following configuration into the editor:
+
+.. code-block:: bash
+
+  server {
+      listen 8080;
+
+      location /api/ {
+        api write=on;
+        allow 127.0.0.1;
+        deny all;
+      }
+  }
+
+**Result**
+
+.. image:: images/file_contents.png
+
+15.  Click the **Publish** button.
+
+.. image:: images/publish_button.png
+
+16. Click **Publish** when presented with the confirmation prompt.
+
+.. image:: images/publish_confirm.png
+
+17. You will see the Published notification shortly after. 
+
+.. image:: images/published_notification.png
+
+18. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
+
+.. code-block:: bash
+
+   sudo nginx -s reload
+
+19. Restart the NGINX Agent
+
+To start the NGINX Agent on systemd systems, run the following command:
+
+.. code-block:: bash
+
+   sudo systemctl restart nginx-agent
+
+20.  Verifying NGINX Agent is Running and Registered
+
+Run the following command on your data plane to verify that the NGINX Agent process is running:
+
+.. code-block:: bash
+
+  ps aux | grep nginx-agent
+
+You should see output that looks similar to the following example:
+
+.. image:: images/nginx_agent_ps_aux_result.png
+
+This section of the lab is complete.

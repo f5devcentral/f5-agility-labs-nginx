@@ -1,19 +1,14 @@
-Class5 - NGINX App Protect
-##########################
+Class5 - NGINX App Protect WAF
+##############################
 
-UDF Lab Maintainers:
-
-   Matthieu Dierick - Sr Solutions Architect <m.dierick@f5.com>
-
-   Gee Chow - Solutions Architect <g.chow@f5.com>
-
-Please email the group with any issues or suggestions.
-
-.. image:: NAP_index.png
-   :align: center
+Welcome to the NGINX App Protect WAF hands-on lab!
 
 .. toctree::
    :maxdepth: 1
+   :caption: Content:
    :glob:
 
+   overview
    module*/module*
+
+Click **Next** to begin the lab.

@@ -1,88 +1,48 @@
-Step 5 - Deploy App Protect via CI/CD pipeline
-##############################################
+Enable NGINX App Protect Threat Campaigns and Signature Updates
+===============================================================
 
-In this lab, we will install NGINX Plus and App Protect packages on CentOS with a CI/CD pipeline. F5 maintains the NGINX Ansible playbooks on Galaxy which allows customers to easily setup App Protect.
+1. Log into the NGINX Plus 2 SSH terminal session, if not already connected.
 
-.. note:: The official Ansible NAP role is available here https://github.com/nginxinc/ansible-role-nginx-app-protect and the NGINX Plus role here https://github.com/nginxinc/ansible-role-nginx 
+.. image:: images/nplus_2_ssh_login.png
 
-.. note:: This example is available on Github: https://github.com/nginx-architects/UDF-App-Protect-cicd     
+2. Add NGINX Plus App Protect signatures repository by typing or pasting the following command:
 
+.. code-block:: bash
 
-**Uninstall the previous running NAP**
+  sudo wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
 
-    #.  SSH to the CentOS-VM
+**Result**
 
-    #.  Remove the existing installation NAP in order to start from scratch. App Protect depends on NGINX Plus, so simply removing it will also remove everything we need.
+.. image:: images/nap_sec_updates_repo_result.png
 
+3. Install attack signature updates:
 
-        .. code-block:: bash
+.. code-block:: bash
 
-            /home/centos/lab-files/remove-app-protect-cleanup.sh
+  sudo apt install -y app-protect-attack-signatures
 
-        .. image:: ../pictures/lab3/remove-nap.png
-           :align: center
-           :scale: 70%
-           :alt: nap
+**Result**
 
+.. image:: images/attack_sig_updates_result.png
 
-        **Run the CI/CD pipeline from Gitlab**
+4. Install the Threat Campaign package:
 
-        Steps:
+Threat Campaigns consist of a constantly updated feed from the F5 Threat Intelligence team. The team identifies threats 24/7 and creates very specific signatures for these current threats. With these specific signatures, there is very low probability of false positives. Unlike signatures, Threat Campaign provides with ruleset. A signature uses patterns and keywords like ' or or 1=1. Threat Campaign uses rules that match perfectly an attack detected by our Threat Intelligence team. Unlike signatures that can generate False Positives due to low accuracy patterns, the Threat Campaigns feature is very accurate and reduces drastically false positives.
+  
+.. code-block:: bash
 
-        #. RDP to the Jumphost with credentials ``user:user``
+  sudo apt install -y app-protect-threat-campaigns
 
-        #. Open Firefox and open ``Gitlab`` (if not already opened)
+**Result**
 
-        #. Select the repository ``nap-deploy-centos`` and go to ``CI /CD``
+.. image:: images/threat_compaign_install_result.png
 
+5. Restart NGINX process to apply the new signatures:
 
-    .. image:: ../pictures/lab3/gitlab_pipeline.png
-        :align: center
-        :scale: 50%
-        :alt: gitlab
+.. code-block:: bash
 
-    #. ``Run the Pipeline`` by clicking the green button. The installation can take up to 10 minutes as the install is very I/O intensive.
+  sudo nginx -s reload
 
-The pipeline is as below:
+.. note:: The command nginx -s reload is the command that tells nginx to check for new configurations, ensure it is valid, and then create new worker processes to handle new connections with the new configuration. The older worker processes are terminated when the clients have disconnected. This allows nginx to be upgraded or reconfigured without impacting existing connections.
 
-.. code-block:: yaml
-
-    stages:
-        - Requirements
-        - Deploy_nap
-        - Workaround_dns
-
-    Requirements:
-        stage: Requirements
-        script:
-            - ansible-galaxy install -r requirements.yml --force
-
-    Deploy_nap:
-        stage: Deploy_nap
-        script:
-            - ansible-playbook -i hosts ./ansible/nap32.yml
-
-    Workaround_dns:
-        stage: Workaround_dns
-        script:
-            - ansible-playbook -i hosts copy-nginx-conf.yml
-
-
-.. note:: As you can notice, the ``Requirements`` stage installs the ``requirements``. We use the parameter ``--force`` in order to be sure we download and install the latest version of the lab.
-
-.. note:: This pipeline executes 2 Ansible playbooks. 
-    
-    #. One playbook to install NAP (which also installs NGINX Plus)
-    #. The last playbook is just there to fix an issue in UDF for the DNS resolver
-
-
-.. image:: ../pictures/lab3/gitlab_pipeline_ok.png
-   :align: center
-   :scale: 40%
-   :alt: pipeline
-
-
-When the pipeline is finished executing, perform a browser test within Firefox using the ``Arcadia NAP CentOS`` bookmark
-
-
-.. note :: Congrats, you have deployed ``NGINX Plus`` and ``NAP`` with a CI/CD pipeline. You can check the pipelines in ``GitLab`` if you are interested to see what has been coded behind the scenes.
+We've now installed NGINX App Protect, the Attack Signatures and Threat Campaigns. Let's now enable security on our application.
