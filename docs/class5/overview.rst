@@ -157,3 +157,5 @@ Lab Maintainers
    Greg Robinson - Senior Solutions Engineer <g.robinson@f5.com>
 
 Please email us with any issues or suggestions.
+
+.. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
