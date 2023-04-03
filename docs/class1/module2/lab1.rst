@@ -184,13 +184,13 @@ access logs for **www2.example.com** as they are written:
 
       tail -f /var/log/nginx/www2.example.com.log
 
-#. Run some traffic to `https://www2.example.com <http://www.example.com>`__ 
+#. Run some traffic to `https://www2.example.com <http://www2.example.com>`__ 
    From a web browser. You can also open another Terminal in VSCode by selecting
    the **split terminal** icon on the right and run a **curl** command:
 
    .. code:: bash
 
-      curl -k https://www2.example.com
+      curl -sk https://www2.example.com
 
    .. note::  We are using a self-signed certificate and you may safely ignore
       the security error for this website
