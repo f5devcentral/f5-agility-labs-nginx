@@ -7,4 +7,6 @@ In this module, we have completed the following items:
 - Deployed NGINX App Protect using a CI/CD pipeline
 - Reviewed the NGINX Plus and Grafana dashboards
 
-Please continue to the additional modules in this lab.
+Please close your SSH, Terminal and VS Code application windows in the RDP session.
+
+This concludes this portion of the lab.

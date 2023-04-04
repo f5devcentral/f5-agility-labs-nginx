@@ -19,103 +19,262 @@ App Protect allows you to reference the file on an external http server or local
 Lab Tasks
 ---------
 
-1. Log into the jump host via RDP and open Firefox. Click the **NMS** bookmark and log in using **lab** as the username and **Agility2023!** as the password. Click on the **Instance Manager** tile.
+1. Click the **Applications** drop-down in the top menu bar and select **Postman**.
 
-.. image:: images/nms_dashboard.png
+.. image:: images/postman_nav.png
 
-2. Navigate to **Instance Manager** > **App Protect**.
+.. caution:: It may take a moment for Postman to launch the first time.
+
+2. Click the **GET Transactions** item in the **Arcadia API** collection. Click **Send** and notice that the API returns data.
+
+.. image:: images/get_transaction_pretest.png 
+
+3. Click the **POST Buy Stocks** item, then click **Send**. Again, notice the API is functioning properly. 
+
+.. image:: images/post_buy_stocks.png
+
+4. Click the drop-down where **POST** is selected, and change to **OPTIONS**. Click **Send**. Notice that our API responded to this request.
+
+.. image:: images/options.png
+
+5. Return to **Firefox**. Click the **NMS** bookmark and log in using **lab** as the username and **Agility2023!** as the password. 
+
+.. image:: images/nms_navigation_login.png
+
+6. Click on the **Instance Manager** tile.
+
+.. image:: images/nms_launchpad.png
+
+7. Click **App Protect** in the left menu.
 
 .. image:: images/nms_app_protect_list.png
 
-3. Click the **Create** button.
+8. Select the **NginxApiSecurityPolicy** from the policy list.
 
-.. image:: images/create_button.png
+.. image:: images/nginx_policy_select.png
 
-4. Name the policy **NginxApiSecurityPolicy**. 
+9. Click on the **Policy Versions** tab.
 
-.. caution:: This policy will be referred to by name and is case-sensitive. Ensure the policy name is exactly as shown below.
+.. image:: images/policy_versions.png
 
-5. Paste the text below into the policy editor:
+10. Click on the version in the list. 
 
-.. code-block:: js
+.. image:: images/policy_version_select.png
 
-    {
-        "policy": {
-            "name": "arcadia_finance_api_security_policy",
-            "template": {
-                "name": "POLICY_TEMPLATE_NGINX_BASE"
-            },
-            "applicationLanguage": "utf-8",
-            "enforcementMode": "blocking",
-            "open-api-files": [
-                {
-                    "link": "https://gitlab.com/cwise24/arcadiaspec/-/raw/main/arcadiaFinance2.02.yaml"
-                }
-            ]
-        }
-    }
+11. Review the configuration. Notice that this policy:
 
-Your screen should look similar to the screenshot below:
+- Blocks the DELETE, OPTIONS and PUT HTTP operations, since our API does not utilize them
+- includes a custom response via JSON to provide the support ID for easier troubleshooting
+- Specifies actions to take on API-related violations
+- Places a cap on XML payload lengths
 
-.. image:: images/json_policy_creation.png
-
-1. Click **Save**.
-
-**Result**
-
-.. image:: images/saved_policy.png
-
-7. Navigate to **Instances**. Click on the **nginx-plus-2** instance.
-
-8. Click on **Edit Config**. 
-
-.. image:: images/edit_config_button.png
-
-9. Modify the NGINX configuration file **arcadia-finance.conf** to add the WAF policy to the API endpoints. Add this to the server block below the default location:
+.. note:: The full schema for the WAF policy can be found at [docs.nginx.com](https://docs.nginx.com/nginx-app-protect-waf/declarative-policy/policy/).
 
 .. code-block:: text
 
-    location /trading/rest {
-        proxy_pass http://arcadia-finance$request_uri;
-        status_zone arcadia-api;
-        app_protect_enable on;
-        app_protect_policy_file "/etc/nms/NginxApiSecurityPolicy.tgz";
-    }
+  {
+      "policy": {
+          "name": "app_protect_api_security_policy",
+          "description": "NGINX App Protect API Security Policy. The policy is intended to be used with an OpenAPI file",
+          "template": {
+              "name": "POLICY_TEMPLATE_NGINX_BASE"
+          },
+          "methods": [
+              {
+                  "name": "DELETE",
+                  "$action": "delete"
+              },
+              {
+                  "name": "OPTIONS",
+                  "$action": "delete"
+              },
+              {
+                  "name": "PUT",
+                  "$action": "delete"
+              }
+          ],
+          "response-pages": [
+              {
+                  "responseContent": "{\"status\":\"error\",\"reason\":\"policy_violation\",\"support_id\":\"<%TS.request.ID()%>\"}",
+                  "responseHeader": "content-type: application/json",
+                  "responseActionType": "custom",
+                  "responsePageType": "default"
+              }
+          ],
+          "blocking-settings": {
+              "violations": [
+                  {
+                      "block": true,
+                      "description": "Mandatory request body is missing",
+                      "name": "VIOL_MANDATORY_REQUEST_BODY"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal parameter location",
+                      "name": "VIOL_PARAMETER_LOCATION"
+                  },
+                  {
+                      "block": true,
+                      "description": "Mandatory parameter is missing",
+                      "name": "VIOL_MANDATORY_PARAMETER"
+                  },
+                  {
+                      "block": true,
+                      "description": "JSON data does not comply with JSON schema",
+                      "name": "VIOL_JSON_SCHEMA"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal parameter array value",
+                      "name": "VIOL_PARAMETER_ARRAY_VALUE"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal Base64 value",
+                      "name": "VIOL_PARAMETER_VALUE_BASE64"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal request content type",
+                      "name": "VIOL_URL_CONTENT_TYPE"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal static parameter value",
+                      "name": "VIOL_PARAMETER_STATIC_VALUE"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal parameter value length",
+                      "name": "VIOL_PARAMETER_VALUE_LENGTH"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal parameter data type",
+                      "name": "VIOL_PARAMETER_DATA_TYPE"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal parameter numeric value",
+                      "name": "VIOL_PARAMETER_NUMERIC_VALUE"
+                  },
+                  {
+                      "block": true,
+                      "description": "Parameter value does not comply with regular expression",
+                      "name": "VIOL_PARAMETER_VALUE_REGEXP"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal URL",
+                      "name": "VIOL_URL"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal parameter",
+                      "name": "VIOL_PARAMETER"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal empty parameter value",
+                      "name": "VIOL_PARAMETER_EMPTY_VALUE"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal repeated parameter name",
+                      "name": "VIOL_PARAMETER_REPEATED"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal method",
+                      "name": "VIOL_METHOD"
+                  },
+                  {
+                      "block": true,
+                      "description": "Illegal gRPC method",
+                      "name": "VIOL_GRPC_METHOD"
+                  }
+              ]
+          },
+          "xml-profiles": [
+              {
+                  "name": "Default",
+                  "defenseAttributes": {
+                      "maximumNameLength": 1024
+                  }
+              }
+          ]
+      }
+  }
 
-    location /api/rest {
-        proxy_pass http://arcadia-finance$request_uri;
-        status_zone arcadia-api;
-        app_protect_enable on;
-        app_protect_policy_file "/etc/nms/NginxApiSecurityPolicy.tgz";
-    }
+12. Let's apply this policy to the Arcadia Finance app, which includes an API. Click on **Instances** in the menu bar.
+
+.. image:: images/instances_navigation.png
+
+13. Select **nginx-plus-1** from the instance list.
+
+.. image:: images/nginx_instance_selection.png
+
+14. Click on **Edit Config** to enter the configuration mode.
+
+.. image:: images/edit_config_nav.png
+
+15. Click the **arcadia-finance.conf** file in the left navigation pane.
+
+.. image:: images/select_app.png
+
+16. Modify the NGINX configuration file **arcadia-finance.conf** to add the WAF policy to the API endpoints. Add this to the server block below the default location:
+
+.. code-block:: text
+
+      location /trading/rest {
+          proxy_pass http://arcadia-finance$request_uri;
+          proxy_set_header Host  k8s.arcadia-finance.io;
+          status_zone arcadia-api;
+          app_protect_enable on;
+          app_protect_policy_file "/etc/nms/NginxApiSecurityPolicy.tgz";
+      }
+
+      location /api/rest {
+          proxy_pass http://arcadia-finance$request_uri;
+          proxy_set_header Host  k8s.arcadia-finance.io;
+          status_zone arcadia-api;
+          app_protect_enable on;
+          app_protect_policy_file "/etc/nms/NginxApiSecurityPolicy.tgz";
+      }
 
 Your screen should look like the screenshot below:
 
 .. image:: images/post_edit_config.png
 
-10. Click **Publish** to deploy the changes. Click **Publish** again when prompted.
+17. Click **Publish** to deploy the changes. Click **Publish** again when prompted. You'll see a 
+
+.. image:: images/published.png
 
 Test the App Protect Policy
 ---------------------------
 
-11. Connect to the Jump Host. Navigate to **Applications** > **Favorites** > **Terminal**. Maximize the window.
+18. Return to the  **Postman** app. Click the **GET Transactions** item in the **Arcadia API** collection.
 
-.. image:: images/terminal.png
+.. image:: images/get_transaction_nav.png
 
-12. Pull a list of trading transactions by issuing a curl command from the terminal window:
+19. Click **Send**.
 
-.. code-block:: bash
+.. image:: images/get_transaction_send.png
 
-  curl -sk http://k8s.arcadia-finance.io:30443/trading/transactions.php
+20. We can see from the response that the API is functioning properly. 
 
-**Result**
+.. image:: images/get_transaction_response.png
 
-.. image:: images/trading_transactions.png
+21. Now select the **POST Buy Stocks XSS Attack**, then select **Send**. The NAP WAF policy will block this attack, as the response shows. 
 
-13. Now, attempt an illegal GET operation against the buy_stocks API endpoint. Notice that the request is blocked.
+.. image:: images/post_buy_stocks_xss_attack.png
 
-.. code-block:: bash
+22. Run the **POST Buy Stocks** item again with the **OPTIONS** action selected. Notice that this request is now blocked as we do not permit OPTIONS operations.
 
-  curl -sk https://k8s.arcadia-finance.io:30443/trading/rest/buy_stocks.php
+.. image:: images/post_buy_stocks_options_blocked.png
 
-Notice that the request is blocked. This shows that the NGINX App Protect WAF policy is protecting the API.
+23. Now, select the **Struts2 Jakarta** item in the **Arcadia Attacks** collection, then press **Send**. This attack is blocked, but not by our WAF policy. Why? Because the URI is not a part of the locations we've added to the policy, so this portion of the app is protected by the original NAP WAF policy.
+
+.. image:: images/struts2_jakarta.png
+
+You've now completed the API WAF portion of the lab.

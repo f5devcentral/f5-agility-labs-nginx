@@ -34,7 +34,7 @@ Navigating to our **Gitlab** instance under the **ks3_infra** repository, you fi
   
 .. image:: images/k3s_infra_ls.png 
 
-6. The **Chart.yaml** contains information on what chart version to use and on which dependencies it relies.
+6. The **Chart.yaml** contains information on which chart version to use and upon which dependencies it relies.
 
 .. image:: images/nic_Chart.png 
 
@@ -52,7 +52,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/VSCode_openFolder.png
 
-10.  Click on the **Home** shortcut on the left. Then click the **Projects** folder, followed by the **arcadia** folder. Finally, click **Open** in the top-right corner of the navigation window.
+10.  Click on the **Home** shortcut on the left, then double-click the **Projects** folder. Single-click on the **arcadia** folder, then click **Open** in the top-right corner of the navigation window.
 
 .. image:: images/VSCode_selectArcadia.png
 
@@ -144,7 +144,11 @@ Finally, our WAF policy:
           usSocialSecurityNumbers: true
           enforcementMode: ignore-urls-in-list
 
-14.  Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
+14. Open a new command prompt window by navigating to **Terminal** > **New Terminal** in the menu bar.
+
+.. image:: images/new_terminal.png
+
+15. Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
 
 .. code-block:: bash 
 
@@ -154,7 +158,9 @@ Finally, our WAF policy:
 
 .. image:: images/terminal_commands.png
 
-15. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. 
+15. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. Open the file by selecting the filename in the left navigation pane.
+
+.. image:: images/select_arcadia-vs_file.png
 
 .. warning:: Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
 
@@ -163,9 +169,9 @@ Finally, our WAF policy:
   policies:
     - name: waf-policy
     
-.. image:: images/vs-policy.png 
+.. image:: images/vs-policy.png
 
-16.   Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands:
+16. Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands in the terminal window:
 
 .. code-block:: bash 
 
@@ -185,19 +191,25 @@ Finally, our WAF policy:
 
 .. image:: images/sync-arcadia.png 
 
-19.  Before we launch attacks at the Arcadia site, let's open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. Since we are not sending traffic to the app, the dashboard will be empty.
+19. Before we launch attacks at the Arcadia site, open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. 
+
+.. note:: Since we are not yet sending traffic to the app, the dashboard will be empty.
 
 .. image:: images/elk.png 
 
-20.  Now, launch attacks against the Arcadia site. From **Applications**, click the drop down and select **Terminal**. 
+20. Now, launch attacks against the Arcadia site. From the **Applications** drop-down, select **Terminal**. 
 
 .. image:: images/applications_terminal.png 
 
-21.   When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
+21. When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
 
 .. code-block:: bash
 
   source k8s-attacks
+
+This is a bash file that launches various attacks at the application using CURL and well-known exploits.
+
+.. note:: Wait for the script to complete before continuing with the lab.
 
 22. Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
 
@@ -210,3 +222,5 @@ Finally, our WAF policy:
 24. Scroll down to **support_id** to match up the Support ID returned by App Protect in your terminal.
 
 .. image:: images/kibana_supportID.png
+
+This concludes this portion of the lab. 

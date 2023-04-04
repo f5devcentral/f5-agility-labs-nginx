@@ -18,4 +18,4 @@ NGINX App Protect can protect APIs in several ways:
    :glob:
 
    lab*/lab*
-
+   recap

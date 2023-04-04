@@ -3,7 +3,7 @@ Review the NGINX Plus & Grafana Dashboard Statistics
 
 This section is optional and showcases the use of Nginx Dashboard (included with Nginx Plus). 
 
-1. Open **Firefox** and open a new tab. Click the **NGINX Dashboard** bookmark.
+1. Return to **Firefox** and open a new tab. Click the **NGINX Dashboard** bookmark.
 
 .. image:: images/nginx_dashboard_bookmark.png
 
@@ -33,14 +33,20 @@ This section is optional and showcases the use of Nginx Dashboard (included with
 
 .. image:: images/grafana_login.png
 
-6. Click on **NGINX Plus Ingress Controller** in the **Recently Viewed Dashboards** list.
+6. Click on the **Dashboards** icon and select **Dashboards** from the left menu. 
 
-.. image:: images/grafana_dashboard.png
+.. image:: images/menu_selection.png
 
-7. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see `this <https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics>`_ link.
+7. Select the **NGINX Plus Ingress Controller** dashboard from the list. 
+
+.. image:: images/grafana_nginx_dashboard.png
+
+8. This section shows Prometheus exporting Nginx Ingress Controller data to Grafana. For a full list of metrics exported please see `this <https://github.com/nginxinc/nginx-prometheus-exporter#exported-metrics>`_ link.
 
 .. image:: images/grafana.png 
 
-8. Expand the sections in the dashboard to see the related statistics.
+9. Expand the sections in the dashboard to see the related statistics.
 
 .. image:: images/grafana_full_dashboard.png
+
+This concludes the NGINX Ingress Controller deployment for NGINX App Protect.

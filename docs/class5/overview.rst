@@ -133,7 +133,7 @@ Remember these important tips:
 - Lab modules are independent; feel free to tackle the modules in any order.
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
-- To paste into the RDP session, press SHIFT+CTRL+V or right-click and select **Paste**.
+- To paste into an SSH session, press SHIFT+CTRL+V or right-click and select **Paste**. Ctrl + V will work inside browser windows.
 
 Tips for Installing NGINX Management Suite, NGINX App Protect and/or NGINX Plus in Your Own Environment
 -------------------------------------------------------------------------------------------------------
@@ -152,9 +152,8 @@ If you're installing NGINX Plus only, make sure that:
 Lab Maintainers
 ---------------
 
-   Chad Wise - Senior Solutions Engineer <c.wise@f5.com>
-
-   Greg Robinson - Senior Solutions Engineer <g.robinson@f5.com>
+- Chad Wise - Senior Solutions Engineer <c.wise@f5.com>
+- Greg Robinson - Senior Solutions Engineer <g.robinson@f5.com>
 
 Please email us with any issues or suggestions.
 
