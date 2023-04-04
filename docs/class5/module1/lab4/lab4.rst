@@ -53,6 +53,8 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/NMS-SM_support_id_entry.png
 
+.. note:: For the remainder of this lab, you will encounter support IDs when the NAP WAF policy blocks a request. Feel free to return to this tool to look at the details of the protection.
+
 12.  Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
 .. image:: images/NMS-SM_support_id_details.png

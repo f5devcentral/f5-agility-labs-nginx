@@ -10,4 +10,4 @@ In this module, we have completed the following items:
 
 This concludes the “test drive” portion of NGINX App Protect (NAP), NGINX Management Suite (NMS) and NGINX Security Monitoring (NMS-SM).
 
-Please continue to the additional modules in this lab.
+This concludes this portion of the lab.
