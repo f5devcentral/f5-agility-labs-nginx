@@ -45,7 +45,7 @@ View the NGINX Plus Instance in NMS
 
 11. Scroll down through the **Host Details**, **Disk Partitions**, **Network Interfaces** and **Processors** sections to see additional details. 
 
-12. Next, click on the **Metrics Summary** tab. In this tab, you can see visualized metrics around instance resource utiliation, including CPU, memory, overall connection counts, HTTP connection counts and more.  
+12. Next, click on the **Metrics Summary** tab. In this tab, you can see visualized metrics around instance resource utilization, including CPU, memory, overall connection counts, HTTP connection counts and more.  
 
 .. image:: images/nim_metrics_summary.png
 
@@ -53,4 +53,4 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_metrics.png
 
-Now that you are familar with viewing metrics of the NGINX Plus instance in NMS, we'll continue to the next lab.
+Now that you are familiar with viewing metrics of the NGINX Plus instance in NMS, we'll continue to the next lab.
