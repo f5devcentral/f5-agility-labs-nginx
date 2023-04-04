@@ -27,7 +27,7 @@ NGINX App Protect can be deployed in a variety of ways depending on the specific
 
 .. image:: images/deployment_environments.png
    :align: center
-   :alt: Image showing diagran of support deployment environments for NGINX App Protect
+   :alt: Image showing diagram of support deployment environments for NGINX App Protect
 
 Lab Overview
 ------------
