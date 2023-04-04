@@ -12,5 +12,6 @@ Click **Next** to begin the lab.
 
    overview
    module*/module*
+   recap
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
