@@ -19,6 +19,8 @@ Since our lab utilizes NMS, we're going to install the NGINX Agent and add the i
 
 3. Configure the NGINX Agent
 
+We need to configure NGINX Agent to perform additional tasks for NGINX App Protect. 
+
 Load the file into a file editor:
 
 .. code-block:: bash
@@ -48,6 +50,19 @@ Add the following configuration block to the end of the file:
     # Syslog server port the collector will be listening to
     syslog_port: 514
 
+Prior to saving, your screen should look the same as below:
+
+.. image:: images/nginx_agent_conf_edits.png
+
+Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
+
+In this example, we've configured NGINX Agent to:
+
+- check for configuration changes every 15 seconds
+- allow for precompiled policies, meaning that NMS will compile the policy before sending to the NGINX Plus/NAP instance
+- Enable large buffers for NGINX App Protect Monitoring
+- Enable NGINX Agent to run a syslog daemon that will forward logs to NMS Security Monitoring
+
 4. Start the NGINX Agent and set to start at boot:
 
 .. code-block:: bash
@@ -59,7 +74,7 @@ Create the Metrics service on NGINX
 
 The NGINX Agent is now configured and started. We'll need a few more configuration pieces to finish the installation.
 
-5. Open **Firefox** by selecting **Applications** > **Favorites** > **Firefox** from the top menu bar.
+5. Switch to **Firefox**, if already open, or open **Firefox** by selecting **Applications** > **Favorites** > **Firefox** from the top menu bar.
 
 .. image:: images/firefox_launch.png
 

@@ -120,12 +120,18 @@ Your configuration file should look similar to below:
 
 Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
 
-12.  Start the NGINX service and set it to start at boot:
+12.  Start the NGINX App Protect service and set it to start at boot:
 
 .. code-block:: bash
 
-  sudo systemctl enable --now nginx
+  sudo systemctl enable --now nginx-app-protect
 
 .. image:: images/systemctl_enable_nginx_now.png
+
+13. Restart the NGINX service:
+
+.. code-block:: bash
+
+  sudo nginx -s reload
 
 Providing that no errors have occurred during these steps, you now have NGINX App Protect installed. Continue to the next section of the lab.
