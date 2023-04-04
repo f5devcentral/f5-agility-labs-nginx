@@ -63,7 +63,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/NMS-SM_support_id_uri.png
 
-14.  If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Subviolations**, **CVEs**, and **Threat Campaigns**. 
+14.  If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Sub-violations**, **CVEs**, and **Threat Campaigns**. 
 
 .. image:: images/NMS-SM_support_id_attack_details_collapsed.png
 
