@@ -19,7 +19,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 4. Load the **Arcadia Finance (N+)** bookmark again. Right-click in the middle of the white space in the browser where the banner image should have loaded. Click **Open Image in New Tab** on the context menu that appears.
 
-.. image:: images/right_click_open_in_new_tab.gif
+.. image:: images/load_image_new_tab.png
 
 5. Click on the **Custom Reject Page** that loads in the new tab.
 

@@ -7,14 +7,7 @@ The Arcadia micro-services offer several REST APIs in order to:
 - Sell stocks
 - Transfer money to friends
 
-NGINX App Protect can secure APIs by importing an OpenAPI spec file. This type of file describes how an API works, lists the endpoints, accepted oeprations, etc. Think of it as a blueprint for an API. Because we have an **OpenAPI specification file**, we can create a very specific, secure App Protect policy. 
-
-App Protect allows you to reference the file on an external http server or locally on the file system of the NGINX instance. Since the **Arcadia Application OAS3** is available publicly at https://app.swaggerhub.com/apis/nginx5/api-arcadia_finance/2.0.2-oas3, we'll simply configure NGINX App Protect to pull the definition from the public source.
-
-.. image:: images/swaggerhub.png
-    :align: center
-
-.. note :: Notice that the URI, method, and response type are all defined for each API. This also serves as a tool for developers to understand what the response should look like for a successful call.
+In this lab, we'll deploy an NGINX App Protect WAF policy to protect the API.
 
 Lab Tasks
 ---------
