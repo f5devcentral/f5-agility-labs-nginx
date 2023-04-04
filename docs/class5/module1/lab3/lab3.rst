@@ -72,7 +72,7 @@ There are two components to NGINX App Protect within NMS:
 
 .. image:: images/NMS-SM_dashboard_advanced.png
 
-17.  Scroll down and review the additional metrics avilable. Click on the single entry under the **Top Attacked Instances** list to see additional details.
+17.  Scroll down and review the additional metrics available. Click on the single entry under the **Top Attacked Instances** list to see additional details.
 
 .. image:: images/NMS-SM_additional_metrics.png
 
