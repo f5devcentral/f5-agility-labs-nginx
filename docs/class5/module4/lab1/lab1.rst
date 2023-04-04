@@ -27,47 +27,11 @@ Lab Tasks
 
 .. image:: images/nms_app_protect_list.png
 
-3. Click the **Create** button.
+3. 
 
-.. image:: images/create_button.png
+1. Navigate to **Instances**. Click on the **nginx-plus-2** instance.
 
-4. Name the policy **NginxApiSecurityPolicy**. 
-
-.. caution:: This policy will be referred to by name and is case-sensitive. Ensure the policy name is exactly as shown below.
-
-5. Paste the text below into the policy editor:
-
-.. code-block:: js
-
-    {
-        "policy": {
-            "name": "arcadia_finance_api_security_policy",
-            "template": {
-                "name": "POLICY_TEMPLATE_NGINX_BASE"
-            },
-            "applicationLanguage": "utf-8",
-            "enforcementMode": "blocking",
-            "open-api-files": [
-                {
-                    "link": "https://gitlab.com/cwise24/arcadiaspec/-/raw/main/arcadiaFinance2.02.yaml"
-                }
-            ]
-        }
-    }
-
-Your screen should look similar to the screenshot below:
-
-.. image:: images/json_policy_creation.png
-
-1. Click **Save**.
-
-**Result**
-
-.. image:: images/saved_policy.png
-
-7. Navigate to **Instances**. Click on the **nginx-plus-2** instance.
-
-8. Click on **Edit Config**. 
+2. Click on **Edit Config**. 
 
 .. image:: images/edit_config_button.png
 

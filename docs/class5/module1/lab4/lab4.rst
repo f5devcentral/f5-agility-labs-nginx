@@ -33,7 +33,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/select_copy_support_id.gif
 
-8. Return to NGINX Security Monitoring by clicking the **NMS** bookmark, logging in with username **lab** and password **Agility2023!** and selecting **Security Monitoring**.
+8. Return to NMS and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
 
 .. image:: images/NMS-SM-tile.png
 
@@ -83,7 +83,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nim_app_protect_agilitypolicy.png
 
-18. Now, click on the **Policy Versions** sub-tab inside of the **Policy Detail** page.
+18. Now, click on the **Policy Versions** tab inside of the **Policy Detail** page.
 
 .. image:: images/nim_app_protect_agilitypolicy_versions.png
 
@@ -119,59 +119,55 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nim_app_protect_new_version_created.png
 
-24. Click on **App Protect** on the menu bar on the left to return to the policy list. 
+24. Click on the policy name at the top of the screen.
 
 .. image:: images/nap_app_protect_link.png
 
-25.   Select the **AgilityPolicy** from the list. 
-
-.. image:: images/nim_agilitypolicy_select.png
- 
-26. Select the **Policy Versions** tab.
+25. Select the **Policy Versions** tab.
 
 .. image:: images/nim_agilitypolicy_versions.png
 
-27. Notice the new policy version is now listed.
+26. Notice the new policy version is now listed.
 
 .. image:: images/nim_app_protect_new_version_listed.png
 
-28. Return to the the **Instances and Instance Groups** tab. 
+27. Return to the the **Instances and Instance Groups** tab. 
 
 .. image:: images/nim_app_protect_agilitypolicy_instance_tab.png
 
-29. Now click on the **Assign Policy and Signature Versions** button above the instance list. 
+28. Now click on the **Assign Policy and Signature Versions** button above the instance list. 
 
 .. image:: images/assign_policy_version.png
 
-30. Notice that the version listed in the **Policy Version** column is in a drop-down box. You may need to hover your mouse arrow over this section to see the drop-down appear.
+29. Notice that the version listed in the **Policy Version** column is in a drop-down box. You may need to hover your mouse arrow over this section to see the drop-down appear.
 
 .. image:: images/policy_version_dropdown.png
 
-31. Change this to your newer version (compare timestamps) and click **Publish**. 
+30. Change this to your newer version (compare timestamps) and click **Publish**. 
 
 .. image:: images/publish.png
 
-32.  A pop-up will confirm that you have changed the version.
+31.  A pop-up will confirm that you have changed the version.
 
 .. image:: images/publish_confirmation.png
 
-33. Click X to close the confirmation window. 
+32. Click X to close the confirmation window. 
 
 .. image:: images/publish_confirmation_close.png
 
-34. Click **Cancel** to close the assignment window. 
+33. Click **Cancel** to close the assignment window. 
 
 .. image:: images/close_assignment_window.png
 
-35. On the top of the left menu bar, click **Instances**.
+34. On the top of the left menu bar, click **Instances**.
 
 .. image:: images/nim_instances_link.png
 
-36.  Select the active NGINX Plus instance from the list.
+35.  Select the **nginx-plus-1** instance from the list.
 
 .. image:: images/active_instance_select.png
 
-37.  Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Finalized**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
+36.  Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Finalized**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
 
 **Deployment not finished**
 
@@ -181,9 +177,9 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/deployment_status.png
 
-30.  Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
+37.  Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
 
-.. caution:: You may need to hold **Shift** and click the **Reload** icon in the browser to force the browser to fully reload the page.
+.. caution:: If images do not load, press **CTRL + Shift + R** to force the browser to fully reload the page.
 
 .. image:: images/successful_full_load.png
 

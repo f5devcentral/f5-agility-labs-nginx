@@ -37,6 +37,16 @@ Add the following configuration block to the end of the file:
     report_interval: 15s
     # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
+  # NGINX App Protect Monitoring config
+  nap_monitoring:
+    # Buffer size for collector. Will contain log lines and parsed log lines
+    collector_buffer_size: 50000
+    # Buffer size for processor. Will contain log lines and parsed log lines
+    processor_buffer_size: 50000
+    # Syslog server IP address the collector will be listening to
+    syslog_ip: "127.0.0.1"
+    # Syslog server port the collector will be listening to
+    syslog_port: 514
 
 4. Start the NGINX Agent and set to start at boot:
 

@@ -7,7 +7,7 @@ In this section of the lab, we'll review the NGINX Plus configuration for the in
 
 .. image:: images/nim_instance_list.png
 
-2. Click the NGINX instance named nginx-plus-1 from the list.
+2. Click the  **nginx-plus-1** NGINX instance from the list.
 
 .. image:: images/nms_instance_manager_active_instance.png
 

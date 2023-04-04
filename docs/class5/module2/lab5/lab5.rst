@@ -11,7 +11,7 @@ To avoid the issue, SSH into nginx-plus-2 and issue the following command:
 
 .. code-block:: bash
 
-  sudo sed -i 's/precompiled_publication: true/precompiled_publication: false/g' /etc/nginx-agent/nginx-agent.conf; sudo systemctl restart nginx-agent; sudo sed -i 's/precompiled_publication: false/precompiled_publication: true/g' /etc/nginx-agent/nginx-agent.conf; sudo systemctl restart nginx-agent
+  sudo sed -i 's/precompiled_publication: true/precompiled_publication: false/g' /etc/nginx-agent/nginx-agent.conf; sudo systemctl restart nginx-agent; sleep 7; sudo sed -i 's/precompiled_publication: false/precompiled_publication: true/g' /etc/nginx-agent/nginx-agent.conf; sudo systemctl restart nginx-agent
 
 2. Open **Firefox** and click on the  **NMS** bookmark.
 
