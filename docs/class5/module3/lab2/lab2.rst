@@ -79,9 +79,8 @@ For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* 
 First, the policy we attach to the VirtualServer manifest:
 
 .. code-block:: yaml
-
-  :caption: waf-policy.yml 
-  :emphasize-lines: 13
+   :caption: waf-policy.yml 
+   :emphasize-lines: 13
 
     ---
     apiVersion: k8s.nginx.org/v1
