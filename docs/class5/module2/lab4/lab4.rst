@@ -17,7 +17,7 @@ To avoid the issue, SSH into nginx-plus-2 and issue the following command:
 
 .. image:: images/nms_bookmark.png
 
-3. Log in using the username **lab** and password **Agility2023!**. Click on the **Instance Manager** tile.
+3. Log in using the username **lab** / password **Agility2023!** credentials. Click on the **Instance Manager** tile.
 
 .. image:: images/nms_dashboard.png
 

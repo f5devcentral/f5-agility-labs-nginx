@@ -7,11 +7,11 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress controller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
 Navigating to our **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
 
-1. On the jump host, use the **Applications** menu bar to launch **FireFox Web Browser**. From the bookmark toolbar open **Gitlab**. Log into the site using the username **lab** and the password **Agility2023!**.
+1. On the jump host, use the **Applications** menu bar to launch **FireFox Web Browser**. From the bookmark toolbar open **Gitlab**. Log into the site using the username **lab** and  password **Agility2023!** credentials.
 
 .. image:: images/gitlab_login.png 
 
-2. Log into the tool using the username **lab** and the password **Agility2023!**.
+2. Log into the tool using the username **lab** and password **Agility2023!** credentials.
 
 .. image:: images/gitlab_login_filled.png
 

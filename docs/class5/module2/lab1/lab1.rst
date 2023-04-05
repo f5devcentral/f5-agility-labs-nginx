@@ -126,8 +126,6 @@ Press **CTRL + X** to save the file, followed by **Y** when asked to save the bu
 
   sudo systemctl enable --now nginx-app-protect
 
-.. image:: images/systemctl_enable_nginx_now.png
-
 13. Restart the NGINX service:
 
 .. code-block:: bash

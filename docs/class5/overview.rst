@@ -13,9 +13,9 @@ Deployment Modes
 NGINX App Protect can be deployed in a variety of ways depending on the specific use case and deployment requirements. Here are some of the most common deployment options:
 
 - As a module within the NGINX Plus application delivery platform: NGINX App Protect can be deployed as a module within the NGINX Plus platform. This provides a unified solution for both load balancing and application security.
-- As a standalone software: NGINX App Protect can also be deployed as a standalone software on a server or in a virtual machine. This option is suitable for organizations that do not require load balancing capabilities or have existing load balancing solutions.
-- In a containerized environment: NGINX App Protect can be deployed in a containerized environment such as Docker or Kubernetes. This provides a scalable and flexible solution for cloud-native applications.
-- As a managed service: NGINX App Protect is also available as a managed service through various cloud providers such as AWS, Azure, and Google Cloud Platform. This option is suitable for organizations that want a fully managed and automated WAF solution.
+- Alongside NGINX Plus Ingress Controller: NGINX App Protect can be deployed in a containerized environment such as Docker or Kubernetes on top of NGINX Plus Ingress Controller. This provides a scalable and flexible solution for cloud-native applications.
+- Alongside NGINX Plus API Connectivity Manager: NGINX App Protect combined with NGINX Plus API Connectivity Manager to create a secure API gateway that layers protection from known attack signatures, threat campaigns to fully protect your APIs
+- As a service for microservices based deployments: Run NGNIX App Protect inside your microservices-based environment to provide WAF protection to your web applications and APIs
 
 **Deployment Modes**
 
