@@ -3,7 +3,9 @@ Enable NGINX App Protect on the Arcadia Finance App
 
 We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finance app.
 
-.. attention:: The release we use in our lab, 2.8, has a known issue. This issue is fixed in releases 2.9.0 and higher [#]_. Due to time restrictions, we were unable to upgrade this lab prior to the event. 
+.. attention:: The release we use in our lab, 2.8.0, has a known issue. This issue is fixed in releases 2.9.0 and higher. Due to time restrictions, we were unable to upgrade this lab prior to the event. 
+  
+  For details on the known-issue, refer to *Precompiled Publication setting is reverted to false after error publishing NGINX App Protect policy* on the `NGINX Management Suite Known Issues <https://docs.nginx.com/nginx-management-suite/nim/releases/known-issues/>`_ page.
 
 1. First, we need to address the known-issue in our lab's release of NGINX Management Suite. From the **Applications** menu, click **SSH Shortcuts** and log into **nginx-plus-2**. Issue the following command: 
 
@@ -15,7 +17,7 @@ We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finan
 
 .. image:: images/nms_bookmark.png
 
-3. Log in using the username **lab** / password **Agility2023!** credentials. Click on the **Instance Manager** tile.
+3. Log in using the **lab** / **Agility2023!** credentials. Click on the **Instance Manager** tile.
 
 .. image:: images/nms_dashboard.png
 
@@ -67,5 +69,3 @@ Your screen should look similar to below:
 13.  On this screen, you can see that our policy is applied.
 
 .. image:: images/agility_policy_applied.png
-
-.. [#] For details on the known-issue, refer to *Precompiled Publication setting is reverted to false after error publishing NGINX App Protect policy* on the `NGINX Management Suite Known Issues <https://docs.nginx.com/nginx-management-suite/nim/releases/known-issues/>`_ page. Note that the issue is resolved in releases 2.9.0 and higher.

@@ -135,18 +135,19 @@ Remember these important tips:
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
 - To paste into an SSH session, press SHIFT+CTRL+V or right-click and select **Paste**. Ctrl + V will work inside browser windows.
+- The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
 
 Tips for Installing NGINX Management Suite, NGINX App Protect and/or NGINX Plus in Your Own Environment
 -------------------------------------------------------------------------------------------------------
 
 If you're installing NGINX Management Suite, make sure that:
- - you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
+- you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
 
 If you're installing NGINX App Protect, make sure that:
- - you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
+- you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
 
-If you're installing NGINX Plus only, make sure that:
- - you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
+If you're installing NGINX Plus, make sure that:
+- you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
 
 .. caution:: NGINX App Protect supports fewer Linux distributions than NGINX Plus. You may need to migrate your NGINX configuration to a supported distro in order to install NAP.
 

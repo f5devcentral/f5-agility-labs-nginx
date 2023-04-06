@@ -11,7 +11,7 @@ Navigating to our **Gitlab** instance under the **ks3_infra** repository, you fi
 
 .. image:: images/gitlab_login.png 
 
-2. Log into the tool using the username **lab** and password **Agility2023!** credentials.
+2. Log in using the **lab** / **Agility2023!** credentials.
 
 .. image:: images/gitlab_login_filled.png
 
