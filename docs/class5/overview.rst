@@ -17,13 +17,14 @@ NGINX App Protect can be deployed in a variety of ways depending on the specific
 - Alongside NGINX Plus API Connectivity Manager: NGINX App Protect combined with NGINX Plus API Connectivity Manager to create a secure API gateway that layers protection from known attack signatures, threat campaigns to fully protect your APIs
 - As a service for microservices based deployments: Run NGNIX App Protect inside your microservices-based environment to provide WAF protection to your web applications and APIs
 
-**Deployment Modes**
-
 .. image:: images/deployment_modes.png
    :align: center
    :alt: Image showing deployment modes for NGINX App Protect
 
-**Deployment Environments**
+Deployment environments
+-----------------------
+
+NGINX App Protect can be deployed in public and private clouds, on virtual machines, as a container on a microservices platforms including NGINX Ingress Controller; anywhere a `supported Linux distribution <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/#prerequisites>`_ can run. 
 
 .. image:: images/deployment_environments.png
    :align: center
