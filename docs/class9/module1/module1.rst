@@ -322,16 +322,42 @@ You should now see the webservice!!!!!! You've been logged in and the browser ha
 Manage NGINX Plus with Instance Manager
 =======================================
 
-The OIDC autentication is working correctly. Now we will manage our NGINX Plus dpeloyment with Instance Manager
+The OIDC authentication is working correctly. Now we will manage our NGINX Plus deployment with Instance Manager
 
-1. Open firefox and open a new tab and put https://10.1.1.6 into the browser url field and launch the page.   
+1. Open a new tab in Firefox and put https://10.1.1.6 into the browser url field and launch the page.   
 
-
-.. image:: ../images/instance_manager_login.png
+.. image:: ../images/nms_login.png
 
 2. Sign into Instance Manager as admin. The username/password are saved in the browser so the fields should autopopulate.
 
-.. image:: ../images/instance_manager_admin_login.png
+.. image:: ../images/nms_admin_login.png
+
+3. Once you are signed in, click on the instance manager module.
+
+.. image:: ../images/nms_modules.png
+
+4. Once directed to main console page of NGINX Instance Manager, you will see the instructions on how to add NGINX instances to Instance Manager.
+
+.. image:: ../images/instance_manager_main.png
+
+5. Copy and run the below command on the nginx server to install the agent
+
+.. code:: shell
+
+	curl -k https://10.1.1.6/install/nginx-agent | sudo sh
+
+6. Now start the nginx agent
+
+.. code:: shell
+
+	sudo systemctl start nginx-agent
+
+7. Now let's revisit the instance manager console and refresh the page. We should see the instance under the 'Instances' tab. 
+
+.. image:: ../images/instance_manager_instances.png
+
+
+
 
 
 
