@@ -405,7 +405,7 @@ We will include both lines in the Instance Manager config manager console as suc
 15. Once the config publication is successful, 
 
 
-.. image:: ../images/instance_manager_rpm.png;
+.. image:: ../images/instance_manager_rpm.png
 
 16. Once the config is successfully published, switch to the firefox browser and refresh the nginx application a few times. You should get 503 response pages triggered when you surpass the rate limit of 10 requests per minute.  
 
