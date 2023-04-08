@@ -397,12 +397,9 @@ And then we instantiate the rate limit in the location block where nginx will se
 We will include both lines in the Instance Manager config manager console as such and publish the configuration
 
 
-14. Once the config publication is successful, 
-
-
 .. image:: ../images/instance_manager_rpm.png
 
-15. Once the config is successfully published, switch to the firefox browser and refresh the nginx application a few times. You should get 503 response pages triggered when you surpass the rate limit of 10 requests per minute.  
+14. Once the config is successfully published, switch to the firefox browser and refresh the nginx application a few times. You should get 503 response pages triggered when you surpass the rate limit of 10 requests per minute.  
 
 .. image:: ../images/browser_refresh_503.png
 
