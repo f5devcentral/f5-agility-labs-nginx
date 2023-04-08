@@ -362,32 +362,27 @@ The OIDC authentication is working correctly. Now we will manage our NGINX Plus 
 .. image:: ../images/instance_manager_details.png  
 
 
-9. Now we can click on the Edit Config button to view and apply config changes to our NGINX Plus authenticator.
-
-.. image:: ../images/instance_manager_editconfig.png 
-
-10. We will update the frontend.conf config file to leverage JWT claims for Logging and Rate Limiting. First we will extend the logging format with two additional fields, $jwt_header_alg and $jwt_claim_aud. Then we will publish the config to the nginx instance.
+9. Now we can click on the Edit Config button to view and apply config changes to our NGINX Plus authenticator. We will update the frontend.conf config file to leverage JWT claims for Logging and Rate Limiting. First we will extend the logging format with two additional fields, $jwt_header_alg and $jwt_claim_aud. Then we will publish the config to the nginx instance.
 
 .. image:: ../images/instance_manager_logs_publish.png
 
-11. You should receive a green notification banner confirming the config publication was successful 
+10. You should receive a green notification banner confirming the config publication was successful 
 
 .. image:: ../images/instance_manager_notify_logs.png 
 
-12. Now we can switch tabs and log back into our nginx backend application and hit the refresh button a few times
+11. Now we can switch tabs and log back into our nginx backend application and hit the refresh button a few times
 
 .. image:: ../images/browser_refresh.png
 
-13. Now we if we check to see nginx log files, we will see new log entries including the two aditional fields added in the configuration. You should see RS256 and agility2023 as the signature algorithm and audience claim respectively.  
+12. Now we if we check to see nginx log files, we will see new log entries including the two aditional fields added in the configuration. You should see RS256 and agility2023 as the signature algorithm and audience claim respectively.  
 
 .. code:: shell
 
 	tail -n 30 /var/log/nginx/access.log
 
+.. image:: ../images/nginx_access_logs.png
 
-.. image ../images/nginx_access_logs.png
-
-14. Next we will update the frontend.conf file to add rate limiting based on the audience JWT claim presented by the user. First we define the rate limit in the http context with the following line
+13. Next we will update the frontend.conf file to add rate limiting based on the audience JWT claim presented by the user. First we define the rate limit in the http context with the following line
 
 .. code:: shell
 
@@ -402,12 +397,12 @@ And then we instantiate the rate limit in the location block where nginx will se
 We will include both lines in the Instance Manager config manager console as such and publish the configuration
 
 
-15. Once the config publication is successful, 
+14. Once the config publication is successful, 
 
 
 .. image:: ../images/instance_manager_rpm.png
 
-16. Once the config is successfully published, switch to the firefox browser and refresh the nginx application a few times. You should get 503 response pages triggered when you surpass the rate limit of 10 requests per minute.  
+15. Once the config is successfully published, switch to the firefox browser and refresh the nginx application a few times. You should get 503 response pages triggered when you surpass the rate limit of 10 requests per minute.  
 
 .. image:: ../images/browser_refresh_503.png
 
