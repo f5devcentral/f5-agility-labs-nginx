@@ -104,6 +104,11 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 12. Click on **Add File** button in the navigation pane.
 
+.. |expand_button| image:: images/expand_button.png
+   :scale: 25%
+
+.. note:: If you do not see the **Add File** button on the toolbar, click the |expand_button| **expand** button.
+
 .. image:: images/add_file_button.png
 
 13.  Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
