@@ -9,5 +9,5 @@ In this class, we will advanced tools and features offered by the latest NAP rel
    :glob:
 
    lab*/lab*
-   recap
+
 

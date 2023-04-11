@@ -11,7 +11,7 @@ For more information about Docker, see `What is Docker? <https://www.docker.com/
 or bookmark the full `Docker documentation <https://docs.docker.com/>`__ for reference
 
 CI/CD flowchart
---------------
+---------------
 
 **The diagram below depicts the workflow from code to deployment.** Our
 exercise ends with pushing the docker image to the container registry

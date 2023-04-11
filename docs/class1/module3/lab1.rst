@@ -269,7 +269,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
     .. note:: You should see output similar to the following
     
-      .. code:: json
+    .. code:: json
 
         {
           "postgresql_backends": {
@@ -310,7 +310,7 @@ In this section, we will use **curl** to interact with the NGINX API.
                 "active": 0,
                 "connections": 9250,
 
-                # Trimmed..
+               } 
 
 #. Using **curl** and **jq**, make a request to the API endpoint,
    **/api/api-version/ssl/** to retrieve SSL/TLS statistics
