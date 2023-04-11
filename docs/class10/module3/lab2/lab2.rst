@@ -8,7 +8,7 @@ Steps
 
 #. RDP to Jumphost as login ``user`` and password ``user``
 #. Open ``Postman``
-#. Open the collection ``Sentence API`` and run the call ``GET Adjectives`` by click ``Send``
+#. Open the collection ``Sentence API`` and run the call ``GET Adjectives`` by clicking ``Send``
 
    * Look at the request : http://api.sentence.com/v1/api/adjectives
    * Endpoint FQDN is the Nginx API Proxy (api.sentence.com) configured by the ``Infra team``
@@ -35,7 +35,7 @@ Steps
             }
        ]
 
-#. Now, send the request for ``GET Colors``. As a reminder, this API Endpoint is not yet published by API Team, and not part of the OpenAPI File.
+#. Now, send the request for ``GET Colors``. As a reminder, this API Endpoint is not yet published by API Team and is not part of the OpenAPI File.
 
    * You should receive a ``404`` from the API Gateway
 
@@ -48,16 +48,16 @@ Steps
 
 
 
-What did happen and what did we do ?
+What did happen, and what did we do?
 ====================================
 
-#. The backend server is a modern-app listening on http://10.1.20.7:30511
+#. The backend server is a modern app listening on http://10.1.20.7:30511
 #. The API Server exposes several APIs on 3 PATHS (version 1)
 
    * /adjectives
    * /animals
    * /locations
 
-#. The API gateway will expose the different versions of this API, that's why the API Gateway takes care of the ``version`` and the ``base path``.
-#. The API gateway ``strips`` the ``version`` and the ``base path`` as the back end server does not need/care of them. They are used to ``route`` request to the right API.
-#. And as ``/colors`` is not part of the OpenAPI spec file, this request is rejected by the API Gateway.
+#. The API gateway will expose the different versions of this API; that’s why the API Gateway takes care of the ``version`` and the ``base path``.
+#. The API gateway ``strips`` the ``version`` and the ``base path`` as the back-end server does not need/care for them. They are used to ``route`` requests to the right API.
+#. And as ``/colors`` is not part of the OpenAPI spec file, the API Gateway rejects this request.
