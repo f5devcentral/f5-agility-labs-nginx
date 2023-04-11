@@ -94,11 +94,11 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/nms_refresh_result.png
 
-10.  Click the **nginx-plus-2.agility.lab** instance in the list. 
+10. Click the **nginx-plus-2.agility.lab** instance in the list. 
 
 .. image:: images/nginx_plus_2_detail.png
 
-11.  Click the **Edit Config** button.
+11. Click the **Edit Config** button.
 
 .. image:: images/edit_button.png
 
@@ -111,11 +111,11 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/add_file_button.png
 
-13.  Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
+13. Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
 
 .. image:: images/filename_prompt.png
 
-14.   Paste the following configuration into the editor:
+14. Paste the following configuration into the editor:
 
 .. code-block:: bash
 
@@ -133,7 +133,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/file_contents.png
 
-15.  Click the **Publish** button.
+15. Click the **Publish** button.
 
 .. image:: images/publish_button.png
 
@@ -159,7 +159,7 @@ To start the NGINX Agent on systemd systems, run the following command:
 
    sudo systemctl restart nginx-agent
 
-20.  Verifying NGINX Agent is Running and Registered
+20. Verifying NGINX Agent is Running and Registered
 
 Run the following command on your data plane to verify that the NGINX Agent process is running:
 

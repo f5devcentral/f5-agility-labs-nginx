@@ -88,7 +88,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. image:: images/apt_conf_download_result.png
   
-10.  Update the repository and install the proper version of the NGINX App Protect WAF package (which includes NGINX Plus):
+10. Update the repository and install the proper version of the NGINX App Protect WAF package (which includes NGINX Plus):
 
 .. note:: For lab stability purposes, we will install a specific version of NGINX App Protect that is compatible with the lab instance of NGINX Management Suite.
 
@@ -100,7 +100,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. image:: images/nap_install_result.png
 
-11.  Load the NGINX App Protect WAF module on the main context in the nginx.conf file:
+11. Load the NGINX App Protect WAF module on the main context in the nginx.conf file:
 
 Open the file in an editor:
 
@@ -120,7 +120,7 @@ Your configuration file should look similar to below:
 
 Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
 
-12.  Start the NGINX App Protect service and set it to start at boot:
+12. Start the NGINX App Protect service and set it to start at boot:
 
 .. code-block:: bash
 

@@ -66,6 +66,6 @@ Your screen should look similar to below:
 
 .. image:: images/agilitypolicy_select.png
 
-13.  On this screen, you can see that our policy is applied.
+13. On this screen, you can see that our policy is applied.
 
 .. image:: images/agility_policy_applied.png

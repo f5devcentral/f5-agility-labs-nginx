@@ -1,7 +1,7 @@
 Review the Arcadia Finance Micro-Services-Based App Deployment
 ==============================================================
 
-In this section, we'll review the Arcadia Finance application and then Nginx Plus Ingress Controller with App Protect deployment in Kubernetes.
+In this section, we'll review the Arcadia Finance application and then NGINX Plus Ingress Controller with App Protect deployment in Kubernetes.
 
 To visualize the application deployment, we've setup an open source utility named Argo Continuous Deployment, or Argo CD for short.
 
@@ -66,9 +66,9 @@ This list shows all the configuration parts that make our ingress controller wor
 
 .. image:: images/ic-list.png
 
-10. Scroll to the bottom of the page to expand the items per page to 15 and take note of the **CRD's** installed with Nginx Plus Ingress. 
+10. Scroll to the bottom of the page to expand the items per page to 15 and take note of the *Custom Resource Definitions (CRDs)* installed with NGINX Plus Ingress. 
 
 .. image:: images/ic-expand-crd.png
 
-These Custom Resources Definitions power **VirtualServer**, **VirtualServerRoute**, **TransportServer**, and **Policies**.
+These CRDs power **VirtualServer**, **VirtualServerRoute**, **TransportServer**, and **Policies**.
 

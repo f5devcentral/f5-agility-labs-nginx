@@ -35,7 +35,7 @@ and click **Log me in**.
     
 .. image:: images/NMS-SM_support_id_link.png
 
-8.   You'll be prompted for your support ID.
+8. You'll be prompted for your support ID.
 
 .. image:: images/NMS-SM_support_id_prompt.png
 
@@ -43,7 +43,7 @@ and click **Log me in**.
 
 .. image:: images/NMS-SM_support_id_entry.png
 
-10.  Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
+10. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
 .. image:: images/NMS-SM_support_id_details.png
 

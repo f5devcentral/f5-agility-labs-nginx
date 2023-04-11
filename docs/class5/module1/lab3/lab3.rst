@@ -32,15 +32,15 @@ There are two components to NGINX App Protect within NMS:
 
 .. image:: images/nim_nap_agility_policy_versions.png
 
-8.  You will see the JSON configuration for this WAF policy. Scroll through the WAF policy to briefly view the policy configuration. We can see actions configured for particular violations, blocked file types, HTTP verbs, and more. Let's not make any changes just yet.
+8. You will see the JSON configuration for this WAF policy. Scroll through the WAF policy to briefly view the policy configuration. We can see actions configured for particular violations, blocked file types, HTTP verbs, and more. Let's not make any changes just yet.
 
 .. image:: images/nim_nap_agility_policy_json.png
 
-9.  Now let's view metrics surrounding the App Protect instance. Click the **Select module** drop-down from the top of the left menu bar. 
+9. Now let's view metrics surrounding the App Protect instance. Click the **Select module** drop-down from the top of the left menu bar. 
 
 .. image:: images/nms_module_dropdown.png
 
-10.  Select **Security monitoring** from the drop-down.
+10. Select **Security monitoring** from the drop-down.
 
 .. image:: images/menu_drop_down_nms-sm.png
 
@@ -56,7 +56,7 @@ There are two components to NGINX App Protect within NMS:
 
 .. image:: images/NMS-SM_dashboard_bots.png
 
-13.  This tab shows information around bot traffic detected by App Protect. Scroll down to the **Top Bot Classes**, **Top Bot Categories**, and **Top Bot Signatures**. Click on **Untrusted Bot** in the **Top Bot Classes** list.
+13. This tab shows information around bot traffic detected by App Protect. Scroll down to the **Top Bot Classes**, **Top Bot Categories**, and **Top Bot Signatures**. Click on **Untrusted Bot** in the **Top Bot Classes** list.
 
 .. image:: images/NMS-SM_top_bot_lists.png
 
@@ -65,18 +65,18 @@ There are two components to NGINX App Protect within NMS:
 .. image:: images/NMS-SM_top_bot_details.png
 
 15. Click the **Advanced** tab. 
-    
+
 .. image:: images/NMS-SM_Advanced_click.png
-    
-16.  This tab shows data relating to attacks matching downloaded signatures. Since signatures have not yet been downloaded, this data is not populated. 
+
+16. This tab shows data relating to attacks matching downloaded signatures. Since signatures have not yet been downloaded, this data is not populated. 
 
 .. image:: images/NMS-SM_dashboard_advanced.png
 
-17.  Scroll down and review the additional metrics available. Click on the single entry under the **Top Attacked Instances** list to see additional details.
+17. Scroll down and review the additional metrics available. Click on the single entry under the **Top Attacked Instances** list to see additional details.
 
 .. image:: images/NMS-SM_additional_metrics.png
 
-18.  Close the details box when finished.
+18. Close the details box when finished.
 
 .. image:: images/NMS-SM_dashboard_advanced_details.png
 
