@@ -4,7 +4,7 @@ Step 7 - Onboard as a Dev API
 The goal of a Developer Portal is not only to provide API Documentation. In addition, a Developer Portal offers the possibility to ``try out`` the API directly from it.
 It means the Developers will ask for API Keys from this portal and use these keys to ``try out`` APIs. Then, the Developer Portal will send a request to the API Gateway with the API-KEY generated.
 
-In this lab, ``Infrastructure`` and ``API`` teams will modify the NMS ACM configurations to:
+In this lab, the ``Infrastructure`` and ``API`` teams will modify the NMS ACM configurations to:
 
    * ``Infra`` team action : Enable Authentication for developers on the Dev Portal with OIDC (Keycloak as Identity Provider) 
    * ``API`` team action : Enable API-Key authentication on the Sentence API proxy (so far, there is no authentication on the API Gateway). So that a Developer can use the API-KEY created by the Developer Portal.
