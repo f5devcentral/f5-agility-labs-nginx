@@ -108,9 +108,9 @@ Check instances connectivity with NMS
 Wait for the environment to be GREEN
 ====================================
 
-#. Switch back to your Infrastructure Environment screen. And check the ``Job Status``
+#. Switch back to your Infrastructure Workspace screen. And check the ``Job Status``
 
-   .. note :: If you don't see the column ``Job Status``, scroll to the right; the column is hidden because of the Win10 RDP low résolution.
+   .. note :: If you don't see the column ``Job Status``, scroll to the right; the column is hidden because of the Win10 RDP low resolution.
 
 #. Wait till it passes to ``Success``. This can take several minutes.
 
