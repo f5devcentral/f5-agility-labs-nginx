@@ -239,7 +239,7 @@ Your screen should look like the screenshot below:
 
 .. image:: images/post_edit_config.png
 
-17. Click **Publish** to deploy the changes. Click **Publish** again when prompted. You'll see a 
+17. Click **Publish** to deploy the changes. Click **Publish** again when prompted. You'll see a notification that the changes were published. 
 
 .. image:: images/published.png
 

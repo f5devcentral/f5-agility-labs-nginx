@@ -13,7 +13,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nms_login.png
 
-4. You'll see the login prompt. Log in using ***lab*** as the username and ***Agility2023!*** as the password.
+4. You'll see the login prompt. Log in using the **lab** / **Agility2023!** credentials.
 
 .. image:: images/login_prompt.png
 

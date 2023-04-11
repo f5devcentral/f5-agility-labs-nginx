@@ -24,7 +24,7 @@ Argo CD offers the following key features and capabilities:
 
 .. image:: images/argo_bookmark.png
 
-3. Log into Argo using **lab** as the username and **Agility2023!** as the password.
+3. Log into Argo using the **lab** / **Agility2023!** credentials.
 
 .. image:: images/argo_login.png
 
