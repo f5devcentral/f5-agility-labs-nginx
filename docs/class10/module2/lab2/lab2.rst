@@ -4,7 +4,7 @@ Step 3 - Link the API GW and Dev Portal
 It is time to ``link`` the API-GW and Dev-Portal instances with NMS.
 To do so, we will execute the Nginx Agent installer on both instances.
 
-Link the API-GW instance.
+Link the API-GW instance
 ========================
 
 #. In UDF, SSH or WEBSSH to ``NGINX Plus APIGW-1``
@@ -43,7 +43,7 @@ Link the API-GW instance.
 
 
 
-Link the Dev-Portal instance.
+Link the Dev-Portal instance
 ============================
 
 #. In UDF, SSH or WEBSSH to ``Dev Portal``
@@ -82,7 +82,7 @@ Link the Dev-Portal instance.
       Successfully updated /etc/nginx-agent/agent-dynamic.conf
 
 
-Check instances connectivity with NMS.
+Check instances connectivity with NMS
 =====================================
 
 #. In ``API Gateway Clusters`` section, click on name ``api-cluster``
@@ -105,10 +105,10 @@ Check instances connectivity with NMS.
    .. image:: ../pictures/lab2/dev-portal-cluster.png
       :align: center
 
-Wait for the environment to be GREEN.
+Wait for the environment to be GREEN
 ====================================
 
-#. Switch back to your Infrastructure Environment screen. And check the ``Job Status. ``
+#. Switch back to your Infrastructure Environment screen. And check the ``Job Status``
 
    .. note :: If you don't see the column ``Job Status``, scroll to the right; the column is hidden because of the Win10 RDP low résolution.
 
