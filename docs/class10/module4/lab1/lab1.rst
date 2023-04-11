@@ -1,7 +1,7 @@
 Step 6 - Check the doc pushed by API Team
 #########################################
 
-In the previous lab, we used ``Postman`` to test our API version 1. App Developers don't use Postman, but prefer to use Developer Portals.
+In the previous lab, we used ``Postman`` to test our API version 1. Unfortunately, app Developers don't use Postman but prefer to use Developer Portals.
 
 Developer Portal offers:
 
@@ -27,7 +27,7 @@ Steps
          :scale: 50%
 
    * Click on ``sentence-api`` documentation
-   * Navigate in the doc (POST /adjectives for instance). You can notice the doc provides with
+   * Navigate in the doc (POST /adjectives, for instance). You can notice the doc provides with
 
       * The Version selected
       * API host with version and base path : http://api.sentence.com:80/v1/api
