@@ -2,13 +2,10 @@
 
 set -x
 
-if [ "$#" -ne 1 ]; then
-	echo "Usage $0 <file.docx>"
-	exit 1
-fi
 
-COMMAND="scripts/convertdocx.sh $1"
-ARCH=`uname m`
+COMMAND="scripts/code-server.sh"
+DOCKER_RUN_ARGS="--name code-server -p 3000:8080"
+ARCH=`uname -m`
 
 . ./containthedocs-image-$ARCH
 

@@ -14,4 +14,3 @@ unzip ../$1
 cp -Rf ./word/media/* ../media
 cd ..
 rm -Rf tmp
-
