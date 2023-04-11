@@ -45,7 +45,7 @@ Add Access Control Routing on API-Proxy
 
 #. Edit ``API-Proxy`` ``v2`` like previously (we are going to ``add`` a security policy on top of the ``Oauth2 Introspection``)
 #. Add a new ``Access Control Routing`` policy
-#. In ``Access Control Routes`` section click on ``Add ACR`` to create the first rule for /colors/{id} (the DELETE endpoint)
+#. In ``Access Control Routes`` section click on ``Add Route`` to create the first rule for /colors/{id} (the DELETE endpoint)
 
    #. Key type : TOKEN
    #. Key : group

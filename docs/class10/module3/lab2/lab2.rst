@@ -8,7 +8,7 @@ Steps
 
 #. RDP to Jumphost as login ``user`` and password ``user``
 #. Open ``Postman``
-#. Open the collection ``Sentence API`` and run the call ``GET Adjectives``
+#. Open the collection ``Sentence API`` and run the call ``GET Adjectives`` by click ``Send``
 
    * Look at the request : http://api.sentence.com/v1/api/adjectives
    * Endpoint FQDN is the Nginx API Proxy (api.sentence.com) configured by the ``Infra team``

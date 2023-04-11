@@ -91,6 +91,7 @@ Request API keys
    * App name : ``sentence1``
    * API : select ``sentence-api v1`` - This is the version v1 exposed on the API Gateway.
    * Click ``Generate``
+  .. note :: You may need to refresh the page to see the newly generated key.
 
 #. You can now expand your ``sentence1`` APIKey to see the value (if not, refresh the page). Copy the value.
 

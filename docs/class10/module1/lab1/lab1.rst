@@ -11,7 +11,7 @@ First of all, before we delve into the lab, it is important to understand how th
 Behind the scenes, the ``Frontend`` app reaches a ``Generator`` micro-service. In turn, the ``Generator`` micro-service reaches four distinct ``Words`` micro-services. Each ``Words`` micro-service generates a distinct **word** (an ``adjective``, an ``animal``, a ``color`` and a ``location``).
 
 Each ``Words`` micro-service is a ``NodeJS`` API server. This means we can ``GET``, ``POST``, ``PATCH``, and ``DELETE`` each respective ``Words`` micro-service.
-The ``Frontend`` is just a web interface representing the outcomes of the APIs. This ``Frontend`` page has a background and logos on purpose in order to make it "heavy" for Volterra demonstrations.
+The ``Frontend`` is just a web interface representing the outcomes of the APIs.
 
 **And this is how the micro-services are meshed together**
 
@@ -61,6 +61,5 @@ From the previous example, this is how the sentence is generated when the ``Gene
 .. image:: ../pictures/lab1/webapp-containers.png
    :align: center
 
-.. note :: In this lab, we will publish the ``Words`` micro-services through an NGINX API Gateway managed by NMS ACM. Then, we will check the result through the ``Frontend`` web interface.
 
 .. note :: In this lab, in order to simplify steps not related to NMS ACM, the Sentence App is already up and running in version 1 (color WORD is not deployed).

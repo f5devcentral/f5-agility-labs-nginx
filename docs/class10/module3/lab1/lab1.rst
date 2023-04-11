@@ -49,6 +49,7 @@ Expose the API proxy
       * Service Target Hostname : 10.1.20.7 (this is the K3S Ingress IP Address)
       * Service Target Transport Protocol : HTTP
       * Service Target Port : 30511 (K8S Node Port)
+      .. note :: autocomplete may cause problems, if you copy and past over the port it may be easier
    
    * API Proxy
 

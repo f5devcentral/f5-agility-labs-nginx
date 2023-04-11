@@ -9,8 +9,8 @@ Keycloak is already configured to issue JWT token for developers.
 Add JWT Policy on API-Proxy
 ===========================
 
-#. Edit ``API-Proxy`` ``v2`` like previously (we will enabled JWT auth only on the Version 2, the Version remains with API Key authentication)
-#. In ``Policies``, ``remove`` the APIKey policy
+#. Edit ``API-Proxy`` ``v2`` like previously (we will enabled JWT auth only on the Version 2, Version 1 remains setup with API Key authentication)
+#. In ``Policies``, ``remove`` the APIKey and the rate limit polices
 #. Add a new ``JSON Web Token Assertion`` policy
 #. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)``and paste the JSON below.
 
