@@ -1,10 +1,10 @@
 Step 3 - Link the API GW and Dev Portal
 #######################################
 
-It is time to ``link`` the API-GW instance and Dev-Portal instance with NMS.
+It is time to ``link`` the API-GW and Dev-Portal instances with NMS.
 To do so, we will execute the Nginx Agent installer on both instances.
 
-Link the API-GW instance
+Link the API-GW instance.
 ========================
 
 #. In UDF, SSH or WEBSSH to ``NGINX Plus APIGW-1``
@@ -13,7 +13,7 @@ Link the API-GW instance
    .. image:: ../pictures/lab2/api-cluster-curl.png
       :align: center
 
-#. Copy the cURL command, it should looks like this
+#. Copy the cURL command; it should look like this
 
    .. code-block:: bash
     
@@ -43,15 +43,15 @@ Link the API-GW instance
 
 
 
-Link the Dev-Portal instance
+Link the Dev-Portal instance.
 ============================
 
 #. In UDF, SSH or WEBSSH to ``Dev Portal``
-#. Similar to API-GW instance, click on the ``Developer Portal Clusters`` row and copy the cURL command.
+#. Like the API-GW instance, click the ``Developer Portal Clusters`` row and copy the cURL command.
 
    .. warning:: DO NOT CLICK ON ``Developer Portal Internal Clusters``
 
-#. The cURL command should looks like this
+#. The cURL command should look like this
 
    .. code-block:: bash
 
@@ -59,7 +59,7 @@ Link the Dev-Portal instance
 
    .. warning:: Check that the FQDN is 10.1.1.6 and not the UDF public proxy FQDN
 
-#. On NGINX Dev-Portal SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
+#. On the NGINX Dev-Portal SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
 
    .. code-block:: bash
 
@@ -82,7 +82,7 @@ Link the Dev-Portal instance
       Successfully updated /etc/nginx-agent/agent-dynamic.conf
 
 
-Check instances connectivity with NMS
+Check instances connectivity with NMS.
 =====================================
 
 #. In ``API Gateway Clusters`` section, click on name ``api-cluster``
@@ -105,12 +105,12 @@ Check instances connectivity with NMS
    .. image:: ../pictures/lab2/dev-portal-cluster.png
       :align: center
 
-Wait for the environment to be GREEN
+Wait for the environment to be GREEN.
 ====================================
 
-#. Switch back to your Infrastructure Environment screen. And check the ``Job Status``
+#. Switch back to your Infrastructure Environment screen. And check the ``Job Status. ``
 
-   .. note :: If you don't see the column ``Job Status``, scroll to the right, the column is hidden because of the Win10 RDP low résolution.
+   .. note :: If you don't see the column ``Job Status``, scroll to the right; the column is hidden because of the Win10 RDP low résolution.
 
 #. Wait till it passes to ``Success``. This can take several minutes.
 
