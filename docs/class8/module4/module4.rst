@@ -39,7 +39,7 @@ Output:
    
    ``JUICESHOP HTTP Code:200``
    
-   ``JUICESHOP HTTP Code:200```
+   ``JUICESHOP HTTP Code:200``
 
 Stop the attack. Use Ctrl+C.
 
@@ -86,7 +86,7 @@ Output:
        
   JUICESHOP HTTP Code:200
   JUICESHOP HTTP Code:200
-  JUICESHOP HTTP Code:200::
+  JUICESHOP HTTP Code:200\::
 
 Slowhttptest will report that NAP DOS is closing the connection: slow HTTP test status on 165th second:
 
@@ -95,7 +95,7 @@ Slowhttptest will report that NAP DOS is closing the connection: slow HTTP test 
    connected: 2
    error: 0
    closed: 14225
-   service available: YES::
+   service available: YES\::
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
@@ -130,7 +130,7 @@ Output:
   details = "Received http2 header with status: 502"
   debug_error_string = "{"created":"@1639496137.06on":"Received http2:status header with non-200 OK
   status","file":"src/core/ext/filters/http/client,"file_line":134,"grpc_message":"Received
-  http2 header with status: 502","grpc_status":14,"value":"502"}"::
+  http2 header with status: 502","grpc_status":14,"value":"502"}"\::
 
 After success mitigation service is available and reports
    
@@ -140,7 +140,7 @@ Output:
   
   Finished trip with 10 points
   
-  Finished trip with 10 points::
+  Finished trip with 10 points\:\:
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
@@ -177,7 +177,7 @@ Output:
   details = "Received http2 header with status: 502"
   debug_error_string = "{"created":"@1639496137.06on":"Received http2 :status header with non-200 OK
   status","file":"src/core/ext/filters/http/client,"file_line":134,"grpc_message":"Received
-  http2 header with status: 502","grpc_status":14,"value":"502"}"::
+  http2 header with status: 502","grpc_status":14,"value":"502"}"\:\:
 
 After success mitigation service is available and reports
 
@@ -187,7 +187,7 @@ Output:
   
   Finished trip with 10 points
   
-  Finished trip with 10 points::
+  Finished trip with 10 points\:\:
 
 GHZ tool will report HTTP status code 403 which indicates traffic is blocked by NAPDOS
 
@@ -197,7 +197,7 @@ GHZ tool will report HTTP status code 403 which indicates traffic is blocked by 
     
     [1000] rpc error: code = PermissionDenied desc = Forbidden: HTTP status code 403; transport: missing content-type field
     
-    [150] rpc error: code = Unavailable desc = transport is closing::
+    [150] rpc error: code = Unavailable desc = transport is closing\:\:
 
 Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 

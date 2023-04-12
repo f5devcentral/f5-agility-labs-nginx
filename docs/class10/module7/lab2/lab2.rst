@@ -1,20 +1,30 @@
 Step 12 - JWT authorization
 ###########################
 
-JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
-Keycloak is already configured to issue JWT token for developers.
+In this lab we will configure our services to use JSON Web Tokens (JWTs) to authenticate requests.
+
+.. note ::
+   JSON Web Tokens (JWT) are an open, industry standard RFC 7519 method for representing claims securely between two parties. 
+
+   OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0 framework. It allows third-party applications to verify the identity of the end-user and to obtain basic user profile information.
+   
+   OAuth (short for "Open Authorization"[1][2]) is an open standard for access delegation, commonly used as a way for internet users to grant websites or applications access to their information on other websites but without giving them the passwords.
+   
+   OAUTH with OIDC issues JWTs for authentiction requests that your applications can leverage for authentication and authorization purposes. 
+   
+   In the following labs, Keycloak is already configured to issue JWT tokens for developers.
 
 .. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
 
 Add JWT Policy on API-Proxy
 ===========================
 
-#. Edit ``API-Proxy`` ``v2`` like previously (we will enabled JWT auth only on the Version 2, the Version remains with API Key authentication)
-#. In ``Policies``, ``remove`` the APIKey policy
+#. Edit the ``API-Proxy`` ``v2`` instance like previously (we will enable JWT auth only on version 2; version 1 will remain configured with API Key authentication)
+#. In ``Policies``, ``remove`` the APIKey and the Rate Limit polices
 #. Add a new ``JSON Web Token Assertion`` policy
-#. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)``and paste the JSON below.
+#. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)`` and paste the JSON below.
 
-   .. note :: You can retrieve this JWKS from Keycloak endpoint http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/certs
+   .. note :: You can retrieve this JWKS from the Keycloak endpoint http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/certs
 
    .. code-block :: JSON
 
@@ -57,7 +67,7 @@ Check what happened in the Dev Portal
 =====================================
 
 #. In the Dev Portal, check what happened for the API Key on Version 2
-#. As you can see, as the API Key policy has been deleted, the API Key for Version 2 has been removed from the Dev Portal and a warning is displayed
+#. As you can see, as the API Key policy has been deleted, the API Key for Version 2 has been removed from the Dev Portal, and a warning is displayed
 
    .. image:: ../pictures/lab2/key-deleted.png
       :align: center
@@ -93,7 +103,6 @@ Test JWT auth out with Postman
    .. image:: ../pictures/lab2/send.png
       :align: center
 
-.. note:: Congratulations, you configured your API Gateway to validate JWT token from Keycloak.
+.. note:: Congratulations, you configured your API Gateway to validate the JWT token from Keycloak.
 
 .. note:: Check your Version 1 is still using API Key authentication.
-

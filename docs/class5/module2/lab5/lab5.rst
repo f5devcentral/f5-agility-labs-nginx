@@ -13,7 +13,7 @@ Test the WAF Policy by Replicating the SQL Injection Attack
 
 .. code-block::bash
 
-   ' or 1=1--
+   ' or 1=1-- '
 
 and click **Log me in**. 
 

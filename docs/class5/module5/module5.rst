@@ -9,5 +9,5 @@ In this class, you will learn about advanced tools and features offered by the l
    :glob:
 
    lab*/lab*
-   recap
+
 

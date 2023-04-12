@@ -7,14 +7,14 @@ The NMS UI
 **********
 
 #. Login to JumpHost Win10 RDP. Login is ``user`` and password is ``user``
-#. Open Chrome and click on NMS bookmark
+#. Open Chrome and click on the NMS bookmark
 #. Sign in to NMS as ``admin`` and password ``admin``
 #. You can change the UI to Dark mode if you prefer it :)
 
    * Click on the ``profile`` icon on the top right
    * Change toggle to ``Dark Mode``
 
-#. You can notice 2 modules installed and licensed
+#. You can notice two modules installed and licensed
 
    * Instance Manager - included and licensed by default
    * API Connectivity Manager (ACM) - installed from the official Nginx repo and licensed
@@ -48,7 +48,7 @@ Connect to ACM and create the infrastructure environment
          .. image:: ../pictures/lab1/acm-infra-env.png
             :align: center
 
-   #. The environment is now created and you can see the commands to execute to ``link`` NGINX instances to your NMS.
+   #. The environment is now created, and you can see the commands to execute to ``link`` NGINX instances to your NMS.
 
       .. image:: ../pictures/lab1/acm-infra-env-created.png
          :align: center

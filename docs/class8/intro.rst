@@ -29,10 +29,12 @@ Backends
     - gRPC Application -- "RouteGuide" gRPC service running in a container environment -- 10.1.1.9
 Monitoring
     - ELK -- containerized ELK stack pre-configured to monitor NAP DoS instances -- 10.1.1.3
-.. image:: ../_static/intro_topology.png
+
+.. image:: ../_static/10putty.png
+
 
 Attack Scripts
-============
+==============
 All attack scripts are located in ``/scripts`` folder on the "Attacker" VM.
 
 HTTP/1 Flood Attack -- ``/scripts/http1flood.sh``
@@ -66,6 +68,7 @@ gRPC Message Flood Attack -- ``/scripts/grpcflood.sh``
 Slow POST gRPC Attack -- ``/scripts/slow_post_http2.sh``
     - The attacker supplies several concurrent slow POST gRPC requests that exceed the server capacity of concurrent requests.
     - This attack sends 100 streams of a POST request to /testing using gRPC
+
 .. code-block:: bash
     :caption: slow_post_http2.sh
 
