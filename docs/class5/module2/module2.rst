@@ -1,5 +1,5 @@
-Module 2 - Protect Arcadia with NGINX App Protect WAF
-=====================================================
+Module 2 - Protect the Arcadia Finance App with NGINX App Protect WAF
+=====================================================================
 
 In this module, we will deploy NGINX App Protect WAF on an existing NGINX Plus instance.
 

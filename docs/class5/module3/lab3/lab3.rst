@@ -29,7 +29,7 @@ This section is optional and showcases the use of Nginx Dashboard (included with
 
 .. image:: images/grafana_bookmark.png
 
-5. Log into Grafana using **admin** as the username and **Agility2023!** as the password.
+5. Log in using the **lab** / **Agility2023!** credentials.
 
 .. image:: images/grafana_login.png
 

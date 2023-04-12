@@ -13,17 +13,18 @@ Deployment Modes
 NGINX App Protect can be deployed in a variety of ways depending on the specific use case and deployment requirements. Here are some of the most common deployment options:
 
 - As a module within the NGINX Plus application delivery platform: NGINX App Protect can be deployed as a module within the NGINX Plus platform. This provides a unified solution for both load balancing and application security.
-- As a standalone software: NGINX App Protect can also be deployed as a standalone software on a server or in a virtual machine. This option is suitable for organizations that do not require load balancing capabilities or have existing load balancing solutions.
-- In a containerized environment: NGINX App Protect can be deployed in a containerized environment such as Docker or Kubernetes. This provides a scalable and flexible solution for cloud-native applications.
-- As a managed service: NGINX App Protect is also available as a managed service through various cloud providers such as AWS, Azure, and Google Cloud Platform. This option is suitable for organizations that want a fully managed and automated WAF solution.
-
-**Deployment Modes**
+- Alongside NGINX Plus Ingress Controller: NGINX App Protect can be deployed in a containerized environment such as Docker or Kubernetes on top of NGINX Plus Ingress Controller. This provides a scalable and flexible solution for cloud-native applications.
+- Alongside NGINX Plus API Connectivity Manager: NGINX App Protect combined with NGINX Plus API Connectivity Manager to create a secure API gateway that layers protection from known attack signatures, threat campaigns to fully protect your APIs
+- As a service for microservices based deployments: Run NGNIX App Protect inside your microservices-based environment to provide WAF protection to your web applications and APIs
 
 .. image:: images/deployment_modes.png
    :align: center
    :alt: Image showing deployment modes for NGINX App Protect
 
-**Deployment Environments**
+Deployment environments
+-----------------------
+
+NGINX App Protect can be deployed in public and private clouds, on virtual machines, as a container on a microservices platforms including NGINX Ingress Controller; anywhere a `supported Linux distribution <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/#prerequisites>`_ can run. 
 
 .. image:: images/deployment_environments.png
    :align: center
@@ -134,18 +135,19 @@ Remember these important tips:
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
 - To paste into an SSH session, press SHIFT+CTRL+V or right-click and select **Paste**. Ctrl + V will work inside browser windows.
+- The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
 
 Tips for Installing NGINX Management Suite, NGINX App Protect and/or NGINX Plus in Your Own Environment
 -------------------------------------------------------------------------------------------------------
 
 If you're installing NGINX Management Suite, make sure that:
- - you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
+- you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
 
 If you're installing NGINX App Protect, make sure that:
- - you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
+- you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
 
-If you're installing NGINX Plus only, make sure that:
- - you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
+If you're installing NGINX Plus, make sure that:
+- you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
 
 .. caution:: NGINX App Protect supports fewer Linux distributions than NGINX Plus. You may need to migrate your NGINX configuration to a supported distro in order to install NAP.
 

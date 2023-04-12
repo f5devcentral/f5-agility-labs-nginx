@@ -82,7 +82,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/launch_nms.png
 
-7. Log into NMS using the username **lab** and the password **Agility2023!**.
+7. Log in using the **lab** / **Agility2023!** credentials.
 
 .. image:: images/login.png
 
@@ -103,6 +103,11 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 .. image:: images/edit_button.png
 
 12. Click on **Add File** button in the navigation pane.
+
+.. |expand_button| image:: images/expand_button.png
+   :scale: 25%
+
+.. note:: If you do not see the **Add File** button on the toolbar, click the |expand_button| **expand** button.
 
 .. image:: images/add_file_button.png
 

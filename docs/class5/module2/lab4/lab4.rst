@@ -3,11 +3,11 @@ Enable NGINX App Protect on the Arcadia Finance App
 
 We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finance app.
 
-1. Address known-issue in NGINX Agent.
-
-.. warning:: As of March 30th, 2023, a known issue is impacting this lab. 
+.. attention:: The release we use in our lab, 2.8.0, has a known issue. This issue is fixed in releases 2.9.0 and higher. Due to time restrictions, we were unable to upgrade this lab prior to the event. 
   
-To avoid the issue, SSH into nginx-plus-2 and issue the following command: 
+  For details on the known-issue, refer to *Precompiled Publication setting is reverted to false after error publishing NGINX App Protect policy* on the `NGINX Management Suite Known Issues <https://docs.nginx.com/nginx-management-suite/nim/releases/known-issues/>`_ page.
+
+1. First, we need to address the known-issue in our lab's release of NGINX Management Suite. From the **Applications** menu, click **SSH Shortcuts** and log into **nginx-plus-2**. Issue the following command: 
 
 .. code-block:: bash
 
@@ -17,7 +17,7 @@ To avoid the issue, SSH into nginx-plus-2 and issue the following command:
 
 .. image:: images/nms_bookmark.png
 
-3. Log in using the username **lab** and password **Agility2023!**. Click on the **Instance Manager** tile.
+3. Log in using the **lab** / **Agility2023!** credentials. Click on the **Instance Manager** tile.
 
 .. image:: images/nms_dashboard.png
 
@@ -33,7 +33,7 @@ To avoid the issue, SSH into nginx-plus-2 and issue the following command:
 
 .. image:: images/config_nav_pane.png
 
-7. Add the following configuration lines to the **server** block:
+7. Add the following configuration lines to the **server** block that includes the *listen 443 ssl* directive:
 
 .. code-block:: bash
 
@@ -69,5 +69,3 @@ Your screen should look similar to below:
 13.  On this screen, you can see that our policy is applied.
 
 .. image:: images/agility_policy_applied.png
-
-This concludes this portion of the lab. 
