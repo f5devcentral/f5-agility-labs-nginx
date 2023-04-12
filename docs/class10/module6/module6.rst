@@ -1,7 +1,7 @@
 Module 6 - Dev Team - Consume API v2.0
 ######################################
 
-Now, it is time to test the new API published by API Team. To so so, the Developer needs to ask for a new API Key for this new version. API Keys are tied to the API version.
+Now, it is time to test the new API published by API Team. To do so, the Developer must ask for a new API Key for this new version. API Keys are tied to the API version.
 
 .. note :: As a reminder, this version 2.0 includes ``colors`` API endpoint.
 

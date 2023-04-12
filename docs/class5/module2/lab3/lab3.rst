@@ -17,7 +17,8 @@ Test a SQL Inject Attack against the Arcadia Finance App
 
 .. code-block::bash
 
-   ' or 1=1--
+   ' or 1=1-- '
+
 
 and click **Log me in**. 
 

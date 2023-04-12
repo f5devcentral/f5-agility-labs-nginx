@@ -1,23 +1,23 @@
 Step 4 - Publish API v1.0
 #########################
 
-Before publishing our first API, it's important to understand what the DevOps (or API Dev) team provided us.
+Before publishing our first API, we must understand what the DevOps (or API Dev) team provided us.
 
-They provided us an OpenAPI spec file (OASv3) via ``SwaggerHub``. You can consult ``version 1.0`` here: https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v1
+They provided us with an OpenAPI spec file (OASv3) via ``SwaggerHub``. You can consult ``version 1.0`` here: https://app.swaggerhub.com/apis/F5EMEASSA/API-Sentence-2022/v1
 
 .. image:: ../pictures/swaggerhub.png
    :align: center
    :scale: 40%
 
-.. note:: This is version 1.0 of the API, and in this version, as you can notice, the ``Colors`` micro-service is not yet available. This means that with this spec file we will publish the API Sentence application without the ``Colors`` micro-service (e.g. a sample sentence might look like ``calm mouse of the mountain``).
+.. note:: This is version 1.0 of the API, and in this version, as you can notice, the ``Colors`` micro-service is not yet available. This means that with this spec file, we will publish the API Sentence application without the ``Colors`` micro-service (e.g., a sample sentence might look like ``calm mouse of the mountain``).
 
 |
 
 Create the API Services
 ***********************
 
-#. In NMS ACM UI, click on ``Services`` menu on the left
-#. Create a new workspace. As you can notice, ``Infra team`` and ``API team`` have their own and separated workspaces
+#. In NMS ACM UI, click on the ``Services`` menu on the left
+#. Create a new workspace. As you can notice, ``Infra team`` and ``API team`` have their separate workspaces
 
    * Name : sentence-app
 
@@ -28,12 +28,12 @@ Create the API Services
 Upload the OpenAPI Spec file
 ============================
 
-#. Click on ``API Docs`` tab
+#. Click on the ``API Docs`` tab
 
    .. image:: ../pictures/lab1/api-docs.png
       :align: center
 
-#. Click on ``Add API Doc`` and drag drop the Swagger file, then click ``Save``
+#. Click on ``Add API Doc`` and drag-drop the Swagger file, then click ``Save``
 
    .. note :: In Win10 RDP Jumphost, the Swagger file located on the desktop (oas-sentence-v1.yaml)
 
@@ -49,6 +49,8 @@ Expose the API proxy
       * Service Target Hostname : 10.1.20.7 (this is the K3S Ingress IP Address)
       * Service Target Transport Protocol : HTTP
       * Service Target Port : 30511 (K8S Node Port)
+
+   .. note :: autocomplete may cause problems; if you copy and past over the port, it may be easier
    
    * API Proxy
 
@@ -78,11 +80,11 @@ Expose the API proxy
 Customize and finalize the configuration
 ========================================
 
-The configuration is not yet finished
+The configuration still needs to be finished.
 
    * Define how the API Gateway will ``route`` the API requests per ``Version``
 
-#. Edit the API Proxy just created (sentence-api) by clicking on the 3 dots on the top right of the row, then click ``Edit Proxy``.
+#. Edit the API Proxy just created (sentence-api) by clicking on the three dots on the top right of the row, then click ``Edit Proxy``.
 
    .. image:: ../pictures/lab1/edit-proxy.png
       :align: center
