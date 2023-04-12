@@ -211,3 +211,4 @@ An example of the contents of the output:
       "tag": "user-defined-signatures"
    }
 
+Using these tools, you can easily migrate BIG-IP Advanced WAF and ASM configurations into NGINX App Protect. 
