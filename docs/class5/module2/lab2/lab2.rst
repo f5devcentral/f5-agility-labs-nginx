@@ -1,7 +1,7 @@
 Adding the NGINX Plus with App Protect Instance to NGINX Management Suite
 =========================================================================
 
-Since our lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
+Since this lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
 
 .. warning:: If you're installing the NGINX Agent in your environment, a few steps are required before starting the installation process. See https://docs.nginx.com/nginx-management-suite/nginx-agent/install-nginx-agent/ for more information. In this lab, these have been checked for you.
 
@@ -19,7 +19,7 @@ Since our lab utilizes NMS, we're going to install the NGINX Agent and add the i
 
 3. Configure the NGINX Agent
 
-We need to configure NGINX Agent to perform additional tasks for NGINX App Protect. 
+Now you'll need to configure NGINX Agent to perform additional tasks for NGINX App Protect. 
 
 Load the file into a file editor:
 

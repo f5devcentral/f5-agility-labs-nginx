@@ -1,7 +1,7 @@
 Module Review - Test Driving NGINX Plus with App Protect and NGINX Management Suite
 -----------------------------------------------------------------------------------
 
-In this module, we have completed the following items:
+In this module, you have completed the following items:
 
 - Viewing NGINX Plus instance health and statistics in NMS
 - Viewing NGINX Plus application service configurations in NMS

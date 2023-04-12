@@ -11,7 +11,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. image:: images/nginx_plus_2_ssh_shortcut_menu.png
 
-3. This host has NGINX Plus installed and serving the Arcadia Finance app, but NGINX App Protect is not installed. First, let's backup the existing NGINX Plus configuration files and logs. Type or paste the commands below:
+3. This host has NGINX Plus installed and serving the Arcadia Finance app, but NGINX App Protect is not installed. First, backup the existing NGINX Plus configuration files and logs. Type or paste the commands below:
 
 .. code-block:: bash
 
@@ -90,7 +90,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
   
 10. Update the repository and install the proper version of the NGINX App Protect WAF package (which includes NGINX Plus):
 
-.. note:: For lab stability purposes, we will install a specific version of NGINX App Protect that is compatible with the lab instance of NGINX Management Suite.
+.. note:: For lab stability purposes, you will install a specific version of NGINX App Protect that is compatible with the lab instance of NGINX Management Suite.
 
 .. code-block:: bash
 

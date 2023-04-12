@@ -54,7 +54,7 @@ This screen shows how traffic flows to the containers running the micro-services
 
 .. image:: images/arcadia_application_network.png
 
-8. Now that you seen the power of Argo CD, lets review the manifest files for our infrastructure side of the lab. Under **Applications** look for the **nginx-plus-ingress** tile.
+8. Now that you seen the power of Argo CD, lets review the manifest files for the infrastructure side of the lab. Under **Applications** look for the **nginx-plus-ingress** tile.
 
 .. image:: images/ic-app.png
 
@@ -62,7 +62,7 @@ This screen shows how traffic flows to the containers running the micro-services
     
 .. image:: images/list.png 
 
-This list shows all the configuration parts that make our ingress controller work. 
+This list shows all the configuration parts that make the ingress controller work. 
 
 .. image:: images/ic-list.png
 

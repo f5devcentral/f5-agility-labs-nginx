@@ -1,7 +1,7 @@
 Test the WAF Policy by Replicating the SQL Injection Attack
 ===========================================================
 
-1. Now that the WAF policy is applied, let's retry the SQL injection attack to see if the attempt is blocked. Click on the **Arcadia Finance (DIY)** bookmark or navigate to https://diy.arcadia-finance.org/.
+1. Now that the WAF policy is applied, retry the SQL injection attack to see if the attempt is blocked. Click on the **Arcadia Finance (DIY)** bookmark or navigate to https://diy.arcadia-finance.org/.
 
 .. image:: images/arcadia_diy.png
 
@@ -19,7 +19,7 @@ and click **Log me in**.
 
 .. image:: images/sql_inj_login.png
 
-4. You should see the custom block page as shown below, showing that the attempt was blocked. Notice that, once again, a **support ID** is generated when the page loads. **Select and copy this value** so that we can search for it in NMS-SM.
+4. You should see the custom block page as shown below, showing that the attempt was blocked. Notice that, once again, a **support ID** is generated when the page loads. **Select and copy this value** so that you can search for it in NMS-SM.
 
 .. image:: images/select_copy_support_id.gif
 

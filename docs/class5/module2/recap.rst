@@ -1,7 +1,7 @@
 Module Review - Protect Arcadia with NGINX App Protect WAF
 ----------------------------------------------------------
 
-In this module, we have completed the following items:
+In this module, you have completed the following items:
 
 - Installed NGINX App Protect over an existing NGINX Plus instance
 - Imported the NGINX Plus/NGINX App Protect into the NGINX Management Suite

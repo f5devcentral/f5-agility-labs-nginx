@@ -29,7 +29,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/custom_reject_page.png
 
-8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. We can use this ID to identify the cause of the image block. **Select and copy this value** so that we can search for it in NMS-SM.
+8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in NMS-SM.
 
 .. image:: images/select_copy_support_id.gif
 
@@ -73,7 +73,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/NMS-SM_support_id_illegal_file_type.png
 
-18. We need to allow JPG files to enable our application to operate properly. In order to do so, we need to modify our WAF policy. Let's start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
+18. You need to allow JPG files to enable the application to operate properly by modifying the WAF policy. Start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
 
 .. image:: images/menu_drop_down_nim.png
 
@@ -185,7 +185,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/successful_full_load.png
 
-Now that you have viewed, diagnosed and remedied a false positive in a WAF policy, let's continue to the next section of the lab.
+Now that you have viewed, diagnosed and remedied a false positive in a WAF policy, continue to the next section of the lab.
 
 
 
