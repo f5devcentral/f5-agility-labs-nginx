@@ -1,16 +1,26 @@
 Step 12 - JWT authorization
 ###########################
 
-JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
-Keycloak is already configured to issue JWT tokens for developers.
+In this lab we will configure our services to use JSON Web Tokens (JWTs) to authenticate requests.
+
+.. note ::
+   JSON Web Tokens (JWT) are an open, industry standard RFC 7519 method for representing claims securely between two parties. 
+
+   OpenID Connect (OIDC) is an identity layer built on top of the OAuth 2.0 framework. It allows third-party applications to verify the identity of the end-user and to obtain basic user profile information.
+   
+   OAuth (short for "Open Authorization"[1][2]) is an open standard for access delegation, commonly used as a way for internet users to grant websites or applications access to their information on other websites but without giving them the passwords.
+   
+   OAUTH with OIDC issues JWTs for authentiction requests that your applications can leverage for authentication and authorization purposes. 
+   
+   In the following labs, Keycloak is already configured to issue JWT tokens for developers.
 
 .. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
 
 Add JWT Policy on API-Proxy
 ===========================
 
-#. Edit ``API-Proxy`` ``v2`` like previously (we will enable JWT auth only on version 2; version 1 remains setup with API Key authentication)
-#. In ``Policies``, ``remove`` the APIKey and the rate limit polices
+#. Edit the ``API-Proxy`` ``v2`` instance like previously (we will enable JWT auth only on version 2; version 1 will remain configured with API Key authentication)
+#. In ``Policies``, ``remove`` the APIKey and the Rate Limit polices
 #. Add a new ``JSON Web Token Assertion`` policy
 #. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)`` and paste the JSON below.
 
