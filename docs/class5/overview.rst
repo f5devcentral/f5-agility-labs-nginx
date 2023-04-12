@@ -40,7 +40,7 @@ This lab serves as an introduction to the NGINX App Protect WAF solution. In thi
 - identify false positives and perform policy changes to remedy
 - deploy NGINX App Protect on an existing NGINX Plus instance 
 - deploy NGINX App Protect in Kubernetes using modern apps methodologies
-- Review NGINX App Protect API Security
+- review NGINX App Protect API Security
 
 Each of the modules in this lab are independent and can be performed in any order. 
 
@@ -49,13 +49,13 @@ NGINX Acronyms
 
 The following are a few acronyms that you will encounter in this lab. 
 
-- NAP – NGINX App Protect
-- NMS – NGINX Management Suite
-- NIM – NGINX Instance Manager (base NMS module)
-- NMS-SM – NGINX Security Monitoring (optional NMS module)
-- ACM – API Connectivity Manager (optional NMS module)
-- ADM – App Delivery Manager (optional NMS module)
-- NIC – NGINX Ingress Controller
+- **NAP** – NGINX App Protect
+- **NMS** – NGINX Management Suite
+- **NIM** – NGINX Instance Manager (base NMS module)
+- **NMS-SM** – NGINX Security Monitoring (optional NMS module)
+- **ACM** – API Connectivity Manager (optional NMS module)
+- **ADM** – App Delivery Manager (optional NMS module)
+- **NIC** – NGINX Ingress Controller
 
 NGINX App Protect WAF Terminology
 ---------------------------------
@@ -103,6 +103,17 @@ NGINX App Protect WAF Terminology
     - The Uniform Resource Identifier (URI) specifies the name of a web object in a request. A Uniform Resource Locator (URL) specifies the location of an object on the Internet. For example, in the web address, ``http://www.siterequest.com/index.html``, index.html is the URI, and the URL is ``http://www.siterequest.com/index.html``. In NGINX App Protect WAF, the terms URI and URL are used interchangeably.
   * - Violation
     - Violations occur when some aspect of a request or response does not comply with the security policy. You can configure the blocking settings for any violation in a security policy. When a violation occurs, the system can Alarm or Block a request (blocking is only available when the enforcement mode is set to Blocking).
+
+Official NGINX Documentation
+----------------------------
+
+Feel free to use the official documentation to clarify information or dive depeer in this lab:
+
+- `NGINX App Protect WAF Administration Guide <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/>`_
+- `Using NGINX App Protect WAF with NGINX Management Suite <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install-nms/>`_
+- `NGINX App Protect WAF Configuration Guide <https://docs.nginx.com/nginx-app-protect-waf/configuration-guide/configuration/>`_
+- `NGINX App Protect WAF Declarative Policy Schema <https://docs.nginx.com/nginx-app-protect-waf/declarative-policy/policy/>`_
+- `NGINX App Protect WAF Troubleshooting Guide <https://docs.nginx.com/nginx-app-protect-waf/troubleshooting-guide/troubleshooting/>`_
 
 Lab Inventory
 -------------
@@ -181,29 +192,7 @@ Remember these important tips:
 - Lab modules are independent; feel free to tackle the modules in any order.
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
-- To paste into an SSH session, press SHIFT+CTRL+V or right-click and select **Paste**. Ctrl + V will work inside browser windows.
+- To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
 - The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
-
-Tips for Installing NGINX Management Suite, NGINX App Protect and/or NGINX Plus in Your Own Environment
--------------------------------------------------------------------------------------------------------
-
-If you're installing NGINX Management Suite, make sure that:
-- you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
-
-If you're installing NGINX App Protect, make sure that:
-- you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
-
-If you're installing NGINX Plus, make sure that:
-- you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
-
-.. caution:: NGINX App Protect supports fewer Linux distributions than NGINX Plus. You may need to migrate your NGINX configuration to a supported distro in order to install NAP.
-
-Lab Maintainers
----------------
-
-- Chad Wise - Senior Solutions Engineer c.wise@f5.com
-- Greg Robinson - Senior Solutions Engineer g.robinson@f5.com
-
-Please email us with any issues or suggestions.
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
