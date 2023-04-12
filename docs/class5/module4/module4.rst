@@ -1,7 +1,7 @@
 Module 4 - API Security
 =======================
 
-In this section, we will configure NGINX App Protect to protect the Arcadia Finance app's API.
+In this section,you will configure NGINX App Protect to protect the Arcadia Finance app's API.
 
 NGINX App Protect can protect APIs in several ways:
 

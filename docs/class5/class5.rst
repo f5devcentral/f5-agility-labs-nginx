@@ -10,6 +10,7 @@ Welcome to the NGINX App Protect WAF hands-on lab!
 
    overview
    module*/module*
+   hints
    recap
 
 Click **Next** to begin the lab.

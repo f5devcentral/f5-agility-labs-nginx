@@ -29,7 +29,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/custom_reject_page.png
 
-8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. We can use this ID to identify the cause of the image block. **Select and copy this value** so that we can search for it in NMS-SM.
+8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in NMS-SM.
 
 .. image:: images/select_copy_support_id.gif
 
@@ -45,7 +45,7 @@ Modify the WAF Policy to Resolve an App Issue
     
 .. image:: images/NMS-SM_support_id_link.png
 
-12.   You'll be prompted for your support ID.
+12. You'll be prompted for your support ID.
 
 .. image:: images/NMS-SM_support_id_prompt.png
 
@@ -55,7 +55,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. note:: At anytime in this lab you encounter a support ID, feel free to return to this tool to look at the details of the attack and mitigation.
 
-14.  Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
+14. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
 .. image:: images/NMS-SM_support_id_details.png
 
@@ -63,7 +63,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/NMS-SM_support_id_uri.png
 
-16.  If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Sub-violations**, **CVEs**, and **Threat Campaigns**. 
+16. If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Sub-violations**, **CVEs**, and **Threat Campaigns**. 
 
 .. image:: images/NMS-SM_support_id_attack_details_collapsed.png
 
@@ -73,7 +73,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/NMS-SM_support_id_illegal_file_type.png
 
-18. We need to allow JPG files to enable our application to operate properly. In order to do so, we need to modify our WAF policy. Let's start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
+18. You need to allow JPG files to enable the application to operate properly by modifying the WAF policy. Start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
 
 .. image:: images/menu_drop_down_nim.png
 
@@ -101,7 +101,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nap_agilitypolicy_edit_version.png
 
-25.  Provide a description of the changes you'll be making in the **Description** field. 
+25. Provide a description of the changes you'll be making in the **Description** field. 
 
 .. image:: images/nap_agilitypolicy_version_edit.png
 
@@ -117,7 +117,7 @@ Modify the WAF Policy to Resolve an App Issue
     
 .. image:: images/save_new_version.png
     
-29.  You will see confirmation that the new version has been created.
+29. You will see confirmation that the new version has been created.
 
 .. image:: images/nim_app_protect_new_version_created.png
 
@@ -149,7 +149,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/publish.png
 
-37.  A pop-up will confirm that you have changed the version.
+37. A pop-up will confirm that you have changed the version.
 
 .. image:: images/publish_confirmation.png
 
@@ -165,11 +165,11 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nim_instances_link.png
 
-41.  Select the **nginx-plus-1** instance from the list.
+41. Select the **nginx-plus-1** instance from the list.
 
 .. image:: images/active_instance_select.png
 
-42.  Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Finalized**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
+42. Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Finalized**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
 
 **Deployment not finished**
 
@@ -179,13 +179,13 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/deployment_status.png
 
-43.  Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
+43. Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
 
 .. caution:: If images do not load, press **CTRL + Shift + R** to force the browser to fully reload the page.
 
 .. image:: images/successful_full_load.png
 
-Now that you have viewed, diagnosed and remedied a false positive in a WAF policy, let's continue to the next section of the lab.
+Now that you have viewed, diagnosed and remedied a false positive in a WAF policy, continue to the next section of the lab.
 
 
 

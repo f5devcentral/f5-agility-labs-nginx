@@ -40,7 +40,7 @@ This lab serves as an introduction to the NGINX App Protect WAF solution. In thi
 - identify false positives and perform policy changes to remedy
 - deploy NGINX App Protect on an existing NGINX Plus instance 
 - deploy NGINX App Protect in Kubernetes using modern apps methodologies
-- Review NGINX App Protect API Security
+- review NGINX App Protect API Security
 
 Each of the modules in this lab are independent and can be performed in any order. 
 
@@ -49,13 +49,71 @@ NGINX Acronyms
 
 The following are a few acronyms that you will encounter in this lab. 
 
-- NAP – NGINX App Protect
-- NMS – NGINX Management Suite
-- NIM – NGINX Instance Manager (base NMS module)
-- NMS-SM – NGINX Security Monitoring (optional NMS module)
-- ACM – API Connectivity Manager (optional NMS module)
-- ADM – App Delivery Manager (optional NMS module)
-- NIC – NGINX Ingress Controller
+- **NAP** – NGINX App Protect
+- **NMS** – NGINX Management Suite
+- **NIM** – NGINX Instance Manager (base NMS module)
+- **NMS-SM** – NGINX Security Monitoring (optional NMS module)
+- **ACM** – API Connectivity Manager (optional NMS module)
+- **ADM** – App Delivery Manager (optional NMS module)
+- **NIC** – NGINX Ingress Controller
+
+NGINX App Protect WAF Terminology
+---------------------------------
+
+.. list-table:: 
+  :header-rows: 1
+
+  * - **Term**
+    - **Definition**
+  * - Alarm
+    - If selected, the NGINX App Protect WAF system records requests that trigger the violation in the remote log (depending on the settings of the logging profile).
+  * - Attack signature
+    - Textual patterns which can be applied to HTTP requests andor responses by NGINX App Protect WAF to determine if traffic is malicious. For example, the string ``<script>`` inside an HTTP request triggers an attack signature violation.
+  * - Attack signature set
+    - A collection of attack signatures designed for a specific purpose (such as Apache).
+  * - Bot signatures
+    - Textual patterns which can be applied to an HTTP request’s User Agent or URI by NGINX App Protect WAF to determine if traffic is coming from a browser or a bot (trusted, untrusted or malicious). For example, the string ``googlebot`` inside the User-Agent header will be classified as ``trusted bot``, and the string ``Bichoo Spider`` will be classified as ``malicious bot``.
+  * - Block
+    - To prevent a request from reaching a protected web application. If selected (and enforcement mode is set to Blocking), NGINX App Protect WAF blocks requests that trigger the violation.
+  * - Blocking response page
+    - A blocking response page is displayed to a client when a request from that client has been blocked. Also called blocking page and response page.
+  * - Enforcement mode
+    - Security policies can be in one of two enforcement modes:
+        - **Transparent mode** In Transparent mode, Blocking is disabled for the security policy. Traffic is not blocked even if a violation is triggered with block flag enabled. You can use this mode when you first put a security policy into effect to make sure that no false positives occur that would stop legitimate traffic.
+        - **Blocking mode** In Blocking mode, Blocking is enabled for the security policy, and you can enable or disable the Block setting for individual violations. Traffic is blocked when a violation occurs if you configure the system to block that type of violation. You can use this mode when you are ready to enforce the security policy. You can change the enforcement mode for a security policy in the security policy JSON file.
+  * - Entities
+    - The elements of a security policy, such as HTTP methods, as well as file types, URLs, and/or parameters, which have attributes such as byte length. Also refers to elements of a security policy for which enforcement can be turned on or off, such as an attack signature.
+  * - False positive
+    - An instance when NGINX App Protect WAF treats a legitimate request as a violation.
+  * - File types
+    - Examples of file types are .php, .asp, .gif, and .txt. They are the extensions for many objects that make up a web application. File Types are one type of entity a NGINX App Protect WAF policy contains.
+  * - Illegal
+    - request	A request which violates a security policy
+  * - Legal
+    - request	A request which has not violated the security policy.
+  * - Loosening
+    - The process of adapting a security policy to allow specific entities such as File Types, URLs, and Parameters. The term also applies to attack signatures, which can be manually disabled — effectively removing the signature from triggering any violations.
+  * - Parameters
+    - Parameters consist of “name=value” pairs, such as OrderID=10. The parameters appear in the query string and/or POST data of an HTTP request. Consequently, they are of particular interest to NGINX App Protect WAF because they represent inputs to the web application.
+  * - TPS/RPS
+    - Transactions per second (TPS)/requests per second (RPS). In NGINX App Protect WAF, these terms are used interchangeably.
+  * - Tuning
+    - Making manual changes to an existing security policy to reduce false positives and increase the policy’s security level.
+  * - URI/URL
+    - The Uniform Resource Identifier (URI) specifies the name of a web object in a request. A Uniform Resource Locator (URL) specifies the location of an object on the Internet. For example, in the web address, ``http://www.siterequest.com/index.html``, index.html is the URI, and the URL is ``http://www.siterequest.com/index.html``. In NGINX App Protect WAF, the terms URI and URL are used interchangeably.
+  * - Violation
+    - Violations occur when some aspect of a request or response does not comply with the security policy. You can configure the blocking settings for any violation in a security policy. When a violation occurs, the system can Alarm or Block a request (blocking is only available when the enforcement mode is set to Blocking).
+
+Official NGINX Documentation
+----------------------------
+
+Feel free to use the official documentation to clarify information or dive depeer in this lab:
+
+- `NGINX App Protect WAF Administration Guide <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/>`_
+- `Using NGINX App Protect WAF with NGINX Management Suite <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install-nms/>`_
+- `NGINX App Protect WAF Configuration Guide <https://docs.nginx.com/nginx-app-protect-waf/configuration-guide/configuration/>`_
+- `NGINX App Protect WAF Declarative Policy Schema <https://docs.nginx.com/nginx-app-protect-waf/declarative-policy/policy/>`_
+- `NGINX App Protect WAF Troubleshooting Guide <https://docs.nginx.com/nginx-app-protect-waf/troubleshooting-guide/troubleshooting/>`_
 
 Lab Inventory
 -------------
@@ -134,29 +192,7 @@ Remember these important tips:
 - Lab modules are independent; feel free to tackle the modules in any order.
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
-- To paste into an SSH session, press SHIFT+CTRL+V or right-click and select **Paste**. Ctrl + V will work inside browser windows.
+- To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
 - The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
-
-Tips for Installing NGINX Management Suite, NGINX App Protect and/or NGINX Plus in Your Own Environment
--------------------------------------------------------------------------------------------------------
-
-If you're installing NGINX Management Suite, make sure that:
-- you use a supported version of NGINX Plus and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
-
-If you're installing NGINX App Protect, make sure that:
-- you use a supported version of Linux: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
-
-If you're installing NGINX Plus, make sure that:
-- you use a supported version of Linux: https://docs.nginx.com/nginx/technical-specs/
-
-.. caution:: NGINX App Protect supports fewer Linux distributions than NGINX Plus. You may need to migrate your NGINX configuration to a supported distro in order to install NAP.
-
-Lab Maintainers
----------------
-
-- Chad Wise - Senior Solutions Engineer c.wise@f5.com
-- Greg Robinson - Senior Solutions Engineer g.robinson@f5.com
-
-Please email us with any issues or suggestions.
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.

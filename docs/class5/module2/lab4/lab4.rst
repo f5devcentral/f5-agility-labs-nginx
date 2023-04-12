@@ -1,13 +1,13 @@
 Enable NGINX App Protect on the Arcadia Finance App
 ===================================================
 
-We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finance app.
+Now you will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finance app.
 
-.. attention:: The release we use in our lab, 2.8.0, has a known issue. This issue is fixed in releases 2.9.0 and higher. Due to time restrictions, we were unable to upgrade this lab prior to the event. 
+.. attention:: The release we've used in the lab, 2.8.0, has a known issue. This issue is fixed in releases 2.9.0 and higher. Due to time restrictions, we were unable to upgrade this lab prior to the event. 
   
   For details on the known-issue, refer to *Precompiled Publication setting is reverted to false after error publishing NGINX App Protect policy* on the `NGINX Management Suite Known Issues <https://docs.nginx.com/nginx-management-suite/nim/releases/known-issues/>`_ page.
 
-1. First, we need to address the known-issue in our lab's release of NGINX Management Suite. From the **Applications** menu, click **SSH Shortcuts** and log into **nginx-plus-2**. Issue the following command: 
+1. First, you'll need to address the known-issue in the lab's release of NGINX Management Suite. From the **Applications** menu, click **SSH Shortcuts** and log into **nginx-plus-2**. Issue the following command: 
 
 .. code-block:: bash
 
@@ -66,6 +66,6 @@ Your screen should look similar to below:
 
 .. image:: images/agilitypolicy_select.png
 
-13.  On this screen, you can see that our policy is applied.
+13. On this screen, you can see that the policy is applied.
 
 .. image:: images/agility_policy_applied.png

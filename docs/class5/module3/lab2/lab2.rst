@@ -4,18 +4,14 @@ Install NGINX App Protect on the Arcadia App in Kubernetes
 .. image:: images/kubnic.PNG
    :align: center
 
-Now we will be deploying our App Protect policy on the Ingress Controller and exposing our service via NodePort from the ingress controller. Normally there would be a load balancer in front of our cluster. To save time, the ingress controller has already been deployed. Let's look at how we deployed our Nginx Plux Ingress Controller via Helm.
-Navigating to our **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
+Now, you will deploy the App Protect policy on the Ingress Controller and expose the service via NodePort from the ingress controller. Normally there would be a load balancer in front of the cluster. To save time, the ingress controller has already been deployed. Let's look at how you've deployed the NGINX Plux Ingress Controller via Helm.
+Navigating to the **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
 
-1. On the jump host, use the **Applications** menu bar to launch **FireFox Web Browser**. From the bookmark toolbar open **Gitlab**. Log into the site using the username **lab** and  password **Agility2023!** credentials.
+1. Launch or return to **Firefox**. From the bookmark toolbar, select **Gitlab**. Log into the site using the username **lab** and  password **Agility2023!** credentials.
 
 .. image:: images/gitlab_login.png 
 
-2. Log in using the **lab** / **Agility2023!** credentials.
-
-.. image:: images/gitlab_login_filled.png
-
-3. Select the **ks3_infra** project repository. This repository houses all the infrastructure commponents used in this lab. All have been deployed with Helm and the help of Argo CD.
+2. Select the **k3s_infra** project repository. This repository houses all the infrastructure components used in this lab. All have been deployed with Helm and the help of Argo CD.
 
 .. image:: images/gitlab_project.png 
 
@@ -38,11 +34,11 @@ Navigating to our **Gitlab** instance under the **ks3_infra** repository, you fi
 
 .. image:: images/nic_Chart.png 
 
-7. In the **values.yaml** file, we define what options we want our ingress controller to have (app-protect, app-dos, snippets etc.), and what registry to pull the relevant image(s).
+7. In the **values.yaml** file, you can define what options you want the ingress controller to have (app-protect, app-dos, snippets etc.), and what registry to pull the relevant image(s).
 
 .. image:: images/nic_values.png
 
-Now that you can see how we've set up Nginx Ingress Controller, let's get back to securing our Arcadia app with App Protect.
+Now that you can see how we've set up NGINX Ingress Controller, you can focus on securing the Arcadia app with App Protect.
 
 8. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
 
@@ -52,7 +48,7 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/VSCode_openFolder.png
 
-10.  Click on the **Home** shortcut on the left, then double-click the **Projects** folder. Single-click on the **arcadia** folder, then click **Open** in the top-right corner of the navigation window.
+10. Click on the **Home** shortcut on the left, then double-click the **Projects** folder. Single-click on the **arcadia** folder, then click **Open** in the top-right corner of the navigation window.
 
 .. image:: images/VSCode_selectArcadia.png
 
@@ -60,23 +56,25 @@ Now that you can see how we've set up Nginx Ingress Controller, let's get back t
 
 .. image:: images/arcadia_folder_expand.png
 
-12.  Now under the **manifest** directory, we can view the manifests files.
+12. Now under the **manifest** directory, you can view the manifests files.
 
    - **arcadia-deployment.yml**
    - **arcadia-svcs.yml**
    - **arcadia-vs.yml** 
 
-For this lab we will be focused on the **arcadia-vs.yml** manifest file *after* we add the security policy files.
+For this lab, focus on the **arcadia-vs.yml** manifest file *after* you add the security policy files.
 
 .. image:: images/arcadia-vs.png
 
 13. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
 
-- waf-policy.yml (this is the policy we attach to the VirtualServer manifest)
-- waf-ap-logconf.yml (this defines our logging filters)
-- waf-ap-policy.yml (this is the declarative WAF policy with all our logic)
+- waf-policy.yml (this is the policy that will be attached to the VirtualServer manifest)
+- waf-ap-logconf.yml (this defines the logging filters)
+- waf-ap-policy.yml (this is the declarative WAF policy with all of the logic)
 
-First, the policy we attach to the VirtualServer manifest:
+.. caution:: We'll just review these files. Do not make any changes.
+
+First, the policy that is attached to the VirtualServer manifest:
 
 .. code-block:: yaml
    :caption: waf-policy.yml 
@@ -114,7 +112,7 @@ Second, the policy for logging and filtering:
      filter:
        request_type: blocked
 
-Finally, our WAF policy:
+Finally, the WAF policy:
 
 .. code-block:: yaml 
    :caption: waf-ap-policy.yaml 
@@ -147,7 +145,7 @@ Finally, our WAF policy:
 
 .. image:: images/new_terminal.png
 
-15. Now, copy the these files over to the **manifests** directory so Nginx App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
+15. Now, copy the these files over to the **manifests** directory so NGINX App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
 
 .. code-block:: bash 
 
@@ -158,7 +156,7 @@ Finally, our WAF policy:
 
 .. image:: images/terminal_commands.png
 
-16. Now, edit the **arcadia-vs.yml** manifest to now include our App Protect policy. Open the file by selecting the filename in the left navigation pane.
+16. Now, edit the **arcadia-vs.yml** manifest to now include the App Protect policy. Open the file by selecting the filename in the left navigation pane.
 
 .. image:: images/select_arcadia-vs_file.png
 
@@ -183,17 +181,17 @@ Finally, our WAF policy:
 
 .. image:: images/waf_policy_git_push.png
 
-18.   To make certain our changes are deployed, let's manually sync Argo with our Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
+18. To make certain the changes are deployed, manually sync Argo with the Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
 
 .. image:: images/argo_bookmark.png
 
-19.  Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes we submitted to Gitlab and deploy into Kubernetes.
+19. Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes you submitted to Gitlab and deploy into Kubernetes.
 
 .. image:: images/sync-arcadia.png 
 
-20. Before we launch attacks at the Arcadia site, open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. 
+20. Before you launch attacks at the Arcadia site, open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. 
 
-.. note:: Since we are not yet sending traffic to the app, the dashboard will be empty.
+.. note:: Since there is not yet any application traffic, the dashboard will be empty.
 
 .. image:: images/elk.png 
 
@@ -211,16 +209,18 @@ This is a bash file that launches various attacks at the application using CURL 
 
 .. note:: Wait for the script to complete before continuing with the lab.
 
-23. Once the attack script completes, move to the **ELK** tab you opened earlier. You may need to click on *Refresh* for the page to update.
+23. Once the attack script completes, return to the **ELK** tab you opened earlier. You may need to click **Refresh** to see statistics.
 
 .. image:: images/kibana.png 
 
-24.  To read details on blocked attack, scroll down to the **Events** section of the dashboard you can open the event by clicking on the **>** icon
+24. In the ELK dashboard, scroll down to the **All Requests** section. Here you will see entries for each of the attacks blocked by NGINX App Protect which were generated by the attack script. The details of each request can be viewed by clicking on the **>** icon next to the request.
 
 .. image:: images/kibana_events.png 
 
-25. Scroll down to **support_id** to match up the Support ID returned by App Protect in your terminal.
+25. You can drill into an event to see the *support_id*, which you can use to correlate the ELK dashboard **Request** details and the attack details shown in the CLI from step 22.
 
 .. image:: images/kibana_supportID.png
+
+.. image:: images/cli_support_ids.png
 
 This concludes this portion of the lab. 

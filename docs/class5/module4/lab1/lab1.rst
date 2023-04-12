@@ -18,7 +18,7 @@ Lab Tasks
 
 .. caution:: It may take a moment for Postman to launch the first time.
 
-2. Click the **GET Transactions** item in the **Arcadia API** collection. Click **Send** and notice that the API returns data.
+2. In the **Collections** tab, select the **Arcadia API** and then the **GET Transactions** item. Click **Send** and notice the response data that the API returns in the **Body** section of the window.
 
 .. image:: images/get_transaction_pretest.png 
 
@@ -26,7 +26,7 @@ Lab Tasks
 
 .. image:: images/post_buy_stocks.png
 
-4. Click the drop-down where **POST** is selected, and change to **OPTIONS**. Click **Send**. Notice that our API responded to this request.
+4. Click the drop-down where **POST** is selected, and change to **OPTIONS**. Click **Send**. Notice that the API responded to this request.
 
 .. image:: images/options.png
 
@@ -56,7 +56,7 @@ Lab Tasks
 
 11. Review the configuration. Notice that this policy:
 
-- Blocks the DELETE, OPTIONS and PUT HTTP operations, since our API does not utilize them
+- Blocks the DELETE, OPTIONS and PUT HTTP operations, since the API does not utilize them
 - includes a custom response via JSON to provide the support ID for easier troubleshooting
 - Specifies actions to take on API-related violations
 - Places a cap on XML payload lengths
@@ -199,7 +199,7 @@ Lab Tasks
       }
   }
 
-12. Let's apply this policy to the Arcadia Finance app, which includes an API. Click on **Instances** in the menu bar.
+12. You can apply this policy to the Arcadia Finance app, which includes an API. Click on **Instances** in the menu bar.
 
 .. image:: images/instances_navigation.png
 
@@ -215,7 +215,7 @@ Lab Tasks
 
 .. image:: images/select_app.png
 
-16. Modify the NGINX configuration file **arcadia-finance.conf** to add the WAF policy to the API endpoints. Add this to the server block below the default location:
+16. Modify the **arcadia-finance.conf** configuration file by adding the below code to the *ssl server block* listening on port 443 directly below the line ``status_zone arcadia_server;``.
 
 .. code-block:: text
 
@@ -254,7 +254,7 @@ Test the App Protect Policy
 
 .. image:: images/get_transaction_send.png
 
-20. We can see from the response that the API is functioning properly. 
+20. Notice from the response that the API is functioning properly. 
 
 .. image:: images/get_transaction_response.png
 
@@ -262,11 +262,11 @@ Test the App Protect Policy
 
 .. image:: images/post_buy_stocks_xss_attack.png
 
-22. Run the **POST Buy Stocks** item again with the **OPTIONS** action selected. Notice that this request is now blocked as we do not permit OPTIONS operations.
+22. Run the **POST Buy Stocks** item again with the **OPTIONS** action selected. Notice that this request is now blocked as the policy does not permit OPTIONS operations.
 
 .. image:: images/post_buy_stocks_options_blocked.png
 
-23. Now, select the **Struts2 Jakarta** item in the **Arcadia Attacks** collection, then press **Send**. This attack is blocked, but not by our WAF policy. Why? Because the URI is not a part of the locations we've added to the policy, so this portion of the app is protected by the original NAP WAF policy.
+23. Now, from the **Arcadia Attacks Collections** select the **Struts2 Jakarta** item and then click **Send**. This attack is blocked, but not by the API WAF policy. Why? Because the URI is not a part of the location where you've added the policy, so this portion of the app is protected by the original NAP WAF policy.
 
 .. image:: images/struts2_jakarta.png
 

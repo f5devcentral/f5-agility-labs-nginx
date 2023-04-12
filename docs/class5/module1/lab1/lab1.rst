@@ -9,7 +9,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/diy_pageload.png
 
-3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Management Suite. Let's take a look at NMS to view the configuration and instance/application metrics. Click on the **NMS** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NMS login page. Click ***Sign In***.
+3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Management Suite. Take a look at NMS to view the configuration and instance/application metrics. Click on the **NMS** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NMS login page. Click ***Sign In***.
 
 .. image:: images/nms_login.png
 
@@ -25,7 +25,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_instances_overview.png
 
-7.  Each instance of this lab runs in a virtual environment. Since new VMs are deployed for each instance, the operating system identifiers change, so each NGINX Plus instance is treated as a new instance. Thus, you may see previous instances listed. **Delete only the  Offline instances by clicking the three dot icon under the Actions column and selecting Delete**, as shown in the image below.
+7. Each instance of this lab runs in a virtual environment. Since new VMs are deployed for each instance, the operating system identifiers change, so each NGINX Plus instance is treated as a new instance. Thus, you may see previous instances listed. **Delete only the  Offline instances by clicking the three dot icon under the Actions column and selecting Delete**, as shown in the image below.
 
 .. warning:: Do not delete the active instance at the top of the list!
 
@@ -39,7 +39,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_instance_details.png
 
-10.  In the **App Protect Details** section, you can clearly see that NGINX App Protect has been installed and is active.
+10. In the **App Protect Details** section, you can clearly see that NGINX App Protect has been installed and is active.
 
 .. image:: images/nim_app_protect_details.png
 
