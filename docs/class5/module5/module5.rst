@@ -1,7 +1,11 @@
 Module 5 - Advanced Tools and Features
 ======================================
 
-In this class, you will learn about advanced tools and features offered by the latest NAP release. As NGINX App Protect WAF and NGINX Management Suite release new features, this section of the lab will grow.
+In this class, you will learn about advanced tools and features involving NGINX App Protect:
+
+- BIG-IP Advanced WAF Security Policies Conversion Tool
+- BIG-IP User Defined Signatures Converter
+- Attack Signature Report Tool
 
 .. toctree::
    :caption: Content:
