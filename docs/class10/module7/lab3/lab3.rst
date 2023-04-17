@@ -72,5 +72,5 @@ Test Oauth2 Introspection out with Postman
 
 .. note:: Congratulations, you configured your API Gateway to use Oauth2 Introspection from Keycloak as Authorization Server.
 
-** note:: Remember to clean up your Postman Oauth v2 store by deleting all JWT tokens.
+.. note:: Remember to clean up your Postman Oauth v2 store by deleting all JWT tokens.
 

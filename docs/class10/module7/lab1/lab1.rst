@@ -7,6 +7,10 @@ Add a Rate Limit policy on API API-Proxy
 ========================================
 
 #. In NMS, edit the API-Proxy ``sentence-api`` ``v2``
+
+   .. image:: ../pictures/lab1/edit-proxy.png
+      :align: center
+
 #. In ``Policies``, add new ``Rate Limit`` policy
 
    .. image:: ../pictures/lab1/add-rl.png
