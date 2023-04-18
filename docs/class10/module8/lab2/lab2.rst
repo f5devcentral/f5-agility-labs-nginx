@@ -1,5 +1,5 @@
 Step 16 - System Metrics and Events
-#######################
+###################################
 NGINX Management Suite Instance Manager provides metrics and events data for your instances.  System metrics are collected by the NGINX Agent without requiring the user to perform any additional setup. NGINX traffic metrics are also being collected as part of the earlier ACM configurations. 
 
 The data that Instance Manager collects can be divided into two categories:
@@ -10,7 +10,7 @@ The data that Instance Manager collects can be divided into two categories:
 NMS also collects events from your NGINX data plane instances so that you have a centralized view of 
 
 System Metrics
-========================================
+==============
 
 #. In NMS, switch to the NIM - NGINX Instance Module. Under Modules, select the Instance Manager.
 
@@ -30,7 +30,7 @@ System Metrics
       :align: center
 
 Events
-===========
+======
 View Events in the User Interface
 To view events in the Instance Manager user interface, take the following steps:
 
