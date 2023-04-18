@@ -1,9 +1,9 @@
 Step 15 - NGINX Configuration
-###########################
+#############################
 
 
 Review NGINX API Gateway Configuration from Data Plane 
-========================
+======================================================
 
 #. In UDF, SSH or WEBSSH to ``NGINX Plus APIGW-1``
 
@@ -16,7 +16,7 @@ Review NGINX API Gateway Configuration from Data Plane
 #. Note in the server block of the NGINX configuration that configurations for api.sentence.com have been created and pushed to the data plane from the ACM control plane.  
 
 Review Dev-Portal Configuration from Data Plane
-============================
+===============================================
 
 #. In UDF, SSH or WEBSSH to ``Dev Portal``
 
@@ -31,7 +31,7 @@ Review Dev-Portal Configuration from Data Plane
 
 
 Review Configuration from NMS
-============================
+=============================
 
 NMS also has the capability to view the current configuration directly from the control plane utilizing the NGINX Instance Manager (NIM) capabilities.  
 
