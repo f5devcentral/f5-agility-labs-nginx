@@ -4,8 +4,6 @@ Step 14 - Access Control Routing with JWT Claims
 JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT tokens for developers.
 
-.. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the JWT policy before enabling the Oauth2 Introspection policy.
-
 What is Access Control Routing?
 ================================
 
@@ -65,10 +63,10 @@ Add Access Control Routing on API-Proxy
    #. Allow the following HTTP Methods : POST
    #. Click ``Next``
 
-   .. image:: ../pictures/lab4/DELETE.png
+   .. image:: ../pictures/lab4/POST.png
       :align: center
 
-#. click ``Save``
+#. Click ``Add``
 #. Click ``Save and Publish``
 
 
@@ -114,7 +112,7 @@ The GET is not part of the ACR policy; no claim will be checked.
 Test with a DELETE
 ------------------
 
-.. note:: As a reminder, only users with claim ``group`` and value ``vip`` can DELETE. But the dev2 user is not in the ``vip`` group, as it is in the ``sales`` group
+.. note:: As a reminder, only users with claim ``group`` and value ``vip`` can DELETE. But the dev1 user is not in the ``vip`` group, as it is in the ``sales`` group
 
 Below is a quick extract of dev1 and dev2 JWT tokens. You can notice the ``group`` claim is different.
 
@@ -192,9 +190,14 @@ Test with a POST
 You can do the same exercise with the POST call. Only ``vip`` users are allowed (dev2)
 
 #. Clear your cookies
-#. Authenticate as ``dev1``, make a test
+#. Authenticate as ``dev1``, make a test.  You should see a 403 Forbidden error.
 #. Clear the cookies
-#. Authenticate as ``dev2``, make a test
+#. Authenticate as ``dev2``, make a test.  This test should complete with a status of 201 Created.  The body of the API call with add ``yellow`` as an avaiable color.
+
+   .. image:: ../pictures/lab4/postman-post.png
+      :align: center
+      :scale: 70%
+
 
 
 .. note:: Congrats, you applied two Access Control Routing rules to only allow specific users to DELETE and POST entries in the API application.

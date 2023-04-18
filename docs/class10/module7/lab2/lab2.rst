@@ -20,7 +20,7 @@ Add JWT Policy on API-Proxy
 ===========================
 
 #. Edit the ``API-Proxy`` ``v2`` instance like previously (we will enable JWT auth only on version 2; version 1 will remain configured with API Key authentication)
-#. In ``Policies``, ``remove`` the APIKey and the Rate Limit polices
+#. In ``Policies``, ``remove`` both the **APIKey** and the **Rate Limit** polices.  Click ``Save and Publish`` after both policies have been removed.  
 #. Add a new ``JSON Web Token Assertion`` policy
 #. For JWKS Sets, choose ``Enter JSON Web Key Sets (JWKS)`` and paste the JSON below.
 

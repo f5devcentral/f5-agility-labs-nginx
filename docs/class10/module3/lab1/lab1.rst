@@ -41,7 +41,7 @@ Upload the OpenAPI Spec file
 Expose the API proxy
 ====================
 
-#. Click on ``API Proxies`` tab, and ``Add Proxy"``
+#. Click on ``API Proxies`` tab, and click ``Publish to Proxy``
 
    * Backend Service
 
