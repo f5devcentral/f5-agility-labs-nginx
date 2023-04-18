@@ -1,5 +1,5 @@
 Module 8 - Observability and Monitoring
-################################
+#######################################
 
 In this module, we will explore the additional information you can gather on your API environment from the NGINX Management Suite (NMS) suite specifically within the NGINX Instance Manager (NIM) module.
 
