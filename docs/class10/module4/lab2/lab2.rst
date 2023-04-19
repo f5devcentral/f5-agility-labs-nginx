@@ -16,7 +16,7 @@ Infrastructure team - Steps
 The infrastructure team must enable OIDC on the DevPortal instance. To do so, follow these steps.
 
 #. In NMS ACM, in ``Infrastructure`` section, go into your ``team-sentence`` workspace, then ``sentence-env`` environment
-#. Click on your ``dev-cluster`` object
+#. Click on your ``devportal-cluster`` object
 #. In the ``Policies`` section, click on ``Manage``
 
    .. image:: ../pictures/lab2/policy-manage.png
@@ -40,7 +40,7 @@ The infrastructure team must enable OIDC on the DevPortal instance. To do so, fo
    * User Info : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/userinfo``
    * Logout URI : ``http://10.1.1.4:8080/realms/devportal/protocol/openid-connect/logout``
 
-   .. note :: The Keycloack configuration console provides all those endpoints. We skip this part in this lab.
+   .. note :: The Keycloak configuration console provides all those endpoints. These Keycloak configurations have already been completed. 
 
 #. Click ``Add``
 #. Click ``Save and Submit``

@@ -145,3 +145,5 @@ An example of the contents of the output:
       ],
       "tag": "user-defined-signatures"
    }
+
+Using this tool can help SecOps teams keep track of the signature sets in use by policies without the need to access production instances.
