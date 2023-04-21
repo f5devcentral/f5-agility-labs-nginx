@@ -114,7 +114,7 @@ You may observe output similar to the following, which displays a list of settin
 
 The output file is based on the default security base template and is ready to use. You can retain all settings, saving them in the output file, including those not supported on NGINX App Protect WAF, by including the --keep-full-configuration switch. Note, however, that when you do so, the system reports unsupported features as errors when you attempt to load the resulting output policy into NGINX App Protect WAF and fail. If you used the default installation settings, the file is saved as /opt/app_protect/bin/convert-policy. 
 
-Using the converter tool, let's now exapnd the *NginxDefaultPolicy.json* found on **NGINX-PLUS-1** instance. 
+Using the converter tool, let's now expand the *NginxDefaultPolicy.json* found on the **NGINX-PLUS-1** instance. 
 
 .. code-block:: bash 
 
