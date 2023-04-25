@@ -114,6 +114,16 @@ You may observe output similar to the following, which displays a list of settin
 
 The output file is based on the default security base template and is ready to use. You can retain all settings, saving them in the output file, including those not supported on NGINX App Protect WAF, by including the --keep-full-configuration switch. Note, however, that when you do so, the system reports unsupported features as errors when you attempt to load the resulting output policy into NGINX App Protect WAF and fail. If you used the default installation settings, the file is saved as /opt/app_protect/bin/convert-policy. 
 
+Using the converter tool, let's now expand the *NginxDefaultPolicy.json* found on the **NGINX-PLUS-1** instance. 
+
+.. code-block:: bash 
+
+   sudo /opt/app_protect/bin/convert-policy -i /etc/app_protect/conf/NginxDefaultPolicy.json -o view_base.json --full-export
+
+   {"warnings":[],"completed_successfully":true,"filename":"/home/lab/view_base.json","file_size":35859}
+
+You can open the file ``cat view_base.json`` to see all the settings of the *default* policy.
+
 User Defined Signatures Converter
 ---------------------------------
 
