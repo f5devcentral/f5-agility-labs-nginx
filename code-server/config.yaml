@@ -1,0 +1,8 @@
+ibind-addr: 0.0.0.0:8080
+auth: none
+password: f7acd02598357ad71e384fce
+cert: false
+user-data-dir: /home/user
+extention-dir: /home/code-server
+disable-telemtry: true
+disable-update-check: true

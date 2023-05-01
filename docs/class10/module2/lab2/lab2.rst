@@ -1,27 +1,35 @@
 Step 3 - Link the API GW and Dev Portal
 #######################################
 
-It is time to ``link`` the API-GW instance and Dev-Portal instance with NMS.
+It is time to ``link`` the API-GW and Dev-Portal instances with NMS.
 To do so, we will execute the Nginx Agent installer on both instances.
 
 Link the API-GW instance
 ========================
-
-#. In UDF, SSH or WEBSSH to ``NGINX Plus APIGW-1``
 #. In NMS UI, click on the ``API Cluster Gateway`` row (not the name link) to pop out the right frame with the commands to execute
 
    .. image:: ../pictures/lab2/api-cluster-curl.png
       :align: center
 
-#. Copy the cURL command, it should looks like this
+#. Copy the cURL command; it should look like this
 
    .. code-block:: bash
     
       curl -k https://10.1.1.6/install/nginx-agent > install.sh && sudo sh install.sh -g api-cluster && sudo systemctl start nginx-agent
       
    .. warning:: check the FQDN is 10.1.1.6 and not the UDF public proxy FQDN
+#. In UDF, SSH or WEBSSH to ``NGINX Plus APIGW-1``
 
-#. In the ``NGINX Plus APIGW-1`` SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
+   .. image:: ../pictures/lab2/apigw-udf-webshell.png
+      :align: center
+
+#. In the ``NGINX Plus APIGW-1`` SSH session, issue the ``nginx -T`` command to get a dump of the full NGINX configuration.  Note the relative lack of configuration on the data plane.  
+   
+   .. code-block:: bash
+      
+      nginx -T
+
+#. In the ``NGINX Plus APIGW-1`` SSH session, paste and execute the cURL command copied from NMS. You will see the below outcome at the end of the installation.
 
    .. code-block:: bash
 
@@ -43,15 +51,20 @@ Link the API-GW instance
 
 
 
+
 Link the Dev-Portal instance
 ============================
 
-#. In UDF, SSH or WEBSSH to ``Dev Portal``
-#. Similar to API-GW instance, click on the ``Developer Portal Clusters`` row and copy the cURL command.
+
+#. In the NSM UI, Like the API-GW instance, click the ``Developer Portal Clusters`` row and copy the cURL command.
 
    .. warning:: DO NOT CLICK ON ``Developer Portal Internal Clusters``
 
-#. The cURL command should looks like this
+   .. image:: ../pictures/lab2/devportal-curl.png
+      :align: center
+
+
+#. The cURL command should look like this
 
    .. code-block:: bash
 
@@ -59,7 +72,20 @@ Link the Dev-Portal instance
 
    .. warning:: Check that the FQDN is 10.1.1.6 and not the UDF public proxy FQDN
 
-#. On NGINX Dev-Portal SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
+#. In UDF, SSH or WEBSSH to ``Dev Portal``
+
+
+   .. image:: ../pictures/lab2/devportal-udf-webshell.png
+      :align: center
+
+
+#. In the ``NGINX Dev-Portal`` SSH session, again issue the ``nginx -T`` command to get a dump of the full NGINX configuration. 
+   
+   .. code-block:: bash
+      
+      nginx -T
+
+#. On the ``NGINX Dev-Portal`` SSH session, paste and execute the cURL command. You will see the below outcome at the end of the installation.
 
    .. code-block:: bash
 
@@ -108,9 +134,9 @@ Check instances connectivity with NMS
 Wait for the environment to be GREEN
 ====================================
 
-#. Switch back to your Infrastructure Environment screen. And check the ``Job Status``
+#. Switch back to your Infrastructure team-sentence Workspace screen. And check the ``Job Status``
 
-   .. note :: If you don't see the column ``Job Status``, scroll to the right, the column is hidden because of the Win10 RDP low résolution.
+   .. note :: If you don't see the column ``Job Status``, scroll to the right; the column is hidden because of the Win10 RDP low resolution.
 
 #. Wait till it passes to ``Success``. This can take several minutes.
 

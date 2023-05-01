@@ -1,0 +1,11 @@
+{
+  "versionMetaTimestamp": 1523306837369,
+  "latestVersion": {
+    "name": "Latest",
+    "url": "/training/community/template/html/"
+  },
+  "otherVersions": [
+    { "name": "Develop", "url": "/training/community/template/html/develop/"},
+    { "name": "2020", "url": "/training/community/template/html/2019/"}
+  ]
+}

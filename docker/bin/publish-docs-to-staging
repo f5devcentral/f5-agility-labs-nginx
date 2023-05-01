@@ -1,0 +1,57 @@
+#!/bin/bash
+
+build_env="$1"
+shift
+
+usage() {
+  cat <<EOF
+Usage: $0 <build env>
+<build env> options:    gitlab
+                        travis
+Publish the container solution docs in docs/_build/html to clouddocs.f5networks.net.
+EOF
+}
+die() {
+  printf "%s\n" "$*" >&2
+
+  usage
+
+  exit 1
+}
+
+set -e
+
+# define the path for the docs in staging s3 bucket based on build environment
+if [ "$build_env" == "gitlab" ]; then
+   # the GitLab CI project path: namespace/project-name/build-id
+    STAGING_PATH="$CI_PROJECT_PATH_SLUG/$CI_BUILD_ID" ; elif
+    [ "$build_env" == "travis" ]; then
+   # the Travis CI project path: owner-name/repo-name/build-number
+    STAGING_PATH="$TRAVIS_REPO_SLUG/$TRAVIS_BUILD_NUMBER"; else
+    die "Provide the name of your CI build environment: travis or gitlab"
+fi
+
+[ "$AWS_ACCESS_KEY_ID" != "" ] || die "AWS_ACCESS_KEY_ID variable not found"
+[ "$AWS_SECRET_ACCESS_KEY" != "" ] || die "AWS_SECRET_ACCESS_KEY variable not found"
+[ "$AWS_S3_BUCKET" != "" ] || die "AWS_S3_BUCKET variable not found"
+
+if [ "$AWS_S3_BUCKET" == "clouddocs.f5.com" ]; then
+   die "Publishing to the production site is not allowed. Change your AWS_S3_BUCKET variable and try again."
+fi
+
+DOCS_PATH="docs/_build/html"
+
+if [ "$BUILD_HTML_DIR" != "" ]; then
+    DOCS_PATH=$BUILD_HTML_DIR
+fi
+
+[ -d $DOCS_PATH ] || die "Docs build output not found in docs/_build/html.\n Set BUILD_HTML_DIR to use a custom location."
+
+# Don't set this until after the AWS variables are checked, to keep the secrets
+# out of the logs
+set -x 
+
+aws s3 cp \
+  $DOCS_PATH \
+  s3://$AWS_S3_BUCKET/under-review/$STAGING_PATH \
+  --recursive

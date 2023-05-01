@@ -1,5 +1,5 @@
 Lab 2.1 - Using the included GIST you will set up and configure RKE 2 and NGINX Ingress Cotroller
-==========================================
+==================================================================================================
 
 To begin Ensure that your UDF pattern is fully operational by selecting the "Components" tab in your UDF pattern. All items in this view should have a greed bar allow the bottom.
 

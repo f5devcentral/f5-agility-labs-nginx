@@ -1,8 +1,7 @@
-Module 5 - Advanced features
-============================
+Module 5 - Advanced Tools and Features
+======================================
 
-In this class, we will advanced features offered by the latest NAP release.
-
+In this class, you will learn about advanced tools and features offered by the latest NAP release. As NGINX App Protect WAF and NGINX Management Suite release new features, this section of the lab will grow.
 
 .. toctree::
    :caption: Content:
@@ -10,4 +9,5 @@ In this class, we will advanced features offered by the latest NAP release.
    :glob:
 
    lab*/lab*
+
 

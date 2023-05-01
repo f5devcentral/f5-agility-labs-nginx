@@ -1,7 +1,7 @@
 Adding the NGINX Plus with App Protect Instance to NGINX Management Suite
 =========================================================================
 
-Since our lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
+Since this lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
 
 .. warning:: If you're installing the NGINX Agent in your environment, a few steps are required before starting the installation process. See https://docs.nginx.com/nginx-management-suite/nginx-agent/install-nginx-agent/ for more information. In this lab, these have been checked for you.
 
@@ -19,6 +19,8 @@ Since our lab utilizes NMS, we're going to install the NGINX Agent and add the i
 
 3. Configure the NGINX Agent
 
+Now you'll need to configure NGINX Agent to perform additional tasks for NGINX App Protect. 
+
 Load the file into a file editor:
 
 .. code-block:: bash
@@ -26,6 +28,8 @@ Load the file into a file editor:
   sudo nano /etc/nginx-agent/nginx-agent.conf
 
 Add the following configuration block to the end of the file:
+
+.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces to ensure no errors occur.
 
 .. code-block:: bash
 
@@ -35,46 +39,83 @@ Add the following configuration block to the end of the file:
     report_interval: 15s
     # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
+  # NGINX App Protect Monitoring config
+  nap_monitoring:
+    # Buffer size for collector. Will contain log lines and parsed log lines
+    collector_buffer_size: 50000
+    # Buffer size for processor. Will contain log lines and parsed log lines
+    processor_buffer_size: 50000
+    # Syslog server IP address the collector will be listening to
+    syslog_ip: "127.0.0.1"
+    # Syslog server port the collector will be listening to
+    syslog_port: 514
 
-4. Start the NGINX Agent:
+Prior to saving, your screen should look the same as below:
+
+.. image:: images/nginx_agent_conf_edits.png
+
+Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
+
+In this example, we've configured NGINX Agent to:
+
+- check for configuration changes every 15 seconds
+- allow for precompiled policies, meaning that NMS will compile the policy before sending to the NGINX Plus/NAP instance
+- Enable large buffers for NGINX App Protect Monitoring
+- Enable NGINX Agent to run a syslog daemon that will forward logs to NMS Security Monitoring
+
+4. Start the NGINX Agent and set to start at boot:
 
 .. code-block:: bash
 
-  sudo systemctl start nginx-agent
+  sudo systemctl enable --now nginx-agent
 
-1. Set the NGINX Agent to start at boot:
+Create the Metrics service on NGINX
+-----------------------------------
 
-.. code-block:: bash
+The NGINX Agent is now configured and started. We'll need a few more configuration pieces to finish the installation.
 
-  sudo systemctl enable nginx-agent
+5. Switch to **Firefox**, if already open, or open **Firefox** by selecting **Applications** > **Favorites** > **Firefox** from the top menu bar.
 
-6.  Create the Metrics service on NGINX. Return to the NMS Dashboard and click on **Instances** in the **Instance Manager** to view the instance list.
+.. image:: images/firefox_launch.png
 
-.. image:: images/nms_dashboard.png
+6. Click the NMS bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
 
-7. Click **Refresh** in the toolbar. The second instance should now appear in the list.
+.. image:: images/launch_nms.png
+
+7. Log in using the **lab** / **Agility2023!** credentials.
+
+.. image:: images/login.png
+
+8. Click on the **Instance Manager** tile to launch NIM. 
+
+.. image:: images/nim_tile.png
+
+9. You should now see second instance in the list. Click **Refresh** in the toolbar if you do not see the new instance.
 
 .. image:: images/nms_refresh_result.png
 
-8.  Click the **nginx-plus-2.agility.lab** instance in the list. 
+10. Click the **nginx-plus-2.agility.lab** instance in the list. 
 
 .. image:: images/nginx_plus_2_detail.png
 
-9.  Click the **Edit Config** button.
+11. Click the **Edit Config** button.
 
 .. image:: images/edit_button.png
 
-10. Click on **Add File** button in the navigation pane.
+12. Click on **Add File** button in the navigation pane.
+
+.. |expand_button| image:: images/expand_button.png
+   :scale: 25%
+
+.. note:: If you do not see the **Add File** button on the toolbar, click the |expand_button| **expand** button.
 
 .. image:: images/add_file_button.png
 
-11.  Provide the filename **/etc/nginx/conf.d/metrics.conf**.
+13. Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
 
-.. image:: aimages/filename_prompt.png
+.. image:: images/filename_prompt.png
 
-12.  Click **Create**.
-
-13.  Paste the following configuration into the editor:
+14. Paste the following configuration into the editor:
 
 .. code-block:: bash
 
@@ -92,38 +133,33 @@ Add the following configuration block to the end of the file:
 
 .. image:: images/file_contents.png
 
-14. Click the **Publish** button.
+15. Click the **Publish** button.
 
 .. image:: images/publish_button.png
 
-15. Click **Publish** when presented with the confirmation prompt.
+16. Click **Publish** when presented with the confirmation prompt.
 
 .. image:: images/publish_confirm.png
 
-16. You will see the Published notification shortly after. 
+17. You will see the Published notification shortly after. 
 
 .. image:: images/published_notification.png
 
-17. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
+18. Return to the SSH terminal to the NGINX Plus 2 instance. Restart NGINX:
 
 .. code-block:: bash
-  sudo nginx -s reload
 
-18. Start and Enable NGINX Agent
+   sudo nginx -s reload
+
+19. Restart the NGINX Agent
 
 To start the NGINX Agent on systemd systems, run the following command:
 
 .. code-block:: bash
 
-  sudo systemctl start nginx-agent
+   sudo systemctl restart nginx-agent
 
-To enable the NGINX Agent to start on boot, run the following command:
-
-.. code-block:: bash
-
-  sudo systemctl enable nginx-agent
-
-19. Verifying NGINX Agent is Running and Registered
+20. Verifying NGINX Agent is Running and Registered
 
 Run the following command on your data plane to verify that the NGINX Agent process is running:
 
@@ -135,8 +171,4 @@ You should see output that looks similar to the following example:
 
 .. image:: images/nginx_agent_ps_aux_result.png
 
-20. Once you’ve verified the NGINX Agent is running on your data plane, you should confirm it’s registered with Instance Manager. Open the NGINX Management Suite web interface and log in. The registered instance is shown in the Instances list.
-
-.. image:: images/nginx_instances_result.png
-
-Once you see the **NGINX Plus 2** instance listed in the NMS Instances list, this section of the lab is complete.
+This section of the lab is complete.

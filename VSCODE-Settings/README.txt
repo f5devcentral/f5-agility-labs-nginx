@@ -1,0 +1,2 @@
+In the settings.json file within this folder you will find directives that will work with the Code-Server that runs from the Agility Docs Docker image.
+These can also be used in the desktop VS Code client to setup the RST extentions for processing and Linting.  Paths per your build need to be reviewed.

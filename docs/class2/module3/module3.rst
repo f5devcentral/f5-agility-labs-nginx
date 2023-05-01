@@ -33,7 +33,7 @@ processes are signaled to terminate, and the new set takes over. For
 more information, please see: \ `Controlling NGINX <https://nginx.org/en/docs/control.html>`__
 
 CI/CD flowchart
---------------
+---------------
 
 **The diagrams below depicts the workflow from code to deployment.**
 

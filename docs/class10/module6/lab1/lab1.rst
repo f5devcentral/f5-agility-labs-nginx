@@ -8,7 +8,7 @@ Check the doc for Version 2
 #. Connect to the Developer Portal
 #. Click on ``APIs`` and select the ``sentence-api``. 
 
-   .. note :: You can notice the 2 versions for the same API (v1 and v2)
+   .. note :: You can notice the two versions for the same API (v1 and v2)
       
       .. image:: ../pictures/lab1/home-versions.png
          :align: center

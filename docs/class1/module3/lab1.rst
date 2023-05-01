@@ -48,7 +48,7 @@ In this section, we will use **Postman** to interact with the NGINX API.
 In the Optional section below, we can reproduce the same steps using
 **curl**
 
-#. Open **Postman** using the shortcut found on the desktop.
+#. Open **Postman** using the shortcut found on the desktop.  If prompted to update Postman click on **Dismiss**.
 
    .. image:: ../images/Postman1_2020-08-26.png
 
@@ -269,7 +269,7 @@ In this section, we will use **curl** to interact with the NGINX API.
 
     .. note:: You should see output similar to the following
     
-      .. code:: json
+    .. code:: json
 
         {
           "postgresql_backends": {
@@ -310,7 +310,7 @@ In this section, we will use **curl** to interact with the NGINX API.
                 "active": 0,
                 "connections": 9250,
 
-                # Trimmed..
+               } 
 
 #. Using **curl** and **jq**, make a request to the API endpoint,
    **/api/api-version/ssl/** to retrieve SSL/TLS statistics
