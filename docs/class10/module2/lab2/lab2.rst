@@ -23,7 +23,7 @@ Link the API-GW instance
    .. image:: ../pictures/lab2/apigw-udf-webshell.png
       :align: center
 
-#. In the ``NGINX Plus APIGW-1`` SSH session, issue the ``nginx -T`` command to get a dump of the full NGINX configuration.  Note the relative lack of configuration on the data plane.  
+#. In the ``NGINX Plus APIGW-1`` SSH session, issue the ``nginx -T`` command to get a dump of the full NGINX configuration.  Note the relative lack of configuration on the data plane.  (If you are seeing permission issues, you may need to utilize SUDO priviliges to execute the nginx -T command.)
    
    .. code-block:: bash
       

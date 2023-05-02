@@ -14,8 +14,6 @@ In this lab we will configure our services to use JSON Web Tokens (JWTs) to auth
    
    In the following labs, Keycloak is already configured to issue JWT tokens for developers.
 
-.. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the APIKEY policy before enabling the JWT policy.
-
 Add JWT Policy on API-Proxy
 ===========================
 
@@ -105,4 +103,4 @@ Test JWT auth out with Postman
 
 .. note:: Congratulations, you configured your API Gateway to validate the JWT token from Keycloak.
 
-.. note:: Check your Version 1 is still using API Key authentication.
+.. note:: Check your Version 1 is still using API Key authentication.  Note the ``/colors`` endpoint is not available v1.
