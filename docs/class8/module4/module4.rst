@@ -6,7 +6,7 @@ Launch HTTP Flood Attack
 
 We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apache Benchmark.
 
-1. SSH (WebShell) into "Attacker (10.1.1.1)" VM.
+1. Open WebShell to the 'Attacker VM' (UDF > Components > Systems > Attacker > Access > Web Shell)
 2. Launch L7 DOS attacks.
 
    ``cd /scripts``
@@ -23,7 +23,7 @@ Output:
    
    ``JUICESHOP HTTP Code:000``
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+Go to "ELK" VM, navigate to "Access" and select "KIBANA" (UDF > Components > Systems > elk > Access > Kibana)
 
 .. image:: access-kibana.jpg
 
@@ -43,7 +43,7 @@ Output:
 
 Stop the attack. Use Ctrl+C.
 
-Verify in ELK that attack ended. Wait for black line in ELK graphs.
+**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
 
 Perform Slow HTTP Attack with slowhttptest tool
 ===============================================
@@ -59,10 +59,10 @@ We will demonstrate a Slow POST attack using slowhttptest tool.
 
 Slow POST attack: Slowing down the HTTP message body, making the server wait until all content arrives according to the Content-Length header; or until the final CRLF arrives.
 
-1. SSH (WebShell) into "Attacker (10.1.1.1)" VM.
+1. Open WebShell into "Attacker (10.1.1.11)" VM (UDF > Components > Systems > Attacker > Access > WebShell)
 
 2. Launch Slow POST Attack
-!!!!!Make sure previous attack ended before launching Attack
+!!!!!Make sure previous attack ended before launching Attack (**Wait for the vertical black line in ELK graphs**)
    
    ``cd /scripts``
    
@@ -107,7 +107,7 @@ Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Veri
 
 Stop the attack. Use Ctrl+C.
 
-Verify in ELK that attack ended. Wait for black line in ELK graphs.
+**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
 
 Launch HTTP/2 Flood attack on gRPC service
 ==========================================
@@ -152,7 +152,7 @@ Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Veri
 
 Stop the attack. Use Ctrl+C.
 
-Verify in ELK that attack ended. Wait for black line in ELK graphs.
+**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
 
 Launch Message flood DoS by gRPC
 ================================
@@ -209,7 +209,7 @@ Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Veri
 
 Stop the attack. Use Ctrl+C.
 
-Verify in ELK that attack ended. Wait for black line in ELK graphs.
+**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
 
 Launch Slow gRPC POST
 =====================
@@ -235,4 +235,4 @@ Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Veri
 
 Stop the attack. Use Ctrl+C.
 
-Verify in ELK that attack ended. Wait for black line in ELK graphs.
+**Wait for the vertical black line in the ELK Dashboards** which indicates the end of the attack.
