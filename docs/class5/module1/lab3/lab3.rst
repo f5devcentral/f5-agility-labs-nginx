@@ -20,7 +20,7 @@ There are two components to NGINX App Protect within NMS:
 
 .. image:: images/nap_click.png
 
-5. You should see a list of existing WAF policies. You can see three policies configured. Notice that only the **AgilityPolicy** is applied to an application. Click on the policy name to view more details.
+5. You should see a list of existing WAF policies. You can see four policies configured. Notice that only the **AgilityPolicy** is applied to an application. Click on the policy name to view more details.
 
 .. image:: images/nap_policy_list.png
 
