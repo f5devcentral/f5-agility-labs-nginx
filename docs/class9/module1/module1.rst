@@ -1,5 +1,5 @@
 Installing Prerequisites:
-========================
+=========================
 
 This exercise will cover installing the Nginx JavaScript Module (njs) which is required for handling the interaction between NGINX Plus and the OpenID Connect provider (IdP). 
 
@@ -108,7 +108,7 @@ Create a clone of the nginx-openid-connect GitHub repository
 	
 
 Configuring the IdP Keycloak:
-============================
+=============================
    
 .. note:: 
    These next steps will guide you through creating a keycloak client for NGINX Plus in the Keycloak GUI
@@ -138,7 +138,7 @@ http://idp.f5lab.com:8080
 .. image:: ../images/ualab07.png
    
 Create a Keycloak client for NGINX Plus in the Keycloak GUI:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. In the left navigation column, click Clients. 
 
 .. image:: ../images/keycloak_click_clients.png
@@ -166,9 +166,7 @@ Valid Redirect URIs - http://nginxdemo.f5lab.com:8010/_codexch
 .. image:: ../images/ualab09.png
 
 .. note::
-	For production, we strongly recommend that you use SSL/TLS (port 443).*
-   *The port number is mandatory even when you’re using the default port for HTTP (80) or HTTPS (443).*
-
+	For production, we strongly recommend that you use **SSL/TLS (port 443)**. The port number is **mandatory** even when you’re using the default port for HTTP (80) or HTTPS (443). 
 	Valid Redirect URIs – The URI of the NGINX Plus instance, including the port number, and ending in /_codexch
 
 5. Click the Credentials tab and make a note of the value in the Secret field. You will copy it into the NGINX Plus configuration file.
@@ -319,14 +317,95 @@ You should now see the webservice!!!!!! You've been logged in and the browser ha
 .. image:: ../images/verificaion_webservice.png
 
 
+Manage NGINX Plus with Instance Manager
+=======================================
+
+The OIDC authentication is working correctly. Now we will manage our NGINX Plus deployment with Instance Manager
+
+1. Open a new tab in Firefox and put https://10.1.1.6 into the browser url field and launch the page.   
+
+.. image:: ../images/nms_login.png
+
+2. Sign into Instance Manager as admin. The username/password are saved in the browser so the fields should autopopulate.
+
+.. image:: ../images/nms_admin_login.png
+
+3. Once you are signed in, click on the instance manager module.
+
+.. image:: ../images/nms_modules.png
+
+4. Once directed to main console page of NGINX Instance Manager, you will see the instructions on how to add NGINX instances to Instance Manager.
+
+.. image:: ../images/instance_manager_main.png
+
+5. Copy and run the below command on the nginx server to install the agent
+
+.. code:: shell
+
+	curl -k https://10.1.1.6/install/nginx-agent | sudo sh
+
+6. Once the installation is complete, start the nginx agent
+
+.. code:: shell
+
+	sudo systemctl start nginx-agent
+
+7. Now let's revisit the instance manager console and refresh the page. We should see the instance under the 'Instances' tab. 
+
+.. image:: ../images/instance_manager_instances.png
 
 
+8. Clicking on the instance will show installation details and metrics
 
+.. image:: ../images/instance_manager_details.png  
+
+
+9. Now we can click on the Edit Config button to view and apply config changes to our NGINX Plus authenticator. We will update the frontend.conf config file to leverage JWT claims for Logging and Rate Limiting. First we will extend the logging format with two additional fields, $jwt_header_alg and $jwt_claim_aud. Then we will publish the config to the nginx instance.
+
+.. image:: ../images/instance_manager_logs_publish.png
+
+10. You should receive a green notification banner confirming the config publication was successful 
+
+.. image:: ../images/instance_manager_notify_logs.png 
+
+11. Now we can switch tabs and log back into our nginx backend application and hit the refresh button a few times
+
+.. image:: ../images/browser_refresh.png
+
+12. Now we if we check to see nginx log files, we will see new log entries including the two aditional fields added in the configuration. You should see RS256 and agility2023 as the signature algorithm and audience claim respectively.  
+
+.. code:: shell
+
+	tail -n 30 /var/log/nginx/access.log
+
+.. image:: ../images/nginx_access_logs.png
+
+13. Next we will update the frontend.conf file to add rate limiting based on the audience JWT claim presented by the user. First we define the rate limit in the http context with the following line
+
+.. code:: shell
+
+	limit_req_zone $jwt_claim_aud zone=10rpm_per_aud:1m rate=10r/m;
+
+And then we instantiate the rate limit in the location block where nginx will serve the authenticated users with the following lines 
+
+.. code:: shell
+
+	limit_req zone=10rpm_per_aud;
+
+We will include both lines in the Instance Manager config manager console as such and publish the configuration
+
+
+.. image:: ../images/instance_manager_rpm.png
+
+14. Once the config is successfully published, switch to the firefox browser and refresh the nginx application a few times. You should get 503 response pages triggered when you surpass the rate limit of 10 requests per minute.  
+
+.. image:: ../images/browser_refresh_503.png
 
 
 
 
 
 	
-	
+ 
+
 

@@ -46,7 +46,7 @@ Exercise 1: Install NGINX Plus
 ------------------------------
 
 #. In the **WORKSPACE** folder found on the desktop, open the
-   **NGINX-PLUS-3** workspace shortcut in Visual Studio Code.
+   **NGINX-PLUS-3** workspace by double clicking the NGINX-PLUS-3 file.  This will start an instance of Visual Studio Code.
 
    **Select Workspace**
 
@@ -87,14 +87,21 @@ Exercise 1: Install NGINX Plus
 
       .. code:: bash
 
-         mkdir -p /etc/ssl/nginx 
-         cp nginx-repo.* /etc/ssl/nginx 
-         wget http://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key 
-         apt-get install apt-transport-https lsb-release ca-certificates 
-         printf "deb https://plus-pkgs.nginx.com/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-plus.list 
-         wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90nginx 
-         apt-get update 
-         apt-get -y install nginx-plus 
+         mkdir -p /etc/ssl/nginx
+         cp nginx-repo.* /etc/ssl/nginx
+         wget http://nginx.org/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
+         apt-get install apt-transport-https lsb-release ca-certificates wget gnupg2 ubuntu-keyring
+
+         wget -qO - https://cs.nginx.com/static/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+         wget -qO - https://cs.nginx.com/static/keys/app-protect-security-updates.key | gpg --dearmor | sudo tee /usr/share/keyrings/app-protect-security-updates.gpg >/dev/null
+
+         printf "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] https://pkgs.nginx.com/plus/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-plus.list
+
+         wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90pkgs-nginx
+
+         apt-get update
+
+         apt-get install -y nginx-plus
 
 #. Verify the version of NGINX Plus that was installed:
 
@@ -151,7 +158,7 @@ In this exercise, we will review and configure NGINX Plus as a basic load
 balancer and test/verify configured functionality.
 
 #. If you have closed VSCode, once again, open the **WORKSPACE** folder found on
-   the desktop, open the **NGINX-PLUS-3** workspace shortcut in Visual Studio
+   the desktop, double click the **NGINX-PLUS-3** workspace shortcut to open Visual Studio
    Code.
 
    .. image:: ../images/2020-06-29_20-56.png

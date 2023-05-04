@@ -6,10 +6,8 @@ Overview
 
 NGINX App Protect DoS provides various monitoring tools for your application:
 
-* The interactive DoS Dashboard page - a real-time live activity monitoring interface that shows status and
-information of your Protected Objects.
-* NGINX App Protect DoS REST API - an interface that can obtain extended metrics information of your
-Protected Objects.
+* The interactive DoS Dashboard page - a real-time live activity monitoring interface that shows status and information of your Protected Objects.
+* NGINX App Protect DoS REST API - an interface that can obtain extended metrics information of your Protected Objects.
 
 Example configuration
 ---------------------

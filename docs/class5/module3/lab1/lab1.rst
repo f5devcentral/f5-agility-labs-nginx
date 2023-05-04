@@ -1,103 +1,74 @@
-Step 6 - Build your first NAP (NGINX App Protect) Docker image
-##############################################################
+Review the Arcadia Finance Micro-Services-Based App Deployment
+==============================================================
 
-In this lab, we will build the NAP Docker image via command line.
+In this section, we'll review the Arcadia Finance application and then NGINX Plus Ingress Controller with App Protect deployment in Kubernetes.
 
-**Follow the steps below to build the Docker image:**
+To visualize the application deployment, we've setup an open source utility named Argo Continuous Deployment, or Argo CD for short.
 
-   #. SSH/vscode/webshell to the Docker App Protect + Docker repo VM
-   #. Change directory to ``cd /home/ubuntu/lab-files``
+Argo CD is a Kubernetes-native continuous deployment (CD) tool. Unlike external CD tools that only enable push-based deployments, Argo CD can pull updated code from Git repositories and deploy it directly to Kubernetes resources. It enables developers to manage both infrastructure configuration and application updates in one system.
 
-      .. note:: Feel free to replace the date with the current date, but be sure to be consistent or commands will fail.
+Argo CD offers the following key features and capabilities:
+ - Manual or automatic deployment of applications to a Kubernetes cluster.
+ - Automatic synchronization of application state to the current version of declarative configuration.
+ - Web user interface and command-line interface (CLI).
+ - Ability to visualize deployment issues, detect and remediate configuration drift.
+ - Role-based access control (RBAC) enabling multi-cluster management.
+ - Single sign-on (SSO) with providers such as GitLab, GitHub, Microsoft, OAuth2, OIDC, LinkedIn, LDAP, and SAML 2.0
+ - Support for webhooks triggering actions in GitLab, GitHub, and BitBucket.
 
+1. To get started, open Firefox on the jump host RDP session.
 
-   #. Run the command:
+.. image:: images/jump_host_firefox.png
 
-      .. code-block:: bash
-       
-         docker build --tag app-protect:04-aug-2021 .
+2. Click on the Argo CD bookmark or navigate to https://argocd.agility.lab:30008/login.
 
-      .. note:: There is a "." (dot) at the end of the command (which is an alias for ``$PWD`` current directory). This tells docker the that the resources for building the image are in the current directory.
+.. image:: images/argo_bookmark.png
 
-      .. note:: By default, when you run the docker build command, it looks for a file named ``Dockerfile`` in the current directory. To target a different file, pass -f flag.
+3. Log into Argo using the **lab** / **Agility2023!** credentials.
 
-   #. Wait until you see the message: ``Successfully tagged app-protect:04-aug-2021``
+.. image:: images/argo_login.png
 
-      
-      .. code-block:: Dockerfile
-         :caption: Here is the code that docker will read and build the image from:
+4. When Argo loads, you will see tiles that contain applications that are deployed in Kubernetes. Click on the **Arcadia** app tile.
 
-         #For CentOS 7
-         FROM centos:7.4.1708
+.. image:: images/argocd_application_tiles.png
 
-         # Download certificate and key from the customer portal (https://cs.nginx.com)
-         # and copy to the build context
-         COPY nginx-repo.crt nginx-repo.key /etc/ssl/nginx/
+5. The Arcadia app consists of several containerized micro-services.
 
-         # Install prerequisite packages
-         RUN yum -y install wget ca-certificates epel-release
+In the Application Tree, which is the default tab in the application view, you can see the individual containers and the components that make up the service.
 
-         # Add NGINX Plus repo to yum
-         RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/nginx-plus-7.repo
-         RUN wget -P /etc/yum.repos.d https://cs.nginx.com/static/files/app-protect-security-updates-7.repo
+.. image:: images/arcadia_application_tree.png
 
-         # Install NGINX App Protect
-         RUN yum -y install app-protect app-protect-attack-signatures\
-            && yum clean all \
-            && rm -rf /var/cache/yum \
-            && rm -rf /etc/ssl/nginx
+6. Click on the **Pods** icon:
 
-         # Forward request logs to Docker log collector:
-         RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-            && ln -sf /dev/stderr /var/log/nginx/error.log
+.. image:: images/pods_icon.png
 
-         # Copy configuration files:
-         COPY nginx.conf custom_log_format.json /etc/nginx/
-         COPY entrypoint.sh  /root/
+Here you can see the Kubernetes pods that are running the Arcadia Finance containers. 
 
-         CMD ["sh", "/root/entrypoint.sh"]
+.. image:: images/arcadia_application_pods.png
 
+7. Finally, click on the **Network** icon:
 
+.. image:: images/network_icon.png
 
-      .. code-block:: bash
-         :caption: entrypoint.sh
+This screen shows how traffic flows to the containers running the micro-services.
 
-         #!/usr/bin/env bash
+.. image:: images/arcadia_application_network.png
 
-         /bin/su -s /bin/bash -c '/opt/app_protect/bin/bd_agent &' nginx
-         /bin/su -s /bin/bash -c "/usr/share/ts/bin/bd-socket-plugin tmm_count 4 proc_cpuinfo_cpu_mhz 2000000 total_xml_memory 307200000 total_umu_max_size 3129344 sys_max_account_id 1024 no_static_config 2>&1 >> /var/log/app_protect/bd-socket-plugin.log &" nginx
-         /usr/sbin/nginx -g 'daemon off;'
+8. Now that you seen the power of Argo CD, lets review the manifest files for the infrastructure side of the lab. Under **Applications** look for the **nginx-plus-ingress** tile.
 
+.. image:: images/ic-app.png
 
+9. On the top right, click on the **List** icon: 
+    
+.. image:: images/list.png 
 
-         .. note:: Please take time to understand what we ran.
+This list shows all the configuration parts that make the ingress controller work. 
 
+.. image:: images/ic-list.png
 
+10. Scroll to the bottom of the page to expand the items per page to 15 and take note of the *Custom Resource Definitions (CRDs)* installed with NGINX Plus Ingress. 
 
-   #. Create a container with the image, run: 
+.. image:: images/ic-expand-crd.png
 
-      .. code-block:: bash
+These CRDs power **VirtualServer**, **VirtualServerRoute**, **TransportServer**, and **Policies**.
 
-         docker run --interactive --tty --rm --name app-protect -p 80:80 --volume /home/ubuntu/lab-files/nginx.conf:/etc/nginx/nginx.conf --volume /home/ubuntu/lab-files/conf.d:/etc/nginx/conf.d app-protect:04-aug-2021
-
-
-      .. note:: The container takes about 45 seconds to start, wait for a message "event": "waf_connected" before continuing.
-
-   #. We will leave this terminal running while we perform some tests. When debugging a container, it is often better to not run it detached (-d command) so we can see if it fails immediately. Many times when a container exists immediately it is because of a missing file, or an error in your NGINX configuration.
-
-      .. note:: If you choose to run it detached, you can follow the logs with ``docker logs --follow app-protect``
-
-   #. Note the signature package date in the output logs.
-         ``2021/08/02 14:15:52 [notice] 13#13: APP_PROTECT { "event": "configuration_load_success", "software_version": "3.583.0", "user_signatures_packages":[],"attack_signatures_package":{"revision_datetime":"2021-07-13T09:45:23Z","version":"2021.07.13"},"completed_successfully":true}``
-
-.. note:: Congratulations, you are running NGINX App Protect with the latest signature package.
-
-**Video of this lab (force HD 1080p in the video settings)**
-
-.. note :: You may notice some differences between the video and the lab. When I did the video, the Dockerfile was different. But the concept remains the same.
-
-.. raw:: html
-
-    <div style="text-align: center; margin-bottom: 2em;">
-    <iframe width="1120" height="630" src="https://www.youtube.com/embed/7o1g-nY2gNY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    </div>

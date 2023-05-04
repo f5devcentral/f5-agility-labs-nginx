@@ -1,0 +1,48 @@
+#!/bin/bash
+
+cloud_path="$1"
+shift
+version="$1"
+shift
+
+usage() {
+  cat <<EOF
+Usage: $0 <cloud_path> <version>
+
+Sync the files in docs/_build/html to the production S3 bucket for clouddocs.f5.com at
+/cloud/'cloud_path'/'version'
+
+'cloud_path' is the clouddocs.f5.com path your documentation should publish to (e.g., openstack, public).
+EOF
+}
+die() {
+  printf "%s\n" "$*" >&2
+
+  usage
+
+  exit 1
+}
+
+set -e
+
+[ -n "$cloud_path" ] || die "Cloud path not provided"
+[ "$AWS_ACCESS_KEY_ID" != "" ] || die "AWS_ACCESS_KEY_ID variable not found"
+[ "$AWS_SECRET_ACCESS_KEY" != "" ] || die "AWS_SECRET_ACCESS_KEY variable not found"
+[ "$AWS_S3_BUCKET" != "" ] || die "AWS_S3_BUCKET variable not found"
+
+DOCS_PATH="docs/_build/html"
+
+if [ "$BUILD_HTML_DIR" != "" ]; then
+    DOCS_PATH=$BUILD_HTML_DIR
+fi
+
+[ -d $DOCS_PATH ] || die "Docs build output not found in docs/_build/html.\n Set BUILD_HTML_DIR to use a custom location."
+
+# Don't set this until after the AWS variables are checked, to keep the secrets
+# out of the logs
+set -x
+
+printf "Deploying docs from $DOCS_PATH to clouddocs.f5.com @ /cloud/${cloud_path}/${version}"
+aws s3 sync \
+  $DOCS_PATH \
+  s3://$AWS_S3_BUCKET/cloud/${cloud_path}/${version}

@@ -1,39 +1,137 @@
-Step 14 - Explore the lab tools for monitoring NGINX Plus
-#########################################################
+Attack Signature Report Tool
+============================
 
-#. In the browser, click ``Arcadia links>WAF NGINX Ingress`` bookmark (you may have to refresh on the browser if you get an error)
-#. You are now connected to the Arcadia App through the Kubernetes Ingress Controller with NAP
-#. Send an attack (like a XSS in the address bar) by appending ``?a=<script>``
-#. Open ``Kibana`` bookmark and click on ``Discover`` to view the logs
+The Attack Signature Report tool scans the system for attack signatures and generates a JSON report file that includes information about these signatures.
 
-    .. image:: ../pictures/kibana_WAF_log.png
-        :align: center
+This tool can be deployed and used independently of the NGINX App Protect WAF deployment, by installing the compiler package as a standalone, in order to generate a report about either the default signatures included in the package, or signatures included in a signature update package. The latter can be obtained by running the tool on a standalone compiler deployment, after installing a new signature update package on top of the compiler package. These reports can then be compared for greater clarity regarding signature updates.
 
-#. View the dashboard in Kibana: ``Firefox>Kibana>Dashboard>Overview``
+.. note:: You can install the compiler package as a standalone by using the compiler Docker image as explained here: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/#converter-tool-docker-image
 
-    .. note:: While monitoring is not solely an API security concern, having a real-time dashboard is helpful in understanding current issues and traffic load. In the following steps, we will look at the NGINX Plus dashboard to see how it can help.
+In addition, this report can be used for reporting or troubleshooting purposes or for auditing/tracking changes for signature updates on the NGINX App Protect WAF deployment itself.
 
-#. In the browser, open ``NGINX Plus Dashboards>k8s NGINX+ Dashboard``
+The usage of the utility is as follows:
 
-#. Note the tab for ``HTTP Zones`` where we can see the Ingresses and VirtualServers deployed for ``k8s.arcadia-finance.io`` and the real-time metrics. You can change the refresh interval by clicking the gear in the upper-right corner.
+.. code-block:: bash
 
-    .. image:: ../pictures/nginx-plus-dashboard.png
-        :align: center
+  USAGE:
+      /opt/app_protect/bin/get-signatures <arguments>
 
+    Required arguments:
+      --outfile|o='/path/to/report-file.json'
+        File name to write signature report.
 
-#. At the top of the menu, click the link for ``HTTP Upstreams``. Here you can see the pods that are part of each of the Arcadia micro-services.
+    Optional arguments:
+      --fields|f='list,of,fields'
+        Comma separated list of desired fields.
+        Available fields:
+        name,signatureId,signatureType,attackType,accuracy,tag,risk,systems,hasCve,references,isUserDefined,description,lastUpdateMicros
 
-    .. image:: ../pictures/nginx-plus-dashboard-upstreams.png
-        :align: center
+Example of generating a signature report (with all signature details):
 
+.. code-block:: bash
 
-    .. note:: We have only deployed 1 pod per service. In production environments, it is common for there to be many pods per service and the KIC will load balance them.
+  /opt/app_protect/bin/get-signatures -o /path/to/signature-report.json | jq
 
-#. Optional: Scale the ``app2`` deployment to 3 pods and view the dashboard again.
+You may observe output similar to the following:
 
-    .. code-block:: BASH
-    
-       kubectl scale deployment app2 --replicas 3
-    
+.. code-block:: json
 
-    .. note:: When pods are scaled up and down, NGINX Plus does not have to reload as it uses an internal API call to update the upstreams- dramatically reducing overhead in dynamic environments.
+  {
+      "file_size": 1868596,
+      "filename": "/path/to/signature-report.json",
+      "completed_successfully": true
+  }
+
+Example of the contents of the output file (displayed and piped into ``jq``):
+
+.. code-block:: json
+
+  {
+      "signatures": [
+          {
+              "isUserDefined": false,
+              "attackType": {
+                  "name": "Detection Evasion"
+              },
+              "name": "Unicode Fullwidth ASCII variant",
+              "hasCve": false,
+              "systems": [
+                  {
+                      "name": "IIS"
+                  }
+              ],
+              "references": [
+                  {
+                      "value": "infosecauditor.wordpress.com/2013/05/27/bypassing-asp-net-validaterequest-for-script-injection-attacks/",
+                      "type": "url"
+                  }
+              ],
+              "signatureId": 299999999,
+              "signatureType": "request",
+              "risk": "low",
+              "accuracy": "low"
+          },
+          {
+              "isUserDefined": false,
+              "attackType": {
+                  "name": "Predictable Resource Location"
+              },
+              "name": "IIS Web Server log dir access (/W3SVC..)",
+              "hasCve": false,
+              "systems": [
+                  {
+                      "name": "IIS"
+                  }
+              ],
+              "references": [
+                  {
+                      "value": "www.webappsec.org/projects/threat/classes/predictable_resource_location.shtml",
+                      "type": "url"
+                  }
+              ],
+              "signatureId": 200000001,
+              "signatureType": "request",
+              "risk": "low",
+              "accuracy": "high"
+          },
+          {
+              "isUserDefined": false,
+              "name": "WEB-INF dir access (/WEB-INF/)",
+              "attackType": {
+                  "name": "Predictable Resource Location"
+              },
+              "hasCve": true,
+              "systems": [
+                  {
+                      "name": "Java Servlets/JSP"
+                  },
+                  {
+                      "name": "Macromedia JRun"
+                  },
+                  {
+                      "name": "Jetty"
+                  }
+              ],
+              "references": [
+                  {
+                      "value": "www.webappsec.org/projects/threat/classes/predictable_resource_location.shtml",
+                      "type": "url"
+                  },
+                  {
+                      "value": "CVE-2016-4800",
+                      "type": "cve"
+                  },
+                  {
+                      "value": "CVE-2007-6672",
+                      "type": "cve"
+                  }
+              ],
+              "signatureType": "request",
+              "risk": "low",
+              "signatureId": 200000018
+          }
+      ],
+      "revisionDatetime": "2019-07-16T12:21:31Z"
+  }
+
+Using this tool can help SecOps teams keep track of the signature sets in use by policies without the need to access production instances.

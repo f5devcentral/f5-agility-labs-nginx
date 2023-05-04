@@ -1,12 +1,16 @@
-Module 3 - Protect Arcadia with NGINX App Protect in Docker
-###########################################################
+Module 3 - Modern Apps NGINX App Protect Deployment
+===================================================
 
-In this class, we will create an App Protect docker container. We will start with a manual method building the Docker images, and we will finish with a full CI/CD pipeline workflow.
+In this section of the lab, you will deploy NGINX App Protect to an existing NGINX Ingress Controller deployment hosting a microservices-based application.
 
+Estimated completion time: 21 minutes
+
+.. image:: images/module_3_overview.gif
 
 .. toctree::
    :maxdepth: 1
    :glob:
+   :caption: Content:
 
    lab*/lab*
-
+   recap

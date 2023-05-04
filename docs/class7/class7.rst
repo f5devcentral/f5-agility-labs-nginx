@@ -1,5 +1,5 @@
 Class7 - NGINX Kubernetes Ingress Controller, the new Rancher Manager and Rancher Kubernetes Engine 2
-=================================================================
+=======================================================================================================
 
 .. note:: **Last Updated: 05/13/2022**
 

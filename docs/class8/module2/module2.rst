@@ -24,17 +24,18 @@ NGINX App Protect DoS directives:
 Install NGINX App Protect DOS 
 -----------------------------
    
-1. Open the WebShell of "NAP DOS 1" VM
+1. Open the WebShell of "NAP DOS 1" VM (UDF > Components > Systems > NAP DOS 1 > Access > Web Shell) 
 
 2. Install NGINX App Protect 
 
 ``apt install -y app-protect-dos``
 
-3. Enable NGINX App Protect configuration
+3. Enable NGINX App Protect configuration by removing "#" from any lines of code in /etc/nginx/nginx.conf file
    
 .. Note:: 
 
-    All NGINX App Protect configurations are commented out.  Go through with vim/nano and uncomment all the lines in /etc/nginx/nginx.conf
+    - All NGINX App Protect configurations should be commented out. Use your editing tool of choice (vi, vim, or nano) to complete this task.
+    - Please note the NAP DOS Live Activity Monitoring section of the /etc/nginx/nginx.conf file will be edited at a later time (Module 6)
 
 .. code-block:: nginx
     :linenos:

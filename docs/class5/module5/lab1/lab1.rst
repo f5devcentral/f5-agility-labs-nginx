@@ -1,127 +1,107 @@
-Step 12 - Protect Arcadia API with NGINX App Protect on a centos VM
-###################################################################
+The BIG-IP Advanced WAF Security Policies Conversion Tool
+=========================================================
 
+.. note:: A hands-on example of converting BIG-IP WAF policies is not yet included in this lab. 
 
-The Arcadia web application has several REST APIs in order to:
+One of the fastest ways to create a security policy is to start by already having one configured on a BIG-IP Advanced WAF system. The Policy Converter tool is used for converting XML formatted ASM and Advanced WAF policies to JSON. The converted JSON policy is based on the NGINX App Protect WAF policy base template and contains the minimal diff to it in JSON declarative policy format.
 
-    #. Buy stocks
-    #. Sell stocks
-    #. Transfer money to friends
+Elements in the XML policy that are not supported in the NGINX App Protect WAF environment will generate warnings. Note that any configuration that is invalid or irrelevant to the NGINX App Protect WAF environment is removed from the exported declarative policy. The conversion utility is installed alongside NGINX App Protect.
 
-Because we have an ``OpenAPI specification file`` we can use this for a very accurate policy for protecting these APIs.
+.. caution:: F5 recommends using the convert-policy tool that comes with the NGINX App Protect WAF installation to convert and deploy the security policy to the same NGINX App Protect WAF installation. You should not use the convert-policy tool from a different NGINX App Protect WAF version to do so.
 
-You can find the ``Arcadia Application OAS3`` file here : https://app.swaggerhub.com/apis/nginx5/api-arcadia_finance/2.0.2-oas3
+The usage of the utility is as follows:
 
-App Protect allows you to reference the file on an external http server or locally on the file system of the NGINX instance.
+.. code-block:: text
 
-.. image:: ../pictures/lab1/swaggerhub.png
-   :align: center
+   USAGE:
+      /opt/app_protect/bin/convert-policy
 
-.. note :: Notice that the URI, method, and response type are all defined for each API. This also serves as a tool for developers to understand what the response should look like for a successful call.
+   Required arguments:
+      --outfile|o='/path/to/policy.json'
+         File name for where to write exported policy.
+         Can also be set via an environment variable: EXPORT_FILE
+      --infile|i='/path/to/policy.xml'
+         Advanced WAF/ASM Security Policy file to convert
+         Can also be set via an environment variable: IMPORT_FILE
 
-Steps for the lab
-*****************
+   Optional arguments:
+      --format|f='json'
+         Desired output format for signature file. Default 'json'
+         Supported formats: 'json'
+      --keep-full-configuration
+         By default the exported policy will only contain elements that are valid for the environment in which this tool is run.
+         If keep-full-configuration is enabled then the full configuration is retained, including elements that are not supported in NGINX App Protect WAF.
+      --full-export
+         By default the exported policy will only contain elements that are different from the default policy template.
+         If full-export is enabled then all policy elements are included in the export file.
+         When this option is selected, no warnings are generated when removing unsupported elements from the exported policy.
 
-.. note :: Make sure NGINX is installed on centos-vm. There is a script on the centos-vm in /home/centos/lab-files/lab-script-cheat.sh that you can use to easily install App Protect and continue on from here.
+To perform the conversion, use the following command syntax:
 
-#. Use vscode or SSH to the centos-vm
+.. code-block:: bash
 
-#. Verify NGINX is installed, if the below command returns some html, it is running
+  /opt/app_protect/bin/convert-policy -i /path/to/policy.xml -o /path/to/policy.json | jq
 
-    .. code-block:: bash
+You may observe output similar to the following, which displays a list of settings and unsupported entities that the tool removed.
 
-        curl 0
+.. code-block:: text   
 
-#. If curl is unable to connect, run this 
+   {
+      "warnings": [
+         "Traffic Learning, Policy Building, and staging are unsupported",
+         "Element '/plain-text-profiles' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_ASM_COOKIE_HIJACKING' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_BLOCKING_CONDITION' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_BRUTE_FORCE' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_CONVICTION' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_CROSS_ORIGIN_REQUEST' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_CSRF' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_CSRF_EXPIRED' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_DYNAMIC_SESSION' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_FLOW' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_FLOW_DISALLOWED_INPUT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_FLOW_ENTRY_POINT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_FLOW_MANDATORY_PARAMS' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_GEOLOCATION' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_GRPC_FORMAT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_GRPC_METHOD' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_GWT_FORMAT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_GWT_MALFORMED' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_HOSTNAME_MISMATCH' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_LOGIN_URL_BYPASSED' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_LOGIN_URL_EXPIRED' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_MALICIOUS_DEVICE' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_MALICIOUS_IP' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_PARAMETER_DYNAMIC_VALUE' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_PLAINTEXT_FORMAT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_REDIRECT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_SESSION_AWARENESS' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_VIRUS' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_BAD_REQUEST' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_BINARY_MESSAGE_LENGTH' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_BINARY_MESSAGE_NOT_ALLOWED' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_EXTENSION' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAMES_PER_MESSAGE_COUNT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAME_LENGTH' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAME_MASKING' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_FRAMING_PROTOCOL' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_TEXT_MESSAGE_NOT_ALLOWED' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_WEBSOCKET_TEXT_NULL_VALUE' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_XML_SCHEMA' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_XML_SOAP_ATTACHMENT' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_XML_SOAP_METHOD' is unsupported.",
+         "/blocking-settings/violations/name value 'VIOL_XML_WEB_SERVICES_SECURITY' is unsupported.",
+         "/blocking-settings/http-protocols/description value 'Unparsable request content' is unsupported.",
+         "/general/enableEventCorrelation must be 'false' (was 'true').",
+         "Element '/websocket-urls' is unsupported.",
+         "/protocolIndependent must be 'true' (was 'false').",
+         "Element '/redirection-protection' is unsupported.",
+         "Element '/gwt-profiles' is unsupported.",
+         "/signature-sets/learn value true is unsupported"
+      ],
+      "file_size": 24227,
+      "completed_successfully": true,
+      "filename": "/path/to/policy.json"
+   }
 
-    .. code-block:: bash
-        
-        /home/centos/lab-files/lab-script-cheat.sh
-
-#. View our API policy template that is installed with app protect
-
-    .. code-block:: bash
-
-        cat /etc/app_protect/conf/NginxApiSecurityPolicy.json
-
-#. The required edits have already been made in our file located in ``cat /home/centos/lab-files/openAPI/NginxApiSecurityPolicy.json`` see the highlighted line below.
-
-    .. code-block:: js
-        :emphasize-lines: 11
-
-        {
-        "policy" : {
-            "name" : "app_protect_api_security_policy",
-            "description" : "NGINX App Protect API Security Policy. The policy is intended to be used with an OpenAPI file",
-            "template": {
-                "name": "POLICY_TEMPLATE_NGINX_BASE"
-            },
-
-            "open-api-files" : [
-                {
-                    "link": "https://raw.githubusercontent.com/nginx-architects/kic-example-apps/main/app-protect-openapi-arcadia/open-api-spec.json"
-                }
-            ],
-
-            "blocking-settings" : {
-                "violations" : [
-                    {
-        ...
-
-#. See the new sections of the NGINX configuration below for the REST API locations that we will protect
-
-    .. code-block:: nginx
-        :emphasize-lines: 11,17
-
-        # app3 service
-        location /app3 {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone app3_service;
-        }
-
-        # apply specific policies to our API endpoints:
-        location /trading/rest {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone trading_service;
-            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-        }
-
-        location /api/rest {
-            proxy_pass http://arcadia_ingress_nodeports$request_uri;
-            status_zone trading_service;
-            app_protect_policy_file "/etc/nginx/NginxApiSecurityPolicy.json";
-        }
-
-#. Copy the configuration files into /etc/nginx:
-
-    .. code-block:: BASH
-    
-        cp ~/lab-files/openAPI/NginxApiSecurityPolicy.json ~/lab-files/openAPI/nginx.conf /etc/nginx
-
-
-#. Restart the NGINX service and then we will run some tests
-
-    .. code-block:: BASH
-        
-        sudo systemctl reload nginx
-
-Test The Protections
-********************
-
-    #. RDP to the jumphost with credentials ``user:user``
-    #. Open ``Postman``
-    #. Open Collection ``Arcadia API`` (see image below for navigating Postman)
-    #. Send your first API Call with ``Last Transactions``. You should see the last transactions. This is just a GET.
-
-       .. image:: ../pictures/lab1/last_trans.png
-           :align: center
-           :scale: 100%
-
-    #. If you look closely at the OAS3 (Open API Spec v3) file, you'll see that buy stocks expects a POST. Try running ``POST Buy Stocks`` and see that it returns success. If you change the method to ``GET`` and run it again you will notice it is blocked. You can check the request content (headers, body), and compare with the OAS3 file in SwaggerHub.
-
-       .. image:: ../pictures/lab1/buy_attack2.png
-           :align: center
-           :scale: 100%
-
-We will view the logs in the Kibana dashboard in the next lab, or feel free to go to ``Firefox>Kibana>Dashboard>Overview`` now.
-
+The output file is based on the default security base template and is ready to use. You can retain all settings, saving them in the output file, including those not supported on NGINX App Protect WAF, by including the --keep-full-configuration switch. Note, however, that when you do so, the system reports unsupported features as errors when you attempt to load the resulting output policy into NGINX App Protect WAF and fail. If you used the default installation settings, the file is saved as /opt/app_protect/bin/convert-policy. 

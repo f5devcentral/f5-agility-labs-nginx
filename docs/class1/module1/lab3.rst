@@ -33,8 +33,8 @@ By the end of the lab you will be able to:
 Exercise 1: Cache proxy for web content
 ---------------------------------------
 
-#. In the **WORKSPACE** folder found on the desktop, open the
-   **NGINX-PLUS-1** workspace shortcut in Visual Studio Code
+#. In the **WORKSPACE** folder found on the desktop, double click the
+   **NGINX-PLUS-1** workspace shortcut to open Visual Studio Code.
 
    .. image:: ../images/2020-06-29_15-55.png
 
@@ -189,7 +189,7 @@ Exercise 2: Visualize cache status on the live activity monitoring dashboard
 ----------------------------------------------------------------------------
 
 #. In a Web Browser, we can visualize cache status on the live activity
-   monitoring dashboard: Navigate to out NGINX Plus dashboard
+   monitoring dashboard: Navigate to NGINX Plus dashboard
    `http://www.example.com:8080/dashboard.html#caches <http://www.example.com:8080/dashboard.html#caches>`__
 
    The Cache Hit Ratio shown for the zone, **image_cache**, will increase

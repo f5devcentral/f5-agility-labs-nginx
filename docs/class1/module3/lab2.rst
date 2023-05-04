@@ -45,8 +45,8 @@ In this section, we will use **Postman** to interact with the NGINX API.
 In the Optional section below, we can reproduce the same steps using
 **curl**
 
-#. In the **WORKSPACE** folder found on the desktop, open the
-   **NGINX-PLUS-1** workspace shortcut in Visual Studio Code
+#. In the **WORKSPACE** folder found on the desktop, double click the
+   **NGINX-PLUS-1** workspace shortcut to open Visual Studio Code
 
     .. image:: ../images/2020-06-29_15-55.png
 
@@ -63,7 +63,7 @@ In the Optional section below, we can reproduce the same steps using
        sets the zone name and size. The configuration of the server
        group is kept in this zone, so all worker processes use the same
        configuration. In our example, the **zone** is also named
-       **dynamic** and is **64k** megabyte in size.
+       **dynamic** and is **64k** in size.
 
     -  The **state** directive configures Persistence of Dynamic
        Configuration by writing the state information to a file that
@@ -528,18 +528,6 @@ In this section, we will use **curl** to interact with the NGINX API.
       .. code:: json
 
          [
-            {
-               "id": 0,
-               "server": "10.1.1.5:80",
-               "weight": 1,
-               "max_conns": 0,
-               "max_fails": 1,
-               "fail_timeout": "10s",
-               "slow_start": "0s",
-               "route": "",
-               "backup": false,
-               "down": false
-            },
             {
                "id": 1,
                "server": "10.1.1.6:80",

