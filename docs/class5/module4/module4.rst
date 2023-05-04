@@ -3,6 +3,8 @@ Module 4 - API Security
 
 In this section,you will configure NGINX App Protect to protect the Arcadia Finance app's API.
 
+Esimated completion time: 23 minutes
+
 NGINX App Protect can protect APIs in several ways:
 
  - Blocking malicious traffic: NGINX App Protect uses a variety of techniques, such as signature-based detection, behavioral analysis, and machine learning, to identify and block malicious traffic before it reaches the API server.
