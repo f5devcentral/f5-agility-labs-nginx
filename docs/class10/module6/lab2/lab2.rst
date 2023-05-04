@@ -30,7 +30,7 @@ Test API Version 2 with Postman
 
 #. Let's try to send a request to ``/animals`` from version 1
 
-   .. note :: It works because the gateway knows, thanks to the /v1 or /v2 prefixes, which API Proxy to use. You can try to change /animals to v2. It will work as this endpoint also exists in v2.  Be sure to utilize the correct API Key in the Postman authorization.
+   .. note ::  It works because the gateway knows, thanks to the /v1 or /v2 prefixes, which API Proxy to use. You can try to change /animals to v2. It will work as this endpoint also exists in v2.  Be sure to utilize the correct API Key in the Postman authorization.  If you did not test with the ``/animals`` endpoint earlier in the lab, you will need to add the API key for authorization.
 
 Test API Version 2 with Dev Portal
 ==================================

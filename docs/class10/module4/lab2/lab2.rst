@@ -151,7 +151,7 @@ The developer portal has one more capability. They can ``test/try out`` the API.
 
 #. In the ``OPTIONS`` field, add the header ``apikey`` into the allow list. Scroll down till the end, and then in the field, enter ``apikey`` and click ``Add Header``
   
-   .. warning :: It is easy to mistakenly add the header to the CORS list, the OPTIONS list as at the bottom.
+   .. warning :: It is easy to mistakenly add the header to the CORS list, the OPTIONS list is at the bottom.
 
    .. image:: ../pictures/lab2/add-header.png
       :align: center
