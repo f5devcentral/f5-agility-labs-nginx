@@ -1,225 +1,226 @@
 Install NGINX App Protect on the Arcadia App in Kubernetes
 ==========================================================
 
-1. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
+.. image:: images/kubnic.PNG
+   :align: center
+
+Now, you will deploy the App Protect policy on the Ingress Controller and expose the service via NodePort from the ingress controller. Normally there would be a load balancer in front of the cluster. To save time, the ingress controller has already been deployed. Let's look at how you've deployed the NGINX Plux Ingress Controller via Helm.
+Navigating to the **Gitlab** instance under the **ks3_infra** repository, you find all the infrastructure objects deployed. 
+
+1. Launch or return to **Firefox**. From the bookmark toolbar, select **Gitlab**. Log into the site using the username **lab** and  password **Agility2023!** credentials.
+
+.. image:: images/gitlab_login.png 
+
+2. Select the **k3s_infra** project repository. This repository houses all the infrastructure components used in this lab. All have been deployed with Helm and the help of Argo CD.
+
+.. image:: images/gitlab_project.png 
+
+3. Once inside the project, click on **charts** directory:
+
+.. image:: images/k3s_infra.png 
+
+4. Now click into the **nginx-ingress** directory:
+
+.. image:: images/nginx_ingress_directory.png
+
+5. Here you will find the two main files we'll discuss:
+
+ - **Charts.yaml**
+ - **values.yaml**
+  
+.. image:: images/k3s_infra_ls.png 
+
+6. The **Chart.yaml** contains information on which chart version to use and upon which dependencies it relies.
+
+.. image:: images/nic_Chart.png 
+
+7. In the **values.yaml** file, you can define what options you want the ingress controller to have (app-protect, app-dos, snippets etc.), and what registry to pull the relevant image(s).
+
+.. image:: images/nic_values.png
+
+Now that you can see how we've set up NGINX Ingress Controller, you can focus on securing the Arcadia app with App Protect.
+
+8. On the jump host, use the **Applications** menu bar to launch **Visual Studio Code**.
 
 .. caution:: It may take several seconds for Visual Studio Code to launch for the first time.
 
-2. In **Visual Studio Code**, navigate to **File** > **Open Folder**. 
+9. In **Visual Studio Code**, navigate to **File** > **Open Folder**. 
 
 .. image:: images/VSCode_openFolder.png
 
-3. Select **arcadia**, then click **Open** in the top-right corner of the navigation window.
+10. Click on the **Home** shortcut on the left, then double-click the **Projects** folder. Single-click on the **arcadia** folder, then click **Open** in the top-right corner of the navigation window.
 
 .. image:: images/VSCode_selectArcadia.png
 
-4. 
+11. Expand the **arcadia** folder by clicking **arcadia** in the top-left of the screen. 
 
-.. image:: images/IC_values.png
+.. image:: images/arcadia_folder_expand.png
 
-.. image:: images/IC_Chart.png
+12. Now under the **manifest** directory, you can view the manifests files.
 
+   - **arcadia-deployment.yml**
+   - **arcadia-svcs.yml**
+   - **arcadia-vs.yml** 
 
-.. image:: images/arcadia-ingres.png
+For this lab, focus on the **arcadia-vs.yml** manifest file *after* you add the security policy files.
 
-.. image:: images/CRDs.png
+.. image:: images/arcadia-vs.png
 
-.. image:: images/grafana.png
+13. You'll want to investigate the three new files we'll be moving into the **manifest** directory as this is the path Argo CD is monitoring for changes.
 
-.. image:: images/kic-nap-config.png
+- waf-policy.yml (this is the policy that will be attached to the VirtualServer manifest)
+- waf-ap-logconf.yml (this defines the logging filters)
+- waf-ap-policy.yml (this is the declarative WAF policy with all of the logic)
 
-.. image:: images/nginx-plus-dashboard-upstreams.png
+.. caution:: We'll just review these files. Do not make any changes.
 
-.. image:: images/nginx-plus-dashboard.png
+First, the policy that is attached to the VirtualServer manifest:
 
-This step is optional, the ingress controller has already been deployed to save time and focus on the items that are specific to configuring NGINX App Protect.
+.. code-block:: yaml
+   :caption: waf-policy.yml 
+   :emphasize-lines: 13
 
-That said, if you are interested in the topology or deploying the ingress controller, please continue on with this step. Otherwise you can skip to module 5: protecting API workloads.
+    ---
+    apiVersion: k8s.nginx.org/v1
+    kind: Policy
+    metadata:
+      name: waf-policy
+    spec:
+      waf:
+        enable: true
+        apPolicy: "arcadia/dataguard-blocking"
+        securityLog:
+          enable: true
+          apLogConf: "arcadia/logconf"
+          logDest: "syslog:server=logstash-logstash.default.svc.cluster.local:5144"
 
-The previous exercises were designed to show what is possible and give examples of how to configure NAP. Using these principles, we can move our NAP configurations to Kubernetes.
+Second, the policy for logging and filtering:
 
-In this step, instead of using a VM or docker container with NGINX App Protect to proxy to a NodePort on our cluster, we will deploy the NGINX Kubernetes Ingress Controller (KIC) which will proxy to a ClusterIP of the Arcadia services. A ClusterIP is only accessible internally to the cluster. By using the ClusterIP, we force all requests to go through the KIC.
+.. code-block:: yaml
+   :caption: waf-ap-logconf.yml 
 
-Generally, we would deploy the ingress controller behind a L4/L7 load balancer to spread the load to all of the ingress controller PODs, as depicted on the right side of this image. In this lab, we will target the KIC Service NodePort directly with our browser (without the L4 LB/LTM in red).
+   ---
+   apiVersion: appprotect.f5.com/v1beta1
+   kind: APLogConf
+   metadata:
+     name: logconf
+   spec:
+     content:
+       format: default
+       max_message_size: 64k
+       max_request_size: any
+     filter:
+       request_type: blocked
 
-.. image:: images/arcadia-topology.png
-   :align: center
+Finally, the WAF policy:
 
-At a high-level we will:
+.. code-block:: yaml 
+   :caption: waf-ap-policy.yaml 
+   
+    ---
+    apiVersion: appprotect.f5.com/v1beta1
+    kind: APPolicy
+    metadata:
+      name: dataguard-blocking
+    spec:
+      policy:
+        name: dataguard_blocking
+        template:
+          name: POLICY_TEMPLATE_NGINX_BASE
+        applicationLanguage: utf-8
+        enforcementMode: blocking
+        blocking-settings:
+          violations:
+          - name: VIOL_DATA_GUARD
+            alarm: true
+            block: true
+        data-guard:
+          enabled: true
+          maskData: true
+          creditCardNumbers: true
+          usSocialSecurityNumbers: true
+          enforcementMode: ignore-urls-in-list
 
-#. Use helm to deploy the Ingress controller that has been saved to the registry running on our docker host
-#. Deploy a new "ingress configuration" using a Custom Resource Definition (CRD) specifically created by NGINX to extend the basic capability of the standard Kubernetes "Ingress" resource. This "VirtualServer" will tell the KIC pods to create the configuration necessary to access and protect our applications.
+14. Open a new command prompt window by navigating to **Terminal** > **New Terminal** in the menu bar.
 
-**Steps**
+.. image:: images/new_terminal.png
 
-    #.  SSH to the k3s VM
-    #.  Check the existing ``ingress`` already deployed and running. It is a NGINX OSS ingress
+15. Now, copy the these files over to the **manifests** directory so NGINX App Protect can enforce the policy. Use the **Terminal** window at the bottom of VSCode to issue these commands:
 
-        .. code-block:: bash
-          :caption: helm removal
+.. code-block:: bash 
 
-            helm list
+  cd ~/Projects/arcadia
+  cp waf-ap-logconf.yml waf-ap-policy.yml waf-policy.yml manifests/.
+  git add manifests/
+  git commit -m "add waf policies"
 
-            NAME         	NAMESPACE	REVISION	UPDATED                                	STATUS  	CHART               	APP VERSION
-            nginx-ingress	default  	8       	2022-12-05 14:01:51.734097641 +0000 UTC	deployed	nginx-ingress-0.15.2	2.4.2
+.. image:: images/terminal_commands.png
 
-    #.  To remove the existing ingress controller (it is a Nginx OSS ingress):
+16. Now, edit the **arcadia-vs.yml** manifest to now include the App Protect policy. Open the file by selecting the filename in the left navigation pane.
 
-        .. code-block:: bash
-          :caption: helm removal
+.. image:: images/select_arcadia-vs_file.png
 
-            helm uninstall nginx-ingress
+.. warning:: Please reference the image below as YAML is very strict with indention. After line 6 you'll insert the new lines.
 
-    #.  Run the following commands to install the NGINX Plus KIC helm chart in a new NameSpace ``ingress``:
+.. code-block:: yaml
 
-        .. code-block:: bash
-          :caption: helm install
- 
-            helm repo add nginx-stable https://helm.nginx.com/stable
-            helm repo update
-            
-            helm install plus nginx-stable/nginx-ingress \
-            --namespace ingress \
-            --set controller.kind=deployment \
-            --set controller.replicaCount=1 \
-            --set controller.nginxplus=true \
-            --set controller.image.repository=private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress \
-            --set controller.image.tag=2.4.2 \
-            --set controller.appprotect.enable=true \
-            --set controller.serviceAccount.imagePullSecretName=regcred \
-            --set controller.service.type=NodePort \
-            --set controller.service.httpPort.nodePort=30080 \
-            --version 0.15.2
-        
-        .. note:: As you can notice, with one helm command, the Ingress Controller pod will be deployed with all the required parameters (NAP enabled, NodePort 30080)
+  policies:
+    - name: waf-policy
+    
+.. image:: images/vs-policy.png
 
-    #.  After running the command, we need to wait for the KIC pod to become available. you can use a command like:
+17. Now that you've updated **arcadia-vs.yml** it's time to push the updates back to Gitlab. Please run these commands in the terminal window:
 
-        .. code-block:: BASH
+.. code-block:: bash 
 
-           kubectl get pods --all-namespaces --watch
+  git add manifests/arcadia-vs.yml
+  git commit -m "add waf policy"
+  git push 
 
-    #.  Once it we have 1/1 ``plus-nginx-ingress`` ready. You can press ``ctrl-c`` to stop the watch.
+**Result**
 
-        .. image:: images/ingress-ready.png
+.. image:: images/waf_policy_git_push.png
 
-    #. Now, it is time to configure the Ingress Controller with CRD ressources (WAF policy, Log profile, Ingress routing ...)
+18. To make certain the changes are deployed, manually sync Argo with the Git repo. In **Firefox**, open Argo CD by clicking on the Argo bookmark.
 
-       #. Execute the following commands to deploy the different resources
+.. image:: images/argo_bookmark.png
 
-          .. code-block:: bash
+19. Click on the Arcadia application tile. Clicking on **Sync** will open a side panel to click **Synchronize**. This will pull the changes you submitted to Gitlab and deploy into Kubernetes.
 
-             cd /home/ubuntu/lab-files/ingress
-             
-             kubectl apply -f ap-dataguard-policy.yaml
-             kubectl apply -f ap-logconf.yaml
-             kubectl apply -f nap-waf.yaml
-             kubectl apply -f virtual-server-waf.yaml
+.. image:: images/sync-arcadia.png 
 
-       #. The manifest ``ap-dataguard-policy.yaml`` creates the WAF policy
+20. Before you launch attacks at the Arcadia site, open the **ELK** bookmark in a new tab in **Firefox** so you can view the attacks and view Support IDs. 
 
-          .. code-block:: yaml
+.. note:: Since there is not yet any application traffic, the dashboard will be empty.
 
-            apiVersion: appprotect.f5.com/v1beta1
-            kind: APPolicy
-            metadata:
-            name: dataguard-alarm
-            spec:
-            policy:
-                applicationLanguage: utf-8
-                blocking-settings:
-                violations:
-                - alarm: true
-                    block: false
-                    name: VIOL_DATA_GUARD
-                data-guard:
-                creditCardNumbers: true
-                enabled: true
-                enforcementMode: ignore-urls-in-list
-                enforcementUrls: []
-                lastCcnDigitsToExpose: 4
-                lastSsnDigitsToExpose: 4
-                maskData: true
-                usSocialSecurityNumbers: true
-                enforcementMode: blocking
-                name: dataguard-alarm
-                template:
-                name: POLICY_TEMPLATE_NGINX_BASE
+.. image:: images/elk.png 
 
-       #. The manifest ``ap-logconf.yaml`` creates the Log Profile to send logs to ELK
+21. Now, launch attacks against the Arcadia site. From the **Applications** drop-down, select **Terminal**. 
 
+.. image:: images/applications_terminal.png 
 
-          .. code-block:: yaml
+22. When the terminal opens, you'll run the below command. Please be sure to leave your terminal open as we'll reference the **Support ID** it provides later.
 
-            apiVersion: appprotect.f5.com/v1beta1
-            kind: APLogConf
-            metadata:
-            name: logconf
-            spec:
-            content:
-                format: default
-                max_message_size: 64k
-                max_request_size: any
-            filter:
-                request_type: all
+.. code-block:: bash
 
-       #. The manifest ``nap-waf.yaml`` creates the WAF config (policy + log)
+  source k8s-attacks
 
-          .. code-block:: yaml
+This is a bash file that launches various attacks at the application using CURL and well-known exploits.
 
-            apiVersion: k8s.nginx.org/v1
-            kind: Policy
-            metadata:
-            name: waf-policy
-            spec:
-            waf:
-                enable: true
-                apPolicy: "default/dataguard-alarm"
-                securityLogs:
-                - enable: true
-                apLogConf: "default/logconf"
-                logDest: "syslog:server=10.1.1.11:5144"
+.. note:: Wait for the script to complete before continuing with the lab.
 
+23. Once the attack script completes, return to the **ELK** tab you opened earlier. You may need to click **Refresh** to see statistics.
 
-       #. The manifest ``virtual-server-waf.yaml`` creates the Ingress resource (to route the traffic and apply the WAF config)
+.. image:: images/kibana.png 
 
-          .. code-block:: yaml
+24. In the ELK dashboard, scroll down to the **All Requests** section. Here you will see entries for each of the attacks blocked by NGINX App Protect which were generated by the attack script. The details of each request can be viewed by clicking on the **>** icon next to the request.
 
-            apiVersion: k8s.nginx.org/v1
-            kind: VirtualServer
-            metadata:
-            name: vs-arcadia-no-waf
-            spec:
-            host: k8s.arcadia-finance.io
-            policies:
-            - name: waf-policy
-            upstreams:
-                - name: main
-                service: main
-                port: 80
-                - name: backend
-                service: backend
-                port: 80
-                - name: app2
-                service: app2
-                port: 80
-                - name: app3
-                service: app3
-                port: 80
-            routes:
-                - path: /
-                action:
-                    pass: main
-                - path: /files
-                action:
-                    pass: backend
-                - path: /api
-                action:
-                    pass: app2
-                - path: /app3
-                action:
-                    pass: app3
+.. image:: images/kibana_events.png 
 
-    #. Test the deployment with the Win10 Jumhost
-    #. In the Chrome Arcadia Link bookmark, select ``WAF NGINX Ingress``
-    #. Navigate and send attacks.
+25. You can drill into an event to see the *support_id*, which you can use to correlate the ELK dashboard **Request** details and the attack details shown in the CLI from step 22.
+
+.. image:: images/kibana_supportID.png
+
+.. image:: images/cli_support_ids.png
+
+This concludes this portion of the lab. 

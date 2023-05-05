@@ -2,7 +2,9 @@
 
 set -x
 
-. ../../containthedocs-image
+ARCH=`uname -m`
+
+. ../../containthedocs-image-$ARCH
 
 exec docker run --rm -it \
   -v "$PWD":"$PWD" --workdir "$PWD" \

@@ -53,7 +53,7 @@ instance.  We will list all ports and the processes, then use grep to filter the
 
   sudo netstat -tulpn | grep nginx
 
-  tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      726/nginx: master p::
+  tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      726/nginx: master p\:\:
 
 Nginx Instance Manager ingests data from the agents and exposes the UI via TCP 443.
 

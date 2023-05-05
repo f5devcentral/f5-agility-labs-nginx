@@ -3,8 +3,9 @@
 set -x
 
 COMMAND="make -C docs spelling"
+ARCH=`uname -m`
 
-. ./containthedocs-image
+. ./containthedocs-image-$ARCH
 
 exec docker run --rm -it \
   -v "$PWD":"$PWD" --workdir "$PWD" \

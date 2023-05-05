@@ -78,7 +78,7 @@ Steps to configure NGINX App Protect as an API firewall
             "secureAttribute" : "always"
          }
       },
-      ...
+
 
 #. Now, we have to configure NGINX's ``nginx.conf`` to use this NAP policy
 

@@ -1,58 +1,50 @@
-Enable NGINX App Protect on the Arcadia Finance App
-===================================================
+Test the WAF Policy by Replicating the SQL Injection Attack
+===========================================================
 
-We will now enable NGINX App Protect and apply a WAF policy to the Arcadia Finance app.
+1. Now that the WAF policy is applied, retry the SQL injection attack to see if the attempt is blocked. Click on the **Arcadia Finance (DIY)** bookmark or navigate to https://diy.arcadia-finance.org/.
 
-#. Open Firefox and log into the NMS portal using the username **lab** and password **Agility2023!**.
+.. image:: images/arcadia_diy.png
 
-.. image:: images/nms_dashboard.png
+2. Click the **Login** button to load the login screen.
 
-#. Click on **Instance Manager**. You'll see the list of instances managed by NMS.
+.. image:: images/arcadia_login_prompt.png
 
-.. image:: images/nms_instances.png
+3. For the username, paste the following value:
 
-#. Click on **nginx-plus-2.agility.lab** in the list. 
+.. code-block::bash
 
-.. image:: images/nms_instance_detail.png
+   ' or 1=1-- '
 
-#. Notice the NGINX App Protect WAF is now enabled.
+and click **Log me in**. 
 
-.. image:: images/nms_app_protect_status.png
+.. image:: images/sql_inj_login.png
 
-#. Click on the **Edit Config** button. 
+4. You should see the custom block page as shown below, showing that the attempt was blocked. Notice that, once again, a **support ID** is generated when the page loads. **Select and copy this value** so that you can search for it in NMS-SM.
 
-.. image:: images/nms_instance_edit_config.png
+.. image:: images/select_copy_support_id.gif
 
-#. Select the **arcadia-financial.conf** file in the navigation pane on the left.
+5. Return to NMS and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
 
-.. image:: images/config_nav_pane.png
+.. image:: images/NMS-SM-tile.png
 
-#. Add the following configuration lines to the **server** block:
+6. You'll be presented with the Security Monitoring landing page, as shown below:
 
-.. code-block:: bash
-  app_protect_enable on;
-  app_protect_policy_file "/etc/nms/AgilityPolicy.tgz";
-  app_protect_security_log_enable on;
-  app_protect_security_log "/etc/nms/secops_dashboard.tgz" syslog:server=127.0.0.1:514;
+.. image:: images/NMS-SM_overview.png
 
-Your screen should look similar to below:
+7. On the left menu, select **Support ID Details**. 
+    
+.. image:: images/NMS-SM_support_id_link.png
 
-.. image:: images/modified_arcadia-financial_conf.png
+8. You'll be prompted for your support ID.
 
-#. Click the **Publish** icon in the toolbar in the file editor.
+.. image:: images/NMS-SM_support_id_prompt.png
 
-.. image:: images/publish_btn.png
+9. Enter your support ID into the search field and click the **arrow** to search.
 
-#. You will be presented with a confirmation prompt. Click **Publish** to continue. 
+.. image:: images/NMS-SM_support_id_entry.png
 
-.. image:: images/publish_confirm.png
+10. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
-#. After a few moments, you will see a notification that the configuration was successfully published:
+.. image:: images/NMS-SM_support_id_details.png
 
-.. image:: images/publish_notification.png
-
-#. Click on **Instances** in the left menubar to return to the list of instances. Click on **nginx-plus-2** to view the instance details. You should see under the **Last Deployment Details** and **App Protect Details** sections should show the WAF enabled.
-
-.. image:: images/instance_detail_result.png
-
-
+NGINX App Protect WAF is now enforcing protection for the site. 

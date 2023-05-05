@@ -21,7 +21,7 @@ This Lab guide will help you complete the following:
 3. Deploying a `NGINX Plus <https://www.nginx.com/products/nginx/>`__ Load Balancer server through a CI/CD process
 
 CI/CD flowchart
---------------
+---------------
 
 **Below is a diagram of a generic CI/CD Pipeline to deliver applications
 on NGINX Plus**

@@ -1,5 +1,5 @@
 Installing Prerequisites:
-========================
+=========================
 
 This exercise will cover installing the Nginx JavaScript Module (njs) which is required for handling the interaction between NGINX Plus and the OpenID Connect provider (IdP). 
 
@@ -108,7 +108,7 @@ Create a clone of the nginx-openid-connect GitHub repository
 	
 
 Configuring the IdP Keycloak:
-============================
+=============================
    
 .. note:: 
    These next steps will guide you through creating a keycloak client for NGINX Plus in the Keycloak GUI
@@ -138,7 +138,7 @@ http://idp.f5lab.com:8080
 .. image:: ../images/ualab07.png
    
 Create a Keycloak client for NGINX Plus in the Keycloak GUI:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 1. In the left navigation column, click Clients. 
 
 .. image:: ../images/keycloak_click_clients.png
@@ -166,9 +166,7 @@ Valid Redirect URIs - http://nginxdemo.f5lab.com:8010/_codexch
 .. image:: ../images/ualab09.png
 
 .. note::
-	For production, we strongly recommend that you use SSL/TLS (port 443).*
-   *The port number is mandatory even when you’re using the default port for HTTP (80) or HTTPS (443).*
-
+	For production, we strongly recommend that you use **SSL/TLS (port 443)**. The port number is **mandatory** even when you’re using the default port for HTTP (80) or HTTPS (443). 
 	Valid Redirect URIs – The URI of the NGINX Plus instance, including the port number, and ending in /_codexch
 
 5. Click the Credentials tab and make a note of the value in the Secret field. You will copy it into the NGINX Plus configuration file.
