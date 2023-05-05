@@ -94,7 +94,7 @@ Create a clone of the nginx-openid-connect GitHub repository
 
 .. code:: shell
         
-   git clone --branch R26 https://github.com/nginxinc/nginx-openid-connect.git
+   git clone --branch R28 https://github.com/nginxinc/nginx-openid-connect.git
 
 3. Verify the clone has completed by running the follow command.
 
@@ -149,15 +149,15 @@ Create a Keycloak client for NGINX Plus in the Keycloak GUI:
 				
 3. On the Add Client page that opens enter the below values then click the  Save  button.
 
-**Client ID – agility2022**
+**Client ID – agility2023**
 
 **Client Protocol – openid-connect.**
 
 .. image:: ../images/ualab08.png
 
-4. On the Agility2022 clients page that opens, enter or select these values on the Settings tab:
+4. On the Agility2023 clients page that opens, enter or select these values on the Settings tab:
 
-Client ID - agility2022
+Client ID - agility2023
 		
 Access Type – confidential
 
@@ -175,7 +175,7 @@ Valid Redirect URIs - http://nginxdemo.f5lab.com:8010/_codexch
 
 .. image:: ../images/client_secret.png
 	
-6. While still under the Agility2022 Clients Page Click the Roles tab, then click the Add Role button in the upper right corner of the page that opens.
+6. While still under the Agility2023 Clients Page Click the Roles tab, then click the Add Role button in the upper right corner of the page that opens.
 
 .. image:: ../images/keycloak_click_role.png
 	
@@ -192,13 +192,13 @@ Creating a user in keycloak
 	
 2. Once create user is completed now click on the Credentials Tab at the top of the screen. 
 
-3. Enter New Password agility2022 and confirm
+3. Enter New Password agility2023 and confirm
 
 4. Toggle Temporary to OFF
 
 .. image:: ../images/keycloak_cred.png
 	
-5. On the management page for the user (here, user01), click the Role Mappings tab. On the page that opens, select agility2022 on the Client Roles drop‑down menu. Click nginx-keycloak-role in the Available Roles box, then click the Add selected button below the box. The role then appears in the Assigned Roles and Effective Roles boxes, as shown in the screenshot.
+5. On the management page for the user (here, user01), click the Role Mappings tab. On the page that opens, select agility2023 on the Client Roles drop‑down menu. Click nginx-keycloak-role in the Available Roles box, then click the Add selected button below the box. The role then appears in the Assigned Roles and Effective Roles boxes, as shown in the screenshot.
 
 .. image:: ../images/keycloak_role_mappings.png
 
@@ -211,7 +211,7 @@ Please copy and paste the below command into the webshell  **DON'T FORGET TO REP
 
 .. code:: shell
 
-	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k request -i agility2022 -s YOURCLIENTSECRET -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
+	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k request -i agility2023 -s YOURCLIENTSECRET -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
 
 Output:
 
@@ -310,7 +310,7 @@ Now that everything is done lets test the config!
 
 Notice you'll be redirected to the IdP for login. 
 
-2. Once on the IdP page put in the credentials for the user you created. user01 with password agility2022
+2. Once on the IdP page put in the credentials for the user you created. user01 with password agility2023
 
 .. image:: ../images/auth_login.png
 
