@@ -37,9 +37,12 @@ Expected time to complete: **1 hour**
 
    * No installation or interaction with your local system is required.
 
+
+
+
 .. attention::
    * For anyone wishing to take this lab at a later date, the lab is hosted on
-     the F5 UDF Environment, and is called **"NGINX Authentication - Agility 2023"**. 
+     the F5 UDF Environment, and is called **"UA Nginx Class 9 Agility 2023"**. 
 
 
 Please work with your F5 account team for access. 
