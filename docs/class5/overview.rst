@@ -87,10 +87,10 @@ NGINX App Protect WAF Terminology
     - An instance when NGINX App Protect WAF treats a legitimate request as a violation.
   * - File types
     - Examples of file types are .php, .asp, .gif, and .txt. They are the extensions for many objects that make up a web application. File Types are one type of entity a NGINX App Protect WAF policy contains.
-  * - Illegal
-    - request	A request which violates a security policy
-  * - Legal
-    - request	A request which has not violated the security policy.
+  * - Illegal request
+    - A request which violates a security policy
+  * - Legal request
+    - A request which has not violated the security policy.
   * - Loosening
     - The process of adapting a security policy to allow specific entities such as File Types, URLs, and Parameters. The term also applies to attack signatures, which can be manually disabled — effectively removing the signature from triggering any violations.
   * - Parameters
@@ -107,7 +107,7 @@ NGINX App Protect WAF Terminology
 Official NGINX Documentation
 ----------------------------
 
-Feel free to use the official documentation to clarify information or dive depeer in this lab:
+Feel free to use the official documentation to clarify information or dive deeper in this lab:
 
 - `NGINX App Protect WAF Administration Guide <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/>`_
 - `Using NGINX App Protect WAF with NGINX Management Suite <https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install-nms/>`_
