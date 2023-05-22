@@ -165,7 +165,7 @@ Below is a quick extract of dev1 and dev2 JWT tokens. You can notice the ``group
       :align: center
       :scale: 50%
 
-#. Send the request. It should not pass. You can see a ``403 Forbidden``. Dev1 user does not belong to the ``vip`` group.
+#. Send DELETE request to http://api.sentence.com/v2/api/colors/5 It should not pass. You can see a ``403 Forbidden``. Dev1 user does not belong to the ``vip`` group.
 
    .. image:: ../pictures/lab4/postman-delete.png
       :align: center
@@ -190,9 +190,9 @@ Test with a POST
 You can do the same exercise with the POST call. Only ``vip`` users are allowed (dev2)
 
 #. Clear your cookies
-#. Authenticate as ``dev1``, make a test.  You should see a 403 Forbidden error.
+#. Authenticate as ``dev1``, make a test POST Request to http://api.sentence.com/v2/api/colors  You should see a 403 Forbidden error.
 #. Clear the cookies
-#. Authenticate as ``dev2``, make a test.  This test should complete with a status of 201 Created.  The body of the API call with add ``yellow`` as an avaiable color.
+#. Authenticate as ``dev2``, make a test test POST Request to http://api.sentence.com/v2/api/colors   This test should complete with a status of 201 Created.  The body of the API call with add ``yellow`` as an avaiable color.
 
    .. image:: ../pictures/lab4/postman-post.png
       :align: center

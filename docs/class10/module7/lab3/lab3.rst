@@ -4,8 +4,6 @@ Step 13 - Oauth2 Introspection
 JWT is based on OAuth and OIDC. Keycloak is the OAuth Authorization Server.
 Keycloak is already configured to issue JWT tokens for developers.
 
-.. warning :: Currently, NMS ACM does not support multiple authentication mechanisms on the same API-Proxy. We must remove the JWT policy before enabling the Oauth2 Introspection policy.
-
 What is Oauth2 Introspection?
 ==============================
 
