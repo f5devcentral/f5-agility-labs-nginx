@@ -15,7 +15,7 @@ In this section of the lab, we'll review the NGINX Plus configuration for the in
 
 .. image:: images/nms_instance_details.png
 
-4. Nwo you can review the configuration of this instance. Click on the **Edit Config** button on the **Instance Detail** page.
+4. Now you can review the configuration of this instance. Click on the **Edit Config** button on the **Instance Detail** page.
 
 .. image:: images/nms_instance_detail_edit_config.png
 
