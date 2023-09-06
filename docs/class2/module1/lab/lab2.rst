@@ -36,7 +36,7 @@ GitLab:
 .. attention:: Let’s take a look at variables used in our lab …
 
 1. Navigate to the
-   Gitlab \ `nginx-plus-dockerfiles <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles>`__ **repository**
+   Gitlab \ `nginx-plus-dockerfiles <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles>`__ **repository**
    **>** **Settings** **>** **CI/CD**. Once on that screen,
    expand \ **Variables**. Here you can see we have pre-configured
    variables

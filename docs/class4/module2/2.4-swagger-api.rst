@@ -66,7 +66,7 @@ you can see this is actual data from our installed instance.
 
     The UDF environment is proxying traffic through a strange long URL. 
     In your environment, this URL won't be present in the same way 
-    and should come across as ``nginx-manager.f5demolab.com`` or similar.
+    and should come across as ``nginx-manager.f5.local`` or similar.
 
 Step 3: Get a list of instances
 -------------------------------

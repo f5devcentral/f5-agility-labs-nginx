@@ -77,7 +77,7 @@ right click on that folder and rename it to ``alpine3.11``:
 
   .. note:: Now we have created a Dockerfile for Alpine 3.11 but still need to
      create a new **Stage** in our GitLab CI/CD Pipeline Configuration file,
-     `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
+     `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
 
 9. In order to build an **Alpine 3.11** image, we also need to add a new
    stage to our ``.gitlab-ci.yml`` file for ``alpine3.11``. Open this
@@ -126,7 +126,7 @@ right click on that folder and rename it to ``alpine3.11``:
     .. image:: ../images/image8.png
 
 13. Open up the \ **nginx-plus-dockerfiles** repository on
-    Gitlab, \ `https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles>`__ or
+    Gitlab, \ `https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles>`__ or
     using the \ **“nginx-plus-dockerfiles”** shortcut provided. This
     will take us to the repository where we just pushed our modified
     Docker file to
@@ -163,7 +163,7 @@ right click on that folder and rename it to ``alpine3.11``:
     .. image:: ../images/image704.png
 
 .. attention::
-   Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles/-/blob/master/.gitlab-ci.yml>`__,
+   Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles/-/blob/master/.gitlab-ci.yml>`__,
    while waiting for the pipeline to complete.
 
    #. Look at stage definitions near the top of the file, labled ``stages``,

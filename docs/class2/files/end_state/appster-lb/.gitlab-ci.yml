@@ -42,14 +42,14 @@ variables:
   # container, thanks to volume mount from config.toml
   DOCKER_TLS_CERTDIR: "/certs"
   # * Set specific docker images we have readily available
-  REGISTRY_URL: registry.gitlab.f5demolab.com
+  REGISTRY_URL: registry.gitlab.f5.local
   CROSSPLANE_IMAGE: $REGISTRY_URL/f5-demo-lab/nginx-plus-dockerfiles:ubuntu18.04_crossplane
   NGINX_IMAGE: $REGISTRY_URL/f5-demo-lab/nginx-plus-dockerfiles:centos7.6
   # * Important - Use CI_COMMIT_SHA for reproducibility and consistency with git tags and docker tags
   # * Define STAGING_HOST and PROD_HOST here or in Gitlab varaibles via UI for security, 
   #   we do the later, but leave lines below as an example 
-  # STAGING_HOST: docker.f5demolab.com
-  # PROD_HOST: nginx.f5demolab.com
+  # STAGING_HOST: docker.f5.local
+  # PROD_HOST: nginx.f5.local
 
 
 services:
@@ -59,7 +59,7 @@ services:
       [
         "/bin/sh",
         "-c",
-        'echo "10.1.1.5 registry.gitlab.f5demolab.com gitlab.f5demolab.com">>/etc/hosts && dockerd-entrypoint.sh',
+        'echo "10.1.1.5 registry.gitlab.f5.local gitlab.f5.local">>/etc/hosts && dockerd-entrypoint.sh',
       ]
 
 before_script:

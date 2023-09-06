@@ -51,7 +51,7 @@ and use volumes to persist data.
 
    .. code:: bash
 
-        $ docker pull registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+        $ docker pull registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
 Which should produce the following output:
 
@@ -67,8 +67,8 @@ Which should produce the following output:
       Digest:
       sha256:400dd9e21e963629fc3d974261b1b6668b5c822009ddb183ddaa0631c2ae4165
       Status: Downloaded newer image for
-      registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
-      registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+      registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+      registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
 4. Run a container using the downloaded docker image from the previous
    step. We will also map ports ``9000`` and ``9080`` on the docker host
@@ -78,7 +78,7 @@ Which should produce the following output:
    .. code:: bash
 
       $ docker run --name test -d -p 9000:80 -p 9080:8080 -v $PWD/etc/nginx:/etc/nginx \
-      registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+      registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
 
 5. You can see the container is running on the mapped ports. When
