@@ -98,7 +98,7 @@ the next exercise
     .. image:: ../images/image8.png
 
 9.  Open up the Appster repo on Gitlab, using the
-    URI \ `https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster>`__
+    URI \ `https://gitlab.f5.local/f5-demo-lab/gitlabappster <https://gitlab.f5.local/f5-demo-lab/gitlabappster>`__
     or using the **Appster** shortcut provided. This is our repository,
     where we just pushed our modified \ ``index.html`` file to.
 
@@ -124,7 +124,7 @@ the next exercise
     .. image:: ../images/image12.png
 
 .. attention:: Stop: This is a good time to inspect the **GitLab CI/CD Pipeline** file,
-   `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__,
+   `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__,
    while waiting for the pipeline to complete.
 
    #. Look at the stage, ``deploy_staging``, and compare to the stage, ``deploy_prod``,

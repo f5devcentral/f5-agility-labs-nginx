@@ -98,7 +98,7 @@ we will enable Rate limiting to our Appster service
    .. image:: ../images/image5.png
 
 6. Open up the \ **appster-lb** repository on Gitlab by the
-   URI, \ `https://gitlab.f5demolab.com/f5-demo-lab/appster-lb <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb>`__
+   URI, \ `https://gitlab.f5.local/f5-demo-lab/appster-lb <https://gitlab.f5.local/f5-demo-lab/appster-lb>`__
    or using the \ **Appster-lb** shortcut provided so we can view the
    pipeline in progress
 
@@ -115,7 +115,7 @@ we will enable Rate limiting to our Appster service
    to view the pipeline progress in greater detail.
 
 .. attention:: Stop: This is a good time to inspect the **GitLab CI/CD pipeline file**, 
-   `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb/-/blob/master/.gitlab-ci.yml>`__,
+   `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/appster-lb/-/blob/master/.gitlab-ci.yml>`__,
    while waiting for the pipeline to complete.
 
    #. Look at stage, ``test_nginx_conf``, and see the first two step with the ``sed`` and ``find``
@@ -141,7 +141,7 @@ we will enable Rate limiting to our Appster service
 8.  Let’s play QA Engineering and do some testing on our Staging
     environment. View our **Staging** NGINX Plus service in a browser on
     the
-    URI, \ `http://docker.f5demolab.com <http://docker.f5demolab.com>`__,
+    URI, \ `http://docker.f5.local <http://docker.f5.local>`__,
     or use the shortcut, \ **STAGING LB - Appster**
 
     .. image:: ../images/image10.png
@@ -288,7 +288,7 @@ we will enable Rate limiting to our Appster service
     .. image:: ../images/image5.png
 
 15. Open up the **appster-lb** repository on Gitlab by the URI,
-    `https://gitlab.f5demolab.com/f5-demo-lab/appster-lb <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb>`__
+    `https://gitlab.f5.local/f5-demo-lab/appster-lb <https://gitlab.f5.local/f5-demo-lab/appster-lb>`__
     or using the **Appster-lb** shortcut provided so we can view the
     pipeline in progress
 
