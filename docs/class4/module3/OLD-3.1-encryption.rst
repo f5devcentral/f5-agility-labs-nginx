@@ -29,7 +29,7 @@ We use TLS for encrypting traffic on the UI and API in our UDF.
 .. image:: ./arch-proxy.png
 
 In the UI for NGINX Instance Manager, go to ``Inventory`` and select 
-the edit config action for ``nginx-manager.f5demolab.com``.
+the edit config action for ``nginx-manager.f5.local``.
 
 .. image:: ./UDF-nginx-manager-edit.png
 
@@ -48,8 +48,8 @@ Ignore the swagger-ui redirect for now, this is used for the UDF environment.
       access_log      /var/log/nginx/noauth-access.log;
       # error_log     /var/log/nginx/noauth-error.log;
 
-      status_zone	    nginx-manager.f5demolab.com_https;
-      server_name	    nginx-manager.f5demolab.com;
+      status_zone	    nginx-manager.f5.local_https;
+      server_name	    nginx-manager.f5.local;
 
       ssl_certificate 		/etc/ssl/nginx-manager/nginx-manager.crt;
       ssl_certificate_key		/etc/ssl/nginx-manager/nginx-manager.key;
@@ -102,9 +102,9 @@ is listening on port 10443 and the internal upstream points to ``127.0.0.1:10000
 .. code-block:: nginx
 
    server {
-      status_zone nginx-manager.f5demolab.com_grpcs;
+      status_zone nginx-manager.f5.local_grpcs;
       listen 10443 http2 ssl;
-      server_name nginx-manager.f5demolab.com;
+      server_name nginx-manager.f5.local;
 
       access_log /var/log/nginx/grpc-access.log grpc_json;
       # error_log /var/log/nginx/grpc-debug.log debug;
@@ -164,8 +164,8 @@ certificate authority as the server before communication is allowed.
    :emphasize-lines: 1
 
    ssh nginx5 cat /etc/nginx-agent/nginx-agent.conf
-   Warning: Permanently added 'nginx5.f5demolab.com,10.1.1.5' (ECDSA) to the list of known hosts.
-   server: nginx-manager.f5demolab.com:10443
+   Warning: Permanently added 'nginx5.f5.local,10.1.1.5' (ECDSA) to the list of known hosts.
+   server: nginx-manager.f5.local:10443
    tls:
    enable: true
    cert: /etc/ssl/nginx-manager/agent.crt

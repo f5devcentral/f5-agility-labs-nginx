@@ -1,10 +1,10 @@
 Lab 1: Run a pipeline to build NGINX Plus images
 ================================================
 
-1. Double-click on the \ **GitHub Desktop** shortcut on the desktop. It
-   will open up the \ **GitHub Desktop Client** application. GitHub
+1. Double-click on the **GitHub Desktop** shortcut on the desktop. It
+   will open up the **GitHub Desktop Client** application. GitHub
    Desktop client is an excellent easy to use tool to manage your code
-   on git repositories. \ **GitHub Desktop** is developed by GitHub,
+   on git repositories. **GitHub Desktop** is developed by GitHub,
    Inc. but can be used on any git-based project
 
    .. image:: ../images/image2.png
@@ -19,7 +19,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    .. image:: ../images/image3.png
 
 3. Inside the project folder, you will see many subfolders containing
-   Dockerfiles to various builds of NGINX Plus on \ `supported Linux
+   Dockerfiles to various builds of NGINX Plus on `supported Linux
    distributions <https://docs.nginx.com/nginx/technical-specs/>`__.
    Take some time to inspect the Docker files in different folders found
    in the project
@@ -43,30 +43,32 @@ Lab 1: Run a pipeline to build NGINX Plus images
       version 3.11 to our CI/CD pipeline.
 
 5. Create a new folder called ``alpine3.11`` in this project under the
-   ``Dockerfiles`` root folder.
+   ``Dockerfiles`` root folder by copying the ``alpine3.10`` folder:
 
    .. image:: ../images/image6.png
 
-   .. image:: ../images/image19.png
+right click on the ``Dockerfile`` folder to paste the copy:
 
-6. Let’s use the **Alpine 3.10** ``Dockerfile`` as a template for our
-   new **Alpine 3.11** build. Go ahead and copy the ``Dockerfile`` in
-   the ``alpine3.10`` folder and paste it into the empty ``alpine3.11``
-   folder. You can use
-   ``Right Click over Alpine3.10 > **Dockerfile** > Copy``, then
-   ``Right Click over Alpine3.11 Folder > Paste``.
+   .. image:: ../images/image601.png
+   
+after pasting you should see an ``alpine3.10 copy`` folder:
 
-   .. image:: ../images/image5.png
+   .. image:: ../images/image602.png
 
-   .. image:: ../images/image20.png
+right click on that folder and rename it to ``alpine3.11``:
 
-7. In order to build an **Alpine 3.11** image, we need to edit the copied
-   ``Dockerfile`` in our ``alpine3.11`` folder, and update the
-   ``FROM alpine:3.10`` command to ``FROM alpine:3.11``
+   .. image:: ../images/image603.png
 
-   .. image:: ../images/image21.png
+   .. image:: ../images/image604.png
 
-   .. image:: ../images/image22.png
+6. Let's use the **Alpine 3.10** ``Dockerfile`` copy as a template for our
+   new **Alpine 3.11** build. Go ahead and edit the ``Dockerfile`` in
+   in our ``alpine3.11`` folder, and update the ``FROM alpine:3.10`` 
+   command to ``FROM alpine:3.11`` 
+
+   .. image:: ../images/image701.png
+
+   .. image:: ../images/image702.png
 
 8. Once you have edited ``Dockerfile`` and replaced the
    ``FROM alpine:3.10`` command to ``FROM alpine:3.11``, go ahead and
@@ -75,7 +77,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
   .. note:: Now we have created a Dockerfile for Alpine 3.11 but still need to
      create a new **Stage** in our GitLab CI/CD Pipeline Configuration file,
-     `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
+     `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
 
 9. In order to build an **Alpine 3.11** image, we also need to add a new
    stage to our ``.gitlab-ci.yml`` file for ``alpine3.11``. Open this
@@ -88,7 +90,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    b. Lastly, edit the stage label ``alpine3.10`` to ``alpine3.11``
 
-   .. image:: ../images/image23.png
+   .. image:: ../images/image703.png
 
    .. important:: The correct indentation in a ``yaml`` file must be valid and
       make sure your ``.gitlab-ci.yml`` file looks like the example above.
@@ -124,7 +126,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
     .. image:: ../images/image8.png
 
 13. Open up the \ **nginx-plus-dockerfiles** repository on
-    Gitlab, \ `https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles>`__ or
+    Gitlab, \ `https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles>`__ or
     using the \ **“nginx-plus-dockerfiles”** shortcut provided. This
     will take us to the repository where we just pushed our modified
     Docker file to
@@ -158,10 +160,10 @@ Lab 1: Run a pipeline to build NGINX Plus images
     Docker images up to our Docker container registry on this
     repository.
 
-    .. image:: ../images/image12.png
+    .. image:: ../images/image704.png
 
 .. attention::
-   Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, `.gitlab-ci.yml <https://gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles/-/blob/master/.gitlab-ci.yml>`__,
+   Stop: This is a good time to inspect the **GitLab CI/CD Pipeline file**, `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles/-/blob/master/.gitlab-ci.yml>`__,
    while waiting for the pipeline to complete.
 
    #. Look at stage definitions near the top of the file, labled ``stages``,
@@ -183,4 +185,4 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
     Here you should see your new **alpine3.11** image
 
-    .. image:: ../images/image24.png
+    .. image:: ../images/image705.png

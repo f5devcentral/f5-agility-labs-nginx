@@ -20,7 +20,7 @@ Step 1
 ------
 
 In the UI for NGINX Instance Manager, go to ``Inventory`` and select 
-the edit config action for ``nginx-manager.f5demolab.com``.
+the edit config action for ``nginx-manager.f5.local``.
 
 .. image:: ./UDF-nginx-manager-edit.png
 
@@ -203,7 +203,7 @@ Add the line and restart the service.
    gateway-port: 11000
 
    # SSL CN or servername for certs
-   server-name: nginx-manager.f5demolab.com
+   server-name: nginx-manager.f5.local
    # path to x.509 certificate file (optional)
    cert: /etc/ssl/nginx-manager/nginx-manager.crt
    # path to x.509 certificate key file (optional)
