@@ -53,8 +53,11 @@ this lab:
 | **Component**                   | **Access**        | **Credentials**|
 |                                 |                   |                |
 +=================================+===================+================+
-| **JumpHost Windows Server 2012  | RDP Access        | ``user`` /     |
+| **JumpHost Windows Server 2019  | RDP Access        | ``user`` /     |
 | R2**                            |                   | ``user``       |
++---------------------------------+-------------------+----------------+
+| **Guacamole Super Jump Host*    | Gucamole          | ``user`` /     |
+|                                 | Browser-Based RDP | ``user``       |
 +---------------------------------+-------------------+----------------+
 | **GitLab GUI**                  | http://10.1.1.5,  | ``udf`` /      |
 |                                 | SSH               | ``P@ssw0rd20`` |
@@ -80,14 +83,16 @@ this lab:
 +---------------------------------+-------------------+----------------+
 
 To get started with the lab exercises, open an RDP session to the
-``Windows server 2012 JumpHost > Access > RDP``
+``Windows server 2019 JumpHost > Access > RDP``
 
 .. image:: ./images/image3.png
 
 To get an open a preset screen resolution RDP session click on
 ``Details > RDP > [Select an RDP screen resolution]``
 
-.. image:: ./images/image4.png
+.. image:: ./images/image4a.png
+
+.. image:: ./images/image4b.png
 
 .. Note:: When prompted for your User Account details, enter: ``user``/``user``
 
@@ -96,5 +101,12 @@ To get an open a preset screen resolution RDP session click on
 The Windows JumpHost is now ready for the lab
 
 .. image:: ./images/image6.png
+
+**Alternatively** if you cannot use the RDP session open a browser based RDP session
+``Super Jump Host > Access > Gucamole``.  Login with user/user.
+
+.. image:: ./images/image7.png
+
+.. image:: ./images/image8.png
 
 .. Important:: **Run all lab activites from the Windows JumpHost**

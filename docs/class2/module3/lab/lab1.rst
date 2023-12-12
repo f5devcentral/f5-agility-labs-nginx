@@ -98,9 +98,9 @@ we will enable Rate limiting to our Appster service
    .. image:: ../images/image5.png
 
 6. Open up the \ **appster-lb** repository on Gitlab by the
-   URI, \ `https://gitlab.f5.local/f5-demo-lab/appster-lb <https://gitlab.f5.local/f5-demo-lab/appster-lb>`__
+   URI, \ `https://gitlab.f5demolab.com/f5-demo-lab/appster-lb <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb>`__
    or using the \ **Appster-lb** shortcut provided so we can view the
-   pipeline in progress
+   pipeline in progress. (udf/P@ssw0rd20)
 
    The pipeline is automatically triggered, and we can follow its
    progress by clicking the pipeline status icon on the main repo
@@ -288,7 +288,7 @@ we will enable Rate limiting to our Appster service
     .. image:: ../images/image5.png
 
 15. Open up the **appster-lb** repository on Gitlab by the URI,
-    `https://gitlab.f5.local/f5-demo-lab/appster-lb <https://gitlab.f5.local/f5-demo-lab/appster-lb>`__
+    `https://gitlab.f5demolab.com/f5-demo-lab/appster-lb <https://gitlab.f5demolab.com/f5-demo-lab/appster-lb>`__
     or using the **Appster-lb** shortcut provided so we can view the
     pipeline in progress
 
