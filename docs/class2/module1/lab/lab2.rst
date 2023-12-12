@@ -61,9 +61,9 @@ GitLab:
 
 2. Let’s take a look at that variable in action: Open a log output of a
    recent successful pipeline job from the sidebar menu, go to **CI/CD >
-   Jobs** and click on a **status: passed** icon associated with a to a
-   image build stage, any stage with name with a linux distro name
-   e.g. \ ``ubuntu18.04`` **(not ``clean_up``)**
+   Jobs** and click on a **status: passed** icon associated with an
+   image build stage.  In the example below, we selected the Alpine 3.17 image.  
+   e.g. \ ``alpine3.17`` **(Stage - build)**
 
    .. image:: ../images/image25.png
 
