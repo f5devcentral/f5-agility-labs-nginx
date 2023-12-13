@@ -56,7 +56,7 @@ this lab:
 | **JumpHost Windows Server 2019  | RDP Access        | ``user`` /     |
 | R2**                            |                   | ``user``       |
 +---------------------------------+-------------------+----------------+
-| **Guacamole Super Jump Host*    | Gucamole          | ``user`` /     |
+| **Guacamole Super Jump Host**   | Gucamole          | ``user`` /     |
 |                                 | Browser-Based RDP | ``user``       |
 +---------------------------------+-------------------+----------------+
 | **GitLab GUI**                  | http://10.1.1.5,  | ``udf`` /      |
