@@ -33,11 +33,11 @@ and use volumes to persist data.
 
    .. code:: bash
 
-      $ whoami
+      whoami
       centos
 
-      $ cd ~/nginx-plus-docker-base
-      $ pwd
+      cd ~/nginx-plus-docker-base
+      pwd
       /home/centos/nginx-plus-docker-base
 
 3. Pull an image from our private docker registry using
