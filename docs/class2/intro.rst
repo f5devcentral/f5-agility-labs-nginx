@@ -5,7 +5,7 @@ The purpose of this Lab is to introduce continuous integration and continuous de
 
 The byword of CI/CD is *automation* - the key factor that enables both integration and delivery to be continuous. Once the code is considered stable, the goal is to eliminate the need for human intervention between the submission of code for integration and the delivery of the same code into the production environment. The agile and lightweight design of `NGINX <https://nginx.org/en>`__ and `NGINX Plus <https://www.nginx.com/products/nginx>`__ makes it extremely easy to deploy them using a CI/CD process.
 
-NGINX native configuration is simple text stored in flat files and organized in logical folder structures. It is therefor trivial to keep the  source of truth for NGINX configurations in source control. Furthermore, NGINX and NGINX Plus can be deployed in various form factors (virtual machine, bare metal, cloud platforms, and containers) which allows the NGINX artifacts of a CI/CD process to produce:
+NGINX native configuration is simple text stored in flat files and organized in logical folder structures. It is therefore trivial to keep the source of truth for NGINX configurations in source control. Furthermore, NGINX and NGINX Plus can be deployed in various form factors (virtual machine, bare metal, cloud platforms, and containers) which allows the NGINX artifacts of a CI/CD process to produce:
 
 -  NGINX configurations files
 -  A Docker container
@@ -39,6 +39,7 @@ The infrastructure is pre-built in UDF for your use and includes the following c
 - Gitlab Runner
 - NGINX Plus
 - A Windows JumpHost
+- A Super Jump Host for alternate RDP connections
 - Staging, and Production environments
 
 The **JumpHost** (Windows) is already set up with all the tools required to edit and commit changes to our Dockerfiles, example “Appster” Web Application and NGINX Plus configurations. **Run all lab activites from the JumpHost** The **Chrome web browser** has been set up with bookmarks to all the web applications you need for this lab.  **Shell access** to the Staging and Production environment is required for one excercise and is useful to look “under the hood” of deployments to Linux servers in a live environment.
