@@ -5,7 +5,8 @@ The purpose of this Lab is to introduce continuous integration and continuous de
 
 The byword of CI/CD is *automation* - the key factor that enables both integration and delivery to be continuous. Once the code is considered stable, the goal is to eliminate the need for human intervention between the submission of code for integration and the delivery of the same code into the production environment. The agile and lightweight design of `NGINX <https://nginx.org/en>`__ and `NGINX Plus <https://www.nginx.com/products/nginx>`__ makes it extremely easy to deploy them using a CI/CD process.
 
-NGINX native configuration is simple text stored in flat files and organized in logical folder structures. It is therefore trivial to keep the  source of truth for NGINX configurations in source control. Furthermore, NGINX and NGINX Plus can be deployed in various form factors (virtual machine, bare metal, cloud platforms, and containers) which allows the NGINX artifacts of a CI/CD process to produce:
+NGINX native configuration is simple text stored in flat files and organized in logical folder structures. It is therefore trivial to keep the source of truth for NGINX configurations in source control. Furthermore, NGINX and NGINX Plus can be deployed in various form factors (virtual machine, bare metal, cloud platforms, and containers) which allows the NGINX artifacts of a CI/CD process to produce:
+
 
 -  NGINX configurations files
 -  A Docker container
@@ -38,7 +39,7 @@ The infrastructure is pre-built in UDF for your use and includes the following c
 - GitLab-CE Server
 - Gitlab Runner
 - NGINX Plus
-- Windows JumpHost
+- A Windows JumpHost
 - Guacamole Super Jump Host (if not able to use RDP)
 - Staging, and Production environments
 
@@ -60,7 +61,7 @@ this lab:
 | **JumpHost Windows Server 2019  | RDP Access        | ``user`` /     |
 | R2**                            |                   | ``user``       |
 +---------------------------------+-------------------+----------------+
-| **Guacamole Super Jump Host*    | Gucamole          | ``user`` /     |
+| **Guacamole Super Jump Host**   | Gucamole          | ``user`` /     |
 |                                 | Browser-Based RDP | ``user``       |
 +---------------------------------+-------------------+----------------+
 | **GitLab GUI**                  | http://10.1.1.5,  | ``udf`` /      |
