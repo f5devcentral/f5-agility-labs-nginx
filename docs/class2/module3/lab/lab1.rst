@@ -90,7 +90,7 @@ we will enable Rate limiting to our Appster service
    field: ``"Enable 10 request per second in the root '/' location."``
 
    Once you fill in both boxes, click on **Commit to Master** and on the
-   next screen, press **“Push to Origin”** to push the new code commit
+   next screen, press **“Push Origin”** to push the new code commit
    to our git repository on Gitlab.
 
    .. image:: ../images/image4.png
@@ -280,7 +280,7 @@ we will enable Rate limiting to our Appster service
     ``"Enable 10000 request per second in the root '/' location."``
 
     Once you fill in both boxes, click on **Commit to Master** and on
-    the next screen, press **“Push to Origin”** to push the new code
+    the next screen, press **“Push Origin”** to push the new code
     commit to our git repository on Gitlab.
 
     .. image:: ../images/image16.png

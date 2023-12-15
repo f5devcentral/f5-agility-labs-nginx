@@ -85,7 +85,7 @@ the next exercise
     field: “Update phone image”
 
     Once you fill in both boxes, click on \ **Commit to Master** and on
-    the next screen, press **Push to Origin** to push the new code
+    the next screen, press **Push Origin** to push the new code
     commit to our git repository on Gitlab.
 
     .. image:: ../images/image7.png
