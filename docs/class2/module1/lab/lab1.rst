@@ -118,7 +118,7 @@ right click on that folder and rename it to ``alpine3.17``:
     field: ``"NGINX Plus for Alpine 3.17"``
 
     Once you fill in both boxes, click on **Commit to Master** and on
-    the next screen, press **“Push to Origin”** to push the new code
+    the next screen, press **“Push Origin”** to push the new code
     commit to our git repository on Gitlab.
 
     .. image:: ../images/image7.png
