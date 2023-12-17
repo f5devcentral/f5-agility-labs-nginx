@@ -1,7 +1,7 @@
-Class5 - NGINX App Protect WAF
-##############################
+Class5 - NGINX App Protect WAF & Denial of Service
+##################################################
 
-Welcome to the NGINX App Protect WAF hands-on lab!
+Welcome to the NGINX App Protect WAF & DoS hands-on lab!
 
 .. toctree::
    :maxdepth: 1

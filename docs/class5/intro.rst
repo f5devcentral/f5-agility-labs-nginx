@@ -1,6 +1,7 @@
-Introduction
-============
-This lab will familiarize you with Denial of Service attaacks and help you protect HTTP and gRPC services against them using NGINX AppProtect Denial of Service (NAP DoS).
+NGINX APp Protect DoS
+=====================
+
+The remainder of this lab will familiarize you with Denial of Service attacks and help you protect HTTP and gRPC services against them using NGINX AppProtect Denial of Service (NAP DoS).
 
 You will accomplish a few things as part of this lab:
 
@@ -12,23 +13,24 @@ You will accomplish a few things as part of this lab:
 #. Observe and monitor attacks from NAP DoS metrics pulled into an ELK Stack (Elastic Search, Logstash, Kibana)
 #. Monitor live activity with the built-in NAP DoS Dashboard
 
-Lab Topology
-============
-This lab uses a UDF (Unified Demonstration Framework) to stand up the set of VMs described below.  Additionally there is an image that show traffic flow through the environment.
+Topology
+========
+
+The remainder of this lab will use VMs in your existing deployment that we have not interacted with so far. They are:
 
 Clients
-    - Legitimate Traffic -- Contains scripts to act as legitimate client traffic -- 10.1.1.10
-    - Attacker -- Contains scripts for DoS attacks to act as bad actor client traffic -- 10.1.1.11
+    - Legitimate Traffic -- Contains scripts to act as legitimate client traffic -- 10.1.1.11
+    - Attack Traffic Generator -- Contains scripts for DoS attacks to act as bad actor client traffic -- 10.1.1.16
 Load Balancers
-    - NGINX LB -- L4 edge load balancer that distributes traffic between two NAP DoS instances and appropriate internal ports -- 10.1.1.4
-    - NAP DoS 1 -- first L7 load balancer that maps internal ports to backend services -- 10.1.1.6
-    - NAP DoS 2 -- second L7 load balancer that maps internal ports to backend services -- 10.1.1.7
-    - Arbitrator --  Orchestrates multiple NAP DoS instances to sync attack starts and stops -- 10.1.1.12
+    - NGINX LB -- L4 edge load balancer that distributes traffic between two NAP DoS instances and appropriate internal ports -- 10.1.1.17
+    - NAP DoS 1 -- first L7 load balancer that maps internal ports to backend services -- 10.1.1.15
+    - NAP DoS 2 -- second L7 load balancer that maps internal ports to backend services -- 10.1.1.14
+    - Arbitrator --  Orchestrates multiple NAP DoS instances to sync attack starts and stops -- 10.1.1.13
 Backends
-    - JuiceShop -- Sample eCommerce site to serve as a generic backend application -- 10.1.1.13
-    - gRPC Application -- "RouteGuide" gRPC service running in a container environment -- 10.1.1.9
+    - JuiceShop -- Sample eCommerce site to serve as a generic backend application -- 10.1.1.19
+    - gRPC Application -- "RouteGuide" gRPC service running in a container environment -- 10.1.1.18
 Monitoring
-    - ELK -- containerized ELK stack pre-configured to monitor NAP DoS instances -- 10.1.1.3
+    - ELK -- containerized ELK stack pre-configured to monitor NAP DoS instances -- 10.1.1.20
 
 .. image:: ../_static/10putty.png
 

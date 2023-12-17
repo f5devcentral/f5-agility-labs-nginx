@@ -24,14 +24,14 @@ Establish baseline
     - Contrary to the lab topology image and the description of the environment, the Kibana server IP address is 10.1.1.8.
    
 
-.. image:: ../../_static/class8_module3_elk_homepage.jpeg
+.. image:: ../../_static/class5_module8_elk_homepage.jpeg
 
 
 5. Click the menu button in the upper left corner ( button with 3 horizontal lines)
 
 6. Under **Analytics** click **Discover** (second option down)
 
-.. image:: ../../_static/class8_module3_kibana_search.png
+.. image:: ../../_static/class5_module8_kibana_search.png
 
 
 7. Under Available Fields, Click the word **learning_confidence** 
@@ -44,6 +44,6 @@ Establish baseline
 
 10. Wait until learing confidence is **Ready** 
 
-.. image:: ../../_static/class8_module3_kibana_ready.png 
+.. image:: ../../_static/class5_module8_kibana_ready.png 
 
 
