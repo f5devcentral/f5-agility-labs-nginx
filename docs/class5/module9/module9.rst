@@ -1,4 +1,4 @@
-Module 4 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
+Module 9 - Protecting HTTP and gRPC Services from Application Layer DoS Attacks
 ###############################################################################
 
 Launch HTTP Flood Attack
@@ -27,7 +27,7 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA" (UDF > Components > Sys
 
 .. image:: access-kibana.jpg
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
 
 .. image:: access-dashboard1.jpg
 
@@ -59,7 +59,7 @@ We will demonstrate a Slow POST attack using slowhttptest tool.
 
 Slow POST attack: Slowing down the HTTP message body, making the server wait until all content arrives according to the Content-Length header; or until the final CRLF arrives.
 
-1. Open WebShell into "Attacker (10.1.1.11)" VM (UDF > Components > Systems > Attacker > Access > WebShell)
+1. Open WebShell into "Attack Traffic Generator (10.1.1.16)" VM (UDF > Components > Systems > Attacker > Access > WebShell)
 
 2. Launch Slow POST Attack
 !!!!!Make sure previous attack ended before launching Attack (**Wait for the vertical black line in ELK graphs**)
@@ -88,7 +88,7 @@ Output:
   JUICESHOP HTTP Code:200
   JUICESHOP HTTP Code:200\::
 
-Slowhttptest will report that NAP DOS is closing the connection: slow HTTP test status on 165th second:
+Slowhttptest will report that NGINX App Protect DoS is closing the connection: slow HTTP test status on 165th second:
 
    initializing: 0
    pending: 1
@@ -101,7 +101,7 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 .. image:: access-kibana.jpg
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
 
 .. image:: access-dashboard1.jpg
 
@@ -114,7 +114,7 @@ Launch HTTP/2 Flood attack on gRPC service
    
 We will be initiating a HTTP/2 Flood Attack on the "RouteGuide GRPC service" using h2load.
 
-1. SSH (WebShell) into "Attacker (10.1.1.11)" VM.
+1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
 2. Launch HTTP/2 Flood Attack.
 
 !!!!!Make sure previous attack ended before launching Attack
@@ -146,7 +146,7 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 .. image:: access-kibana.jpg
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
 
 .. image:: access-dashboard1.jpg
 
@@ -161,7 +161,7 @@ Attacker sends requests to heavy URLs
      
 We will be initiating a Message flood DoS by gRPC on the "RouteGuide GRPC service" using ghz tool.
 
-1. SSH (WebShell) into "Attacker (10.1.1.11)" VM.
+1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
 2. Launch GRPC Flood Attack.
 
 !!!!!Make sure previous attack ended before launching Attack 
@@ -189,7 +189,7 @@ Output:
   
   Finished trip with 10 points\:\:
 
-GHZ tool will report HTTP status code 403 which indicates traffic is blocked by NAPDOS
+GHZ tool will report HTTP status code 403 which indicates traffic is blocked by NGINX App Protect DoS
 
   Error distribution:
   
@@ -203,7 +203,7 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 .. image:: access-kibana.jpg
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
 
 .. image:: access-dashboard1.jpg
 
@@ -216,7 +216,7 @@ Launch Slow gRPC POST
    
 Attacker supplies a number of concurrent slow POST gRPC requests that exceeds the server capacity of concurrent requests.
 
-1. SSH (WebShell) into "Attacker (10.1.1.11)" VM.
+1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
 2. Launch Slow gRPC POST Attack.
 
 !!!!!Make sure previous attack ended before launching Attack
@@ -229,7 +229,7 @@ Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
 .. image:: access-kibana.jpg
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link Verify NAP DOS mitigation.
+Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
 
 .. image:: access-dashboard1.jpg
 

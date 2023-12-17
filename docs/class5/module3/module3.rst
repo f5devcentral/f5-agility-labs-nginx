@@ -1,7 +1,7 @@
-Module 3 - Modern Apps NGINX App Protect Deployment
-===================================================
+Module 3 - Modern Apps NGINX App Protect WAF Deployment
+=======================================================
 
-In this section of the lab, you will deploy NGINX App Protect to an existing NGINX Ingress Controller deployment hosting a microservices-based application.
+In this section of the lab, you will deploy NGINX App Protect WAF to an existing NGINX Ingress Controller deployment hosting a microservices-based application.
 
 Estimated completion time: 21 minutes
 

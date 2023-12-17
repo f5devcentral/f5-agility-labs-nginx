@@ -1,5 +1,5 @@
-Module 5 - Reporting and Monitoring NAP DoS using ELK Stack
-###########################################################
+Module 10 - Reporting and Monitoring NGINX App Protect DoS using ELK Stack
+##########################################################################
 
 1. Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
@@ -11,7 +11,7 @@ Module 5 - Reporting and Monitoring NAP DoS using ELK Stack
 
 Once the attack begins the NGINX App Protect Dos will switch into attack mode due to the server health deteriorating - almost immediately. ( Dashboard : AP_DOS: Server_stress_level )
 
-That’s why BaDoS first mitigates with a global rate limit just to protect the server. (Dashboard: AP_DOS: HTTP mitigation, Global Rate will marked Red)
+That's why BaDoS first mitigates with a global rate limit just to protect the server. (Dashboard: AP_DOS: HTTP mitigation, Global Rate will marked Red)
 
 During this time Behavioral DoS identifies anomalous traffic and generates Dynamic Signatures matching only the malicious traffic. (Dashboard: AP_DOS: HTTP mitigation, Signatures will marked Purple)
 

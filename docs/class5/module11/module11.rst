@@ -1,5 +1,5 @@
-Module 6 - Live Activity Monitoring with NAP DoS Dashboard
-##########################################################
+Module 11 - Live Activity Monitoring with NGINX App Protect DoS Dashboard
+#########################################################################
 
 Overview
 --------
