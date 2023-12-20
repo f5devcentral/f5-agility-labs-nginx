@@ -1,5 +1,5 @@
-Module 2 - Install and Enable NGINX AppProtect DoS
-######################################################
+Module 7 - Install and Enable NGINX AppProtect DoS
+##################################################
 
 
 In this module you will install and enable NGINX App Protect DoS on NAP DOS1 and NAP DOS 2
@@ -35,7 +35,7 @@ Install NGINX App Protect DOS
 .. Note:: 
 
     - All NGINX App Protect configurations should be commented out. Use your editing tool of choice (vi, vim, or nano) to complete this task.
-    - Please note the NAP DOS Live Activity Monitoring section of the /etc/nginx/nginx.conf file will be edited at a later time (Module 6)
+    - Please note the NAP DoS Live Activity Monitoring section of the /etc/nginx/nginx.conf file will be edited at a later time (Module 11)
 
 .. code-block:: nginx
     :linenos:
@@ -69,14 +69,14 @@ Install NGINX App Protect DOS
 
 
       upstream myapp1 {
-            server 10.1.1.13:3000;
+            server 10.1.1.19:3000;
         }
 
         server {
             listen 50051 http2;
             server_name grpc.example.com;
             #app_protect_dos_security_log_enable on;
-            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.8:5261;
+            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.20:5261;
             http2_max_concurrent_streams 100000;
 
             ssl_certificate /etc/ssl/certs/cert.crt;
@@ -92,16 +92,16 @@ Install NGINX App Protect DOS
                 #app_protect_dos_policy_file "/etc/app_protect_dos/BADOSDefaultPolicy.json";
                 #app_protect_dos_name "routeguide";
                 #set $loggable '0';
-                #access_log syslog:server=10.1.1.8:5561 log_dos if=$loggable;
+                #access_log syslog:server=10.1.1.20:5561 log_dos if=$loggable;
                 grpc_pass grpc://routeguide_service;
             }
         }
 
         upstream routeguide_service {
             zone routeguide_service 64k;
-            server 10.1.1.9:10001;
-            server 10.1.1.9:10002;
-            server 10.1.1.9:10003;
+            server 10.1.1.18:10001;
+            server 10.1.1.18:10002;
+            server 10.1.1.18:10003;
         }
 
 
@@ -110,9 +110,9 @@ Install NGINX App Protect DOS
             keepalive_requests 100000;
             client_max_body_size 2000M;
             #app_protect_dos_security_log_enable on;
-            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.8:5261;
+            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.20:5261;
             #set $loggable '0';
-            #access_log syslog:server=10.1.1.8:5561 log_dos if=$loggable;
+            #access_log syslog:server=10.1.1.20:5561 log_dos if=$loggable;
             http2_max_concurrent_streams 100000;
             ssl_certificate /etc/ssl/certs/cert.crt;
             ssl_certificate_key /etc/ssl/certs/cert.key;
@@ -123,7 +123,7 @@ Install NGINX App Protect DOS
 
             location /monitor {
                 rewrite ^/monitor(.*)$ /routeguide.RouteGuide/GetFeature break;
-                grpc_pass grpc://10.1.1.9:10002;
+                grpc_pass grpc://10.1.1.18:10002;
             }
 
             location /testing {
@@ -131,8 +131,8 @@ Install NGINX App Protect DOS
                 grpc_set_header te trailers;
                 #app_protect_dos_enable on;
                 #app_protect_dos_name "slowpost";
-                #app_protect_dos_monitor uri=https://10.1.1.7:8095/monitor protocol=grpc;
-                grpc_pass grpc://10.1.1.9:10002;
+                #app_protect_dos_monitor uri=https://10.1.1.14:8095/monitor protocol=grpc;
+                grpc_pass grpc://10.1.1.18:10002;
             }
         }
 
@@ -141,9 +141,9 @@ Install NGINX App Protect DOS
             keepalive_requests 100000;
             server_name juiceshop;
             #app_protect_dos_security_log_enable on;
-            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.8:5261;
+            #app_protect_dos_security_log "/etc/app_protect_dos/log-default.json" syslog:server=10.1.1.20:5261;
             #set $loggable '0';
-            #access_log syslog:server=10.1.1.8:5561 log_dos if=$loggable;
+            #access_log syslog:server=10.1.1.20:5561 log_dos if=$loggable;
 
             location / {
                 #app_protect_dos_enable on;

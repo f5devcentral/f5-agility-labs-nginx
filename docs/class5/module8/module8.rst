@@ -1,10 +1,10 @@
-Module 3 - Establishing Application Traffic Baseline
-###################################################################
+Module 8 - Establishing Application Traffic Baseline
+####################################################
 
 NGINX App Protect DoS is based on learning and analyzing all traffic to the web application. 
-It  builds baselines for what traffic should look like and identifies anomalies when server stress is detected.
+It builds baselines for what traffic should look like and identifies anomalies when server stress is detected.
 
-Establish baseline
+Establish Baseline
 ------------------
 
 1. Open WebShell to the 'legitimate traffic VM' (UDF > Components > Systems > legitimate traffic > Access > Web Shell)
@@ -21,17 +21,17 @@ Establish baseline
 
 .. Note::
 
-    - Contrary to the lab topology image and the description of the environment, the Kibana server IP address is 10.1.1.8.
+    - Contrary to the lab topology image and the description of the environment, the Kibana server IP address is 10.1.1.20.
    
 
-.. image:: ../../_static/class8_module3_elk_homepage.jpeg
+.. image:: ../../_static/class5_module8_elk_homepage.jpeg
 
 
 5. Click the menu button in the upper left corner ( button with 3 horizontal lines)
 
 6. Under **Analytics** click **Discover** (second option down)
 
-.. image:: ../../_static/class8_module3_kibana_search.png
+.. image:: ../../_static/class5_module8_kibana_search.png
 
 
 7. Under Available Fields, Click the word **learning_confidence** 
@@ -44,6 +44,6 @@ Establish baseline
 
 10. Wait until learing confidence is **Ready** 
 
-.. image:: ../../_static/class8_module3_kibana_ready.png 
+.. image:: ../../_static/class5_module8_kibana_ready.png 
 
 

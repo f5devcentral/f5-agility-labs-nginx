@@ -1,25 +1,25 @@
-NGINX App Protect Overview
---------------------------
+NGINX App Protect WAF Overview
+------------------------------
 
-NGINX App Protect is a web application firewall (WAF) designed to protect web applications from a variety of threats such as DDoS attacks, SQL injection, cross-site scripting (XSS), and other common web application attacks.
+NGINX App Protect WAF is a web application firewall designed to protect web applications from a variety of threats such as SQL injection, cross-site scripting (XSS), and other common web application attacks.
 
-NGINX App Protect is built on top of the NGINX web server and is deployed as a module within the NGINX Plus application delivery platform. It uses machine learning algorithms and other advanced techniques to detect and block malicious traffic in real-time.
+NGINX App Protect WAF is built on top of the NGINX web server and is deployed as a module within the NGINX Plus application delivery platform. It uses machine learning algorithms and other advanced techniques to detect and block malicious traffic in real-time.
 
-NGINX App Protect provides comprehensive protection for web applications without sacrificing performance. It can be deployed on-premises, in the cloud, or in a hybrid environment and integrates with popular DevOps tools and platforms such as Kubernetes, AWS, and Azure.
+NGINX App Protect WAF provides comprehensive protection for web applications without sacrificing performance. It can be deployed on-premises, in the cloud, or in a hybrid environment and integrates with popular DevOps tools and platforms such as Kubernetes, AWS, and Azure.
 
 Deployment Modes
 ----------------
 
-NGINX App Protect can be deployed in a variety of ways depending on the specific use case and deployment requirements. Here are some of the most common deployment options:
+NGINX App Protect WAF can be deployed in a variety of ways depending on the specific use case and deployment requirements. Here are some of the most common deployment options:
 
-- As a module within the NGINX Plus application delivery platform: NGINX App Protect can be deployed as a module within the NGINX Plus platform. This provides a unified solution for both load balancing and application security.
-- Alongside NGINX Plus Ingress Controller: NGINX App Protect can be deployed in a containerized environment such as Docker or Kubernetes on top of NGINX Plus Ingress Controller. This provides a scalable and flexible solution for cloud-native applications.
-- Alongside NGINX Plus API Connectivity Manager: NGINX App Protect combined with NGINX Plus API Connectivity Manager to create a secure API gateway that layers protection from known attack signatures, threat campaigns to fully protect your APIs
-- As a service for microservices based deployments: Run NGNIX App Protect inside your microservices-based environment to provide WAF protection to your web applications and APIs
+- As a module within the NGINX Plus application delivery platform: NGINX App Protect WAF can be deployed as a module within the NGINX Plus platform. This provides a unified solution for both load balancing and application security.
+- Alongside NGINX Plus Ingress Controller: NGINX App Protect WAF can be deployed in a containerized environment such as Docker or Kubernetes on top of NGINX Plus Ingress Controller. This provides a scalable and flexible solution for cloud-native applications.
+- Alongside NGINX Plus API Connectivity Manager: NGINX App Protect WAF combined with NGINX Plus API Connectivity Manager to create a secure API gateway that layers protection from known attack signatures, threat campaigns to fully protect your APIs
+- As a service for microservices based deployments: Run NGNIX App Protect WAF inside your microservices-based environment to provide WAF protection to your web applications and APIs
 
 .. image:: images/deployment_modes.png
    :align: center
-   :alt: Image showing deployment modes for NGINX App Protect
+   :alt: Image showing deployment modes for NGINX App Protect WAF
 
 Deployment environments
 -----------------------
@@ -28,19 +28,19 @@ NGINX App Protect can be deployed in public and private clouds, on virtual machi
 
 .. image:: images/deployment_environments.png
    :align: center
-   :alt: Image showing diagram of support deployment environments for NGINX App Protect
+   :alt: Image showing diagram of support deployment environments for NGINX App Protect WAF
 
 Lab Overview
 ------------
 
 This lab serves as an introduction to the NGINX App Protect WAF solution. In this lab, you will:
 
-- review a fully deployed NGINX Plus instance with NGINX App Protect in place for an existing application
+- review a fully deployed NGINX Plus instance with NGINX App Protect WAF in place for an existing application
 - test drive the NGINX Management Suite's Instance Manager and Security Monitoring modules to manage configurations and security posture
 - identify false positives and perform policy changes to remedy
-- deploy NGINX App Protect on an existing NGINX Plus instance 
-- deploy NGINX App Protect in Kubernetes using modern apps methodologies
-- review NGINX App Protect API Security
+- deploy NGINX App Protect WAF on an existing NGINX Plus instance 
+- deploy NGINX App Protect WAF in Kubernetes using modern apps methodologies
+- review NGINX App Protect WAF API Security
 
 Each of the modules in this lab are independent and can be performed in any order. 
 
@@ -49,13 +49,13 @@ NGINX Acronyms
 
 The following are a few acronyms that you will encounter in this lab. 
 
-- **NAP** – NGINX App Protect
-- **NMS** – NGINX Management Suite
-- **NIM** – NGINX Instance Manager (base NMS module)
-- **NMS-SM** – NGINX Security Monitoring (optional NMS module)
-- **ACM** – API Connectivity Manager (optional NMS module)
-- **ADM** – App Delivery Manager (optional NMS module)
-- **NIC** – NGINX Ingress Controller
+- **NAP** - NGINX App Protect WAF
+- **NMS** - NGINX Management Suite
+- **NIM** - NGINX Instance Manager (base NMS module)
+- **NMS-SM** - NGINX Security Monitoring (optional NMS module)
+- **ACM** - API Connectivity Manager (optional NMS module)
+- **ADM** - App Delivery Manager (optional NMS module)
+- **NIC** - NGINX Ingress Controller
 
 NGINX App Protect WAF Terminology
 ---------------------------------
@@ -98,7 +98,7 @@ NGINX App Protect WAF Terminology
   * - TPS/RPS
     - Transactions per second (TPS)/requests per second (RPS). In NGINX App Protect WAF, these terms are used interchangeably.
   * - Tuning
-    - Making manual changes to an existing security policy to reduce false positives and increase the policy’s security level.
+    - Making manual changes to an existing security policy to reduce false positives and increase the policy's security level.
   * - URI/URL
     - The Uniform Resource Identifier (URI) specifies the name of a web object in a request. A Uniform Resource Locator (URL) specifies the location of an object on the Internet. For example, in the web address, ``http://www.siterequest.com/index.html``, index.html is the URI, and the URL is ``http://www.siterequest.com/index.html``. In NGINX App Protect WAF, the terms URI and URL are used interchangeably.
   * - Violation
