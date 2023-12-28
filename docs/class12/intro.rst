@@ -21,3 +21,6 @@ What Kubernetes is **NOT**:
 What Kubernetes IS:
  - Orchestation Platform (ensuring workloads are available/scalable)
  - 
+
+
+.. image:: images/container_evo.png
