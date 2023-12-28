@@ -7,4 +7,4 @@ Class 12 - Lab Access
    :glob:
 
    intro
-   module*/module*
+   module1/module1
