@@ -2,7 +2,7 @@ Kubernetes Components
 =====================
 
 
-NODE
+Node
 ----
 
 Nodes are the primary compent of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
@@ -23,35 +23,57 @@ Let's view the nodes attached to our cluster by connecting to the Jumphost from 
 
    kubectl get nodes 
 
+Returned content:
+
 .. code-block:: 
    :caption: Node data basic 
 
     NAME                       STATUS   ROLES                  AGE    VERSION
-    k3s-master.agility.lab     Ready    control-plane,master   308d   v1.25.6+k3s1
-    k3s-worker-2.agility.lab   Ready    <none>                 308d   v1.25.6+k3s1
-    k3s-worker-1.agility.lab   Ready    <none>                 308d   v1.25.6+k3s1
+    k3s-leader.lab             Ready    control-plane,master   308d   v1.25.6+k3s1
+    k3s-worker-2.lab           Ready    <none>                 308d   v1.25.6+k3s1
+    k3s-worker-1.lab           Ready    <none>                 308d   v1.25.6+k3s1
 
 
-That was very basic information on our nodes, but if we want more details we can add the `-o` for *output* and add *wide*
+That was very basic information on our nodes, but if we want more details we can add the `-o` flag, for *output*, and add *wide*
 
 .. code-block:: bash 
    :caption: Get node info wide 
 
    kubectl get nodes -o wide
 
+Returned content:
+
 .. code-block:: 
    :caption: Node data wide 
 
     NAME                       STATUS   ROLES                  AGE    VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
-    k3s-master.agility.lab     Ready    control-plane,master   308d   v1.25.6+k3s1   10.1.1.5      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
-    k3s-worker-2.agility.lab   Ready    <none>                 308d   v1.25.6+k3s1   10.1.1.7      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
-    k3s-worker-1.agility.lab   Ready    <none>                 308d   v1.25.6+k3s1   10.1.1.6      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+    k3s-leader.lab             Ready    control-plane,master   308d   v1.25.6+k3s1   10.1.1.5      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+    k3s-worker-2.lab           Ready    <none>                 308d   v1.25.6+k3s1   10.1.1.7      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+    k3s-worker-1lab            Ready    <none>                 308d   v1.25.6+k3s1   10.1.1.6      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+
+As you can see from the *-o wide* flag, we can get greater detail on our nodes. We can get further details by asking kubectl to *describe* the resource type and resource name.
+
+.. code-block:: bash 
+   :caption: Node describe 
+
+   kubectl describe node k3s-leader.lab
+
+Container Network Interface (CNI)
+---------------------------------
+
+Custom Resource Definitions (CRD)
+----------------------------------
 
 Namespaces
 ----------
 
 
-POD 
+Pod
 ---
+
+Deployment 
+----------
+
+
 
 
