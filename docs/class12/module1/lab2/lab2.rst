@@ -16,14 +16,14 @@ specific command-line tool you'll use is *kubectl*. Kubectl allows you to view, 
 Let's view the nodes attached to our cluster.
 
 .. code-block:: bash 
-   :caption: Get Nodes 
+   :caption: Get node info
 
    kubectl get nodes 
 
 That was very basic information on our nodes, but if we want more details we can add the `-o` for *output* and add *wide*
 
 .. code-block:: bash 
-   :caption: Get Nodes 
+   :caption: Get node info wide 
 
    kubectl get nodes -o wide
 
