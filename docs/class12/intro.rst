@@ -24,3 +24,5 @@ What Kubernetes IS:
 
 
 .. image:: images/container_evo.png
+   :width: 400
+   :alt: Container Evolution
