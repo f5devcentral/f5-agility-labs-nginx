@@ -1,5 +1,5 @@
-Class 1 - Lab Access
-====================
+Class 12 - Lab Access
+#####################
 
 .. toctree::
    :maxdepth: 1
