@@ -21,4 +21,5 @@ Welcome to the |classbold| lab at F5 Agility |year|
    class9/class*
    class10/class*
    class11/class*
+   class12/class*
 
