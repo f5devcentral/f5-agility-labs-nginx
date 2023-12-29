@@ -94,20 +94,29 @@ As you can see from the *-o wide* flag, we can get greater detail on our nodes. 
    kubectl describe node k3s-leader.lab
 
 
-
-Container Network Interface (CNI)
----------------------------------
-
-Calico 
-Flannel 
-Cilium 
-
 Custom Resource Definitions (CRD)
 ----------------------------------
 
 Namespaces
 ----------
 
+In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces.
+
+Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
+
+Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+
+.. code-block:: bash 
+   :caption: View All Namespaces
+
+   kubectl get namespace
+
+You can abbreviate resource types. The *namespace* resource can be abbreviated as **ns** as shown below.
+
+.. code-block:: bash 
+   :caption: View kube-system Namespaces
+
+   kubectl describe ns kube-system
 
 Pod
 ---
@@ -118,6 +127,10 @@ Deployment
 Service
 -------
 
-
+How to determine A record 
+- Loadbalancer
+- ClusterIP
+- NodePort
+- Brief CNI 
 
 
