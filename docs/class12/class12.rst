@@ -1,5 +1,5 @@
-Class 12 - Lab Access
-#####################
+Class 12 - The Path to Understanding Kubernetes and Containers
+##############################################################
 
 .. toctree::
    :maxdepth: 1
