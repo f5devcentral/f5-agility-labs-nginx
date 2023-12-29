@@ -1,80 +1,123 @@
-Kubernetes Overview
--------------------
+Container Components
+====================
+
+Containers are a lightweight, executable software package containing all the necessary code and it's dependencies to run as a process on a host. Traditionally, applications
+were run from bare metal or virtual machines atop an operating system. This meant that multiple applications could compete for resources and any changes to the operating system
+could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS, then test. Next 
+upgrade the web server language dependencies, then test. Finally the application code could be upgraded and user acceptance testing could begin.
+
+Containerization has greatly increased the time it takes to rollout new code (enhancements or fixes) to production. In the world of applications and application security, 
+speed is still king. 
+
+Even though we will not build a container, we will discuss some important things about containers. First, containers run as a process on the host system. They need 
+a container runtime, such as Docker to run on. The runtime engine will validate the container's image and configuration. Secondly, your new container will share host network information
+(i.e. DNS, routing/nat) and will ONLY have what you installed. Again, a container is not a full distro of an operating system. 
+
+Many different types of container images (Linux, Windows)
+
+Building your container can be compared to making a layered cake. There needs to be a base image (Linux or Windows base images), then you can add on 
+packages/libraries to allow your application to run. Containers can be *built* using a Dockerfile. In this file you'll define the base, packages needed, and importantly
+necessary commands to be run. It's **VERY** important to remember, containers run until the defaut command executes, then they terminate. 
+
+Let's look at some excerpts from our very own Nginx container. 
+
+.. code-block:: bash 
+   :caption: Nginx Dockerfile 
+
+   FROM debian:bookworm-slim
+
+   EXPOSE 80
+
+   CMD ["nginx", "-g", "daemon off;"]
+
+The above excerpt tells us our container has a base image **FROM** Debian Linux and is a particular slimmed down version of Debian. To communicate 
+with the container, you'll need to **EXPOSE** ports and this is that command. The **CMD** (command) is turning the Nginx daemon off so it will run in the foreground so it will not stop. 
+
+Kubernetes Components
+=====================
 
 
-Lab Inventory
--------------
+Node
+----
 
-.. list-table:: 
-  :header-rows: 1
+Nodes are the primary compent of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
+You will see the leader node referred to by different names (depending on documentation) but the process is all the same. Nodes can be bare metal, virtual
+machines, or even containers (used in development use cases). Worker nodes will run your containerized workloads while the leader nodes will handle 
+scheduling of where workloads will be deployed, configuration and state of the cluster. 
 
-  * - **Instance**
-    - **IP Address**
-    - **OS**
-    - **NGINX Services**
-    - **Apps/Protocols**
-  * - k3s Master Node
-    - 10.1.1.5
-    - Ubuntu 20.04 LTS
-    - NIC
-    - SSH, k3s
-  * - k3s Worker Node 1
-    - 10.1.1.6
-    - Ubuntu 20.04 LTS
-    - NIC
-    - SSH, k3s, Arcadia Finance
-  * - k3s Worker Node 2
-    - 10.1.1.7
-    - Ubuntu 20.04 LTS
-    - NIC
-    - SSH, k3s, Arcadia Finance
-  * - NGINX Plus 1
-    - 10.1.1.8
-    - Ubuntu 20.04 LTS
-    - Plus + NAP
-    - SSH
-  * - NGINX Plus 2
-    - 10.1.1.9
-    - Ubuntu 20.04 LTS
-    - Plus
-    - SSH
-  * - DevOps Tools
-    - 10.1.1.10
-    - Ubuntu 20.04 LTS
-    - none
-    - SSH
+In this course, the cluster is already set up for you. You will communicate with the leader node to perform all actions for this course. The Kubernetes 
+specific command-line tool you'll use is *kubectl*. Kubectl allows you to view, configure, inspect all aspects of the cluster.
 
-Accessing the Lab
------------------
+Let's view the nodes attached to our cluster by connecting to the Jumphost from within the lab environment. 
 
-In this lab, you will access all resources by connecting to a Linux jump host running XRDP. XRDP is an open-source version of the popular Remote Desktop Protocol and is compatible with all popular RDP clients.
+.. image:: images/access_jump.png
 
-When you first connect to the Jump Host via RDP, you will be prompted to click **OK** to connect to the remote session.
 
-.. image:: images/xrdp_login_prompt.png
+.. code-block:: bash 
+   :caption: Get node info
 
-Once connected, you will see the desktop as shown below.
+   kubectl get nodes 
 
-.. image:: images/xrdp_desktop.png
+Returned content:
 
-Clicking on the **Applications** drop-down in the menu bar will bring up a list of applications you will need to finish this lab.
+.. code-block:: 
+   :caption: Node data basic 
 
-**Favorites** includes Firefox, Visual Studio Code and Terminal.
+    NAME                       STATUS   ROLES                  AGE    VERSION
+    k3s-leader.lab             Ready    control-plane,master   308d   v1.25.6+k3s1
+    k3s-worker-2.lab           Ready    <none>                 308d   v1.25.6+k3s1
+    k3s-worker-1.lab           Ready    <none>                 308d   v1.25.6+k3s1
 
-.. image:: images/desktop_favorites.png
 
-**SSH Shortcuts** open SSH terminal windows to the command prompt of all machines in the lab.
+That was very basic information on our nodes, but if we want more details we can add the `-o` flag, for *output*, and add *wide*
 
-.. image:: images/desktop_ssh.png
+.. code-block:: bash 
+   :caption: Get node info wide 
 
-Each section in this lab will begin with the assumption that you are connected via RDP, able to navigate the **Applications** menu and familiar with the available applications.
+   kubectl get nodes -o wide
 
-Remember these important tips:
+Returned content:
 
-- Lab modules are independent; feel free to tackle the modules in any order.
-- The username **lab** and password **f5Appw0rld!** will work for every login unless specifically noted.
-- Traffic and attack generators are running to help generate statistics, events and attacks.
-- To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
-- The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
+.. code-block:: 
+   :caption: Node data wide 
 
-.. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
+    NAME                       STATUS   ROLES                  AGE    VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
+    k3s-leader.lab             Ready    control-plane,master   308d   v1.25.6+k3s1   10.1.1.5      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+    k3s-worker-2.lab           Ready    <none>                 308d   v1.25.6+k3s1   10.1.1.7      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+    k3s-worker-1lab            Ready    <none>                 308d   v1.25.6+k3s1   10.1.1.6      <none>        Ubuntu 20.04.5 LTS   5.15.0-1030-aws   containerd://1.6.15-k3s1
+
+As you can see from the *-o wide* flag, we can get greater detail on our nodes. We can get further details by asking kubectl to *describe* the resource type and resource name.
+
+.. code-block:: bash 
+   :caption: Node describe 
+
+   kubectl describe node k3s-leader.lab
+
+
+
+Container Network Interface (CNI)
+---------------------------------
+
+Calico 
+Flannel 
+Cilium 
+
+Custom Resource Definitions (CRD)
+----------------------------------
+
+Namespaces
+----------
+
+
+Pod
+---
+
+Deployment 
+----------
+
+Service
+-------
+
+
+
+
