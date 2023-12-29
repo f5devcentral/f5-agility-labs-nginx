@@ -94,6 +94,7 @@ our new container the name of *app*. The next flagged items are:
  - ``-t`` tty 
 
 We can now run this command to see all container (active and stopped)
+
 .. code-block:: bash
    :caption: Show Container
 
