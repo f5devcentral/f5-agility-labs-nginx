@@ -7,4 +7,4 @@ Class 12 - The Path to Understanding Kubernetes and Containers
    :glob:
 
    intro
-   module1/module1
+   module*/module*
