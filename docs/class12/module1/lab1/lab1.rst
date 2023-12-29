@@ -39,6 +39,9 @@ First, access the Jumphost via Web Shell
 .. image:: images/jumphost_webshell.png
 
 
+To save on time, some of the files have been built for you. From the web shell, change directory to **lab1** ``cd lab1``. Within this directory you can 
+see tow of the necessary files. *web.conf* and *index.html*. It will now be up to you to create the Dockerfile that will make our new Nginx container.
+
 .. code-block:: bash 
    :caption: Dockerfile 
 
@@ -48,3 +51,73 @@ First, access the Jumphost via Web Shell
    COPY web.conf /etc/nginx/conf.d/web.conf
    COPY index.html /usr/share/nginx/html/index.html
    EXPOSE 83/tcp
+
+Copying this text in the blank Dockerfile file, you'll:
+ - Start container image creation from the base Nginx image
+ - The *RUN* command will execuite a command, we will delete the default configuration shipped on all Nginx instances
+ - The *COPY* command will allow us to place files inside the container image to be available at run time. Those files are:
+    - *web.conf* This is our new nginx.conf that will tell the web server how to respond
+    - *index.html* This is our web page that will be displayed 
+ - The *EXPOSE* command allows us to expose additional ports on the container 
+
+Now to build and tag the new container. Podman will take the Dockerfile and other referenced files (web.conf, index.html) and build them into our new 
+container image.
+
+.. code-block:: bash
+   :caption: Podman Build
+
+   podman build -t appworld:v1 .
+
+As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. The ``.`` is simply telling 
+podman the Dockerfile file is located in the same directory we are working from. 
+
+Once the image is built, you can now run the command to list the images. You should see two images listed. This is because podman did not have the Nginx image
+and had to download it first as it was our base. 
+
+.. code::block bash 
+   :caption: List Images
+
+   podman images
+
+Now it is time to run our newly created container image. 
+
+.. code-block:: bash
+   :caption: Run Container
+
+   podman run -p 83:83 --name app -dit appworld:v1
+
+We'll cover in detail what the above command is doing. Podman is being instructed to run a container on host port 83 and map it to container port 83, and give
+our new container the name of *app*. The next flagged items are:
+
+ - ``-d`` run the container detached, if we did not do this the terminal would reflect the prompt from inside the running container 
+ - ``-i`` interactive 
+ - ``-t`` tty 
+
+We can now run this command to see all container (active and stopped)
+.. code-block:: bash
+   :caption: Show Container
+
+   podman ps -a
+
+
+.. code-block:: bash
+   :caption: Curl Container
+
+   curl http://localhost:83
+
+Curl Output should look like this:
+
+.. code-block:: bash 
+
+   root@ip-10-1-1-12:/lab1# curl http://localhost:83
+     <html>
+     <head>
+     <title>F5 AppWorld</title>
+     </head>
+     <body>
+             First Page
+             <p>Lab1 site for training.</p>
+     </body>
+     </html>
+
+This now concludes the Container section of this lab.
