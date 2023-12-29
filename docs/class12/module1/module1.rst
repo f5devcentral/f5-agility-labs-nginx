@@ -1,5 +1,5 @@
-Module 1 - Lab Access 
-######################
+Module 1 - Container and Kubernetes Overview 
+############################################
 
 In this module, we will cover lab components and access.
 
