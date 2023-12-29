@@ -98,6 +98,10 @@ As you can see from the *-o wide* flag, we can get greater detail on our nodes. 
 Container Network Interface (CNI)
 ---------------------------------
 
+Calico 
+Flannel 
+Cilium 
+
 Custom Resource Definitions (CRD)
 ----------------------------------
 
@@ -110,6 +114,9 @@ Pod
 
 Deployment 
 ----------
+
+Service
+-------
 
 
 

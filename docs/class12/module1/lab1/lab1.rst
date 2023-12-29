@@ -72,7 +72,7 @@ Each section in this lab will begin with the assumption that you are connected v
 Remember these important tips:
 
 - Lab modules are independent; feel free to tackle the modules in any order.
-- The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
+- The username **lab** and password **f5Appw0rld!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
 - To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
 - The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
