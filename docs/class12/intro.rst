@@ -1,5 +1,5 @@
-The Path to Understanding Kubernetes and Containers
-====================================================
+The Path to Understanding Kubernetes and Containers - Intro
+===========================================================
 
 Purpose:
 
@@ -22,6 +22,7 @@ What Kubernetes IS:
  - Orchestation Platform (ensuring workloads are available/scalable)
  - 
 
+The evolution off applications from 
 
 .. image:: images/container_evo.png
    :width: 800
