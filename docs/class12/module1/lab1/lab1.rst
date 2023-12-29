@@ -32,3 +32,20 @@ Let's look at some excerpts from our very own Nginx container.
 
 The above excerpt tells us our container has a base image **FROM** Debian Linux and is a particular slimmed down version of Debian. To communicate 
 with the container, you'll need to **EXPOSE** ports and this is that command. The **CMD** (command) is turning the Nginx daemon off so it will run in the foreground so it will not stop. 
+
+In this lab, we will build a custom container image using *Podman*. Podman is similar to Docker for many tasks but does not have licensing constraints.
+First, access the Jumphost via Web Shell 
+
+.. image:: images/jumphost_webshell.png 
+   :caption: Web Shell 
+
+
+.. code-block:: bash 
+   :caption: Dockerfile 
+
+   FROM nginx
+   RUN rm -f /etc/nginx/conf.d/default.conf
+
+   COPY web.conf /etc/nginx/conf.d/web.conf
+   COPY index.html /usr/share/nginx/html/index.html
+   EXPOSE 83/tcp
