@@ -1,5 +1,5 @@
-Module 2 - Operations
-############################################
+Module 2 - Kubernetes Operations
+################################
 
 In this module, we will cover lab components and access.
 
