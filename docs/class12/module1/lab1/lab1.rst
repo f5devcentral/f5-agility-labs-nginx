@@ -121,4 +121,9 @@ Curl Output should look like this:
      </body>
      </html>
 
+This lab is not an all inclusive demonstration of building containers. There are many configurations you can construct from your Dockerfile. Some important 
+security items to take note of is scanning your images. As you can see from this lab, other parts that you did not build are now part of your application. Another 
+security action to take to to limit the user being run inside the container. Otherwise in our container, you can get shell access as the root user.
+
+
 This now concludes the Container section of this lab.
