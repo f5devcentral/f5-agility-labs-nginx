@@ -33,7 +33,11 @@ The evolution off applications from
 Official Kubernetes Documentation
 ---------------------------------
 
+Feel free to use the official documentation to clarify information or dive deeper in this lab:
 
+- `Kubernetes Documentation <https://kubernetes.io/docs/home/>`_
+- `Kubernetes Nodes <https://kubernetes.io/docs/concepts/architecture/nodes/>`_
+- `Kubernetes Custom Resource <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/>`_
 
 
 Lab Inventory
