@@ -1,5 +1,5 @@
-NGINX Kubernetes Overview
-------------------------------
+Kubernetes Overview
+-------------------
 
 
 Lab Inventory
