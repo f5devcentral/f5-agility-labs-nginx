@@ -36,8 +36,7 @@ with the container, you'll need to **EXPOSE** ports and this is that command. Th
 In this lab, we will build a custom container image using *Podman*. Podman is similar to Docker for many tasks but does not have licensing constraints.
 First, access the Jumphost via Web Shell 
 
-.. image:: images/jumphost_webshell.png 
-   :caption: Web Shell 
+.. image:: images/jumphost_webshell.png
 
 
 .. code-block:: bash 
