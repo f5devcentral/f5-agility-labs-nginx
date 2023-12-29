@@ -54,11 +54,11 @@ see tow of the necessary files. *web.conf* and *index.html*. It will now be up t
 
 Copying this text in the blank Dockerfile file, you'll:
  - Start container image creation from the base Nginx image
- - The *RUN* command will execuite a command, we will delete the default configuration shipped on all Nginx instances
- - The *COPY* command will allow us to place files inside the container image to be available at run time. Those files are:
+ - The **RUN** command will execuite a command, we will delete the default configuration shipped on all Nginx instances
+ - The **COPY** command will allow us to place files inside the container image to be available at run time. Those files are:
     - *web.conf* This is our new nginx.conf that will tell the web server how to respond
     - *index.html* This is our web page that will be displayed 
- - The *EXPOSE* command allows us to expose additional ports on the container 
+ - The **EXPOSE** command allows us to expose additional ports on the container 
 
 Now to build and tag the new container. Podman will take the Dockerfile and other referenced files (web.conf, index.html) and build them into our new 
 container image.
@@ -94,11 +94,13 @@ our new container the name of *app*. The next flagged items are:
  - ``-t`` tty 
 
 We can now run this command to see all container (active and stopped)
+
 .. code-block:: bash
    :caption: Show Container
 
    podman ps -a
 
+Now you can use *curl* to test connectivity to our new container. 
 
 .. code-block:: bash
    :caption: Curl Container
@@ -119,5 +121,10 @@ Curl Output should look like this:
              <p>Lab1 site for training.</p>
      </body>
      </html>
+
+This lab is not an all inclusive demonstration of building containers. There are many configurations you can construct from your Dockerfile. Some important 
+security items to take note of is scanning your images. As you can see from this lab, other parts that you did not build are now part of your application. Another 
+security action to take to to limit the user being run inside the container. Otherwise in our container, you can get shell access as the root user.
+
 
 This now concludes the Container section of this lab.
