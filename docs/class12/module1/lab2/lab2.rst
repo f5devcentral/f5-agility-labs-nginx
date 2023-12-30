@@ -17,6 +17,12 @@ Let's view the nodes attached to our cluster by connecting to the Jumphost from 
 
 .. image:: images/access_jump.png
 
+``ssh lab@10.1.1.5``
+
+Password is:
+
+``f5AppW0rld!``
+
 
 .. code-block:: bash 
    :caption: Get node info
