@@ -131,7 +131,7 @@ Your log output should look like:
 
 .. code-block:: bash 
    :caption: Container Logs
-   :emphasize-lines: 19
+   :emphasize-lines: 20
 
    root@ip-10-1-1-12:/# podman logs app
    /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
