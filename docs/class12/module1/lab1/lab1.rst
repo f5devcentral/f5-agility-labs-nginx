@@ -53,7 +53,7 @@ see tow of the necessary files. *web.conf* and *index.html*. It will now be up t
 Copying this text in the blank Dockerfile file, you'll:
  - Start container image creation from the base Nginx image
  - The **RUN** command will execute a command, we will delete the default configuration shipped on all Nginx instances
- - The **COPY** command will allow us to place files inside the container image to be available at run time. Those files are:
+ - The **COPY**  command will allow us to place files inside the container image to be available at run time. Those files are:
     - *web.conf* This is our new nginx.conf that will tell the web server how to respond
     - *index.html* This is our web page that will be displayed 
  - The **EXPOSE** command allows us to expose additional ports on the container 
@@ -130,7 +130,8 @@ Now that your container is running and a successful curl has completed, let's di
 Your log output should look like:
 
 .. code-block:: bash 
-   :caption: Container Logs 
+   :caption: Container Logs
+   :emphasize-lines: 19
 
    root@ip-10-1-1-12:/# podman logs app
    /docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
