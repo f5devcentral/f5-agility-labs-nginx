@@ -17,11 +17,8 @@ Let's view the nodes attached to our cluster by connecting to the Jumphost from 
 
 .. image:: images/access_jump.png
 
-``ssh lab@10.1.1.5``
 
-Password is:
-
-``f5AppW0rld!``
+From the web shell you will ssh into the leader node, ``ssh lab@10.1.1.5``, password is: ``f5AppW0rld!``.
 
 
 .. code-block:: bash 
@@ -65,8 +62,65 @@ As you can see from the *-o wide* flag, we can get greater detail on our nodes. 
    kubectl describe node k3s-leader.lab
 
 
-Custom Resource Definitions (CRD)
-----------------------------------
+Custom Resource
+---------------
+
+A resource is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind; for example, the built-in pods 
+resource contains a collection of Pod objects. A custom resource is an extension of the Kubernetes API that is not necessarily available in 
+a default Kubernetes installation. It represents a customization of a particular Kubernetes installation. However, many core Kubernetes 
+functions are now built using custom resources, making Kubernetes more modular.
+
+How you define the custom resource is by a Custom Resource Definition 
+
+Nginx CRD for Nginx Plus (NIC)
+
+Let's view the installed CRD's and we'll focus in on Nginx.
+
+.. code-block:: bash 
+   :caption:
+
+   kubectl get crd
+
+
+.. code-block:: bash
+   :caption: CRD Output
+   :emphasize-lines: 24
+
+   lab@k3s-leader:~$ k get crd
+   NAME                                         CREATED AT
+   addons.k3s.cattle.io                         2023-02-23T02:26:32Z
+   helmcharts.helm.cattle.io                    2023-02-23T02:26:32Z
+   helmchartconfigs.helm.cattle.io              2023-02-23T02:26:32Z
+   analysisruns.argoproj.io                     2023-02-23T03:39:17Z
+   analysistemplates.argoproj.io                2023-02-23T03:39:17Z
+   clusteranalysistemplates.argoproj.io         2023-02-23T03:39:17Z
+   experiments.argoproj.io                      2023-02-23T03:39:17Z
+   rollouts.argoproj.io                         2023-02-23T03:39:17Z
+   applications.argoproj.io                     2023-02-23T04:18:30Z
+   applicationsets.argoproj.io                  2023-02-23T04:18:30Z
+   appprojects.argoproj.io                      2023-02-23T04:18:30Z
+   apdospolicies.appprotectdos.f5.com           2023-02-25T20:46:34Z
+   apdoslogconfs.appprotectdos.f5.com           2023-02-25T20:46:34Z
+   globalconfigurations.k8s.nginx.org           2023-02-25T20:46:34Z
+   aplogconfs.appprotect.f5.com                 2023-02-25T20:46:34Z
+   transportservers.k8s.nginx.org               2023-02-25T20:46:34Z
+   dosprotectedresources.appprotectdos.f5.com   2023-02-25T20:46:34Z
+   dnsendpoints.externaldns.nginx.org           2023-02-25T20:46:34Z
+   apusersigs.appprotect.f5.com                 2023-02-25T20:46:34Z
+   policies.k8s.nginx.org                       2023-02-25T20:46:34Z
+   virtualserverroutes.k8s.nginx.org            2023-02-25T20:46:34Z
+   virtualservers.k8s.nginx.org                 2023-02-25T20:46:34Z
+   appolicies.appprotect.f5.com                 2023-02-25T20:46:34Z
+
+.. code-block:: bash 
+   :caption:
+
+   kubectl describe crd 
+
+This CRD file defines how a user can employ the newly created resource with a full schema. If you are not familiar with schema's, think of it as syntax checking process to make sure newly created 
+manifest files meet the defined specification to be deployed on the Kubernetes system. We will not be building any Custom Resources in this lab but knowing what Custom Resources are and that Custom
+Resource Definitions describe them is valuable knowledge. This capability allows you and companies like F5 to greatly extend functions and capabilities of your cluster or products made to interact with 
+applications. 
 
 Namespaces
 ----------
@@ -89,11 +143,27 @@ You can abbreviate resource types. The *namespace* resource can be abbreviated a
 
    kubectl describe ns kube-system
 
+For this part of the lab, we'll just cover two important namespaces:
+
+- **default**
+- **kube-system** 
+
+Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it it implied default. So you always want
+to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
+the default namsespace, like our CRD's. 
+
+Next is the *kube-system* namespace. This namespace is important as a vital Pod is running here, CoreDNS. We'll look into Pods and this Pod in the next 
+section. 
+
 Pod
 ---
 
+In Kubernetes, a Pod is the smallest unit
+
 Deployment 
 ----------
+
+
 
 Service
 -------
