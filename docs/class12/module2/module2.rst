@@ -1,11 +1,10 @@
 Module 2 - Kubernetes Operations
 ################################
 
-In this module, we will cover lab components and access.
+In this module, we will cover operations aspects of Kubernetes.
 
-Estimated completion time: 10 minutes
+Estimated completion time: X minutes
 
-.. note:: The goal of this module is to provide an overview of an entire functioning solution, including features of centralized management for NAP WAF.
 
 
 .. toctree::
