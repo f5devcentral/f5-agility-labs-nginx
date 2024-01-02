@@ -70,8 +70,8 @@ container image.
 
    podman build -t appworld:v1 .
 
-As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. After the ``:`` is used for 
-showing more specific version of the container build. The ``.`` is simply telling podman the Dockerfile file is located in the same directory we are working from. 
+As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. After the ``:`` (colon) is used for 
+showing more specific version of the container build. The ``.`` (period) is simply telling podman the Dockerfile file is located in the same directory we are working from. 
 
 Once the image is built, you can now run the command to list the images. You should see two images listed. This is because podman did not have the Nginx image
 and had to download it first as it was our base. 
@@ -88,12 +88,12 @@ Now it is time to run our newly created container image.
 
    podman run -p 83:83 --name app -dit appworld:v1
 
-We'll cover in detail what the above command is doing. Podman is being instructed to run a container on host port 83 and map it to container port 83, and give
-our new container the name of *app*. The next flagged items are:
+We'll cover in detail what the above command is doing. Podman is being instructed to ``-p`` (publish) the container on host port 83 and map it to container port 83, and give
+our new container the ``--name`` (name) of *app*. The next flagged items are:
 
  - ``-d`` run the container detached, if we did not do this the terminal would reflect the prompt from inside the running container 
- - ``-i`` interactive 
- - ``-t`` tty 
+ - ``-i`` interactive - allows us to execute commands while the container is in a running state.
+ - ``-t`` Pseudo-tty 
 
 We can now run this command to see all container (active and stopped)
 
@@ -160,7 +160,7 @@ Your log output should look like:
 
 You can also follow the logs actively like you would any Linux system using the ``-f`` flag. An example would be ``podman logs -f app``.
 
-This lab is not an all inclusive demonstration of building and running containers. There are many configurations you can construct from your Dockerfile. Some important 
+This lab is not an all inclusive demonstration of building and running containers. There are many configurations you can construct from your Dockerfile, such as attaching storage. Some important 
 security items to take note of is scanning your images. As you can see from this lab, other parts that you did not build are now part of your application. Another 
 security action to take to to limit the user being run inside the container. Otherwise in our container, you can get shell access as the root user.
 
