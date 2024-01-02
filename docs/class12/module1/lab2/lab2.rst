@@ -5,17 +5,32 @@ Kubernetes Components
 Node
 ----
 
-Nodes are the primary compent of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
-You will see the leader node referred to by different names (depending on documentation) but the process is all the same. Nodes can be bare metal, virtual
+Nodes are the primary component of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
+You will see the leader node referred to by different names, such as master node (depending on documentation), but the process is all the same. Nodes can be bare metal, virtual
 machines, or even containers (used in development use cases). Worker nodes will run your containerized workloads while the leader nodes will handle 
 scheduling of where workloads will be deployed, configuration and state of the cluster. 
 
 In this course, the cluster is already set up for you. You will communicate with the leader node to perform all actions for this course. The Kubernetes 
 specific command-line tool you'll use is *kubectl*. Kubectl allows you to view, configure, inspect all aspects of the cluster.
 
+Let's look at our two node types in detail.
+
+.. image:: images/kube_cluster.png
+
+The *Leader Node* is in charge of the cluster control plane. There must be at least, but not limited to, one leader node per cluster. Some of the components included in the leader
+node are the API server and Scheduler.
+
+
+The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as Docker or containerd
+so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kublet is responsible for pulling container 
+images, allows control plane to monitor the node, and ensures containers are healthy and running. 
+
+.. note:: Keep in mind that in a dev environment, your leader node may also be your worker node (not a production practice).
+
+
 Let's view the nodes attached to our cluster by connecting to the Jumphost from within the lab environment. 
 
-.. image:: images/access_jump.png
+.. image:: images/jumphost_webshell.png
 
 
 From the web shell you will ssh into the leader node, ``ssh lab@10.1.1.5``, password is: ``f5AppW0rld!``.
@@ -37,7 +52,7 @@ Returned content:
     k3s-worker-1.lab           Ready    <none>                 308d   v1.25.6+k3s1
 
 
-That was very basic information on our nodes, but if we want more details we can add the `-o` flag, for *output*, and add *wide*
+That was very basic information on our nodes, but if we want more details we can add the `-o` flag, for *output*, and add `wide`
 
 .. code-block:: bash 
    :caption: Get node info wide 
@@ -65,19 +80,21 @@ As you can see from the *-o wide* flag, we can get greater detail on our nodes. 
 Custom Resource
 ---------------
 
+As the name implies, custom resources are object you can build to extend capabilities in Kubernetes. 
 A resource is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind; for example, the built-in pods 
 resource contains a collection of Pod objects. A custom resource is an extension of the Kubernetes API that is not necessarily available in 
 a default Kubernetes installation. It represents a customization of a particular Kubernetes installation. However, many core Kubernetes 
 functions are now built using custom resources, making Kubernetes more modular.
 
-How you define the custom resource is by a Custom Resource Definition 
+How you define the custom resource is by a Custom Resource Definition(CRD). This CRD will create a new RESTful endpoint that will be able to be utilized on either 
+a namespace level or cluster level. 
 
 Nginx CRD for Nginx Plus (NIC)
 
 Let's view the installed CRD's and we'll focus in on Nginx.
 
-.. code-block:: bash 
-   :caption:
+.. code-block:: bash
+   :caption: CRD
 
    kubectl get crd
 
@@ -112,8 +129,8 @@ Let's view the installed CRD's and we'll focus in on Nginx.
    virtualservers.k8s.nginx.org                 2023-02-25T20:46:34Z
    appolicies.appprotect.f5.com                 2023-02-25T20:46:34Z
 
-.. code-block:: bash 
-   :caption:
+.. code-block:: bash
+   :caption: Describe CRD
 
    kubectl describe crd 
 
