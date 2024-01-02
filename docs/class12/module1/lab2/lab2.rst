@@ -5,7 +5,7 @@ Kubernetes Components
 Node
 ----
 
-Nodes are the primary compent of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
+Nodes are the primary component of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
 You will see the leader node referred to by different names, such as master node (depending on documentation), but the process is all the same. Nodes can be bare metal, virtual
 machines, or even containers (used in development use cases). Worker nodes will run your containerized workloads while the leader nodes will handle 
 scheduling of where workloads will be deployed, configuration and state of the cluster. 
@@ -21,7 +21,7 @@ The *Leader Node* is in charge of the cluster control plane. There must be at le
 node are the API server and Scheduler.
 
 
-The *Worker Node* is where our containrized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as Docker or containerd
+The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as Docker or containerd
 so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kublet is responsible for pulling container 
 images, allows control plane to monitor the node, and ensures containers are healthy and running. 
 
@@ -30,7 +30,7 @@ images, allows control plane to monitor the node, and ensures containers are hea
 
 Let's view the nodes attached to our cluster by connecting to the Jumphost from within the lab environment. 
 
-.. image:: images/jumphost_websell.png
+.. image:: images/jumphost_webshell.png
 
 
 From the web shell you will ssh into the leader node, ``ssh lab@10.1.1.5``, password is: ``f5AppW0rld!``.
