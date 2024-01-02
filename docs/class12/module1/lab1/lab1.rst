@@ -70,8 +70,8 @@ container image.
 
    podman build -t appworld:v1 .
 
-As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. After the ``:`` is used for 
-showing more specific version of the container build. The ``.`` is simply telling podman the Dockerfile file is located in the same directory we are working from. 
+As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. After the ``:`` (colon) is used for 
+showing more specific version of the container build. The ``.`` (period) is simply telling podman the Dockerfile file is located in the same directory we are working from. 
 
 Once the image is built, you can now run the command to list the images. You should see two images listed. This is because podman did not have the Nginx image
 and had to download it first as it was our base. 
