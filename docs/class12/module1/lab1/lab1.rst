@@ -54,12 +54,13 @@ To edit the file, you'll need to open the file in an editor ``vim Dockerfile``
 To close and save the file please use the command ``:wq``
 
 Copying this text in the blank Dockerfile file, you'll:
- - Start container image creation from the base Nginx image
- - The **RUN** command will execute a command, we will delete the default configuration shipped on all Nginx instances
- - The **COPY**  command will allow us to place files inside the container image to be available at run time. Those files are:
-    * *web.conf* This is our new nginx.conf that will tell the web server how to respond
-    * *index.html* This is our web page that will be displayed 
- - The **EXPOSE** command allows us to expose additional ports on the container 
+
+- Start container image creation from the base Nginx image.
+- The **RUN** command will execute a command, we will delete the default configuration shipped on all Nginx instances.
+- The **COPY** command will allow us to place files inside the container image to be available at run time(web.conf, index.html).
+- The **EXPOSE** command allows us to expose additional ports on the container.
+
+
 
 Now to build and tag the new container. Podman will take the Dockerfile and other referenced files (web.conf, index.html) and build them into our new 
 container image.
