@@ -81,17 +81,12 @@ As you can see from the *-o wide* flag, we can get greater detail on our nodes. 
 Custom Resource
 ---------------
 
-As the name implies, custom resources are object you can build to extend capabilities in Kubernetes. 
-
-A resource is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind; for example, the built-in pods 
-resource contains a collection of Pod objects. A custom resource is an extension of the Kubernetes API that is not necessarily available in 
-a default Kubernetes installation. It represents a customization of a particular Kubernetes installation. However, many core Kubernetes 
-functions are now built using custom resources, making Kubernetes more modular.
+As the name implies, custom resources are objects you can build to extend capabilities in Kubernetes. You can create new resources that don't exist in the default
+Kubernetes installation or even combine existing objects so they can be deployed at the same time. Throughout this course you'll be interacting with the Kubernetes 
+API when we check on nodes, pods, namespaces etc. 
 
 How you define the custom resource is by a Custom Resource Definition(CRD). This CRD will create a new RESTful endpoint that will be able to be utilized on either 
 a namespace level or cluster level. 
-
-Nginx CRD for Nginx Plus (NIC)
 
 Let's view the installed CRD's and we'll focus in on Nginx.
 
@@ -134,21 +129,23 @@ Let's view the installed CRD's and we'll focus in on Nginx.
 .. code-block:: bash
    :caption: Describe CRD
 
-   kubectl describe crd 
+   kubectl describe crd virtualservers.k8s.nginx.org 
 
 This CRD file defines how a user can employ the newly created resource with a full schema. If you are not familiar with schema's, think of it as syntax checking process to make sure newly created 
 manifest files meet the defined specification to be deployed on the Kubernetes system. We will not be building any Custom Resources in this lab but knowing what Custom Resources are and that Custom
 Resource Definitions describe them is valuable knowledge. This capability allows you and companies like F5 to greatly extend functions and capabilities of your cluster or products made to interact with 
 applications. 
 
+This particual CRD allows users of the VirtualServer resource to fully utilize Nginx capabilities that are not available in a standard ingress manifest or would require service mesh 
+capabilities.
+
 Namespaces
 ----------
 
-In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces.
+In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster, think of *sub-clusters*. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
 
 Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
 
-Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
 
 .. code-block:: bash 
    :caption: View All Namespaces
@@ -167,12 +164,51 @@ For this part of the lab, we'll just cover two important namespaces:
 - **default**
 - **kube-system** 
 
-Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it it implied default. So you always want
-to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
-the default namsespace, like our CRD's. 
+.. code-block:: bash
+   :caption: default
 
-Next is the *kube-system* namespace. This namespace is important as a vital Pod is running here, CoreDNS. We'll look into Pods and this Pod in the next 
-section. 
+   kubectl get all,crd
+
+Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So you always want
+to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
+the default namsespace. One item that you'll find in the default namespace are CRD's.
+
+
+.. code-block:: bash
+   :caption: kube-system
+
+   kubectl get all -n kube-system
+
+Next is the *kube-system* namespace. This namespace is important as a vital Pod is running here, CoreDNS. Referencing the returned data below, we can see the CoreDNS 
+objects in the namespace kube-system.
+
+
+
+.. code-block:: bash 
+   :caption: CoreDNS
+   :emphasize-lines: 4,8,13
+
+   lab@k3s-leader:~$ k get all -n kube-system
+   NAME                                          READY   STATUS    RESTARTS      AGE
+   pod/local-path-provisioner-79f67d76f8-7bs59   1/1     Running   9 (15m ago)   5d9h
+   pod/coredns-597584b69b-5fb2r                  1/1     Running   9 (15m ago)   5d9h
+   pod/metrics-server-5f9f776df5-df9cx           1/1     Running   9 (15m ago)   5d9h
+
+   NAME                     TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)                  AGE
+   service/kube-dns         ClusterIP   10.43.0.10     <none>        53/UDP,53/TCP,9153/TCP   314d
+   service/metrics-server   ClusterIP   10.43.207.69   <none>        443/TCP                  314d
+
+   NAME                                     READY   UP-TO-DATE   AVAILABLE   AGE
+   deployment.apps/local-path-provisioner   1/1     1            1           314d
+   deployment.apps/coredns                  1/1     1            1           314d
+   deployment.apps/metrics-server           1/1     1            1           314d
+
+   NAME                                                DESIRED   CURRENT   READY   AGE
+   replicaset.apps/local-path-provisioner-79f67d76f8   1         1         1       314d
+   replicaset.apps/coredns-597584b69b                  1         1         1       314d
+   replicaset.apps/metrics-server-5f9f776df5           1         1         1       314d
+
+The next three sections will reference data from the above output.
 
 Pod
 ---
