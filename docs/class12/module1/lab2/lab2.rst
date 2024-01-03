@@ -18,10 +18,11 @@ Let's look at our two node types in detail.
 .. image:: images/kube_cluster.png
 
 The *Leader Node* is in charge of the cluster control plane. There must be at least, but not limited to, one leader node per cluster. Some of the components included in the leader
-node are the API server and Scheduler.
+node are the API server and Scheduler. The API server validates and configures the cluster for all the cluster objects. This includes pods, services and deployments. The scheduler watches for newly created pods and determines the best matching node(s) to place the workload on. If there aren't any nodes 
+matching the requirements of the pod, the pod will remian in an *unscheduled* state. 
 
 
-The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as Docker or containerd
+The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as *Docker* or *containerd*
 so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kublet is responsible for pulling container 
 images, allows control plane to monitor the node, and ensures containers are healthy and running. 
 
@@ -81,6 +82,7 @@ Custom Resource
 ---------------
 
 As the name implies, custom resources are object you can build to extend capabilities in Kubernetes. 
+
 A resource is an endpoint in the Kubernetes API that stores a collection of API objects of a certain kind; for example, the built-in pods 
 resource contains a collection of Pod objects. A custom resource is an extension of the Kubernetes API that is not necessarily available in 
 a default Kubernetes installation. It represents a customization of a particular Kubernetes installation. However, many core Kubernetes 
