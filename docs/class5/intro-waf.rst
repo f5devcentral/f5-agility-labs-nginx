@@ -68,7 +68,7 @@ NGINX App Protect WAF Terminology
   * - Alarm
     - If selected, the NGINX App Protect WAF system records requests that trigger the violation in the remote log (depending on the settings of the logging profile).
   * - Attack signature
-    - Textual patterns which can be applied to HTTP requests andor responses by NGINX App Protect WAF to determine if traffic is malicious. For example, the string ``<script>`` inside an HTTP request triggers an attack signature violation.
+    - Textual patterns which can be applied to HTTP requests and/or responses by NGINX App Protect WAF to determine if traffic is malicious. For example, the string ``<script>`` inside an HTTP request triggers an attack signature violation.
   * - Attack signature set
     - A collection of attack signatures designed for a specific purpose (such as Apache).
   * - Bot signatures
@@ -193,6 +193,6 @@ Remember these important tips:
 - The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
 - To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
-- The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
+- The screen resolution for the Remote Desktop connection is selected when connecting to the session. Choose a resolution that works best for you.
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.

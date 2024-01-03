@@ -3,7 +3,7 @@ Module 4 - API Security
 
 In this section,you will configure NGINX App Protect WAF to protect the Arcadia Finance app's API.
 
-Esimated completion time: 23 minutes
+Estimated completion time: 23 minutes
 
 NGINX App Protect can protect APIs in several ways:
 

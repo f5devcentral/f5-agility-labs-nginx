@@ -6,7 +6,7 @@ Purpose:
 
 *Containers* slightly resemble virtual machines. In that, they contain filesystems, all necessary libraries, and will use portions of memory and compute
 from the host. Containers can allow you to build and move applications nearly anywhere and are usually lightweight. Being that they are lightweight, 
-this allows you to maintain different environments (dev, qa, production) and have full application fucintionality.
+this allows you to maintain different environments (dev, qa, production) and have full application functionality.
 
 *Kubernetes* originates from Greek, meaning pilot or helmsman. It's an open source platform used in managing containerized workloads and services. Kubernetes
 is an *orchestration* tool ensuring containerized workloads are available and scalable. And since it's power is in orchestration this relieves admins from the burden
@@ -14,12 +14,12 @@ of many manual processes to keep applications available and push updates.
 
 What Kubernetes is **NOT**:
  - Not a Hypervisor or Operating System
- - Not a replacment for container runtimes (i.e. Docker)
+ - Not a replacement for container runtimes (i.e. Docker)
  - Just for Microservices
  - Not a standalone solution
 
 What Kubernetes IS:
- - Orchestation Platform (ensuring workloads are available/scalable)
+ - Orchestration Platform (ensuring workloads are available/scalable)
  - 
 
 The evolution off applications from 
@@ -113,7 +113,7 @@ Remember these important tips:
 - The username **lab** and password **f5Appw0rld!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
 - To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
-- The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
+- The screen resolution for the Remote Desktop connection is selected when connecting to the session. Choose a resolution that works best for you.
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
 

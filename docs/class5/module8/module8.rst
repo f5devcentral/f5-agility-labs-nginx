@@ -42,7 +42,7 @@ Establish Baseline
 
     After 15 minutes of running good (creating a baseline) traffic, there will be "Ready" and "Not ready" states indicated. Find a row indicating a "Ready" state, then filter for that word by moving your cursor to the far right side of the window and select "+." 
 
-10. Wait until learing confidence is **Ready** 
+10. Wait until learning confidence is **Ready** 
 
 .. image:: ../../_static/class5_module8_kibana_ready.png 
 
