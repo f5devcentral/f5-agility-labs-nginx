@@ -5,7 +5,7 @@ View the NGINX Plus Instance in NMS
 
 .. caution:: It may take several seconds for Firefox to launch the first time.
 
-1. In Firefox, click on the **Acardia Finance (N+)** bookmark or navigate to **https://nginx-plus.arcadia-finance.io/**. You should see the application page load as shown below.
+1. In Firefox, click on the **Arcadia Finance (N+)** bookmark or navigate to **https://nginx-plus.arcadia-finance.io/**. You should see the application page load as shown below.
 
 .. image:: images/diy_pageload.png
 
