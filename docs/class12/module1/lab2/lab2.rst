@@ -220,11 +220,11 @@ In Kubernetes, a Pod is the smallest unit
    :header-rows: 1
 
    * - **Resource Type**
-       - **Resource Name**
-       - **Ready**
-       - **Status**
-       - **Restarts**
-       - **Age**
+     - **Resource Name**
+     - **Ready**
+     - **Status**
+     - **Restarts**
+     - **Age**
    * - pod
      - coredns-597584b69b-5fb2r
      - 1 of 1 container is ready
