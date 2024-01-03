@@ -13,10 +13,10 @@ import f5_sphinx_theme
 # ------------
 #
 # REQUIRED: Your class/lab name
-classname = "F5 Agility Template"
+classname = "NGINX Modern Apps"
 
 # OPTIONAL: The URL to the GitHub Repository for this class
-github_repo = "https://github.com/f5devcentral/f5-agility-labs-template"
+github_repo = "https://github.com/f5devcentral/f5-agility-labs-nginx"
 
 #
 # END CONFIG
@@ -25,7 +25,7 @@ github_repo = "https://github.com/f5devcentral/f5-agility-labs-template"
 sys.path.insert(0, os.path.abspath("."))
 
 year = time.strftime("%Y")
-eventname = "Agility %s Hands-on Lab Guide" % (year)
+eventname = "AppWorld %s Hands-on Lab Guide" % (year)
 
 rst_prolog = """
 .. |classname| replace:: %s
@@ -142,8 +142,8 @@ master_doc = "index"
 
 # General information about the project.
 project = classname
-copyright = "2022, F5 Networks, Inc."
-author = "F5 Networks, Inc."
+copyright = "2024, F5, Inc."
+author = "F5, Inc."
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -360,7 +360,7 @@ latex_documents = [
         master_doc,
         "%s.tex" % cleanname,
         "%s Documentation" % classname,
-        "F5 Networks, Inc.",
+        "F5, Inc.",
         "manual",
         True,
     ),
