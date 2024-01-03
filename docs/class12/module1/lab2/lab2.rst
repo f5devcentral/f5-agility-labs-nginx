@@ -208,12 +208,36 @@ objects in the namespace kube-system.
    replicaset.apps/coredns-597584b69b                  1         1         1       314d
    replicaset.apps/metrics-server-5f9f776df5           1         1         1       314d
 
-The next three sections will reference data from the above output.
+The next three sections will reference highlighted data from the above output. Your data will not match exactly as the pod names or cluster ip's are generated at 
+runtime. 
 
 Pod
 ---
 
 In Kubernetes, a Pod is the smallest unit
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Resource Type**
+       - **Resource Name**
+       - **Ready**
+       - **Status**
+       - **Restarts**
+       - **Age**
+     * - pod
+       - coredns-597584b69b-5fb2r
+       - 1 of 1 container is ready
+       - Running
+       - 9
+       - 5d9h 
+
+| **Resource Type** indicates this is of type pod 
+| **Resource Name** a unique name for the resource in the namespace
+| **Ready** shows how many containers are running in the pod
+| **Status** this examples shows the status as running, meaning the pod is bound to node and all containers are created and started
+| **Restarts** shows the number of restarts of the container (not pod)
+| **Age** describes how long ago our pod was created and running
 
 Deployment 
 ----------
