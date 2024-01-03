@@ -85,7 +85,7 @@ Lab Inventory
 Accessing the Lab
 -----------------
 
-In this lab, you will access all resources by connecting to a Linux jump host running XRDP. XRDP is an open-source version of the popular Remote Desktop Protocol and is compatible with all popular RDP clients.
+In this lab, you can access resources by connecting to a Linux jump host running XRDP or from a web shell. XRDP is an open-source version of the popular Remote Desktop Protocol and is compatible with all popular RDP clients.
 
 When you first connect to the Jump Host via RDP, you will be prompted to click **OK** to connect to the remote session.
 
@@ -116,3 +116,7 @@ Remember these important tips:
 - The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
+
+To access by web shell 
+
+.. image:: images/jumphost_webshell.png
