@@ -225,12 +225,12 @@ In Kubernetes, a Pod is the smallest unit
        - **Status**
        - **Restarts**
        - **Age**
-     * - pod
-       - coredns-597584b69b-5fb2r
-       - 1 of 1 container is ready
-       - Running
-       - 9
-       - 5d9h 
+   * - pod
+     - coredns-597584b69b-5fb2r
+     - 1 of 1 container is ready
+     - Running
+     - 9
+     - 5d9h 
 
 | **Resource Type** indicates this is of type pod 
 | **Resource Name** a unique name for the resource in the namespace
