@@ -139,6 +139,11 @@ applications.
 This particular CRD allows users of the VirtualServer resource to fully utilize Nginx capabilities that are not available in a standard ingress manifest or would require service mesh 
 capabilities.
 
+Manifest
+--------
+
+
+
 Namespaces
 ----------
 
@@ -214,23 +219,26 @@ runtime.
 Pod
 ---
 
-In Kubernetes, a Pod is the smallest unit
+In Kubernetes, a Pod is smallest unit of compute and holds one or more containers. In this lab we will only work with a single container in a pod. Something to 
+keep in mind though, if you deploy multiple containers in single pod, those containers will compete for resources. Placing containers inside of pods make them 
+easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab will will review data returned 
+from our coredns pod.
 
 .. list-table:: 
    :header-rows: 1
 
    * - **Resource Type**
-       - **Resource Name**
-       - **Ready**
-       - **Status**
-       - **Restarts**
-       - **Age**
-     * - pod
-       - coredns-597584b69b-5fb2r
-       - 1 of 1 container is ready
-       - Running
-       - 9
-       - 5d9h 
+     - **Resource Name**
+     - **Ready**
+     - **Status**
+     - **Restarts**
+     - **AGE**
+   * - pod
+     - coredns-597584b69b-5fb2r
+     - 1/1
+     - Running
+     - 9
+     - 5d9h 
 
 | **Resource Type** indicates this is of type pod 
 | **Resource Name** a unique name for the resource in the namespace
@@ -239,10 +247,52 @@ In Kubernetes, a Pod is the smallest unit
 | **Restarts** shows the number of restarts of the container (not pod)
 | **Age** describes how long ago our pod was created and running
 
+- `Pod Status <https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase>`_
+
+
+You can also describe this resource for more detail. 
+
+.. code-block:: bash
+   :caption: Describe CoreDNS
+
+   kubectl describe pod coredns-597584b69b-5fb2r
+
+Looking at the above output you can see a wealth of information about the CoreDNS pod. From which node it's running on, labels, pod IP address and what 
+image being used to pod related events. 
+
 Deployment 
 ----------
 
+A Kubernetes deployment manages sets of pods used to run an application. The deployment manifest spcecifies these main components:
 
+- deployment name and namespace
+- container image
+- container tags
+- replicas (copies we want running), 
+- update strategy (how Kubernetes will roll out new verions of your application)
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Resource Type**
+     - **Resource Name**
+     - **Ready**
+     - **UP-TO-DATE**
+     - **AVAILABLE**
+     - **Age**
+   * - deployment.apps
+     - coredns
+     - 1/1
+     - 1
+     - 1
+     - 314d
+
+| **Resource Type** 
+| **Resource Name**
+| **Ready** Number of replica's ready (1)
+| **UP-TO-DATE** Number of replicas updated (1)
+| **AVAILABLE** Number of replicas available (1)
+| **AGE** amount of time the application has been running 
 
 Service
 -------
