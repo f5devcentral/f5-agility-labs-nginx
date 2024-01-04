@@ -30,7 +30,7 @@ Lab Tasks
 
 .. image:: images/options.png
 
-5. Return to **Firefox**. Click the **NMS** bookmark and log in using **lab** as the username and **Agility2023!** as the password. 
+5. Return to **Firefox**. Click the **NMS** bookmark and log in using **lab** as the username and **AppWorld2024!** as the password. 
 
 .. image:: images/nms_navigation_login.png
 
