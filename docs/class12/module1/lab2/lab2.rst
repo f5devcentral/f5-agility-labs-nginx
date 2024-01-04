@@ -34,7 +34,10 @@ Let's view the nodes attached to our cluster by connecting to the Jumphost from 
 .. image:: images/jumphost_webshell.png
 
 
-From the web shell you will ssh into the leader node, ``ssh lab@10.1.1.5``, password is: ``f5AppW0rld!``.
+From the web shell you will ssh into the leader node:
+
+| ``ssh lab@10.1.1.5``
+| password: ``f5AppW0rld!``
 
 
 .. code-block:: bash 
@@ -142,7 +145,16 @@ capabilities.
 Manifest
 --------
 
+A Kubernetes manifest is typically a YAML file used to describe the desired state of an object. In this course you'll use manifest files to define pods, deployments,
+and services. You'll use the minimum set of directives to create these objects but Kubernetes will add some default information which we'll investigate.
+Common directives amoung nearly all mainifest files are:
 
+- apiVersion - what api version to use of the CRD 
+- Kind - what type of object is being created
+- name - the name you want to reference this object by
+- namespace - the namespace this object will reside in (default is *default*)
+
+You'll find those directives at the top of all the mainfest files you'll create in this course.
 
 Namespaces
 ----------
@@ -268,8 +280,11 @@ A Kubernetes deployment manages sets of pods used to run an application. The dep
 - deployment name and namespace
 - container image
 - container tags
-- replicas (copies we want running), 
+- replicas (copies we want running/ scaling), 
 - update strategy (how Kubernetes will roll out new verions of your application)
+
+As you deploy a new application across your cluster, the deployment manifest tells Kubernetes the image version, expected number of pods to run across the cluster and
+attachs a label to each pod showing it's association with the deployment.
 
 .. list-table:: 
    :header-rows: 1
@@ -287,18 +302,59 @@ A Kubernetes deployment manages sets of pods used to run an application. The dep
      - 1
      - 314d
 
-| **Resource Type** 
-| **Resource Name**
+| **Resource Type** deployment.apps
+| **Resource Name** coredns 
 | **Ready** Number of replica's ready (1)
 | **UP-TO-DATE** Number of replicas updated (1)
 | **AVAILABLE** Number of replicas available (1)
 | **AGE** amount of time the application has been running 
 
+In the next module we will use the edit command to view more components of a deployment. 
+
+
 Service
 -------
 
-How to determine A record 
-- Loadbalancer
-- ClusterIP
-- NodePort
-- Brief CNI 
+A Kubernetes service is a method for exposing our application that can be running on one or many pods (think deployment). Services also use *tags* like deployments 
+to associate pods to a service name. This is tremendously helpful as pods can created or deleted on different nodes and our service manifest will handle
+service discovery.
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Resource Type**
+     - **Resource Name**
+     - **TYPE**
+     - **CLUSTER-IP**
+     - **EXTERNAL-IP**
+     - **PORTS**
+     - **Age**
+   * - service
+     - kube-dns
+     - CLUSTER-IP
+     - 10.43.0.10
+     - <none>
+     - 53/UDP,53/TCP,9153/TCP 
+     - 314d
+
+| **Resource Type** service
+| **Resource Name** kube-dns 
+| **TYPE** how the service is exposed to the world
+| **CLUSTER-IP** this is the internal IP of the pod reachable from within the cluster
+| **EXTERNAL-IP** if **TYPE** is Loadbalancer and public IP would be shown 
+| **PORTS** the ports exposed for public access to the deployment 
+| **AGE** amount of time the service has been running
+
+
+One very important concept we will cover here is the service type. This type determines how your application will be exposed. There are three main service types that we will speak to:
+
+- ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster this way. Usually used with an ingress controller
+- Loadbalancer - exposes application externally via loadbalancer using cloud service provider constructs(i.e. AWS NLB, Azure ALB, Google NLB)
+- NodePort - exposes applications on each node on a specified port. Keep in mind even if a pod does not exist on the node, the port is still open.
+
+Container Network Interface
+---------------------------
+
+We won't be talking a lot about CNI's in this lab but we do need to at least address it. CNI's focus on the connectivity, or removal of, of container networks. The container runtime calls the 
+installed CNI to add or delete a network interface for the container/pod. 
+
