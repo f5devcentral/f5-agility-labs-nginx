@@ -17,7 +17,7 @@ Now you will now enable NGINX App Protect and apply a WAF policy to the Arcadia 
 
 .. image:: images/nms_bookmark.png
 
-3. Log in using the **lab** / **Agility2023!** credentials. Click on the **Instance Manager** tile.
+3. Log in using the **lab** / **AppWorld2024!** credentials. Click on the **Instance Manager** tile.
 
 .. image:: images/nms_dashboard.png
 

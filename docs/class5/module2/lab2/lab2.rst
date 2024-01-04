@@ -82,7 +82,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/launch_nms.png
 
-7. Log in using the **lab** / **Agility2023!** credentials.
+7. Log in using the **lab** / **AppWorld2024!** credentials.
 
 .. image:: images/login.png
 

@@ -13,7 +13,7 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nms_login.png
 
-4. You'll see the login prompt. Log in using the **lab** / **Agility2023!** credentials.
+4. You'll see the login prompt. Log in using the **lab** / **AppWorld2024!** credentials.
 
 .. image:: images/login_prompt.png
 
