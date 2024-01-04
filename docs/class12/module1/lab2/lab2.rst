@@ -19,7 +19,7 @@ Let's look at our two node types in detail.
 
 The *Leader Node* is in charge of the cluster control plane. There must be at least, but not limited to, one leader node per cluster. Some of the components included in the leader
 node are the API server and Scheduler. The API server validates and configures the cluster for all the cluster objects. This includes pods, services and deployments. The scheduler watches for newly created pods and determines the best matching node(s) to place the workload on. If there aren't any nodes 
-matching the requirements of the pod, the pod will remian in an *unscheduled* state. 
+matching the requirements of the pod, the pod will remain in an *unscheduled* state. 
 
 
 The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as *Docker* or *containerd*
@@ -139,7 +139,7 @@ manifest files meet the defined specification to be deployed on the Kubernetes s
 Resource Definitions describe them is valuable knowledge. This capability allows you and companies like F5 to greatly extend functions and capabilities of your cluster or products made to interact with 
 applications. 
 
-This particual CRD allows users of the VirtualServer resource to fully utilize Nginx capabilities that are not available in a standard ingress manifest or would require service mesh 
+This particular CRD allows users of the VirtualServer resource to fully utilize Nginx capabilities that are not available in a standard ingress manifest or would require service mesh 
 capabilities.
 
 Manifest
@@ -147,14 +147,14 @@ Manifest
 
 A Kubernetes manifest is typically a YAML file used to describe the desired state of an object. In this course you'll use manifest files to define pods, deployments,
 and services. You'll use the minimum set of directives to create these objects but Kubernetes will add some default information which we'll investigate.
-Common directives amoung nearly all mainifest files are:
+Common directives among nearly all manifest files are:
 
 - apiVersion - what api version to use of the CRD 
 - Kind - what type of object is being created
 - name - the name you want to reference this object by
 - namespace - the namespace this object will reside in (default is *default*)
 
-You'll find those directives at the top of all the mainfest files you'll create in this course.
+You'll find those directives at the top of all the manifest files you'll create in this course.
 
 Namespaces
 ----------
@@ -275,16 +275,16 @@ image being used to pod related events.
 Deployment 
 ----------
 
-A Kubernetes deployment manages sets of pods used to run an application. The deployment manifest spcecifies these main components:
+A Kubernetes deployment manages sets of pods used to run an application. The deployment manifest specifies these main components:
 
 - deployment name and namespace
 - container image
 - container tags
 - replicas (copies we want running/ scaling), 
-- update strategy (how Kubernetes will roll out new verions of your application)
+- update strategy (how Kubernetes will roll out new versions of your application)
 
 As you deploy a new application across your cluster, the deployment manifest tells Kubernetes the image version, expected number of pods to run across the cluster and
-attachs a label to each pod showing it's association with the deployment.
+attaches a label to each pod showing it's association with the deployment.
 
 .. list-table:: 
    :header-rows: 1
@@ -341,7 +341,7 @@ service discovery.
 | **Resource Name** kube-dns 
 | **TYPE** how the service is exposed to the world
 | **CLUSTER-IP** this is the internal IP of the pod reachable from within the cluster
-| **EXTERNAL-IP** if **TYPE** is Loadbalancer and public IP would be shown 
+| **EXTERNAL-IP** if **TYPE** is Load balancer and public IP would be shown 
 | **PORTS** the ports exposed for public access to the deployment 
 | **AGE** amount of time the service has been running
 
@@ -349,7 +349,7 @@ service discovery.
 One very important concept we will cover here is the service type. This type determines how your application will be exposed. There are three main service types that we will speak to:
 
 - ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster this way. Usually used with an ingress controller
-- Loadbalancer - exposes application externally via loadbalancer using cloud service provider constructs(i.e. AWS NLB, Azure ALB, Google NLB)
+- Load balancer - exposes application externally via load balancer using cloud service provider constructs(i.e. AWS NLB, Azure ALB, Google NLB)
 - NodePort - exposes applications on each node on a specified port. Keep in mind even if a pod does not exist on the node, the port is still open.
 
 Container Network Interface
