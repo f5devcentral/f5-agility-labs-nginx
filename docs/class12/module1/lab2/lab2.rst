@@ -358,3 +358,12 @@ Container Network Interface
 We won't be talking a lot about CNI's in this lab but we do need to at least address it. CNI's focus on the connectivity, or removal of, of container networks. The container runtime calls the 
 installed CNI to add or delete a network interface for the container/pod. 
 
+Two CNI's you'll probably see or hear about most often:
+
+- Calico - BGP
+- Flannel - VXLAN
+
+Additional information:
+
+- `Container Networking <https://github.com/containernetworking/cni>`_
+- `Learn Calico <https://academy.tigera.io/course/certified-calico-operator-level-1/>`_
