@@ -11,7 +11,7 @@ Notes Regarding Installations Outside of this Lab
 
 NGINX products were already provided within this lab. If you are interested in using these products yourself at a later date, note the following:
 
-  * If you plan to install NGINX Management Suite outside of this lab, make sure that you use a supported version of NGINX Plus, NGINX App Protect and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
+  * If you plan to install NGINX Instance Manager outside of this lab, make sure that you use a supported version of NGINX Plus, NGINX App Protect and Linux: https://docs.nginx.com/nginx-management-suite/admin-guides/installation/on-prem/install-guide/
   
   * If you plan to install NGINX App Protect WAF outside of this lab, make sure that you use a supported version of Linux and NGINX Plus: https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/
 
