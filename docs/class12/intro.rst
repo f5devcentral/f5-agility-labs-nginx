@@ -13,14 +13,15 @@ is an *orchestration* tool ensuring containerized workloads are available and sc
 of many manual processes to keep applications available and push updates.
 
 What Kubernetes is **NOT**:
- - Not a Hypervisor or Operating System
- - Not a replacment for container runtimes (i.e. Docker)
+ - Hypervisor or Operating System
+ - Replacment for container runtimes (i.e. Docker)
  - Just for Microservices
- - Not a standalone solution
+ - Standalone solution
 
-What Kubernetes IS:
+What Kubernetes **IS**:
  - Orchestation Platform (ensuring workloads are available/scalable)
- - 
+ - Ideal for microservices 
+ - Enables *cloud native* application design
 
 The evolution off applications from 
 
