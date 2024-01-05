@@ -1,4 +1,4 @@
-View the NGINX Plus Instance in NMS
+View the NGINX Plus Instance in NIM
 ===================================
 
 1. Navigate to **Applications** on the menu bar and launch **Firefox**.
@@ -9,15 +9,15 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/diy_pageload.png
 
-3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Management Suite. Take a look at NMS to view the configuration and instance/application metrics. Click on the **NMS** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NMS login page. Click ***Sign In***.
+3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Instance Manager. Take a look at NIM to view the configuration and instance/application metrics. Click on the **NIM** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NIM login page. Click ***Sign In***.
 
-.. image:: images/nms_login.png
+.. image:: images/nim_login.png
 
 4. You'll see the login prompt. Log in using the **lab** / **AppWorld2024!** credentials.
 
 .. image:: images/login_prompt.png
 
-5. You will see the NGINX Management Suite Launchpad. Click on the **Instance Manager** button.
+5. You will see the NGINX Instance Manager Launchpad. Click on the **Instance Manager** button.
 
 .. image:: images/launchpad.png
 
@@ -53,4 +53,4 @@ View the NGINX Plus Instance in NMS
 
 .. image:: images/nim_metrics.png
 
-Now that you are familiar with viewing metrics of the NGINX Plus instance in NMS, we'll continue to the next lab.
+Now that you are familiar with viewing metrics of the NGINX Plus instance in NIM, we'll continue to the next lab.

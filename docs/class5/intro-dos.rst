@@ -19,7 +19,7 @@ Topology
 The remainder of this lab will use VMs in your existing deployment that we have not interacted with so far. They are:
 
 Clients
-    - Legitimate Traffic -- Contains scripts to act as legitimate client traffic -- 10.1.1.11
+    - Legitimate Traffic Generator -- Contains scripts to act as legitimate client traffic -- 10.1.1.11
     - Attack Traffic Generator -- Contains scripts for DoS attacks to act as bad actor client traffic -- 10.1.1.16
 Load Balancers
     - NGINX LB -- L4 edge load balancer that distributes traffic between two NGINX App Protect DoS instances and appropriate internal ports -- 10.1.1.17
@@ -37,7 +37,7 @@ Monitoring
 
 Attack Scripts
 ==============
-All attack scripts are located in ``/scripts`` folder on the "Attacker" VM.
+All attack scripts are located in ``/scripts`` folder on the "Attack Traffic Generator" VM.
 
 HTTP/1 Flood Attack -- ``/scripts/http1flood.sh``
     - A type of DoS attack in which the attacker manipulates HTTP and sends unwanted requests in order to attack a web server or application.
