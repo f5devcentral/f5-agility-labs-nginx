@@ -13,7 +13,7 @@ NGINX App Protect DoS directives:
 3. **app_protect_dos_monitor** - This directive is how App Protect monitors stress level of the protected resources. There are 3 arguments for this directive:
 
    - URI - a mandatory argument, this is the destination to the protected resources
-   - Protocol - an optional argument, this is the protocol of the protected resource ( http1, http2, grpg) http1 is the default
+   - Protocol - an optional argument, this is the protocol of the protected resource ( http1, http2, grpc) http1 is the default
    - Timeout - determines how many seconds App Protect waits for a response. The default is 10 seconds for http1 and http2 and 5 seconds for grpc
    
 4. **app_protect_dos_security_log_enable** - Enable/Disable App Protect DOS security logger

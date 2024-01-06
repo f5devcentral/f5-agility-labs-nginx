@@ -14,7 +14,6 @@ NGINX App Protect WAF can be deployed in a variety of ways depending on the spec
 
 - As a module within the NGINX Plus application delivery platform: NGINX App Protect WAF can be deployed as a module within the NGINX Plus platform. This provides a unified solution for both load balancing and application security.
 - Alongside NGINX Plus Ingress Controller: NGINX App Protect WAF can be deployed in a containerized environment such as Docker or Kubernetes on top of NGINX Plus Ingress Controller. This provides a scalable and flexible solution for cloud-native applications.
-- Alongside NGINX Plus API Connectivity Manager: NGINX App Protect WAF combined with NGINX Plus API Connectivity Manager to create a secure API gateway that layers protection from known attack signatures, threat campaigns to fully protect your APIs
 - As a service for microservices based deployments: Run NGNIX App Protect WAF inside your microservices-based environment to provide WAF protection to your web applications and APIs
 
 .. image:: images/deployment_modes.png
@@ -35,12 +34,12 @@ Lab Overview
 
 This lab serves as an introduction to the NGINX App Protect WAF solution. In this lab, you will:
 
-- review a fully deployed NGINX Plus instance with NGINX App Protect WAF in place for an existing application
-- test drive the NGINX Management Suite's Instance Manager and Security Monitoring modules to manage configurations and security posture
-- identify false positives and perform policy changes to remedy
-- deploy NGINX App Protect WAF on an existing NGINX Plus instance 
-- deploy NGINX App Protect WAF in Kubernetes using modern apps methodologies
-- review NGINX App Protect WAF API Security
+- Review a fully deployed NGINX Plus instance with NGINX App Protect WAF in place for an existing application
+- Test drive NGINX Instance Manager and Security Monitoring modules to manage configurations and security posture
+- Identify false positives and perform policy changes to remedy
+- Deploy NGINX App Protect WAF on an existing NGINX Plus instance 
+- Deploy NGINX App Protect WAF in Kubernetes using modern apps methodologies
+- Review NGINX App Protect WAF API Security
 
 Each of the modules in this lab are independent and can be performed in any order. 
 
@@ -50,11 +49,8 @@ NGINX Acronyms
 The following are a few acronyms that you will encounter in this lab. 
 
 - **NAP** - NGINX App Protect WAF
-- **NMS** - NGINX Management Suite
-- **NIM** - NGINX Instance Manager (base NMS module)
-- **NMS-SM** - NGINX Security Monitoring (optional NMS module)
-- **ACM** - API Connectivity Manager (optional NMS module)
-- **ADM** - App Delivery Manager (optional NMS module)
+- **NIM** - NGINX Instance Manager
+- **SM** - NGINX Security Monitoring
 - **NIC** - NGINX Ingress Controller
 
 NGINX App Protect WAF Terminology
@@ -68,7 +64,7 @@ NGINX App Protect WAF Terminology
   * - Alarm
     - If selected, the NGINX App Protect WAF system records requests that trigger the violation in the remote log (depending on the settings of the logging profile).
   * - Attack signature
-    - Textual patterns which can be applied to HTTP requests andor responses by NGINX App Protect WAF to determine if traffic is malicious. For example, the string ``<script>`` inside an HTTP request triggers an attack signature violation.
+    - Textual patterns which can be applied to HTTP requests and/or responses by NGINX App Protect WAF to determine if traffic is malicious. For example, the string ``<script>`` inside an HTTP request triggers an attack signature violation.
   * - Attack signature set
     - A collection of attack signatures designed for a specific purpose (such as Apache).
   * - Bot signatures
@@ -126,10 +122,10 @@ Lab Inventory
     - **OS**
     - **NGINX Services**
     - **Apps/Protocols**
-  * - NGINX Management Suite
+  * - NGINX Instance Manager
     - 10.1.1.4
     - Ubuntu 20.04 LTS
-    - NMS, NIM, NMS-SM
+    - NIM, SM
     - SSH
   * - k3s Master Node
     - 10.1.1.5
@@ -190,9 +186,9 @@ Each section in this lab will begin with the assumption that you are connected v
 Remember these important tips:
 
 - Lab modules are independent; feel free to tackle the modules in any order.
-- The username **lab** and password **Agility2023!** will work for every login unless specifically noted.
+- The username **lab** and password **AppWorld2024!** will work for every login unless specifically noted.
 - Traffic and attack generators are running to help generate statistics, events and attacks.
 - To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
-- The screen resolution for the Remote Desktop connection is selected when conencting to the session. Choose a resolution that works best for you.
+- The screen resolution for the Remote Desktop connection is selected when connecting to the session. Choose a resolution that works best for you.
 
 .. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.

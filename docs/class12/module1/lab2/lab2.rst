@@ -23,7 +23,7 @@ matching the requirements of the pod, the pod will remain in an *unscheduled* st
 
 
 The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as *Docker* or *containerd*
-so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kublet is responsible for pulling container 
+so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kubelet is responsible for pulling container 
 images, allows control plane to monitor the node, and ensures containers are healthy and running. 
 
 .. note:: Keep in mind that in a dev environment, your leader node may also be your worker node (not a production practice).
@@ -189,7 +189,7 @@ For this part of the lab, we'll just cover two important namespaces:
 
 Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So you always want
 to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
-the default namsespace. One item that you'll find in the default namespace are CRD's.
+the default namespace. One item that you'll find in the default namespace are CRD's.
 
 
 .. code-block:: bash

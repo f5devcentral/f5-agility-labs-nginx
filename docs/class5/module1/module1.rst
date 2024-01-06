@@ -1,4 +1,4 @@
-Module 1 - Test Driving NGINX Plus with App Protect WAF and NGINX Management Suite
+Module 1 - Test Driving NGINX Plus with App Protect WAF and NGINX Instance Manager
 ##################################################################################
 
 In this module, you will review an existing NGINX Plus instance running NGINX App Protect WAF protecting an deployed application. 

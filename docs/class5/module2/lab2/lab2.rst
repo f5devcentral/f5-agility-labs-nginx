@@ -1,13 +1,13 @@
-Adding the NGINX Plus with App Protect Instance to NGINX Management Suite
+Adding the NGINX Plus with App Protect Instance to NGINX Instance Manager
 =========================================================================
 
-Since this lab utilizes NMS, we're going to install the NGINX Agent and add the instance to the NGINX Management Suite for centralized management and analytics.
+Since this lab utilizes NIM, we're going to install the NGINX Agent and add the instance to the NGINX Instance Manager for centralized management and analytics.
 
 .. warning:: If you're installing the NGINX Agent in your environment, a few steps are required before starting the installation process. See https://docs.nginx.com/nginx-management-suite/nginx-agent/install-nginx-agent/ for more information. In this lab, these have been checked for you.
 
 1. Connect to the NGINX Plus 2 instance via SSH, if not already connected.
 
-2. The NGINX Agent will be pulled from the NGINX Management Suite server and installed:
+2. The NGINX Agent will be pulled from the NGINX Instance Manager server and installed:
 
 .. code-block:: bash
 
@@ -37,7 +37,7 @@ Add the following configuration block to the end of the file:
   nginx_app_protect:
     # Report interval for NGINX App Protect details - the frequency the NGINX Agent checks NGINX App Protect for changes.
     report_interval: 15s
-    # Enable precompiled publication from the NGINX Management Suite (true) or perform compilation on the data plane host (false).
+    # Enable precompiled publication from the NGINX Instance Manager (true) or perform compilation on the data plane host (false).
     precompiled_publication: true
   # NGINX App Protect Monitoring config
   nap_monitoring:
@@ -59,9 +59,9 @@ Press **CTRL + X** to save the file, followed by **Y** when asked to save the bu
 In this example, we've configured NGINX Agent to:
 
 - check for configuration changes every 15 seconds
-- allow for precompiled policies, meaning that NMS will compile the policy before sending to the NGINX Plus/NAP instance
+- allow for precompiled policies, meaning that NIM will compile the policy before sending to the NGINX Plus/NAP instance
 - Enable large buffers for NGINX App Protect Monitoring
-- Enable NGINX Agent to run a syslog daemon that will forward logs to NMS Security Monitoring
+- Enable NGINX Agent to run a syslog daemon that will forward logs to NIM Security Monitoring
 
 4. Start the NGINX Agent and set to start at boot:
 
@@ -78,11 +78,11 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/firefox_launch.png
 
-6. Click the NMS bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
+6. Click the NIM bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
 
-.. image:: images/launch_nms.png
+.. image:: images/launch_nim.png
 
-7. Log in using the **lab** / **Agility2023!** credentials.
+7. Log in using the **lab** / **AppWorld2024!** credentials.
 
 .. image:: images/login.png
 
@@ -92,7 +92,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 9. You should now see second instance in the list. Click **Refresh** in the toolbar if you do not see the new instance.
 
-.. image:: images/nms_refresh_result.png
+.. image:: images/nim_refresh_result.png
 
 10. Click the **nginx-plus-2.agility.lab** instance in the list. 
 

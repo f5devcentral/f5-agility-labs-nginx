@@ -1,5 +1,5 @@
 Module 3 - Kubernetes Troubleshooting
-######################################
+#####################################
 
 In this module, we will cover lab components and access.
 

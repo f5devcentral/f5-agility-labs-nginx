@@ -29,49 +29,49 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/custom_reject_page.png
 
-8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in NMS-SM.
+8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in SM.
 
 .. image:: images/select_copy_support_id.gif
 
-9. Return to NMS and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
+9. Return to NIM and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
 
-.. image:: images/NMS-SM-tile.png
+.. image:: images/SM-tile.png
 
 10. You'll be presented with the Security Monitoring landing page, as shown below:
 
-.. image:: images/NMS-SM_overview.png
+.. image:: images/SM_overview.png
 
 11. On the left menu, select **Support ID Details**. 
     
-.. image:: images/NMS-SM_support_id_link.png
+.. image:: images/SM_support_id_link.png
 
 12. You'll be prompted for your support ID.
 
-.. image:: images/NMS-SM_support_id_prompt.png
+.. image:: images/SM_support_id_prompt.png
 
 13. Enter your support ID into the search field and click the **arrow** to search.
 
-.. image:: images/NMS-SM_support_id_entry.png
+.. image:: images/SM_support_id_entry.png
 
 .. note:: At anytime in this lab you encounter a support ID, feel free to return to this tool to look at the details of the attack and mitigation.
 
 14. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
-.. image:: images/NMS-SM_support_id_details.png
+.. image:: images/SM_support_id_details.png
 
 15. Notice that the image URI is listed as **/images/slider/slide-3.jpg**.
 
-.. image:: images/NMS-SM_support_id_uri.png
+.. image:: images/SM_support_id_uri.png
 
 16. If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Sub-violations**, **CVEs**, and **Threat Campaigns**. 
 
-.. image:: images/NMS-SM_support_id_attack_details_collapsed.png
+.. image:: images/SM_support_id_attack_details_collapsed.png
 
-.. image:: images/NMS-SM_support_id_attack_details.png
+.. image:: images/SM_support_id_attack_details.png
 
 17. Notice that the **Violations** section shows a single violation: **Illegal File Type**. 
 
-.. image:: images/NMS-SM_support_id_illegal_file_type.png
+.. image:: images/SM_support_id_illegal_file_type.png
 
 18. You need to allow JPG files to enable the application to operate properly by modifying the WAF policy. Start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
 
