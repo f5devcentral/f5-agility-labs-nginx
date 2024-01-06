@@ -4,7 +4,7 @@ The Path to Understanding Kubernetes and Containers - Intro
 Purpose:
 
 
-*Containers* slightly resemble virtual machines. In that, they contain filesystems, all necessary libraries, and will use portions of memory and compute
+*Containers* slightly resemble virtual machines. In that, they contain file systems, all necessary libraries, and will use portions of memory and compute
 from the host. Containers can allow you to build and move applications nearly anywhere and are usually lightweight. Being that they are lightweight, 
 this allows you to maintain different environments (dev, qa, production) and have full application functionality.
 
@@ -13,14 +13,15 @@ is an *orchestration* tool ensuring containerized workloads are available and sc
 of many manual processes to keep applications available and push updates.
 
 What Kubernetes is **NOT**:
- - Not a Hypervisor or Operating System
- - Not a replacement for container runtimes (i.e. Docker)
+ - Hypervisor or Operating System
+ - Replacement for container runtime (i.e. Docker)
  - Just for Microservices
- - Not a standalone solution
+ - Standalone solution
 
-What Kubernetes IS:
+What Kubernetes **IS**:
  - Orchestration Platform (ensuring workloads are available/scalable)
- - 
+ - Ideal for microservices 
+ - Enables *cloud native* application design
 
 The evolution off applications from 
 
