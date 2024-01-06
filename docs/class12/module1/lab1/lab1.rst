@@ -51,7 +51,7 @@ To edit the file, you'll need to open the file in an editor ``vim Dockerfile``
    COPY index.html /usr/share/nginx/html/index.html
    EXPOSE 83/tcp
 
-To close and save the file please use the command ``:wq``
+To close and save the file please press ``ESC`` (escape key) use the command ``:wq``. If you make a mistake and would like to exit vim without saving, press the ``ESC`` key and use this command ``:q!``
 
 Copying this text in the blank Dockerfile file, you'll:
 
@@ -127,6 +127,14 @@ our new container the ``--name`` (name) of *app*. The next flagged items are:
  - ``-d`` run the container detached, if we did not do this the terminal would reflect the prompt from inside the running container 
  - ``-i`` interactive - allows us to execute commands while the container is in a running state.
  - ``-t`` Pseudo-tty 
+|
+Once your container is running, you should see the container id like the below output.
+
+.. code-block:: bash 
+   :caption: Running Container
+
+   root@ip-10-1-1-12:/# podman run -p 83:83 --name app -dit appworld:v1
+   79869cbf10fe9424cafbc33a64af2ff812215b0bdad69379bb3d661360460628
 
 We can now run this command to see all container (active and stopped)
 
@@ -135,8 +143,14 @@ We can now run this command to see all container (active and stopped)
 
    podman ps -a
 
-The above the command asks podman to list ``ps`` containers and ``-a`` shows all containers as the default is to only show running.
+The above the command asks podman to list ``ps`` containers and ``-a`` shows all containers as the default is to only show running. You'll notice the continer id has been
+truncated to the first 12 characters. If you'd like to see the full container id you can use this command: 
 
+.. code-block:: bash
+   :caption: Untruncated
+
+   podman ps --no-tunc
+|
 Now you can use *curl* to test connectivity to our new container. 
 
 .. code-block:: bash

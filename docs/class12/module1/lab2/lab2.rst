@@ -318,6 +318,7 @@ Again, you are asking Kubernetes to run a pod with a container using the BusyBox
 
 *Watch* will re-run the ``kubectl get pod -n test`` command every 2 seconds by default. Now you can watch the new pod run. What will happen after 35 seconds?
 
+To exit the *watch* command, use the shell exscape **Control + C** 
 
 Deployment 
 ----------
