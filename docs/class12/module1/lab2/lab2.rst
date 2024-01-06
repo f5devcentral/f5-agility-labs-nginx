@@ -260,6 +260,8 @@ from our coredns pod.
 | **Restarts** shows the number of restarts of the container (not pod)
 | **Age** describes how long ago our pod was created and running
 
+Documentation:
+
 - `Pod Status <https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase>`_
 
 
@@ -309,6 +311,8 @@ Now let's try running our pod again, but this time we'll run a shell function of
    kubectl delete pod bbox -n test
    kubectl run bbox --image=docker.io/busybox -- /bin/sh -c 'sleep 35' -n test
    watch kubectl get pod -n test
+
+Again, you are asking Kubernetes to run a pod with a container using the BusyBox image inside. You are also passing in the bash command *sleep 35*.
 
 *Watch* will re-run the ``kubectl get pod -n test`` command every 2 seconds by default. Now you can watch the new pod run. What will happen after 35 seconds?
 
@@ -398,7 +402,7 @@ Container Network Interface
 ---------------------------
 
 We won't be talking a lot about CNI's in this lab but we do need to at least address it. CNI's focus on the connectivity, or removal of, of container networks. The container runtime calls the 
-installed CNI to add or delete a network interface for the container/pod. 
+installed CNI to add or delete a network interface for the container/pod. The CNI has sole responsibility of building the container network.
 
 Two CNI's you'll probably see or hear about most often:
 

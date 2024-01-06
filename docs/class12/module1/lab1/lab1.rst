@@ -65,6 +65,10 @@ Copying this text in the blank Dockerfile file, you'll:
 Now to build and tag the new container. Podman will take the Dockerfile and other referenced files (web.conf, index.html) and build them into our new 
 container image.
 
+
+.. note:: You will want to copy the below command exactly to include the period ``.``
+
+
 .. code-block:: bash
    :caption: Podman Build
 
