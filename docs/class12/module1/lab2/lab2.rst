@@ -6,12 +6,12 @@ Node
 ----
 
 Nodes are the primary component of a Kubernetes cluster. We will talk about the two types of nodes found in every cluster. A *worker node* and a *leader node*.
-You will see the leader node referred to by different names, such as master node (depending on documentation), but the process is all the same. Nodes can be bare metal, virtual
+You will see the leader node referred to by different names, such as master node (which is being removed), but the process is all the same. Nodes can be bare metal, virtual
 machines, or even containers (used in development use cases). Worker nodes will run your containerized workloads while the leader nodes will handle 
 scheduling of where workloads will be deployed, configuration and state of the cluster. 
 
 In this course, the cluster is already set up for you. You will communicate with the leader node to perform all actions for this course. The Kubernetes 
-specific command-line tool you'll use is *kubectl*. Kubectl allows you to view, configure, inspect all aspects of the cluster.
+specific command-line tool you'll use is *kubectl*. Kubectl allows you to view, configure, and inspect all aspects of the cluster.
 
 Let's look at our two node types in detail.
 
@@ -159,7 +159,8 @@ You'll find those directives at the top of all the manifest files you'll create 
 Namespaces
 ----------
 
-In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster, think of *sub-clusters*. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster, think of a namespace as a *sub-cluster*. Just like you'd use a partition in a BIG-IP to separate
+objects, you'd use a namespace in Kubernetes. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
 
 Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
 
@@ -267,7 +268,7 @@ You can also describe this resource for more detail.
 .. code-block:: bash
    :caption: Describe CoreDNS
 
-   kubectl describe pod coredns-597584b69b-5fb2r
+   kubectl describe pod coredns-597584b69b-5fb2r -n kube-system
 
 Looking at the above output you can see a wealth of information about the CoreDNS pod. From which node it's running on, labels, pod IP address and what 
 image being used to pod related events. 
@@ -284,7 +285,8 @@ A Kubernetes deployment manages sets of pods used to run an application. The dep
 - update strategy (how Kubernetes will roll out new versions of your application)
 
 As you deploy a new application across your cluster, the deployment manifest tells Kubernetes the image version, expected number of pods to run across the cluster and
-attaches a label to each pod showing it's association with the deployment.
+attaches a label to each pod showing it's association with the deployment. Kubernetes will assign and keep your requested replicas running (or restarted) keeping in line 
+with cluster resources.
 
 .. list-table:: 
    :header-rows: 1

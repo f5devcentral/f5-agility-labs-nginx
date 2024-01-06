@@ -55,7 +55,7 @@ To close and save the file please use the command ``:wq``
 
 Copying this text in the blank Dockerfile file, you'll:
 
-- Start container image creation from the base Nginx image.
+- **Build** a custom container creation from the base Nginx image.
 - The **RUN** command will execute a command, we will delete the default configuration shipped on all Nginx instances.
 - The **COPY** command will allow us to place files inside the container image to be available at run time(web.conf, index.html).
 - The **EXPOSE** command allows us to expose additional ports on the container.
@@ -71,7 +71,8 @@ container image.
    podman build -t appworld:v1 .
 
 As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. After the ``:`` (colon) is used for 
-showing more specific version of the container build. The ``.`` (period) is simply telling podman the Dockerfile file is located in the same directory we are working from. 
+showing more specific version of the container build. You'll often hear this referred to as the *tag* version. If you do not supply a tag your container registry will assume 
+*latest* is the tag to be used. The ``.`` (period) is simply telling podman the Dockerfile file is located in the same directory we are working from. 
 
 Once the image is built, you can now run the command to list the images. You should see two images listed. This is because podman did not have the Nginx image
 and had to download it first as it was our base. 
@@ -80,6 +81,34 @@ and had to download it first as it was our base.
    :caption: List Images
 
    podman images
+
+Let's investigate the container images we now have:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Repository**
+     - **TAG**
+     - **IMAGE ID**
+     - **CREATED**
+     - **SIZE**
+   * - localhost/appworld
+     - v1
+     - 9d3b676be476
+     - 6 days ago
+     - 191 MB
+   * - docker.io/library/nginx
+     - latest
+     - d453dd892d93
+     - 2 months ago
+     - 191 MB
+
+
+| **Repository** show where the container came from
+| **TAG** is the tag we set or with no tag set the default is *latest*
+| **IMAGE ID** is a unique id assigned to the container
+| **CREATED** 
+| **SIZE** size of the container image
 
 Now it is time to run our newly created container image. 
 
@@ -98,9 +127,11 @@ our new container the ``--name`` (name) of *app*. The next flagged items are:
 We can now run this command to see all container (active and stopped)
 
 .. code-block:: bash
-   :caption: Show Container
+   :caption: Show Containers
 
    podman ps -a
+
+The above the command asks podman to list ``ps`` containers and ``-a`` shows all containers as the default is to only show running.
 
 Now you can use *curl* to test connectivity to our new container. 
 
@@ -130,6 +161,8 @@ Now that your container is running and a successful curl has completed, let's di
    :caption: Container Logs 
 
    podman logs app
+
+The above command is asking podman to show logs for the container with the name of *app*, which we gave to our container when we started it.
 
 Your log output should look like:
 
@@ -161,8 +194,8 @@ Your log output should look like:
 You can also follow the logs actively like you would any Linux system using the ``-f`` flag. An example would be ``podman logs -f app``.
 
 This lab is not an all inclusive demonstration of building and running containers. There are many configurations you can construct from your Dockerfile, such as attaching storage. Some important 
-security items to take note of is scanning your images. As you can see from this lab, other parts that you did not build are now part of your application. Another 
-security action to take to to limit the user being run inside the container. Otherwise in our container, you can get shell access as the root user.
+security items to take note of is scanning your images. Scanning your images takes a deep look into the libraries/packages that make up your container and can help 
+alert you to supply chain security vulnerabilities. Another security action to take is to limit the user being run inside the container. Otherwise in our container, you can get shell access as the root user.
 
 
 This now concludes the Container section of this lab.
