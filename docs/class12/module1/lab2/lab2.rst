@@ -273,6 +273,46 @@ You can also describe this resource for more detail.
 Looking at the above output you can see a wealth of information about the CoreDNS pod. From which node it's running on, labels, pod IP address and what 
 image being used to pod related events. 
 
+Please always remember a container's life is ephemeral in Kubernetes. You will hear the phrase "Cattle, not pets" a lot when talkig about a containers *life* in Kubernetes. We
+will do a short lab here to cover that exact concept. 
+
+From the web shell execute these commands:
+
+.. code-block:: bash
+   :caption: BusyBox 
+
+   kubectl create namespace test
+   kubectl run bbox --image=docker.io/busybox -n test
+
+We have created a new namespace and asked Kubernetes to run a pod named *bbox* with the container busybox inside the test namespace.
+
+.. code-block:: bash
+   :caption: Get Pods
+
+   kubectl get pod -n test
+
+Notice now when you check on the pods in the test namespace, bbox is *Completed*. This means our pod was created, assigned to a node, then the kubelet got our BusyBox image
+and ran the container inside the pod through execution. So without any applications or code to run our container executed and shutdown.
+
+.. code-block:: 
+
+   lab@k3s-leader:~$ k get po
+   NAME                            READY   STATUS      RESTARTS         AGE
+   bbox                            0/1     Completed   1 (2s ago)       3s
+
+Now let's try running our pod again, but this time we'll run a shell function of sleep for 35 seconds. **Please run each single command at a time**.
+
+
+.. code-block:: bash
+   :caption: Sleep BusyBox
+
+   kubectl delete pod bbox -n test
+   kubectl run bbox --image=docker.io/busybox -- /bin/sh -c 'sleep 35' -n test
+   watch kubectl get pod -n test
+
+*Watch* will re-run the ``kubectl get pod -n test`` command every 2 seconds by default. Now you can watch the new pod run. What will happen after 35 seconds?
+
+
 Deployment 
 ----------
 
