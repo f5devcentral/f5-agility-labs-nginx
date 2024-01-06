@@ -280,7 +280,7 @@ image being used to pod related events.
 Please always remember a container's life is ephemeral in Kubernetes. You will hear the phrase "Cattle, not pets" a lot when talkig about a containers *life* in Kubernetes. We
 will do a short lab here to cover that exact concept. 
 
-From the web shell execute these commands:
+From the web shell execute these commands individually:
 
 .. code-block:: bash
    :caption: BusyBox 
@@ -298,9 +298,10 @@ We have created a new namespace and asked Kubernetes to run a pod named *bbox* w
 Notice now when you check on the pods in the test namespace, bbox is *Completed*. This means our pod was created, assigned to a node, then the kubelet got our BusyBox image
 and ran the container inside the pod through execution. So without any applications or code to run our container executed and shutdown.
 
-.. code-block:: 
+.. code-block:: bash
+   :caption: Output
 
-   lab@k3s-leader:~$ k get po
+   lab@k3s-leader:~$ kubectl get pod -n test
    NAME                            READY   STATUS      RESTARTS         AGE
    bbox                            0/1     Completed   1 (2s ago)       3s
 
