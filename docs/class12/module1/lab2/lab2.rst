@@ -277,10 +277,10 @@ You can also describe this resource for more detail.
 Looking at the above output you can see a wealth of information about the CoreDNS pod. From which node it's running on, labels, pod IP address and what 
 image being used to pod related events. 
 
-Please always remember a container's life is ephemeral in Kubernetes. You will hear the phrase "Cattle, not pets" a lot when talkig about a containers *life* in Kubernetes. We
+Please always remember a container's life is ephemeral in Kubernetes. You will hear the phrase "Cattle, not pets" a lot when talking about a containers *life* in Kubernetes. We
 will do a short lab here to cover that exact concept. 
 
-From the web shell execute these commands:
+From the web shell execute these commands individually:
 
 .. code-block:: bash
    :caption: BusyBox 
@@ -298,9 +298,10 @@ We have created a new namespace and asked Kubernetes to run a pod named *bbox* w
 Notice now when you check on the pods in the test namespace, bbox is *Completed*. This means our pod was created, assigned to a node, then the kubelet got our BusyBox image
 and ran the container inside the pod through execution. So without any applications or code to run our container executed and shutdown.
 
-.. code-block:: 
+.. code-block:: bash
+   :caption: Output
 
-   lab@k3s-leader:~$ k get po
+   lab@k3s-leader:~$ kubectl get pod -n test
    NAME                            READY   STATUS      RESTARTS         AGE
    bbox                            0/1     Completed   1 (2s ago)       3s
 
@@ -318,7 +319,7 @@ Again, you are asking Kubernetes to run a pod with a container using the BusyBox
 
 *Watch* will re-run the ``kubectl get pod -n test`` command every 2 seconds by default. Now you can watch the new pod run. What will happen after 35 seconds?
 
-To exit the *watch* command, use the shell exscape **Control + C** 
+To exit the *watch* command, use the shell escape **Control + C** 
 
 Deployment 
 ----------
