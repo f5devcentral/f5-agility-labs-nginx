@@ -260,6 +260,8 @@ from our coredns pod.
 | **Restarts** shows the number of restarts of the container (not pod)
 | **Age** describes how long ago our pod was created and running
 
+|
+
 Documentation:
 
 - `Pod Status <https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase>`_
