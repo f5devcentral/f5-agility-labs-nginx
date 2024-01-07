@@ -5,7 +5,7 @@ Kubernetes - Operations
    :align: center
 
 
-Now that we've covered the core components of Kubernetes, it's time to put it into operation. In this module you'll create Pods, Deployments, and Services. The image above depects how 
+Now that we've covered the core components of Kubernetes, it's time to put it into operation. In this module you'll create Pods, Deployments, and Services. The image above depicts how 
 we tie all these components together. When Kubernetes gets the run command, it will first look to see if the image is held locally on the cache by Kubelet. If there is not a local image, Kubelet 
 will *pull* the image from a container registry. Let's jump into the operational items that make Kubernetes run.
 
@@ -13,7 +13,7 @@ Operations - Container registry
 -------------------------------
 
 We'll briefly talk about *container registries*. A container registry is a storage area for storing container images. Most commonly used id Docker Hub, as we have used that registry
-during this class. When you return to your jobs however, your company will most likely use a private contianer registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
+during this class. When you return to your jobs however, your company will most likely use a private container registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
 with some access controls. In Kubernetes this is done with a *docker-registry* secret. A secret is another Kubernetes object used for storing sensitive information.
 
 In this class, you'll not have to set any of this up.
@@ -38,8 +38,8 @@ Now, verify your pod is running
 | Once you have verified the pod is running, you'll delete the pod. 
 | ``kubectl delete pod testpod -n test``
 
-Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indentions are correct, let's 
-review what the manifest file would look like to depoy our Nginx container in a pod called *testpod*.
+Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indention's are correct, let's 
+review what the manifest file would look like to deploy our Nginx container in a pod called *testpod*.
 
 .. note:: YAML is can be very fussy on indentation, please pay close attention
 
@@ -77,6 +77,7 @@ A helpful resource to check for this lab is the *api-resource*. Here you can see
 very useful to save in typing and for those of you continuing on and take the Certified Kubernetes Administrator (CKA) certification. 
 
 |
+
 .. code-block:: bash
    :caption: API Resources
 
@@ -87,7 +88,7 @@ Now, back to creating pods. You can use the *dry-run=client* feature to have Kub
 .. code-block:: bash
    :caption: Pod Dry Run
 
-   kubectl run dryrun --image=nginx:1.21 --port 80 -n test --dry-run=client -o yaml
+   kubectl run testpod --image=nginx:1.21 --port 80 -n test --dry-run=client -o yaml
 
 Notice the *-o* output flag. You can also ask Kubernetes to output *json* format as well. You can also direct the output to a file by using ``>``. An example would be ``kubectl run dryrun --image=nginx --dry-run=client -o yaml > testpod.yaml``. Let's
 try it out.
@@ -97,7 +98,7 @@ Now that your manifest file is ready, time to apply it to Kubernetes.
 .. code-block:: bash
    :caption: Pod Dry Run
 
-   kubectl run dryrun --image=nginx:1.21 --port 80 -n test --dry-run=client -o yaml > testpod.yaml
+   kubectl run testpod --image=nginx:1.21 --port 80 -n test --dry-run=client -o yaml > testpod.yaml
 
 
 .. code-block:: bash
@@ -128,10 +129,12 @@ We will focus on this line in the returned data:
      - image: nginx:1.21
        imagePullPolicy: IfNotPresent
 
-Arrow your cursor down to the *image* line and press ``i``. This command allows you to edit the file. You'll be changing the tagged version from **1.20** to **1.25**. Once
+Arrow your cursor down to the *image* line and press ``i``. This command allows you to edit the file. You'll be changing the tagged version from **1.21** to **1.25**. Once
 this change is made use the vim write and quit command, press:
+
 |  ``ESC`` (escape key)
 |  ``:wq``
+
 
 You should see the pod was edited.
 
@@ -163,6 +166,14 @@ Output from describe should look like the below. Showing Kubelet pulled the cont
     Normal  Created    98s (x2 over 6m47s)  kubelet            Created container testpod
     Normal  Started    97s (x2 over 6m47s)  kubelet            Started container testpod
 
+Before moving on the next section, we'll delete the running pod.
+
+.. code-block:: bash
+   :caption: Delete Pod
+
+   kubectl delete pod testpod -n test
+
+Official Documentation
 
 - `Kubernetes Pod <https://kubernetes.io/docs/concepts/workloads/pods/>`_
 
@@ -172,15 +183,28 @@ Operations - Deployment
 .. code-block:: bash 
    :caption: Deployment 
 
-   kubectl create deployment my-dep --image=nginx --replicas=3
+   kubectl create deployment lab-deploy --image=nginx:1.22 --replicas=3 -n test
+
+You should see the deployment has run from the below sample returned output:
 
 .. code-block:: bash
-   :caption: Deployment Manfiest 
+   :caption: Deployment Output 
+
+   lab@k3s-leader:~$ kubectl get deploy lab-deploy -n test
+   NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+   lab-deploy   3/3     3            3           10s
+
+For this section you'll be doing some of the exact steps we did for Pod's section. We'll cover some important parts of the manifest file that enable the deployment to build 
+containers for the deployment.
+
+.. code-block:: bash
+   :caption: Sample Deployment Manifest 
 
    apiVersion: apps/v1
    kind: Deployment
    metadata:
-     name: nginx-deployment
+     name: lab-deploy
+     namespace: test
      labels:
        app: nginx
    spec:
@@ -195,19 +219,51 @@ Operations - Deployment
        spec:
          containers:
          - name: nginx
-           image: nginx:1.20
+           image: nginx:1.22
            ports:
            - containerPort: 80
+
+| **labels**
+| **spec**
+
+- **replicas**
+- **selector**
+- **template**
+
+.. code-block:: bash
+   :caption: Deployment Manifest
+
+   kubectl create deployment lab-deploy --image=nginx:1.22 --replicas=3 -n test --dry-run=client -o yaml > lab-deploy.yaml
+
+As you've done a previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
+command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work it's magic.
+
+.. code-block:: bash
+   :caption: Deploy
+
+   kubectl apply -f lab-deploy.yaml
+
+You should now see you deployment has been created.
+| ``deployment.apps/lab-deploy created``
+
+Kubernetes has become so popular because of it's many features in how it can run workloads and be customized. One of these impressive features is *scaling*. Scaling allows 
+you to increase or decrease pod counts. You can even set scaling to occur during resource consumption. When configuring scaling to happen based on consumption (or lack of), this
+is called *auto-scaling*. In this lab, we will focus on manually scaling resources in the deployment. To do this, we will adjust the number of *replicas* specified in the manifest.
+
 
 .. code-block:: bash
    :caption: Scale
 
-   kubectl scale --replicas=3 deployment/demo-deployment
+   kubectl scale --replicas=3 deploy/lab-deploy -n test
+
+Official Documentation
 
 - `Kubernetes Deployment <https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>`_
 
 Operations - Ingress
 --------------------
+
+Official Documentation
 
 
 Operations - Service
@@ -218,5 +274,6 @@ Operations - Service
 
    kubectl expose deployment <deployment_name> --type=ClusterIP --port=8080 --target-port=80 --name=nginx-clusterip-svc
 
-- `Kubernetes Service <https://kubernetes.io/docs/concepts/services-networking/service/>`_
+Official Documentation
 
+- `Kubernetes Service <https://kubernetes.io/docs/concepts/services-networking/service/>`_
