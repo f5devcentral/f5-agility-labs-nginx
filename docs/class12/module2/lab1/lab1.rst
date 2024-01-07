@@ -77,6 +77,7 @@ A helpful resource to check for this lab is the *api-resource*. Here you can see
 very useful to save in typing and for those of you continuing on and take the Certified Kubernetes Administrator (CKA) certification. 
 
 |
+
 .. code-block:: bash
    :caption: API Resources
 
