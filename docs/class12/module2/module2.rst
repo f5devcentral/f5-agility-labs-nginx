@@ -3,7 +3,7 @@ Module 2 - Kubernetes Operations
 
 In this module, we will cover operations aspects of Kubernetes.
 
-Estimated completion time: X minutes
+Estimated completion time: 30 minutes
 
 
 
