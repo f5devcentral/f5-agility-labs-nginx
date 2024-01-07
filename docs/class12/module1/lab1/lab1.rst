@@ -14,8 +14,8 @@ a container runtime, such as Docker to run on. The runtime engine will validate 
 (i.e. DNS, routing/nat) and will ONLY have what you installed. Again, a container is not a full distro of an operating system. 
 
 Building your container can be compared to making a layered cake. There needs to be a base image (Linux or Windows base images), then you can add on 
-packages/libraries to allow your application to run. Containers can be *built* using a Dockerfile. In this file you'll define the base, packages needed, and importantly
-necessary commands to be run. It's **VERY** important to remember, containers run until the default command executes, then they terminate. 
+packages/libraries to allow your application to run. Containers can be *built* using a Dockerfile. In this file you'll define the base, packages needed, and important
+necessary commands to be run. In Kubernetes it's **VERY** important to remember, containers run until the default command executes, then they terminate. 
 
 Let's look at some excerpts from our very own Nginx container. 
 
