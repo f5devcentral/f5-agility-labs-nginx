@@ -36,6 +36,7 @@ Official Kubernetes Documentation
 
 Feel free to use the official documentation to clarify information or dive deeper in this lab:
 
+- `Kubectl Commands <https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands>`_
 - `Kubernetes Documentation <https://kubernetes.io/docs/home/>`_
 - `Kubernetes Nodes <https://kubernetes.io/docs/concepts/architecture/nodes/>`_
 - `Kubernetes Custom Resource <https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/>`_
