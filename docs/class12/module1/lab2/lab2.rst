@@ -182,10 +182,6 @@ For this part of the lab, we'll just cover two important namespaces:
 - **default**
 - **kube-system** 
 
-.. code-block:: bash
-   :caption: default
-
-   kubectl get all,crd
 
 Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So you always want
 to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
@@ -193,14 +189,20 @@ the default namespace. One item that you'll find in the default namespace are CR
 
 
 .. code-block:: bash
-   :caption: kube-system
+   :caption: default
 
-   kubectl get all -n kube-system
+   kubectl get all,crd
+| 
 
 Next is the *kube-system* namespace. This namespace is important as a vital Pod is running here, CoreDNS. Referencing the returned data below, we can see the CoreDNS 
 objects in the namespace kube-system.
 
+.. code-block:: bash
+   :caption: kube-system
 
+   kubectl get all -n kube-system
+
+Example output:
 
 .. code-block:: bash 
    :caption: CoreDNS
@@ -267,7 +269,7 @@ Documentation:
 - `Pod Status <https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase>`_
 
 
-You can also describe this resource for more detail. 
+You can also describe this resource for more detail. **You'll have to replace your pod name with the example below**.
 
 .. code-block:: bash
    :caption: Describe CoreDNS
@@ -312,7 +314,7 @@ Now let's try running our pod again, but this time we'll run a shell function of
    :caption: Sleep BusyBox
 
    kubectl delete pod bbox -n test
-   kubectl run bbox --image=docker.io/busybox -- /bin/sh -c 'sleep 35' -n test
+   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep 35'
    watch kubectl get pod -n test
 
 Again, you are asking Kubernetes to run a pod with a container using the BusyBox image inside. You are also passing in the bash command *sleep 35*.
