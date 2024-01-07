@@ -1,9 +1,9 @@
 Module 1 - Container and Kubernetes Overview 
 ############################################
 
-In this module, we will cover lab components and access.
+In this module, we will cover lab access, container and Kubernetes components.
 
-Estimated completion time: X minutes
+Estimated completion time: 30 minutes
 
 
 
