@@ -14,10 +14,12 @@ Operations - Container registry
 
 We'll briefly talk about *container registries*. A container registry is a storage area for storing container images. Most commonly used id Docker Hub, as we have used that registry
 during this class. When you return to your jobs however, your company will most likely use a private contianer registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
-with some access controls. In Kubernetes this is done with a *docker-registry* secret. 
+with some access controls. In Kubernetes this is done with a *docker-registry* secret. A secret is another Kubernetes object used for storing sensitive information.
 
 In this class, you'll not have to set any of this up.
+
 |
+- `Kubernetes Secret <https://kubernetes.io/docs/concepts/configuration/secret/>`_
 - `Kubernetes Private Registry <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`_
 
 Operations - Pod
