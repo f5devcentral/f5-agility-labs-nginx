@@ -1,19 +1,27 @@
 Kubernetes - Operations 
 =======================
 
+.. image:: images/k8s_service.png
+   :align: center
+
 
 Now that we've covered the core components of Kubernetes, it's time to put it into operation. In this module you'll create Pods, Deployments, and Services. Creating a pod in Kubernetes 
 is not a lot different than what we did in the last module when we ran the *podman run* command. When Kubernetes gets the run command, it will first look to see 
 if the image is held locally on the cache by the Kublet
 
-Container registry 
-- pull process 
+Operations - Container registry
+-------------------------------
+
+We'll briefly talk about *container registries*. A container registry is a storage area for storing container images. Most commonly used id Docker Hub, as we have used that registry
+during this class. When you return to your jobs however, your company will most likely use a private contianer registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
+with some access controls. In Kubernetes this is done with a *docker-registry* secret. 
+
+In this class, you'll not have to set any of this up.
+|
+- `Kubernetes Private Registry <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`_
 
 Operations - Pod
 ----------------
-
-.. image:: images/k8s_service.png
-   :align: center
 
 .. code-block:: bash
    :caption: Pod Creation 
@@ -43,10 +51,10 @@ Operations - Pod
 | **image** defines what image to use
 | **ports** defines what ports the container will listen on
 
-
+|
 A helpful resource to check for this lab is the *api-resource*. Here you can see object type (kind), what it's *shortname* is and the *apiVersion* associated. The shortname is 
 very useful to save in typing and for those of you continuing on and take the Certified Kubernetes Administrator (CKA) certification. 
-
+|
 .. code-block:: bash
    :caption: API Resources
 
