@@ -1,7 +1,11 @@
 Kubernetes Troubleshooting
 ==========================
 
+.. code-block:: bash
+   :caption: Explain
 
+   kubectl explain
+   
 .. code-block:: bash 
    :caption: Describe
 

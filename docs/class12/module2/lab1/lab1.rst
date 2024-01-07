@@ -33,7 +33,10 @@ You'll create a new pod using the Kubernetes imperative command shown below. Whe
    kubectl run testpod --image=nginx:1.21 -n test
 
 
-Now, verify your pod is running ``kubectl get pod -n test``. Once you have verified the pod is running, you'll delete the pod. ``kubectl delete pod testpod -n test``.
+Now, verify your pod is running 
+| ``kubectl get pod -n test`` 
+| Once you have verified the pod is running, you'll delete the pod. 
+| ``kubectl delete pod testpod -n test``
 
 Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indentions are correct, let's 
 review what the manifest file would look like to depoy our Nginx container in a pod called *testpod*.
@@ -126,7 +129,9 @@ We will focus on this line in the returned data:
        imagePullPolicy: IfNotPresent
 
 Arrow your cursor down to the *image* line and press ``i``. This command allows you to edit the file. You'll be changing the tagged version from **1.20** to **1.25**. Once
-this change is made use the vim write and quit command, press ``ESC`` (escape key), ``:wq``.
+this change is made use the vim write and quit command, press:
+|  ``ESC`` (escape key)
+|  ``:wq``
 
 You should see the pod was edited.
 
@@ -190,7 +195,7 @@ Operations - Deployment
        spec:
          containers:
          - name: nginx
-           image: nginx:1.14.2
+           image: nginx:1.20
            ports:
            - containerPort: 80
 
@@ -200,6 +205,10 @@ Operations - Deployment
    kubectl scale --replicas=3 deployment/demo-deployment
 
 - `Kubernetes Deployment <https://kubernetes.io/docs/concepts/workloads/controllers/deployment/>`_
+
+Operations - Ingress
+--------------------
+
 
 Operations - Service
 --------------------
@@ -211,5 +220,3 @@ Operations - Service
 
 - `Kubernetes Service <https://kubernetes.io/docs/concepts/services-networking/service/>`_
 
-Operations - Ingress
---------------------
