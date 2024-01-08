@@ -5,9 +5,13 @@ Kubernetes - Operations
    :align: center
 
 
-Now that we've covered the core components of Kubernetes, it's time to put it into operation. In this module you'll create Pods, Deployments, and Services. The image above depicts how 
+Now that we've covered the core components of Kubernetes, it's time to put it into operations. In this module you'll create Pods, Deployments, and Services. The image above depicts how 
 we tie all these components together. When Kubernetes gets the run command, it will first look to see if the image is held locally on the cache by Kubelet. If there is not a local image, Kubelet 
-will *pull* the image from a container registry. Let's jump into the operational items that make Kubernetes run.
+will *pull* the image from a container registry. You have already created a namespace *test* and this will isolate resources. Kubernetes will create and assign the pods, while 
+the Kublet will get image and stand up the container. Kubernetes, through the deployment manifest, watches all the pods tagged with labels matching the tags. Then, Kubernetes
+will expose the deployment through the service manifest. This happens the same way, through matching label tags.
+
+Let's jump into the operational items that make Kubernetes run.
 
 Operations - Container registry
 -------------------------------
@@ -46,7 +50,7 @@ Once you have verified the pod is running, you'll delete the pod:
 Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indention's are correct, let's 
 review what the manifest file would look like to deploy our Nginx container in a pod called *testpod*.
 
-.. note:: YAML is can be very fussy on indentation, please pay close attention
+.. note:: YAML is can be very fussy on indentation, please pay **close attention** to your indentation
 
 .. code-block:: yaml
    :caption: Pod Manifest 
@@ -88,12 +92,15 @@ very useful to save in typing and for those of you continuing on and take the Ce
 
    kubectl api-resources
 
+|
+
 Now, back to creating pods. You can use the *dry-run=client* feature to have Kubernetes write the manifest for you. This process allows you run your Kubernetes command without submitting it to the cluster.
 
 .. code-block:: bash
    :caption: Pod Dry Run
 
    kubectl run testpod --image=nginx:1.21 --port 80 -n test --dry-run=client -o yaml
+|
 
 Notice the *-o* output flag. You can also ask Kubernetes to output *json* format as well. You can also direct the output to a file by using ``>``. An example would be ``kubectl run dryrun --image=nginx --dry-run=client -o yaml > testpod.yaml``. Let's
 try it out.
@@ -155,7 +162,7 @@ Now to verify the updated pod we'll use the describe command.
 
    kubectl describe pod testpod -n test
 
-Output from describe should look like the below. Showing Kubelet pulled the container image, created and started the container.
+Output from describe should look like the below. Showing Kubernetes, along with Kubelet, have terminated the existing container version 1.21 and pulled the container image, created and started the container.
 
 .. code-block:: bash
    :emphasize-lines: 7-10
@@ -199,8 +206,17 @@ You should see the deployment has run from the below sample returned output:
    NAME         READY   UP-TO-DATE   AVAILABLE   AGE
    lab-deploy   3/3     3            3           10s
 
+Now you'll delete the deployment
+
+.. code-block:: bash
+   :caption: Delete Deployment
+
+   kubectl delete deploy lab-deploy -n test
+
 For this section you'll be doing some of the exact steps we did for Pod's section. We'll cover some important parts of the manifest file that enable the deployment to build 
 containers for the deployment.
+
+This is an example deployment manifest to explain directives.
 
 .. code-block:: bash
    :caption: Sample Deployment Manifest 
@@ -240,6 +256,8 @@ containers for the deployment.
 
    kubectl create deployment lab-deploy --image=nginx:1.22 --replicas=3 -n test --dry-run=client -o yaml > lab-deploy.yaml
 
+.. note:: You can use the command ``cat lab-deploy.yaml`` to view the manifest file
+
 As you've done a previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
 command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work it's magic.
 
@@ -249,7 +267,8 @@ command to not submit the command to Kubernetes and output it to file. Now that 
    kubectl apply -f lab-deploy.yaml
 
 You should now see you deployment has been created.
-| ``deployment.apps/lab-deploy created``
+
+``deployment.apps/lab-deploy created``
 
 Kubernetes has become so popular because of it's many features in how it can run workloads and be customized. One of these impressive features is *scaling*. Scaling allows 
 you to increase or decrease pod counts. You can even set scaling to occur during resource consumption. When configuring scaling to happen based on consumption (or lack of), this
@@ -259,7 +278,48 @@ is called *auto-scaling*. In this lab, we will focus on manually scaling resourc
 .. code-block:: bash
    :caption: Scale
 
-   kubectl scale --replicas=3 deploy/lab-deploy -n test
+   kubectl scale --replicas=5 deploy/lab-deploy -n test
+
+You should now see the deployment scale up
+
+``deployment.apps/lab-deploy scaled``
+
+.. code-block:: bash
+   :caption: Describe Deployment
+   :emphasize-lines: 32
+
+   lab@k3s-leader:~$ kubectl describe deploy/lab-deploy -n test
+   Name:                   lab-deploy
+   Namespace:              test
+   CreationTimestamp:      Sun, 07 Jan 2024 19:26:55 -0500
+   Labels:                 app=lab-deploy
+   Annotations:            deployment.kubernetes.io/revision: 1
+   Selector:               app=lab-deploy
+   Replicas:               5 desired | 5 updated | 5 total | 5 available | 0 unavailable
+   StrategyType:           RollingUpdate
+   MinReadySeconds:        0
+   RollingUpdateStrategy:  25% max unavailable, 25% max surge
+   Pod Template:
+     Labels:  app=lab-deploy
+     Containers:
+      nginx:
+       Image:        nginx:1.22
+       Port:         <none>
+       Host Port:    <none>
+       Environment:  <none>
+       Mounts:       <none>
+     Volumes:        <none>
+   Conditions:
+     Type           Status  Reason
+     ----           ------  ------
+     Progressing    True    NewReplicaSetAvailable
+     Available      True    MinimumReplicasAvailable
+   OldReplicaSets:  <none>
+   NewReplicaSet:   lab-deploy-cb697555 (5/5 replicas created)
+   Events:
+     Type    Reason             Age   From                   Message
+     ----    ------             ----  ----                   -------
+     Normal  ScalingReplicaSet  19s   deployment-controller  Scaled up replica set lab-deploy-cb697555 to 5 from 3
 
 Official Documentation
 
@@ -280,19 +340,23 @@ Operations - Service
 
    kubectl expose deployment lab-deploy --type=NodePort --port=80 --target-port=80 --name=lab-deploy-svc --selector=app=lab-deploy -n test
 
+In the above command, you are telling Kubernetes to expose the deployment (lab-deploy) as a NodePort service. NodePort means that the TCP or UDP port 
+will open on all nodes. The default ports are 30000-32767. You can alter this default or even specify the port you'd like.
 
-NodePort 
+To test out our service, you'll need to find what NodePort port was enabled with the *describe* command.
 
 .. code-block:: bash
    :caption: Describe Service
 
    kubectl describe deploy lab-deploy -n test
 
+Describe deployment output:
+
 .. code-block:: bash
    :caption: Output
    :emphasize-lines: 6,14, 15
 
-   lab@k3s-leader:~$ k describe svc lab-deploy-svc -n test
+   lab@k3s-leader:~$ kubectl describe service lab-deploy-svc -n test
    Name:                     lab-deploy-svc
    Namespace:                test
    Labels:                   app=lab-deploy
@@ -310,6 +374,15 @@ NodePort
    Session Affinity:         None
    External Traffic Policy:  Cluster
    Events:                   <none>
+
+This is an example, you'll have to insert your NodePort port from your describe command.
+
+.. code-block:: bash
+   :caption: Curl
+
+   curl http://10.1.1.6:31612
+
+
 
 Official Documentation
 
