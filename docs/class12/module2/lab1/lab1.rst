@@ -382,7 +382,16 @@ This is an example, you'll have to insert your NodePort port from your describe 
 
    curl http://10.1.1.6:31612
 
+From inside the cluster, the new service (thanks to CoreDNS) will have an A record entry. The format for the fqdn entry is:
 
+- service name
+- namespace
+- svc (for service)
+- cluster.local
+
+*lab-deploy-svc.test.svc.cluster.local*
+
+We'll look at this in the next lab for troubleshooting.
 
 Official Documentation
 
