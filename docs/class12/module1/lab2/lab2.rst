@@ -85,7 +85,8 @@ Custom Resource
 ---------------
 
 As the name implies, custom resources are objects you can build to extend capabilities in Kubernetes. You can create new resources that don't exist in the default
-Kubernetes installation or even combine existing objects so they can be deployed at the same time. Throughout this course you'll be interacting with the Kubernetes 
+Kubernetes installation or even combine existing objects so they can be deployed at the same time. Imagine creating a custom Kubernetes API that could deploy your application
+and expose it to the world in one manifest. That's what a CRD allows you to do. Throughout this course you'll be interacting with the Kubernetes 
 API when we check on nodes, pods, namespaces etc. 
 
 How you define the custom resource is by a Custom Resource Definition(CRD). This CRD will create a new RESTful endpoint that will be able to be utilized on either 
@@ -139,7 +140,7 @@ manifest files meet the defined specification to be deployed on the Kubernetes s
 Resource Definitions describe them is valuable knowledge. This capability allows you and companies like F5 to greatly extend functions and capabilities of your cluster or products made to interact with 
 applications. 
 
-This particular CRD allows users of the VirtualServer resource to fully utilize Nginx capabilities that are not available in a standard ingress manifest or would require service mesh 
+This particular CRD allows users of the VirtualServer resource to fully utilize Nginx capabilities that are not available in a standard ingress manifest or would require higher level 
 capabilities.
 
 Manifest
@@ -407,7 +408,7 @@ One very important concept we will cover here is the service type. This type det
 Container Network Interface
 ---------------------------
 
-We won't be talking a lot about CNI's in this lab but we do need to at least address it. CNI's focus on the connectivity, or removal of, of container networks. The container runtime calls the 
+We won't be talking a lot about CNI's in this lab but we do need to at least address it. CNI's focus on the connectivity, or removal of, container networks. The container runtime calls the 
 installed CNI to add or delete a network interface for the container/pod. The CNI has sole responsibility of building the container network.
 
 Two CNI's you'll probably see or hear about most often:
