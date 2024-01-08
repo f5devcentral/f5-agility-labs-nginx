@@ -16,8 +16,7 @@ Let's jump into the operational items that make Kubernetes run.
 Operations - Container registry
 -------------------------------
 
-We'll briefly talk about *container registries*. A container registry is a storage area for storing container images. Most commonly used id Docker Hub, as we have used that registry
-during this class. When you return to your jobs however, your company will most likely use a private container registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
+We'll briefly talk about *container registries*. A container registry is a storage area for storing container and the most commonly used is Docker Hub which we use for the registry during this class. When you return to your jobs however, your company will most likely use a private container registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
 with some access controls. In Kubernetes this is done with a *docker-registry* secret. A secret is another Kubernetes object used for storing sensitive information.
 
 In this class, you'll not have to set any of this up.
@@ -205,6 +204,28 @@ You should see the deployment has run from the below sample returned output:
    lab@k3s-leader:~$ kubectl get deploy lab-deploy -n test
    NAME         READY   UP-TO-DATE   AVAILABLE   AGE
    lab-deploy   3/3     3            3           10s
+
+Let's validate your deployment, your output should match the above.
+
+.. code-block:: bash
+   :caption: Get Deployment
+
+   kubectl get deploy lab-deploy -n test 
+
+Now you'll describe the deployment, take note of the lines showing **Selector** info (what pods will be in the deployment), **Replicas** how many pods are desired to 
+be up and running.
+
+.. code-block:: 
+
+   Selector:               app=lab-deploy
+   Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+
+Please describe your deployment 
+
+.. code-block:: bash
+   :caption: Describe Deployment
+
+   kubectl describe deploy lab-deploy -n test 
 
 Now you'll delete the deployment
 
