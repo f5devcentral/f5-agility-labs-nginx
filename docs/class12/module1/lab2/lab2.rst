@@ -37,7 +37,7 @@ Let's view the nodes attached to our cluster by connecting to the Jumphost from 
 From the web shell you will ssh into the leader node:
 
 | ``ssh lab@10.1.1.5``
-| password: ``f5AppW0rld!``
+| password: ``f5Appw0rld!``
 
 
 .. code-block:: bash 
