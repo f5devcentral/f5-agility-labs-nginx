@@ -33,10 +33,15 @@ You'll create a new pod using the Kubernetes imperative command shown below. Whe
    kubectl run testpod --image=nginx:1.21 -n test
 
 
-Now, verify your pod is running 
-| ``kubectl get pod -n test`` 
-| Once you have verified the pod is running, you'll delete the pod. 
-| ``kubectl delete pod testpod -n test``
+Now, verify your pod is running:
+
+-  ``kubectl get pod -n test`` 
+
+Once you have verified the pod is running, you'll delete the pod:
+
+-  ``kubectl delete pod testpod -n test``
+
+|
 
 Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indention's are correct, let's 
 review what the manifest file would look like to deploy our Nginx container in a pod called *testpod*.
@@ -206,16 +211,16 @@ containers for the deployment.
      name: lab-deploy
      namespace: test
      labels:
-       app: nginx
+       app: lab-deploy
    spec:
      replicas: 3
      selector:
        matchLabels:
-         app: nginx
+         app: lab-deploy
      template:
        metadata:
          labels:
-           app: nginx
+           app: lab-deploy
        spec:
          containers:
          - name: nginx
@@ -223,12 +228,12 @@ containers for the deployment.
            ports:
            - containerPort: 80
 
-| **labels**
-| **spec**
+| **labels** this sets the label for the deployment. Labels make searching faster and easier
+| **spec** specification that contains other manifest resources. Here the spec directive is defining the deployment with pod count and container images
 
-- **replicas**
-- **selector**
-- **template**
+- **replicas** specifies how many pods are expected to be running
+- **selector** looks for matching labels will become part of the deployment
+- **template** sets the build for the containers that are to become part of the deployment; sets labels, container image and ports
 
 .. code-block:: bash
    :caption: Deployment Manifest
@@ -265,6 +270,7 @@ Operations - Ingress
 
 Official Documentation
 
+- `Kubernetes Ingress <https://kubernetes.io/docs/concepts/services-networking/ingress/>`_
 
 Operations - Service
 --------------------
@@ -272,7 +278,38 @@ Operations - Service
 .. code-block:: bash
    :caption: Service
 
-   kubectl expose deployment <deployment_name> --type=ClusterIP --port=8080 --target-port=80 --name=nginx-clusterip-svc
+   kubectl expose deployment lab-deploy --type=NodePort --port=80 --target-port=80 --name=lab-deploy-svc --selector=app=lab-deploy -n test
+
+
+NodePort 
+
+.. code-block:: bash
+   :caption: Describe Service
+
+   kubectl describe deploy lab-deploy -n test
+
+.. code-block:: bash
+   :caption: Output
+   :emphasize-lines: 6,14, 15
+
+   lab@k3s-leader:~$ k describe svc lab-deploy-svc -n test
+   Name:                     lab-deploy-svc
+   Namespace:                test
+   Labels:                   app=lab-deploy
+   Annotations:              <none>
+   Selector:                 app=lab-deploy
+   Type:                     NodePort
+   IP Family Policy:         SingleStack
+   IP Families:              IPv4
+   IP:                       10.43.171.70
+   IPs:                      10.43.171.70
+   Port:                     <unset>  80/TCP
+   TargetPort:               80/TCP
+   NodePort:                 <unset>  31612/TCP
+   Endpoints:                10.42.3.124:80,10.42.4.63:80,10.42.5.173:80
+   Session Affinity:         None
+   External Traffic Policy:  Cluster
+   Events:                   <none>
 
 Official Documentation
 
