@@ -1,4 +1,4 @@
-Lab 2 (OPTIONAL): Made new code commit, push changes using command line tools, and deploy
+Lab 2 (OPTIONAL): Make new code commit, push changes using command line tools, and deploy
 =========================================================================================
 
 In this task, we will run through a similar process achieving similar results executing commands in a bash shell.
