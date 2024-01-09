@@ -6,12 +6,13 @@ Launch HTTP Flood Attack
 
 We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apache Benchmark.
 
-1. Open WebShell to the 'Attacker VM' (UDF > Components > Systems > Attacker > Access > Web Shell)
+1. Open WebShell to the **Attack Traffic Generator** VM (UDF > Components > Systems > Attack Traffic Generator > Access > Web Shell)
 2. Launch L7 DOS attacks.
 
-   ``cd /scripts``
-   
-   ``./http1flood.sh``
+.. code:: bash
+
+  /scripts/http1flood.sh
+
 
 You will notice that a good traffic script reports that service is unavailable
 
@@ -59,7 +60,7 @@ We will demonstrate a Slow POST attack using slowhttptest tool.
 
 Slow POST attack: Slowing down the HTTP message body, making the server wait until all content arrives according to the Content-Length header; or until the final CRLF arrives.
 
-1. Open WebShell into "Attack Traffic Generator (10.1.1.16)" VM (UDF > Components > Systems > Attacker > Access > WebShell)
+1. Open WebShell into "Attack Traffic Generator (10.1.1.16)" VM (UDF > Components > Systems > Attack Traffic Generator > Access > WebShell)
 
 2. Launch Slow POST Attack
 !!!!!Make sure previous attack ended before launching Attack (**Wait for the vertical black line in ELK graphs**)

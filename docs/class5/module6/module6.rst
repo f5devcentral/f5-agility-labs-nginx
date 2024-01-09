@@ -8,8 +8,8 @@ Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected applicat
 -----------------------------------------------------------------------------------
 
 Generate legitimate traffic 
-   1. In UDF, Click on Access for the **legitimate traffic** VM and select WebShell (or ssh into the box if you set that up)
-   2. We will utilize the good.sh bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
+   1. In UDF, Click on Access for the **Legitimate Traffic Generator** VM and select WebShell (or ssh into the box if you set that up)
+   2. We will utilize the **good.sh** bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
 
 .. code-block:: bash 
    :caption: /good.sh
@@ -39,21 +39,27 @@ Generate legitimate traffic
 
 3. Run the good traffic shell script and keep it running:
 
-``./good.sh``
-    
+.. code-block:: bash
+
+   /good.sh
+
+
 Output from the script: 
 
 .. code:: shell 
  
-   JUICESHOP HTTP Code:200 Finished trip with 10 points
+   JUICESHOP HTTP Code:200
+   Finished trip with 10 points
 
-   JUICESHOP HTTP Code:200 Finished trip with 10 points
+   JUICESHOP HTTP Code:200
+   Finished trip with 10 points
 
-   JUICESHOP HTTP Code:200 Finished trip with 10 points 
+   JUICESHOP HTTP Code:200
+   Finished trip with 10 points 
 
 
 Start HTTP/2 Flood attack
-   1. Back in the UDF, click 'Access' on the **Attacker** VM and select WebShell
+   1. Back in the UDF, click 'Access' on the **Attack Traffic Generator** VM and select WebShell
 
 .. code-block:: bash
    :caption: http2flood.sh
@@ -66,13 +72,16 @@ Start HTTP/2 Flood attack
 
 2. Run the http2 flood script for 15 seconds and keep it running:
 
-``./scripts/http2flood.sh``
+.. code-block:: bash
 
-Attack script Output
+   /scripts/http2flood.sh
+
+
+Attack script output:
 
 .. code:: shell 
 
-   finished in 1.07s, 9350.31 req/s, 2.09MB/s
+  finished in 1.07s, 9350.31 req/s, 2.09MB/s
   requests: 10000 total, 10000 started, 10000 done, 0 succeeded, 10000 failed, 0 errored, 0 timeout
   status codes: 0 2xx, 0 3xx, 0 4xx, 10000 5xx
   traffic: 2.23MB (2339000) total, 527.34KB (540000) headers (space savings 45.45%), 1.50MB (1570000) data
@@ -95,7 +104,7 @@ Attack script Output
   progress: 90% done
   progress: 100% done
 
-3. Click back on to the WebShell on the legitimate VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
+3. Click back on to the WebShell on the Legitimate Traffic Generator VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
 
 .. code:: shell
 
@@ -103,5 +112,5 @@ Attack script Output
         details = "Received http2 header with status: 502"
         debug_error_string = "{"created":"@1650395963.222837020","description":"Received http2 :status header with non-200 OK status","file":"src/core/ext/filters/http/client/http_client_filter.cc","file_line":134,"grpc_message":"Received http2 header with status: 502","grpc_status":14,"value":"502"}"
 
-4. Stop the HTTP2Flood attack running on the Attacker host by pressing CTRL+C
-5. On the legitimate traffic WebShell, press CTRL+C to exit the script
+4. Stop the HTTP2Flood attack running on the Attack Traffic Generator host by pressing CTRL+C
+5. On the Legitimate Traffic Generator WebShell, press CTRL+C to exit the script

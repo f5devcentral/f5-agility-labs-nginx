@@ -7,13 +7,13 @@ It builds baselines for what traffic should look like and identifies anomalies w
 Establish Baseline
 ------------------
 
-1. Open WebShell to the 'legitimate traffic VM' (UDF > Components > Systems > legitimate traffic > Access > Web Shell)
+1. Open WebShell to the **Legitimate Traffic Generator** VM (UDF > Components > Systems > Legitimate Traffic Generator > Access > Web Shell)
 
 2. Run the good traffic script
 
-.. code:: shell
+.. code:: bash
 
-    ./good.sh 
+    /good.sh 
 
 3. Allow good traffic to run for 10 to 20 minutes 
 
