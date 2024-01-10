@@ -1,10 +1,4 @@
-import os
-import sys
-import time
-import re
-import pkgutil
-import string
-import f5_sphinx_theme
+
 
 # -*- coding: utf-8 -*-
 #
@@ -13,7 +7,7 @@ import f5_sphinx_theme
 # ------------
 #
 # REQUIRED: Your class/lab name
-classname = "F5 Agility Template"
+classname = "NGINX"
 
 # OPTIONAL: The URL to the GitHub Repository for this class
 github_repo = "https://github.com/f5devcentral/f5-agility-labs-template"
@@ -22,10 +16,17 @@ github_repo = "https://github.com/f5devcentral/f5-agility-labs-template"
 # END CONFIG
 # ----------
 
+import os
+import sys
+import time
+import re
+import pkgutil
+import string
 sys.path.insert(0, os.path.abspath("."))
+import f5_sphinx_theme
 
 year = time.strftime("%Y")
-eventname = "Agility %s Hands-on Lab Guide" % (year)
+eventname = "Appworld %s Hands-on Lab Guide" % (year)
 
 rst_prolog = """
 .. |classname| replace:: %s
@@ -70,6 +71,34 @@ if "github_repo" in locals() and len(github_repo) > 0:
     )
 else:
     rst_prolog += ".. |repoinfo| replace:: \\n"
+
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+on_snops = os.environ.get('SNOPS_ISALIVE', None) == 'True'
+
+print("on_rtd = %s" % on_rtd)
+print("on_snops = %s" % on_snops)
+
+branch_map = {
+    "stable":"master",
+    "latest":"master"
+}
+
+try:
+    if not on_rtd:
+        from git import Repo
+        repo = Repo("%s/../" % os.getcwd())
+        git_branch = repo.active_branch
+        git_branch_name = git_branch.name
+    else:
+        git_branch_name = os.environ.get('READTHEDOCS_VERSION', None)
+except:
+    git_branch_name = 'master'
+
+print("guessed git branch: %s" % git_branch_name)
+
+if git_branch_name in branch_map:
+    git_branch_name = branch_map[git_branch_name]
+    print(" remapped to git branch: %s" % git_branch_name)
 
 # -- General configuration ------------------------------------------------
 

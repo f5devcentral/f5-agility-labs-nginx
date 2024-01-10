@@ -1,7 +1,7 @@
-F5 Agility Labs - Index
-=======================
+F5 Appworld Labs - Index
+========================
 
-Welcome to the |classbold| lab at F5 Agility |year|
+Welcome to the |classbold| lab at F5 Appworld |year|
 
 |repoinfo|
 
