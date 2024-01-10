@@ -1,7 +1,10 @@
 Bonus lab
 =========
+For this lab, you want to run a split screen of the Jumphost web shell and the Leader node web shell. To access the Leader node shell
 
-On the Leader Node web shell you'll monitor the *test* namespace for events (in real time)
+.. image:: images/leader-node-shell.png
+
+On the Leader node web shell you'll monitor the *test* namespace for events (in real time)
 
 .. code-block:: bash
    :caption: Events
