@@ -9,7 +9,7 @@ from the host. Containers can allow you to build and move applications nearly an
 this allows you to maintain different environments (dev, qa, production) and have full application functionality.
 
 *Kubernetes* originates from Greek, meaning pilot or helmsman. It's an open source platform used in managing containerized workloads and services. Kubernetes
-is an *orchestration* tool ensuring containerized workloads are available and scalable. And since it's power is in orchestration this relieves admins from the burden
+is an *orchestration* tool ensuring containerized workloads are available and scalable. And since its power is in orchestration this relieves admins from the burden
 of many manual processes to keep applications available and push updates.
 
 What Kubernetes is **NOT**:
