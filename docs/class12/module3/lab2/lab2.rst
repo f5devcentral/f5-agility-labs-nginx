@@ -4,6 +4,10 @@ For this lab, you want to run a split screen of the Jumphost web shell and the L
 
 .. image:: images/leader-node-shell.png
 
+Once the leader node shell comes up, it will be on user *root*. Please run the command ``su lab`` to switch to the *lab* user.
+
+.. image:: images/split-screen.png
+
 On the Leader node web shell you'll monitor the *test* namespace for events (in real time)
 
 .. code-block:: bash
