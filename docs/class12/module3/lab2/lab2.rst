@@ -1,7 +1,7 @@
 Bonus lab
 =========
 
-On the Leader Node web shell you'll monitor the *test* namespace for events (in realtime)
+On the Leader Node web shell you'll monitor the *test* namespace for events (in real time)
 
 .. code-block:: bash
    :caption: Events
@@ -164,7 +164,7 @@ Staying on the Jumphost, you'll now rollback to revision 1 which was our **nginx
    kubectl rollout undo deploy/roller-deploy -n test --to-revision=1
 
 Once this command runs you should observer in the Leader node shell (if you have not stopped the watch command), the same process of Kubernetes turning up a new pod and container
-with the new image and then terminating the old one. You should now see the revsion history increment to 3.
+with the new image and then terminating the old one. You should now see the revision history increment to 3.
 
 .. code-block:: bash
    :caption: Rollout History
