@@ -293,6 +293,8 @@ From the web shell execute these commands individually:
 
 We have created a new namespace and asked Kubernetes to run a pod named *bbox* with the container busybox inside the test namespace.
 
+.. note:: You may have to run this command a few times as Kubernetes gets the pod to start 
+   
 .. code-block:: bash
    :caption: Get Pods
 
@@ -362,6 +364,14 @@ with cluster resources.
 | **AVAILABLE** Number of replicas available (1)
 | **AGE** amount of time the application has been running 
 
+Let's see all the deployments in the *kube-system* namespace 
+
+.. code-block:: bash
+   :caption: Deployments
+
+   kubectl get deployments -n kube-system
+
+
 In the next module we will use the edit command to view more components of a deployment. 
 
 
@@ -404,6 +414,14 @@ One very important concept we will cover here is the service type. This type det
 - ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster this way. Usually used with an ingress controller
 - Load balancer - exposes application externally via load balancer using cloud service provider constructs(i.e. AWS NLB, Azure ALB, Google NLB)
 - NodePort - exposes applications on each node on a specified port. Keep in mind even if a pod does not exist on the node, the port is still open.
+
+Let's see all the services in the *kube-system* namespace 
+
+.. code-block:: bash
+   :caption: Services
+
+   kubectl get services -n kube-system
+
 
 Container Network Interface
 ---------------------------
