@@ -177,12 +177,7 @@ Output from describe should look like the below. Showing Kubernetes, along with 
     Normal  Created    98s (x2 over 6m47s)  kubelet            Created container testpod
     Normal  Started    97s (x2 over 6m47s)  kubelet            Started container testpod
 
-Before moving on the next section, we'll delete the running pod.
-
-.. code-block:: bash
-   :caption: Delete Pod
-
-   kubectl delete pod testpod -n test
+This concludes the pod section.
 
 Official Documentation
 

@@ -87,7 +87,24 @@ You can connect to the shell of a running pod by using the below command.
 .. code-block:: bash 
    :caption: Shell Single Container
 
-   kubectl exec -it <pod_name> -n <namespace> -- /bin/bash
+   kubectl exec -it testpod -n test -- /bin/bash
+
+You should now see a prompt:
+
+.. code-block:: bash
+   :caption: Bash
+   :emphasize-lines: 2
+
+   lab@k3s-leader:~$ kubectl exec -it testpod -n test -- /bin/bash
+   root@testpod:/#
+
+
+Feel free to run some Linux commands such as
+
+- pwd
+- ls -la
+
+To exit the shell, type **exit**
 
 Example for multi-container pod:
 
