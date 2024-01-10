@@ -1,7 +1,7 @@
-F5 Appworld Labs - Index
-========================
+NGINX AppWorld Labs - Index
+===========================
 
-Welcome to the |classbold| lab at F5 Appworld |year|
+Welcome to the |classbold| labs at AppWorld |year|
 
 |repoinfo|
 
@@ -21,4 +21,5 @@ Welcome to the |classbold| lab at F5 Appworld |year|
    class9/class*
    class10/class*
    class11/class*
+   class12/class*
 

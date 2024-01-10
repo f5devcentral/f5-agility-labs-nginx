@@ -1,5 +1,5 @@
-Class3 - NGINX Dataplane Scripting
-==================================
+Class 3 - NGINX Dataplane Scripting
+===================================
 
 This class will introduce the student to customizing NGINX using NGINX JavaScript (njs)
 

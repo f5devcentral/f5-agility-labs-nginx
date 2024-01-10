@@ -19,16 +19,16 @@ GitLab:
    variables <https://docs.gitlab.com/ee/ci/variables/#custom-environment-variables>`__:
    When your use case requires a specific custom variable, you
    can \ `set them up quickly from the
-   UI <https://docs.gitlab.com/ee/ci/variables/#creating-a-custom-environment-variable>`__ or
+   UI <https://docs.gitlab.com/ee/ci/variables/#define-a-cicd-variable-in-the-ui>`__ or
    directly in the ``.gitlab-ci.yml`` file and reuse them as you wish.
    There are two variable types:
 
    -  `Variable
-      type <https://docs.gitlab.com/ee/ci/variables/#variable-type>`__:
+      type <https://docs.gitlab.com/ee/ci/variables/#use-file-type-cicd-variables>`__:
       The Runner will create an environment variable named the same as
       the variable key and set its value to the variable value.
    -  `File
-      type <https://docs.gitlab.com/ee/ci/variables/#file-type>`__: The
+      type <hhttps://docs.gitlab.com/ee/ci/variables/#use-file-type-cicd-variables>`__: The
       Runner will write the variable value to a temporary file and set
       the path to this file as the value of an environment variable,
       named the same as the variable key
