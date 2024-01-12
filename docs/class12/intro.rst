@@ -24,7 +24,7 @@ What Kubernetes **IS**:
  - Enables *cloud native* application design
 
 The evolution off applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
-is not always the answer. There are, however, some definate advantages to a container based evnironment. In the *Container Deployment* image you can see we are no longer
+is not always the answer. There are, however, some definite advantages to a container based environment. In the *Container Deployment* image you can see we are no longer
 bound to the operating system, you can set resource limits per container and application dependencies are all built with the container image. Since the container houses
 the application and its dependencies, this allows for easier upgrades and security fixes to your application.
 
