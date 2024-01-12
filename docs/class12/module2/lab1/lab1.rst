@@ -101,7 +101,7 @@ Now, back to creating pods. You can use the *dry-run=client* feature to have Kub
    kubectl run testpod --image=nginx:1.21 --port 80 -n test --dry-run=client -o yaml
 |
 
-Notice the *-o* output flag. You can also ask Kubernetes to output *json* format as well. You can also direct the output to a file by using ``>``. An example would be ``kubectl run dryrun --image=nginx --dry-run=client -o yaml > testpod.yaml``. Let's
+Notice the *-o* output flag. You can also ask Kubernetes to output *json* format as well. You can also direct the output to a file by using ``>``. An example would be ``kubectl run testpod --image=nginx --dry-run=client -o yaml > testpod.yaml``. Let's
 try it out.
 
 Now that your manifest file is ready, time to apply it to Kubernetes.
