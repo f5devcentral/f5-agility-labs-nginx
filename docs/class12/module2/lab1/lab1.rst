@@ -81,7 +81,7 @@ Let's explain the directives from above.
 
 |
 
-A helpful resource to check for this lab is the *api-resource*. Here you can see object type (kind), what it's *shortname* is and the *apiVersion* associated. The shortname is 
+A helpful resource to check for this lab is the *api-resource*. Here you can see object type (kind), what its *shortname* is and the *apiVersion* associated. The shortname is 
 very useful to save in typing and for those of you continuing on and take the Certified Kubernetes Administrator (CKA) certification. 
 
 |
@@ -275,7 +275,7 @@ This is an example deployment manifest to explain directives.
 .. note:: You can use the command ``cat lab-deploy.yaml`` to view the manifest file
 
 As you've done a previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
-command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work it's magic.
+command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work its magic.
 
 .. code-block:: bash
    :caption: Deploy
@@ -286,7 +286,7 @@ You should now see you deployment has been created.
 
 ``deployment.apps/lab-deploy created``
 
-Kubernetes has become so popular because of it's many features in how it can run workloads and be customized. One of these impressive features is *scaling*. Scaling allows 
+Kubernetes has become so popular because of its many features in how it can run workloads and be customized. One of these impressive features is *scaling*. Scaling allows 
 you to increase or decrease pod counts. You can even set scaling to occur during resource consumption. When configuring scaling to happen based on consumption (or lack of), this
 is called *auto-scaling*. In this lab, we will focus on manually scaling resources in the deployment. To do this, we will adjust the number of *replicas* specified in the manifest.
 
