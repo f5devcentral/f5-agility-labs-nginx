@@ -23,7 +23,9 @@ What Kubernetes **IS**:
  - Ideal for microservices 
  - Enables *cloud native* application design
 
-The evolution off applications from 
+The evolution off applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
+is not always the answer. There are, however, some definate advantages to a container based evnironment. In the *Container Deployment* image you can see we are no longer
+bound to the operating system, you can set resource limits per container and application dependencies are all built with the container image. 
 
 .. image:: images/container_evo.png
    :width: 800
