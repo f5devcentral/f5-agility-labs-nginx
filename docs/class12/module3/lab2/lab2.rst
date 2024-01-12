@@ -140,7 +140,7 @@ Output observed on the Leader node shell after image update:
    roller-deploy-5c754bcfb8-cv48x   0/1     Terminating         0          30m
 
 From the above output you can see the original 3 nodes were running. Once you set a new image Kubernetes went to work creating a new pod, assigning the pod to a node and 
-letting Kubelet do it's job. Once the new pod/container are running, Kubernetes now begins to terminate one of the older pods running the old version of **nginx:1.20**.
+letting Kubelet do its job. Once the new pod/container are running, Kubernetes now begins to terminate one of the older pods running the old version of **nginx:1.20**.
 This is because we specified 3 replicas in our deployment. Kubernetes will continue this very process until 3 new pods with new container images are running, and our
 3 old versions are terminated.
 
