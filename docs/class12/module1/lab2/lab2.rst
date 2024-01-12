@@ -438,3 +438,20 @@ Additional information:
 
 - `Container Networking <https://github.com/containernetworking/cni>`_
 - `Learn Calico <https://academy.tigera.io/course/certified-calico-operator-level-1/>`_
+
+
+Ingress & Ingress Controller
+-----------------------------
+
+An Ingress controller is a specialized load balancer for Kubernetes (and other containerized) environments. An Ingress controller abstracts away the complexity 
+of Kubernetes application traffic routing and provides a bridge between Kubernetes services and external ones. Ingress controllers can handle TLS offload, load balancing
+to pods inside the cluster and with Nginx Plus ingress controller you can even run a web application firewall.
+
+We will not cover ingress controllers in the course as there is already a specialized class for Nginx Ingress Controller. Having said that, an ingress controller still 
+needs pods and a service to expose it. 
+
+
+
+Official Documentation
+
+- `Kubernetes Ingress <https://kubernetes.io/docs/concepts/services-networking/ingress/>`_
