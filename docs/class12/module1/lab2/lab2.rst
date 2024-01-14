@@ -24,7 +24,8 @@ matching the requirements of the pod, the pod will remain in an *unscheduled* st
 
 The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as *Docker* or *containerd*
 so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kubelet is responsible for pulling container 
-images, allows control plane to monitor the node, and ensures containers are healthy and running. 
+images, allows control plane to monitor the node, and ensures containers are healthy and running. *Kube-proxy* is a network agent installed on every node and provides network 
+forwarding to backend services. 
 
 .. note:: Keep in mind that in a dev environment, your leader node may also be your worker node (not a production practice).
 
