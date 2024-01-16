@@ -14,7 +14,7 @@ Table of Contents
 - [Generating Attacks](#generating-attacks)
 
 Available Dashboards
-====================
+--------------------
 
 Main Dashboard
 
