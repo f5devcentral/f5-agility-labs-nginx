@@ -9,7 +9,7 @@ from the host. Containers can allow you to build and move applications nearly an
 this allows you to maintain different environments (dev, qa, production) and have full application functionality.
 
 *Kubernetes* originates from Greek, meaning pilot or helmsman. It's an open source platform used in managing containerized workloads and services. Kubernetes
-is an *orchestration* tool ensuring containerized workloads are available and scalable. And since it's power is in orchestration this relieves admins from the burden
+is an *orchestration* tool ensuring containerized workloads are available and scalable. And since its power is in orchestration this relieves admins from the burden
 of many manual processes to keep applications available and push updates.
 
 What Kubernetes is **NOT**:
@@ -23,7 +23,10 @@ What Kubernetes **IS**:
  - Ideal for microservices 
  - Enables *cloud native* application design
 
-The evolution off applications from 
+The evolution off applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
+is not always the answer. There are, however, some definite advantages to a container based environment. In the *Container Deployment* image you can see we are no longer
+bound to the operating system, you can set resource limits per container and application dependencies are all built with the container image. Since the container houses
+the application and its dependencies, this allows for easier upgrades and security fixes to your application.
 
 .. image:: images/container_evo.png
    :width: 800

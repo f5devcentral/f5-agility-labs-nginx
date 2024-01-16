@@ -1,7 +1,7 @@
 Container Components
 ====================
 
-Containers are a lightweight, executable software package containing all the necessary code and it's dependencies to run as a process on a host. Traditionally, applications
+Containers are a lightweight, executable software package containing all the necessary code and its dependencies to run as a process on a host. Traditionally, applications
 were run from bare metal or virtual machines atop an operating system. This meant that multiple applications could compete for resources and any changes to the operating system
 could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS, then test. Next 
 upgrade the web server language dependencies, then test. Finally the application code could be upgraded and user acceptance testing could begin.
@@ -81,7 +81,7 @@ showing more specific version of the container build. You'll often hear this ref
 Once the image is built, you can now run the command to list the images. You should see two images listed. This is because podman did not have the Nginx image
 and had to download it first as it was our base. 
 
-.. code::block bash 
+.. code-block:: bash 
    :caption: List Images
 
    podman images
@@ -149,7 +149,7 @@ truncated to the first 12 characters. If you'd like to see the full container id
 .. code-block:: bash
    :caption: Untruncated
 
-   podman ps --no-tunc
+   podman ps --no-trunc
 |
 Now you can use *curl* to test connectivity to our new container. 
 
