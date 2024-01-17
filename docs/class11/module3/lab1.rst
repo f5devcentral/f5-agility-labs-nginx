@@ -7,7 +7,7 @@ Change to the task_02 directory.
 
    cd ../task_02
 
-Create a TLS certificate and key for the httpS://jobs.local/get-job api endpoint we plan to create.
+Create a TLS certificate and key for the https://jobs.local/get-job api endpoint we plan to create.
 
 .. code-block:: bash
 
@@ -29,7 +29,7 @@ Confirm the K8s secret was created.
 
 .. code-block:: bash
 
-   kubectl get secret tls jobs-local-tls -o yaml
+   kubectl get secret jobs-local-tls -o yaml
 
 .. image:: images/03_get_secret.jpg
   :scale: 50%
@@ -40,6 +40,12 @@ All Kubernetes admins are familiar with native K8s resources such as 'pods', 'de
 
    bat VirtualServer.yaml
    k apply -f VirtualServer.yaml
+
+Confirm the status of the virtualserver 'my-virtualserver' you just created.
+
+.. code-block:: bash
+
+   kubectl describe virtualserver my-virtualserver
 
 Our environment now looks like this:
 

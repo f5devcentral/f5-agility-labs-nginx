@@ -3,9 +3,9 @@ Task 06: API Request Rate-Limiting
 
 In order to ensure fair use of our API, we need to protect against a single user crowding out other users.
 
-NGINX Plus can rate-limit the API requests of a single user. The rate-limit policy can be keyed to their "Authentication" header.
+NGINX Plus can rate-limit the API requests of a single user. The rate-limit policy can be keyed to their "Authorization" header.
 
-Open a new terminal tab. We will run an HTTP load test from the jumphost to the ``https://jobs.local/get-job`` API endpoint to confirm the rate-limit policy is working.
+**Open a new terminal tab**. We will run an HTTP load test from the jumphost to the ``https://jobs.local/get-job`` API endpoint to confirm the rate-limit policy is working.
 
 
 .. code-block:: bash
@@ -23,7 +23,7 @@ You should now have two terminal tabs open:
 - [Tab #2] jumphost
 
 
-From jumphost, download the performance test script.
+From jumphost, download the load test script.
 
 .. code-block:: bash
 
@@ -41,10 +41,16 @@ From jumphost, edit the HTTP load test script to include your JWT token in every
 
    micro k6-jobs.js
 
+If you are unfamiliar with the micro text editor:
+
+- Ctrl + V [Win] or Cmd + V [Mac] to Paste
+- Ctrl + S [Win] or Cmd + S [Mac] to Save
+- Ctrl + Q [Win] or Cmd + Q [Mac] to Quit/Exit
+
 .. image:: images/01_k6_jwt.jpg
   :scale: 50%
 
-From jumphost, run the performance test.
+From jumphost, run the http request load test.
 
 .. code-block:: bash
 
@@ -55,7 +61,13 @@ From jumphost, run the performance test.
 
 Note the row reporting *http_reqs*. These are the successfull HTTP requests made by the client.
 
-From microk8s1, create a rate-limit policy. Our rate-limit policy will limit clients to 10 HTTP requests-per-second keyed to the Authorization HTTP header. You can key the rate-limit policy to client IP address, any arbitrary HTTP header, and more.
+From microk8s1, change to the task_06 directory.
+
+.. code-block:: bash
+
+   cd ../task_06
+
+Create a rate-limit policy. Our rate-limit policy will limit clients to 10 HTTP requests-per-second keyed to the Authorization HTTP header. You can key the rate-limit policy to client IP address, any arbitrary HTTP header, and more.
 
 .. code-block:: bash
 
@@ -107,7 +119,13 @@ Modify ``my-virtualserver`` to reference the ``rate-limit`` policy. This has alr
 .. image:: images/05_apply_virtualserver.jpg
   :scale: 50%
 
-From jumphost, run an HTTP request load test with rate-limiting. When the client exceeds the requests per second specified in the rate-limit policy, it will receive a 429 "Too Many Requests" error. Our client is configured to be well behaved and will slow down the rate of requests. Note the ``http_reqs`` recorded under the rate-limit policy will be roughly ~10/s.
+Confirm the status of the virtualserver 'my-virtualserver' you just modified.
+
+.. code-block:: bash
+
+   kubectl describe virtualserver my-virtualserver
+
+From jumphost, run the same HTTP request load test again now that a rate-limiting policy has been applied. When the client exceeds the requests per second specified in the rate-limit policy, it will receive a 429 "Too Many Requests" error. Our client is configured to be well behaved and will slow down the rate of requests. Note the ``http_reqs`` recorded under the rate-limit policy will be roughly ~10/s.
 
 .. code-block:: bash
 

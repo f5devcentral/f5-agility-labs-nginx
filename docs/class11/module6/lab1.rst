@@ -59,7 +59,7 @@ The output of ``create-signed-jwt-sh`` is presented in two formats:
 
 - Authorization Bearer: <base64 encoded string>. This is the value expected in an HTTP "Authorization" header.
 
-- Human redable Base64 decoded Header, Payload, and JWT Signture components.
+- Human redable Base64 decoded Header, Payload, and JWT Signature components.
 
 The public key used to validate the JWT must be converted to a JSON formatted array of JSON Web Keys (JWK). The create-signed-jwt.sh script has prepared this as well.
 
@@ -104,6 +104,12 @@ Apply the modified VirtualServer.yaml.
    bat VirtualServer.yaml
    kubectl apply -f VirtualServer.yaml
 
+Confirm the status of the virtualserver 'my-virtualserver' you just modified.
+
+.. code-block:: bash
+
+   kubectl describe virtualserver my-virtualserver
+
 Copy to the clipboard the value of the "Authorization" header in the output of ``create-signed-jwt.sh``.
 
 .. code-block:: bash
@@ -115,7 +121,7 @@ Copy to the clipboard the value of the "Authorization" header in the output of `
 
 You may have already prepared this step in the previous task. If so, skip these instructions and just create the "Authorization" header as shown in the table and screenshot below.
 
-In the URL bar of the web browser, connect to the ``https://jobs.local/get-job`` API endpoint.
+In the URL bar of the web browser, connect to the ``https://jobs.local`` API endpoint.
 
 - Press [F12] to reveal the Firefox Developer Tools
 - Select 'Network' and 'Response' just like the screenshot below 

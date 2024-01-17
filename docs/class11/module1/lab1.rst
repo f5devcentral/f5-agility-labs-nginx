@@ -27,7 +27,7 @@ With your screen split between left (terminal) and right (web browser) windows, 
 .. image:: images/04_split_screen.jpg
   :scale: 50%
 
-Clone the *nginx-api-gateway-for-k8s repository*.
+Clone the *nginx-api-gateway-for-k8s* repository.
 
 .. code-block:: bash
 
