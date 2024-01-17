@@ -90,11 +90,12 @@ Create a clone of the nginx-openid-connect GitHub repository
 
 .. image:: ../images/ualab_nginxv.png
 
-2. Now that we have the version number we are ready to clone the branch in github. Clone the branch with the command below.
+2. Now that we have the version number we are ready to clone the branch in github. Clone the branch in your home directory with the command 
+below.
 
 .. code:: shell
         
-   git clone --branch R28 https://github.com/nginxinc/nginx-openid-connect.git
+   cd /home/ubuntu && git clone --branch R28 https://github.com/nginxinc/nginx-openid-connect.git
 
 3. Verify the clone has completed by running the follow command.
 
@@ -302,13 +303,17 @@ Testing the config
 
 Now that everything is done lets test the config!
 
-1. Go back to firefox and open a new tab and put http://nginxdemo.f5lab.com:8010 into the browser url field and launch the page.
+1. Clear recent history and cookies from the browser.
+
+.. image:: ../images/clear_cookies.png
+
+2. Go back to firefox and open a new tab and put http://nginxdemo.f5lab.com:8010 into the browser url field and launch the page.
 
 .. image:: ../images/test_oidc.png
 
 Notice you'll be redirected to the IdP for login. 
 
-2. Once on the IdP page put in the credentials for the user you created. user01 with password agility2023
+3. Once on the IdP page put in the credentials for the user you created. user01 with password agility2023
 
 .. image:: ../images/auth_login.png
 

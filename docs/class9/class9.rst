@@ -13,7 +13,9 @@ UDF Lab Maintainers:
 -  Amir Rawdat <`a.rawdat@f5.com <mailto:%3a.rawdat@f5.com>`__>
 
 
-This lab will show how to enable single sign-on (SSO) for applications being proxied by NGINX Plus. The solution uses OpenID Connect as the authentication mechanism, with Keycloak as the identity provider (IdP), and NGINX Plus as the relying party.
+This lab will show how to enable single sign-on (SSO) for applications being proxied by 
+NGINX Plus. The solution uses OpenID Connect as the authentication mechanism, with 
+Keycloak as the identity provider (IdP), and NGINX Plus as the relying party.
 
 
 Expected time to complete: **3 hours**
@@ -34,6 +36,9 @@ Expected time to complete: **3 hours**
    * All work for this lab will be performed exclusively from the UDF Webshell and Firefox Container.
 
    * No installation or interaction with your local system is required.
+
+
+
 
 .. attention::
    * For anyone wishing to take this lab at a later date, the lab is hosted on
