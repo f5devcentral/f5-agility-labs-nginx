@@ -365,7 +365,7 @@ To test out our service, you'll need to find what NodePort port was enabled with
 .. code-block:: bash
    :caption: Describe Service
 
-   kubectl describe deploy lab-deploy -n test
+   kubectl describe service lab-deploy-svc -n test
 
 Describe deployment output:
 

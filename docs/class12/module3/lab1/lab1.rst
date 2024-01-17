@@ -79,7 +79,7 @@ Filter events by *namespace* and resource type.
 .. code-block:: bash 
    :caption: Filter Pod
 
-   kubectl get events -n test ---field-selector involvedObject.kind=Pod
+   kubectl get events -n test --field-selector involvedObject.kind=Pod
 
 Filter events by namespace, resource type, and pod name.
 
