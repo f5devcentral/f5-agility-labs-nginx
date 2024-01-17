@@ -174,8 +174,7 @@ Valid Redirect URIs - http://nginxdemo.f5lab.com:8010/_codexch
 
 .. image:: ../images/client_secret.png
 	
-6. While still under the Agility2023 Clients Page Click the Roles tab, then click the Add Role button in the upper right corner of the page that 
-opens.
+6. While still under the Agility2023 Clients Page Click the Roles tab, then click the Add Role button in the upper right corner of the page that opens.
 
 .. image:: ../images/keycloak_click_role.png
 	
@@ -198,8 +197,7 @@ Creating a user in keycloak
 
 .. image:: ../images/keycloak_cred.png
 	
-5. On the management page for the user (here, user01), click the Role Mappings tab. On the page that opens, select agility2023 on the Client 
-Roles drop‑down menu. Click nginx-keycloak-role in the Available Roles box, then click the Add selected button below the box. The role then appears in the Assigned Roles and Effective Roles boxes, as shown in the screenshot.
+5. On the management page for the user (here, user01), click the Role Mappings tab. On the page that opens, select agility2023 on the Client Roles drop‑down menu. Click nginx-keycloak-role in the Available Roles box, then click the Add selected button below the box. The role then appears in the Assigned Roles and Effective Roles boxes, as shown in the screenshot.
 
 .. image:: ../images/keycloak_role_mappings.png
 
@@ -212,8 +210,7 @@ Please copy and paste the below command into the webshell  **DON'T FORGET TO REP
 
 .. code:: shell
 
-	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k request -i agility2023 -s YOURCLIENTSECRET -x 
-http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
+	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k request -i agility2023 -s YOURCLIENTSECRET -x http://idp.f5lab.com:8080/auth/realms/master/.well-known/openid-configuration
 
 Output:
 

@@ -18,7 +18,7 @@ NGINX Plus. The solution uses OpenID Connect as the authentication mechanism, wi
 Keycloak as the identity provider (IdP), and NGINX Plus as the relying party.
 
 
-Expected time to complete: **1 hour**
+Expected time to complete: **3 hours**
 
 .. toctree::
    :maxdepth: 4
@@ -42,7 +42,5 @@ Expected time to complete: **1 hour**
 
 .. attention::
    * For anyone wishing to take this lab at a later date, the lab is hosted on
-     the F5 UDF Environment, and is called **"UA Nginx Class 9 Agility 2023"**. 
-
-
-Please work with your F5 account team for access. 
+     the F5 UDF Environment, and is called **"UA Nginx Class 9 Agility 2023"**. Please work with your F5 Account
+     Team for access.
