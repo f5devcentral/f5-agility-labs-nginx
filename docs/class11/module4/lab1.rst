@@ -23,6 +23,12 @@ Review the modified `VirtualServer.yaml` manifest.
 .. image:: images/02_apply_virtualserver.jpg
   :scale: 50%
 
+Confirm the status of the virtualserver 'my-virtualserver' you just modified.
+
+.. code-block:: bash
+
+   kubectl describe virtualserver my-virtualserver
+
 Our environment now looks like this:
 
 .. table::

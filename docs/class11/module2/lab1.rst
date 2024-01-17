@@ -22,9 +22,9 @@ Let's first create two NodePort services to test our services from outside the K
    +----------------------------------+----------------------------------+
    | NodePort Service                 | Inside K8s Cluster               |
    +==================================+==================================+
-   | http://jobs.local:30010/get-job  | http://eclectic-jobs:3000/       |
+   | http://jobs.local:30020          | http://eclectic-jobs:3000/       |
    +----------------------------------+----------------------------------+
-   | http://jobs.local:30020          | http://myapp:3000                |
+   | http://jobs.local:30010          | http://myapp:3000                |
    +----------------------------------+----------------------------------+
 
 View the service manifests.
@@ -47,7 +47,7 @@ Confirm the NodePort services were created.
 
    k get svc
 
-From the URL bar of the web browser, connect to the `eclectic-jobs` NodePort service: ``http://job.local:30020``.
+From the URL bar of the web browser, connect to the `eclectic-jobs` NodePort service: ``http://jobs.local:30020``.
 Press the [F5] key to make new requests to the `eclectic-jobs` API.
 The `eclectic-jobs` API returns a random job title in JSON format.
 
