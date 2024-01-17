@@ -15,11 +15,11 @@ username: admin
 
 pass: NIM123!@#
 
-.. image:: /class1/images/nim-login.png
+.. image:: /class8/images/nim-login.png
 
 |
 
-.. image:: /class1/images/nim-button.png
+.. image:: /class8/images/nim-button.png
 
 |
 |
@@ -27,7 +27,7 @@ pass: NIM123!@#
 
 2) **Modify nginx.conf parameters**
    
-.. image:: /class1/images/nim-edit-button.png
+.. image:: /class8/images/nim-edit-button.png
 
 Click on Instances in the left column and then the ellipsis on the far rights of the NGINX-Plus instance, and then Edit Config 
 
@@ -36,7 +36,7 @@ Click on Instances in the left column and then the ellipsis on the far rights of
 
 Now you can edit the Nginx configuration file through this NIM interface
 
-.. image:: /class1/images/nim-nginx-conf.png
+.. image:: /class8/images/nim-nginx-conf.png
 
 |
 |
@@ -45,14 +45,14 @@ Find the line (3) that has worker_processes.
 
 Change the value from auto to 1
 
-.. image:: /class1/images/nim-processes-1.png
+.. image:: /class8/images/nim-processes-1.png
 
 .. note:: What does 'auto' do for worker_processes?
 
 |
 |
 
-.. image:: /class1/images/nim-publish.png
+.. image:: /class8/images/nim-publish.png
 
 Hit the publish button in the upper right to push the changes out to the NGINX Proxy
 
@@ -61,7 +61,7 @@ Hit the publish button in the upper right to push the changes out to the NGINX P
 
 Now run another test and review the Locus Charts  
 
-.. image:: /class1/images/locus-10-100-30.png
+.. image:: /class8/images/locus-10-100-30.png
   :width: 200 px
 
 .. note:: Are there any differences in Requests per Second, Response times or other stats?
@@ -73,7 +73,7 @@ Now run another test and review the Locus Charts
  	
 Find and change worker_connections to a value of 1 from 4096.  Line 11.
 
-.. image:: /class1/images/nim-worker-1.png
+.. image:: /class8/images/nim-worker-1.png
 
 After changes, make sure to publish and run test again with same values.
 

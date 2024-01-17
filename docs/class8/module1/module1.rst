@@ -15,7 +15,7 @@ The lab consists of multiple components:
 
 Here is a picutre of the components and how they connect together: 
 
-.. image:: /class1/images/lab-diagram.jpg  
+.. image:: /class8/images/lab-diagram.jpg  
   :width: 800 px
 
 
@@ -30,7 +30,7 @@ Review the Environment
    
 Click on ACCESS and then WEB SHELL
 
-.. image:: /class1/images/nginx-web-shell.png
+.. image:: /class8/images/nginx-web-shell.png
   :width: 600 px
   :align: center
 
@@ -58,7 +58,7 @@ server config block includes
 
 3) **Go to NGINX Proxy Dashboard and review**
 
-.. image:: /class1/images/nginx-web-shell.png
+.. image:: /class8/images/nginx-web-shell.png
   :width: 600 px
   :align: center
 
@@ -66,7 +66,7 @@ server config block includes
 
 Review the Dashboard and what is included under the tabs across the top of the page
 	
-.. image:: /class1/images/n-dashboard.png  
+.. image:: /class8/images/n-dashboard.png  
 
 |
 |
@@ -92,7 +92,7 @@ Now start up the Locus controller GUI
 
 Under Locus Controller ACCESS click on LOCUS to bring up the GUI
 
-.. image:: /class1/images/locus-gui.png  
+.. image:: /class8/images/locus-gui.png  
 
 |
 |
@@ -105,7 +105,7 @@ Verify 8-core machine, run this command to verify CPUs
 
    `mpstat -P ALL`  
   
-.. image:: /class1/images/locus-cpu.png  
+.. image:: /class8/images/locus-cpu.png  
 
 |
 
@@ -140,7 +140,7 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class1/images/locus-10-100-30.png  
+.. image:: /class8/images/locus-10-100-30.png  
 
 
 |
@@ -157,7 +157,7 @@ Click on Workers tab on top list, ensure there are 8 worker running
 
 9) **Run same test a 2nd time**
 
-.. image:: /class1/images/locus-new-test.png 
+.. image:: /class8/images/locus-new-test.png 
 
 Review NGINX Proxy CPUs while test is running.  Back on NGINX Proxy WEB SHELL: 
 
@@ -181,7 +181,7 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class1/images/locus-50-500-30.png  
+.. image:: /class8/images/locus-50-500-30.png  
    :width: 200 px
 
 Review NGINX Proxy CPUs
