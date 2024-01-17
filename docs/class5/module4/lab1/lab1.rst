@@ -30,17 +30,17 @@ Lab Tasks
 
 .. image:: images/options.png
 
-5. Return to **Firefox**. Click the **NIM** bookmark and log in using **lab** as the username and **AppWorld2024!** as the password. 
+5. Return to **Firefox**. Click the **NMS** bookmark and log in using **lab** as the username and **Agility2023!** as the password. 
 
-.. image:: images/nim_navigation_login.png
+.. image:: images/nms_navigation_login.png
 
 6. Click on the **Instance Manager** tile.
 
-.. image:: images/nim_launchpad.png
+.. image:: images/nms_launchpad.png
 
 7. Click **App Protect** in the left menu.
 
-.. image:: images/nim_app_protect_list.png
+.. image:: images/nms_app_protect_list.png
 
 8. Select the **NginxApiSecurityPolicy** from the policy list.
 

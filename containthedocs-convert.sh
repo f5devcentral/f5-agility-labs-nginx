@@ -8,8 +8,9 @@ if [ "$#" -ne 1 ]; then
 fi
 
 COMMAND="scripts/convertdocx.sh $1"
+ARCH=`uname m`
 
-. ./containthedocs-image
+. ./containthedocs-image-$ARCH
 
 exec docker run --rm -it \
   -v "$PWD":"$PWD" --workdir "$PWD" \

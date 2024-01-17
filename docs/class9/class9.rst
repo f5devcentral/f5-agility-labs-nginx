@@ -1,7 +1,12 @@
-Class 9 - Access on NGINX Plus: Authentication for Web Access
-=============================================================
+Class 9: Access on NGINX+ - Authentication for Web Access
+=========================================================
 
 .. note:: **Last Updated: 04/20/2023**
+
+Instructors at Agility 2023:
+
+-  Amir Rawdat <a.rawdat@f5.com>
+-  Ivan Reyes Mendez <i.reyesmendez@f5.com>
 
 UDF Lab Maintainers:
 

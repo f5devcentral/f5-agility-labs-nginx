@@ -2,7 +2,7 @@ Lab 1: Make new code commit, push changes and deploy to Staging and Production
 ==============================================================================
 
 In this example, we will make a simple change in updating the phone
-image on the homepage of our website. We will then commit our changes and push the new
+image on the homepage. We will then commit our changes and push the new
 code to our Gitlab repository; this will automatically trigger a CI/CD
 pipeline.
 
@@ -85,7 +85,7 @@ the next exercise
     field: “Update phone image”
 
     Once you fill in both boxes, click on \ **Commit to Master** and on
-    the next screen, press **Push Origin** to push the new code
+    the next screen, press **Push to Origin** to push the new code
     commit to our git repository on Gitlab.
 
     .. image:: ../images/image7.png
@@ -99,7 +99,7 @@ the next exercise
 
 9.  Open up the Appster repo on Gitlab, using the
     URI \ `https://gitlab.f5.local/f5-demo-lab/gitlabappster <https://gitlab.f5.local/f5-demo-lab/gitlabappster>`__
-    or using the **Appster** shortcut provided. (udf/P@ssw0rd20) This is our repository,
+    or using the **Appster** shortcut provided. This is our repository,
     where we just pushed our modified \ ``index.html`` file to.
 
     .. image:: ../images/image9.png

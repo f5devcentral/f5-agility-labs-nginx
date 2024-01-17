@@ -1,5 +1,5 @@
-Class 6 - NGINX API Management
-##############################
+Class6 - NGINX API Management
+#############################
 
 UDF Lab Maintainers:
 

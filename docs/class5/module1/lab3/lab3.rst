@@ -1,22 +1,22 @@
-View NGINX App Protect in NIM
+View NGINX App Protect in NMS
 =============================
 
-There are two components to NGINX App Protect within NIM: 
+There are two components to NGINX App Protect within NMS: 
 
 - NAP configuration via Instance Manager extension
-- NAP monitoring via NGINX Security Monitoring (SM)
+- NAP monitoring via NGINX Security Monitoring (NMS-SM)
 
-1. Take a look at both of these components. First, load the **NIM** bookmark in **Firefox** and login using the **lab** / **AppWorld2024!** credentials, if not already.
+1. Take a look at both of these components. First, load the **NMS** bookmark in **Firefox** and login using the **lab** / **Agility2023!** credentials, if not already.
 
 2. Click the **Select module** drop-down from the top of the left menu bar.
 
-.. image:: images/nim_instance_manager_dropdown.png
+.. image:: images/nms_instance_manager_dropdown.png
 
 3. Click **Instance Manager** in the drop-down.
 
-.. image:: images/nim_instance_manager_dropdown_selection.png
+.. image:: images/nms_instance_manager_dropdown_selection.png
 
-4. Take a look at the NGINX App Protect policies that exist in NIM. Click on **App Protect** towards the bottom of the **Instance Manager** menu bar. 
+4. Take a look at the NGINX App Protect policies that exist in NMS. Click on **App Protect** towards the bottom of the **Instance Manager** menu bar. 
 
 .. image:: images/nap_click.png
 
@@ -38,54 +38,54 @@ There are two components to NGINX App Protect within NIM:
 
 9. Now you can view metrics surrounding the App Protect instance. Click the **Select module** drop-down from the top of the left menu bar. 
 
-.. image:: images/nim_module_dropdown.png
+.. image:: images/nms_module_dropdown.png
 
 10. Select **Security monitoring** from the drop-down.
 
-.. image:: images/menu_drop_down_SM.png
+.. image:: images/menu_drop_down_nms-sm.png
 
 11. The **Security Dashboard** page will load, as shown below. 
 
-.. image:: images/SM_security_dashboard.png
+.. image:: images/NMS-SM_security_dashboard.png
 
 11. Scroll down through the **Main** tab to see statistics surrounding attack traffic types, IP addresses, violations, URIs, and more. 
 
-.. image:: images/SM_dashboard_main.png
+.. image:: images/NMS-SM_dashboard_main.png
 
 12. Click the **Bots** tab. 
 
-.. image:: images/SM_dashboard_bots.png
+.. image:: images/NMS-SM_dashboard_bots.png
 
 13. This tab shows information around bot traffic detected by App Protect. Scroll down to the **Top Bot Classes**, **Top Bot Categories**, and **Top Bot Signatures**. Click on **Untrusted Bot** in the **Top Bot Classes** list.
 
-.. image:: images/SM_top_bot_lists.png
+.. image:: images/NMS-SM_top_bot_lists.png
 
 14. View extra details around the entry. Close the details box when finished.
 
-.. image:: images/SM_top_bot_details.png
+.. image:: images/NMS-SM_top_bot_details.png
 
 15. Click the **Advanced** tab. 
 
-.. image:: images/SM_Advanced_click.png
+.. image:: images/NMS-SM_Advanced_click.png
 
 16. This tab shows data relating to attacks matching downloaded signatures. Since signatures have not yet been downloaded, this data is not populated. 
 
-.. image:: images/SM_dashboard_advanced.png
+.. image:: images/NMS-SM_dashboard_advanced.png
 
 17. Scroll down and review the additional metrics available. Click on the single entry under the **Top Attacked Instances** list to see additional details.
 
-.. image:: images/SM_additional_metrics.png
+.. image:: images/NMS-SM_additional_metrics.png
 
 18. Close the details box when finished.
 
-.. image:: images/SM_dashboard_advanced_details.png
+.. image:: images/NMS-SM_dashboard_advanced_details.png
 
 18. Finally, click on the **Events Log** tab to view the historical event list. 
 
-.. image:: images/SM_dashboard_event_logs.png
+.. image:: images/NMS-SM_dashboard_event_logs.png
 
 19. You can click on any of the events in the list to view more details. Close the details box when finished.
 
-.. image:: images/SM_dashboard_event_details.png
+.. image:: images/NMS-SM_dashboard_event_details.png
 
-Now that you've reviewed where WAF policies exist in NIM, how they are deployed at the application level and how to monitor security statistics and events in NIM, continue to the next section of the lab.
+Now that you've reviewed where WAF policies exist in NMS, how they are deployed at the application level and how to monitor security statistics and events in NMS, continue to the next section of the lab.

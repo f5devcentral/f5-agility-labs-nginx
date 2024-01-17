@@ -1,7 +1,7 @@
 Lab 1- Join UDF Course
 ======================
 
-Welcome to NGINX - Intro to NGINX+ from BIG-IP! In this course we will learn the following:
+Welcome to NGINX – Intro to NGINX+ from BIG-IP! In this course we will learn the following:
 
 •	How to install Nginx Plus. 
 
