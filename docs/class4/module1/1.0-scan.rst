@@ -12,7 +12,7 @@ Manager.
 Guide
 =====
 
-The lab environment contains 5 instances of NGINX (not including the 
+The lab environment contains several instances of NGINX (not including the 
 repository server and the nginx-manager server). We will use the ``NIM Scan`` feature
 to discover the instances and list CVE information.
 
