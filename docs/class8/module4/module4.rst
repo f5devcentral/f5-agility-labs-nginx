@@ -1,8 +1,10 @@
 Tuning the Cache
 ################
 
-Talk about what a cache is XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-	
+|
+
+Cache is a hardware or software component embedded in an application or device memory that automatically and temporarily stores data consumed by the user to reduce the data retrieval time and effort the next time the application or device is accessed.
+
 |
 |
 
@@ -14,7 +16,7 @@ In NIM, edit nginx.conf, and publish changes
 
 Uncomment the proxy_cache, line 72
 
-.. image:: /class1/images/nim-proxy-cache.png
+.. image:: /class8/images/nim-proxy-cache.png
 
 |
 |
@@ -44,7 +46,7 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class1/images/locus-500-50-30.png  
+.. image:: /class8/images/locus-500-50-30.png  
    :width: 200 px
 
 .. note::  Where you do see the preformance improvment? 
@@ -68,7 +70,7 @@ Uncomment "sendfile on", line 29
 
 |
 
-.. image:: /class1/images/nim-sendfile.png  
+.. image:: /class8/images/nim-sendfile.png  
 
 	
 Run the same test again.
@@ -80,7 +82,7 @@ Run the same test again.
 
 5) **Turn on open file cache**
 
-.. image:: /class1/images/nim-open-file-cache.png  
+.. image:: /class8/images/nim-open-file-cache.png  
 
 In NIM, edit nginx.conf and publish
 

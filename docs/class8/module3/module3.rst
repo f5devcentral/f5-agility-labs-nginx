@@ -16,7 +16,7 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class1/images/locus-2000-200-30.png  
+.. image:: /class8/images/locus-2000-200-30.png  
    :width: 200 px
 	
 Review Locus Charts
@@ -45,7 +45,7 @@ Increase rlimit to 4096, by uncommenting line 4
 
 * worker_rlimit_nofile 4096; 
 
-.. image:: /class1/images/nim-rlimit-4096.png  
+.. image:: /class8/images/nim-rlimit-4096.png  
 
 .. note: What does rlimit do?  
 
