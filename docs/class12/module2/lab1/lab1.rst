@@ -367,7 +367,7 @@ To test out our service, you'll need to find what NodePort port was enabled with
 
    kubectl describe service lab-deploy-svc -n test
 
-Describe deployment output:
+Describe service output:
 
 .. code-block:: bash
    :caption: Output
@@ -405,6 +405,8 @@ From inside the cluster, the new service (thanks to CoreDNS) will have an A reco
 - namespace
 - svc (for service)
 - cluster.local
+
+Here is an example of the *lab-deploy-svc* fqdn:
 
 *lab-deploy-svc.test.svc.cluster.local*
 
