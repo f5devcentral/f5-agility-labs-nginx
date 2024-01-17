@@ -1,5 +1,6 @@
-Class 1 - Intro to NGINX Plus
-=============================
+Class1 - A Technical Introduction to F5 NGINX Plus
+==================================================
+
 
 This class provides hands-on experience using NGINX plus.
 

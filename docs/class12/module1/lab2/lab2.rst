@@ -24,7 +24,8 @@ matching the requirements of the pod, the pod will remain in an *unscheduled* st
 
 The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as *Docker* or *containerd*
 so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kubelet is responsible for pulling container 
-images, allows control plane to monitor the node, and ensures containers are healthy and running. 
+images, allows control plane to monitor the node, and ensures containers are healthy and running. *Kube-proxy* is a network agent installed on every node and provides network 
+forwarding to backend services. 
 
 .. note:: Keep in mind that in a dev environment, your leader node may also be your worker node (not a production practice).
 
@@ -438,3 +439,20 @@ Additional information:
 
 - `Container Networking <https://github.com/containernetworking/cni>`_
 - `Learn Calico <https://academy.tigera.io/course/certified-calico-operator-level-1/>`_
+
+
+Ingress & Ingress Controller
+-----------------------------
+
+An Ingress controller is a specialized load balancer for Kubernetes (and other containerized) environments. An Ingress controller abstracts away the complexity 
+of Kubernetes application traffic routing and provides a bridge between Kubernetes services and external ones. Ingress controllers can handle TLS offload, load balancing
+to pods inside the cluster and with Nginx Plus ingress controller you can even run a web application firewall.
+
+We will not cover ingress controllers in the course as there is already a specialized class for Nginx Ingress Controller. Having said that, an ingress controller still 
+needs pods and a service to expose it. 
+
+
+
+Official Documentation
+
+- `Kubernetes Ingress <https://kubernetes.io/docs/concepts/services-networking/ingress/>`_
