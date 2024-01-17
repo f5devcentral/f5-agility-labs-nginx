@@ -38,11 +38,11 @@ Lab 1: Run a pipeline to build NGINX Plus images
    `Dockerfile
    Reference <https://docs.docker.com/engine/reference/builder/>`__.
 
-   .. note:: NGINX Plus now supports the newer ``3.11`` version of Alpine linux.
+   .. note:: NGINX Plus now supports the newer ``3.17`` version of Alpine linux.
       Let’s create add the creation of a NGINX Plus build for Alpine Linux
-      version 3.11 to our CI/CD pipeline.
+      version 3.17 to our CI/CD pipeline.
 
-5. Create a new folder called ``alpine3.11`` in this project under the
+5. Create a new folder called ``alpine3.17`` in this project under the
    ``Dockerfiles`` root folder by copying the ``alpine3.10`` folder:
 
    .. image:: ../images/image6.png
@@ -55,32 +55,32 @@ after pasting you should see an ``alpine3.10 copy`` folder:
 
    .. image:: ../images/image602.png
 
-right click on that folder and rename it to ``alpine3.11``:
+right click on that folder and rename it to ``alpine3.17``:
 
    .. image:: ../images/image603.png
 
    .. image:: ../images/image604.png
 
 6. Let's use the **Alpine 3.10** ``Dockerfile`` copy as a template for our
-   new **Alpine 3.11** build. Go ahead and edit the ``Dockerfile`` in
-   in our ``alpine3.11`` folder, and update the ``FROM alpine:3.10`` 
-   command to ``FROM alpine:3.11`` 
+   new **Alpine 3.17** build. Go ahead and edit the ``Dockerfile`` in
+   in our ``alpine3.17`` folder, and update the ``FROM alpine:3.10`` 
+   command to ``FROM alpine:3.17`` 
 
    .. image:: ../images/image701.png
 
    .. image:: ../images/image702.png
 
 8. Once you have edited ``Dockerfile`` and replaced the
-   ``FROM alpine:3.10`` command to ``FROM alpine:3.11``, go ahead and
+   ``FROM alpine:3.10`` command to ``FROM alpine:3.17``, go ahead and
    **save** the file. You can navigate to ``file`` -> ``save`` or you
    can use the shortcut, **CTRL+S**.
 
-  .. note:: Now we have created a Dockerfile for Alpine 3.11 but still need to
+  .. note:: Now we have created a Dockerfile for Alpine 3.17 but still need to
      create a new **Stage** in our GitLab CI/CD Pipeline Configuration file,
      `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
 
-9. In order to build an **Alpine 3.11** image, we also need to add a new
-   stage to our ``.gitlab-ci.yml`` file for ``alpine3.11``. Open this
+9. In order to build an **Alpine 3.17** image, we also need to add a new
+   stage to our ``.gitlab-ci.yml`` file for ``alpine3.17``. Open this
    project’s GitLab CI/CD Pipeline Configuration file,
    ``.gitlab-ci.yml`` and find the stage labeled ``alpine3.10`` (use
    Find **Ctrl+F**).
@@ -88,7 +88,7 @@ right click on that folder and rename it to ``alpine3.11``:
    a. Go ahead and **Copy (Ctrl+C)** this stage, and **Paste (Ctrl+V)**
       it underneath the existing ``alpine3.10`` stage.
 
-   b. Lastly, edit the stage label ``alpine3.10`` to ``alpine3.11``
+   b. Lastly, edit the stage label ``alpine3.10`` to ``alpine3.17``
 
    .. image:: ../images/image703.png
 
@@ -96,7 +96,7 @@ right click on that folder and rename it to ``alpine3.11``:
       make sure your ``.gitlab-ci.yml`` file looks like the example above.
 
 10. Once you have edited ``.gitlab-ci.yml`` and created the new
-    ``alpine3.11`` stage, go ahead and **save** the file. You can
+    ``alpine3.17`` stage, go ahead and **save** the file. You can
     navigate to ``file`` -> ``save`` or you can use the shortcut,
     **CTRL+S**.
 
@@ -105,29 +105,29 @@ right click on that folder and rename it to ``alpine3.11``:
 
     .. attention:: The GitHub Desktop Client has automatically tracked the changes that
        were made to the project folder, and is highlighting those exact changes,
-       "2 changed file: `.gitlab-ci.yml` and `Dockerfiles\alpine3.11\Dockerfile`"
+       "2 changed file: `.gitlab-ci.yml` and `Dockerfiles\alpine3.17\Dockerfile`"
 
 12. We are now going to push these changes to our repository on GitLab.
     In the lower-left of the GitHub, Desktop Client provide a **Commit
     title** and **note** before we can commit to master.
 
-    You can see two boxes. Go ahead and type in the **title** field:
-    ``"Alpine 3.11"``. 
+    You can see two boxes. Go ahead and type in the **Summary** field:
+    ``"Alpine 3.17"``. 
 
     Additionally, you can provide notes as well, type in the **notes**
-    field: ``"NGINX Plus for Alpine 3.11"``
+    field: ``"NGINX Plus for Alpine 3.17"``
 
     Once you fill in both boxes, click on **Commit to Master** and on
-    the next screen, press **“Push to Origin”** to push the new code
+    the next screen, press **“Push Origin”** to push the new code
     commit to our git repository on Gitlab.
 
     .. image:: ../images/image7.png
 
     .. image:: ../images/image8.png
 
-13. Open up the \ **nginx-plus-dockerfiles** repository on
+13. In Google Chrome, open up the \ **nginx-plus-dockerfiles** repository on
     Gitlab, \ `https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles>`__ or
-    using the \ **“nginx-plus-dockerfiles”** shortcut provided. This
+    using the \ **“nginx-plus-dockerfiles”** shortcut provided. (udf/P@ssw0rd20) This
     will take us to the repository where we just pushed our modified
     Docker file to
 
@@ -136,7 +136,7 @@ right click on that folder and rename it to ``alpine3.11``:
 14. On this **nginx-plus-dockerfiles** repository page, you will see the
     pipeline status icon next to the latest \ **Commit SHA**. When the
     pipeline currently in progress, you will see an \ **orange icon** 
-    (waiting to start) or \ **blue circle** (running). Hopefully, we
+    (waiting to start), a \ **blue circle** (running), or a \ **green check** (passed). Hopefully, we
     don’t see a \ **red icon**, which indicates the pipeline has failed.
     We can click on the pipeline status icon to view the pipeline
     progress
@@ -183,6 +183,6 @@ right click on that folder and rename it to ``alpine3.11``:
     the Container Registry page, expand the title, and you will see a
     list of Docker images ready for use
 
-    Here you should see your new **alpine3.11** image
+    Here you should see your new **alpine3.17** image
 
     .. image:: ../images/image705.png

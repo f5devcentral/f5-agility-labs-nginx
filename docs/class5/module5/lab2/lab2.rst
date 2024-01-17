@@ -56,7 +56,7 @@ For those that have Advanced WAF/ASM deployed on BIG-IP, the User Defined Signat
 
 The tool can optionally accept a tag argument as an input. Otherwise, the default tag value user-defined-signatures is assigned to the exported JSON file.
 
-.. note:: A hands-on example of converting user definied signatures is not yet included in this lab. 
+.. note:: A hands-on example of converting user defined signatures is not yet included in this lab. 
 
 The usage of the utility is as follows:
 

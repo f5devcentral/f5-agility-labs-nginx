@@ -33,11 +33,11 @@ and use volumes to persist data.
 
    .. code:: bash
 
-      $ whoami
+      whoami
       centos
 
-      $ cd ~/nginx-plus-docker-base
-      $ pwd
+      cd ~/nginx-plus-docker-base
+      pwd
       /home/centos/nginx-plus-docker-base
 
 3. Pull an image from our private docker registry using
@@ -51,7 +51,7 @@ and use volumes to persist data.
 
    .. code:: bash
 
-        $ docker pull registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+        docker pull registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
 Which should produce the following output:
 
@@ -77,8 +77,8 @@ Which should produce the following output:
 
    .. code:: bash
 
-      $ docker run --name test -d -p 9000:80 -p 9080:8080 -v $PWD/etc/nginx:/etc/nginx \
-      registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+      docker run --name test -d -p 9000:80 -p 9080:8080 -v $PWD/etc/nginx:/etc/nginx 
+      registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
 
 5. You can see the container is running on the mapped ports. When
@@ -88,7 +88,7 @@ Which should produce the following output:
 
    .. code:: bash
 
-      $ docker ps
+      docker ps
 
 
 6. We can now test the NGINX Plus container by making a HTTP request
@@ -96,7 +96,7 @@ Which should produce the following output:
 
    .. code:: bash
 
-      $ curl http://127.0.0.1:9000 -L
+      curl http://127.0.0.1:9000 -L
 
 Which should produce the following output:
 
@@ -118,17 +118,17 @@ Which should produce the following output:
 
    .. code:: bash
 
-      $ docker stop test
+      docker stop test
 
    .. code:: bash
 
-      $ docker rm test
+      docker rm test
 
 8. When we run ``docker ps`` again you will see that the container is no
    longer running
 
    .. code:: bash
 
-      $ docker ps
+      docker ps
 
    .. image:: ../images/image18.png
