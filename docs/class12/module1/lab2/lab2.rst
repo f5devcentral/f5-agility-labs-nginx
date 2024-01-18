@@ -311,6 +311,17 @@ and ran the container inside the pod through execution. So without any applicati
    NAME                            READY   STATUS      RESTARTS         AGE
    bbox                            0/1     Completed   1 (2s ago)       3s
 
+.. note:: You may not yet see a Completed status and instead see CrashLoopBackOff (clbo) status
+
+
+.. image:: images/clbo.png
+
+If you encouter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
+
+- CrashLoopBackOff - pod is unable to start or runs into an error and is then restarted multiple times by the kubelet
+- ImagePullBackOff - kubelet is unable to pull the container image
+
+
 Now let's try running our pod again, but this time we'll run a shell function of sleep for 35 seconds. **Please run each single command at a time**.
 
 
