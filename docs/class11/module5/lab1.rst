@@ -4,7 +4,7 @@ Task 04: OpenAPI Spec Enforcement with NGINX App Protect
 Our API has two endpoints:
 
 - ``https://jobs.local/get-job`` is used to GET a random job title.
-- ``https://jobs.local/add-job`` is will accept an HTTP POST with a list of job titles in JSON format. For example:
+- ``https://jobs.local/add-job`` will accept an HTTP POST with a list of job titles in JSON format. For example:
 
 .. code-block:: yaml
 
