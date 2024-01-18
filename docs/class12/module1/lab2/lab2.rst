@@ -315,6 +315,7 @@ and ran the container inside the pod through execution. So without any applicati
 
 
 .. image:: images/clbo.png
+   
 
 If you encouter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
 
