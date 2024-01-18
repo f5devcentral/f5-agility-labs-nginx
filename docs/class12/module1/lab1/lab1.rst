@@ -39,7 +39,10 @@ First, access the Jumphost via Web Shell
 
 To save on time, some of the files have been built for you. From the web shell, change directory to **lab1** ``cd lab1``. Within this directory you can 
 see two of the necessary files. *web.conf* and *index.html*. It will now be up to you to create the Dockerfile that will make our new Nginx container.
-To edit the file, you'll need to open the file in an editor ``vim Dockerfile`` 
+To edit the file, you'll need to open the file in an editor ``vim Dockerfile``. To enter *interactive* mode press ``i``. 
+
+.. image:: images/interactive.png
+
 
 .. code-block:: bash 
    :caption: Dockerfile 
