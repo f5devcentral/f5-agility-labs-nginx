@@ -90,8 +90,8 @@ Kubernetes installation or even combine existing objects so they can be deployed
 and expose it to the world in one manifest. That's what a CRD allows you to do. Throughout this course you'll be interacting with the Kubernetes 
 API when we check on nodes, pods, namespaces etc. 
 
-How you define the custom resource is by a Custom Resource Definition(CRD). This CRD will create a new RESTful endpoint that will be able to be utilized on either 
-a namespace level or cluster level. 
+How you define the custom resource is by a Custom Resource Definition (CRD). This CRD will create a new RESTful endpoint that will be able to be utilized on either 
+a namespace level, or cluster level. 
 
 Let's view the installed CRD's and we'll focus in on Nginx.
 
@@ -161,8 +161,8 @@ You'll find those directives at the top of all the manifest files you'll create 
 Namespaces
 ----------
 
-In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster, think of a namespace as a *sub-cluster*. Just like you'd use a partition in a BIG-IP to separate
-objects, you'd use a namespace in Kubernetes. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+In Kubernetes, namespaces provide a mechanism for isolating groups of resources within a single cluster, think of a namespace as a *sub-cluster*. Just like you'd use a partition in a BIG-IP to separate
+objects, you'd use a namespace in Kubernetes. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another, and each Kubernetes resource can only be in one namespace.
 
 Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
 
@@ -185,7 +185,7 @@ For this part of the lab, we'll just cover two important namespaces:
 - **kube-system** 
 
 
-Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So you always want
+Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So, you always want
 to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
 the default namespace. One item that you'll find in the default namespace are CRD's.
 
@@ -238,7 +238,7 @@ Pod
 
 In Kubernetes, a Pod is smallest unit of compute and holds one or more containers. In this lab we will only work with a single container in a pod. Something to 
 keep in mind though, if you deploy multiple containers in single pod, those containers will compete for resources. Placing containers inside of pods make them 
-easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab will will review data returned 
+easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab will review data returned 
 from our coredns pod.
 
 .. list-table:: 
@@ -302,7 +302,7 @@ We have created a new namespace and asked Kubernetes to run a pod named *bbox* w
    kubectl get pod -n test
 
 Notice now when you check on the pods in the test namespace, bbox is *Completed*. This means our pod was created, assigned to a node, then the kubelet got our BusyBox image
-and ran the container inside the pod through execution. So without any applications or code to run our container executed and shutdown.
+and ran the container inside the pod through execution. So, without any applications or code to run our container executed and shutdown.
 
 .. code-block:: bash
    :caption: Output
@@ -317,7 +317,7 @@ and ran the container inside the pod through execution. So without any applicati
 .. image:: images/clbo.png
    
 
-If you encouter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
+If you encounter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
 
 - CrashLoopBackOff - pod is unable to start or runs into an error and is then restarted multiple times by the kubelet
 - ImagePullBackOff - kubelet is unable to pull the container image
@@ -425,7 +425,7 @@ service discovery.
 One very important concept we will cover here is the service type. This type determines how your application will be exposed. There are three main service types that we will speak to:
 
 - ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster this way. Usually used with an ingress controller
-- Load balancer - exposes application externally via load balancer using cloud service provider constructs(i.e. AWS NLB, Azure ALB, Google NLB)
+- Load balancer - exposes application externally via load balancer using cloud service provider constructs (i.e. AWS NLB, Azure ALB, Google NLB)
 - NodePort - exposes applications on each node on a specified port. Keep in mind even if a pod does not exist on the node, the port is still open.
 
 Let's see all the services in the *kube-system* namespace 

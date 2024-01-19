@@ -2,7 +2,7 @@ Kubernetes Troubleshooting
 ==========================
 
 Throughout this class you have used several first step methods in troubleshooting. Using *get* and *describe* help start the process, but what if they do not provide 
-enough detail to lead you to the problem? In this lab we'll show you some additional commands you can use to get information, or configure all the objects in your cluster.
+enough detail to lead you to the problem? In this lab we'll show you some additional commands you can use to get information or configure all the objects in your cluster.
 
 
 Explain
@@ -157,7 +157,7 @@ Example for multi-container pod:
 DNS Utils
 ---------
 
-For this next Troubleshooting exercise you'll deploy a special *dnsutils* container image. This container has *dnsutils* installed and will allow you to view how services are
+For this next troubleshooting exercise, you'll deploy a special *dnsutils* container image. This container has *dnsutils* installed and will allow you to view how services are
 registered in CoreDNS.
 
 .. code-block:: bash

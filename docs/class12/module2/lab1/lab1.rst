@@ -46,7 +46,7 @@ Once you have verified the pod is running, you'll delete the pod:
 
 |
 
-Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indention's are correct, let's 
+Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indentions are correct, let's 
 review what the manifest file would look like to deploy our Nginx container in a pod called *testpod*.
 
 .. note:: YAML can be very fussy on indentation, please pay **close attention** to your indentation
@@ -71,7 +71,7 @@ review what the manifest file would look like to deploy our Nginx container in a
 Let's explain the directives from above.
 
 | **apiVersion** determines what version of the API will be used for creation
-| **kind** specifies the type of object to be created and is defined in the apiVersion
+| **kind** specifies the type of object to be created, and is defined in the apiVersion
 | **metadata** describes information of an object that allows for the unique identification of that object
 | **spec** defines the desired state of the object in Kubernetes
 | **containers** specifies the containers to be built inside the pod
@@ -364,7 +364,7 @@ will open on all nodes. The default ports are 30000-32767. You can alter this de
 Types of service types:
 
 - **Cluster IP** This is the default service, which is used to expose a service on a cluster-internal IP. This means the service is only accessible from inside the cluster.
-- **Node Port** This exposes a service on each node's IP at a static port so the service is accessible from outside the cluster.
+- **Node Port** This exposes a service on each node's IP at a static port, so the service is accessible from outside the cluster.
 - **Load Balancer** This uses a cloud provider's load balancer to access a service from outside the cluster.
 - **External Name** This maps a service to the contents of a predefined external name field by returning a CNAME record with its value.
 - **Headless** This headless service is used for pod grouping when a stable IP address is not required.
