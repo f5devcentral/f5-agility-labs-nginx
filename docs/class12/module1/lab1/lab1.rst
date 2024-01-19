@@ -15,7 +15,7 @@ a container runtime, such as Docker to run on. The runtime engine will validate 
 
 Building your container can be compared to making a layered cake. There needs to be a base image (Linux or Windows base images), then you can add on 
 packages/libraries to allow your application to run. Containers can be *built* using a Dockerfile. In this file you'll define the base, packages needed, and important
-necessary commands to be run. In Kubernetes it's **VERY** important to remember, containers run until the default command executes, then they terminate. 
+necessary commands to be run. In Kubernetes it's **VERY** important to remember, containers only run while the default command executes, then they terminate. 
 
 Let's look at some excerpts from our very own Nginx container. 
 
@@ -61,7 +61,7 @@ Copying this text in the blank Dockerfile file, you'll:
 
 - **Build** a custom container creation from the base Nginx image.
 - The **RUN** command will execute a command, we will delete the default configuration shipped on all Nginx instances.
-- The **COPY** command will allow us to place files inside the container image to be available at run time(web.conf, index.html).
+- The **COPY** command will allow us to place files inside the container image to be available at run time (web.conf, index.html).
 - The **EXPOSE** command allows us to expose additional ports on the container.
 
 

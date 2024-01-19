@@ -90,6 +90,6 @@ Lab Inventory
 Accessing the Lab
 -----------------
 
-To access by web shell 
+All of the procedures you'll be asked to accomplish will be done using a web shell. To access the web shell from the Jumphost client:
 
 .. image:: images/jumphost_webshell.png

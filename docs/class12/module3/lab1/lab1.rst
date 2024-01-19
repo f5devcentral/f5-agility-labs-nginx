@@ -60,7 +60,7 @@ a given resource or group of resources. This command you have run several times 
 Events
 ------
 
-Kubernetes #events* can provide valuable insights to events from controllers, schedulers, pods and nodes. You can, and should, filter down events.
+Kubernetes *events* can provide valuable insights to events from controllers, schedulers, pods and nodes. You can, and should, filter down events.
 
 .. code-block:: bash 
    :caption: Filter Namespace
