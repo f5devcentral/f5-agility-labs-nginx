@@ -36,6 +36,8 @@ With the deployment up and running, you can now see Kubernetes has assigned it a
 
    kubectl rollout history deploy/roller-deploy -n test
 
+|
+
 .. code-block:: bash
    :caption: Leader Node History Output
 
