@@ -54,7 +54,7 @@ The `eclectic-jobs` API returns a random job title in JSON format.
 .. image:: images/01_eclectic-jobs_browser.jpg
   :scale: 50%
 
-From the URL bar of the web browser, connect to the `myapp` NodePort servicen: ``http://jobs.local:30010``.
+From the URL bar of the web browser, connect to the `myapp` NodePort service: ``http://jobs.local:30010``.
 Press the [F5] key to make new requests of the `myapp` web application.
 The `myapp` web application is attempting to fetch a random job title from the (non-existant) ``https://jobs.local/get-job`` API endpoint.
 
