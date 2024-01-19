@@ -3,7 +3,7 @@ Container Components
 
 A container is a lightweight, executable software package containing all necessary code and its dependencies to run as a process on a host. Traditionally, applications
 were run from bare metal or virtual machines atop an operating system. This meant that multiple applications could compete for resources and any changes to the operating system
-could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS and then test. Then, the the web server language dependencies needed to be upgraded and tested. Finally, the application code could be upgraded and user acceptance testing could begin.
+could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS and then test. Then, the web server language dependencies needed to be upgraded, and tested. Finally, the application code could be upgraded and user acceptance testing could begin.
 
 Containerization has greatly decreased the time it takes to roll-out new code (enhancements or fixes) to production. In the world of applications and application security, 
 speed is still king. 
