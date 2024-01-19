@@ -82,7 +82,7 @@ Let's explain the directives from above.
 |
 
 A helpful resource to check for this lab is the *api-resource*. Here you can see object type (kind), what its *shortname* is and the *apiVersion* associated. The shortname is 
-very useful to save in typing and for those of you continuing on and take the Certified Kubernetes Administrator (CKA) certification. 
+very useful to save in typing and for those of you continuing on to take the Certified Kubernetes Administrator (CKA) certification. 
 
 |
 
@@ -93,7 +93,7 @@ very useful to save in typing and for those of you continuing on and take the Ce
 
 |
 
-Now, back to creating pods. You can use the *dry-run=client* feature to have Kubernetes write the manifest for you. This process allows you run your Kubernetes command without submitting it to the cluster.
+Now, back to creating pods. You can use the *dry-run=client* feature to have Kubernetes write the manifest for you. This process allows you to run your Kubernetes command without submitting it to the cluster.
 
 .. code-block:: bash
    :caption: Pod Dry Run
