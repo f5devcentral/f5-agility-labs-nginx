@@ -300,8 +300,17 @@ You should now see the deployment scale up
 
 ``deployment.apps/lab-deploy scaled``
 
+Now let's describe the new deployment: 
+
 .. code-block:: bash
    :caption: Describe Deployment
+
+   kubectl describe deploy/lab-deploy -n test
+
+
+
+.. code-block:: bash
+   :caption: Output Describe Deployment
    :emphasize-lines: 32
 
    lab@k3s-leader:~$ kubectl describe deploy/lab-deploy -n test
