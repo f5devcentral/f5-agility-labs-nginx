@@ -8,7 +8,7 @@ Kubernetes - Operations
 Now that we've covered the core components of Kubernetes, it's time to put it into operations. In this module you'll create Pods, Deployments, and Services. The image above depicts how 
 we tie all these components together. When Kubernetes gets the run command, it will first look to see if the image is held locally on the cache by Kubelet. If there is not a local image, Kubelet 
 will *pull* the image from a container registry. You have already created a namespace *test* and this will isolate resources. Kubernetes will create and assign the pods, while 
-the Kublet will get image and stand up the container. Kubernetes, through the deployment manifest, watches all the pods tagged with labels matching the tags. Then, Kubernetes
+the Kubelet will get image and stand up the container. Kubernetes, through the deployment manifest, watches all the pods tagged with labels matching the tags. Then, Kubernetes
 will expose the deployment through the service manifest. This happens the same way, through matching label tags.
 
 Let's jump into the operational items that make Kubernetes run.
