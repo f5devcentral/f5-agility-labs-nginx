@@ -363,11 +363,11 @@ will open on all nodes. The default ports are 30000-32767. You can alter this de
 
 Types of service types:
 
-- Cluster IP This is the default service, which is used to expose a service on a cluster-internal IP. This means the service is only accessible from inside the cluster.
-- Node Port This exposes a service on each node's IP at a static port so the service is accessible from outside the cluster.
-- Load Balancer This uses a cloud provider's load balancer to access a service from outside the cluster.
-- External Name This maps a service to the contents of a predefined external name field by returning a CNAME record with its value.
-- Headless This headless service is used for pod grouping when a stable IP address is not required.
+- **Cluster IP** This is the default service, which is used to expose a service on a cluster-internal IP. This means the service is only accessible from inside the cluster.
+- **Node Port** This exposes a service on each node's IP at a static port so the service is accessible from outside the cluster.
+- **Load Balancer** This uses a cloud provider's load balancer to access a service from outside the cluster.
+- **External Name** This maps a service to the contents of a predefined external name field by returning a CNAME record with its value.
+- **Headless** This headless service is used for pod grouping when a stable IP address is not required.
 
 To test out our service, you'll need to find what NodePort port was enabled with the *describe* command.
 
