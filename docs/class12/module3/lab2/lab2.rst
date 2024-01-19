@@ -45,7 +45,13 @@ With the deployment up and running, you can now see Kubernetes has assigned it a
     1         <none>
 
 On the Leader node shell, you will now need to *describe* the deployment as some specific information is needed. From the output, find the **Labels** value. This will be used in the next step.
-kubectl describe deploy/roller-deploy -n test 
+
+
+.. code-block:: bash
+   :caption: Describe Deploy
+   
+   kubectl describe deploy/roller-deploy -n test 
+
 
 .. code-block:: bash
    :caption: Output
@@ -109,7 +115,7 @@ Output observed on the Leader node shell after image update:
 .. code-block:: bash
    :caption: Output
 
-   ab@k3s-leader:/$ k get pod --selector app=roller-deploy -n test --watch
+   lab@k3s-leader:/$ kubectl get pod --selector app=roller-deploy -n test --watch
    NAME                             READY   STATUS    RESTARTS   AGE
    roller-deploy-5c754bcfb8-cv48x   1/1     Running   0          26m
    roller-deploy-5c754bcfb8-dldd8   1/1     Running   0          26m
