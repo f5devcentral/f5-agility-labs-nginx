@@ -1,17 +1,16 @@
 Container Components
 ====================
 
-Containers are a lightweight, executable software package containing all the necessary code and its dependencies to run as a process on a host. Traditionally, applications
+A container is a lightweight, executable software package containing all necessary code and its dependencies to run as a process on a host. Traditionally, applications
 were run from bare metal or virtual machines atop an operating system. This meant that multiple applications could compete for resources and any changes to the operating system
-could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS, then test. Next 
-upgrade the web server language dependencies, then test. Finally the application code could be upgraded and user acceptance testing could begin.
+could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS and then test. Then, the the web server language dependencies needed to be upgraded and tested. Finally, the application code could be upgraded and user acceptance testing could begin.
 
 Containerization has greatly decreased the time it takes to roll-out new code (enhancements or fixes) to production. In the world of applications and application security, 
 speed is still king. 
 
 Later in this lab we will build a container, but first we will discuss some important things about containers. First, containers run as a process on the host system. They need 
-a container runtime, such as Docker to run on. The runtime engine will validate the container's image and configuration. Secondly, your new container will share host network information
-(i.e. DNS, routing/nat) and will ONLY have what you installed. Again, a container is not a full distro of an operating system. 
+a container runtime, such as Docker, to run on. The runtime engine will validate the container's image and configuration. Second, your new container will share host network information
+(i.e. DNS, routing/NAT) and will ONLY have what you installed. Again, a container is not a full distro of an operating system. 
 
 Building your container can be compared to making a layered cake. There needs to be a base image (Linux or Windows base images), then you can add on 
 packages/libraries to allow your application to run. Containers can be *built* using a Dockerfile. In this file you'll define the base, packages needed, and important
@@ -29,9 +28,9 @@ Let's look at some excerpts from our very own Nginx container.
    CMD ["nginx", "-g", "daemon off;"]
 
 The above excerpt tells us our container has a base image **FROM** Debian Linux and is a particular slimmed down version of Debian. To communicate 
-with the container, you'll need to **EXPOSE** ports and this is that command (ports can be TCP or UDP). The **CMD** (command) is turning the Nginx daemon off so it will run in the foreground so it will not stop. 
+with the container, you'll need to **EXPOSE** ports and this is that command (ports can be TCP or UDP). The **CMD** (command) is turning the Nginx daemon off so it will run in the foreground and not stop. 
 
-In this lab, we will build a custom container image using *Podman*. Podman is similar to Docker for many tasks but does not have licensing constraints.
+In this lab, we will build a custom container image using *Podman*. Podman is similar to Docker for many tasks.
 First, access the Jumphost via Web Shell 
 
 .. image:: images/jumphost_webshell.png
@@ -61,7 +60,7 @@ Copying this text in the blank Dockerfile file, you'll:
 
 - **Build** a custom container creation from the base Nginx image.
 - The **RUN** command will execute a command, we will delete the default configuration shipped on all Nginx instances.
-- The **COPY** command will allow us to place files inside the container image to be available at run time(web.conf, index.html).
+- The **COPY** command will allow us to place files inside the container image to be available at run time (web.conf, index.html).
 - The **EXPOSE** command allows us to expose additional ports on the container.
 
 
@@ -78,12 +77,12 @@ container image.
 
    podman build -t appworld:v1 .
 
-As your image is being built, let's cover the command being run. We are telling podman to build a new image and give it the tag *appworld:v1*. After the ``:`` (colon) is used for 
-showing more specific version of the container build. You'll often hear this referred to as the *tag* version. If you do not supply a tag your container registry will assume 
-*latest* is the tag to be used. The ``.`` (period) is simply telling podman the Dockerfile file is located in the same directory we are working from. 
+As your image is being built, let's cover the command being run. We are telling Podman to build a new image and give it the tag *appworld:v1*. The part after the ``:`` (colon) is used for 
+showing the specific version of the container build. You'll often hear this referred to as the *tag* version. If you do not supply a tag your container registry will assume 
+*latest* is the tag to be used. The ``.`` (period) is simply telling Podman the Dockerfile file is located in the same directory we are working from. 
 
-Once the image is built, you can now run the command to list the images. You should see two images listed. This is because podman did not have the Nginx image
-and had to download it first as it was our base. 
+Once the image is built, you can run the command to list the images. You should see two images listed. This is because Podman did not have the Nginx image
+and had to download it first as the base. 
 
 .. code-block:: bash 
    :caption: List Images
@@ -112,10 +111,10 @@ Let's investigate the container images we now have:
      - 191 MB
 
 
-| **Repository** show where the container came from
-| **TAG** is the tag we set or with no tag set the default is *latest*
+| **Repository** shows where the container came from
+| **TAG** is the tag we set. If we did not specify a tag, it is set to the default of *latest*
 | **IMAGE ID** is a unique id assigned to the container
-| **CREATED** 
+| **CREATED** shows when the image was originally created
 | **SIZE** size of the container image
 
 Now it is time to run our newly created container image. 
@@ -128,7 +127,7 @@ Now it is time to run our newly created container image.
 We'll cover in detail what the above command is doing. Podman is being instructed to ``-p`` (publish) the container on host port 83 and map it to container port 83, and give
 our new container the ``--name`` (name) of *app*. The next flagged items are:
 
- - ``-d`` run the container detached, if we did not do this the terminal would reflect the prompt from inside the running container 
+ - ``-d`` run the container detached. If we did not do this the terminal would reflect the prompt from inside the running container.
  - ``-i`` interactive - allows us to execute commands while the container is in a running state.
  - ``-t`` Pseudo-tty 
 |
@@ -147,7 +146,7 @@ We can now run this command to see all container (active and stopped)
 
    podman ps -a
 
-The above the command asks podman to list ``ps`` containers and ``-a`` shows all containers as the default is to only show running. You'll notice the continer id has been
+The above the command asks Podman to list ``ps`` containers and ``-a`` shows all containers (the default is to only show running containers). You'll notice the continer id has been
 truncated to the first 12 characters. If you'd like to see the full container id you can use this command: 
 
 .. code-block:: bash
@@ -184,7 +183,7 @@ Now that your container is running and a successful curl has completed, let's di
 
    podman logs app
 
-The above command is asking podman to show logs for the container with the name of *app*, which we gave to our container when we started it.
+The above command is asking Podman to show logs for the container with the name of *app*, which we gave to our container when we started it.
 
 Your log output should look like:
 
