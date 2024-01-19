@@ -274,7 +274,7 @@ This is an example deployment manifest to explain directives.
 
 .. note:: You can use the command ``cat lab-deploy.yaml`` to view the manifest file
 
-As you've done a previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
+As you've done in previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
 command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work its magic.
 
 .. code-block:: bash
