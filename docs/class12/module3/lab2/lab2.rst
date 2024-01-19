@@ -181,7 +181,7 @@ Staying on the Jumphost, you'll now rollback to revision 1 which was our **nginx
 
    kubectl rollout undo deploy/roller-deploy -n test --to-revision=1
 
-Once this command runs you should observer in the Leader node shell (if you have not stopped the watch command), the same process of Kubernetes turning up a new pod and container
+Once this command runs, you should observe on the Leader node shell (if you have not stopped the watch command), the same process of Kubernetes turning up a new pod and container
 with the new image and then terminating the old one. You should now see the revision history increment to 3.
 
 .. code-block:: bash
