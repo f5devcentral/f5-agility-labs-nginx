@@ -11,33 +11,33 @@ Once the leader node shell comes up, it will be on user *root*. Please run the c
 On the Leader node web shell you'll monitor the *test* namespace for events (in real time)
 
 .. code-block:: bash
-   :caption: Events
+   :caption: Leader Node Events
 
    kubectl get events -n test --watch
 
 On the Jumphost web shell you'll create a new deployment
 
 .. code-block:: bash 
-   :caption: Deployment 
+   :caption: Jummphost Deployment 
 
    kubectl create deployment roller-deploy --image=nginx:1.20 --replicas=3 -n test
 
-On your events shell you should see Kubernetes creating the Replica Set, the pod and Kubelet pulling the image and getting the container running. A replica set resides
+On your events shell (Leader Node) you should see Kubernetes creating the Replica Set, the pod and Kubelet pulling the image and getting the container running. A replica set resides
 inside a deployment. Remember on our deployment we specified the *replica* count? A replica set ensures that a specified number of pod replicas are running at any given time. 
 
 In this lab you will perform a rolling update to the deployment *roller-deploy*. This rolling update should not impact traffic however, we will not be testing for that.
 
 On the Leader Node shell you can now escape the *watch* by using ``Control + C``
 
-With the deployment up and running, you can now see Kubernetes has assigned it a version:
+With the deployment up and running, you can now see Kubernetes has assigned it a version from the Leader Node shell:
 
 .. code-block:: bash
-   :caption: History Command
+   :caption: Leader Node History Command
 
    kubectl rollout history deploy/roller-deploy -n test
 
 .. code-block:: bash
-   :caption: History Output
+   :caption: Leader Node History Output
 
     lab@k3s-leader:/$ kubectl rollout history deploy/roller-deploy -n test
     deployment.apps/roller-deploy 
@@ -48,13 +48,13 @@ On the Leader node shell, you will now need to *describe* the deployment as some
 
 
 .. code-block:: bash
-   :caption: Describe Deploy
+   :caption: Leader Node Describe Deploy
    
    kubectl describe deploy/roller-deploy -n test 
 
 
 .. code-block:: bash
-   :caption: Output
+   :caption: Leader Node Output
    :emphasize-lines: 5, 15
 
    kubectl describe deploy/roller-deploy -n test
@@ -94,9 +94,14 @@ On the Leader node shell, you will now *watch* the roller-deploy *deployment* ba
 *discover* new pods based on labels. Please also make note of the *Containers name* field above.
 
 .. code-block:: bash
-   :caption: Output
+   :caption: Leader Node Watch
+ 
+   kubectl get pod --selector app=roller-deploy -n test --watch
 
-   lab@k3s-leader:/$ k get pod --selector app=roller-deploy -n test --watch
+.. code-block:: bash
+   :caption: Leader Node Output
+
+   lab@k3s-leader:/$ kubectl get pod --selector app=roller-deploy -n test --watch
    NAME                             READY   STATUS    RESTARTS   AGE
    roller-deploy-5c754bcfb8-cv48x   1/1     Running   0          17m
    roller-deploy-5c754bcfb8-dldd8   1/1     Running   0          17m
@@ -106,14 +111,14 @@ On the Jumphost shell, you will now update the container image in your deploymen
 named *nginx* in the deployment named *roller-deploy* to **nginx:1.24**.
 
 .. code-block:: bash
-   :caption: Update Image
+   :caption: Jumphost Update Image
 
    kubectl set image deploy/roller-deploy nginx=nginx:1.24 -n test
 
 Output observed on the Leader node shell after image update:
 
 .. code-block:: bash
-   :caption: Output
+   :caption: Leader Node Output
 
    lab@k3s-leader:/$ kubectl get pod --selector app=roller-deploy -n test --watch
    NAME                             READY   STATUS    RESTARTS   AGE
@@ -153,14 +158,14 @@ This is because we specified 3 replicas in our deployment. Kubernetes will conti
 Let's focus back on the Jumphost shell and check the rollout history:
 
 .. code-block:: bash
-   :caption: Rollout History
+   :caption: Jumphost Rollout History
 
    kubectl rollout history deploy/roller-deploy -n test
 
 You will now see the *newest* revision to your history
 
 .. code-block:: bash
-   :caption: Output 
+   :caption: Jumphost Output 
    :emphasize-lines: 4,5
 
    lab@k3s-leader:~$ kubectl rollout history deploy/roller-deploy -n test
@@ -172,15 +177,15 @@ You will now see the *newest* revision to your history
 Staying on the Jumphost, you'll now rollback to revision 1 which was our **nginx:1.20** image.
 
 .. code-block:: bash
-   :caption: Rollout Undo
+   :caption: Jumphost Rollout Undo
 
    kubectl rollout undo deploy/roller-deploy -n test --to-revision=1
 
-Once this command runs you should observer in the Leader node shell (if you have not stopped the watch command), the same process of Kubernetes turning up a new pod and container
+Once this command runs, you should observe on the Leader node shell (if you have not stopped the watch command), the same process of Kubernetes turning up a new pod and container
 with the new image and then terminating the old one. You should now see the revision history increment to 3.
 
 .. code-block:: bash
-   :caption: Rollout History
+   :caption: Jumphost Rollout History
 
    kubectl rollout history deploy/roller-deploy -n test
 
@@ -190,14 +195,14 @@ annotation to the deployment to *explain* that you've upgraded the deployment im
 you ran.
 
 .. code-block:: bash
-   :caption: Annotation 
+   :caption: Jumphost Annotation 
 
    kubectl annotate deploy/roller-deploy -n test kubernetes.io/change-cause="container image to nginx:1.24"
 
 Now if you run the history command again, you'll notice your revision note is included.
 
 .. code-block:: bash
-   :caption: Rollout History
+   :caption: Jumphost Rollout History
 
    kubectl rollout history deploy/roller-deploy -n test
 
