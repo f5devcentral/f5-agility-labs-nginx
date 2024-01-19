@@ -49,7 +49,7 @@ Once you have verified the pod is running, you'll delete the pod:
 Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indention's are correct, let's 
 review what the manifest file would look like to deploy our Nginx container in a pod called *testpod*.
 
-.. note:: YAML is can be very fussy on indentation, please pay **close attention** to your indentation
+.. note:: YAML can be very fussy on indentation, please pay **close attention** to your indentation
 
 .. code-block:: yaml
    :caption: Pod Manifest 
