@@ -29,7 +29,7 @@ pass: NIM123!@#
    
 .. image:: /class8/images/nim-edit-button.png
 
-Click on Instances in the left column and then the ellipsis on the far rights of the NGINX-Plus instance, and then Edit Config 
+Click on Instances in the left column and then the ellipsis on the far right of the NGINX-Plus instance, and then Edit Config 
 
 |
 |
@@ -59,7 +59,7 @@ Hit the publish button in the upper right to push the changes out to the NGINX P
 |
 |
 
-Now run another test and review the Locus Charts  
+Now run another test and review the Locust Charts  
 
 .. image:: /class8/images/locus-10-100-30.png
   :width: 200 px
@@ -77,7 +77,7 @@ Find and change worker_connections to a value of 1 from 4096.  Line 11.
 
 After changes, make sure to publish and run test again with same values.
 
-.. note:: How did the performance change adn What does worker_connections do?
+.. note:: How did the performance change and What does worker_connections do?
 	
 
 |
@@ -85,9 +85,13 @@ After changes, make sure to publish and run test again with same values.
 
 4) **Revert changes to original settings and publish**
    
-worker_processes auto;
-workder_connections 4096;
+worker_processes auto; (line 3)
 
+|
+
+worker_connections 4096; (line 11) 
+
+|
 
 .. toctree::
    :maxdepth: 2

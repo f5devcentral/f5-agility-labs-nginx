@@ -3,7 +3,7 @@ Tuning the Cache
 
 |
 
-Cache is a hardware or software component embedded in an application or device memory that automatically and temporarily stores data consumed by the user to reduce the data retrieval time and effort the next time the application or device is accessed.
+Cache is a hardware or software component that is embedded in application or device memory. It is used to temporarily store data needed by the user, reducing the time and effort required for retrieving data that is accessed repeatedly.
 
 |
 |
@@ -14,20 +14,33 @@ Cache is a hardware or software component embedded in an application or device m
 
 In NIM, edit nginx.conf, and publish changes
 
-Uncomment the proxy_cache, line 72
+|
+
+Uncomment proxy_cache_path, line 35
+
+.. image:: /class8/images/line35.png
+
+|
+
+Uncomment proxy_cache, line 72
 
 .. image:: /class8/images/nim-proxy-cache.png
 
 |
 |
 
-2) Confirm cache is opperational 
+2) Confirm cache is operational 
    
 On NGINX Proxy cli
 
    `ps aux | grep nginx`
 
 .. note:: Are there any new processes running? Look for cache manager and loader processes
+
+|
+|
+
+.. image:: /class8/images/cacheprocess.png
 
 |
 
