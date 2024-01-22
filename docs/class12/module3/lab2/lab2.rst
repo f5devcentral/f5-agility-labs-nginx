@@ -180,7 +180,7 @@ with the new image and then terminating the old one. You should now see the revi
 
 One last useful command to show is how to add an *annotation* to your deployment and why. A Kubernetes annotation is a key-value pair, somewhat like labels, used to add 
 non-structured data to your object. Annotations are not used to identify the object, like we have with labels, but rather to describe them. In this example, you'll add an 
-annotation to the deployment to *explain* that you've upgraded the deployment image used. This will show up the **CHANGE-CAUSE** section from the *rollout history* command
+annotation to the deployment to *explain* that you've upgraded the deployment image used. This will show up as the **CHANGE-CAUSE** section from the *rollout history* command
 you ran.
 
 .. code-block:: bash
