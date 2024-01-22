@@ -4,11 +4,11 @@ Getting familiar with the LAB
 
 The lab consists of multiple components: 
 
-*   NGINX Gateway Proxy, this is what we will be performance tuning
+*   NGINX Gateway Proxy, Reverse Proxy / Load balancer which we will be tuning the configuration to achieve better performance for the applications
 *   NGINX API Server, the backend serving up the content
-*   Locus Worker, generates the traffic load
-*   Locus controller, GUI Interface to manager the load generater 
-*   NGINX Instance Manager, GUI GINX Central Manager
+*   Locust Worker, generates the traffic load
+*   Locust controller, GUI Interface to manager the load generater 
+*   NGINX Instance Manager, NGINX Central Manager
 
 |
 |
@@ -19,7 +19,7 @@ Here is a picutre of the components and how they connect together:
   :width: 800 px
 
 
-The Locus load generation tool will be retrieving a 1.5MB file from the backend application server. 
+The Locust load generation tool will be retrieving a 1.5MB file from the backend application server. 
 
 Review the Environment
 
@@ -39,11 +39,11 @@ Click on ACCESS and then WEB SHELL
 
 2) **Review the nginx.conf file and some of the parameters already set**
 
-  `vi /etc/nginx/nginx.conf`
+  `view /etc/nginx/nginx.conf`
 
-proxy_max_temp_file_size 0;  This disable the temporary buffer as the 1.5M response doesn't fit and would logs warning
+proxy_max_temp_file_size 0;  This disables the temporary buffer as the 1.5M response doesn't fit and would logs warning
 
-Nginx Dashboard configuration
+|
 
 upstream app_servers config block includes
 
@@ -53,15 +53,24 @@ server config block includes
 
 * status_zone my_proxy;
 
+.. image:: /class8/images/codeblock.png
+  :width: 600 px
+  :align: center
+
+|
+
+WHAT DO THESE ACTUALLY DO - JUST CHECKING CONFIG IS FINE BUT CUSTOMERS WOULD WANT TO KNOW WHY
+
 |
 |
 
-3) **Go to NGINX Proxy Dashboard and review**
+3) **Go to NGINX+ Dashboard and review**
 
 .. image:: /class8/images/nginx-web-shell.png
   :width: 600 px
   :align: center
 
+|
 |
 
 Review the Dashboard and what is included under the tabs across the top of the page
@@ -69,37 +78,47 @@ Review the Dashboard and what is included under the tabs across the top of the p
 .. image:: /class8/images/n-dashboard.png  
 
 |
+
+We need to probably say something about the useful info provided in the dashboard. To click through different sections, how it can be used , what to decipher from it etc.
+
+|
 |
 
-4) **Start up Locus controller software**
+4) **Start up Locust controller software**
    
-Log on to the Locus Controller cli or WEB SHELL
+Log on to the Locust Controller cli or WEB SHELL
 
-Review the Locus configuraiton Failures
+Review the Locust configuraiton files
 
    `cat /home/ubuntu/run_locust_controller.sh`
 
-   `cat /home/ubuntu/locusfile.py`
+   `cat /home/ubuntu/locustfile.py`
 
-Now start up the Locus controller GUI 
+Now start up the Locust controller GUI 
 
    `/home/ubuntu/run_locust_controller.sh`
 
 |
 |
 
-5) **Sign on to Locus Controller GUI**
+5) **Access the Locust Controller Web Interface**
 
-Under Locus Controller ACCESS click on LOCUS to bring up the GUI
+Under Locust Controller ACCESS click on LOCUST to bring up the Web Interface
 
 .. image:: /class8/images/locus-gui.png  
 
 |
 |
 
-6) **On Locus Worker node**
+6) **On Locust Worker node**
    
-Log on to the Locus Worker cli or WEB SHELL
+Log on to the Locust Worker cli or WEB SHELL
+
+|
+
+.. image:: /class8/images/locust-controller-gui.png
+
+|
 
 Verify 8-core machine, run this command to verify CPUs
 
@@ -109,28 +128,28 @@ Verify 8-core machine, run this command to verify CPUs
 
 |
 
-Start up 8 locus workers by running this command 8 times
+Start up 8 locust workers by running this command 8 times
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
-   `/home/ubuntu/run_locus_worker.sh 10.1.1.6`
+   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
 
 |
 |
 
-7) **In Locus GUI, start the load generation**
+7) **In Locust GUI, start the load generation**
    
 Number of Users: 100
 
@@ -142,6 +161,9 @@ Advanced Options, Run time: 30s
 
 .. image:: /class8/images/locus-10-100-30.png  
 
+|
+
+Click the 'Start swarming' button
 
 |
 |
@@ -150,12 +172,16 @@ Advanced Options, Run time: 30s
    
 .. note:: What is happening with Total Request per Second and Response Time graphs 
 	
-Click on Workers tab on top list, ensure there are 8 worker running 
+Click the Charts tab to review graphs as they are generated
 
 |
 |
 
-9) **Run same test a 2nd time**
+9) **Run same test again**
+
+Run same test a 2nd time by clicking 'New test' at the top-right under 'Status STOPPED'. Keep the settings the same as before and click the 'Start swarming' button.
+
+|
 
 .. image:: /class8/images/locus-new-test.png 
 
@@ -184,9 +210,10 @@ Advanced Options, Run time: 30s
 .. image:: /class8/images/locus-50-500-30.png  
    :width: 200 px
 
-Review NGINX Proxy CPUs
-Review Locus GUI Charts
-	
+Review NGINX Proxy CPUs and the Locus GUI Charts
+
+|
+
 .. note::  How much CPU is being used?  Is the system fully saturated? How was Total Request per Second affected by this addtional load
 	
 |
