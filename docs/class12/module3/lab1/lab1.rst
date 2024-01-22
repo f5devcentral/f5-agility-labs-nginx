@@ -140,7 +140,7 @@ Feel free to run some Linux commands such as
 
 To exit the shell, type **exit**
 
-But you don't have to directly run the shell to execute your commands; you can instead *pass* the command to the shell.
+But you can also run a command *without* directly accessing the shell. You just *pass* the command to the shell like below.
 
 .. code-block:: bash
    :caption: Shell
