@@ -17,17 +17,17 @@ Let's look at our two node types in detail.
 
 .. image:: images/kube_cluster.png
 
-The *Leader Node* is in charge of the cluster control plane. There must be at least, but not limited to, one leader node per cluster. Some of the components included in the leader
+The *Leader Node* is in charge of the cluster control plane. There must be at least one leader node per cluster, but there can be more. Some of the components included in the leader
 node are the API server and Scheduler. The API server validates and configures the cluster for all the cluster objects. This includes pods, services and deployments. The scheduler watches for newly created pods and determines the best matching node(s) to place the workload on. If there aren't any nodes 
 matching the requirements of the pod, the pod will remain in an *unscheduled* state. 
 
 
 The *Worker Node* is where our containerized workloads will run in our data plane. The worker nodes will need a container runtime engine (CRE) such as *Docker* or *containerd*
-so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kubelet is responsible for pulling container 
-images, allows control plane to monitor the node, and ensures containers are healthy and running. *Kube-proxy* is a network agent installed on every node and provides network 
+so our containers can be run. In order for the leader node to communicate to our worker node an agent called *Kubelet* must also run. Kubelet is responsible for pulling (downloading) container 
+images, it allows the control plane to monitor the node, and it ensures the containers are healthy and running. *Kube-proxy* is a network agent installed on every node and provides network 
 forwarding to backend services. 
 
-.. note:: Keep in mind that in a dev environment, your leader node may also be your worker node (not a production practice).
+.. note:: Keep in mind that in a dev environment, your leader node may also be your worker node (this is generally not a recommended practice for production deployments).
 
 
 Let's view the nodes attached to our cluster by connecting to the Jumphost from within the lab environment. 
@@ -86,14 +86,14 @@ Custom Resource
 ---------------
 
 As the name implies, custom resources are objects you can build to extend capabilities in Kubernetes. You can create new resources that don't exist in the default
-Kubernetes installation or even combine existing objects so they can be deployed at the same time. Imagine creating a custom Kubernetes API that could deploy your application
+Kubernetes installation or combine existing objects so they can be deployed at the same time. Imagine creating a custom Kubernetes API that could deploy your application
 and expose it to the world in one manifest. That's what a CRD allows you to do. Throughout this course you'll be interacting with the Kubernetes 
-API when we check on nodes, pods, namespaces etc. 
+API when we check on nodes, pods, namespaces, etc. 
 
-How you define the custom resource is by a Custom Resource Definition(CRD). This CRD will create a new RESTful endpoint that will be able to be utilized on either 
+You will define a custom resource using a Custom Resource Definition (CRD). This CRD will create a new RESTful endpoint that can be utilized on either 
 a namespace level or cluster level. 
 
-Let's view the installed CRD's and we'll focus in on Nginx.
+Let's view the installed CRDs and focus in on Nginx.
 
 .. code-block:: bash
    :caption: CRD
@@ -136,7 +136,7 @@ Let's view the installed CRD's and we'll focus in on Nginx.
 
    kubectl describe crd virtualservers.k8s.nginx.org 
 
-This CRD file defines how a user can employ the newly created resource with a full schema. If you are not familiar with schema's, think of it as syntax checking process to make sure newly created 
+This CRD file defines how a user can employ the newly created resource with a full schema. If you are not familiar with schemas, think of it as a syntax checking process to make sure newly created 
 manifest files meet the defined specification to be deployed on the Kubernetes system. We will not be building any Custom Resources in this lab but knowing what Custom Resources are and that Custom
 Resource Definitions describe them is valuable knowledge. This capability allows you and companies like F5 to greatly extend functions and capabilities of your cluster or products made to interact with 
 applications. 
@@ -161,10 +161,10 @@ You'll find those directives at the top of all the manifest files you'll create 
 Namespaces
 ----------
 
-In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster, think of a namespace as a *sub-cluster*. Just like you'd use a partition in a BIG-IP to separate
+In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster. Think of a namespace as a *sub-cluster*. Just like you'd use a partition in a BIG-IP to separate
 objects, you'd use a namespace in Kubernetes. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
 
-Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
+Namespaces are intended for use in environments with many users spread across multiple teams or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
 
 
 .. code-block:: bash 
@@ -230,16 +230,16 @@ Example output:
    replicaset.apps/coredns-597584b69b                  1         1         1       314d
    replicaset.apps/metrics-server-5f9f776df5           1         1         1       314d
 
-The next three sections will reference highlighted data from the above output. Your data will not match exactly as the pod names or cluster ip's are generated at 
-runtime. 
+The next three sections will reference highlighted data from the above output. Your data will not match exactly since the pod names or cluster IPs are generated at 
+runtime.
 
 Pod
 ---
 
-In Kubernetes, a Pod is smallest unit of compute and holds one or more containers. In this lab we will only work with a single container in a pod. Something to 
-keep in mind though, if you deploy multiple containers in single pod, those containers will compete for resources. Placing containers inside of pods make them 
-easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab will will review data returned 
-from our coredns pod.
+In Kubernetes, a Pod is the smallest unit of compute and holds one or more containers. In this lab we will only work with a single container in a pod. Something to 
+keep in mind, though: if you deploy multiple containers in single pod, those containers will compete for resources. Placing containers inside of pods make them 
+easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab we will review data returned 
+from our CoreDNS pod.
 
 .. list-table:: 
    :header-rows: 1
@@ -260,9 +260,9 @@ from our coredns pod.
 | **Resource Type** indicates this is of type pod 
 | **Resource Name** a unique name for the resource in the namespace
 | **Ready** shows how many containers are running in the pod
-| **Status** this examples shows the status as running, meaning the pod is bound to node and all containers are created and started
-| **Restarts** shows the number of restarts of the container (not pod)
-| **Age** describes how long ago our pod was created and running
+| **Status** shows the status of the pod. In this example, the status is running, meaning the pod is bound to a node and all containers are created and started
+| **Restarts** shows the number of restarts of the container (not the pod)
+| **Age** describes how long ago our pod was created and has been running
 
 |
 
@@ -271,15 +271,15 @@ Documentation:
 - `Pod Status <https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#pod-phase>`_
 
 
-You can also describe this resource for more detail. **You'll have to replace your pod name with the example below**.
+You can also describe this resource for more detail. **You'll have to replace the pod name in the example below with your pod name**.
 
 .. code-block:: bash
    :caption: Describe CoreDNS
 
    kubectl describe pod coredns-597584b69b-5fb2r -n kube-system
 
-Looking at the above output you can see a wealth of information about the CoreDNS pod. From which node it's running on, labels, pod IP address and what 
-image being used to pod related events. 
+Looking at the above output you can see a wealth of information about the CoreDNS pod: which node it's running on, labels, pod IP address, what 
+image is being used, and pod related events. 
 
 Please always remember a container's life is ephemeral in Kubernetes. You will hear the phrase "Cattle, not pets" a lot when talking about a containers *life* in Kubernetes. We
 will do a short lab here to cover that exact concept. 
@@ -302,7 +302,7 @@ We have created a new namespace and asked Kubernetes to run a pod named *bbox* w
    kubectl get pod -n test
 
 Notice now when you check on the pods in the test namespace, bbox is *Completed*. This means our pod was created, assigned to a node, then the kubelet got our BusyBox image
-and ran the container inside the pod through execution. So without any applications or code to run our container executed and shutdown.
+and ran the container inside the pod through execution. Without any applications or code to run our container executed and shut down.
 
 .. code-block:: bash
    :caption: Output
@@ -311,7 +311,7 @@ and ran the container inside the pod through execution. So without any applicati
    NAME                            READY   STATUS      RESTARTS         AGE
    bbox                            0/1     Completed   1 (2s ago)       3s
 
-.. note:: You may not yet see a Completed status and instead see CrashLoopBackOff (clbo) status
+.. note:: You may not yet see a Completed status and may instead see CrashLoopBackOff (clbo) status
 
 
 .. image:: images/clbo.png
@@ -319,11 +319,11 @@ and ran the container inside the pod through execution. So without any applicati
 
 If you encouter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
 
-- CrashLoopBackOff - pod is unable to start or runs into an error and is then restarted multiple times by the kubelet
-- ImagePullBackOff - kubelet is unable to pull the container image
+- CrashLoopBackOff - pod is unable to start or has run into an error and has been restarted multiple times by the kubelet
+- ImagePullBackOff - kubelet is unable to pull (download) the container image
 
 
-Now let's try running our pod again, but this time we'll run a shell function of sleep for 35 seconds. **Please run each single command at a time**.
+Now let's try running our pod again, but this time we'll run a shell function of sleep for 35 seconds. **Please run each command one at a time**.
 
 
 .. code-block:: bash
@@ -351,7 +351,7 @@ A Kubernetes deployment manages sets of pods used to run an application. The dep
 - update strategy (how Kubernetes will roll out new versions of your application)
 
 As you deploy a new application across your cluster, the deployment manifest tells Kubernetes the image version, expected number of pods to run across the cluster and
-attaches a label to each pod showing it's association with the deployment. Kubernetes will assign and keep your requested replicas running (or restarted) keeping in line 
+attaches a label to each pod showing its association with the deployment. Kubernetes will assign and keep your requested replicas running (or restarted) keeping in line 
 with cluster resources.
 
 .. list-table:: 
@@ -392,7 +392,7 @@ Service
 -------
 
 A Kubernetes service is a method for exposing our application that can be running on one or many pods (think deployment). Services also use *tags* like deployments 
-to associate pods to a service name. This is tremendously helpful as pods can created or deleted on different nodes and our service manifest will handle
+to associate pods to a service name. This is tremendously helpful as pods can be created or deleted on different nodes and our service manifest will handle
 service discovery.
 
 .. list-table:: 
@@ -416,16 +416,16 @@ service discovery.
 | **Resource Type** service
 | **Resource Name** kube-dns 
 | **TYPE** how the service is exposed to the world
-| **CLUSTER-IP** this is the internal IP of the pod reachable from within the cluster
-| **EXTERNAL-IP** if **TYPE** is Load balancer and public IP would be shown 
+| **CLUSTER-IP** this is the internal IP of the pod and is reachable from within the cluster
+| **EXTERNAL-IP** if **TYPE** is Load balancer a public IP would be shown 
 | **PORTS** the ports exposed for public access to the deployment 
 | **AGE** amount of time the service has been running
 
 
 One very important concept we will cover here is the service type. This type determines how your application will be exposed. There are three main service types that we will speak to:
 
-- ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster this way. Usually used with an ingress controller
-- Load balancer - exposes application externally via load balancer using cloud service provider constructs(i.e. AWS NLB, Azure ALB, Google NLB)
+- ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster. Usually used with an ingress controller
+- Load balancer - exposes an application externally via load balancer using cloud service provider constructs (i.e. AWS NLB, Azure ALB, Google NLB)
 - NodePort - exposes applications on each node on a specified port. Keep in mind even if a pod does not exist on the node, the port is still open.
 
 Let's see all the services in the *kube-system* namespace 
@@ -439,10 +439,10 @@ Let's see all the services in the *kube-system* namespace
 Container Network Interface
 ---------------------------
 
-We won't be talking a lot about CNI's in this lab but we do need to at least address it. CNI's focus on the connectivity, or removal of, container networks. The container runtime calls the 
-installed CNI to add or delete a network interface for the container/pod. The CNI has sole responsibility of building the container network.
+We won't be talking a lot about CNIs in this lab but we do need to at least address it. CNIs focus on the connectivity, or removal of, container networks. The container runtime calls the 
+installed CNI to add or delete a network interface for the container/pod. The CNI has the sole responsibility of building the container network.
 
-Two CNI's you'll probably see or hear about most often:
+Two CNIs you'll probably see or hear about most often:
 
 - Calico - BGP
 - Flannel - VXLAN
