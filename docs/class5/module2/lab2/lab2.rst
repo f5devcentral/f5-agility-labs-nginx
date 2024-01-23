@@ -27,11 +27,23 @@ Load the file into a file editor:
 
   sudo nano /etc/nginx-agent/nginx-agent.conf
 
-Add the following configuration block to the end of the file:
-
-.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces to ensure no errors occur.
+Near the end of the file, modify the line starting with "config_dirs" so it looks like the following:
 
 .. code-block:: bash
+
+  config_dirs: "/etc/nginx:/usr/local/etc/nginx:/usr/share/nginx/modules:/etc/nms:/etc/app_protect"
+
+
+Next, add the following configuration block to the end of the file:
+
+.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces and ensure the lines are indented properly to ensure no errors occur.
+
+.. code-block:: bash
+
+  # Enable reporting NGINX App Protect details to the management plane.
+  extensions:
+    - nginx-app-protect
+    - nap-monitoring
 
   # Enable reporting NGINX App Protect details to the control plane.
   nginx_app_protect:
