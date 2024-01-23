@@ -40,6 +40,10 @@ Next, add the following configuration block to the end of the file:
 
 .. code-block:: bash
 
+  events:
+    # report data plane events back to the management plane
+    enable: true
+
   # Enable reporting NGINX App Protect details to the management plane.
   extensions:
     - nginx-app-protect
