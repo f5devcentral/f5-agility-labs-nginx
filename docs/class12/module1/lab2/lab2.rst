@@ -238,7 +238,7 @@ Pod
 
 In Kubernetes, a Pod is the smallest unit of compute and holds one or more containers. In this lab we will only work with a single container in a pod. Something to 
 keep in mind though, if you deploy multiple containers in single pod, those containers will compete for resources. Placing containers inside of pods make them 
-easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab will review data returned 
+easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab we will review data returned 
 from our coredns pod.
 
 .. list-table:: 
