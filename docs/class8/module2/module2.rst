@@ -19,6 +19,10 @@ pass: NIM123!@#
 
 |
 
+Click on the Instance Manager tile.
+
+|
+
 .. image:: /class8/images/nim-button.png
 
 |
@@ -64,7 +68,7 @@ Now run another test and review the Locust Charts
 .. image:: /class8/images/locus-10-100-30.png
   :width: 200 px
 
-.. note:: Are there any differences in Requests per Second, Response times or other stats?
+.. note:: Are there any differences in Requests per Second, Response times or other stats from the previous test?
 	
 |
 |

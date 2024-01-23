@@ -62,7 +62,7 @@ Advanced Options, Run time: 30s
 .. image:: /class8/images/locus-500-50-30.png  
    :width: 200 px
 
-.. note::  Where you do see the preformance improvment? 
+.. note::  Where you do see the performance improvement?
 	
 Review NGINX Dashboard cache section.  How much bandwidth was saved from going to upstream server?
 
@@ -88,7 +88,7 @@ Uncomment "sendfile on", line 29
 	
 Run the same test again.
 
-.. note:: Were there any performace gains seen?
+.. note:: Were there any performance gains seen?
 
 |
 |

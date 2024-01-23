@@ -41,7 +41,7 @@ Click on ACCESS and then WEB SHELL
 
   `view /etc/nginx/nginx.conf`
 
-proxy_max_temp_file_size 0;  This disables the temporary buffer as the 1.5M response doesn't fit and would logs warning
+proxy_max_temp_file_size 0;  Disables buffering of responses to temporary files
 
 |
 
@@ -64,7 +64,13 @@ WHAT DO THESE ACTUALLY DO - JUST CHECKING CONFIG IS FINE BUT CUSTOMERS WOULD WAN
 |
 |
 
-3) **Go to NGINX+ Dashboard and review**
+3) **Go to NGINX Proxy Dashboard and review**
+
+|
+
+Under ACCESS for the NGINX Proxy, select NGINX+DASHBOARD
+
+|
 
 .. image:: /class8/images/nginx-web-shell.png
   :width: 600 px
@@ -128,23 +134,9 @@ Verify 8-core machine, run this command to verify CPUs
 
 |
 
-Start up 8 locust workers by running this command 8 times
+Start up locust workers by running this command:
 
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
-
-   `/home/ubuntu/run_locust_worker.sh 10.1.1.6`
+   `/home/ubuntu/start_locust_workers.sh`
 
 |
 |
