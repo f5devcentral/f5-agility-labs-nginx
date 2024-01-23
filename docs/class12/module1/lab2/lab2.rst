@@ -238,7 +238,7 @@ Pod
 
 In Kubernetes, a Pod is the smallest unit of compute and holds one or more containers. In this lab we will only work with a single container in a pod. Something to 
 keep in mind though, if you deploy multiple containers in single pod, those containers will compete for resources. Placing containers inside of pods make them 
-easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab will review data returned 
+easier to manage and scale for Kubernetes. In the next module you will perform CRUD operations on a pod, but for this lab we will review data returned 
 from our coredns pod.
 
 .. list-table:: 
@@ -424,7 +424,7 @@ service discovery.
 
 One very important concept we will cover here is the service type. This type determines how your application will be exposed. There are three main service types that we will speak to:
 
-- ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster this way. Usually used with an ingress controller
+- ClusterIP - this exposes your application on an internal cluster IP and is only reachable from within the cluster. Usually used with an ingress controller
 - Load balancer - exposes application externally via load balancer using cloud service provider constructs (i.e. AWS NLB, Azure ALB, Google NLB)
 - NodePort - exposes applications on each node on a specified port. Keep in mind even if a pod does not exist on the node, the port is still open.
 

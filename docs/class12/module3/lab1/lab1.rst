@@ -8,7 +8,7 @@ enough detail to lead you to the problem? In this lab we'll show you some additi
 Explain
 -------
 
-Let's start with the *explain* command. Kubernetes explain command provides documentation of the resource or specific field of the resource. In past labs, you used 
+Let's start with the *explain* command. The Kubernetes explain command provides documentation of the resource or specific field of the resource. In past labs, you used 
 imperative commands to create pods but we only covered the fields used. You can find reference to all objects right from the cli.
 
 Example:
@@ -38,7 +38,7 @@ As you can see from the output, the *name* field is required when declaring a po
 Get
 ---
 
-Kubernetes *get* command will fetch status and name of an object. In the below example, instead of requesting information on a specific object we are seeking information
+Kubernetes *get* command will fetch the status and name of an object. In the below example, instead of requesting information on a specific object we are seeking information
 on all objects within the *test* namespace.
 
 .. code-block:: bash
