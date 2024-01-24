@@ -140,19 +140,21 @@ Feel free to run some Linux commands such as
 
 To exit the shell, type **exit**
 
+For multi-container pods, you will need to include the -c flag to specify the container to exec into. (For single-container pods, the -c flag is optional.)
+
+.. code-block:: bash 
+   :caption: Shell Multi-Container
+
+   kubectl exec -it <pod_name> -c <container_name> -n <namespace> -- /bin/bash
+
+How would you use the -c flag to exec into the container running in *testpod*?
+
 But you don't have to access the shell to run your commands, you can *pass* the command to the shell.
 
 .. code-block:: bash
    :caption: Shell
 
    kubectl exec -it testpod -n test -- ls -la
-
-Example for multi-container pod:
-
-.. code-block:: bash 
-   :caption: Shell Multi-Container
-
-   kubectl exec -it <pod_name> -c <container_name> -n <namespace> -- /bin/bash
 
 DNS Utils
 ---------
