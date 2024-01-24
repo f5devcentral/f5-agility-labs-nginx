@@ -75,7 +75,7 @@ Now run another test and review the Locust Charts
 
 3) **Make another change to the nginx.conf, publish and test again**
  	
-Find and change worker_connections to a value of 1 from 4096.  Line 11.
+Find and change worker_connections to a value of 16 from 4096 (line 11)
 
 .. image:: /class8/images/nim-worker-1.png
 
