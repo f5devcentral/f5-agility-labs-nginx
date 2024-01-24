@@ -63,6 +63,8 @@ Advanced Options, Run time: 30s
    :width: 200 px
 
 .. note::  Where you do see the performance improvement?
+
+XXXXXXXXXXXX NEED HINT FOR THIS. Do they simply take the value for “Served” in the Traffic section of the NGINX Dashboard or should they be looking at something else?
 	
 Review NGINX Dashboard cache section.  How much bandwidth was saved from going to upstream server?
 
@@ -74,6 +76,8 @@ Review NGINX Dashboard cache section.  How much bandwidth was saved from going t
 Turn on Sendfile linux system call
 
 .. note:: What does Sendfile do?
+
+XXXXXXXXXXXXXX NEED INFO ON WHAT SENDFILE DOES
 
 In NIM, edit nginx.conf and publish 
 
@@ -106,6 +110,8 @@ Uncomment open_file_cache, line 36
 |
 
 .. note:: Do you notice any improvements?  
+
+XXXXXXXXXXXXXX  NEED HINT ON WHAT TO EXPECT
 
 |
 

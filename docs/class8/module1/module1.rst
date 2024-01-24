@@ -58,7 +58,7 @@ server config block includes
  
 |
 
-WHAT DO THESE ACTUALLY DO - JUST CHECKING CONFIG IS FINE BUT CUSTOMERS WOULD WANT TO KNOW WHY
+XXXXXXXXXXXXXXXXXXWHAT DO THESE ACTUALLY DO - JUST CHECKING CONFIG IS FINE BUT CUSTOMERS WOULD WANT TO KNOW WHY
 
 |
 |
@@ -136,6 +136,10 @@ Verify 8-core machine, run this command to verify CPUs
 Start up locust workers by running this command:
 
    `/home/ubuntu/start_locust_workers.sh`
+
+|
+
+XXXXXXXXXXXXXXXXXXX NEED NOTE TO NOT SHUTDOWN WINDOW.  SCREENSHOT TOO!
 
 |
 |
