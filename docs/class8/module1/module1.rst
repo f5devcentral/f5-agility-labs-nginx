@@ -55,7 +55,7 @@ server config block includes
 
 .. image:: /class8/images/codeblock.png
   :width: 600 px
-
+ 
 |
 
 WHAT DO THESE ACTUALLY DO - JUST CHECKING CONFIG IS FINE BUT CUSTOMERS WOULD WANT TO KNOW WHY
