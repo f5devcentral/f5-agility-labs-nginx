@@ -55,7 +55,6 @@ server config block includes
 
 .. image:: /class8/images/codeblock.png
   :width: 600 px
-  :align: center
 
 |
 
