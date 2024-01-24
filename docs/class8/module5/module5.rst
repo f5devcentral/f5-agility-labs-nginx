@@ -56,7 +56,7 @@ Now load the new TCP settings
 |
 |
 
-2) **Review rate limits**  
+4) **Review rate limits**  
    
 Review this line in the nginx.conf file
 	
@@ -65,7 +65,7 @@ Review this line in the nginx.conf file
 |
 |
 
-4) **Review keepalive parameters**
+5) **Review keepalive parameters**
 
 * keepalive_timeout  65;
 * keepalive_requests 10000;
