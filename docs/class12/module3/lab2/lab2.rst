@@ -199,7 +199,7 @@ you ran.
 .. code-block:: bash
    :caption: Jumphost Annotation 
 
-   kubectl annotate deploy/roller-deploy -n test kubernetes.io/change-cause="container image to nginx:1.24"
+   kubectl annotate deploy/roller-deploy -n test kubernetes.io/change-cause="rollback container image to nginx:1.20"
 
 Now if you run the history command again, you'll notice your revision note is included.
 
