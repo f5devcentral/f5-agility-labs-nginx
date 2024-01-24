@@ -208,6 +208,17 @@ Now if you run the history command again, you'll notice your revision note is in
 
    kubectl rollout history deploy/roller-deploy -n test
 
+.. code-block:: bash
+   :caption: Jumphost History Output
+
+   lab@k3s-leader:~$ kubectl annotate deploy/roller-deploy -n test kubernetes.io/change-cause="rollback container image to nginx:1.20"
+   deployment.apps/roller-deploy annotated
+   lab@k3s-leader:~$ kubectl rollout history deploy/roller-deploy -n test
+   deployment.apps/roller-deploy 
+   REVISION  CHANGE-CAUSE
+   2         <none>
+   3         rollback container image to nginx:1.20
+
 
 Official Documentation
 
