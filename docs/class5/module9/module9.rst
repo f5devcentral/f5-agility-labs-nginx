@@ -7,7 +7,7 @@ Launch HTTP Flood Attack
 We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apache Benchmark.
 
 1. Open WebShell to the **Attack Traffic Generator** VM (UDF > Components > Systems > Attack Traffic Generator > Access > Web Shell)
-2. Launch L7 DOS attacks.
+2. Launch L7 DoS attacks.
 
 .. code:: bash
 
