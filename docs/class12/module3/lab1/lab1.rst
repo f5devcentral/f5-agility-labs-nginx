@@ -147,12 +147,14 @@ But you don't have to access the shell to run your commands, you can *pass* the 
 
    kubectl exec -it testpod -n test -- ls -la
 
-Example for multi-container pod:
+
+If your pod has more than one container you must specify the container you want to connect to with the ``-c`` flag as in the example below.
 
 .. code-block:: bash 
-   :caption: Shell Multi-Container
+   :caption: Example Shell Multi-Container
 
    kubectl exec -it <pod_name> -c <container_name> -n <namespace> -- /bin/bash
+
 
 DNS Utils
 ---------
