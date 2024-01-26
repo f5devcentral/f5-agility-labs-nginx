@@ -11,7 +11,7 @@ Since this lab utilizes NIM, we're going to install the NGINX Agent and add the 
 
 .. code-block:: bash
 
-  curl -k https://nginx-mgmt-suite.agility.lab/install/nginx-agent | sudo sh
+  curl -k https://nginx-instance-manager.appworld.lab/install/nginx-agent | sudo sh
 
 **Result**
 
@@ -94,7 +94,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/firefox_launch.png
 
-6. Click the NIM bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
+6. Click the NIM bookmark or navigate to https://nginx-instance-manager.appworld.lab/ui/.
 
 .. image:: images/launch_nim.png
 
@@ -110,7 +110,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/nim_refresh_result.png
 
-10. Click the **nginx-plus-2.agility.lab** instance in the list. 
+10. Click the **nginx-plus-2.appworld.lab** instance in the list. 
 
 .. image:: images/nginx_plus_2_detail.png
 
