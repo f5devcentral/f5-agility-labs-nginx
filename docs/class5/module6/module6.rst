@@ -104,13 +104,12 @@ Attack script output:
   progress: 90% done
   progress: 100% done
 
-3. Click back on to the WebShell on the Legitimate Traffic Generator VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
+3. Click back on to the WebShell on the Legitimate Traffic Generator VM. Did the output from the script change? Output should no longer show “Finished trip with 10 points” and you may see a:
 
-.. code:: shell
+   .. code:: shell
 
-  JUICESHOP HTTP Code:200
-        details = "Received http2 header with status: 502"
-        debug_error_string = "{"created":"@1650395963.222837020","description":"Received http2 :status header with non-200 OK status","file":"src/core/ext/filters/http/client/http_client_filter.cc","file_line":134,"grpc_message":"Received http2 header with status: 502","grpc_status":14,"value":"502"}"
+      "debug_error_string = "UNKNOWN:Error received from peer {created_time:"2024-01-26T15:39:49.83945022+00:00", grpc_status:2, grpc_message:"Stream removed"}""
 
 4. Stop the HTTP2Flood attack running on the Attack Traffic Generator host by pressing CTRL+C
+
 5. On the Legitimate Traffic Generator WebShell, press CTRL+C to exit the script
