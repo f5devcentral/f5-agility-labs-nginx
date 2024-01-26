@@ -15,7 +15,7 @@ Test the WAF Policy by Replicating the SQL Injection Attack
 
    ' or 1=1-- '
 
-and click **Log me in**. 
+and click **Log me in**.
 
 .. image:: images/sql_inj_login.png
 
@@ -47,4 +47,4 @@ and click **Log me in**.
 
 .. image:: images/SM_support_id_details.png
 
-NGINX App Protect WAF is now enforcing protection for the site. 
+NGINX App Protect WAF is now enforcing protection for the site.

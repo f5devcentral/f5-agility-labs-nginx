@@ -9,7 +9,7 @@ View the NGINX Plus Instance in NIM
 
 .. image:: images/diy_pageload.png
 
-3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Instance Manager. Take a look at NIM to view the configuration and instance/application metrics. Click on the **NIM** bookmark in Firefox or navigate to **https://nginx-mgmt-suite.agility.lab/ui/**. You'll be presented with the NIM login page. Click ***Sign In***.
+3. This web application is being proxied by an NGINX Plus instance running NGINX App Protect WAF. This instance is being managed by NGINX Instance Manager. Take a look at NIM to view the configuration and instance/application metrics. Click on the **NIM** bookmark in Firefox or navigate to **https://nginx-instance-manager.appworld.lab/ui/**. You'll be presented with the NIM login page. Click ***Sign In***.
 
 .. image:: images/nim_login.png
 
@@ -31,7 +31,7 @@ View the NGINX Plus Instance in NIM
 
 .. image:: images/nim_instances_delete_offline.png
 
-8. Click on the **nginx-instance-1.agility.lab** instance in the list that shows **Online** under the **Status** column. The **Instance Detail** screen loads.
+8. Click on the **nginx-instance-1.appworld.lab** instance in the list that shows **Online** under the **Status** column. The **Instance Detail** screen loads.
 
 .. image:: images/nim_instance_detail.png
 

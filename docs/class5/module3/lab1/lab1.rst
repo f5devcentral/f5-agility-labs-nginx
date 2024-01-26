@@ -20,7 +20,7 @@ Argo CD offers the following key features and capabilities:
 
 .. image:: images/jump_host_firefox.png
 
-2. Click on the Argo CD bookmark or navigate to https://argocd.agility.lab:30008/login.
+2. Click on the Argo CD bookmark or navigate to https://argocd.appworld.lab:30008/login.
 
 .. image:: images/argo_bookmark.png
 
