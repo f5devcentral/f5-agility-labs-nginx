@@ -31,6 +31,8 @@ Output:
 
 .. image:: access-dashboard1.jpg
 
+.. image:: dos-dashboard1.jpg
+
 5. As evidence of successful mitigation, the good traffic script will continue to report that the service is available.
 
 Output:
@@ -44,7 +46,7 @@ Output:
 
 6. Stop the attack. Use Ctrl+C.
 
-.. note:: Wait for the vertical black line in the ELK Dashboards before running the next attack script.
+.. note:: Wait for the vertical black line in the ELK Dashboard before running the next attack script.
 
 
 Perform Slow HTTP Attack with slowhttptest tool
@@ -98,9 +100,15 @@ Slowhttptest will report that NGINX App Protect DoS is closing the connection: s
 
 .. image:: access-dashboard1.jpg
 
-5. Stop the attack. Use Ctrl+C.
+.. image:: dos-dashboard2.jpg
 
-.. note:: Wait for the vertical black line in the ELK Dashboards before running the next attack script.
+5. Wait a few minutes for the mitigation to occur.
+
+.. image:: dos-dashboard3.jpg
+
+6. Stop the attack. Use Ctrl+C.
+
+.. note:: Wait for the vertical black line in the ELK Dashboard before running the next attack script.
 
 
 Launch HTTP/2 Flood attack on gRPC service
@@ -135,9 +143,13 @@ Output:
 
 .. image:: access-dashboard1.jpg
 
-5. Stop the attack. Use Ctrl+C.
+5. Open the Kibana dashboard you will notice the script triggered Signature Based Redirects mitigation response.
 
-.. note:: Wait for the vertical black line in the ELK Dashboards before running the next attack script.
+.. image:: dos-dashboard4.jpg
+
+6. Stop the attack. Use Ctrl+C.
+
+.. note:: Wait for the vertical black line in the ELK Dashboard before running the next attack script.
 
 
 Launch Message flood DoS by gRPC
@@ -166,15 +178,15 @@ Output:
   
   Finished trip with 10 points\:\:
 
-The ghz tool used in the script will report HTTP status code 403, which indicates traffic is blocked by NGINX App Protect DoS.
+The ghz tool used in the script will report HTTP status code 307. The status 307 is used to make it unambiguously clear which kind of reaction is expected of the client.
 
-  Error distribution:
-  
-    [9050] rpc error: code = Unavailable desc = the connection is draining
-    
-    [1000] rpc error: code = PermissionDenied desc = Forbidden: HTTP status code 403; transport: missing content-type field
-    
-    [150] rpc error: code = Unavailable desc = transport is closing\:\:
+  .. code:: shell
+
+    Error distribution:
+
+      [300] rpc error: code = Unknown desc = Temporary Redirect: HTTP status code 307; transport: received the unexpected content- type "text/html"
+      [9661] rpc error: code = Unavailable desc = transport is closing
+      [138] rpc error: code = DeadlineExceeded desc = context deadline exceeded
 
 3. Go to "ELK" VM, navigate to "Access" and select "KIBANA"
 
@@ -186,7 +198,7 @@ The ghz tool used in the script will report HTTP status code 403, which indicate
 
 5. Stop the attack. Use Ctrl+C.
 
-.. note:: Wait for the vertical black line in the ELK Dashboards before running the next attack script.
+.. note:: Wait for the vertical black line in the ELK Dashboard before running the next attack script.
 
 
 Launch Slow gRPC POST
@@ -213,4 +225,4 @@ Attacker supplies a number of concurrent slow POST gRPC requests that exceeds th
 
 5. Stop the attack. Use Ctrl+C.
 
-.. note:: Wait for the vertical black line in the ELK Dashboards which indicates the end of the attack.
+.. note:: Wait for the vertical black line in the ELK Dashboard which indicates the end of the attack.
