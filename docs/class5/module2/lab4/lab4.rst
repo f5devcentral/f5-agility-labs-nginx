@@ -44,7 +44,7 @@ Your screen should look similar to below:
 
 .. image:: images/publish_confirm.png
 
-9. After a few moments, you will see a notification that the configuration was successfully published.
+9. After a few moments, you will see a notification that the configuration was successfully published. If the Publish initially fails, please click Publish and confirm publishing again.
 
 .. image:: images/publish_notification.png
 
