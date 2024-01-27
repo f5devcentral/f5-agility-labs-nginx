@@ -68,7 +68,7 @@ There are two components to NGINX App Protect within NIM:
 
 .. image:: images/SM_Advanced_click.png
 
-16. This tab shows data relating to attacks matching downloaded signatures. Since signatures have not yet been downloaded, this data is not populated. 
+16. This tab shows data relating to attacks matching downloaded signatures.
 
 .. image:: images/SM_dashboard_advanced.png
 
