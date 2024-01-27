@@ -81,37 +81,37 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/nim_app_protect_menu.png
 
-20. Click on the **AgilityPolicy** in the policy list. 
+20. Click on the **AppWorldPolicy** in the policy list. 
 
-.. image:: images/nim_app_protect_agilitypolicy.png
+.. image:: images/nim_app_protect_appworldpolicy.png
 
 21. Now, click on the **Policy Versions** tab inside of the **Policy Detail** page.
 
-.. image:: images/nim_app_protect_agilitypolicy_versions.png
+.. image:: images/nim_app_protect_appworldpolicy_versions.png
 
 22. Click on the version name under the **Versions** column in the list.
 
-.. image:: images/nim_app_protect_agilitypolicy_version_view.png
+.. image:: images/nim_app_protect_appworldpolicy_version_view.png
 
 23. The JSON configuration of the policy will be displayed, as shown below:
   
-.. image:: images/nap_agilitypolicy_json.png
+.. image:: images/nap_appworldpolicy_json.png
 
 24. To modify the policy based on this version of the policy, click **Edit Version**. 
 
-.. image:: images/nap_agilitypolicy_edit_version.png
+.. image:: images/nap_appworldpolicy_edit_version.png
 
 25. Provide a description of the changes you'll be making in the **Description** field. 
 
-.. image:: images/nap_agilitypolicy_version_edit.png
+.. image:: images/nap_appworldpolicy_version_edit.png
 
 26. Place your mouse cursor inside the policy editor. Press **CTRL+F** to open the search dialog.
 
-.. image:: images/nim_app_protect_agilitypolicy_version_search.png
+.. image:: images/nim_app_protect_appworldpolicy_version_search.png
 
 27. Search for **"jpg"** and you'll find on line 240 that JPG files are not being allowed. Modify line 241 to change ``"allowed": false`` to ``"allowed": true``. Note that false and true are not encapsulated in quotation marks.
 
-.. image:: images/nim_app_protect_agilitypolicy_version_modified.png
+.. image:: images/nim_app_protect_appworldpolicy_version_modified.png
 
 28. Click the **Save New Version** button to create a new version of the policy. 
     
@@ -127,7 +127,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 31. Select the **Policy Versions** tab.
 
-.. image:: images/nim_agilitypolicy_versions.png
+.. image:: images/nim_appworldpolicy_versions.png
 
 32. Notice the new policy version is now listed.
 
@@ -135,7 +135,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 33. Return to the the **Instances and Instance Groups** tab. 
 
-.. image:: images/nim_app_protect_agilitypolicy_instance_tab.png
+.. image:: images/nim_app_protect_appworldpolicy_instance_tab.png
 
 34. Now click on the **Assign Policy and Signature Versions** button above the instance list. 
 

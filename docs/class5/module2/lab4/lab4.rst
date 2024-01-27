@@ -28,7 +28,7 @@ Now you will now enable NGINX App Protect and apply a WAF policy to the Arcadia 
 .. code-block:: bash
 
       app_protect_enable on;
-      app_protect_policy_file "/etc/nms/AgilityPolicy.tgz";
+      app_protect_policy_file "/etc/nms/AppWorldPolicy.tgz";
       app_protect_security_log_enable on;
       app_protect_security_log "/etc/nms/secops_dashboard.tgz" syslog:server=127.0.0.1:514;
 
@@ -52,10 +52,10 @@ Your screen should look similar to below:
 
 .. image:: images/app_protect_nav.png
 
-11. On the list of policies, click on the name **AgilityPolicy**.
+11. On the list of policies, click on the name **AppWorldPolicy**.
 
-.. image:: images/agilitypolicy_select.png
+.. image:: images/appworld_policy_select.png
 
 12. On this screen, you can see that the policy is applied.
 
-.. image:: images/agility_policy_applied.png
+.. image:: images/appworld_policy_applied.png
