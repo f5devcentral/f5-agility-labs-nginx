@@ -12,6 +12,7 @@ Since this lab utilizes NIM, we're going to install the NGINX Agent and add the 
 .. code-block:: bash
 
   curl -k https://nginx-instance-manager.appworld.lab/install/nginx-agent | sudo sh
+  sudo systemctl restart nginx-agent
 
 **Result**
 
@@ -123,7 +124,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 .. |expand_button| image:: images/expand_button.png
    :scale: 25%
 
-.. note:: If you do not see the **Add File** button on the toolbar, click the |expand_button| **expand** button.
+.. note:: If you do not see the **Add File** button on the toolbar, click the expand_button expand button, or zoom out on Firefox (Command/Ctrl +/-).
 
 .. image:: images/add_file_button.png
 

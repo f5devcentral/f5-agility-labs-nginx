@@ -3,7 +3,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. note:: NGINX Plus and NGINX App Protect repositories are accessed using a cert/key pair that enables access for customers who have purchased licenses. In this lab, NGINX Plus repo keys are already copied to the Ubuntu VM.
 
-.. note:: This section of the lab covers installation of NGINX App Protect. General instructions for installation can be found at https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/. The steps in this guide are customized to this lab environment and operating system.
+.. note:: This section of the lab covers installation of NGINX App Protect. General instructions for installation can be found at https://docs.nginx.com/nginx-app-protect-waf/admin-guide/install/.
 
 1. Connect to the jump host via RDP if not already.
 
@@ -88,13 +88,12 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. image:: images/apt_conf_download_result.png
   
-10. Update the repository and install the proper version of the NGINX App Protect WAF package (which includes NGINX Plus):
-
-.. note:: For lab stability purposes, you will install a specific version of NGINX App Protect that is compatible with the lab instance of NGINX Instance Manager.
+10. Update the repository and install the NGINX App Protect WAF package (which includes NGINX Plus):
 
 .. code-block:: bash
 
-  sudo apt-get update && sudo apt install -y app-protect=28+4.100.1-1~focal nginx-plus-module-appprotect=28+4.100.1-1~focal app-protect-engine=10.208.1-1~focal app-protect-compiler=10.208.1-1~focal app-protect-common=10.208.1-1~focal app-protect-common=10.208.1-1~focal app-protect-plugin=4.100.1-1~focal
+  sudo apt-get update
+  sudo apt-get install app-protect
 
 **Result**
 
