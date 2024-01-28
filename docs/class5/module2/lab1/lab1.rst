@@ -93,7 +93,7 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 .. code-block:: bash
 
   sudo apt-get update
-  sudo apt-get install app-protect
+  sudo apt-get install -y app-protect
 
 **Result**
 

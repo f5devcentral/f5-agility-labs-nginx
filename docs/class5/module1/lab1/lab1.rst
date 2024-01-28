@@ -41,7 +41,7 @@ View the NGINX Plus Instance in NIM
 
 .. image:: images/nim_instances_delete_offline_confirm.png
 
-10. Click on the **nginx-instance-1.appworld.lab** instance in the list that shows **Online** under the **Status** column. The **Instance Detail** screen loads.
+10. Click on the **nginx-plus-1.appworld.lab** instance in the list that shows **Online** under the **Status** column. The **Instance Detail** screen loads.
 
 .. image:: images/nim_instance_detail.png
 
