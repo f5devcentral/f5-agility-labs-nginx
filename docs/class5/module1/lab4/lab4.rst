@@ -47,7 +47,7 @@ Modify the WAF Policy to Resolve an App Issue
     
 .. image:: images/SM_support_id_link.png
 
-11. You'll be prompted for your support ID. Wait for 60 seconds or so, then move to the next step.
+11. You'll be prompted for your support ID.
 
 .. image:: images/SM_support_id_prompt.png
 

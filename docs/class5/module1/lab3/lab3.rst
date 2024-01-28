@@ -6,7 +6,7 @@ There are two components to NGINX App Protect within NIM:
 - NAP configuration via Instance Manager extension
 - NAP monitoring via NGINX Security Monitoring (SM)
 
-1. Take a look at both of these components. First, load the **NIM** bookmark in **Firefox** and login using the **lab** / **AppWorld2024!** credentials, if not already.
+1. Take a look at both of these components. First, load the **NIM** bookmark in **Firefox** and login using the **lab** / **AppWorld2024!** credentials, if not already. Then, click the Instance Manager tile.
 
 2. Click the **Select module** drop-down from the top of the left menu bar.
 
@@ -40,7 +40,7 @@ There are two components to NGINX App Protect within NIM:
 
 .. image:: images/nim_module_dropdown.png
 
-10. Select **Security monitoring** from the drop-down.
+10. Select **Security Monitoring** from the drop-down.
 
 .. image:: images/menu_drop_down_nim-SM.png
 

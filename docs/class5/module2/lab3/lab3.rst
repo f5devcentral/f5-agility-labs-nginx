@@ -1,12 +1,18 @@
-Test a SQL Inject Attack against the Arcadia Finance App
-========================================================
+Test a SQL Injection Attack against the Arcadia Finance App
+===========================================================
 
-1. Before you enable the App Protect service, attempt a SQL injection attack on the Arcadia Finance app. In UDF, open a new webshell connection to NGINX Instance Manager under Systems > ACCESS. Copy the command below and paste it into the webshell (Command/Shift + Ctrl + V).
+1. Before you enable the App Protect service, attempt a SQL injection attack on the Arcadia Finance app. In your Jump Server RDP session, click **Applications** and then **Terminal**.
+
+.. image:: images/terminal_click.png
+
+.. image:: images/terminal_new.png
+
+2. In the terminal window that opens, enter the command below.
 
 .. code-block:: bash
 
-   curl -X POST -k -H "host: nginx-plus.arcadia-finance.io" "https://nginx-plus-2.appworld.lab/trading/auth.php&\'+or+1=1;--"
+   curl -vd POST -kLH "host: diy.arcadia-finance.io" "https://nginx-plus-2.appworld.lab/trading/auth.php" -H 'Sec-Fetch-User: ?1' --data-raw 'username='+or+1=1'--&password='
 
-2. While your SQL injection was not successful in logging into the system, the attempt was also not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as you progress through the lab.
+.. image:: images/terminal_curl_output_block.png
 
-   TODO: ADD SCREENSHOT OF RESULT
+While your SQL injection was not successful in logging into the system, the attempt was also not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as you progress through the lab.

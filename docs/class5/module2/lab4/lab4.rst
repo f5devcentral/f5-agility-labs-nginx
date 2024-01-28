@@ -48,7 +48,7 @@ Your screen should look similar to below:
 
 .. image:: images/publish_notification.png
 
-10. Click on **App Protect** from the menu. 
+10. Click on **App Protect** **Policies** from the menu. 
 
 .. image:: images/app_protect_nav.png
 
