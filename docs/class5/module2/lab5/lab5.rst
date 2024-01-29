@@ -36,7 +36,7 @@ Now that the WAF policy is applied, retry the SQL injection attack to see if the
 
 .. image:: images/SM_support_id_prompt.png
 
-8. Enter your support ID into the search field and click the **arrow** to search.
+8. Enter your support ID into the search field and click the **arrow** to search. If you initially receive an error, wait a few moments and click **Try Again**.
 
 .. image:: images/SM_support_id_entry.png
 

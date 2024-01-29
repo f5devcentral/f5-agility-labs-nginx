@@ -75,8 +75,8 @@ Press **CTRL + X** to save the file, followed by **Y** when asked to save the bu
 
 In this example, we've configured NGINX Agent to:
 
-- check for configuration changes every 15 seconds
-- allow for precompiled policies, meaning that NIM will compile the policy before sending to the NGINX Plus/NAP instance
+- Check for configuration changes every 15 seconds
+- Allow for precompiled policies, meaning that NIM will compile the policy before sending to the NGINX Plus/NAP instance
 - Enable large buffers for NGINX App Protect Monitoring
 - Enable NGINX Agent to run a syslog daemon that will forward logs to NIM Security Monitoring
 
@@ -130,7 +130,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/filename_prompt.png
 
-14. Paste the following configuration into the editor:
+14. Paste the following configuration into the editor using **CTRL + V**:
 
 .. code-block:: bash
 
