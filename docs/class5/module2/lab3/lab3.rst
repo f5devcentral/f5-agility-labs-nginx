@@ -15,4 +15,4 @@ Test a SQL Injection Attack against the Arcadia Finance App
 
 .. image:: images/terminal_curl_output_block.png
 
-While your SQL injection was not successful in logging into the system, the attempt was also not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as you progress through the lab.
+While your SQL injection was not successful in logging into the system, the attempt was also not blocked. You were just redirected back to the login page. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as you progress through the lab.
