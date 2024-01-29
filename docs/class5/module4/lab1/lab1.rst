@@ -12,13 +12,13 @@ In this lab, we'll deploy an NGINX App Protect WAF policy to protect the API.
 Lab Tasks
 ---------
 
-1. Click the **Applications** drop-down in the top menu bar and select **Postman**.
+1. Click the **Applications** drop-down in the top menu bar and select **Visual Studio Code**.
 
 .. image:: images/postman_nav.png
 
-.. caution:: It may take a moment for Postman to launch the first time.
+.. caution:: It may take a moment for Visual Studio Code to launch the first time.
 
-2. In the **Collections** tab, select the **Arcadia API** and then the **GET Transactions** item. Click **Send** and notice the response data that the API returns in the **Body** section of the window.
+2. Select **Thunder Client** from the bottom of the left menu (it looks like a lightning bolt) and authenticate the keyring with the password ``AppWorld2024!``. In the **Collections** tab, select the **Arcadia API** and then the **GET Transactions** item. Click **Send** and notice the response data that the API returns in the **Body** section of the window to the right.
 
 .. image:: images/get_transaction_pretest.png 
 
@@ -38,7 +38,7 @@ Lab Tasks
 
 .. image:: images/nim_launchpad.png
 
-7. Click **App Protect** in the left menu.
+7. Click **Instances**, then **App Protect** in the left menu.
 
 .. image:: images/nim_app_protect_list.png
 
@@ -46,7 +46,7 @@ Lab Tasks
 
 .. image:: images/nginx_policy_select.png
 
-9. Click on the **Policy Versions** tab.
+9. Click on the **Versions** tab.
 
 .. image:: images/policy_versions.png
 
@@ -246,7 +246,7 @@ Your screen should look like the screenshot below:
 Test the App Protect Policy
 ---------------------------
 
-18. Return to the  **Postman** app. Click the **GET Transactions** item in the **Arcadia API** collection.
+18. Return to **Visual Studio Code**. Click the **GET Transactions** item in the **Arcadia API** collection.
 
 .. image:: images/get_transaction_nav.png
 
