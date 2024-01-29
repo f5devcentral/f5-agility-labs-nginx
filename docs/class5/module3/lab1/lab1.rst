@@ -18,8 +18,6 @@ Argo CD offers the following key features and capabilities:
 
 1. To get started, open Firefox on the jump host RDP session.
 
-.. image:: images/jump_host_firefox.png
-
 2. Click on the Argo CD bookmark or navigate to https://argocd.appworld.lab:30008/login.
 
 .. image:: images/argo_bookmark.png
