@@ -6,7 +6,7 @@ In this module you will install and enable NGINX App Protect DoS on NAP DOS 1 an
 
 NGINX App Protect DoS directives:
 
-1. **load_module**  - This command will load the dynamic module into NGINX Plus.  Located in the main context 
+1. **load_module** - This command will load the dynamic module into NGINX Plus.  Located in the main context
 
 2. **app_protect_dos_enable** - Enable/Disable App Protect DoS module. It can be located in the location, server or http contexts.
 
@@ -15,16 +15,16 @@ NGINX App Protect DoS directives:
    - URI - a mandatory argument, this is the destination to the protected resources
    - Protocol - an optional argument, this is the protocol of the protected resource ( http1, http2, grpc) http1 is the default
    - Timeout - determines how many seconds App Protect waits for a response. The default is 10 seconds for http1 and http2 and 5 seconds for grpc
-   
+
 4. **app_protect_dos_security_log_enable** - Enable/Disable App Protect DoS security logger
 
-5. **app_protect_dos_security_log** - This directive takes two arguments, first is the configuration file path and the second is the destination where events will be sent 
+5. **app_protect_dos_security_log** - This directive takes two arguments, first is the configuration file path and the second is the destination where events will be sent
 
 
 Install NGINX App Protect DoS 
 -----------------------------
    
-1. Open the WebShell of "NAP DOS 1" VM (UDF > Components > Systems > NAP DOS 1 > Access > Web Shell) 
+1. Open the WebShell of "NAP DOS 1" VM (UDF > Components > Systems > NAP DOS 1 > Access > Web Shell)
 
 2. Install NGINX App Protect 
 
