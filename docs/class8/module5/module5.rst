@@ -10,7 +10,7 @@ This section list some additional tuning parameters. These are good to understan
 
 Writing to disk can be resource intensive. This setting allows you to buffer log output and only write to disk after collecting a specified amount of data.
 
-Review this line in nginx.conf file
+Review this line in the nginx.conf file
 
 * access_log /var/log/nginx/access.log main buffer=128;
 
