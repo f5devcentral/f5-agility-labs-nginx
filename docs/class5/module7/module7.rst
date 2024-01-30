@@ -1,5 +1,5 @@
-Module 7 - Install and Enable NGINX AppProtect DoS
-##################################################
+Module 7 - Install and Enable NGINX App Protect DoS
+###################################################
 
 
 In this module you will install and enable NGINX App Protect DoS on NAP DOS 1 and NAP DOS 2
@@ -28,20 +28,29 @@ Install NGINX App Protect DoS
 
 2. Install NGINX App Protect 
 
-``apt install -y app-protect-dos``
+   .. code:: shell
+
+      apt install -y app-protect-dos
+
+.. image:: images/nginx-app-protect-dos-install.png
 
 3. Enable NGINX App Protect DoS configuration by copying the /etc/nginx/nginx.conf.dos file over the existing /etc/nginx/nginx.conf file.
 
-``cp /etc/nginx/nginx.conf.dos /etc/nginx/nginx.conf``
+   .. code:: shell
+
+      cp /etc/nginx/nginx.conf.dos /etc/nginx/nginx.conf
 
 4. Optionally, view the contents of /etc/nginx/nginx.conf in a text editor. As a reminder, the NGINX App Protect DoS configuration directives start with app_protect_dos_*.
 
 5. Restart NGINX
 
-``service nginx restart``
+   .. code:: shell
 
-``service nginx status``
+      service nginx restart
+      service nginx status
 
-If NGINX restarted successfully, the restart command will complete successfully and status will return that NGINX is online.
+.. image:: images/nginx-app-protect-dos-restart.png
+
+If NGINX restarted successfully, the restart command will complete successfully and status will return that NGINX is active (running).
 
 6. Repeat steps 1 - 5 on the "NAP DOS 2" VM

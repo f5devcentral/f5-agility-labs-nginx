@@ -20,7 +20,6 @@ Welcome to the NGINX App Protect Web Application Firewall & Denial-of-Service pr
    module8/module8
    module9/module9
    module10/module10
-   module11/module11
    conclusion
 
 Click **Next** to begin the lab.
