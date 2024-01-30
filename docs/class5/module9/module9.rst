@@ -14,7 +14,7 @@ We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apach
 
     /scripts/http1flood.sh
 
-3. Launch the good traffic generator in the **Legitimate Traffic Generator** WebShell.
+3. Re-open and re-launch L7 DoS attacks in the **Attack Traffic Generator** WebShell.
 
   .. code:: shell
 
@@ -97,8 +97,6 @@ Slow POST attack: Slowing down the HTTP message body, making the server wait unt
 
 2. Launch Slow POST Attack
 
-  .. note:: Wait for the vertical black line in the AP_DOS: Client HTTP transactions/s graph in the ELK Dashboard before continuing.
-
   .. code:: shell
 
     cd /scripts
@@ -153,8 +151,6 @@ We will be initiating a HTTP/2 Flood Attack on the "RouteGuide GRPC service" usi
 1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
 
 2. Launch HTTP/2 Flood Attack.
-
-  .. note:: Make sure the previous attack ended before launching this new attack.
 
   .. code:: shell
 

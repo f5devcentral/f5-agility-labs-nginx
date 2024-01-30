@@ -42,8 +42,14 @@ It will take a few minutes of running the good.sh script to create a baseline tr
 
 9. Repeat steps 7 & 8 adding **vs_name** and **unit_hostname** as additional selected fields.
 
+.. image:: images/unit_hostname.jpg
+
 .. Note::
 
     If after few minutes of running good traffic there is still a "Not ready" state indicated, click on **learning_confidence** located under the “Filter by type” column. Then, click on the '+' under "Top 5 values" and select "Ready".
 
+.. image:: images/ready_filter.jpg
+
 .. image:: images/vs_name-unit_hostname.png
+
+10. On the **Legitimate Traffic Generator** WebShell, press **Ctrl+C** to exit the script and close the WebShell tab in your browser.

@@ -106,7 +106,7 @@ Attack script output:
   progress: 90% done
   progress: 100% done
 
-3. Click back on to the WebShell on the Legitimate Traffic Generator VM. Did the output from the script change? Output should no longer show “Finished trip with 10 points” and you may see one of the following two messages:
+3. Click back on to the WebShell on the **Legitimate Traffic Generator** VM. Did the output from the script change? Output should no longer show "Finished trip with 10 points", because gRPC is failing, and you may see one of the following two error messages:
 
    .. code:: shell
 
