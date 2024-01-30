@@ -32,9 +32,6 @@ Backends
 Monitoring
     - ELK -- containerized ELK stack pre-configured to monitor NGINX App Protect DoS instances -- 10.1.1.20
 
-.. image:: ../_static/10putty.png
-
-
 Attack Scripts
 ==============
 All attack scripts are located in ``/scripts`` folder on the "Attack Traffic Generator" VM.
