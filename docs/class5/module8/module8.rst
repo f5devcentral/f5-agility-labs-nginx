@@ -13,7 +13,7 @@ Establish Baseline
 
 .. code:: bash
 
-    /good.sh 
+    /good.sh
 
 3. Allow good traffic to run, and proceed with the next steps
 
