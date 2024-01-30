@@ -51,7 +51,7 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/SM_support_id_prompt.png
 
-12. Enter your support ID into the search field and click the **arrow** to search.
+12. Enter your support ID into the search field and click the **arrow** to search. If you receive an error, the system is still processing the alert; wait a bit and click **Try Again**.
 
 .. image:: images/SM_support_id_entry.png
 

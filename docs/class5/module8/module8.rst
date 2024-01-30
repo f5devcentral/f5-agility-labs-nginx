@@ -38,7 +38,7 @@ Establish Baseline
 
 .. image:: images/multi-fields-plus-button.png
 
-It will take a few minutes of running good to create a baseline traffic profile, you will see "Ready" and/or "Not ready" states indicated.
+It will take a few minutes of running the good.sh script to create a baseline traffic profile, you will see "Ready" and/or "Not ready" states indicated.
 
 9. Repeat steps 7 & 8 adding **vs_name** and **unit_hostname** as additional selected fields.
 

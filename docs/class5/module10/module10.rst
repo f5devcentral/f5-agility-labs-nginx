@@ -12,8 +12,7 @@ NGINX App Protect DoS provides various monitoring tools for your application:
 Example configuration
 ---------------------
 
-Enable the DoS Dashboard by specifying the /dashboard-dos.html location. By default the DoS Dashboard is
-located in the root directory (for example, /usr/share/nginx/html) specified by the root directive
+The DoS Dashboard has been enabled for this lab by specifying the **/dashboard-dos.html** location. By default the DoS Dashboard is located in the root directory (for example, /usr/share/nginx/html) specified by the root directive.
 
 .. code-block:: nginx
    :linenos:
@@ -32,6 +31,8 @@ Accessing the Dashboard
 -----------------------
 
 Go to "NAP DOS 1" VM, navigate to "Access" and select "NAPDOS - Dashboard"
+
+  TODO: add new screenshot from Scott here.
 
 Tab Overview
 ------------

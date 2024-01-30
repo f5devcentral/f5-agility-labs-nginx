@@ -33,7 +33,7 @@ We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apach
     JUICESHOP HTTP Code:200
     Finished trip with 10 points
 
-  .. Note:: Upon initial launch of the http1flood.sh on the legit traffic terminal buffer you can see the following indicator of service disruption in the output of the legit traffic output prior to NAP-DoS migration.
+  .. Note:: Upon initial launch of the http1flood.sh script, on the legitimate traffic terminal buffer you may see the following indicator of service disruption in the output of the legit traffic output prior to NAP-DoS mitigation. If you do not see this, it's likely that mitigation occurred very quickly, and it has already scrolled off of the terminal output.
 
   .. code:: shell
 
@@ -56,7 +56,7 @@ We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apach
 
 .. image:: images/dashboard-http1flood.png
 
-6. As evidence of successful mitigation, the good traffic script will continue to report that the service is available.
+6. As evidence of successful mitigation, the good traffic script will continue to report that the service is available as seen below.  However, you can see the attack detected in the AP_DOS:HTTP mitigation chart as seen above (the vertical red line on the chart).
 
 Output:
 
@@ -74,7 +74,7 @@ Output:
 
 7. Stop the attack. Use **Ctrl+C**.
 
-.. note:: Wait for the vertical black line in the ELK Dashboard before running the next attack script. Click the refresh button after a couple of minutes of stopping the attack script.
+.. note:: Click the refresh button several times after stopping the attack script and wait for the vertical black line in the ELK Dashboard before running the next attack script. The vertical black line indicates that the attack has stopped.
 
   .. image:: images/blackline.png
 
@@ -121,7 +121,7 @@ Output:
     JUICESHOP HTTP Code:200
     Finished trip with 10 points
 
-Slowhttptest will report that NGINX App Protect DoS is closing the connection: slow HTTP test status on the 165th second:
+Slowhttptest will report that NGINX App Protect DoS is closing the connection as seen below (note the slow HTTP test status output, somewhere around the 165th second):
 
   .. code:: shell
 
