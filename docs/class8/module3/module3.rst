@@ -37,7 +37,7 @@ If seeing failures, review the Failures tab on the top row
 |
 |
 
-3) **Fix the currenty problem by increaing the rlimit** 
+3) **Fix the current problem by increaing the rlimit** 
 
 In the NIM Console, edit nginx.conf file and publish
 
