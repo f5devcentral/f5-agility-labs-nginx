@@ -63,8 +63,6 @@ Advanced Options, Run time: 30s
    :width: 200 px
 
 .. note::  Where you do see the performance improvement?
-
-XXXXXXXXXXXX NEED HINT FOR THIS. Do they simply take the value for “Served” in the Traffic section of the NGINX Dashboard or should they be looking at something else?
 	
 .. note:: Review NGINX Dashboard cache section.  How much bandwidth was saved from going to upstream server?
 (For a hint, refer to the HINTS section at the bottom of this page.)
@@ -78,6 +76,8 @@ Turn on Sendfile linux system call
 
 .. note:: What does Sendfile do?
 (For a hint, refer to the HINTS section at the bottom of this page.)
+
+|
 
 In NIM, edit nginx.conf and publish 
 
@@ -111,7 +111,7 @@ Uncomment open_file_cache, line 36
 
 .. note:: Do you notice any improvements?  
 
-XXXXXXXXXXXXXX  NEED HINT ON WHAT TO EXPECT
+(For a hint, refer to the HINTS section at the bottom of this page.)
 
 |
 
@@ -123,6 +123,9 @@ Look at the numbers in the Traffic section in the upper-right.
 _4. What does Sendfile do?_
 The Sendfile option improves performance when copying data from disk to NGINX process memory. When this option is enabled, the Linux system call of the same name (sendfile) is used to copiy data between a source and destination entirely within kernel space. This is more efficient than issuing a write, followed by a read, which transfers data through the user space.
 See https://man7.org/linux/man-pages/man2/sendfile.2.html
+
+_5. Do you notice any improvements?_
+If the performance improvement isn't immediate obvious, look at both the 50th percentile and 95th percentile curves. What do these values represent?
 
 .. toctree::
    :maxdepth: 2
