@@ -30,9 +30,9 @@ The DoS Dashboard has been enabled for this lab by specifying the **/dashboard-d
 Accessing the Dashboard
 -----------------------
 
-Go to "NAP DOS 1" VM, navigate to "Access" and select "NAPDOS - Dashboard"
+Go to **NAP DOS 1** VM, navigate to **Access** and select **NAPDOS - Dashboard**, then click **Dos Protected Objects**.
 
-  TODO: add new screenshot from Scott here.
+.. image:: images/nap_dos_protected.jpg
 
 Tab Overview
 ------------
