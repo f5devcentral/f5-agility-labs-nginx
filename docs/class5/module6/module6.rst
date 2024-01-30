@@ -1,9 +1,9 @@
-Module 6 - HTTP/2 and GRPC DoS Attack on Unprotected Application
-################################################################
+Module 6 - HTTP/2 and GRPC DoS Attack on an Unprotected Application
+###################################################################
 
 In this module you will generate **good** and malicious traffic. With the addition of malicious traffic will cause the good traffic to error out. We will utilize HTTP/2 and gRPC as part of this module.
 
-Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected application
+Demonstrate the effects of HTTP/2 and gRPC attacks on an unprotected application
 -----------------------------------------------------------------------------------
 
 Generate legitimate traffic
