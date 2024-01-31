@@ -2,7 +2,7 @@ Start your Tuning
 #################
 
 In this section we will be tuning some NGINX configuration parameters and reviewing the results.
-We will be using NGINX Instance Manager to make configuraiton changes and then pushing those changes to the NGINX Proxy. 
+We will be using NGINX Instance Manager to make configuration changes and then pushing those changes to the NGINX Proxy. 
 
 |
 |
@@ -33,25 +33,23 @@ Click on the Instance Manager tile.
    
 .. image:: /class8/images/nim-edit-button.png
 
-Click on Instances in the left column and then the ellipsis on the far right of the NGINX-Plus instance, and then Edit Config 
+Click on Instances in the left column and then the ellipsis on the far right of the NGINX-Plus-Proxy instance. Next, click Edit Config.
 
 |
 |
 
-Now you can edit the Nginx configuration file through this NIM interface
+Now you can edit the NGINX configuration file through this NIM interface
 
 .. image:: /class8/images/nim-nginx-conf.png
 
 |
 |
 
-Find the line (3) that has worker_processes.
+Find the line (3) that has worker_processes. When set to "auto" NGINX will spawn worker processes to match the number of CPU cores on the system. This system is configured with 2 CPU cores, so in this case, NGINX will spawn 2 worker processes.
 
-Change the value from auto to 1
+Let's change the value from auto to 1, reducing the number of worker processes in half.
 
 .. image:: /class8/images/nim-processes-1.png
-
-.. note:: What does 'auto' do for worker_processes?
 
 |
 |
