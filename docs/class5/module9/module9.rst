@@ -14,7 +14,7 @@ We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apach
 
     /scripts/http1flood.sh
 
-3. Re-open and re-launch L7 DoS attacks in the **Attack Traffic Generator** WebShell.
+3. Re-open and re-launch the good traffic generator in the **Legitimate Traffic Generator** WebShell.
 
   .. code:: shell
 
@@ -139,8 +139,6 @@ Slowhttptest will report that NGINX App Protect DoS is closing the connection as
 .. image:: images/dashboard-slow_post_http1.png
 
 5. Stop the attack. Use **Ctrl+C**.
-
-.. note:: Wait for the vertical black line in the AP_DOS: Client HTTP transactions/s graph in the ELK Dashboard before running the next attack script.
 
 
 Launch HTTP/2 Flood attack on gRPC service
