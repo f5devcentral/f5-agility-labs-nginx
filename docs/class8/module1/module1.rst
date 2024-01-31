@@ -59,7 +59,7 @@ server config block includes
 
 |
 
-Under ACCESS for the NGINX Proxy, select NGINX+DASHBOARD
+Under ACCESS for the NGINX Proxy, select NGINX+ DASHBOARD
 
 |
 
@@ -162,7 +162,8 @@ Click the 'Start swarming' button
 |
 |
 
-8) **Review graphs as they generate**
+
+8) **Review graphs as they are generated**
    
 .. note:: What is happening with Total Request per Second and Response Time graphs 
 	
@@ -173,7 +174,7 @@ Click the Charts tab to review graphs as they are generated
 
 9) **Run same test again**
 
-Run same test a 2nd time by clicking 'New test' at the top-right under 'Status STOPPED'. Keep the settings the same as before and click the 'Start swarming' button.
+Run the same test a 2nd time by clicking 'New test' at the top-right under 'Status STOPPED'. Keep the settings the same as before and click the 'Start swarming' button.
 
 |
 
@@ -205,7 +206,7 @@ Advanced Options, Run time: 30s
 .. image:: /class8/images/locus-50-500-30.png  
    :width: 200 px
 
-Review NGINX Proxy CPUs and the Locus GUI Charts
+Review NGINX Proxy CPUs and the Locust GUI Charts
 
 |
 

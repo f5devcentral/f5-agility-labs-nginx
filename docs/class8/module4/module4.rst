@@ -148,6 +148,9 @@ _4. What does Sendfile do?_
 The Sendfile option improves performance when copying data from disk to NGINX process memory. When this option is enabled, the Linux system call of the same name (sendfile) is used to copiy data between a source and destination entirely within kernel space. This is more efficient than issuing a write, followed by a read, which transfers data through the user space.
 See https://man7.org/linux/man-pages/man2/sendfile.2.html
 
+_5. Do you notice any improvements?_
+If the performance improvement isn't immediate obvious, look at both the 50th percentile and 95th percentile curves. What do these values represent?
+
 .. toctree::
    :maxdepth: 2
    :hidden:
