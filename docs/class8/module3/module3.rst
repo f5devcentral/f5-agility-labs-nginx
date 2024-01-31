@@ -37,17 +37,18 @@ If seeing failures, review the Failures tab on the top row
 |
 |
 
-3) **Fix the current problem by increaing the rlimit** 
+3) **Fix the problem by increasing the rlimit**
+This changes the limit on the number of open files that a worker process may have
 
-In the NIM Console, edit nginx.conf file and publish
+In the NIM Console, edit nginx.conf file.
 
-Increase rlimit to 4096, by uncommenting line 4
+Increase rlimit to 4096, by uncommenting line 5
 
 * worker_rlimit_nofile 4096; 
 
-.. image:: /class8/images/nim-rlimit-4096.png  
+Publish the new configuration.
 
-.. note: What does rlimit do?  
+.. image:: /class8/images/nim-rlimit-4096.png  
 
 |
 |

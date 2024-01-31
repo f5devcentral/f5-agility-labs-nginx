@@ -1,19 +1,19 @@
-Getting familiar with the LAB
+Getting familiar with the Lab
 #############################
 
 
 The lab consists of multiple components: 
 
-*   NGINX Gateway Proxy, Reverse Proxy / Load balancer which we will be tuning the configuration to achieve better performance for the applications
-*   NGINX API Server, the backend serving up the content
-*   Locust Worker, generates the traffic load
-*   Locust controller, GUI Interface to manager the load generater 
-*   NGINX Instance Manager, NGINX Central Manager
+*   NGINX Proxy: A reverse proxy / load balancer on which we will be tuning the configuration to achieve better performance for the applications
+*   App Server: The backend application server, serving up the content
+*   Locust Worker: Generates the traffic load
+*   Locust Controller: Manages the Locust Worker instance and provides a GUI interface for monitoring load 
+*   NGINX Instance Manager: A web based application for managing NGINX instances. You will use this to update the NGINX Proxy's configuration file.
 
 |
 |
 
-Here is a picutre of the components and how they connect together: 
+Here is a diagram of the components and how they connect together: 
 
 .. image:: /class8/images/lab-diagram.jpg  
   :width: 800 px
@@ -41,25 +41,17 @@ Click on ACCESS and then WEB SHELL
 
   `view /etc/nginx/nginx.conf`
 
-proxy_max_temp_file_size 0;  Disables buffering of responses to temporary files
-
-|
-
 upstream app_servers config block includes
 
-* zone backend 64k
+* zone backend 64k: Defines a shared memory zone allowing NGINX worker processes to synchronize information on the backend's run-time state. This enables us to display upstream statistics on the NGINX Plus dashboard.
 
 server config block includes 
 
-* status_zone my_proxy;
+* status_zone my_proxy: Defines a shared memory zone allowing NGINX worker processes to collect and synchronize information on the status of the server. This enables us to monitor HTTP server statistics in the NGINX Plus dashboard.
 
 .. image:: /class8/images/codeblock.png
   :width: 600 px
  
-|
-
-XXXXXXXXXXXXXXXXXXWHAT DO THESE ACTUALLY DO - JUST CHECKING CONFIG IS FINE BUT CUSTOMERS WOULD WANT TO KNOW WHY
-
 |
 |
 
@@ -82,9 +74,10 @@ Review the Dashboard and what is included under the tabs across the top of the p
 	
 .. image:: /class8/images/n-dashboard.png  
 
-|
-
-XXXXXXXXXXXXXXXXXXX We need to probably say something about the useful info provided in the dashboard. To click through different sections, how it can be used , what to decipher from it etc.
+* HTTP Zones: this section contains the zone we defined in the proxy's server block. It tracks collective requests, responses, traffic and SSL statistics. Note that SSL statistics are missing because for simplicity, we do not use SSL for this lab.
+* HTTP Upstreams: this sections contains statistics on the upstreams or backends that we defined in the proxy's upstream block. It tracks connections, requests, responses, health statistics and other information related to the proxy's connection to the application server.
+* Workers: this section containers statistics that are specific to individual NGINX worker processes.
+* Caches: this section is not yet visible. Later in the lab we will turn caching on and this section will display statistics related to the health of our proxy's cache.
 
 |
 |
@@ -93,13 +86,15 @@ XXXXXXXXXXXXXXXXXXX We need to probably say something about the useful info prov
    
 Log on to the Locust Controller cli or WEB SHELL
 
-Review the Locust configuraiton files
+Review the Locust configuration files
 
    `cat /home/ubuntu/run_locust_controller.sh`
 
    `cat /home/ubuntu/locustfile.py`
 
-Now start up the Locust controller GUI 
+Notice that the Locust load script is configured to get a file called "1.5MB.txt", effectively putting load on the proxy.
+
+Now start up the Locust controller and web interface.
 
    `/home/ubuntu/run_locust_controller.sh`
 
@@ -125,7 +120,7 @@ Log on to the Locust Worker cli or WEB SHELL
 
 |
 
-Verify 8-core machine by running this command to verify the CPU count
+Verify 8-core machine, run this command to verify CPUs and their associated statistics
 
    `mpstat -P ALL`  
   
@@ -138,13 +133,17 @@ Start up locust workers by running this command:
    `/home/ubuntu/start_locust_workers.sh`
 
 |
+This script with start all 8 workers (1 per CPU) in NOHUP mode, meaning you can close the shell window and they'll keep running. However, it's best to keep this window open to monitor the workers, which will log their output to nohup.out.
 
-XXXXXXXXXXXXXXXXXXX NEED NOTE TO NOT SHUTDOWN WINDOW.  SCREENSHOT TOO!
+Tail the nohup.out file to monitor Locust workers
+  `tail -f /home/ubuntu/nohup.out`
 
-|
+Sometimes, overloading Locust may cause worker threads to quit. We've tuned this lab so that shouldn't happen, but if it does, you'll want to terminate the workers and restart them. You can use the previously shown script to restart the workers. To terminate them, we've included the following script:
+  `/home/ubuntu/terminate_locust_workers.sh`
 |
 
 7) **In Locust GUI, start the load generation**
+Let's begin with a basic test to get a performance baseline with our default settings. 
    
 Number of Users: 100
 
@@ -162,6 +161,7 @@ Click the 'Start swarming' button
 
 |
 |
+
 
 8) **Review graphs as they are generated**
    
@@ -189,6 +189,7 @@ Review NGINX Proxy CPUs while test is running.  Back on NGINX Proxy WEB SHELL:
 
 Review Locust GUI Charts
 
+.. note:: Even when all test parameters are the same, tests will exhibit different results due to a multitude of external factors influencing system and network resources.
 |
 |
 
@@ -209,7 +210,7 @@ Review NGINX Proxy CPUs and the Locust GUI Charts
 
 |
 
-.. note::  How much CPU is being used?  Is the system fully saturated? How was Total Request per Second affected by this addtional load
+.. note::  How much CPU is being used?  Is the system fully saturated? How was Total Request per Second affected by this additional load
 	
 |
 |
