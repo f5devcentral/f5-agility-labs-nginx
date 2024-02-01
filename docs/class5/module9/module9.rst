@@ -72,7 +72,7 @@ Output:
     Finished trip with 10 points
 
 
-7. Stop the attack. Use **Ctrl+C**.
+7. Press Ctrl+C on the **Attack Traffic Generator** VM to stop the attack script. Leave the good script running.
 
 .. note:: Click the refresh button several times after stopping the attack script and wait for the vertical black line in the ELK Dashboard before running the next attack script. The vertical black line indicates that the attack has stopped.
 
