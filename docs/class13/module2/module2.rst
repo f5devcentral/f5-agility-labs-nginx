@@ -155,7 +155,7 @@ Deploy and protect a web application
 
    .. code:: bash
 
-      curl http://nap-monitor.f5k8s.net/
+      curl http://nap-ingress2.f5k8s.net
 
    .. code:: bash
 
@@ -176,30 +176,30 @@ Now, let's try to send a malicious request to the application:
 
    .. code:: bash
 
-      curl "http://nap-monitor.f5k8s.net/index.php?password=0%22%20or%201%3D1%20%22%0A"
+      curl "http://nap-ingress2.f5k8s.netindex.php?password=0%22%20or%201%3D1%20%22%0A"
 
 #.  SQL Injection
 
    .. code:: bash
 
-      curl "http://nap-monitor.f5k8s.net/index.php?password==0'%20or%201=1'"
+      curl "http://nap-ingress2.f5k8s.net/index.php?password==0'%20or%201=1'"
 
 #. SQL Injection
 
    .. code:: bash
 
-      curl "http://nap-monitor.f5k8s.net/index.php?id=%'%20or%200=0%20union%20select%20null,%20version()%23"
+      curl "http://nap-ingress2.f5k8s.net/index.php?id=%'%20or%200=0%20union%20select%20null,%20version()%23"
 
 #. Cross Site Scripting
 
    .. code:: bash
 
-      curl "http://nap-monitor.f5k8s.net/index.php?username=<script>"
+      curl "http://nap-ingress2.f5k8s.net/index.php?username=<script>"
 
 #. Command Injection
 
    .. code:: bash
-      curl "http://nap-monitor.f5k8s.net/index.php?id=0;%20ls%20-l"
+      curl "http://nap-ingress2.f5k8s.net/index.php?id=0;%20ls%20-l"
 
 
 The expected output  for all the previous requests is the following:
