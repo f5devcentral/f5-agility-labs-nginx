@@ -1,184 +1,240 @@
-GitOps continuous delivery for NGINX App Protect with ArgoCD 
-============================================================
-
-Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. Argo CD follows the GitOps pattern of using Git repositories as the source of truth for defining the desired application state. 
-
-.. image:: images/argocd-ui.gif
-
-Argo CD is implemented as a kubernetes controller which continuously monitors running applications and compares the current, live state against the desired target state (as specified in the Git repo). A deployed application whose live 
-state deviates from the target state is considered OutOfSync. Argo CD reports & visualizes the differences, while providing facilities to automatically or manually sync the live state back to the desired target state. Any modifications 
-made to the desired target state in the Git repo can be automatically applied and reflected in the specified target environments.
-
-Argo CD is being actively developed by the community. Argo CD releases can be found <a href="https://github.com/argoproj/argo-cd/releases"> here</a>.
+NGINX App Protect WAF Dashboard
+===============================
 
 
-NAP with Argo CD 
-----------------
+Let's start off to review the dashboard for NGINX App Protect WAF. 
 
-In this example we will configure NAP to work with Argo CD so that we follow a GitOps continuous delivery methodology.
+The overall solution uses Logstash to receive logs from NGINX App Protect, process them and finally store them in Elasticsearch indexes. Grafana retrieves the logs 
+from the Elastic indexes and helps us visualize them.
 
-Let us create a Git Repository with the required manifests
+.. image:: images/attack-signatures-0.png
 
-#. Login to Gitlab
-    > GitLab can be found under the `bigip-01` on the `Access` drop-down menu.
-  
-    Use the credentials (**root** / **Ingresslab123**) to log in. 
+Table of Contents
 
-   .. image:: images/gitlab-login.png
-
-#. Go to Repository `nap/ArgoCD` that has been pre-configured.
-
-   .. image:: images/gitlab-repo.png
-
-#. Review all the files that already exists on the repo. These files include:
-
-  - ns.yml        (deploys the Namespace)
-  - app.yml       (deploys the demo apps)
-  - appolicy.yml  (deploys the NAP policy)
-  - log.yml       (deploys the Logging profile)
-  - policy.yml    (deploys the NGINX policy)
-  - vs.yml        (deploys the VirtualServer CRD)
-
-   .. image:: images/gitlab-files.png
+   - [Available Dashboards](#available-dashboards)
+   - [Generating Attacks](#generating-attacks)
 
 
-Now lets connect Argo CD with the Git Repository 
+Available Dashboards
+--------------------
 
-#. Login to Argo CD
-    > Argo CD can be found under the `bigip-01` on the `Access` drop-down menu. 
+Main Dashboard
+--------------
 
-    Use the credentials (**admin** / **Ingresslab123**) to log in. 
+The main dashboard that provides an overview of all the violations that have been logged by NGINX App Protect WAF. From this table you can navigate to the other dashboards like SupportID, by clicking on the links. Some of the 
+graphs/tables included in this dashboard are:
 
-   .. image:: images/argo-login.png
+* Attacks recorded and mitigated
+* Violation categories
+* Attacks over time
+* Mitigated Bots 
+* GeoMap
+* Attacks per URL
+* Attack Signature detected
+* Bot activity per IP/Country
+* Bot activity per Policy/Device
+* CVEs and Threat Campaigns
+* Logs
 
-#. Create a new Application
-  
-    Click on `+ NEW APP` button that can be found on the top left of the page.
-    
-   .. image:: images/argo-main.png
-
-Find below the information that needs to inserted in the form. 
-  
-  - Application Name -> **nap-demo**
-  - Project -> **default**
-  - Sync Policy -> **Automatic**
-  - Prune Resources -> **Enabled**
-  - Repository URL -> **https://git.f5k8s.net/nap/argocd.git**
-  - Revision -> **HEAD**
-  - Path -> **.**
-  - Cluster URL -> **https://kubernetes.default.svc**
-  - Namespace  -> **nap-argo**
-
-Press `Create` and wait to see that the Argo CD application being created.
-
-   .. image:: images/argo-app.png
-
-#. Open the `nap-demo` application so that you see all the Kubernetes objects that Argo CD has created.
-
-   .. image:: images/argo-details.png
-
-#. Go to VSCode and verify that all the Kubernetes objects have been applied correctly.
+.. image:: images/nap1.png
 
 
-   .. code:: bash
+Attack Signature Dashboard
+--------------------------
 
-      kubectl get appolicy nap-v1 -n nap-argo -o yaml
+The Attack Signature dashboard provides all details for the signatures that were triggered by NGINX App Protect WAF. Some of the graphs/tables included in this dashboard are:
 
-The expected output is the following. 
+* Signature Hits
+* Signature Accuracy and Risk
+* Signatures per Context 
+* Signature details 
+* Signatures per URL/IP/Policy
+* Parameter Names and Values
+* Header Names and Values
+* Cookies Names and Values
+* Logs
 
-   .. code:: bash
-
-      apiVersion: appprotect.f5.com/v1beta1
-      kind: APPolicy
-      metadata:
-        annotations: 
-          kubectl.kubernetes.io/last-applied-configuration: | 
- 
- 
- 
- 
- 
- 
-{"apiVersion":"appprotect.f5.com/v1beta1","kind":"APPolicy","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"nap-demo"},"name":"nap-v1","namespace":"nap-argo"},"spec":{"policy":{"applicationLanguage":"utf-8","enforcementMode":"transparent","name":"nap-v1","template":{"name":"POLICY_TEMPLATE_NGINX_BASE"}}}}
-        creationTimestamp: "2022-11-01T12:59:36Z"
-        generation: 6
-        labels:
-          app.kubernetes.io/instance: nap-demo
-        name: nap-v1
-        namespace: nap-argo
-        resourceVersion: "2665839"
-        uid: ed79f06c-42bc-43fc-9bb5-624775d6cd68
-      spec:
-        policy:
-          applicationLanguage: utf-8
-          enforcementMode: blocking
-          name: nap-v1
-          template:
-            name: POLICY_TEMPLATE_NGINX_BASE
+.. image:: images/attack-signatures-1.png
 
 
-Note: Please verify that the enforcementMode is set as `Blocking`
+Bot Dashboard
+-------------
 
-Step 3 - Make changes on the Repository 
----------------------------------------
+The Bot Dashboard provides all details for the Bot activity that was logged by NGINX App Protect WAF. Some of the graphs/tables included in this dashboard are:
 
+* Bot Types
+* Bot Categories
+* Bot Activity over time
+* Mitigated Bots 
+* Bot activity per URL
+* Bot activity per IP/Country
+* Bot activity per Policy/Device
+* Logs
 
-#. Make changes to appolicy.yml
-
-    Open the appolicy.yml, change the policy from blocking to transparent and commit the changes.
-  
-   .. image:: images/git-changes.png
-
-  > Note: Because you are accessing GitLab behind a reverse proxy, it is recommended to **Edit** instead of **WED IDE**, in case you are using the web browser to access the repository files
-
-#. Go to Argo CD and refresh the application.
-
-    Argo CD will detect the changes and immediately apply them to Kubernetes.
-
-   .. image:: images/argo-refresh.png
-
-#. Run the following command to verify that the enforcement mode has changed to transparent
-
-   .. code:: bash
-
-      kubectl get appolicy nap-v1 -n nap-argo -o yaml | grep enforcementMode:
-
-The expected output is the following. 
-
-   .. code:: bash
-
-      enforcementMode: transparent
+.. image:: images/bot-1.png
 
 
-Step 4 - Create a webhook from Git to Argo CD
---------------------------------------------- 
+SupportID Dashboard
+-------------------
+
+The SupportID Dashboard provides all details for a specific transaction that was logged by NGINX App Protect WAF. These include the following:
+
+* Client/Server Information (Client IP/Port, Server IP/Port, X-Forwared-For, etc)
+* Violation Details (Outcome, Request Status, Outcome Reson, etc)
+* Bot Details (Bot Classm Bot Category, Bit Signature, etc)
+* Device Details (NAP Device name, Vritual Server Name)
+* Signatures Triggered
+* Treat Campaign triggered
+* Violation list
+* Many more
+
+It also includes both the original and decoded Elasticsearch indices for better troubleshooting.
+
+.. image:: images/support1.png
 
 
-Be default Argo CD polls Git repositories every three minutes to detect changes to the manifests. To reduce the 3 min window, we will implement a webhook that will be sent from GitLab to Argo CD every time there is a commit on the repo. 
-That will trigger Argo CD to make the comparison and deploy any changes. 
+Dashboards under development
+----------------------------
 
-#. Go to Settings->WebHooks
-    On the GitLab UI, select Webhooks that is located under Settings.
+The following dashboard are currently under development and should be released shortly:
 
-   .. image:: images/gitlab-webhook.png
+* File Type Violations
+* Header/Cookie Violations
+* Parameter Violations
+* Evasion Techniques
+* HTTP Protocol Compliance
+* URL Violations
 
-#. Create the WebHook.
-    Fill in the following information on the form.
+Generating attacks
+------------------
 
-    - URL                     -> **https://10.1.10.18/api/webhook**
-    - Push Events             -> **Enabled**
-    - Enable SSL verification -> **Disabled**
+In the following section we will generate multiple attacks so that the dashboards get populated with meaningful data that we can review.
 
-    And press `Add webhook`.
+To run the demos, use the terminal on VS Code. VS Code is under the `bigip-01` on the `Access` drop-down menu. Click <a href="https://raw.githubusercontent.com/F5EMEA/oltra/main/vscode.png"> here </a> to see how.*
 
-    > Note: On ArgoCD the webhook URI **MUST** be **/api/webhook** in order to work. If you add a forward slash **/** at the end of the URI, you will receive a 404 from Argo CD.
+Change the working directory to `monitoring`.
+
+.. code:: bash
+   
+   cd ~/oltra/use-cases/app-protect/monitoring
 
 
+### Step 1. Deploy and protect a web application  
 
-3. Make changes to the Appolicy.yml.
+Create the application deployment and service in namespace `nap`:
 
-    Make a change to the APPolicy manifest on GitLab and verify that the changes are replicated immediately to the Kubernetes cluster.
-    
-    For example change the EnforcementMode to Blocking.
-    
-    `enforcementMode: transparent`  =>  `enforcementMode: blocking`
+.. code:: bash
+
+   kubectl create namespace nap
+   kubectl apply -f app.yml
+
+Create the App Protect policy.
+
+.. code:: bash
+
+   kubectl apply -f appolicy.yml
+
+
+Create log configuration resource:
+
+.. code:: bash
+
+   kubectl apply -f log.yml
+
+
+Create the policy to reference the AP Policy, the AP Log profile and the log destination.
+
+.. code:: bash
+   kubectl apply -f policy.yml
+
+
+Create the VirtualServer resource:
+
+.. code:: bash
+   kubectl apply -f virtual-server.yml
+
+
+Send a request to the application.
+
+
+.. code:: bash
+   curl http://nap-monitor.f5k8s.net/
+
+.. code:: bash
+
+   #####################  Expected output  #######################
+   Server address: 10.244.140.109:8080
+   Server name: nap-monitor-7586895968-r26zn
+   Date: 12/Sep/2022:14:12:25 +0000
+   URI: /
+   Request ID: 0495d6a17797ea9776120d5f4af10c1a
+
+
+Step 2. Execute malicious requests to the application  
+
+Now, let's try to send a malicious request to the application:
+
+SQL Injection (encoded)
+
+.. code:: bash
+      
+   curl "http://nap-monitor.f5k8s.net/index.php?password=0%22%20or%201%3D1%20%22%0A"
+
+SQL Injection
+
+.. code:: bash
+
+   curl "http://nap-monitor.f5k8s.net/index.php?password==0'%20or%201=1'"
+
+SQL Injection
+
+.. code:: bash
+
+   curl "http://nap-monitor.f5k8s.net/index.php?id=%'%20or%200=0%20union%20select%20null,%20version()%23"
+
+Cross Site Scripting
+
+.. code:: bash
+
+   curl "http://nap-monitor.f5k8s.net/index.php?username=<script>"
+
+Command Injection
+
+.. code:: bash
+      
+   curl "http://nap-monitor.f5k8s.net/index.php?id=0;%20ls%20-l"
+
+
+The expected output  for all the previous requests is the following:
+
+.. code:: bash
+
+   <html><head><title>Request Rejected</title></head><body>The requested URL was rejected........ ```
+
+Step 3. Review Logs 
+-------------------
+
+
+Login to Grafana (credentials **admin/Ingresslab123**)
+
+.. image:: images/login.png
+
+Go to **Dashboards->Browse**
+
+.. image:: images/browse.png
+
+
+Select the NAP Dashboards that can be located under the NGINX folder
+
+.. image:: images/dashboards.png
+
+Navigate through the different Dashboards to review the attacks.
+
+
+***Clean up the environment (Optional)***
+
+.. code:: bash
+
+   kubectl delete -f .
+
+(Add summary page aftewards with thoughts?)
