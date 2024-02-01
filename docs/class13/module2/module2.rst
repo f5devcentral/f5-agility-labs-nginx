@@ -236,7 +236,7 @@ To run the demos, use the terminal on VS Code. VS Code is under the `bigip-01` o
 
 Go to **Dashboards->NAP->Main Dashboard**
 
-Note the count in the Severity Box:
+Note the current count in the Severity Box and the number of attacks:
 
 .. image:: images/ViolationRatingsDash.png
 
@@ -251,6 +251,10 @@ In the terminal window execute the following command and observe the count in th
 .. code:: bash
 
    for i in {1..50}; do curl "http://nap-ingress2.f5k8s.net/?a=b=0xF0"; done
+
+Review the main dashboard and note if the number of attacks incremented and which severity level incremented.
+
+.. image:: images/ViolationRatingsDash2.png
 
 Were the attacks blocked by the WAF? Hint: Did the server response include a support ID?
 
