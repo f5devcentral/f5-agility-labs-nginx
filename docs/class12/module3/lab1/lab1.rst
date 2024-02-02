@@ -167,7 +167,7 @@ registered in CoreDNS.
 
    kubectl run dnsutils --image=registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3 --restart=Always -n test -- /bin/bash -c "sleep infinity"
 
-Once deployed and running, you can execute *dig* commands from inside the cluster using the dnsutils tools.
+Once deployed and running, you can execute dig commands from inside the cluster using the dnsutils tools. If this command fails, wait a few seconds then execute again.
 
 .. code-block:: bash
    :caption: DNS dig
