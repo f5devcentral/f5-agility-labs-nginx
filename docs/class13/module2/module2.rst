@@ -106,7 +106,9 @@ Generating attacks
 
 In the following section we will generate multiple attacks so that the dashboards get populated with meaningful data that we can review.
 
-To run the demos, use the terminal on VS Code. VS Code is under the `bigip-01` on the `Access` drop-down menu. Click <a href="https://raw.githubusercontent.com/F5EMEA/oltra/main/vscode.png"> here </a> to see how.*
+To run the demos, use the terminal on VS Code. VS Code is under the `bigip-01` on the `Access` drop-down menu. 
+
+.. image:: images/vscode.png
 
 
 #. Change the working directory to `monitoring`.
