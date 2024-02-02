@@ -17,180 +17,170 @@ Modify the WAF Policy to Resolve an App Issue
 
 .. image:: images/arcadia_full_load.png
 
-5. Load the **Arcadia Finance (N+)** bookmark again. Right-click in the middle of the white space in the browser where the banner image should have loaded. Click **Open Image in New Tab** on the context menu that appears.
+5. Load the Arcadia Finance (N+) bookmark again. Now, we will make a request for the missing image in the blank section of the web page. In your Jump Server RDP session, click **Applications** and then **Terminal**.
 
-.. image:: images/load_image_new_tab.png
+.. image:: images/terminal_click.png
 
-6. Click on the **Custom Reject Page** that loads in the new tab.
+.. image:: images/terminal_new.png
 
-.. image:: images/custom_reject_page_link.png
+6. In the terminal window that opens, enter the command below.
 
-7. You should see the custom reject page as shown below:
+.. code-block:: bash
 
-.. image:: images/custom_reject_page.png
+    curl -X POST -k -H "host: nginx-plus.arcadia-finance.io" "https://nginx-plus-1.appworld.lab/images/slider/slide-img-3.jpg" |& sed 's/>/>\n/gI'
 
-8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in NMS-SM.
+.. image:: images/terminal_curl_output_block.png
 
-.. image:: images/select_copy_support_id.gif
+7. NGINX App Protect intercepted the request and responded with this custom page. Notice that a **support ID** is generated in the terminal output. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in SM.
 
-9. Return to NMS and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
+.. image:: images/terminal_curl_output_select_support_id.png
 
-.. image:: images/NMS-SM-tile.png
+8. Return to NIM and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
 
-10. You'll be presented with the Security Monitoring landing page, as shown below:
+.. image:: images/SM-tile.png
 
-.. image:: images/NMS-SM_overview.png
+9. You'll be presented with the Security Monitoring landing page, as shown below:
 
-11. On the left menu, select **Support ID Details**. 
+.. image:: images/SM_overview.png
+
+10. On the left menu, select **Support ID Details**. 
     
-.. image:: images/NMS-SM_support_id_link.png
+.. image:: images/SM_support_id_link.png
 
-12. You'll be prompted for your support ID.
+11. You'll be prompted for your support ID.
 
-.. image:: images/NMS-SM_support_id_prompt.png
+.. image:: images/SM_support_id_prompt.png
 
-13. Enter your support ID into the search field and click the **arrow** to search.
+12. Enter your support ID into the search field and click the **arrow** to search. If you receive an error, the system is still processing the alert; wait a bit and click **Try Again**.
 
-.. image:: images/NMS-SM_support_id_entry.png
+.. image:: images/SM_support_id_entry.png
 
 .. note:: At anytime in this lab you encounter a support ID, feel free to return to this tool to look at the details of the attack and mitigation.
 
-14. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
+13. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
-.. image:: images/NMS-SM_support_id_details.png
+.. image:: images/SM_support_id_details.png
 
-15. Notice that the image URI is listed as **/images/slider/slide-3.jpg**.
+14. Notice that the image URI is listed as **/images/slider/slide-img-3.jpg**.
 
-.. image:: images/NMS-SM_support_id_uri.png
+.. image:: images/SM_support_id_uri.png
 
-16. If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Sub-violations**, **CVEs**, and **Threat Campaigns**. 
+15. If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Subviolations**, **CVEs**, and **Threat Campaigns**. 
 
-.. image:: images/NMS-SM_support_id_attack_details_collapsed.png
+.. image:: images/SM_support_id_attack_details_collapsed.png
 
-.. image:: images/NMS-SM_support_id_attack_details.png
+16. Notice that the **Violations** section shows an **Illegal File Type** violation.
 
-17. Notice that the **Violations** section shows a single violation: **Illegal File Type**. 
+.. image:: images/SM_support_id_illegal_file_type.png
 
-.. image:: images/NMS-SM_support_id_illegal_file_type.png
-
-18. You need to allow JPG files to enable the application to operate properly by modifying the WAF policy. Start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
+17. You need to allow JPG files to enable the application to operate properly. To do this, you will need to modify the WAF policy. Start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
 
 .. image:: images/menu_drop_down_nim.png
 
-19. Inside of the **Instance Manager** dashboard, click on **App Protect** towards the bottom of the left menu bar.
+18. Inside of the **Instance Manager** dashboard, click on **App Protect**, then **Policies** towards the bottom of the left menu bar.
 
 .. image:: images/nim_app_protect_menu.png
 
-20. Click on the **AgilityPolicy** in the policy list. 
+19. Click on the **AppWorldPolicy** in the policy list. 
 
-.. image:: images/nim_app_protect_agilitypolicy.png
+.. image:: images/nim_app_protect_appworldpolicy.png
 
-21. Now, click on the **Policy Versions** tab inside of the **Policy Detail** page.
+20. Now, click on the **Versions** tab inside of the **Policy Detail** page.
 
-.. image:: images/nim_app_protect_agilitypolicy_versions.png
+.. image:: images/nim_app_protect_appworldpolicy_versions.png
 
-22. Click on the version name under the **Versions** column in the list.
+21. Click on the version name under the **Versions** column in the list.
 
-.. image:: images/nim_app_protect_agilitypolicy_version_view.png
+.. image:: images/nim_app_protect_appworldpolicy_version_view.png
 
-23. The JSON configuration of the policy will be displayed, as shown below:
+22. The JSON configuration of the policy will be displayed, as shown below:
   
-.. image:: images/nap_agilitypolicy_json.png
+.. image:: images/nap_appworldpolicy_json.png
 
-24. To modify the policy based on this version of the policy, click **Edit Version**. 
+23. To modify the policy based on this version of the policy, click **Edit Version**.
 
-.. image:: images/nap_agilitypolicy_edit_version.png
+.. image:: images/nap_appworldpolicy_edit_version.png
 
-25. Provide a description of the changes you'll be making in the **Description** field. 
+24. Provide a description of the changes you'll be making in the **Description** field.
 
-.. image:: images/nap_agilitypolicy_version_edit.png
+.. image:: images/nap_appworldpolicy_version_edit.png
 
-26. Place your mouse cursor inside the policy editor. Press **CTRL+F** to open the search dialog.
+25. Place your mouse cursor inside the policy editor. Press **CTRL+F** to open the search dialog.
 
-.. image:: images/nim_app_protect_agilitypolicy_version_search.png
+.. image:: images/nim_app_protect_appworldpolicy_version_search.png
 
-27. Search for **"jpg"** and you'll find on line 240 that JPG files are not being allowed. Modify line 241 to change ``"allowed": false`` to ``"allowed": true``. Note that false and true are not encapsulated in quotation marks.
+26. Search for **"jpg"** and you'll find on line 240 that JPG files are not being allowed. Modify line 241 to change ``"allowed": false`` to ``"allowed": true``. Note that false and true are not encapsulated in quotation marks.
 
-.. image:: images/nim_app_protect_agilitypolicy_version_modified.png
+.. image:: images/nim_app_protect_appworldpolicy_version_modified.png
 
-28. Click the **Save New Version** button to create a new version of the policy. 
+27. Click the **Save New Version** button to create a new version of the policy. 
     
 .. image:: images/save_new_version.png
     
-29. You will see confirmation that the new version has been created.
+28. You will see confirmation that the new version has been created.
 
 .. image:: images/nim_app_protect_new_version_created.png
 
-30. Click on the policy name at the top of the screen.
+29. Click on the policy name at the top of the screen.
 
 .. image:: images/nap_app_protect_link.png
 
-31. Select the **Policy Versions** tab.
+30. Select the **Versions** tab.
 
-.. image:: images/nim_agilitypolicy_versions.png
+.. image:: images/nim_appworldpolicy_versions.png
 
-32. Notice the new policy version is now listed.
+31. Notice the new policy version is now listed.
 
 .. image:: images/nim_app_protect_new_version_listed.png
 
-33. Return to the the **Instances and Instance Groups** tab. 
+32. Return to the the **Deployments** tab.
 
-.. image:: images/nim_app_protect_agilitypolicy_instance_tab.png
+.. image:: images/nim_app_protect_appworldpolicy_instance_tab.png
 
-34. Now click on the **Assign Policy and Signature Versions** button above the instance list. 
+33. Now click on the **Assign Policy and Signature Versions** button above the instance list.
 
 .. image:: images/assign_policy_version.png
 
-35. Notice that the version listed in the **Policy Version** column is in a drop-down box. You may need to hover your mouse arrow over this section to see the drop-down appear.
+34. Notice that the version listed in the **Policy Version** column is in a drop-down box. You may need to hover your mouse arrow over this section to see the drop-down appear.
 
 .. image:: images/policy_version_dropdown.png
 
-36. Change this to your newer version (compare timestamps) and click **Publish**. 
+35. Change this to your newer version (compare timestamps) and click **Publish**.
 
 .. image:: images/publish.png
 
-37. A pop-up will confirm that you have changed the version.
+36. A pop-up will confirm that you have changed the version.
 
 .. image:: images/publish_confirmation.png
 
-38. Click X to close the confirmation window. 
+37. Click X to close the confirmation window.
 
 .. image:: images/publish_confirmation_close.png
 
-39. Click **Cancel** to close the assignment window. 
+38. Click **Cancel** to close the assignment window.
 
 .. image:: images/close_assignment_window.png
 
-40. On the top of the left menu bar, click **Instances**.
+39. On the top of the left menu bar, click **Instances**.
 
 .. image:: images/nim_instances_link.png
 
-41. Select the **nginx-plus-1** instance from the list.
+40. Select the **nginx-plus-1** instance from the list.
 
 .. image:: images/active_instance_select.png
 
-42. Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Finalized**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
-
-**Deployment not finished**
-
-.. image:: images/deployment_status_unknown.png
-
-**Deployment finished**
+41. Look for the deployment status in the **Last Deployment Details** section. You should see a status of **Successful**. If not, wait a few moments for the deployment to commence and complete. You may need to refresh your browser for the status to update.
 
 .. image:: images/deployment_status.png
 
-43. Once the deployment has finished, check the site to see if the issue is remediated. In a new tab in **Firefox**, open a new tab and click on the **Arcadia Finance (N+)** bookmark. Notice that the images are now loading successfully.
+42. Once the deployment has finished, check the site to see if the issue is remediated. Go back to the Terminal that is open on the Jump Server and enter the command below.
 
-.. caution:: If images do not load, press **CTRL + Shift + R** to force the browser to fully reload the page.
+.. code-block:: bash
 
-.. image:: images/successful_full_load.png
+    curl -X POST -k -H "host: nginx-plus.arcadia-finance.io" "https://nginx-plus-1.appworld.lab/images/slider/slide-img-3.jpg" -o slide-img-3.jpg && file slide-img-3.jpg | sed 's/, /\n/gI'
+
+The command will attempt to download the jpg image, and inspect its contents. You should see output as in the screenshot below signifying that the file has been downloaded successfully, and is no longer being blocked by the WAF policy.
+
+.. image:: images/terminal_curl_output_pass.png
 
 Now that you have viewed, diagnosed and remedied a false positive in a WAF policy, continue to the next section of the lab.
-
-
-
-
-
-
-
-

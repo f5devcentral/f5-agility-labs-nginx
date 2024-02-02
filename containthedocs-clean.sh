@@ -3,9 +3,8 @@
 set -x
 
 COMMAND="make -C docs clean"
-ARCH=`uname -m`
 
-. ./containthedocs-image-$ARCH
+. ./containthedocs-image
 
 exec docker run --rm -it \
   -v "$PWD":"$PWD" --workdir "$PWD" \

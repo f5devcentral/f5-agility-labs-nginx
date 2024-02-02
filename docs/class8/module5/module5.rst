@@ -1,26 +1,99 @@
-Module 5 - Reporting and Monitoring NAP DoS using ELK Stack
-###########################################################
+Additional Tuning Parameters and Best Practices
+###############################################
 
-1. Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+This section list some additional tuning parameters. These are good to understand and will improve performance in certain use cases. We've included these tunes into the nginx.conf file on the proxy and you may choose to uncomment them to see how they impact performance.
 
-.. image:: access-kibana.jpg
+|
+|
 
-2. Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link
+1) **Optimize the Access Log**
 
-.. image:: access-dashboard1.jpg
+Writing to disk can be resource intensive. This setting allows you to buffer log output and only write to disk after collecting a specified amount of data.
 
-Once the attack begins the NGINX App Protect Dos will switch into attack mode due to the server health deteriorating - almost immediately. ( Dashboard : AP_DOS: Server_stress_level )
+Review this line in the nginx.conf file
 
-That’s why BaDoS first mitigates with a global rate limit just to protect the server. (Dashboard: AP_DOS: HTTP mitigation, Global Rate will marked Red)
+* access_log /var/log/nginx/access.log main buffer=128;
 
-During this time Behavioral DoS identifies anomalous traffic and generates Dynamic Signatures matching only the malicious traffic. (Dashboard: AP_DOS: HTTP mitigation, Signatures will marked Purple)
+Although typically not recommended, you may chose to turn off the access log entirely if writing to disk is a concern
 
-It might take a few moments for a dynamic signature(s) to generate, but shortly after the attack has been detected a signature should be created.
+* access_log off;
+|
+|
 
-Dynamic Signatures will be displayed in (Dashboard:AP_DOS: Attack signatures)
+2) **Linux TCP Memory Tuning**  
+   
+Observe existing TCP memory settings
 
-Once mitigation is in effect, the server health will rapidly improve and application performance will return to normal. ( Dashboard : AP_DOS: Server_stress_level returns to value 0.5)
+`sudo sysctl -a|grep tcp_[rw]*mem`
 
-After a few minutes, you will begin to see transactions being mitigated with Blocked Bad Actor. (Dashboard: AP_DOS: HTTP mitigation, Bad Actors will marked Yellow)
+|
 
-Bad Actors IPs will be listed in (Dashboard: AP_DOS: Detected bad actors)
+.. image:: /class8/images/tcp-default.png
+
+|
+
+Access the NGINX Proxy either SSH or WEB SHELL.
+Edit /etc/sysctl.conf and uncomment the TCP memory settings at the end of the file.
+
+|
+
+.. image:: /class8/images/tcp-sysctl.png
+
+|
+
+Now load the new TCP settings
+
+`sudo sysctl -p`
+
+|
+
+.. image:: /class8/images/tcp-sysctl-p.png
+
+|
+|
+
+3) **Review gzip compression**
+Note that gzip compression will not work in combination with the sendfile tune. In order to compress the payload, NGINX will need to copy data into user-space. Compression is only advised under certain circumstances when CPU resources are available.
+
+* gzip  on;
+
+|
+
+4) **Rate limits**  
+   
+Review the following lines in the nginx.conf file
+	
+* limit_req_zone $binary_remote_addr zone=addr:10m rate=1000r/s;
+* limit_req zone=addr;
+
+Uncommenting these directives will enable rate limiting, according to the parameters set in limit_req_zone
+
+5) **Connection limits**
+
+Review the following lines in the nginx.conf file
+
+* limit_conn_zone $binary_remote_addr zone=addr:10m;
+* limit_conn addr 400;
+
+Uncommenting these directives will enable connection limits.
+
+.. note:: Both connection and rate limits are advised as best-practices for any service running in production. These parameters can help defend against some Denial-of-Service attacks, as well as, prevent back-end application servers from being overwhelmed with rouge traffic.
+
+|
+
+6) **Review upstream keepalive parameters**
+
+* keepalive_requests 10000;
+* upstream block, keepalive 512;
+
+.. note:: While not too effective in our particular lab environment, keepalive parameters are essential to performance in real production environments.
+
+Thank you!! Hope you enjoyed this lab!!
+
+|
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+   :glob:
+

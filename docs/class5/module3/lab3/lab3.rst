@@ -15,7 +15,7 @@ This section is optional and showcases the use of NGINX Dashboard (included with
 
 .. image:: images/nginx-plus-dashboard-upstreams.png
 
-4. The additional detail provided in the NGINX Dashboard is provided via *Snippets* that are enabled in the **values.yaml** file and directivese called out in **arcadia-vs.yml** file.
+4. The additional detail provided in the NGINX Dashboard is provided via *Snippets* that are enabled in the **values.yaml** file and directives called out in **arcadia-vs.yml** file.
 
 .. image:: images/status-zone.png
 
@@ -29,7 +29,7 @@ This section is optional and showcases the use of NGINX Dashboard (included with
 
 .. image:: images/grafana_bookmark.png
 
-7. Log in using the **lab** / **Agility2023!** credentials.
+7. Log in using the **lab** / **AppWorld2024!** credentials.
 
 .. image:: images/grafana_login.png
 
