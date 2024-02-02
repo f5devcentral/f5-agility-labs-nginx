@@ -22,7 +22,7 @@ Argo CD offers the following key features and capabilities:
 
 .. image:: images/argo_bookmark.png
 
-3. Log into Argo using the **lab** / **AppWorld2024!** credentials.
+3. Log into Argo using the **lab** / **Agility2023!** credentials.
 
 .. image:: images/argo_login.png
 

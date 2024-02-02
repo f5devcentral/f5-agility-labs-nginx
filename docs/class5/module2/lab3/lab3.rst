@@ -1,7 +1,11 @@
 Test a SQL Injection Attack against the Arcadia Finance App
 ===========================================================
 
+<<<<<<< HEAD
 1. Before you enable the App Protect service, attempt a SQL injection attack on the Arcadia Finance app. In your Jump Server RDP session, click **Applications** and then **Terminal**.
+=======
+1. Before you enable the App Protect service, attempt a SQL injection attack on the Acardia Finance app. In **Firefox**, open a new tab then click on the **Arcadia Finance (DIY)** bookmark or navigate to **https://diy.arcadia-finance.io/**. 
+>>>>>>> origin/master
 
 .. image:: images/terminal_click.png
 

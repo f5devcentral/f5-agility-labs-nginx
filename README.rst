@@ -1,5 +1,5 @@
-NGINX for F5 AppWorld
-=====================
+NGINX for F5 Agility
+====================
 
 Currently included classes:
 
@@ -7,8 +7,9 @@ Currently included classes:
 #. NGINX Plus CICD
 #. NGINX Dataplane Scripting
 #. NGINX Instance Manager Introduction
-#. NGINX App Protect WAF & DoS
+#. NGINX App Protect
 #. NGINX API Management and Security
 #. NGINX Kubernetes Ingress Controller and Rancher
-#. NGINX Access on F5 NGINX Plus - Authentication for Web Access
+#. NGINX App Protect Denial of Service (NAP DoS)
+#. NGINX Access on F5 NGINX Plus – Authentication for Web Access
 #. NGINX API Connectivity Manager

@@ -29,49 +29,63 @@ Modify the WAF Policy to Resolve an App Issue
 
     curl -X POST -k -H "host: nginx-plus.arcadia-finance.io" "https://nginx-plus-1.appworld.lab/images/slider/slide-img-3.jpg" |& sed 's/>/>\n/gI'
 
+<<<<<<< HEAD
 .. image:: images/terminal_curl_output_block.png
+=======
+8. NGINX App Protect redirected us to this page. Notice that a **support ID** is generated when the page loads. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in NMS-SM.
+>>>>>>> origin/master
 
 7. NGINX App Protect intercepted the request and responded with this custom page. Notice that a **support ID** is generated in the terminal output. You can use this ID to identify the cause of the image block. **Select and copy this value** so that you can search for it in SM.
 
+<<<<<<< HEAD
 .. image:: images/terminal_curl_output_select_support_id.png
 
 8. Return to NIM and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
+=======
+9. Return to NMS and navigate to Security Monitoring by clicking the drop-down in the top left of the screen and selecting **Security Monitoring**.
+>>>>>>> origin/master
 
-.. image:: images/SM-tile.png
+.. image:: images/NMS-SM-tile.png
 
 9. You'll be presented with the Security Monitoring landing page, as shown below:
 
-.. image:: images/SM_overview.png
+.. image:: images/NMS-SM_overview.png
 
 10. On the left menu, select **Support ID Details**. 
     
-.. image:: images/SM_support_id_link.png
+.. image:: images/NMS-SM_support_id_link.png
 
 11. You'll be prompted for your support ID.
 
-.. image:: images/SM_support_id_prompt.png
+.. image:: images/NMS-SM_support_id_prompt.png
 
 12. Enter your support ID into the search field and click the **arrow** to search. If you receive an error, the system is still processing the alert; wait a bit and click **Try Again**.
 
-.. image:: images/SM_support_id_entry.png
+.. image:: images/NMS-SM_support_id_entry.png
 
 .. note:: At anytime in this lab you encounter a support ID, feel free to return to this tool to look at the details of the attack and mitigation.
 
 13. Once the security event has loaded, you can see details surrounding the violation that is blocking images on your app. 
 
-.. image:: images/SM_support_id_details.png
+.. image:: images/NMS-SM_support_id_details.png
 
 14. Notice that the image URI is listed as **/images/slider/slide-img-3.jpg**.
 
-.. image:: images/SM_support_id_uri.png
+.. image:: images/NMS-SM_support_id_uri.png
 
 15. If you scroll down to the **Attack Details** section, you can expand the individual sections showing **Violations**, **Subviolations**, **CVEs**, and **Threat Campaigns**. 
 
-.. image:: images/SM_support_id_attack_details_collapsed.png
+.. image:: images/NMS-SM_support_id_attack_details_collapsed.png
 
+<<<<<<< HEAD
 16. Notice that the **Violations** section shows an **Illegal File Type** violation.
+=======
+.. image:: images/NMS-SM_support_id_attack_details.png
 
-.. image:: images/SM_support_id_illegal_file_type.png
+17. Notice that the **Violations** section shows a single violation: **Illegal File Type**. 
+>>>>>>> origin/master
+
+.. image:: images/NMS-SM_support_id_illegal_file_type.png
 
 17. You need to allow JPG files to enable the application to operate properly. To do this, you will need to modify the WAF policy. Start that process by navigating back to **Instance Manager** from the **Select module** drop-down at the top of the left menu bar.
 

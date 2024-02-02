@@ -1,7 +1,7 @@
 Module 5 - Advanced Tools and Features
 ======================================
 
-In this class, you will learn about advanced tools and features involving NGINX App Protect WAF:
+In this class, you will learn about advanced tools and features involving NGINX App Protect:
 
 Estimated completion time: 13 minutes
 
@@ -15,4 +15,5 @@ Estimated completion time: 13 minutes
    :glob:
 
    lab*/lab*
-   recap
+
+

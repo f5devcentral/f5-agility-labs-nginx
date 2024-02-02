@@ -19,16 +19,16 @@ GitLab:
    variables <https://docs.gitlab.com/ee/ci/variables/#custom-environment-variables>`__:
    When your use case requires a specific custom variable, you
    can \ `set them up quickly from the
-   UI <https://docs.gitlab.com/ee/ci/variables/#define-a-cicd-variable-in-the-ui>`__ or
+   UI <https://docs.gitlab.com/ee/ci/variables/#creating-a-custom-environment-variable>`__ or
    directly in the ``.gitlab-ci.yml`` file and reuse them as you wish.
    There are two variable types:
 
    -  `Variable
-      type <https://docs.gitlab.com/ee/ci/variables/#use-file-type-cicd-variables>`__:
+      type <https://docs.gitlab.com/ee/ci/variables/#variable-type>`__:
       The Runner will create an environment variable named the same as
       the variable key and set its value to the variable value.
    -  `File
-      type <hhttps://docs.gitlab.com/ee/ci/variables/#use-file-type-cicd-variables>`__: The
+      type <https://docs.gitlab.com/ee/ci/variables/#file-type>`__: The
       Runner will write the variable value to a temporary file and set
       the path to this file as the value of an environment variable,
       named the same as the variable key
@@ -61,9 +61,9 @@ GitLab:
 
 2. Let’s take a look at that variable in action: Open a log output of a
    recent successful pipeline job from the sidebar menu, go to **CI/CD >
-   Jobs** and click on a **status: passed** icon associated with an
-   image build stage.  In the example below, we selected the Alpine 3.17 image.  
-   e.g. \ ``alpine3.17`` **(Stage - build)**
+   Jobs** and click on a **status: passed** icon associated with a to a
+   image build stage, any stage with name with a linux distro name
+   e.g. \ ``ubuntu18.04`` **(not ``clean_up``)**
 
    .. image:: ../images/image25.png
 

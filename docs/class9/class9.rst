@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 Class 9: Access on NGINX Plus - Authentication for Web Access
 =============================================================
+=======
+Class 9: Access on NGINX+ - Authentication for Web Access
+=========================================================
+>>>>>>> origin/master
 
 .. note:: **Last Updated: 1/22/2024**
 
@@ -7,6 +12,11 @@ Instructors at F5 AppWorld 2024:
 
 -  Sam Park <s.park@f5.com>
 -  Scott Huddy <s.huddy@f5.com>
+
+Instructors at Agility 2023:
+
+-  Amir Rawdat <a.rawdat@f5.com>
+-  Ivan Reyes Mendez <i.reyesmendez@f5.com>
 
 UDF Lab Maintainers:
 
