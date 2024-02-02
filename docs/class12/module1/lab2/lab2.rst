@@ -48,7 +48,7 @@ From the web shell you will ssh into the leader node:
 
 Returned content:
 
-.. code-block:: 
+.. code-block:: bash 
    :caption: Node data basic 
 
     NAME                       STATUS   ROLES                  AGE    VERSION
