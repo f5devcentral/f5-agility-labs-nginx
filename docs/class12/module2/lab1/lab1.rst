@@ -401,7 +401,7 @@ Describe service output:
    External Traffic Policy:  Cluster
    Events:                   <none>
 
-This is an example, you'll have to insert your NodePort port from your describe command.
+Test connectivity by issuing a curl to the localhost on the port listed in the *describe* command output.
 
 .. code-block:: bash
    :caption: Curl
