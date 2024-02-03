@@ -76,7 +76,7 @@ Review the Dashboard and what is included under the tabs across the top of the p
 
 * HTTP Zones: this section contains the zone we defined in the proxy's server block. It tracks collective requests, responses, traffic and SSL statistics. Note that SSL statistics are missing because for simplicity, we do not use SSL for this lab.
 * HTTP Upstreams: this sections contains statistics on the upstreams or backends that we defined in the proxy's upstream block. It tracks connections, requests, responses, health statistics and other information related to the proxy's connection to the application server.
-* Workers: this section containers statistics that are specific to individual NGINX worker processes.
+* Workers: this section contains statistics that are specific to individual NGINX worker processes.
 * Caches: this section is not yet visible. Later in the lab we will turn caching on and this section will display statistics related to the health of our proxy's cache.
 
 |
