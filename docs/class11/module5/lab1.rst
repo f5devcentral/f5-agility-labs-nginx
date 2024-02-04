@@ -12,27 +12,54 @@ Our API has two endpoints:
    
 In the URL bar of the web browser, connect to the ``https://jobs.local/get-job`` API endpoint.
 
+.. image:: images/jobs-local-get-job.png
+   :scale: 50%
+
 - Press [F12] to reveal the Firefox Developer Tools
-- Select 'Network' and 'Response' just like the screenshot below 
-- Press [F5] to create a new HTTP request
-- Right-click on the 'add-job' request just like in the screenshot below
+- Select "Network"
+
+.. image:: images/jobs-local-get-job-f12.png
+   :scale: 50%
+
+- Press [F5] to create a new HTTP requestor
+- click and highlight the document "get-job"
+- Select 'Response' just like the screenshot below 
+
+.. image:: images/jobs-local-get-job-f5.png
+   :scale: 50%
+
+- Right-click on the 'get-job' request just like in the screenshot below
 - Select 'Edit and Resend'
+
+.. image:: images/job-local-get-job-edit-send.png
+   :scale: 50%
+
 - On the left-hand side, in the 'New Request' section, select [Clear]
+
+.. image:: images/jobs-local-clear.png
+   :scale: 50%
+
 - Fill in the values just like the table below
 
-+------------------------------------------------+
-| New Request                                    |
-+==============+=================================+
-| POST         | https://jobs.local/add-job      |
-+--------------+---------------------------------+
-| *Headers*                                      |
-+--------------+---------------------------------+
-| Content-Type | application/json                |
-+--------------+---------------------------------+
-| *Body*                                         |
-+------------------------------------------------+
-| ["Professional Skateboarder"]                  |
-+------------------------------------------------+
++---------------------------------+----------------------------+
+| New Request                     |                            |
++=================================+============================+
+| POST                            | https://jobs.local/add-job |
++---------------------------------+----------------------------+
+| *Headers*                       |                            |
++---------------------------------+----------------------------+
+| Content-Type                    | application/json           |
++---------------------------------+----------------------------+
+| *Body*                          |                            |
++---------------------------------+----------------------------+
+| [\"Professional Skateboarder\"] |                            |
++---------------------------------+----------------------------+
+
+
+
+.. image:: images/jobs-local-add-job-form.png
+   :scale: 50%
+
 
 Click [Send]
 

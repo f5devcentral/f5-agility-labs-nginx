@@ -55,7 +55,7 @@ The public key will be used to validate the JWT signature.
    create-signed-jwt.sh
    create-signed-jwt.sh
 
-The output of ``create-signed-jwt-sh`` is presented in two formats:
+The output of ``create-signed-jwt.sh`` is presented in two formats:
 
 - Authorization Bearer: <base64 encoded string>. This is the value expected in an HTTP "Authorization" header.
 
@@ -127,21 +127,21 @@ In the URL bar of the web browser, connect to the ``https://jobs.local/get-job``
 
 Copy and paste the value of the "Authorization" header just like the table and screenshots below. Replace the <base64 encoded JWT> placeholder.
 
-+------------------------------------------------+
-| New Request                                    |
-+==============+=================================+
-| POST         | https://jobs.local/add-job      |
-+--------------+---------------------------------+
-| *Headers*                                      |
-+--------------+---------------------------------+
-| Content-Type | application/json                |
-+--------------+---------------------------------+
-| Authorization| Bearer <base64 encoded JWT>     |
-+--------------+---------------------------------+
-| *Body*                                         |
-+------------------------------------------------+
-| ["Professional Skateboarder"]                  |
-+------------------------------------------------+
++---------------------------------+----------------------------+
+| New Request                     |                            |
++=================================+============================+
+| POST                            | https://jobs.local/add-job |
++---------------------------------+----------------------------+
+| *Headers*                       |                            |
++---------------------------------+----------------------------+
+| Content-Type                    | application/json           |
++---------------------------------+----------------------------+
+| Bearer <base64 encoded JWT>     |                            |
++---------------------------------+----------------------------+
+| *Body*                          |                            |
++---------------------------------+----------------------------+
+| [\"Professional Skateboarder\"] |                            |
++---------------------------------+----------------------------+
 
 With the "Authorization" header on/enabled, you can POST new jobs to the ``https:/jobs.local/add-job`` API endpoint.
 
