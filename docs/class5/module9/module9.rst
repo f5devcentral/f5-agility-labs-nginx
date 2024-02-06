@@ -72,7 +72,7 @@ Output:
     Finished trip with 10 points
 
 
-7. Stop the attack. Use **Ctrl+C**.
+7. Press **Ctrl+C** on the **Attack Traffic Generator** VM to stop the attack script. Leave the good script running.
 
 .. note:: Click the refresh button several times after stopping the attack script and wait for the vertical black line in the ELK Dashboard before running the next attack script. The vertical black line indicates that the attack has stopped.
 
@@ -102,7 +102,7 @@ Slow POST attack: Slowing down the HTTP message body, making the server wait unt
     cd /scripts
     ./slow_post_http1.sh
 
-Wait 2 mins until the script establishes 10k connections.
+Wait a few mins until the script establishes 4-5k connections.
 
 As evidence of successful mitigation, the good traffic script will continue to report that the service is available.
 
@@ -119,16 +119,9 @@ Output:
     JUICESHOP HTTP Code:200
     Finished trip with 10 points
 
-Slowhttptest will report that NGINX App Protect DoS is closing the connection as seen below (note the slow HTTP test status output, somewhere around the 165th second):
+Slowhttptest will report that NGINX App Protect DoS is closing the connections similar to below:
 
-  .. code:: shell
-
-    initializing: 0
-    pending: 1
-    connected: 2
-    error: 0
-    closed: 14225
-    service available: YES
+.. image:: images/slow_http1_output.png
 
 3. Open the Kibana tab to verify that NGINX App Protect DoS is mitigating the attack. Click on the three lines in the far right corner, select **Dashboard**, then click **AP_DOS_AppProtect**.
 
@@ -140,6 +133,7 @@ Slowhttptest will report that NGINX App Protect DoS is closing the connection as
 
 5. Stop the attack. Use **Ctrl+C**.
 
+.. note:: Wait for the vertical black line in the AP_DOS: Client HTTP transactions/s graph in the ELK Dashboard before running the next attack script.
 
 Launch HTTP/2 Flood attack on gRPC service
 ==========================================

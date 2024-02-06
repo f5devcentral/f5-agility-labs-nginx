@@ -10,3 +10,4 @@ In this lab you will be tuning different NGINX configuration parameters and test
    :glob:
 
    module*/module*
+
