@@ -225,3 +225,7 @@ Official Documentation
 - `Kubernetes Replica Set <https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/>`_
 - `Kubernetes Rolling Update <https://kubernetes.io/docs/tutorials/kubernetes-basics/update/update-intro/>`_
 - `Kubernetes Annotations <https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/>`_
+
+
+This concludes *The Path to Understanding Kubernetes and Containers* class. While this class will not make you a Kubernetes expert, this is a very strong start into understanding 
+components and commands. I'd highly recommend takikng a formal Certified Kubernetes Administrators (CKA) course if you are seeking a more in depth knowledge base.

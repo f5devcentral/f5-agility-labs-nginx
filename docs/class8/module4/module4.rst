@@ -10,7 +10,16 @@ In NIM, edit nginx.conf.
 Uncomment the proxy_buffers directive, line 39
 `proxy_buffers 8 1638k;`
 
+|
+
+.. image:: /class8/images/mod4-line39.png
+
+|
+
 Publish changes
+
+|
+|
 
 2) **Run a test and review performance**
 Scale the number of users down to 100 with a Spawn Rate of 10/s
@@ -28,6 +37,9 @@ Advanced Options, Run time: 30s
 Cache is a hardware or software component that is embedded in application or device memory. It is used to temporarily store data needed by the user, reducing the time and effort required for retrieving data that is accessed repeatedly. NGINX can act as a caching servers, storing files from backends on disk.
 
 
+|
+|
+
 3) **Turn on file caching in the Nginx proxy**
 
 .. note:: How do you think caching could help the performance of delivering applications?  
@@ -38,7 +50,7 @@ In NIM, edit nginx.conf, and publish changes
 
 Uncomment proxy_cache_path, line 37
 
-.. image:: /class8/images/line35.png
+.. image:: /class8/images/mod4-line39.png
 
 |
 
@@ -47,7 +59,11 @@ Uncomment proxy_cache, line 73
 .. image:: /class8/images/nim-proxy-cache.png
 
 |
+
 Publish changes
+
+|
+|
 
 4) Confirm cache is operational 
    
@@ -105,12 +121,15 @@ Publish the changes.
 
 .. image:: /class8/images/nim-sendfile.png  
 
+|
 	
 Run the same test again.
 
 .. note:: Were there any performance gains seen?
 
 |
+|
+
 7) **Improve network packet packaging**
 
 In NIM, edit nginx.conf
@@ -122,6 +141,9 @@ This will cause NGINX to send the first part of the file in the same packet as t
 Publish the changes and re-run the test.
 
 .. note:: Were there any performance gains seen?
+
+|
+|
 
 8) **Turn on open file cache**
 
@@ -137,6 +159,7 @@ Doing so enables NGINX to track open file descriptors, which can have a positive
 
 .. note:: Do you notice any improvements?  
 
+|
 |
 
 HINTS:

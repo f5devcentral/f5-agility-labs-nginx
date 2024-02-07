@@ -48,7 +48,7 @@ From the web shell you will ssh into the leader node:
 
 Returned content:
 
-.. code-block:: 
+.. code-block:: bash 
    :caption: Node data basic 
 
     NAME                       STATUS   ROLES                  AGE    VERSION
@@ -66,7 +66,7 @@ That was very basic information on our nodes, but if we want more details we can
 
 Returned content:
 
-.. code-block:: 
+.. code-block:: bash
    :caption: Node data wide 
 
     NAME                       STATUS   ROLES                  AGE    VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME

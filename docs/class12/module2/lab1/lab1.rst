@@ -81,8 +81,7 @@ Let's explain the directives from above.
 
 |
 
-A helpful resource to check for this lab is the *api-resource*. Here you can see object type (kind), what its *shortname* is and the *apiVersion* associated. The shortname is 
-very useful to save in typing and for those of you continuing on to take the Certified Kubernetes Administrator (CKA) certification. 
+A helpful resource is the *kubectl api-resource* command output. Here you can see each object type (kind), the corresponding shortname and the apiVersion associated. The shortname is very useful to save keystrokes, especially for those of you planing to pass the Certified Kubernetes Administrator (CKA) certification.
 
 |
 
@@ -401,7 +400,7 @@ Describe service output:
    External Traffic Policy:  Cluster
    Events:                   <none>
 
-This is an example, you'll have to insert your NodePort port from your describe command.
+Test connectivity by issuing a curl to the localhost on the port listed in the *describe* command output.
 
 .. code-block:: bash
    :caption: Curl
