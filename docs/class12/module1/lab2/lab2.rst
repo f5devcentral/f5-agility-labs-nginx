@@ -447,6 +447,13 @@ Two CNI's you'll probably see or hear about most often:
 - Calico - BGP
 - Flannel - VXLAN
 
+Some important information on Kubernetes networking:
+
+- Every pod gets its own IP address
+- Containers within a pod share the pod IP address and can communicate freely with each other
+- Pods can communicate with all other pods in the cluster using pod IP addresses (without NAT)
+- Isolation (restricting what each pod can communicate with) is defined using network policies
+
 Additional information:
 
 - `Container Networking <https://github.com/containernetworking/cni>`_
