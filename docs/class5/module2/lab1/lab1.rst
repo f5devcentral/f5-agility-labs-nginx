@@ -11,95 +11,22 @@ Installing NGINX App Protect on an existing NGINX Plus instance
 
 .. image:: images/nginx_plus_2_ssh_shortcut_menu.png
 
-3. This host has NGINX Plus installed and serving the Arcadia Finance app, but NGINX App Protect is not installed. First, backup the existing NGINX Plus configuration files and logs. Type or paste the commands below:
+.. note:: This host has NGINX Plus installed and serving the Arcadia Finance app, but NGINX App Protect is not installed.
 
-.. code-block:: bash
-
-  sudo cp -a /etc/nginx /etc/nginx-plus-backup
-  sudo cp -a /var/log/nginx /var/log/nginx-plus-backup
-
-**Result**
-
-.. image:: images/backup_existing_config_logs_result.png
-
-4. Install the prerequisite packages by typing or pasting the commands below:
-
-.. code-block:: bash
-
-  sudo apt-get update && sudo apt-get install -y apt-transport-https lsb-release ca-certificates wget gnupg2
-
-**Result**
-
-.. image:: images/install_prereq_packages_result.png
-
-5. NGINX packages are signed to ensure integrity of the contents. You need to download and add the NGINX signing keys to the **apt** package manager:
-
-.. code-block:: bash
-
-  sudo wget https://cs.nginx.com/static/keys/nginx_signing.key && sudo apt-key add nginx_signing.key
-  sudo wget https://cs.nginx.com/static/keys/app-protect-security-updates.key && sudo apt-key add app-protect-security-updates.key
-
-**Result**
-
-.. image:: images/install_apt_keys_result.png
-  
-6. Remove any previous NGINX Plus repository and apt configuration files:
-
-.. caution:: It's okay if these commands return an error. The target files may not exist.
-
-.. code-block:: bash
-
-  sudo rm /etc/apt/sources.list.d/nginx-plus.list
-  sudo rm /etc/apt/sources.list.d/*app-protect*.list
-  sudo rm /etc/apt/apt.conf.d/90pkgs-nginx
-
-**Result**
-
-.. image:: images/remove_previous_repos_result.png
-  
-7. Add the NGINX Plus repository:
-
-.. code-block:: bash
-
-  printf "deb https://pkgs.nginx.com/plus/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-plus.list
-
-**Result**
-
-.. image:: images/add_nplus_repo_result.png
-  
-8. Add NGINX App Protect WAF repositories:
-
-.. code-block:: bash
-
-  printf "deb https://pkgs.nginx.com/app-protect/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/nginx-app-protect.list
-  printf "deb https://pkgs.nginx.com/app-protect-security-updates/ubuntu `lsb_release -cs` nginx-plus\n" | sudo tee /etc/apt/sources.list.d/app-protect-security-updates.list
-
-**Result**
-
-.. image:: images/add_nap_repo_result.png
-  
-9. Download the apt configuration to ``/etc/apt/apt.conf.d``:
-
-.. code-block:: bash
-
-  sudo wget -P /etc/apt/apt.conf.d https://cs.nginx.com/static/files/90pkgs-nginx
-
-**Result**
-
-.. image:: images/apt_conf_download_result.png
-  
-10. Update the repository and install the NGINX App Protect WAF package (which includes NGINX Plus):
+3. Update the repository and install the NGINX App Protect WAF package:
 
 .. code-block:: bash
 
   sudo apt-get update
   sudo apt-get install -y app-protect
 
+If you are prompted for a password, enter `AppWorld2024!`.
+
 **Result**
 
 .. image:: images/nap_install_result.png
 
-11. Load the NGINX App Protect WAF module on the main context in the nginx.conf file:
+4. Load the NGINX App Protect WAF module on the main context in the nginx.conf file:
 
 Open the file in an editor:
 
@@ -119,13 +46,13 @@ Your configuration file should look similar to below:
 
 Press **CTRL + X** to save the file, followed by **Y** when asked to save the buffer, then **enter** when asked for the filename. 
 
-12. Start the NGINX App Protect service and set it to start at boot:
+5. Start the NGINX App Protect service and set it to start at boot:
 
 .. code-block:: bash
 
   sudo systemctl enable --now nginx-app-protect
 
-13. Restart the NGINX service:
+6. Restart the NGINX service:
 
 .. code-block:: bash
 
