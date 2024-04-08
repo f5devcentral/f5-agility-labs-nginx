@@ -31,7 +31,7 @@ Clone the *nginx-api-gateway-for-k8s* repository.
 
 .. code-block:: bash
 
-   git clone https://github.com/tmarfil/nginx-api-gateway-for-k8s.git 
+   git clone https://github.com/f5devcentral/nginx-api-gateway-for-k8s.git 
 
 .. image:: images/05_git_clone.jpg
   :scale: 50%
