@@ -8,7 +8,7 @@ Kubernetes - Operations
 Now that we've covered the core components of Kubernetes, it's time to put it into operations. In this module you'll create Pods, Deployments, and Services. The image above depicts how 
 we tie all these components together. When Kubernetes gets the run command, it will first look to see if the image is held locally on the cache by Kubelet. If there is not a local image, Kubelet 
 will *pull* the image from a container registry. You have already created a namespace *test* and this will isolate resources. Kubernetes will create and assign the pods, while 
-the Kublet will get image and stand up the container. Kubernetes, through the deployment manifest, watches all the pods tagged with labels matching the tags. Then, Kubernetes
+the Kubelet will get the image and stand up the container. Kubernetes, through the deployment manifest, watches all the pods tagged with labels matching the tags. Then, Kubernetes
 will expose the deployment through the service manifest. This happens the same way, through matching label tags.
 
 Let's jump into the operational items that make Kubernetes run.
@@ -46,10 +46,10 @@ Once you have verified the pod is running, you'll delete the pod:
 
 |
 
-Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indention's are correct, let's 
+Vim is not known for being overly friendly to copy/paste commands. Rather than have you spend time doing that and making sure all the indentions are correct, let's 
 review what the manifest file would look like to deploy our Nginx container in a pod called *testpod*.
 
-.. note:: YAML is can be very fussy on indentation, please pay **close attention** to your indentation
+.. note:: YAML can be very fussy on indentation, please pay **close attention** to your indentation
 
 .. code-block:: yaml
    :caption: Pod Manifest 
@@ -71,7 +71,7 @@ review what the manifest file would look like to deploy our Nginx container in a
 Let's explain the directives from above.
 
 | **apiVersion** determines what version of the API will be used for creation
-| **kind** specifies the type of object to be created and is defined in the apiVersion
+| **kind** specifies the type of object to be created, and is defined in the apiVersion
 | **metadata** describes information of an object that allows for the unique identification of that object
 | **spec** defines the desired state of the object in Kubernetes
 | **containers** specifies the containers to be built inside the pod
@@ -81,8 +81,7 @@ Let's explain the directives from above.
 
 |
 
-A helpful resource to check for this lab is the *api-resource*. Here you can see object type (kind), what its *shortname* is and the *apiVersion* associated. The shortname is 
-very useful to save in typing and for those of you continuing on and take the Certified Kubernetes Administrator (CKA) certification. 
+A helpful resource is the *kubectl api-resource* command output. Here you can see each object type (kind), the corresponding shortname and the apiVersion associated. The shortname is very useful to save keystrokes, especially for those of you planing to pass the Certified Kubernetes Administrator (CKA) certification.
 
 |
 
@@ -93,7 +92,7 @@ very useful to save in typing and for those of you continuing on and take the Ce
 
 |
 
-Now, back to creating pods. You can use the *dry-run=client* feature to have Kubernetes write the manifest for you. This process allows you run your Kubernetes command without submitting it to the cluster.
+Now, back to creating pods. You can use the *dry-run=client* feature to have Kubernetes write the manifest for you. This process allows you to run your Kubernetes command without submitting it to the cluster.
 
 .. code-block:: bash
    :caption: Pod Dry Run
@@ -274,7 +273,7 @@ This is an example deployment manifest to explain directives.
 
 .. note:: You can use the command ``cat lab-deploy.yaml`` to view the manifest file
 
-As you've done a previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
+As you've done in previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
 command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work its magic.
 
 .. code-block:: bash
@@ -300,8 +299,17 @@ You should now see the deployment scale up
 
 ``deployment.apps/lab-deploy scaled``
 
+Now let's describe the new deployment: 
+
 .. code-block:: bash
    :caption: Describe Deployment
+
+   kubectl describe deploy/lab-deploy -n test
+
+
+
+.. code-block:: bash
+   :caption: Output Describe Deployment
    :emphasize-lines: 32
 
    lab@k3s-leader:~$ kubectl describe deploy/lab-deploy -n test
@@ -354,20 +362,20 @@ will open on all nodes. The default ports are 30000-32767. You can alter this de
 
 Types of service types:
 
-- Cluster IP This is the default service, which is used to expose a service on a cluster-internal IP. This means the service is only accessible from inside the cluster.
-- Node Port This exposes a service on each node's IP at a static port so the service is accessible from outside the cluster.
-- Load Balancer This uses a cloud provider's load balancer to access a service from outside the cluster.
-- External Name This maps a service to the contents of a predefined external name field by returning a CNAME record with its value.
-- Headless This headless service is used for pod grouping when a stable IP address is not required.
+- **Cluster IP** This is the default service, which is used to expose a service on a cluster-internal IP. This means the service is only accessible from inside the cluster.
+- **Node Port** This exposes a service on each node's IP at a static port, so the service is accessible from outside the cluster.
+- **Load Balancer** This uses a cloud provider's load balancer to access a service from outside the cluster.
+- **External Name** This maps a service to the contents of a predefined external name field by returning a CNAME record with its value.
+- **Headless** This headless service is used for pod grouping when a stable IP address is not required.
 
 To test out our service, you'll need to find what NodePort port was enabled with the *describe* command.
 
 .. code-block:: bash
    :caption: Describe Service
 
-   kubectl describe deploy lab-deploy -n test
+   kubectl describe service lab-deploy-svc -n test
 
-Describe deployment output:
+Describe service output:
 
 .. code-block:: bash
    :caption: Output
@@ -392,7 +400,7 @@ Describe deployment output:
    External Traffic Policy:  Cluster
    Events:                   <none>
 
-This is an example, you'll have to insert your NodePort port from your describe command.
+Test connectivity by issuing a curl to the localhost on the port listed in the *describe* command output.
 
 .. code-block:: bash
    :caption: Curl
@@ -405,6 +413,8 @@ From inside the cluster, the new service (thanks to CoreDNS) will have an A reco
 - namespace
 - svc (for service)
 - cluster.local
+
+Here is an example of the *lab-deploy-svc* fqdn:
 
 *lab-deploy-svc.test.svc.cluster.local*
 

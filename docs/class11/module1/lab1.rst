@@ -27,11 +27,11 @@ With your screen split between left (terminal) and right (web browser) windows, 
 .. image:: images/04_split_screen.jpg
   :scale: 50%
 
-Clone the *nginx-api-gateway-for-k8s repository*.
+Clone the *nginx-api-gateway-for-k8s* repository.
 
 .. code-block:: bash
 
-   git clone https://github.com/tmarfil/nginx-api-gateway-for-k8s.git 
+   git clone https://github.com/f5devcentral/nginx-api-gateway-for-k8s.git 
 
 .. image:: images/05_git_clone.jpg
   :scale: 50%

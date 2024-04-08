@@ -2,7 +2,7 @@ Start your Tuning
 #################
 
 In this section we will be tuning some NGINX configuration parameters and reviewing the results.
-We will be using NGINX Instance Manager to make configuraiton changes and then pushing those changes to the NGINX Proxy. 
+We will be using NGINX Instance Manager to make configuration changes and then pushing those changes to the NGINX Proxy. 
 
 |
 |
@@ -15,11 +15,15 @@ username: admin
 
 pass: NIM123!@#
 
-.. image:: /class1/images/nim-login.png
+.. image:: /class8/images/nim-login.png
 
 |
 
-.. image:: /class1/images/nim-button.png
+Click on the Instance Manager tile.
+
+|
+
+.. image:: /class8/images/nim-button.png
 
 |
 |
@@ -27,57 +31,55 @@ pass: NIM123!@#
 
 2) **Modify nginx.conf parameters**
    
-.. image:: /class1/images/nim-edit-button.png
+.. image:: /class8/images/nim-edit-button.png
 
-Click on Instances in the left column and then the ellipsis on the far rights of the NGINX-Plus instance, and then Edit Config 
-
-|
-|
-
-Now you can edit the Nginx configuration file through this NIM interface
-
-.. image:: /class1/images/nim-nginx-conf.png
+Click on Instances in the left column and then the ellipsis on the far right of the NGINX-Plus-Proxy instance. Next, click Edit Config.
 
 |
 |
 
-Find the line (3) that has worker_processes.
+Now you can edit the NGINX configuration file through this NIM interface
 
-Change the value from auto to 1
-
-.. image:: /class1/images/nim-processes-1.png
-
-.. note:: What does 'auto' do for worker_processes?
+.. image:: /class8/images/nim-nginx-conf.png
 
 |
 |
 
-.. image:: /class1/images/nim-publish.png
+Find the line (3) that has worker_processes. When set to "auto" NGINX will spawn worker processes to match the number of CPU cores on the system. This system is configured with 2 CPU cores, so in this case, NGINX will spawn 2 worker processes.
+
+Let's change the value from auto to 1, reducing the number of worker processes in half.
+
+.. image:: /class8/images/nim-processes-1.png
+
+|
+|
+
+.. image:: /class8/images/nim-publish.png
 
 Hit the publish button in the upper right to push the changes out to the NGINX Proxy
 
 |
 |
 
-Now run another test and review the Locus Charts  
+Now run another test and review the Locust Charts  
 
-.. image:: /class1/images/locus-10-100-30.png
+.. image:: /class8/images/locus-10-100-30.png
   :width: 200 px
 
-.. note:: Are there any differences in Requests per Second, Response times or other stats?
+.. note:: Are there any differences in Requests per Second, Response times or other stats from the previous test?
 	
 |
 |
 
 3) **Make another change to the nginx.conf, publish and test again**
  	
-Find and change worker_connections to a value of 1 from 4096.  Line 11.
+Find and change worker_connections to a value of 16 from 4096 (line 11)
 
-.. image:: /class1/images/nim-worker-1.png
+.. image:: /class8/images/nim-worker-1.png
 
 After changes, make sure to publish and run test again with same values.
 
-.. note:: How did the performance change adn What does worker_connections do?
+.. note:: How did the performance change and What does worker_connections do?
 	
 
 |
@@ -85,9 +87,13 @@ After changes, make sure to publish and run test again with same values.
 
 4) **Revert changes to original settings and publish**
    
-worker_processes auto;
-workder_connections 4096;
+worker_processes auto; (line 3)
 
+|
+
+worker_connections 4096; (line 11) 
+
+|
 
 .. toctree::
    :maxdepth: 2

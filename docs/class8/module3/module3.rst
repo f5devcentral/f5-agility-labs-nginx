@@ -1,12 +1,12 @@
-High Volume Testing, Identiying Break Points
-############################################
+High Volume Testing, Identifying Break Points
+#############################################
 
-Now it is time to generate high volume of traffic and see where the breaking points are
+Now it is time to generate a high volume of traffic and see where the breaking points are.
 
 |
 |
 
-1) **Run Locus test with high volume of Users**
+1) **Run Locust test with a high volume of Users**
    
 Number of Users: 2000
 
@@ -16,10 +16,10 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class1/images/locus-2000-200-30.png  
+.. image:: /class8/images/locus-2000-200-30.png  
    :width: 200 px
 	
-Review Locus Charts
+Review Locust Charts
 
 .. note::  Any changes to the graphs?  Were there any failures?
 	
@@ -37,24 +37,25 @@ If seeing failures, review the Failures tab on the top row
 |
 |
 
-3) **Fix the currenty problem by increaing the rlimit** 
+3) **Fix the problem by increasing the rlimit**
+This changes the limit on the number of open files that a worker process may have
 
-In the NIM Console, edit nginx.conf file and publish
+In the NIM Console, edit nginx.conf file.
 
-Increase rlimit to 4096, by uncommenting line 4
+Increase rlimit to 4096, by uncommenting line 5
 
 * worker_rlimit_nofile 4096; 
 
-.. image:: /class1/images/nim-rlimit-4096.png  
+Publish the new configuration.
 
-.. note: What does rlimit do?  
+.. image:: /class8/images/nim-rlimit-4096.png  
 
 |
 |
 
 4) **Run the same test again**
    
-Review Locus graphs
+Review Locust graphs
 
 .. note::  Were there improvements and were there still failures?
 	

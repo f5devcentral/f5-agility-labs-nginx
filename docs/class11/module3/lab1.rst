@@ -7,7 +7,7 @@ Change to the task_02 directory.
 
    cd ../task_02
 
-Create a TLS certificate and key for the httpS://jobs.local/get-job api endpoint we plan to create.
+Create a TLS certificate and key for the https://jobs.local/get-job api endpoint we plan to create.
 
 .. code-block:: bash
 
@@ -29,17 +29,23 @@ Confirm the K8s secret was created.
 
 .. code-block:: bash
 
-   kubectl get secret tls jobs-local-tls -o yaml
+   kubectl get secret jobs-local-tls -o yaml
 
 .. image:: images/03_get_secret.jpg
   :scale: 50%
 
-All Kubernetes admins are familiar with native K8s resources such as 'pods', 'deployments', and 'services', but what is a 'virtualserver'? A virtualserver is a K8s Custom Resource Definition (CRD) used to configure NGINX ingress. Custom Resource Defnitions extend the Kubernetes system to support new resource types. We will create the virtualserver named "my-virtualserver" here for the first time. The properties for "my-virtualserver" are in the `VirtualServer.yaml` manifest. We will build all of the advanced API gateway functionality by layering them one-by-one, each time applying a modified, more capable version of the `VirtualServer.yaml` manifest that we start with here. 
+All Kubernetes admins are familiar with native K8s resources such as 'pods', 'deployments', and 'services', but what is a 'virtualserver'? A virtualserver is a K8s Custom Resource Definition (CRD) used to configure NGINX ingress. Custom Resource Definitions extend the Kubernetes system to support new resource types. We will create the virtualserver named "my-virtualserver" here for the first time. The properties for "my-virtualserver" are in the `VirtualServer.yaml` manifest. We will build all of the advanced API gateway functionality by layering them one-by-one, each time applying a modified, more capable version of the `VirtualServer.yaml` manifest that we start with here. 
 
 .. code-block:: bash
 
    bat VirtualServer.yaml
    k apply -f VirtualServer.yaml
+
+Confirm the status of the virtualserver 'my-virtualserver' you just created.
+
+.. code-block:: bash
+
+   kubectl describe virtualserver my-virtualserver
 
 Our environment now looks like this:
 

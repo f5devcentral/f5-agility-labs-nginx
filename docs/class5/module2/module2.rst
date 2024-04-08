@@ -3,7 +3,7 @@ Module 2 - Protect the Arcadia Finance App with NGINX App Protect WAF
 
 In this module, you will deploy NGINX App Protect WAF on an existing NGINX Plus instance.
 
-Estimated completion time: 17 minutes
+Estimated completion time: 15 minutes
 
 .. note:: The goal of this module is to provide familiarity with the process of adding NGINX App Protect WAF to an existing application.
 

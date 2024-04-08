@@ -22,9 +22,9 @@ Let's first create two NodePort services to test our services from outside the K
    +----------------------------------+----------------------------------+
    | NodePort Service                 | Inside K8s Cluster               |
    +==================================+==================================+
-   | http://jobs.local:30010/get-job  | http://eclectic-jobs:3000/       |
+   | http://jobs.local:30020          | http://eclectic-jobs:3000/       |
    +----------------------------------+----------------------------------+
-   | http://jobs.local:30020          | http://myapp:3000                |
+   | http://jobs.local:30010          | http://myapp:3000                |
    +----------------------------------+----------------------------------+
 
 View the service manifests.
@@ -47,14 +47,14 @@ Confirm the NodePort services were created.
 
    k get svc
 
-From the URL bar of the web browser, connect to the `eclectic-jobs` NodePort service: ``http://job.local:30020``.
+From the URL bar of the web browser, connect to the `eclectic-jobs` NodePort service: ``http://jobs.local:30020``.
 Press the [F5] key to make new requests to the `eclectic-jobs` API.
 The `eclectic-jobs` API returns a random job title in JSON format.
 
 .. image:: images/01_eclectic-jobs_browser.jpg
   :scale: 50%
 
-From the URL bar of the web browser, connect to the `myapp` NodePort servicen: ``http://jobs.local:30010``.
+From the URL bar of the web browser, connect to the `myapp` NodePort service: ``http://jobs.local:30010``.
 Press the [F5] key to make new requests of the `myapp` web application.
 The `myapp` web application is attempting to fetch a random job title from the (non-existant) ``https://jobs.local/get-job`` API endpoint.
 

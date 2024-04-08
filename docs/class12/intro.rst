@@ -23,7 +23,7 @@ What Kubernetes **IS**:
  - Ideal for microservices 
  - Enables *cloud native* application design
 
-The evolution off applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
+The evolution of applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
 is not always the answer. There are, however, some definite advantages to a container based environment. In the *Container Deployment* image you can see we are no longer
 bound to the operating system, you can set resource limits per container and application dependencies are all built with the container image. Since the container houses
 the application and its dependencies, this allows for easier upgrades and security fixes to your application.
@@ -90,38 +90,6 @@ Lab Inventory
 Accessing the Lab
 -----------------
 
-In this lab, you can access resources by connecting to a Linux jump host running XRDP or from a web shell. XRDP is an open-source version of the popular Remote Desktop Protocol and is compatible with all popular RDP clients.
-
-When you first connect to the Jump Host via RDP, you will be prompted to click **OK** to connect to the remote session.
-
-.. image:: images/xrdp_login_prompt.png
-
-Once connected, you will see the desktop as shown below.
-
-.. image:: images/xrdp_desktop.png
-
-Clicking on the **Applications** drop-down in the menu bar will bring up a list of applications you will need to finish this lab.
-
-**Favorites** includes Firefox, Visual Studio Code and Terminal.
-
-.. image:: images/desktop_favorites.png
-
-**SSH Shortcuts** open SSH terminal windows to the command prompt of all machines in the lab.
-
-.. image:: images/desktop_ssh.png
-
-Each section in this lab will begin with the assumption that you are connected via RDP, able to navigate the **Applications** menu and familiar with the available applications.
-
-Remember these important tips:
-
-- Lab modules are independent; feel free to tackle the modules in any order.
-- The username **lab** and password **f5Appw0rld!** will work for every login unless specifically noted.
-- Traffic and attack generators are running to help generate statistics, events and attacks.
-- To paste text into the lab, right-click your mouse and select **Paste** as keyboard shortcuts are not consistent between applications.
-- The screen resolution for the Remote Desktop connection is selected when connecting to the session. Choose a resolution that works best for you.
-
-.. note:: To allow for easy reference back to this page, hold CTRL (Windows) or CMD (Mac) while clicking the **Next** button below to continue in a new tab.
-
-To access by web shell 
+All of the procedures you'll be asked to accomplish will be done using a web shell. To access the web shell from the Jumphost client:
 
 .. image:: images/jumphost_webshell.png

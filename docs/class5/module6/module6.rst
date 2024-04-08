@@ -1,14 +1,15 @@
-Module 6 - HTTP/2 and GRPC DoS Attack on Unprotected Application
-################################################################
+Module 6 - HTTP/2 and GRPC DoS Attack on an Unprotected Application
+###################################################################
 
-| In this module you will generate **good** and malicious traffic. With the addition of malicious traffic will cause the good traffic to error out. We
-| will utilize HTTP/2 and gRPC as part of this module.
+In this module you will generate **good** and malicious traffic. With the addition of malicious traffic will cause the good traffic to error out. We will utilize HTTP/2 and gRPC as part of this module.
 
-Demonstrate the effects of an HTTP/2 and gRPC attacks on an unprotected application
+Demonstrate the effects of HTTP/2 and gRPC attacks on an unprotected application
 -----------------------------------------------------------------------------------
 
-Generate legitimate traffic 
+Generate legitimate traffic
+
    1. In UDF, Click on Access for the **Legitimate Traffic Generator** VM and select WebShell (or ssh into the box if you set that up)
+
    2. We will utilize the **good.sh** bash script in order to generate HTTP 1 traffic using **curl**, HTTP 2 traffic using **h2load** and using Python3 with route_guide_client to generate gRPC traffic.
 
 .. code-block:: bash 
@@ -59,7 +60,8 @@ Output from the script:
 
 
 Start HTTP/2 Flood attack
-   1. Back in the UDF, click 'Access' on the **Attack Traffic Generator** VM and select WebShell
+
+   1. Back in the UDF, click **Access** on the **Attack Traffic Generator** VM and select WebShell. Position this tab side-by-side with the **Legitimate Traffic Generator** WebShell tab that is already open so you can see both WebShells at the same time.
 
 .. code-block:: bash
    :caption: http2flood.sh
@@ -104,13 +106,16 @@ Attack script output:
   progress: 90% done
   progress: 100% done
 
-3. Click back on to the WebShell on the Legitimate Traffic Generator VM. Did the output from the script change? Output now shows the HTTP/2 service is experiencing an outage.
+3. Click back on to the WebShell on the **Legitimate Traffic Generator** VM. Did the output from the script change? Output should no longer show "Finished trip with 10 points", because gRPC is failing, and you may see one of the following two error messages:
 
-.. code:: shell
+   .. code:: shell
 
-  JUICESHOP HTTP Code:200
-        details = "Received http2 header with status: 502"
-        debug_error_string = "{"created":"@1650395963.222837020","description":"Received http2 :status header with non-200 OK status","file":"src/core/ext/filters/http/client/http_client_filter.cc","file_line":134,"grpc_message":"Received http2 header with status: 502","grpc_status":14,"value":"502"}"
+      "debug_error_string = "UNKNOWN:Error received from peer {created_time:"2024-01-26T15:39:49.83945022+00:00", grpc_status:2, grpc_message:"Stream removed"}""
 
-4. Stop the HTTP2Flood attack running on the Attack Traffic Generator host by pressing CTRL+C
-5. On the Legitimate Traffic Generator WebShell, press CTRL+C to exit the script
+   .. code:: shell
+
+      E0129 18:20:43.992650291 4639 hpack_parser.cc:999] Error parsing 'content-type' metadata: invalid value
+
+4. Stop the HTTP2Flood attack running on the Attack Traffic Generator host by pressing **Ctrl+C**
+
+5. On the Legitimate Traffic Generator WebShell, press **Ctrl+C** to exit the script

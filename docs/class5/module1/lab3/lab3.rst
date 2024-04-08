@@ -6,7 +6,7 @@ There are two components to NGINX App Protect within NIM:
 - NAP configuration via Instance Manager extension
 - NAP monitoring via NGINX Security Monitoring (SM)
 
-1. Take a look at both of these components. First, load the **NIM** bookmark in **Firefox** and login using the **lab** / **AppWorld2024!** credentials, if not already.
+1. Take a look at both of these components. First, load the **NIM** bookmark in **Firefox** and login using the **lab** / **AppWorld2024!** credentials, if not already. Then, click the Instance Manager tile.
 
 2. Click the **Select module** drop-down from the top of the left menu bar.
 
@@ -16,35 +16,35 @@ There are two components to NGINX App Protect within NIM:
 
 .. image:: images/nim_instance_manager_dropdown_selection.png
 
-4. Take a look at the NGINX App Protect policies that exist in NIM. Click on **App Protect** towards the bottom of the **Instance Manager** menu bar. 
+4. Take a look at the NGINX App Protect policies that exist in NIM. Click on **App Protect** -> **Policies** towards the bottom of the **Instance Manager** menu bar. 
 
 .. image:: images/nap_click.png
 
-5. You should see a list of existing WAF policies. You can see four policies configured. Notice that only the **AgilityPolicy** is applied to an application. Click on the policy name to view more details.
+5. You should see a list of existing WAF policies. You can see four policies configured. Notice that only the **AppWorldPolicy** is applied to an application. Click on the policy name to view more details.
 
 .. image:: images/nap_policy_list.png
 
-6. You'll see that the policy is applied to an NGINX instance. The version of the policy that is applied is also shown. Click on the **Policy Versions** sub-tab to see existing versions of this policy. 
+6. You'll see that the policy is applied to an NGINX instance. The version of the policy that is applied is also shown. Click on the **Versions** sub-tab to see existing versions of this policy.
 
 .. image:: images/nap_policy_overview.png
 
 7. Notice that currently there is only one version. Click on the version name of the policy version in the list.
 
-.. image:: images/nim_nap_agility_policy_versions.png
+.. image:: images/nim_nap_appworld_policy_versions.png
 
 8. You will see the JSON configuration for this WAF policy. Scroll through the WAF policy to briefly view the policy configuration. You can see actions configured for particular violations, blocked file types, HTTP verbs, and more. Don't make any changes just yet.
 
-.. image:: images/nim_nap_agility_policy_json.png
+.. image:: images/nim_nap_appworld_policy_json.png
 
 9. Now you can view metrics surrounding the App Protect instance. Click the **Select module** drop-down from the top of the left menu bar. 
 
 .. image:: images/nim_module_dropdown.png
 
-10. Select **Security monitoring** from the drop-down.
+10. Select **Security Monitoring** from the drop-down.
 
-.. image:: images/menu_drop_down_SM.png
+.. image:: images/menu_drop_down_nim-SM.png
 
-11. The **Security Dashboard** page will load, as shown below. 
+11. The **Security Dashboard** page will load, as shown below.
 
 .. image:: images/SM_security_dashboard.png
 
@@ -68,7 +68,7 @@ There are two components to NGINX App Protect within NIM:
 
 .. image:: images/SM_Advanced_click.png
 
-16. This tab shows data relating to attacks matching downloaded signatures. Since signatures have not yet been downloaded, this data is not populated. 
+16. This tab shows data relating to attacks matching downloaded signatures.
 
 .. image:: images/SM_dashboard_advanced.png
 

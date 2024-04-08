@@ -6,45 +6,78 @@ Launch HTTP Flood Attack
 
 We will be initiating a HTTP Flood Attack on the Juice Shop web site using Apache Benchmark.
 
-1. Open WebShell to the **Attack Traffic Generator** VM (UDF > Components > Systems > Attack Traffic Generator > Access > Web Shell)
-2. Launch L7 DOS attacks.
+1. Open WebShell to the **Attack Traffic Generator** VM (UDF > Components > Systems > Attack Traffic Generator > Access > Web Shell). Position this tab side-by-side with the **Legitimate Traffic Generator** WebShell tab that is already open so you can see both WebShells at the same time.
 
-.. code:: bash
+2. Launch L7 DoS attacks in the **Attack Traffic Generator** WebShell.
 
-  /scripts/http1flood.sh
+  .. code:: shell
+
+    /scripts/http1flood.sh
+
+3. Re-open and re-launch the good traffic generator in the **Legitimate Traffic Generator** WebShell.
+
+  .. code:: shell
+
+    /good.sh
+  
+  The good traffic script will report that the service is available:
+
+  .. code:: shell
+
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
+
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
+
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
+
+  .. Note:: Upon initial launch of the http1flood.sh script, on the legitimate traffic terminal buffer you may see the following indicator of service disruption in the output of the legit traffic output prior to NAP-DoS mitigation. If you do not see this, it's likely that mitigation occurred very quickly, and it has already scrolled off of the terminal output.
+
+  .. code:: shell
+
+    Finished trip with 10 points
+
+    Finished trip with 10 points
+
+    Finished trip with 10 points
+
+    JUICESHOP HTTP Code:000
+    JUICESHOP HTTP Code:000
+    JUICESHOP HTTP Code:000
 
 
-You will notice that a good traffic script reports that service is unavailable
+4. Re-open the Kibana tab.
+
+5. Click on the three lines in the far right corner, select **Dashboard**, then click **AP_DOS_AppProtect**.
+
+.. image:: images/open-kibana-app-dos-dashboard.png
+
+.. image:: images/dashboard-http1flood.png
+
+6. As evidence of successful mitigation, the good traffic script will continue to report that the service is available as seen below.  However, you can see the attack detected in the AP_DOS:HTTP mitigation chart as seen above (the vertical red line on the chart).
 
 Output:
-     
-   ``JUICESHOP HTTP Code:000``
-   
-   ``JUICESHOP HTTP Code:000``
-   
-   ``JUICESHOP HTTP Code:000``
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA" (UDF > Components > Systems > elk > Access > Kibana)
+  .. code:: shell
 
-.. image:: access-kibana.jpg
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-.. image:: access-dashboard1.jpg
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-After success mitigation service is available and reports
 
-Output:
-      
-   ``JUICESHOP HTTP Code:200``
-   
-   ``JUICESHOP HTTP Code:200``
-   
-   ``JUICESHOP HTTP Code:200``
+7. Press **Ctrl+C** on the **Attack Traffic Generator** VM to stop the attack script. Leave the good script running.
 
-Stop the attack. Use Ctrl+C.
+.. note:: Click the refresh button several times after stopping the attack script and wait for the vertical black line in the ELK Dashboard before running the next attack script. The vertical black line indicates that the attack has stopped.
 
-**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
+  .. image:: images/blackline.png
+
 
 Perform Slow HTTP Attack with slowhttptest tool
 ===============================================
@@ -63,177 +96,104 @@ Slow POST attack: Slowing down the HTTP message body, making the server wait unt
 1. Open WebShell into "Attack Traffic Generator (10.1.1.16)" VM (UDF > Components > Systems > Attack Traffic Generator > Access > WebShell)
 
 2. Launch Slow POST Attack
-!!!!!Make sure previous attack ended before launching Attack (**Wait for the vertical black line in ELK graphs**)
-   
-   ``cd /scripts``
-   
-   ``./slow_post_http1.sh``
 
-Wait 2 mins until tool established 10k connection.
+  .. code:: shell
 
-You will notice that a good traffic script reports that service is unavailable 
-   
+    cd /scripts
+    ./slow_post_http1.sh
+
+Wait a few mins until the script establishes 4-5k connections.
+
+As evidence of successful mitigation, the good traffic script will continue to report that the service is available.
+
 Output:
-     
-  ``JUICESHOP HTTP Code:000``
-  
-  ``JUICESHOP HTTP Code:000``
-  
-  ``JUICESHOP HTTP Code:000``
 
-After success mitigation service is available and reports
-   
-Output:
-       
-  JUICESHOP HTTP Code:200
-  JUICESHOP HTTP Code:200
-  JUICESHOP HTTP Code:200\::
+  .. code:: shell
 
-Slowhttptest will report that NGINX App Protect DoS is closing the connection: slow HTTP test status on 165th second:
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-   initializing: 0
-   pending: 1
-   connected: 2
-   error: 0
-   closed: 14225
-   service available: YES\::
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-.. image:: access-kibana.jpg
+Slowhttptest will report that NGINX App Protect DoS is closing the connections similar to below:
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
+.. image:: images/slow_http1_output.png
 
-.. image:: access-dashboard1.jpg
+3. Open the Kibana tab to verify that NGINX App Protect DoS is mitigating the attack. Click on the three lines in the far right corner, select **Dashboard**, then click **AP_DOS_AppProtect**.
 
-Stop the attack. Use Ctrl+C.
+.. image:: images/open-kibana-app-dos-dashboard.png
 
-**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
+4. Click the refresh button at the top left of the page. Review the output of the **AP_DOS: Client HTTP transactions/s** pane.
+
+.. image:: images/dashboard-slow_post_http1.png
+
+5. Stop the attack. Use **Ctrl+C**.
+
+.. note:: Wait for the vertical black line in the AP_DOS: Client HTTP transactions/s graph in the ELK Dashboard before running the next attack script.
 
 Launch HTTP/2 Flood attack on gRPC service
 ==========================================
-   
+
 We will be initiating a HTTP/2 Flood Attack on the "RouteGuide GRPC service" using h2load.
 
 1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
+
 2. Launch HTTP/2 Flood Attack.
 
-!!!!!Make sure previous attack ended before launching Attack
+  .. code:: shell
 
-  cd /scripts/
-     
-  ./http2flood.sh
+    cd /scripts/
+    ./http2flood.sh
 
-You will notice that a good traffic script reports that service is unavailable
-   
-Output:
-   
-  details = "Received http2 header with status: 502"
-  debug_error_string = "{"created":"@1639496137.06on":"Received http2:status header with non-200 OK
-  status","file":"src/core/ext/filters/http/client,"file_line":134,"grpc_message":"Received
-  http2 header with status: 502","grpc_status":14,"value":"502"}"\::
-
-After success mitigation service is available and reports
-   
-Output:
-   
-  Finished trip with 10 points
-  
-  Finished trip with 10 points
-  
-  Finished trip with 10 points\:\:
-
-Go to "ELK" VM, navigate to "Access" and select "KIBANA"
-
-.. image:: access-kibana.jpg
-
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
-
-.. image:: access-dashboard1.jpg
-
-Stop the attack. Use Ctrl+C.
-
-**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
-
-Launch Message flood DoS by gRPC
-================================
-
-Attacker sends requests to heavy URLs
-     
-We will be initiating a Message flood DoS by gRPC on the "RouteGuide GRPC service" using ghz tool.
-
-1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
-2. Launch GRPC Flood Attack.
-
-!!!!!Make sure previous attack ended before launching Attack 
-
-  ``cd /scripts/``
-  
-  ``./grpcflood.sh``
-
-You will notice that a good traffic script reports that service is unavailable
+As evidence of successful mitigation, the good traffic script will continue to report that the service is available.
 
 Output:
 
-  details = "Received http2 header with status: 502"
-  debug_error_string = "{"created":"@1639496137.06on":"Received http2 :status header with non-200 OK
-  status","file":"src/core/ext/filters/http/client,"file_line":134,"grpc_message":"Received
-  http2 header with status: 502","grpc_status":14,"value":"502"}"\:\:
+  .. code:: shell
 
-After success mitigation service is available and reports
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-Output:
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-  Finished trip with 10 points
-  
-  Finished trip with 10 points
-  
-  Finished trip with 10 points\:\:
+    JUICESHOP HTTP Code:200
+    Finished trip with 10 points
 
-GHZ tool will report HTTP status code 403 which indicates traffic is blocked by NGINX App Protect DoS
+3. Open the Kibana tab to verify that NGINX App Protect DoS is mitigating the attack. Click on the three lines in the far right corner, select **Dashboard**, then click **AP_DOS_AppProtect**.
 
-  Error distribution:
-  
-    [9050] rpc error: code = Unavailable desc = the connection is draining
-    
-    [1000] rpc error: code = PermissionDenied desc = Forbidden: HTTP status code 403; transport: missing content-type field
-    
-    [150] rpc error: code = Unavailable desc = transport is closing\:\:
+.. image:: images/open-kibana-app-dos-dashboard.png
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+4. Click the refresh button. You should see a spike in traffic highlighted by a red line in the **Client HTTP transactions/s**, **HTTP mitigation**, **Server HTTP transactions/s**, and **Server_stress_level** panes. This denotes the beginning of the attack vector.
 
-.. image:: access-kibana.jpg
+.. image:: images/dashboard-http2flood.png
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
+5. Stop the attack. Use **Ctrl+C**.
 
-.. image:: access-dashboard1.jpg
 
-Stop the attack. Use Ctrl+C.
+Module Recap
+============
 
-**Wait for the vertical black line in the ELK Dashboards** before running the next attack script.
+We covered a lot in our exploration of how to mitigate attacks with NGINX App Protect DoS, as well as the visualization aspects of the events in the Kibana dashboard.
 
-Launch Slow gRPC POST
-=====================
-   
-Attacker supplies a number of concurrent slow POST gRPC requests that exceeds the server capacity of concurrent requests.
+The following is a brief review of the salient features of the dashboard:
 
-1. SSH (WebShell) into "Attack Traffic Generator (10.1.1.16)" VM.
-2. Launch Slow gRPC POST Attack.
+- Once an attack begins, NGINX App Protect DoS will switch into attack mode due to the server health deteriorating - almost immediately. (Dashboard : AP_DOS: Server_stress_level).
 
-!!!!!Make sure previous attack ended before launching Attack
+- NGINX App Protect DoS will first mitigate with a global rate limit just to protect the upstream server. (Dashboard: AP_DOS: HTTP mitigation, Global Rate will marked Red).
 
-  ``cd /scripts/``
-  
-  ``./slow_post_http2.sh``
+- During this time, NGINX App Protect DoS identifies anomalous traffic and generates Dynamic Signatures matching only the malicious traffic. (Dashboard: AP_DOS: HTTP mitigation, Signatures will be marked Purple).
 
-Go to "ELK" VM, navigate to "Access" and select "KIBANA"
+- It might take a few moments for a dynamic signature(s) to generate, but shortly after the attack has been detected a signature should be created.
 
-.. image:: access-kibana.jpg
+- Dynamic Signatures will be displayed in (Dashboard:AP_DOS: Attack signatures).
 
-Navigate to Kibana > Dashboards > click on the "AP_DOS: AppProtectDOS" link to verify NGINX App Protect DoS mitigation.
+- Once mitigation is in effect, the upstream server health will rapidly improve and application performance will return to normal. (Dashboard : AP_DOS: Server_stress_level returns to value 0.5).
 
-.. image:: access-dashboard1.jpg
+- After a few minutes, you will begin to see transactions being mitigated with Blocked Bad Actor events. (Dashboard: AP_DOS: HTTP mitigation, Bad Actors will marked Yellow).
 
-Stop the attack. Use Ctrl+C.
-
-**Wait for the vertical black line in the ELK Dashboards** which indicates the end of the attack.
+- Bad Actor IP addresses will be listed in (Dashboard: AP_DOS: Detected bad actors).

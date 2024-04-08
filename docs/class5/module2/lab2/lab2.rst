@@ -11,7 +11,8 @@ Since this lab utilizes NIM, we're going to install the NGINX Agent and add the 
 
 .. code-block:: bash
 
-  curl -k https://nginx-mgmt-suite.agility.lab/install/nginx-agent | sudo sh
+  curl -k https://nginx-instance-manager.appworld.lab/install/nginx-agent | sudo sh
+  sudo systemctl restart nginx-agent
 
 **Result**
 
@@ -27,11 +28,27 @@ Load the file into a file editor:
 
   sudo nano /etc/nginx-agent/nginx-agent.conf
 
-Add the following configuration block to the end of the file:
-
-.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces to ensure no errors occur.
+Near the end of the file, modify the line starting with "config_dirs" so it looks like the following:
 
 .. code-block:: bash
+
+  config_dirs: "/etc/nginx:/usr/local/etc/nginx:/usr/share/nginx/modules:/etc/nms:/etc/app_protect"
+
+
+Next, add the following configuration block to the end of the file:
+
+.. caution:: When you paste the block below, extra line breaks may be included. Please remove those line spaces and ensure the lines are indented properly to ensure no errors occur.
+
+.. code-block:: bash
+
+  events:
+    # report data plane events back to the management plane
+    enable: true
+
+  # Enable reporting NGINX App Protect details to the management plane.
+  extensions:
+    - nginx-app-protect
+    - nap-monitoring
 
   # Enable reporting NGINX App Protect details to the control plane.
   nginx_app_protect:
@@ -58,8 +75,8 @@ Press **CTRL + X** to save the file, followed by **Y** when asked to save the bu
 
 In this example, we've configured NGINX Agent to:
 
-- check for configuration changes every 15 seconds
-- allow for precompiled policies, meaning that NIM will compile the policy before sending to the NGINX Plus/NAP instance
+- Check for configuration changes every 15 seconds
+- Allow for precompiled policies, meaning that NIM will compile the policy before sending to the NGINX Plus/NAP instance
 - Enable large buffers for NGINX App Protect Monitoring
 - Enable NGINX Agent to run a syslog daemon that will forward logs to NIM Security Monitoring
 
@@ -78,13 +95,13 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/firefox_launch.png
 
-6. Click the NIM bookmark or navigate to https://nginx-mgmt-suite.agility.lab/ui/.
+6. Click the NIM bookmark or navigate to https://nginx-instance-manager.appworld.lab/ui/.
 
 .. image:: images/launch_nim.png
 
 7. Log in using the **lab** / **AppWorld2024!** credentials.
 
-.. image:: images/login.png
+.. image:: images/login_prompt.png
 
 8. Click on the **Instance Manager** tile to launch NIM. 
 
@@ -94,7 +111,7 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 
 .. image:: images/nim_refresh_result.png
 
-10. Click the **nginx-plus-2.agility.lab** instance in the list. 
+10. Click the **nginx-plus-2.appworld.lab** instance in the list. 
 
 .. image:: images/nginx_plus_2_detail.png
 
@@ -107,15 +124,13 @@ The NGINX Agent is now configured and started. We'll need a few more configurati
 .. |expand_button| image:: images/expand_button.png
    :scale: 25%
 
-.. note:: If you do not see the **Add File** button on the toolbar, click the |expand_button| **expand** button.
-
 .. image:: images/add_file_button.png
 
 13. Provide the filename **/etc/nginx/conf.d/metrics.conf**. Click **Create**.
 
 .. image:: images/filename_prompt.png
 
-14. Paste the following configuration into the editor:
+14. Paste the following configuration into the editor using **CTRL + V**:
 
 .. code-block:: bash
 
