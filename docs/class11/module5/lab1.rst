@@ -15,7 +15,7 @@ In the URL bar of the web browser, connect to the ``https://jobs.local/`` API en
 - Press [F12] to reveal the Firefox Developer Tools
 - Select 'Network' and 'Response' just like the screenshot below 
 - Press [F5] to create a new HTTP request
-- Right-click on the 'add-job' request just like in the screenshot below
+- Right-click on any request just like in the screenshot below
 - Select 'Edit and Resend'
 - On the left-hand side, in the 'New Request' section, select [Clear]
 - Fill in the values just like the table below
