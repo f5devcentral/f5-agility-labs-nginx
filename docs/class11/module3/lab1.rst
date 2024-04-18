@@ -34,7 +34,7 @@ Confirm the K8s secret was created.
 .. image:: images/03_get_secret.jpg
   :scale: 50%
 
-All Kubernetes admins are familiar with native K8s resources such as 'pods', 'deployments', and 'services', but what is a 'virtualserver'? A virtualserver is a K8s Custom Resource Definition (CRD) used to configure NGINX ingress. Custom Resource Defnitions extend the Kubernetes system to support new resource types. We will create the virtualserver named "my-virtualserver" here for the first time. The properties for "my-virtualserver" are in the `VirtualServer.yaml` manifest. We will build all of the advanced API gateway functionality by layering them one-by-one, each time applying a modified, more capable version of the `VirtualServer.yaml` manifest that we start with here. 
+All Kubernetes admins are familiar with native K8s resources such as 'pods', 'deployments', and 'services', but what is a 'virtualserver'? A virtualserver is a K8s Custom Resource Definition (CRD) used to configure NGINX ingress. Custom Resource Definitions extend the Kubernetes system to support new resource types. We will create the virtualserver named "my-virtualserver" here for the first time. The properties for "my-virtualserver" are in the `VirtualServer.yaml` manifest. We will build all of the advanced API gateway functionality by layering them one-by-one, each time applying a modified, more capable version of the `VirtualServer.yaml` manifest that we start with here. 
 
 .. code-block:: bash
 
