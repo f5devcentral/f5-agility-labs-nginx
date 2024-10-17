@@ -86,6 +86,11 @@ Lab Inventory
     - Ubuntu 20.04 LTS
     - none
     - SSH
+  * - Jump Server
+    - 10.1.1.12
+    - Ubuntu 20.04 LTS
+    - none
+    - SSH
 
 Accessing the Lab
 -----------------
