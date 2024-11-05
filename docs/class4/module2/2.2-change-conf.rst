@@ -19,85 +19,49 @@ Step 1: Preparations
 
 To follow this Exercise we need to open a few windows in the browser and terminal.
 
-Navigate to the UDF Instances and look for ``NGINX Plus - 3``.  Select 
-the ``ACCESS`` dropdown and open the ``SAMPLE WEB PAGE`` selection.
+Navigate to the UDF Instances and look for ``NGINX OSS - website-02``.  Select 
+the ``ACCESS`` dropdown and open the ``WEBSITE - HTTP`` selection.
 
-.. image:: ./UDF-nginx5-sample.png
-
-A default web page that says ``Welcome to CentOS`` should appear.
-
-.. image:: ./UDF-nginx5-welcome.png
+A web page that shows NGINX Stats should appear.
 
 Leave this webpage open in a tab and navigate back to the UDF environment.
-
 
 Finally, make sure you have the NGINX Instance Manager user interface open. 
 
 .. image:: ./UI-home.png
 
-Click under modules, then instances and click under actions edit config on Ubuntu.
-
-.. image:: ./UI-edit.png
+Click under modules, then instances and click under actions edit config on ``website-02`.
 
 You should see an editor pane and an ``nginx.conf`` file displayed.
-
-.. image:: ./UI-editor.png
 
 Step 2: Change the default website
 ----------------------------------
 
 We want to change the default website for the Sample web page shown above.
-Using the editor in the user interface navigate to ``default.conf``.
-
-.. image:: ./UI-editor-default.png
+Using the editor in the user interface navigate to ``conf.d/default.conf``.
 
 Scroll to the default location block and look for
-the ``index index.html;`` line.
+the ``demo_index.html index.htm index.html;`` line.
 
 .. code-block:: nginx
     :emphasize-lines: 8,9
 
-    server {
-        listen 0.0.0.0:8081;
-        server_name default_server;
-
-        location / {
-            root /usr/share/nginx/html;
-            index index.html;
-            # index sample.html; #  Page with lots of info
-        }
-
+    location / {
+        root   /usr/share/nginx/html;
+        index  demo_index.html index.html index.htm;
     }
 
-``sample.html`` is a file that displays some gibberish and will replace 
-the default website.  This is a very common operation and can be used to test 
-new web pages very easily.  We want to replace the default ``Welcome to CentOS`` 
-page with our new ``sample.html``.
+You need to change this to serve the Lab web page.
+Edit the file, and change the location / block to
 
-To do this, we need to comment and uncomment two lines.
-We want to comment the ``index index.html;`` line and uncomment the 
-``index sample.html;`` line to switch the default page.
 
-The ``default.conf`` should look like this
-
-.. code-block:: nginx
-    :emphasize-lines: 8,9
-
-    server {
-        listen 0.0.0.0:8081;
-        server_name default_server;
-
-        location / {
-            root /usr/share/nginx/html;
-            # index index.html;
-            index sample.html; #  Page with lots of info
-        }
-
+    location / {
+        root   /usr/share/nginx/html;
+        index  lab.html demo_index.html index.html index.htm;
     }
 
-Click the ``Save as`` button at the top then use ubuntu as the name then click save.
 
-.. image:: ./UI-nginx5-save.png
+Click the ``Save as`` button at the top and use website-02-lab as the name then click save.
 
 Step 3: Publish the new website
 -------------------------------
