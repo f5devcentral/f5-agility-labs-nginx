@@ -400,7 +400,7 @@ Describe service output:
    External Traffic Policy:  Cluster
    Events:                   <none>
 
-Test connectivity by issuing a curl to the localhost on the port listed in the *describe* command output.
+Test connectivity by issuing a curl command to a Node IP Address, remember we are using **type: NodePort**, on the port listed in the *describe* command output.
 
 .. code-block:: bash
    :caption: Curl
