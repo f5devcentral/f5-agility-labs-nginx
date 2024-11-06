@@ -46,6 +46,20 @@ on all objects within the *test* namespace.
 
    kubectl get all -n test 
 
+An example to review the status of a pod, *testpod* you would can run the below command. While the output is very lenthy, focus on the *status* field.
+
+.. code-block:: bash
+   :caption: Get Pod
+
+   kubectl get pod testpod -n test -o yaml
+
+You can also use *jsonpath* to filter the output. In the below example, we are filtering the output to only show the *status* field.
+
+.. code-block:: bash
+   :caption: Get Pod
+
+   kubectl get pod testpod -n test -o jsonpath='{.status}'
+
 Describe
 --------
 
@@ -56,6 +70,13 @@ a given resource or group of resources. This is the command you have run several
    :caption: Describe
 
    kubectl describe <resource_type> <resource_name> -n <namespace>
+
+As an example, let's describe the *lab-deploy* deployment.
+
+.. code-block:: bash 
+   :caption: Describe
+
+   kubectl describe deployment lab-deploy -n test
 
 Events
 ------
