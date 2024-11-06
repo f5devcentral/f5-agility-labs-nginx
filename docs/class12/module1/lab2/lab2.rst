@@ -330,7 +330,7 @@ Now let's try running our pod again, but this time we'll run a shell function of
    :caption: Sleep BusyBox
 
    kubectl delete pod bbox -n test
-   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep 35'
+   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep infinity'
    watch kubectl get pod -n test
 
 Again, you are asking Kubernetes to run a pod with a container using the BusyBox image inside. You are also passing in the bash command *sleep 35*.
