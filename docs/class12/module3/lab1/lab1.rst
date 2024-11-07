@@ -53,7 +53,8 @@ An example to review the status of a pod, *testpod* you would can run the below 
 
    kubectl get pod testpod -n test -o yaml
 
-You can also use *jsonpath* to filter the output. In the below example, we are filtering the output to only show the *status* field.
+You can also use *jsonpath* to filter the output. In the below example, we are filtering the output to only show the *status* field. We will also use the *jq*
+command to format the output.
 
 .. code-block:: bash
    :caption: Get Pod
