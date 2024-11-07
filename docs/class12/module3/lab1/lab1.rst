@@ -58,7 +58,7 @@ You can also use *jsonpath* to filter the output. In the below example, we are f
 .. code-block:: bash
    :caption: Get Pod
 
-   kubectl get pod testpod -n test -o jsonpath='{.status}'
+   kubectl get pod testpod -n test -o jsonpath='{.status}' | jq
 
 Describe
 --------
