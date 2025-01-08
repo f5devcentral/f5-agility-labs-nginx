@@ -11,6 +11,8 @@ The UDF lab consists of:
 •	A VM hosting NGINX and Agent, managed by NIM
 •	A JumpHost VM with a virtual FireFox instance for accessing the web interfaces used in this lab
 
+.. image:: images/nim-templating-arch.png
+
 .. toctree::
    :maxdepth: 1
    :caption: Content:
