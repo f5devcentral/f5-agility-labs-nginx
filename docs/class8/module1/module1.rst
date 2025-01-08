@@ -1,32 +1,43 @@
-Getting familiar with the Lab
+Getting Familiar with the Lab
 #############################
 
+Welcome to the NGINX Performance Tuning and Security Hardening lab! This lab is divided into several sections:
 
-The lab consists of multiple components: 
+* Environment setup
+* Performance assessment & tuning
+* Security assessment & hardening
 
-*   NGINX Proxy: A reverse proxy / load balancer on which we will be tuning the configuration to achieve better performance for the applications
-*   App Server: The backend application server, serving up the content
-*   Locust Worker: Generates the traffic load
-*   Locust Controller: Manages the Locust Worker instance and provides a GUI interface for monitoring load 
+These sections are further subdivided into modules, accessible via the navigation on the left.
+
+Materials
+=========
+
+During this lab, we will be using the following systems, all running in F5's Unified Demonstration Framework (UDF) cloud environment:
+
+*   NGINX Proxy: A reverse proxy / load balancer on which we will be tuning the configuration to achieve better performance and security for our backend applications
+*   App Server: Our mock backend application server that we will use to serve data and return information to inform our security posture
+*   Locust Worker: Generates traffic load for our Performance Tuning modules and contains scripts to simulate various security attacks
+*   Locust Controller: Manages the Locust Worker instance and provides a GUI interface for monitoring load
 *   NGINX Instance Manager: A web based application for managing NGINX instances. You will use this to update the NGINX Proxy's configuration file.
 
-|
-|
+System Architecture Diagram
+---------------------------
 
-Here is a diagram of the components and how they connect together: 
+This diagram represents how the individual systems in the lab environment connect:
 
 .. image:: /class8/images/lab-diagram.jpg  
   :width: 800 px
 
-
 The Locust load generation tool will be retrieving a 1.5MB file from the backend application server. 
 
-Review the Environment
+Get to Know the Environment
+===========================
 
-|
-|
+Let's familiarize ourselves with the UDF platform, lab instances and key utilities.
 
-1) **Log in to NGINX Proxy**
+.. note:: This section will focus on the Performance Tuning portion of the lab. Security hardening systems, concepts and utilities will be covered in a later module.
+
+1. **Log in to NGINX Proxy**
    
 Click on ACCESS and then WEB SHELL
 
@@ -34,10 +45,7 @@ Click on ACCESS and then WEB SHELL
   :width: 600 px
   :align: center
 
-|
-|
-
-2) **Review the nginx.conf file and some of the parameters already set**
+2. **Review the nginx.conf file and some of the parameters already set**
 
   `view /etc/nginx/nginx.conf`
 
@@ -51,24 +59,14 @@ server config block includes
 
 .. image:: /class8/images/codeblock.png
   :width: 600 px
- 
-|
-|
 
-3) **Go to NGINX Proxy Dashboard and review**
-
-|
+3. **Go to NGINX Proxy Dashboard and review**
 
 Under ACCESS for the NGINX Proxy, select NGINX+ DASHBOARD
-
-|
 
 .. image:: /class8/images/nginx-web-shell.png
   :width: 600 px
   :align: center
-
-|
-|
 
 Review the Dashboard and what is included under the tabs across the top of the page
 	
@@ -79,10 +77,7 @@ Review the Dashboard and what is included under the tabs across the top of the p
 * Workers: this section contains statistics that are specific to individual NGINX worker processes.
 * Caches: this section is not yet visible. Later in the lab we will turn caching on and this section will display statistics related to the health of our proxy's cache.
 
-|
-|
-
-4) **Start up Locust controller software**
+4. **Start up Locust controller software**
    
 Log on to the Locust Controller cli or WEB SHELL
 
@@ -98,27 +93,17 @@ Now start up the Locust controller and web interface.
 
    `/home/ubuntu/run_locust_controller.sh`
 
-|
-|
-
-5) **Access the Locust Controller Web Interface**
+5. **Access the Locust Controller Web Interface**
 
 Under Locust Controller ACCESS click on LOCUST to bring up the Web Interface
 
 .. image:: /class8/images/locus-gui.png  
 
-|
-|
-
-6) **On Locust Worker node**
+6. **On Locust Worker node**
    
 Log on to the Locust Worker cli or WEB SHELL
 
-|
-
 .. image:: /class8/images/locust-controller-gui.png
-
-|
 
 Verify 8-core machine, run this command to verify CPUs and their associated statistics
 
@@ -126,13 +111,10 @@ Verify 8-core machine, run this command to verify CPUs and their associated stat
   
 .. image:: /class8/images/locus-cpu.png  
 
-|
-
 Start up locust workers by running this command:
 
    `/home/ubuntu/start_locust_workers.sh`
 
-|
 This script with start all 8 workers (1 per CPU) in NOHUP mode, meaning you can close the shell window and they'll keep running. However, it's best to keep this window open to monitor the workers, which will log their output to nohup.out.
 
 Tail the nohup.out file to monitor Locust workers
@@ -140,9 +122,8 @@ Tail the nohup.out file to monitor Locust workers
 
 Sometimes, overloading Locust may cause worker threads to quit. We've tuned this lab so that shouldn't happen, but if it does, you'll want to terminate the workers and restart them. You can use the previously shown script to restart the workers. To terminate them, we've included the following script:
   `/home/ubuntu/terminate_locust_workers.sh`
-|
 
-7) **In Locust GUI, start the load generation**
+7. **In Locust GUI, start the load generation**
 Let's begin with a basic test to get a performance baseline with our default settings. 
    
 Number of Users: 100
@@ -155,28 +136,17 @@ Advanced Options, Run time: 30s
 
 .. image:: /class8/images/locus-10-100-30.png  
 
-|
-
 Click the 'Start swarming' button
 
-|
-|
-
-
-8) **Review graphs as they are generated**
+8. **Review graphs as they are generated**
    
 .. note:: What is happening with Total Request per Second and Response Time graphs 
 	
 Click the Charts tab to review graphs as they are generated
 
-|
-|
-
-9) **Run same test again**
+9. **Run same test again**
 
 Run the same test a 2nd time by clicking 'New test' at the top-right under 'Status STOPPED'. Keep the settings the same as before and click the 'Start swarming' button.
-
-|
 
 .. image:: /class8/images/locus-new-test.png 
 
@@ -186,14 +156,11 @@ Review NGINX Proxy CPUs while test is running.  Back on NGINX Proxy WEB SHELL:
 
 .. note:: How much CPU is being used?  Is the system fully saturated? 
 	
-
 Review Locust GUI Charts
 
 .. note:: Even when all test parameters are the same, tests will exhibit different results due to a multitude of external factors influencing system and network resources.
-|
-|
 
-10) **Run another test but this time with more load**
+10. **Run another test but this time with more load**
 
 Number of Users: 500
 
@@ -208,20 +175,13 @@ Advanced Options, Run time: 30s
 
 Review NGINX Proxy CPUs and the Locust GUI Charts
 
-|
-
 .. note::  How much CPU is being used?  Is the system fully saturated? How was Total Request per Second affected by this additional load
-	
-|
-|
 
-11) **Run same test again and review NGINX Dashboard**
+11. **Run same test again and review NGINX Dashboard**
  
 How many Active connections?
 
 In HTTP Zones, review total requests and responses
-
-
 
 .. toctree::
    :maxdepth: 2
