@@ -19,7 +19,7 @@ Begin by logging into NIM as Paul in the following steps. Paul has the NIM admin
 
     .. image:: ../images/image-28.png
 
-** ### Viewing, Monitoring and Managing NGINX **
+**### Viewing, Monitoring and Managing NGINX **
 
 Here we will examine the default configuration of the NGINX server, and afterward generate a new one for the PyGoat application.
 
