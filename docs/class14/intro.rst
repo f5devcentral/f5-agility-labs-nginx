@@ -1,26 +1,15 @@
 Introduction
 ============
 
-Let's get familiar with the components in UDF, we will explore the following in more detail:
+The goal of this lab is to provide an introduction to the NIM templating system by walking through a few use cases that personas in a typical organization might want to implement. The lab will provide pre-built templates for your use. Authoring templates is out of scope for this lab.
 
-- UDF itself
-- GitLabs console
-- ArgoCD UI
-- N+ instances shell
-- Grafana dashboards for NAP
+The UDF lab consists of:
 
-Module 2: 
-
-You will launch a simulated attack on a “standard” or default policy NAP & observe telemetry\
-
-- After each policy type flow has been completed. Have students answer the following questions for each policy type's behavior:
-- What are some key insights? What is working well; not working well (false positives vs comprehensive coverage)?
-- Students edit policy files and improve on the yaml to add future optimizations
-- Observe new behavior: What changed?
-
-Module 3: 
-
-After using Module 2 above, we will dive deeper into some DoS attacks against NGNIX NAP
+•	A VM with NIM installed
+•	A VM with KeyCloak to provide single sign-on to NIM using OIDC
+•  A VM hosting a workload, specifically the OWASP PyGoat application
+•	A VM hosting NGINX and Agent, managed by NIM
+•	A JumpHost VM with a virtual FireFox instance for accessing the web interfaces used in this lab
 
 .. toctree::
    :maxdepth: 1
