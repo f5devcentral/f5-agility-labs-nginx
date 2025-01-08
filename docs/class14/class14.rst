@@ -4,6 +4,7 @@ F5 AppWorld 2025 – NGINX One Templates
 In this lab we will introduce you to the design of the NGINX Instance Manager templating system, as well as walk through using it to apply configuration changes to NGINX for common use cases. 
 
 In this lab, you will:
+
 •	Understand the NGINX Instance Manager templating system by walking through a few use cases that personas in a typical organization might want to implement
 •	Explore NGINX Instance Manager’s interface to understand how it can be used to centrally manage NGINX instances
 •	Configure NGINX to proxy to an application using a template
@@ -12,14 +13,6 @@ In this lab, you will:
 
 Prerequisites: 
 •	Basic NGINX knowledge
-
-We will explore the following:
-
-- UDF locations to launch these services
-- GitLabs console
-- ArgoCD UI
-- N+ instances shell
-- Grafana dashboards for NAP
 
 Module 1: 
 
