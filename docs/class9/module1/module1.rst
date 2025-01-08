@@ -852,7 +852,6 @@ authentication tokens between the instances.**
 /etc/nginx/nginx.conf file to enable cluster state sharing and click publish.
 
 .. image:: ../images/nms-instance-group-stream.png
-   :width: 500
 
 **save and close file**
 
