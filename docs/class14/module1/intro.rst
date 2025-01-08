@@ -1,4 +1,4 @@
-Lab 1.1 - UDF pattern deployment
+Intro - UDF pattern deployment
 ================================
 
 In order to begin you will need to go to F5's Unified Development Framework (UDF) site and launch the apropriate course. The following will walk you through that process.
@@ -11,7 +11,7 @@ To access the UDF course for this class follow the instructions below.
    #. Click on the Non-F5 Users selection.
    #. Login with the provided access.
    #. In the left navigation bar select Courses.
-   #. Type "Maximize ROI with F5 NGINX App Protect using Observability" in the search bar under the Content tab.
+   #. Type "NIM Templates" in the search bar under the Content tab.
    #. Select the Details button on the title screen.
    #. Click the Details button on the blueprint in the lower right.
    #. Select the Deploy option.
@@ -20,7 +20,6 @@ To access the UDF course for this class follow the instructions below.
    #. Leave everything else default and click start.
 
 .. note:: The UDF pattern will take a few minutes to stand up. In the meantime feel free to read through the Documentaion section of the pattern.
-
 
 
 Getting Started
