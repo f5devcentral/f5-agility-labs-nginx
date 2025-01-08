@@ -3,25 +3,25 @@ NGINX Templates
 
 The templating system for NIM has the following benefits:
 
-**### Simplify Configurations **
+**Simplify Configurations**
 
 Configurations rendered from templates make administering NGINX extremely easy. Templates can provide only the required parameters via the UI or API.
 
-**### Ensure Standards **
+**Ensure Standards**
 
 Maintain consistency and best practices across your NGINX estate by managing crucial settings centrally.
 
-**### Empower App Dev Teams **
+**Empower App Dev Teams**
 
 Allow teams to manage and own the contents of their own location or server blocks.
 
-**### Maximum Flexibility **
+**Maximum Flexibility**
 
 Customize existing templates or build your own to suit your needs.
 
-**## Config Templates Design **
+**Config Templates Design**
 
-**### Types of Templates**
+**Types of Templates**
 
 Configuration templates come in two types:
 
@@ -32,7 +32,7 @@ Configuration templates come in two types:
   - Feature augments: These add specific functionalities such as caching, authentication, or rate limiting to the NGINX configuration.
   - Segment augments: These modify or add configuration segments like additional server blocks, location directives, or upstream definitions.
 
-**### Template resource files **
+**Template resource files**
 
 Configuration templates include the following components:
 
@@ -42,7 +42,7 @@ Configuration templates include the following components:
 
 - **Auxiliary files**: Additional files required for configuration, such as JavaScript for added functionality, security certificates, or documentation (README.md). These files support the main configuration and provide necessary context or capabilities.
 
-**## Target **
+**Target**
 
 A target refers to the specific NGINX server instance, instance group, or staged config where a template (base or augment) is intended to be applied. It's the designated location or context within which the generated configuration will be active and operational.
 
@@ -54,7 +54,7 @@ There are three types of targets:
 
 3. **Staged config**: A staging area for configurations before deployment, allowing for testing and validation to minimize potential disruptions upon live deployment.
 
-**## Template submission **
+**Template submission**
 
 Template submission involves applying a set of configurations (derived from base and/or augment templates) to a target. This action takes the parameters defined in the templates, generates the final NGINX configuration, and deploys it to the specified target. RBAC plays a pivotal role here, determining who can submit and modify template submissions. Template submission effectively bridges the gap between configuration design and operational use.
 
