@@ -1,7 +1,8 @@
 NGINX Templates
 ===============================
 
-The templating system for NIM has the following benefits:
+Config Templates Benefits
+-------------------
 
 **Simplify Configurations**
 
@@ -19,7 +20,9 @@ Allow teams to manage and own the contents of their own location or server block
 
 Customize existing templates or build your own to suit your needs.
 
-**Config Templates Design**
+
+Config Templates Design
+--------------------
 
 **Types of Templates**
 
