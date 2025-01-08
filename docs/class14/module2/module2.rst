@@ -1,313 +1,131 @@
-NGINX App Protect WAF Dashboard
+Configure NGINX Using a Template
 ===============================
 
-Let's go over the dashboard for NGINX App Protect WAF. 
+1. In the left navigation, click **Templates**.
 
-The overall solution uses Logstash to receive logs from NGINX App Protect, process them and finally store them in Elasticsearch indexes. Grafana retrieves the logs from the 
-Elastic indexes and helps us visualize them.
+1. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
-.. image:: images/attack-signatures-0.png
+1. Select the **Publish to an instance** radio button.
 
-Table of Contents
+1. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
 
-- [Available Dashboards](#available-dashboards)
-- [Generating Attacks](#generating-attacks)
+1. Click **Next**.
 
-Available Dashboards
---------------------
+1. In the **Choose Augments** view, click **Next**.
 
-Main Dashboard
+1. On the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
-The main dashboard that provides an overview of all the violations that have been logged by NGINX App Protect WAF. From this table you can navigate to the other dashboards like SupportID, by clicking on the links. Some of the graphs/tables 
-included in this dashboard are:
+1. Enter the following data in this section:
 
-- Attacks recorded and mitigated
-- Violation categories
-- Attacks over time
-- Mitigated Bots 
-- GeoMap
-- Attacks per URL
-- Attack Signature detected
-- Bot activity per IP/Country
-- Bot activity per Policy/Device
-- CVEs and Threat Campaigns
-- Logs
+    | Item                     | Value       |
+    |--------------------------|-------------|
+    | Server Label             | pygoat      |
+    | Listen -> Port           | 443         |
+    | Listen -> Default Server | TRUE        |
 
+1. Under **Server name**, click **+ Add item**.
 
-.. image:: images/nap1.png
+1. Enter the following data:
 
-Attack Signature Dashboard
---------------------------
+    | Item                                 | Value              |
+    |--------------------------------------|--------------------|
+    | Server name -> ITEM 1 -> Server name | pygoat.f5demos.com |
 
-The Attack Signature dashboard provides all details for the signatures that were triggered by NGINX App Protect WAF. Some of the graphs/tables included in this dashboard are:
+1. In the **TLS Settings** section, enter the following data:
 
-- Signature Hits
-- Signature Accuracy and Risk
-- Signatures per Context 
-- Signature details 
-- Signatures per URL/IP/Policy
-- Parameter Names and Values
-- Header Names and Values
-- Cookies Names and Values
-- Logs
+    | Item                     | Value                                         |
+    |--------------------------|-----------------------------------------------|
+    | Enable TLS               | TRUE                                          |
+    | TLS Certificate Path     | /etc/ssl/certs/wildcard.f5demos.com.crt.pem   |
+    | TLS Keyfile Path         | /etc/ssl/private/wildcard.f5demos.com.key.pem |
+    | Redirect Port            | 80                                            |
 
-.. image:: images/attack-signatures-1.png
+1. In the **Server Locations** section, click the **Add Server Locations** link.
 
+1. Enter the following data in this section:
 
-Bot Dashboard
--------------
+    | Item                     | Value           |
+    |--------------------------|-----------------|
+    | Location Match Strategy  | Prefix          |
+    | URI                      | /               |
+    | Upstream Name            | pygoat-upstream |
 
-The Bot Dashboard provides all details for the Bot activity that was logged by NGINX App Protect WAF. Some of the graphs/tables included in this dashboard are:
+    > Note: Do not enter any information into the **Proxy Headers** portion of the template form.
 
-- Bot Types
-- Bot Categories
-- Bot Activity over time
-- Mitigated Bots 
-- Bot activity per URL
-- Bot activity per IP/Country
-- Bot activity per Policy/Device
-- Logs
+    That was a lot of data entry! But what did we just do? Based on the data we entered into the **HTTP Servers** template, we intend to:
 
-.. image:: images/bot-1.png
+    - Create a new HTTP Server called **pygoat.f5demos.com**
+    - THis server should listen on port 443
+    - Will be the default HTTP server
+    - Will encrypt communications using TLS
+    - Reference an existing certificate and key for TLS
+    - Will redirect any HTTP traffic to HTTPS
+    - Create a single location using the `/` path prefix
+    - Requests made to this location will pass traffic to an upstream called **pygoat-upstream**
+    - No Proxy Headers were configured
 
-SupportID Dashboard
--------------------
+    But where is the upstream itself defined?
 
-The SupportID Dashboard provides all details for a specific transaction that was logged by NGINX App Protect WAF. These include the following:
+1. Click **Next**. You will be presented with a form to collect the details of the upstream server for the PyGoat application, which is hosted on the `workloads.f5demos.com` server.
 
-- Client/Server Information (Client IP/Port, Server IP/Port, X-Forwared-For, etc)
-- Violation Details (Outcome, Request Status, Outcome Reson, etc)
-- Bot Details (Bot Classm Bot Category, Bit Signature, etc)
-- Device Details (NAP Device name, Vritual Server Name)
-- Signatures Triggered
-- Treat Campaign triggered
-- Violation list
-- Many more
+1. In the **HTTP Upstreams** section, click the **Add HTTP Upstream Servers** link.
 
-It also includes both the original and decoded Elasticsearch indices for better troubleshooting.
+1. Enter the following data in this section:
 
-.. image:: images/support1.png
+    | Item                     | Value           |
+    |--------------------------|-----------------|
+    | Upstream Name            | pygoat-upstream |
+    | Load balancing strategy  | Round Robin     |
 
+1. In the **Servers** section, click **+Add item**.
 
-Dashboards under development
-----------------------------
+1. Enter the following data in this section:
 
-The following dashboard are currently under development and should be released shortly:
+    | Item                     | Value                 |
+    |--------------------------|-----------------------|
+    | Host                     | workloads.f5demos.com |
+    | Port                     | 8000                  |
+    | Down                     | FALSE                 |
+    | Backup                   | FALSE                 |
 
-- File Type Violations
-- Header/Cookie Violations
-- Parameter Violations
-- Evasion Techniques
-- HTTP Protocol Compliance
-- URL Violations
+    > Note: Do not enter any information into the **Zone** portion of the template form.
 
-Generating attacks
-------------------
+    What did we configure in the **HTTP Upstreams** portion of the template?
 
-In the following section we will generate multiple attacks so that the dashboards get populated with meaningful data that we can review.
+    - An upstream that is configured with a Round Robin loan balancing strategy (unused now, but would be relevant if we had multiple upstream servers configured)
+    - A single upstream server, located at `workloads.f5demos.com` on port `8000` was configured
+    - This server was not set to **Down**
+    - This server was not set as a **Backup** server
+    - No Zones were configured
 
-To run the demos, use the terminal on VS Code. VS Code is under the `bigip-01` on the `Access` drop-down menu. 
+    > Note: the value `pygoat-upstream` was entered into both the **HTTP Servers** and **HTTP Upstreams** templates. Why? This unique identifier needed to match so the templating system could properly correlate these objects together even though they were configured on different pages of the template.
 
-.. image:: images/vscode.png
+1. Click **Next**. This will show you a preview of the config generated from the templates.
 
+1. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
 
-#. Change the working directory to `monitoring`.
+1. Click the **Publish** button. If successful, you should see a message indicating so.
 
-.. code:: bash
+    .. image:: ../images/image-18.png
 
-    cd ~/oltra/use-cases/app-protect/monitoring
+1. Click the **Close and Exit** button.
 
+1. Click **Template Submissions** in the left navigation.
 
-Deploy and protect a web application  
+    You should see that the **Basic Reverse Proxy** has been deployed to 1 instance:
 
-#. Create the application deployment and service in namespace `nap`:
+    .. image:: ../images/image-19.png
 
-   .. code:: bash
-   
-      kubectl create namespace nap
-      kubectl apply -f app.yml
+1. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
 
+1. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
-#. Create the App Protect policy.
+    .. image:: ../images/image-20.png
 
-   .. code:: bash
+    If we wanted to make changes to the submission, we could simply edit the values here, and publish configuration as we did before.
 
-      kubectl apply -f appolicy.yml
+#### Test the Deployed Configuration
 
-#. Create log configuration resource:
+1. Back in the FireFox **Lab Links** tab, click on the **PyGoat Web Application** link once again. The application should load now:
 
-   .. code:: bash
-
-      kubectl apply -f log.yml
-
-
-#. Create the policy to reference the AP Policy, the AP Log profile and the log destination.
-
-   .. code:: bash
-
-      kubectl apply -f policy.yml
-
-#. Create the VirtualServer resource:
-
-   .. code:: bash
-
-      kubectl apply -f virtual-server.yml
-
-#. Send a request to the application.
-
-   .. code:: bash
-
-      curl http://nap-ingress2.f5k8s.net
-
-   .. code:: bash
-
-      #####################  Expected output  #######################
-      Server address: 10.244.140.109:8080
-      Server name: nap-monitor-7586895968-r26zn
-      Date: 12/Sep/2022:14:12:25 +0000
-      URI: /
-      Request ID: 0495d6a17797ea9776120d5f4af10c1a
-
-
-Step 2. Execute malicious requests to the application  
-
-Now, let's try to send a malicious request to the application:
-
-
-#.  SQL Injection (encoded)
-
-   .. code:: bash
-
-      curl "http://nap-ingress2.f5k8s.netindex.php?password=0%22%20or%201%3D1%20%22%0A"
-
-#.  SQL Injection
-
-   .. code:: bash
-
-      curl "http://nap-ingress2.f5k8s.net/index.php?password==0'%20or%201=1'"
-
-#. SQL Injection
-
-   .. code:: bash
-
-      curl "http://nap-ingress2.f5k8s.net/index.php?id=%'%20or%200=0%20union%20select%20null,%20version()%23"
-
-#. Cross Site Scripting
-
-   .. code:: bash
-
-      curl "http://nap-ingress2.f5k8s.net/index.php?username=<script>"
-
-#. Command Injection
-
-   .. code:: bash
-      curl "http://nap-ingress2.f5k8s.net/index.php?id=0;%20ls%20-l"
-
-
-The expected output  for all the previous requests is the following:
-``` <html><head><title>Request Rejected</title></head><body>The requested URL was rejected........ ```
-
-
-Step 3. Review Logs 
-
-Login to Grafana (credentials **admin/Ingresslab123**)
-
-.. image:: images/login.png
-
-
-Go to **Dashboards->Browse**
-
-.. image:: images/browse.png
-
-
-Select the NAP Dashboards that can be located under the NGINX folder
-
-.. image:: images/dashboards.png
-
-
-Navigate through the different Dashboards to review the attacks.
-
-
-Zero to Hero! Maximizing ROI via Ratings Based Templates
---------------------------------------------------------
-Ratings based template policies combine multiple threats to help reduce the operational cost of tuning a WAF policy in order to protect your applications.
-
-In the following section we will generate multiple attacks to understand how the default ratings based templates provide a higher level of efficacy while reducing false positives. This allows you to implement blocking mode early in the application deployment lifecycle and trust that you won't be buried in sifting through logs.
-
-To run the demos, use the terminal on VS Code. VS Code is under the `bigip-01` on the `Access` drop-down menu. Click <a href="https://raw.githubusercontent.com/F5EMEA/oltra/main/vscode.png"> here </a> to see how.*
-
-Go to **Dashboards->NAP->Main Dashboard**
-
-Note the current count in the Severity Box and the number of attacks:
-
-.. image:: images/ViolationRatingsDash.png
-
-#. Return to the working directory to `monitoring` in Visual Studio Code.
-
-.. code:: bash
-
-    cd ~/oltra/use-cases/app-protect/monitoring
-
-In the terminal window execute the following command and observe the count in the dashboard.
-
-.. code:: bash
-
-   for i in {1..50}; do curl "http://nap-ingress2.f5k8s.net/?a=b=0xF0"; done
-
-Review the main dashboard and note if the number of attacks incremented and which severity level incremented.
-
-.. image:: images/ViolationRatingsDash2.png
-
-Were the attacks blocked by the WAF? Hint: Did the server response include a support ID?
-
-Examine the dashboard and examine the 'Main' Dashboard and notice how the additional 50 requests were categorized. Why was it not blocked?
-
-Next in the terminal window execute the following command.
-
-.. code:: bash
-
-   for i in {1..50}; do curl "http://nap-ingress2.f5k8s.net/intranet/"; done
-
-Were the attacks blocked by the WAF? Hint: See above!
-
-Examine the dashboard and examine the 'Main' and the 'Attack Signatures' Dashboards and notice how the additional 50 requests were categorized.
-
-If you scroll to the bottom of the 'Attack Signatures' Dashboard you can see the 'URL / Request violations details'
-
-.. image:: images/requestvolationdetails.png
-
-Clicking on a "Support ID" will launch another screen to provide more details.
-
-.. image:: images/supportiddetails.png
-
-What triggered the violation? What was the violation rating? Why was it blocked or not blocked?
-
-.. code:: bash
-
-   for i in {1..50}; do curl "http://nap-ingress2.f5k8s.net/etc/security/password"; done
-
-Were the attacks blocked by the WAF? Hint: Are you seeing a trend here?
-
-Once again examine the dashboard results.
-
-Now let's combine all of these requests in to one.
-
-.. code:: bash
-
-   for i in {1..50}; do curl "http://nap-ingress2.f5k8s.net/intranet/?a=/etc/security/passwd&b=%f0"; done
-
-Now examine the results. Were the requests blocked? Discussion.
-
-.. image:: images/violationLevel4.png
-
-Also note, the VIOL_BOT_CLIENT. How do you think this was detected? Let's try and fool it by changing the "user-agent" to a regular browser.
-
-.. code:: bash
-
-   for i in {1..50}; do curl -H "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36" "http://nap-ingress2.f5k8s.net/intranet/?a=/etc/security/passwd&b=%f0"; done
-
-Examine the different violation log details in Kibana.
-
-.. image:: images/kibanaLogs.png
-
-This completes the lab.
+    .. image:: ../images/image-21.png

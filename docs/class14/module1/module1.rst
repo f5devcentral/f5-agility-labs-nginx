@@ -41,11 +41,12 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
     We don't be adding any more instances in this lab, we can do everything we need to with one instance.
 
-4. Go back to the **Instances** page.
+4. Browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
+
+5. Go back to the **Instances** page.
 
     Select **nginx.f5demos.com**. Note that it is online, and ready to receive management commands from NIM.
 
-5. Browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
 
 6. Click **Edit Config** near the top right of the window.
 
