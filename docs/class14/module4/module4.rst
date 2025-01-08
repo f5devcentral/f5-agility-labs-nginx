@@ -73,7 +73,7 @@ We are now going to log in as Jane Developer so that we can verify she has acces
 
     .. image:: ../images/image-25.png
 
-**Update Template Submission as Jane Developer*
+**Update Template Submission as Jane Developer**
 
 1. Click **Template Submissions** in the left navigation.
 
@@ -97,7 +97,7 @@ We are now going to log in as Jane Developer so that we can verify she has acces
 
 You did it! What if Jane would like to control aspects of the configuration that have not been exposed in the base template? As you read about in the lab introduction, this this is where Augment Templates can be used.
 
-**Import a Custom 404 Augment Template*
+**Import a Custom 404 Augment Template**
 
 We are now going to log in as Paul Platops so that we can import and grant developers access to an Augment Template that attaches a custom pre-built 404 response handler.
 
@@ -131,7 +131,7 @@ We are now going to log in as Paul Platops so that we can import and grant devel
 
   .. image:: ../images/image-5.png
 
-**Apply the Custom 404 Augment Template*
+**Apply the Custom 404 Augment Template**
 
 As Jane Developer, we will attach the custom 404 handler to the NGINX configuration that she has been granted access to. We (as Jane Developer) will use the augment template that Paul just imported to accomplish this.
 
@@ -182,7 +182,7 @@ As Jane Developer, we will attach the custom 404 handler to the NGINX configurat
 
 14. Click the **Publish** button. If successful, you should see a message indicating so.
 
-**Test the Augment Template*
+**Test the Augment Template**
 
 1. In FireFox, click the tab for the PyGoat app.
 
@@ -192,7 +192,7 @@ As Jane Developer, we will attach the custom 404 handler to the NGINX configurat
 
     .. image:: ../images/image-3.png
 
-**Import another Augment Template*
+**Import another Augment Template**
 
 We are now going to log in as Paul Platops so that we can import and grant persons in the **secops** role access to rate limiting augment template.
 
@@ -226,7 +226,7 @@ We are now going to log in as Paul Platops so that we can import and grant perso
 
     .. image:: ../images/image-6.png
 
-**Apply the Rate Limiting Augment Template*
+**Apply the Rate Limiting Augment Template**
 
 Sally Secops has noticed that the PyGoat application's login API has been overused by actors with questionable intent, also resulting in degraded application performance. Sally would like to attach rate limiting to the NGINX configuration or the PyGoat application's NGINX HTTP Server. We (as Sally Secops) will use the augment template that Paul just imported to accomplish this.
 
@@ -283,7 +283,7 @@ Sally Secops has noticed that the PyGoat application's login API has been overus
 
 12. Click the **Publish** button. If successful, you should see a message indicating so.
 
-**Test the Rate Limiting Augment Template*
+**Test the Rate Limiting Augment Template**
 
 In this final section of the lab, we will use the hey utility to test the efficacy of the rate limiting augment template that you just deployed.
 
@@ -313,6 +313,6 @@ In this final section of the lab, we will use the hey utility to test the effica
 
     Notice that the first requests were successful with a status code of 200 observed. Then, `hey` started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
 
-**Conclusion*
+**Conclusion**
 
 As you have witnessed, NIM's Templating framework gives organizations the control they need to empower users of their NGINX platform. Via templates, these users can apply use cases to their application delivery tier without requiring they be NGINX configuration experts. Additionally, the framework allows organizations to provide this capability to users in a "least-privileged" manner - only granting them permissions to execute templates on the instances they have been assigned. This ensures compliance, and significantly narrows the "blast radius" in the event an outage occurs due to human error while configuring.
