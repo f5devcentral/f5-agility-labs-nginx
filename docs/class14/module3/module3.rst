@@ -3,54 +3,77 @@ Configure NGINX Using a Template
 
 1. In the left navigation, click **Templates**.
 
-1. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
+2. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
-1. Select the **Publish to an instance** radio button.
+3. Select the **Publish to an instance** radio button.
 
-1. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
+4. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
 
-1. Click **Next**.
+5. Click **Next**.
 
-1. In the **Choose Augments** view, click **Next**.
+6. In the **Choose Augments** view, click **Next**.
 
-1. On the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
+7. On the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
-1. Enter the following data in this section:
+8. Enter the following data in this section:
 
-    | Item                     | Value       |
-    |--------------------------|-------------|
-    | Server Label             | pygoat      |
-    | Listen -> Port           | 443         |
-    | Listen -> Default Server | TRUE        |
+.. list-table:: 
+   :header-rows: 1
 
-1. Under **Server name**, click **+ Add item**.
+   * - **Item**
+     - **Value**
+   * - Server Label
+     - pygoat
+   * - Listen Port
+     - 443
+   * - Default Server
+     - true
 
-1. Enter the following data:
+9. Under **Server name**, click **+ Add item**.
 
-    | Item                                 | Value              |
-    |--------------------------------------|--------------------|
-    | Server name -> ITEM 1 -> Server name | pygoat.f5demos.com |
+10. Enter the following data:
 
-1. In the **TLS Settings** section, enter the following data:
+.. list-table:: 
+   :header-rows: 1
 
-    | Item                     | Value                                         |
-    |--------------------------|-----------------------------------------------|
-    | Enable TLS               | TRUE                                          |
-    | TLS Certificate Path     | /etc/ssl/certs/wildcard.f5demos.com.crt.pem   |
-    | TLS Keyfile Path         | /etc/ssl/private/wildcard.f5demos.com.key.pem |
-    | Redirect Port            | 80                                            |
+   * - **Item**
+     - **Value**
+   * - Server name -> ITEM 1 -> Server name
+     - pygoat.f5demos.com
 
-1. In the **Server Locations** section, click the **Add Server Locations** link.
+11. In the **TLS Settings** section, enter the following data:
 
-1. Enter the following data in this section:
+.. list-table:: 
+   :header-rows: 1
 
-    | Item                     | Value           |
-    |--------------------------|-----------------|
-    | Location Match Strategy  | Prefix          |
-    | URI                      | /               |
-    | Upstream Name            | pygoat-upstream |
+   * - **Item**
+     - **Value**
+   * - Enable TLS  
+     - TRUE
+   * - TLS Certificate Path   
+     - /etc/ssl/certs/wildcard.f5demos.com.crt.pem
+   * - TLS Keyfile Path
+     - /etc/ssl/private/wildcard.f5demos.com.key.pem
+   * - Redirect Port  
+     - 80
 
-    > Note: Do not enter any information into the **Proxy Headers** portion of the template form.
+12. In the **Server Locations** section, click the **Add Server Locations** link.
+
+13. Enter the following data in this section:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Item**
+     - **Value**
+   * - Location Match Strategy
+     - Prefix
+   * - URI   
+     - /
+   * - Upstream Name
+     - pygoat-upstream
+
+Note: Do not enter any information into the **Proxy Headers** portion of the template form.
 
     That was a lot of data entry! But what did we just do? Based on the data we entered into the **HTTP Servers** template, we intend to:
 
@@ -66,29 +89,43 @@ Configure NGINX Using a Template
 
     But where is the upstream itself defined?
 
-1. Click **Next**. You will be presented with a form to collect the details of the upstream server for the PyGoat application, which is hosted on the `workloads.f5demos.com` server.
+14. Click **Next**. You will be presented with a form to collect the details of the upstream server for the PyGoat application, which is hosted on the `workloads.f5demos.com` server.
 
-1. In the **HTTP Upstreams** section, click the **Add HTTP Upstream Servers** link.
+15. In the **HTTP Upstreams** section, click the **Add HTTP Upstream Servers** link.
 
-1. Enter the following data in this section:
+16. Enter the following data in this section:
 
-    | Item                     | Value           |
-    |--------------------------|-----------------|
-    | Upstream Name            | pygoat-upstream |
-    | Load balancing strategy  | Round Robin     |
+.. list-table:: 
+   :header-rows: 1
 
-1. In the **Servers** section, click **+Add item**.
+   * - **Item**
+     - **Value**
+   * - Upstream Name
+     - pygoat-upstream
+   * - Load balancing strategy   
+     - Round Robin
+   * - Upstream Name
+     - pygoat-upstream
 
-1. Enter the following data in this section:
+17. In the **Servers** section, click **+Add item**.
 
-    | Item                     | Value                 |
-    |--------------------------|-----------------------|
-    | Host                     | workloads.f5demos.com |
-    | Port                     | 8000                  |
-    | Down                     | FALSE                 |
-    | Backup                   | FALSE                 |
+18. Enter the following data in this section:
 
-    > Note: Do not enter any information into the **Zone** portion of the template form.
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Item**
+     - **Value**
+   * - Host
+     - workloads.f5demos.com
+   * - Port 
+     - 8000
+   * - Down
+     - False
+   * - Backup
+     - False
+
+Note: Do not enter any information into the **Zone** portion of the template form.
 
     What did we configure in the **HTTP Upstreams** portion of the template?
 
@@ -100,31 +137,31 @@ Configure NGINX Using a Template
 
     > Note: the value `pygoat-upstream` was entered into both the **HTTP Servers** and **HTTP Upstreams** templates. Why? This unique identifier needed to match so the templating system could properly correlate these objects together even though they were configured on different pages of the template.
 
-1. Click **Next**. This will show you a preview of the config generated from the templates.
+19. Click **Next**. This will show you a preview of the config generated from the templates.
 
-1. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
+20. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
 
-1. Click the **Publish** button. If successful, you should see a message indicating so.
+21. Click the **Publish** button. If successful, you should see a message indicating so.
 
     .. image:: ../images/image-18.png
 
-1. Click the **Close and Exit** button.
+22. Click the **Close and Exit** button.
 
-1. Click **Template Submissions** in the left navigation.
+23. Click **Template Submissions** in the left navigation.
 
     You should see that the **Basic Reverse Proxy** has been deployed to 1 instance:
 
     .. image:: ../images/image-19.png
 
-1. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
+24. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
 
-1. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
+25. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
     .. image:: ../images/image-20.png
 
     If we wanted to make changes to the submission, we could simply edit the values here, and publish configuration as we did before.
 
-#### Test the Deployed Configuration
+**Test the Deployed Configuration**
 
 1. Back in the FireFox **Lab Links** tab, click on the **PyGoat Web Application** link once again. The application should load now:
 
