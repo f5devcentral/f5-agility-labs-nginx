@@ -11,24 +11,24 @@ In this lab, you will:
 •	Configure NGINX to show a custom 404 page for users using templates
 •	Use a template to add more advanced functionality to NGINX such as rate limiting and authentication. 
 
-## Prerequisites: 
+**Prerequisites**: 
 •	Basic NGINX knowledge
 
-## Module 1: 
+**Module 1**: 
 
 Understanding the NGINX Instance Manager solution
 
 •	Logging into NGINX Instance Manager
 •	Viewing, Monitoring and Managing NGINX Instances
 
-## Module 2: 
+**Module 2**: 
 
 Introduction to NIM Templates
 
 •	Background and Overview of NIM Templates
 •	Examine Default Configuration
 
-## Module 3: 
+**Module 3**: 
 
 Create a Reverse Proxy Configuration using a Template:
 
@@ -37,7 +37,7 @@ Create a Reverse Proxy Configuration using a Template:
 •	Round Robin Load Balancing
 •	Test the configuration
 
-## Module 4: 
+**Module 4**: 
 
 Create more advanced configuration
 
