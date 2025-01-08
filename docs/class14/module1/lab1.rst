@@ -19,19 +19,6 @@ Begin by logging into NIM as Paul in the following steps. Paul has the NIM admin
 
     .. image:: ../images/image-28.png
 
-4. Click the **Instance Manager** tile.
-
-   .. image:: ../images/image-14.png
-
-    If you are familiar with NIM, things may seem typical to you, with the addition of **Templates** and **Template Submissions** links in the left navigation:
-
-    .. image:: ../images/image-16.png
-
-5. Click the **Templates** link. Note there is one base template listed, **F5 Global Default Base**
-
-    > Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
-
-
 ### Viewing, Monitoring and Managing NGINX
 
 Here we will examine the default configuration of the NGINX server, and afterward generate a new one for the PyGoat application.
@@ -48,8 +35,20 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
     .. image:: ../images/image-17.png
 
-3. Select **nginx.f5demos.com**. Note that it is online, and ready to receive management commands from NIM.
+3. You can see that NIM is currently only managing one single NGINX Instance.
+
+    Select **nginx.f5demos.com**. Note that it is online, and ready to receive management commands from NIM.
+
+3. Browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
 
 4. Click **Edit Config** near the top right of the window.
 
 You will see the NIM config editor, displaying the existing state of the NGINX configuration files in the instance. As a reminder, the configuration has not been customized for the application we will be hosting in this lab.
+
+5. Feel free to check out other tabs. There are many other options in NIM such as Certificate Management and NGINX App Protect WAF management. 
+
+    Today we are focusing on Templates.
+
+6. Click the **Templates** tab. Note there is one base template listed, **F5 Global Default Base**
+
+    > Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
