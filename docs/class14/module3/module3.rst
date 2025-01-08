@@ -1,185 +1,131 @@
-GitOps continuous delivery for NGINX App Protect with ArgoCD 
-============================================================
+Configure NGINX Using a Template
+===============================
 
-Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. Argo CD follows the GitOps pattern of using Git repositories as the source of truth for defining the desired application state. 
+1. In the left navigation, click **Templates**.
 
-.. image:: images/argocd-ui.gif
+1. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
-Argo CD is implemented as a kubernetes controller which continuously monitors running applications and compares the current, live state against the desired target state (as specified in the Git repo). A deployed application whose live 
-state deviates from the target state is considered OutOfSync. Argo CD reports & visualizes the differences, while providing facilities to automatically or manually sync the live state back to the desired target state. Any modifications 
-made to the desired target state in the Git repo can be automatically applied and reflected in the specified target environments.
+1. Select the **Publish to an instance** radio button.
 
-Argo CD is being actively developed by the community. Argo CD releases can be found <a href="https://github.com/argoproj/argo-cd/releases"> here</a>.
+1. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
 
+1. Click **Next**.
 
-NAP with Argo CD 
-----------------
+1. In the **Choose Augments** view, click **Next**.
 
-In this example we will configure NAP to work with Argo CD so that we follow a GitOps continuous delivery methodology.
+1. On the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
-Let us create a Git Repository with the required manifests
+1. Enter the following data in this section:
 
-#. Login to Gitlab
-    > GitLab can be found under the `bigip-01` on the `Access` drop-down menu.
-  
-    Use the credentials (**root** / **Ingresslab123**) to log in. 
+    | Item                     | Value       |
+    |--------------------------|-------------|
+    | Server Label             | pygoat      |
+    | Listen -> Port           | 443         |
+    | Listen -> Default Server | TRUE        |
 
-   .. image:: images/gitlab-login.png
+1. Under **Server name**, click **+ Add item**.
 
-#. Go to Repository `nap/ArgoCD` that has been pre-configured.
+1. Enter the following data:
 
-   .. image:: images/gitlab-repo.png
+    | Item                                 | Value              |
+    |--------------------------------------|--------------------|
+    | Server name -> ITEM 1 -> Server name | pygoat.f5demos.com |
 
-#. Review all the files that already exists on the repo. These files include:
+1. In the **TLS Settings** section, enter the following data:
 
-  - ns.yml        (deploys the Namespace)
-  - app.yml       (deploys the demo apps)
-  - appolicy.yml  (deploys the NAP policy)
-  - log.yml       (deploys the Logging profile)
-  - policy.yml    (deploys the NGINX policy)
-  - vs.yml        (deploys the VirtualServer CRD)
+    | Item                     | Value                                         |
+    |--------------------------|-----------------------------------------------|
+    | Enable TLS               | TRUE                                          |
+    | TLS Certificate Path     | /etc/ssl/certs/wildcard.f5demos.com.crt.pem   |
+    | TLS Keyfile Path         | /etc/ssl/private/wildcard.f5demos.com.key.pem |
+    | Redirect Port            | 80                                            |
 
-   .. image:: images/gitlab-files.png
+1. In the **Server Locations** section, click the **Add Server Locations** link.
 
+1. Enter the following data in this section:
 
-Now lets connect Argo CD with the Git Repository 
+    | Item                     | Value           |
+    |--------------------------|-----------------|
+    | Location Match Strategy  | Prefix          |
+    | URI                      | /               |
+    | Upstream Name            | pygoat-upstream |
 
-#. Login to Argo CD
-    > Argo CD can be found under the `bigip-01` on the `Access` drop-down menu. 
+    > Note: Do not enter any information into the **Proxy Headers** portion of the template form.
 
-    Use the credentials (**admin** / **Ingresslab123**) to log in. 
+    That was a lot of data entry! But what did we just do? Based on the data we entered into the **HTTP Servers** template, we intend to:
 
-   .. image:: images/argo-login.png
+    - Create a new HTTP Server called **pygoat.f5demos.com**
+    - THis server should listen on port 443
+    - Will be the default HTTP server
+    - Will encrypt communications using TLS
+    - Reference an existing certificate and key for TLS
+    - Will redirect any HTTP traffic to HTTPS
+    - Create a single location using the `/` path prefix
+    - Requests made to this location will pass traffic to an upstream called **pygoat-upstream**
+    - No Proxy Headers were configured
 
-#. Create a new Application
-  
-    Click on `+ NEW APP` button that can be found on the top left of the page.
-    
-   .. image:: images/argo-main.png
+    But where is the upstream itself defined?
 
-Find below the information that needs to inserted in the form. 
-  
-  - Application Name -> **nap-demo**
-  - Project -> **default**
-  - Sync Policy -> **Automatic**
-  - Prune Resources -> **Enabled**
-  - Repository URL -> **https://git.f5k8s.net/nap/argocd.git**
-  - Revision -> **HEAD**
-  - Path -> **.**
-  - Cluster URL -> **https://kubernetes.default.svc**
-  - Namespace  -> **nap-argo**
+1. Click **Next**. You will be presented with a form to collect the details of the upstream server for the PyGoat application, which is hosted on the `workloads.f5demos.com` server.
 
-Press `Create` and wait to see that the Argo CD application being created.
+1. In the **HTTP Upstreams** section, click the **Add HTTP Upstream Servers** link.
 
-   .. image:: images/argo-app.png
+1. Enter the following data in this section:
 
-#. Open the `nap-demo` application so that you see all the Kubernetes objects that Argo CD has created.
+    | Item                     | Value           |
+    |--------------------------|-----------------|
+    | Upstream Name            | pygoat-upstream |
+    | Load balancing strategy  | Round Robin     |
 
-   .. image:: images/argo-details.png
+1. In the **Servers** section, click **+Add item**.
 
-#. Go to VSCode and verify that all the Kubernetes objects have been applied correctly.
+1. Enter the following data in this section:
 
+    | Item                     | Value                 |
+    |--------------------------|-----------------------|
+    | Host                     | workloads.f5demos.com |
+    | Port                     | 8000                  |
+    | Down                     | FALSE                 |
+    | Backup                   | FALSE                 |
 
-   .. code:: bash
+    > Note: Do not enter any information into the **Zone** portion of the template form.
 
-      kubectl get appolicy nap-v1 -n nap-argo -o yaml
+    What did we configure in the **HTTP Upstreams** portion of the template?
 
-The expected output is the following. 
+    - An upstream that is configured with a Round Robin loan balancing strategy (unused now, but would be relevant if we had multiple upstream servers configured)
+    - A single upstream server, located at `workloads.f5demos.com` on port `8000` was configured
+    - This server was not set to **Down**
+    - This server was not set as a **Backup** server
+    - No Zones were configured
 
-   .. code:: bash
+    > Note: the value `pygoat-upstream` was entered into both the **HTTP Servers** and **HTTP Upstreams** templates. Why? This unique identifier needed to match so the templating system could properly correlate these objects together even though they were configured on different pages of the template.
 
-      apiVersion: appprotect.f5.com/v1beta1
-      kind: APPolicy
-      metadata:
-        annotations: 
-          kubectl.kubernetes.io/last-applied-configuration: | 
- 
- 
- 
- 
- 
- 
-{"apiVersion":"appprotect.f5.com/v1beta1","kind":"APPolicy","metadata":{"annotations":{},"labels":{"app.kubernetes.io/instance":"nap-demo"},"name":"nap-v1","namespace":"nap-argo"},"spec":{"policy":{"applicationLanguage":"utf-8","enforcementMode":"transparent","name":"nap-v1","template":{"name":"POLICY_TEMPLATE_NGINX_BASE"}}}}
-        creationTimestamp: "2022-11-01T12:59:36Z"
-        generation: 6
-        labels:
-          app.kubernetes.io/instance: nap-demo
-        name: nap-v1
-        namespace: nap-argo
-        resourceVersion: "2665839"
-        uid: ed79f06c-42bc-43fc-9bb5-624775d6cd68
-      spec:
-        policy:
-          applicationLanguage: utf-8
-          enforcementMode: blocking
-          name: nap-v1
-          template:
-            name: POLICY_TEMPLATE_NGINX_BASE
+1. Click **Next**. This will show you a preview of the config generated from the templates.
 
+1. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
 
-Note: Please verify that the enforcementMode is set as `Blocking`
+1. Click the **Publish** button. If successful, you should see a message indicating so.
 
-Step 3 - Make changes on the Repository 
----------------------------------------
+    .. image:: ../images/image-18.png
 
+1. Click the **Close and Exit** button.
 
-#. Make changes to appolicy.yml
+1. Click **Template Submissions** in the left navigation.
 
-    Open the appolicy.yml, change the policy from blocking to transparent and commit the changes.
-  
-   .. image:: images/git-changes.png
+    You should see that the **Basic Reverse Proxy** has been deployed to 1 instance:
 
-  > Note: Because you are accessing GitLab behind a reverse proxy, it is recommended to **Edit** instead of **WED IDE**, in case you are using the web browser to access the repository files
+    .. image:: ../images/image-19.png
 
-#. Go to Argo CD and refresh the application.
+1. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
 
-    Argo CD will detect the changes and immediately apply them to Kubernetes.
+1. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
-   .. image:: images/argo-refresh.png
+    .. image:: ../images/image-20.png
 
-#. Run the following command to verify that the enforcement mode has changed to transparent
+    If we wanted to make changes to the submission, we could simply edit the values here, and publish configuration as we did before.
 
-   .. code:: bash
+#### Test the Deployed Configuration
 
-      kubectl get appolicy nap-v1 -n nap-argo -o yaml | grep enforcementMode:
+1. Back in the FireFox **Lab Links** tab, click on the **PyGoat Web Application** link once again. The application should load now:
 
-The expected output is the following. 
-
-   .. code:: bash
-
-      enforcementMode: transparent
-
-
-Step 4 - Create a webhook from Git to Argo CD
---------------------------------------------- 
-
-
-Be default Argo CD polls Git repositories every three minutes to detect changes to the manifests. To reduce the 3 min window, we will implement a webhook that will be sent from GitLab to Argo CD every time there is a commit on the repo. 
-That will trigger Argo CD to make the comparison and deploy any changes. 
-
-#. Go to Settings->WebHooks
-    On the GitLab UI, select Webhooks that is located under Settings.
-
-   .. image:: images/gitlab-webhook.png
-
-#. Create the WebHook.
-    Fill in the following information on the form.
-
-    - URL                     -> **https://10.1.10.18/api/webhook**
-    - Push Events             -> **Enabled**
-    - Enable SSL verification -> **Disabled**
-
-    And press `Add webhook`.
-
-    > Note: On ArgoCD the webhook URI **MUST** be **/api/webhook** in order to work. If you add a forward slash **/** at the end of the URI, you will receive a 404 from Argo CD.
-
-
-
-3. Make changes to the Appolicy.yml.
-
-    Make a change to the APPolicy manifest on GitLab and verify that the changes are replicated immediately to the Kubernetes cluster.
-    
-    For example change the EnforcementMode to Blocking.
-    
-    `enforcementMode: transparent`  =>  `enforcementMode: blocking`
-    
+    .. image:: ../images/image-21.png
