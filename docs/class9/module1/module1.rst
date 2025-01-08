@@ -784,11 +784,12 @@ instances to Instance Manager.
 .. image:: ../images/instance_manager_main-w.jpg
 
 5. Copy and run the below command on the NGINX 1 server to install the 
-agent.
+agent and add the NGINX 1 server to the 'default' instance group.
 
 .. code:: shell
 
-	curl -k https://nim.f5lab.com/install/nginx-agent | sudo sh
+	curl -k -O  https://nim.f5lab.com/install/nginx-agent
+        sudo sh nginx-agent --instance-group default
 
 6. Once the installation is complete, start the nginx agent.
 
@@ -823,8 +824,9 @@ to install the agent.
 
 .. code:: shell
 	
-   curl -k https://nim.f5lab.com/install/nginx-agent | sudo sh
-
+        curl -k -O https://nim.f5lab.com/install/nginx-agent
+        sudo sh nginx-agent --instance-group default    
+   
 2. Once the installation is complete, start the nginx agent on -both- 
 servers.
 
@@ -841,117 +843,43 @@ see the new servers.
 
 .. image:: ../images/add_instance-7.jpg
 
-4. Now we'll go back to -all three- NGINX server's webshell connections 
-and create the Instance Group (if the webshell is currently closed for 
-NGINX 1, please reopen it).
-   To create the Instance Group, we need to edit the agent-dynamic.conf 
-file and add an instance_group following the steps below for each of the 
-three NGINX servers.
-
-Open the file for editing in nano:
-
-.. code:: shell
-	
-   nano /var/lib/nginx-agent/agent-dynamic.conf
-
-.. image:: ../images/instance-group-1.jpg
-   :width: 500
-
-...add the following to the bottom of the file on each server and Save:
-
-.. code:: shell
-
-   instance_group: default
-
-**screenshot of output**
-
-.. image:: ../images/instance-group-2.jpg
-   :width: 600
-
-...and then restart the agent on each of the three servers.
-
-.. code:: shell
-	
-   sudo systemctl restart nginx-agent
-
-.. image:: ../images/instance-group-3.jpg
-   :width: 500
+4. Now you can see the Instance Group created in Instance Manager. 
 
 **In order to make sure our new cluster is performant, we need to sync the 
 authentication tokens between the instances.**
 
-5. First, open nginx.conf on -all three- NGINX servers using the command 
-below.
+5. Open the default instance group and uncomment the stream block in the 
+/etc/nginx/nginx.conf file to enable cluster state sharing and click publish.
 
-.. code:: shell
-	
-   nano /etc/nginx/nginx.conf
-
-6. Then add the 'stream' block below to the configuration, just before the 
-'http' block.
-
-.. attention::
-
-   **The server 'listen' directive needs to match the IP address of each 
-server.  The example below shows 10.1.10.6, which is correct for NGINX 1.  
-For NGINX 2, change this to 10.1.10.7 and for NGINX 3, change it to 
-10.1.10.8.** 
-   
-.. code:: shell
-	
-   stream {
-   resolver 127.0.0.53 valid=20s;
-    server {
-        listen 10.1.10.6:9000;
-        zone_sync;
-        zone_sync_server 10.1.10.6:9000;
-        zone_sync_server 10.1.10.7:9000;
-        zone_sync_server 10.1.10.8:9000;
-      }
-   }
-
-**screenshot of output**
-
-.. image:: ../images/stream_block.jpg
+.. image:: ../images/nms-instance-group-stream.png
    :width: 500
 
 **save and close file**
 
-7. Reload NGINX on -all three- servers.
-
-.. code:: shell
-
-   nginx -s reload   
-
-You should now see an **Instance Group** named 'default' in the Instance 
-Manager. 
-   
-   .. image:: ../images/instance-group-4.jpg
-
-8.  Now we will go back to UDF and select 'Access' --> 'TMUI' to log on to 
+6.  Now we will go back to UDF and select 'Access' --> 'TMUI' to log on to 
 the BIG-IP (admin:f5r0x!) in order to test and validate the configuration.  
 
    .. image:: ../images/BIG-IP_Access.jpg
    .. image:: ../images/big-ip-2.jpg
 
-9. Navigate to DNS > GSLB > Pools > Pool List and select 'gslbPool'.
+7. Navigate to DNS > GSLB > Pools > Pool List and select 'gslbPool'.
 
    .. image:: ../images/big-ip-3.jpg
    .. image:: ../images/big-ip-3.5.jpg
 
-10. Click the 'Statistics' tab and you'll see that only 'nginx1' is 
+8. Click the 'Statistics' tab and you'll see that only 'nginx1' is 
 currently enabled and has 'Preferred' resolutions listed under 'Load 
 Balancing'.
 
    .. image:: ../images/big-ip-4.jpg
    .. image:: ../images/big-ip-4.5.jpg
 
-11. Click the 'back' button on your web browser to get back to the 
+9. Click the 'back' button on your web browser to get back to the 
 'gslbPool.  This time select the 'Members' tab.
 
    .. image:: ../images/big-ip-5.jpg
 
-12. Here we will check the boxes next to 'nginx2' and 'nginx3' and click 
+10. Here we will check the boxes next to 'nginx2' and 'nginx3' and click 
 'Enable' to add them in to the load balancing pool.
     Refresh the page by clicking the 'Members' tab again and you will see 
 the new members become active (it may take several seconds).
@@ -960,25 +888,25 @@ configuation.
 
    .. image:: ../images/big-ip-6.jpg
 
-13. Go back to Firefox, open a new tab, and navigate to 
+11. Go back to Firefox, open a new tab, and navigate to 
 http://nginxdemo.f5lab.com:8010 again.
     Log back in as user01 with password: appworld2024, as needed.
 
    .. image:: ../images/test-gslb-1.jpg
 
-14. Go back to the BIG-IP and refresh the page (Ctrl-F5) to verify that 
+12. Go back to the BIG-IP and refresh the page (Ctrl-F5) to verify that 
 the successful login was performed by one of the other NGINX servers, in 
 this case, nginx2.
 
    .. image:: ../images/test-gslb-2.jpg
 
-15. Refresh the page in Firefox several times (Ctrl-R) and then refresh 
+13. Refresh the page in Firefox several times (Ctrl-R) and then refresh 
 the BIG-IP Statistics again (Ctrl-F5) to confirm that the load balancing 
 is leveraging each of the NGINX servers.
 
    .. image:: ../images/test-gslb-3.jpg
     
-16. Finally, validate the configuration by running the command below on 
+14. Finally, validate the configuration by running the command below on 
 -each of the three- NGINX Plus servers to confirm that the access token 
 has synchronized.
 
