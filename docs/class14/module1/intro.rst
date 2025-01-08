@@ -19,7 +19,7 @@ To access the UDF course for this class follow the instructions below.
    #. In the pop up window set the Autostop Duration to 4 hours.
    #. Leave everything else default and click start.
 
-.. note:: The UDF pattern will take a few minutes to stand up. In the meantime feel free to read through the Documentaion section of the pattern.
+The UDF pattern will take a few minutes to stand up. In the meantime feel free to read through the Documentaion section of the pattern.
 
 Recap
 -----
