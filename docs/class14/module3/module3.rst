@@ -104,8 +104,6 @@ Note: Do not enter any information into the **Proxy Headers** portion of the tem
      - pygoat-upstream
    * - Load balancing strategy   
      - Round Robin
-   * - Upstream Name
-     - pygoat-upstream
 
 17. In the **Servers** section, click **+Add item**.
 
