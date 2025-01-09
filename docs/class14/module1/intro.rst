@@ -11,7 +11,8 @@ To access the UDF course for this class follow the instructions below.
    #. Click on the Non-F5 Users selection.
    #. Login with the provided access.
    #. In the left navigation bar select Courses.
-   #. Type "AppWorld 2025 - NGINX One - Instance Manager Templates" in the search bar under the Content tab.
+   #. Seach for "Instance Manager Templates" in the search bar under the Content tab.
+   #. Select "AppWorld 2025 - NGINX One - Instance Manager Templates" 
    #. Select the Details button on the title screen.
    #. Click the Details button on the blueprint in the lower right.
    #. Select the Deploy option.
