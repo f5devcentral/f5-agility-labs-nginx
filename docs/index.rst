@@ -23,3 +23,4 @@ Welcome to the |classbold| labs at AppWorld |year|
    class11/class*
    class12/class*
    class13/class*
+   class14/class*
