@@ -3,9 +3,9 @@ Configure NGINX Using a Template
 
 **Application 1 - Basic Proxy for Juice Shop**
 
-1. In a new Firefox tab, enter **nginx.f5.demos.com**, which is the hostname of the NGINX server. 
+1. In a new Firefox tab, enter **nginx.f5demos.com**, which is the hostname of the NGINX server. 
 
-   You will see a generic page. NGINX (**nginx.f5.demos.com**) has not been configured to proxy traffic to any of our applications.
+You will see a generic **Welcome to NGINX** page. NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by       default.
 
 2. In the left navigation, click **Templates**.
 
