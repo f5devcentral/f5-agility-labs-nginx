@@ -256,13 +256,20 @@ Sally Secops has noticed that the PyGoat application's login API has been overus
 
     This step has 3 options. Enter the values from the following table:
 
-    | Item                | Value                 |
-    |---------------------|-----------------------|
-    | Apply Rate Limiting | TRUE                  |
-    | Rate Limit Method   | Binary Remote Address |
-    | Requests Per Second | 5                     |
+.. list-table:: 
+   :header-rows: 1
 
-    > Note: Realistically, 5 requests per second per client is extremely low. We are just using this value for illustrative purposes.
+   * - **Item**
+     - **Value**
+   * - Apply Rate Limiting
+     - TRUE
+   * - Rate Limit Method
+     - Binary Remote Address
+   * - Requests Per Second 
+     - 5
+
+
+Note: Realistically, 5 requests per second per client is extremely low. We are just using this value for illustrative purposes.
 
     .. image:: ../images/image-9.png
 
@@ -270,7 +277,7 @@ Sally Secops has noticed that the PyGoat application's login API has been overus
 
     Notice that there are two changes in the diff editor: one in the http context, and one in the server context. Since the Rate Limiting template needs to insert directives into both contexts, this template emits two different include statements as pictured below.
 
-    ![rate limiting preview](images/image-10.png)
+    .. image:: ../images/image-10.png
 
     In addition to the changes to `nginx.conf`, there are 2 new files in the generated configuration:
 
