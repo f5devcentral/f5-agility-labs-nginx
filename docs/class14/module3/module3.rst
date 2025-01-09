@@ -33,7 +33,7 @@ Configure NGINX Using a Template
    * - **Item**
      - **Value**
    * - Listen Port
-     - 80
+     - 8080
    * - Default Server
      - true
 
