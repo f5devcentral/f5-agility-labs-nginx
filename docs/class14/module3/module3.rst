@@ -5,11 +5,11 @@ Configure NGINX Using a Template
 
 1. In a new Firefox tab, enter **nginx.f5demos.com**, which is the hostname of the NGINX server. 
 
-   You will see a generic **Welcome to NGINX** page. 
+   You will see a generic **Welcome to nginx** page. 
 
    .. image:: ../images/image-welcome-nginx.png
 
-   NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by          default.
+   NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by default.
 
 2. In the left navigation, click **Templates**.
 
@@ -17,7 +17,7 @@ Configure NGINX Using a Template
 
 4. Select the **Publish to an instance** radio button.
 
-5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
+5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that we accessed earlier and is already managed by NIM.
 
 6. Click **Next**.
 
@@ -39,7 +39,7 @@ Configure NGINX Using a Template
 
 10. Scroll down to **Server Locations**
 
-11. Enter the following data in this section:
+11. Enter the following data in this section (**workloads.f5demos.com:9000** is the host that contains one of our applications):
 
 .. list-table:: 
    :header-rows: 1
@@ -53,7 +53,7 @@ Configure NGINX Using a Template
    * - Upstream Name
      - workloads.f5demos.com:9000
 
-12. Click **Next**. This will show you a preview of the config generated from the templates.
+12. Click **Next**. This will show you a preview of the config generated from the templates. 
 
 13. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
 
@@ -71,7 +71,7 @@ Configure NGINX Using a Template
 
 **Application 2 - PyGoat**
 
-Let's configure NGINX with some additional parameters for a different application called "PyGoat". 
+Let's configure NGINX with some additional parameters for the **PyGoat** application". 
 
 1. In the left navigation, click **Templates**.
 
