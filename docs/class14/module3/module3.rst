@@ -1,6 +1,74 @@
 Configure NGINX Using a Template
 ===============================
 
+**Application 1 - Basic Proxy for Juice Shop**
+
+1. In a new Firefox tab, enter **nginx.f5.demos.com**, which is the hostname of the NGINX server. 
+
+   You will see a generic page. NGINX (**nginx.f5.demos.com**) has not been configured to proxy traffic to any of our applications.
+
+2. In the left navigation, click **Templates**.
+
+3. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
+
+4. Select the **Publish to an instance** radio button.
+
+5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
+
+6. Click **Next**.
+
+7. In the **Choose Augments** view, click **Next**.
+
+8. On the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
+
+9. Enter the following data in this section:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Item**
+     - **Value**
+   * - Listen Port
+     - 80
+   * - Default Server
+     - true
+
+10. Scroll down to **Server Locations**
+
+11. Enter the following data in this section:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **Item**
+     - **Value**
+   * - Location Match Strategy
+     - Prefix
+   * - URI   
+     - /
+   * - Upstream Name
+     - workloads.f5demos.com:9000
+
+12. Click **Next**. This will show you a preview of the config generated from the templates.
+
+13. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
+
+14. Click the **Publish** button. If successful, you should see a message indicating so.
+
+    .. image:: ../images/image-18.png
+
+15. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
+
+    - Creates a new HTTP Server 
+    - Listens on port 80 
+    - Will be the default HTTP server
+    - Creates a single location using the `/` path prefix
+    - Ensure requests made to this location will pass traffic to a **Juice Shop** application running on the workloads.f5demos.com server
+
+**Application 2 - PyGoat**
+
+Let's configure NGINX with some additional parameters for a different application called "PyGoat". 
+
 1. In the left navigation, click **Templates**.
 
 2. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
