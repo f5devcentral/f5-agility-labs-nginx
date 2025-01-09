@@ -55,7 +55,7 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 19. Close the developer role details by clicking the **x** button in the top right of the dialog.
 
-**Login to NIM as Jane Developer*
+**Login to NIM as Jane Developer**
 
 We are now going to log in as Jane Developer so that we can verify she has access to update the template submission.
 
@@ -318,7 +318,7 @@ This will execute a total of `10` requests using `1` concurrent worker at a rate
 
     .. image:: ../images/image-13.png
 
-Notice that the first requests were successful with a status code of 200 observed. Then, `hey` started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
+Notice that the first requests were successful with a status code of 200 observed. Then, they started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
 
 **Conclusion**
 
