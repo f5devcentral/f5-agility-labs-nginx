@@ -5,7 +5,11 @@ Configure NGINX Using a Template
 
 1. In a new Firefox tab, enter **nginx.f5demos.com**, which is the hostname of the NGINX server. 
 
-You will see a generic **Welcome to NGINX** page. NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by       default.
+   You will see a generic **Welcome to NGINX** page. 
+
+   .. image:: ../images/image-welcome-nginx.png
+
+   NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by          default.
 
 2. In the left navigation, click **Templates**.
 
