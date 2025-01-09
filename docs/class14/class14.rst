@@ -1,4 +1,4 @@
-F5 AppWorld 2025 – NGINX One Templates 
+Class 14 - F5 AppWorld 2025 – NGINX One Templates 
 ==========================================================================
 
 In this lab we will introduce you to the design of the NGINX Instance Manager templating system, as well as walk through using it to apply configuration changes to NGINX for common use cases. 
