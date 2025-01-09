@@ -11,7 +11,7 @@ Begin by logging into NIM as Paul in the following steps. Paul has the NIM admin
 
     .. image:: ../images/image-15.png
 
-2. Under Lab Links, click the **NIM** link to open NIM in a new tab.
+2. Under Lab Links, click the **NGINX Instance Manager** link to open NIM in a new tab.
 
     .. image:: ../images/image-26.png
 
