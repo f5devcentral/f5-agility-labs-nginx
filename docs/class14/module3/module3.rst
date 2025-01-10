@@ -244,4 +244,4 @@ Note: Do not enter any information into the **Zone** portion of the template for
    :glob:
 
    intro
-   module*/module*
+   ../module*/module*

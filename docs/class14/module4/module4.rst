@@ -332,4 +332,4 @@ As you have witnessed, NIM's Templating framework gives organizations the contro
    :glob:
 
    intro
-   module*/module*
+   ../module*/module*
