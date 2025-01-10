@@ -1,4 +1,4 @@
-NGINX Templates
+Introduction to NIM Templates
 ===============================
 
 Config Templates Benefits
