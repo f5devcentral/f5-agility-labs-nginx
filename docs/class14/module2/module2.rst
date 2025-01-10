@@ -78,4 +78,4 @@ Ready to get started?
    :glob:
 
    intro
-   module*/module*
+   ../module*/module*
