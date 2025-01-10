@@ -3,7 +3,7 @@ Class 14 - F5 AppWorld 2025 – Operationalize NGINX One Configuration and Enabl
 
 Learn how to use Templates in NGINX Instance Manager (NIM) and NGINX One SaaS console! 
 
-In this lab we will introduce you to the design of the NGINX Instance Manager templating system, as well as walk through using it to apply configuration changes to NGINX for common use cases. Templates empower users who are not experts in NGINX directives to create use cases in a controlled manner. Users can fill in form fields, use drop down lists, and be able to achieve use cases including API Gateway, Secure Load Balancing, Authentication, and more. Advanced users can create templates for less advanced users. Many templates will be included in the box, and customers can create their own custom templates as well.
+In this lab we will introduce you to the design of the NGINX Instance Manager templating system, as well as walk through using it to apply configuration changes to NGINX for common use cases. Templates empower users who are not experts in NGINX directives to create use cases in a controlled manner. 
 
 In this lab, you will:
 
