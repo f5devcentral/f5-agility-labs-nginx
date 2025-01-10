@@ -17,6 +17,7 @@ Review this line in the nginx.conf file
 Although typically not recommended, you may chose to turn off the access log entirely if writing to disk is a concern
 
 * access_log off;
+
 |
 |
 
