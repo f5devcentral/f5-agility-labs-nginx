@@ -237,11 +237,3 @@ Note: Do not enter any information into the **Zone** portion of the template for
 
     .. image:: ../images/image-21.png
 
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Content:
-   :glob:
-
-   intro
-   ../module*/module*
