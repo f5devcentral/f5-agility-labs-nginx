@@ -69,8 +69,6 @@ Key aspects of template submission include:
 
 - **Role-based access control (RBAC)**: With RBAC, administrators can limit who can create and modify template submissions based on team roles or individual responsibilities, ensuring only authorized users can change NGINX configurations.
 
-Ready to get started?
-
 
 .. toctree::
    :maxdepth: 1
