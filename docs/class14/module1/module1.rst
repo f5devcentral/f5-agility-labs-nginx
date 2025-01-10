@@ -59,12 +59,3 @@ You will see the NIM config editor, displaying the existing state of the NGINX c
 8. Click the **Templates** tab. Note there is one base template listed, **F5 Global Default Base**
 
     > Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
-
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Content:
-   :glob:
-
-   intro
-   ../module*/module*
