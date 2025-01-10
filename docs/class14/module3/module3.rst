@@ -236,3 +236,12 @@ Note: Do not enter any information into the **Zone** portion of the template for
 1. Back in the FireFox **Lab Links** tab, click on the **PyGoat Web Application** link once again. The application should load now:
 
     .. image:: ../images/image-21.png
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Content:
+   :glob:
+
+   intro
+   module*/module*

@@ -323,3 +323,13 @@ Notice that the first requests were successful with a status code of 200 observe
 **Conclusion**
 
 As you have witnessed, NIM's Templating framework gives organizations the control they need to empower users of their NGINX platform. Via templates, these users can apply use cases to their application delivery tier without requiring they be NGINX configuration experts. Additionally, the framework allows organizations to provide this capability to users in a "least-privileged" manner - only granting them permissions to execute templates on the instances they have been assigned. This ensures compliance, and significantly narrows the "blast radius" in the event an outage occurs due to human error while configuring.
+
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Content:
+   :glob:
+
+   intro
+   module*/module*
