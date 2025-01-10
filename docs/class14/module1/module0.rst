@@ -37,4 +37,4 @@ You now have the following:
    :glob:
 
    intro
-   module*/module*
+   ../module*/module*
