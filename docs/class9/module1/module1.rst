@@ -312,7 +312,7 @@ Profile > click the + button or click create
 
 **Name: appworld2025_oauth_profile**
 
-**Client Application: appworld2025_client_app**
+**Client Application: appworld2025_client_app** (Slide this from "Available" over to "Selected" column)
 
 **Click the Custom box on the right hand side of the screen**
 
@@ -394,7 +394,7 @@ Policies) > click the + button or click Create
 
 **Name: appworld2025_access_profile**
 
-**Profile Type: LTM+APM**
+**Profile Type: LTM-APM**
 
 **OAuth Profile: appworld2025_oauth_profile**
 
@@ -469,7 +469,7 @@ Add Item
 
 .. image:: ../images/mod1_apm_perSessionPolicy_builder12.jpg
 
-42. Click on Apply Access Policy in the top left of the screen
+42. Click on Apply Access Policy in the top left of the screen, then click Close.
 
 .. image:: ../images/mod1_apm_perSessionPolicy_builder13.jpg
 
@@ -920,8 +920,5 @@ command on nginx-1 and nginx-3 and you should see the same token.
 
 
 **Congratulations, you have successfully completed the lab!**
-
-
-
 
 
