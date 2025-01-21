@@ -1,19 +1,10 @@
-.. raw:: html
-
-   <h1 align="center">
-   <a href="F5 AIGW Lab"><img width="900" src="../images/darkbanner.png" alt="F5 AIGW Lab"></a>
-   </h1>
-
-.. raw:: html
-
-   </p>
+.. image:: ../images/darkbanner.png
 
 Understanding F5 AI Gateway components and preparing the lab
 ============================================================
 
-| `AI Gateway solution
-  components <#there-are-two-solution-components-to-aigw>`__
-| `Starting the ab <#starting-the-lab>`__
+- `AI Gateway solution components <#there-are-two-solution-components-to-aigw>`__
+- `Starting the ab <#starting-the-lab>`__
 
 There are two solution components to AIGW:
 ==========================================
@@ -338,27 +329,28 @@ configured to route traffic to.
 
 | The different components of ``services`` in F5 AIGW configuration:
 
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **Setting**        | **Description**                                                                                     |
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **name**           | The name of the service. User-defined and must be unique.                                           |
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **type**           | Indicates the type of model that the service provides. For example, for ``openAI/azure``,           |
-|                    | ``ollama/llama3``.                                                                                  |
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **executor**       | Indicates which executor to use to process the request. Options are: ``openai``, ``anthropic``, or  |
-|                    | ``ollama``.                                                                                         |
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **config:**        | The configuration of the executor, allowing additional key-value pairs to be passed to the executor.|
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **- endpoint**     | The endpoint URL of the service.                                                                    |
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **- apiVersion**   | For azure type services, obtained from Azure AI studio. The version of ``OpenAI API`` to use.       |
-+--------------------+-----------------------------------------------------------------------------------------------------+
++------------------------+-------------------------------------------------------------------------------------------------+
+| **Setting**            | **Description**                                                                                 |
++------------------------+-------------------------------------------------------------------------------------------------+
+| **name**               | The name of the service. User-defined and must be unique.                                       |
++------------------------+-------------------------------------------------------------------------------------------------+
+| **type**               | Indicates the type of model that the service provides. For example, for ``openAI/azure``,       |
+|                        | ``ollama/llama3``.                                                                              |
++------------------------+-------------------------------------------------------------------------------------------------+
+| **executor**           | Indicates which executor to use to process the request. Options are: ``openai``, ``anthropic``, |
+|                        | or ``ollama``.                                                                                  |
++------------------------+-------------------------------------------------------------------------------------------------+
+| **config:**            | The configuration of the executor, allowing additional key-value pairs to be passed to the      |
+|                        | executor.                                                                                       |
++------------------------+-------------------------------------------------------------------------------------------------+
+| **- endpoint**         | The endpoint URL of the service.                                                                |
++------------------------+-------------------------------------------------------------------------------------------------+
+| **- apiVersion**       | For azure type services, obtained from Azure AI studio. The version of ``OpenAI API`` to use.   |
++------------------------+-------------------------------------------------------------------------------------------------+
 | **- anthropicVersion** | For anthropic type services, the version of the ``Anthropic API`` to use.                       |
-+--------------------+-----------------------------------------------------------------------------------------------------+
-| **- secrets**      | Defines the source and names of the secrets needed by the service (API Keys).                       |
-+--------------------+-----------------------------------------------------------------------------------------------------+
++------------------------+-------------------------------------------------------------------------------------------------+
+| **- secrets**          | Defines the source and names of the secrets needed by the service (API Keys).                   |
++------------------------+-------------------------------------------------------------------------------------------------+
 
 
 External LLM services
@@ -382,16 +374,7 @@ configure OpenAI GPT-4o service:
              targets:
                apiKey: OPENAI_API_KEY
 
-| You can now proceed to the next part.
-| `Click here for lab 2 <../lab2/lab2.rst>`__
 
-.. raw:: html
+| `Click here for lab 2 <../lab2/lab2.html>`__
 
-   <h1 align="center">
-   <a href="F5 AIGW Lab"><img width="900" src="../images/Designer.jpeg" alt="F5 AIGW Lab"></a>
-   </h1>
-
-.. raw:: html
-
-   </p>
-
+.. image:: ../images/Designer.jpeg

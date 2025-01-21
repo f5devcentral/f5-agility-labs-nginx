@@ -1,20 +1,11 @@
-.. raw:: html
+.. image:: ./images/darkbanner.png
 
-   <h1 align="center">
-   <a href="F5 AIGW Lab"><img width="900" src="./images/darkbanner.png" alt="F5 AIGW Lab"></a>
-   </h1>
-
-.. raw:: html
-
-   </p>
-
-Table of Contents
+Class 15 - F5 AppWorld 2025 - Introduction to F5 AI Gateway
 =================
 
--  `Table of Contents <#table-of-contents>`__
--  `What is generative AI? <#what-is-generative-ai>`__
+-  `What is Generative AI? <#what-is-generative-ai>`__
 
-   -  `What are large language models
+   -  `What are Large Language Models
       (LLMs)? <#what-are-large-language-models-llms>`__
 
 -  `Overview of AI Gateway <#overview-of-ai-gateway>`__
@@ -44,8 +35,8 @@ Table of Contents
       -  `Pointing to a filesystem
          location <#pointing-to-a-filesystem-location>`__
 
-What is generative AI?
-======================
+What is Generative AI?
+---------------------
 
 Generative AI (Gen AI) is a class of artificial intelligence systems
 designed to generate new content, such as text, images, audio, video,
@@ -54,7 +45,7 @@ AI, which focused primarily on classicification and prediction tasks,
 generative AI creates original output that mimics human creativity.
 
 What are large language models (LLMs)?
---------------------------------------
+^^^^^
 
 A Large Language Model (LLM) is a type of artificial intelligence system
 that is trained to understand, generate, and manipulate human language
@@ -85,10 +76,10 @@ presents a challenge in properly securing and observing AI traffic in
 todays environments.
 
 Overview of AI Gateway
-======================
+-----
 
 What is AI Gateway?
--------------------
+^^^^^
 
 F5 **AI Gateway** is a specialized platform designed to route, protect,
 and manage generative AI traffic between clients and Large Language
@@ -99,7 +90,7 @@ for bidirectional traffic monitoring.
 The main AI Gateway functions are:
 
 Core
-----
+^^^^
 
 The core performs the following tasks:
 
@@ -122,7 +113,7 @@ The core performs the following tasks:
 -  Providing comprehensive logging of all requests and responses
 
 Processors
-----------
+^^^^^
 
 A processor runs separately from the core and can perform one or more of
 the following actions on a request or response:
@@ -149,7 +140,7 @@ the following actions on a request or response:
   applications and simplifies compliance.
 
 What are the use cases for AI Gateway?
---------------------------------------
+^^^^^
 
 AIGW acts as a hub for integration and streamlining of AI applications
 with AI services (OpenAI, Anthropic, Mistral, Ollama, etc.). Now that we
@@ -186,7 +177,7 @@ General use cases:
    -  Data exfiltration
 
 Where does AI Gateway fit in the data flow?
--------------------------------------------
+^^^^^^
 
 | |AIGW archi|
 | F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP,
@@ -196,21 +187,27 @@ Where does AI Gateway fit in the data flow?
   prompt and taking required action based on AIGW’s configuration.
 
 Lab Outline
-===========
+-----
 
 Use cases and examples
-----------------------
+^^^^^
 
-1. `Lab 1 F5 AIGW Configuration walkthrough <lab1/lab1.rst>`__
-2. `Lab 2 Accessing the lab environment <lab2/lab2.rst>`__
-3. `Lab 3 Understanding the lab AI assistant workflow <lab3/lab3.rst>`__
-4. `Lab 4 LLM01 Prompt-injection Attack <lab4/lab4.rst>`__
-5. `Lab 5 Smart routing with language-id processor </lab5/lab5.rst>`__
-6. `Lab 6.LLM02 Sensitive information disclosure <lab6/lab6.rst>`__
-7. `Lab 7 LLM07 System prompt leakage <lab7/lab7.rst>`__
+`Lab 1 - F5 AIGW Configuration walkthrough <lab1/lab1.html>`__
+
+`Lab 2 - Accessing the lab environment <lab2/lab2.html>`__
+
+`Lab 3 - Understanding the lab AI assistant workflow <lab3/lab3.html>`__
+
+`Lab 4 - LLM01 Prompt-injection Attack <lab4/lab4.html>`__
+
+`Lab 5 - Smart routing with language-id processor <lab5/lab5.html>`__
+
+`Lab 6 - LLM02 Sensitive information disclosure <lab6/lab6.html>`__
+
+`Lab 7 - LLM07 System prompt leakage <lab7/lab7.html>`__
 
 Components of lab
------------------
+^^^^^
 
 | There are two VMs for the lab running a kubernetes cluster. - Primary
   VM named **aigw.dev.local** will be running a Linux desktop, with
@@ -223,7 +220,7 @@ Components of lab
   install additional models on that VM using ``ollama CLI tool``:
 
 LLMs used in this lab
-=====================
+-----
 
 This lab uses Ollama which is free and provides different LLMs for basic
 testing and PoC’ing.
@@ -233,7 +230,7 @@ Anthropic, you will need to obtain your own API key and follow the
 instructions below.
 
 Using API keys for external LLMs (OpenAI, Anthropic examples)
--------------------------------------------------------------
+^^^^^
 
 First, obtain an API key from your external LLM service. The follow
 links have guidance for the respective services: -
@@ -319,9 +316,8 @@ Then, refer to this path and file using a ``secrets`` definition under
              targets:
                apiKey: openai
 
-`Click here to proceed to Lab 1. <./lab1/lab1.rst>`__
+`Click here to proceed to Lab 1 <lab1/lab1.html>`__
 
 .. |AIGW archi| image:: ./images/aigw-arch.jpeg
-.. <p align="center">
-..   <img src="./images/darkbanner.png" alt="Your AI world" style="width:90%; max-height:500px;">
-.. </p>     
+
+.. image:: ./images/darkbanner.png
