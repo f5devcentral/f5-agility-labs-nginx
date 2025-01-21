@@ -1,7 +1,7 @@
 Understanding the **AI Assistant** application flow
 ===================================================
 
-.. image:: /lab3/images/00.png
+.. image:: images/00.png
 
 Let’s start by explaining the different functions. We will focus only on
 the most relevant parts of the flow.
@@ -138,5 +138,4 @@ Understanding the **AI Gateway** initial config
       2025/01/12 13:58:19 INFO executing http service
       2025/01/12 13:58:24 INFO service response name=http/ result="map[status:200 OK]"
 
-| You can now proceed to the next part.
-| `Click here for lab 4 <../lab4/lab4.rst>`__
+| `Click here for Lab 4 <../lab4/lab4.html>`__

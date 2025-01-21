@@ -5,7 +5,7 @@ Class 15 - F5 AppWorld 2025 - Introduction to F5 AI Gateway
 
 -  `What is Generative AI? <#what-is-generative-ai>`__
 
-   -  `What are large language models
+   -  `What are Large Language Models
       (LLMs)? <#what-are-large-language-models-llms>`__
 
 -  `Overview of AI Gateway <#overview-of-ai-gateway>`__
@@ -192,13 +192,19 @@ Lab Outline
 Use cases and examples
 ^^^^^
 
-`Lab 1 - F5 AIGW Configuration walkthrough <lab1/lab1.rst>`__
-`Lab 2 - Accessing the lab environment <lab2/lab2.rst>`__
-`Lab 3 - Understanding the lab AI assistant workflow <lab3/lab3.rst>`__
-`Lab 4 - LLM01 Prompt-injection Attack <lab4/lab4.rst>`__
-`Lab 5 - Smart routing with language-id processor </lab5/lab5.rst>`__
-`Lab 6 - LLM02 Sensitive information disclosure <lab6/lab6.rst>`__
-`Lab 7 - LLM07 System prompt leakage <lab7/lab7.rst>`__
+`Lab 1 - F5 AIGW Configuration walkthrough <lab1/lab1.html>`__
+
+`Lab 2 - Accessing the lab environment <lab2/lab2.html>`__
+
+`Lab 3 - Understanding the lab AI assistant workflow <lab3/lab3.html>`__
+
+`Lab 4 - LLM01 Prompt-injection Attack <lab4/lab4.html>`__
+
+`Lab 5 - Smart routing with language-id processor <lab5/lab5.html>`__
+
+`Lab 6 - LLM02 Sensitive information disclosure <lab6/lab6.html>`__
+
+`Lab 7 - LLM07 System prompt leakage <lab7/lab7.html>`__
 
 Components of lab
 ^^^^^
@@ -310,9 +316,8 @@ Then, refer to this path and file using a ``secrets`` definition under
              targets:
                apiKey: openai
 
-`Click here to proceed to Lab 1. <./lab1/lab1.rst>`__
+`Click here to proceed to Lab 1 <lab1/lab1.html>`__
 
 .. |AIGW archi| image:: ./images/aigw-arch.jpeg
-.. <p align="center">
-..   <img src="./images/darkbanner.png" alt="Your AI world" style="width:90%; max-height:500px;">
-.. </p>     
+
+.. image:: ./images/darkbanner.png

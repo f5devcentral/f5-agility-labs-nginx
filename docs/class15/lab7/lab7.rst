@@ -156,13 +156,6 @@ using again ``prompt-injection`` processor.
    Thank you for participating in the F5 AIGW Lab. We hope you enjoyed
    it.
 
-.. raw:: html
+.. image:: images/thankyou.png
 
-   <h1 align="center">
-   <a href="F5 AIGW Lab"><img width="900" src="../images/thank you.webp" alt="F5 AIGW Lab"></a>
-   </h1>
-
-.. raw:: html
-
-   </p>
-.. |image1| image:: /lab7/images/00.png
+.. |image1| image:: images/00.png

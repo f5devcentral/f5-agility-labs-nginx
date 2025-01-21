@@ -184,15 +184,10 @@ using the F5 built ``prompt-injection`` processor.
       2025/01/12 12:26:16 INFO executing http service
       2025/01/12 12:26:21 INFO service response name=http/ result="map[status:200 OK]"
 
-.. raw:: html
+`Click here for Lab 6 <../lab6/lab6.html>`__
 
-   <h1 align="center">
-   <a href="F5 AIGW Lab"><img width="900" src="../images/point right.png" alt="F5 AIGW Lab"></a>
-   </h1>
+.. image:: images/pointright.png
 
-.. raw:: html
 
-   </p>
-You can now proceed to the next lab.
 
-`Click here for Lab 6 <../lab6/lab6.rst>`__
+
