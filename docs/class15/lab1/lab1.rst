@@ -1,10 +1,10 @@
 .. image:: ../images/darkbanner.png
 
 Lab 1 - F5 AI Gateway configuration walkthrough
-============================================================
+===============================================
 
 A deeper look into configuring the AI Gateway components
------
+--------------------------------------------------------
 
 In the introduction, we reviewed F5 AI Gateway's two main components, **Core** and **Processors**.
 
@@ -113,6 +113,7 @@ The additional configurable components for this section:
 Here is an example of setting up mTLS with AIGW core:
 
 .. code:: yaml
+
    mode: standalone
    server:
      address: :8443

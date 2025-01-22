@@ -1,7 +1,7 @@
 .. image:: ./images/darkbanner.png
 
 Class 15 - F5 AppWorld 2025 - Introduction to F5 AI Gateway
-=================
+===========================================================
 
 -  `What is Generative AI? <#what-is-generative-ai>`__
 
@@ -36,7 +36,7 @@ Class 15 - F5 AppWorld 2025 - Introduction to F5 AI Gateway
          location <#pointing-to-a-filesystem-location>`__
 
 What is Generative AI?
----------------------
+----------------------
 
 Generative AI (Gen AI) is a class of artificial intelligence systems
 designed to generate new content, such as text, images, audio, video,
@@ -45,7 +45,7 @@ AI, which focused primarily on classicification and prediction tasks,
 generative AI creates original output that mimics human creativity.
 
 What are Large Language Models (LLMs)?
-^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 A Large Language Model (LLM) is a type of artificial intelligence system
 that is trained to understand, generate, and manipulate human language
@@ -76,10 +76,10 @@ presents a challenge in properly securing and observing AI traffic in
 todays environments.
 
 Overview of AI Gateway
------
+----------------------
 
 What is AI Gateway?
-^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 F5 **AI Gateway** is a specialized platform designed to route, protect,
 and manage generative AI traffic between clients and Large Language
@@ -113,7 +113,7 @@ The **Core** performs the following tasks:
 -  Providing comprehensive logging of all requests and responses
 
 Processors
-^^^^^
+^^^^^^^^^^
 
 A **Processor** runs separately from the core and can perform one or more of
 the following actions on a request or response:
@@ -140,7 +140,7 @@ the following actions on a request or response:
   applications and simplifies compliance.
 
 What are the use cases for AI Gateway?
-^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 AIGW acts as a hub for integration and streamlining of AI applications
 with AI services (OpenAI, Anthropic, Mistral, Ollama, etc.). Now that we
@@ -177,7 +177,7 @@ General use cases:
    -  Data exfiltration
 
 Where does AI Gateway fit in the data flow?
-^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | |AIGW archi|
 | F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP,
@@ -187,10 +187,10 @@ Where does AI Gateway fit in the data flow?
   prompt and taking required action based on AIGW’s configuration.
 
 Lab Outline
------
+-----------
 
 Use cases and examples
-^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 `Lab 1 - F5 AIGW Configuration walkthrough <lab1/lab1.html>`__
 
@@ -207,9 +207,9 @@ Use cases and examples
 `Lab 7 - LLM07 System prompt leakage <lab7/lab7.html>`__
 
 Components of lab
-^^^^^
+^^^^^^^^^^^^^^^^^
 
-| There are two VMs for the lab running a kubernetes cluster.
+There are two VMs for the lab running a kubernetes cluster.
 - Primary VM named **aigw.dev.local** will be running a Linux desktop, with ``Docker,`` ``VSCode``, ``Chrome`` and terminal to interact with ``AIGW``
 - A secondary VM named **llm-server01** will be running Ollama (Hostname: **llmodel01**) with different models (ollama, llama3, phi3)
 
@@ -218,7 +218,7 @@ Components of lab
 **NOTE** You can install additional models on that VM using ``ollama CLI tool``.
 
 LLMs used in this lab
------
+---------------------
 
 This lab uses Ollama which is free and provides different LLMs for basic
 testing and PoC’ing.
@@ -228,7 +228,7 @@ Anthropic, you will need to obtain your own API key and follow the
 instructions below.
 
 Using API keys for external LLMs (OpenAI, Anthropic examples)
-^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 First, obtain an API key from your external LLM service. The following
 links have guidance for the respective services:
