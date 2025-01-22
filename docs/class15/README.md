@@ -106,7 +106,7 @@ General use cases:
 
 ## Where does AI Gateway fit in the data flow?
 
-![AIGW archi](./images/aigw-arch.jpeg)     
+![AIGW archi](./images/aigw-arch.png)     
 F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP, NGINX). This proxy can then manage Layer 7 traffic and provide WAF protections before traffic reached AIGW. Once traffic reaches AIGW, it is handling the AI specific traffic and focuses on analyzing the prompt and taking required action based on AIGW's configuration.
 
 
@@ -118,7 +118,7 @@ F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP, NGINX). This pr
 2. [Lab 2 Accessing the lab environment](lab2/lab2.md)
 3. [Lab 3 Understanding the lab AI assistant workflow](lab3/lab3.md)
 4. [Lab 4 LLM01 Prompt-injection Attack](lab4/lab4.md)
-5. [Lab 5 Smart routing with language-id processor](/lab5/lab5.md)
+5. [Lab 5 Smart routing with language-id processor](lab5/lab5.md)
 6. [Lab 6.LLM02 Sensitive information disclosure](lab6/lab6.md)
 7. [Lab 7 LLM07 System prompt leakage](lab7/lab7.md)
 
