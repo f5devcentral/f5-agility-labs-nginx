@@ -40,11 +40,11 @@ What is Generative AI?
 
 Generative AI (Gen AI) is a class of artificial intelligence systems
 designed to generate new content, such as text, images, audio, video,
-and even code, basd on patterns learned from exisiting data. Traditional
+and even code, based on patterns learned from exisiting data. Moving beyond traditional
 AI, which focused primarily on classicification and prediction tasks,
 generative AI creates original output that mimics human creativity.
 
-What are large language models (LLMs)?
+What are Large Language Models (LLMs)?
 ^^^^^
 
 A Large Language Model (LLM) is a type of artificial intelligence system
@@ -70,7 +70,7 @@ by continuing a sequence of text based on their learned knowledge.
 
 As AI continues to grow at a very fast rate, the need for AI in business
 environment is rapidly increasing. The need for helpful AI tools, like
-chatbots or assistants, for customers to interact with, ask questions
+chatbots or assistants, for customers to interact with and ask questions to,
 has significantly increased the need for AI in business. It also
 presents a challenge in properly securing and observing AI traffic in
 todays environments.
@@ -92,7 +92,7 @@ The main AI Gateway functions are:
 Core
 ^^^^
 
-The core performs the following tasks:
+The **Core** performs the following tasks:
 
 -  Performs Authn/Authz checks, such as validating JWTs and inspecting
    request headers.
@@ -101,7 +101,7 @@ The core performs the following tasks:
    the request.
 -  Selects and routes each request to an appropriate LLM backend,
    transforming requests/responses to match the LLM/client schema.
--  Applies processors to the response from the LLM backend, which may
+-  Applies **Processors** to the response from the LLM backend, which may
    modify or reject the response.
 -  Optionally, stores an auditable record of every request/response and
    the specific activity of each processor. These records can be
@@ -115,7 +115,7 @@ The core performs the following tasks:
 Processors
 ^^^^^
 
-A processor runs separately from the core and can perform one or more of
+A **Processor** runs separately from the core and can perform one or more of
 the following actions on a request or response:
 
 -  **Modify**: A processor may rewrite a request or response. For
@@ -154,7 +154,7 @@ General use cases:
 
    -  Prompt management
    -  Prompt templates
-   -  RBAC for LLM providers (only access certain LLMS)
+   -  RBAC for LLM providers (only access certain LLMs)
    -  Prompt leakage: block before it gets to LLM
 
 -  Prompt-based routing
@@ -209,15 +209,13 @@ Use cases and examples
 Components of lab
 ^^^^^
 
-| There are two VMs for the lab running a kubernetes cluster. - Primary
-  VM named **aigw.dev.local** will be running a Linux desktop, with
-  ``Docker,`` ``VSCode``, ``Chrome`` and terminal to interact with
-  ``AIGW`` - A secondary VM named **llm-server01** will be running
-  Ollama (Hostname: **llmodel01**) with different models (ollama,
-  llama3, phi3)
-| - **NOTE**: You can expect requests to the ollama LLM could take some
-  time, so be patient on waiting for the responses. - **NOTE**: You can
-  install additional models on that VM using ``ollama CLI tool``:
+| There are two VMs for the lab running a kubernetes cluster.
+- Primary VM named **aigw.dev.local** will be running a Linux desktop, with ``Docker,`` ``VSCode``, ``Chrome`` and terminal to interact with ``AIGW``
+- A secondary VM named **llm-server01** will be running Ollama (Hostname: **llmodel01**) with different models (ollama, llama3, phi3)
+
+**NOTE** You can expect requests to the ollama LLM could take some time, so be patient on waiting for the responses.
+
+**NOTE** You can install additional models on that VM using ``ollama CLI tool``.
 
 LLMs used in this lab
 -----
@@ -232,9 +230,10 @@ instructions below.
 Using API keys for external LLMs (OpenAI, Anthropic examples)
 ^^^^^
 
-First, obtain an API key from your external LLM service. The follow
-links have guidance for the respective services: -
-`OpenAI <https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key>`__
+First, obtain an API key from your external LLM service. The following
+links have guidance for the respective services:
+
+- `OpenAI <https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key>`__
 - `Anthropic <https://docs.anthropic.com/en/api/getting-started>`__
 
 When configuring AIGW, you can set OS environment variables and then
@@ -318,6 +317,6 @@ Then, refer to this path and file using a ``secrets`` definition under
 
 `Click here to proceed to Lab 1 <lab1/lab1.html>`__
 
-.. |AIGW archi| image:: ./images/aigw-arch.jpeg
+.. |AIGW archi| image:: ./images/aigw-arch.png
 
 .. image:: ./images/darkbanner.png
