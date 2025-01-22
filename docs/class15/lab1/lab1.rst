@@ -1,69 +1,60 @@
 .. image:: ../images/darkbanner.png
 
-Understanding F5 AI Gateway components and preparing the lab
+Lab 1 - F5 AI Gateway configuration walkthrough
 ============================================================
 
-- `AI Gateway solution components <#there-are-two-solution-components-to-aigw>`__
-- `Starting the ab <#starting-the-lab>`__
+A deeper look into configuring the AI Gateway components
+-----
 
-There are two solution components to AIGW:
-==========================================
-
-1. **AIGW core**
-2. **AIGW processors**
+In the introduction, we reviewed F5 AI Gateway's two main components, **Core** and **Processors**.
 
 There are several key configuration components to understand as well:
 
-+-----------------------------------+-----------------------------------+
-| Component                         | Description                       |
-+===================================+===================================+
-| ``routes``                        | the applications exposed by AIGW  |
-|                                   | and made accssible to Gen AI apps |
-|                                   | and users                         |
-+-----------------------------------+-----------------------------------+
-| ``services``                      | the LLM models AIGW will route    |
-|                                   | requests to                       |
-+-----------------------------------+-----------------------------------+
-| ``policies``                      | a set of reusable rules that are  |
-|                                   | evaluated at runtime on a         |
-|                                   | per-request basis, picking the    |
-|                                   | best processing profile for the   |
-|                                   | request                           |
-+-----------------------------------+-----------------------------------+
-| ``profiles``                      | applies processors to incoming    |
-|                                   | and response requests             |
-+-----------------------------------+-----------------------------------+
-| ``processors``                    | the AI middleware that provide    |
-|                                   | enhancements, protections and     |
-|                                   | peformance improvements for AI    |
-|                                   | applications                      |
-+-----------------------------------+-----------------------------------+
++------------------+------------------------------------------------------+
+| Component        | Description                                          |
++==================+======================================================+
+| ``routes``       | the applications exposed by AIGW and madeaccssible   |
+|                  | to Gen AI apps and users                             |
++------------------+------------------------------------------------------+
+| ``services``     | the LLM models AIGW will route requests to           |
++------------------+------------------------------------------------------+
+| ``policies``     | a set of reusable rules that are evaluated at        |
+|                  | runtime on a per-request basis, picking the best     |
+|                  | processing profile for the request                   |
++------------------+------------------------------------------------------+
+| ``profiles``     | applies processors to incoming and response requests |
++------------------+------------------------------------------------------+
+| ``processors``   | the AI middleware that provide enhancements,         |
+|                  | protections and peformance improvements for AI       |
+|                  | applications                                         |
++------------------+------------------------------------------------------+
 
 Component diagram
 -----------------
 
-.. code:: mermaid
+.. mermaid::
 
-   flowchart LR
-   A[Upstream Proxy] --> AIGW[AIGW Core]
-     subgraph AIGW[AIGW Core]
-       direction LR
-       Routes@{shape: procs}
-       -->
-       Policies@{shape: procs}
-       -->
-       Profiles@{shape: procs}
-       -->Services@{shape: procs}
-     end
-     subgraph Processors[AIGW Processors]
-       direction LR
-       Processes@{shape: procs}
-     end
-     Profiles --> Processors
-     Services --> OpenAI
-     Services --> Anthropic
-     Services --> Ollama
-     Services --> OtherLLM[Other external LLMs]
+  flowchart LR
+  A[Upstream Proxy] --> AIGW[AIGW Core]
+    subgraph AIGW[AIGW Core]
+      direction LR
+      Routes@{shape: procs}
+      -->
+      Policies@{shape: procs}
+      -->
+      Profiles@{shape: procs}
+      -->Services@{shape: procs}
+    end
+    subgraph Processors[AIGW Processors]
+      direction LR
+      Processes@{shape: procs}
+    end
+    Profiles --> Processors
+    Services --> OpenAI
+    Services --> Anthropic
+    Services --> Ollama
+    Services --> OtherLLM[Other external LLMs]
+
 
 The **AIGW core** component acts as an HTTP router for incoming AI
 requests. The core is configured by defining ``routes`` that will accept

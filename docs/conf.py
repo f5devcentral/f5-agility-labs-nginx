@@ -85,7 +85,8 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.extlinks",
     "sphinx.ext.graphviz",
-    "sphinx_copybutton"
+    "sphinx_copybutton",
+    "sphinxcontrib.mermaid"
     # "sphinxcontrib.nwdiag",
     # "sphinxcontrib.blockdiag",
     # "sphinx.ext.autosectionlabel"
