@@ -93,8 +93,7 @@ Create a clone of the nginx-openid-connect GitHub repository
 
 .. code:: shell
         
-   cd /home/ubuntu && git clone 
-https://github.com/nginxinc/nginx-openid-connect.git
+   cd /home/ubuntu && git clone https://github.com/nginxinc/nginx-openid-connect.git
 
 6. Verify the clone has completed by running the following command.  
 
@@ -114,9 +113,7 @@ Creating self-signed certificates to be used by Nginx Plus
 
 .. code:: shell 
 
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout 
-/etc/nginx/selfsigned.key -out /etc/nginx/selfsigned.crt -subj 
-"/C=US/ST=WA/L=Seattle/O=F5/OU=Appworld2025/CN=nginxdemo.f5lab.com"
+	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/selfsigned.key -out /etc/nginx/selfsigned.crt -subj "/C=US/ST=WA/L=Seattle/O=F5/OU=Appworld2025/CN=nginxdemo.f5lab.com"
 
 **screenshot of output**
 
@@ -312,7 +309,7 @@ Profile > click the + button or click create
 
 **Name: appworld2025_oauth_profile**
 
-**Client Application: appworld2025_client_app**
+**Client Application: appworld2025_client_app** (Slide this from "Available" over to "Selected" column)
 
 **Click the Custom box on the right hand side of the screen**
 
@@ -394,7 +391,7 @@ Policies) > click the + button or click Create
 
 **Name: appworld2025_access_profile**
 
-**Profile Type: LTM+APM**
+**Profile Type: LTM-APM**
 
 **OAuth Profile: appworld2025_oauth_profile**
 
@@ -469,7 +466,7 @@ Add Item
 
 .. image:: ../images/mod1_apm_perSessionPolicy_builder12.jpg
 
-42. Click on Apply Access Policy in the top left of the screen
+42. Click on Apply Access Policy in the top left of the screen, then click Close.
 
 .. image:: ../images/mod1_apm_perSessionPolicy_builder13.jpg
 
@@ -920,8 +917,5 @@ command on nginx-1 and nginx-3 and you should see the same token.
 
 
 **Congratulations, you have successfully completed the lab!**
-
-
-
 
 
