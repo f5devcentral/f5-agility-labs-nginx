@@ -177,10 +177,10 @@ right click on that folder and rename it to ``alpine3.17``:
    #. Look at stage definitions near the top of the file, labled ``stages``,
       and see there are two stages defined, ``build`` and ``cleanup``, these stages
       run in order, **sequentially**, but the stages Continous Integration Jobs (``$CI_JOB_NAME``)
-      e.g. \ ``alpine3.9``, ``alpine3.10``, ``alpine3.11``, etc., within those stages run in **parallel**.
+      e.g. \ ``alpine3.10``, ``alpine3.17``, etc., within those stages run in **parallel**.
 
-   #. Look at the **CI_JOB_NAME**, ``alpine3.9``, and here like other jobs, we have set
-      a varible ``$NAME`` with ``nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID``: This uses the Job name (``alpine3.9``)
+   #. Look at the **CI_JOB_NAME**, ``alpine3.10``, and here like other jobs, we have set
+      a varible ``$NAME`` with ``nginx-plus-$CI_JOB_NAME-$CI_PIPELINE_ID``: This uses the Job name (``alpine3.10``)
       and the unique Pipeline ID of this run as the docker image name. Having
       a unique image name that references a build job allows us to roll back or deploy to a previously
       know good build
