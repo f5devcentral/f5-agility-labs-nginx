@@ -39,7 +39,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
    Reference <https://docs.docker.com/engine/reference/builder/>`__.
 
    .. note:: NGINX Plus now supports the newer ``3.17`` version of Alpine linux.
-      Let’s create add the creation of a NGINX Plus build for Alpine Linux
+      Let’s add the NGINX Plus build for Alpine Linux
       version 3.17 to our CI/CD pipeline.
 
 5. Create a new folder called ``alpine3.17`` in this project under the
@@ -47,7 +47,7 @@ Lab 1: Run a pipeline to build NGINX Plus images
 
    .. image:: ../images/image6.png
 
-right click on the ``Dockerfile`` folder to paste the copy:
+right click on the ``Dockerfiles`` folder to paste the copy:
 
    .. image:: ../images/image601.png
    
@@ -70,7 +70,7 @@ right click on that folder and rename it to ``alpine3.17``:
 
    .. image:: ../images/image702.png
 
-8. Once you have edited ``Dockerfile`` and replaced the
+7. Once you have edited ``Dockerfile`` and replaced the
    ``FROM alpine:3.10`` command to ``FROM alpine:3.17``, go ahead and
    **save** the file. You can navigate to ``file`` -> ``save`` or you
    can use the shortcut, **CTRL+S**.
@@ -79,7 +79,7 @@ right click on that folder and rename it to ``alpine3.17``:
      create a new **Stage** in our GitLab CI/CD Pipeline Configuration file,
      `.gitlab-ci.yml <https://gitlab.f5.local/f5-demo-lab/gitlabappster/-/blob/master/.gitlab-ci.yml>`__
 
-9. In order to build an **Alpine 3.17** image, we also need to add a new
+8. In order to build an **Alpine 3.17** image, we also need to add a new
    stage to our ``.gitlab-ci.yml`` file for ``alpine3.17``. Open this
    project’s GitLab CI/CD Pipeline Configuration file,
    ``.gitlab-ci.yml`` and find the stage labeled ``alpine3.10`` (use
@@ -95,19 +95,19 @@ right click on that folder and rename it to ``alpine3.17``:
    .. important:: The correct indentation in a ``yaml`` file must be valid and
       make sure your ``.gitlab-ci.yml`` file looks like the example above.
 
-10. Once you have edited ``.gitlab-ci.yml`` and created the new
+9. Once you have edited ``.gitlab-ci.yml`` and created the new
     ``alpine3.17`` stage, go ahead and **save** the file. You can
     navigate to ``file`` -> ``save`` or you can use the shortcut,
     **CTRL+S**.
 
-11. Open or switch back to GitHub Desktop Client, and you will now see
+10. Open or switch back to GitHub Desktop Client, and you will now see
     the changes made.
 
     .. attention:: The GitHub Desktop Client has automatically tracked the changes that
        were made to the project folder, and is highlighting those exact changes,
        "2 changed file: `.gitlab-ci.yml` and `Dockerfiles\alpine3.17\Dockerfile`"
 
-12. We are now going to push these changes to our repository on GitLab.
+11. We are now going to push these changes to our repository on GitLab.
     In the lower-left of the GitHub, Desktop Client provide a **Commit
     title** and **note** before we can commit to master.
 
@@ -125,15 +125,23 @@ right click on that folder and rename it to ``alpine3.17``:
 
     .. image:: ../images/image8.png
 
-13. In Google Chrome, open up the \ **nginx-plus-dockerfiles** repository on
+12. In Google Chrome, open up the \ **nginx-plus-dockerfiles** repository on
     Gitlab, \ `https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles <https://gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles>`__ or
-    using the \ **“nginx-plus-dockerfiles”** shortcut provided. (udf/P@ssw0rd20) This
-    will take us to the repository where we just pushed our modified
+    using the \ **“nginx-plus-dockerfiles”** shortcut provided. (udf/P@ssw0rd20)
+
+   .. note:: If the browser shows you a warning to indicate the connection is not secure
+      and shows an error code of "NET::ERR_CERT_AUTHORITY_INVALID", this is due to the
+      use of a self-signed certificate on the server. We will be using self-signed
+      certificates for the purposes of this lab. However, you should use authentic
+      certificates from known Certificate Authorities in any production environments.
+      Click on Advanced, followed by the link to proceed to the site.
+
+    This will take us to the repository where we just pushed our modified
     Docker file to
 
     .. image:: ../images/image9.png
 
-14. On this **nginx-plus-dockerfiles** repository page, you will see the
+13. On this **nginx-plus-dockerfiles** repository page, you will see the
     pipeline status icon next to the latest \ **Commit SHA**. When the
     pipeline currently in progress, you will see an \ **orange icon** 
     (waiting to start), a \ **blue circle** (running), or a \ **green check** (passed). Hopefully, we
@@ -149,7 +157,7 @@ right click on that folder and rename it to ``alpine3.17``:
 
     .. image:: ../images/image11.png
 
-15. After clicking on the pipeline status icon, we can view the full
+14. After clicking on the pipeline status icon, we can view the full
     pipeline. As you can see, we can now see our
     pipeline: \ **BUILD** and **CLEANUP.** This pipeline was
     automatically triggered after we submitted our changes to Dockerfile
@@ -177,7 +185,7 @@ right click on that folder and rename it to ``alpine3.17``:
       a unique image name that references a build job allows us to roll back or deploy to a previously
       know good build
 
-16. A Docker Container Registry is integrated into GitLab, and every
+15. A Docker Container Registry is integrated into GitLab, and every
     project can have its own space to store its Docker images. We can
     see our image in the **Package** **>** **Container Registry**. On
     the Container Registry page, expand the title, and you will see a
