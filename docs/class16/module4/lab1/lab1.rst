@@ -1,39 +1,153 @@
-AI Gateway
-##########
+Secure the Application
+######################
 
-F5 **AI Gateway** is a specialized platform designed to route, protect, and manage generative AI traffic between clients and Large Language Model (LLM) backends. It addresses the unique challenges posed by AI applications, particularly their non-deterministic nature and the need for bidirectional traffic monitoring.
+Securing the ChatBot is very important but before doing that even more important is securing the full application.
 
-The main AI Gateway functions are:
+In order to achive this we will do a WAAP config protection on our application which at the same time will actually help us some of the OWASP Top 10 GeniAi attacks.
 
-* Implementing traffic steering policies
-* Inspects and filters client requests and LLM responses
-* Prevents malicious inputs from reaching LLM backends
-* Ensures safe LLM responses to clients
-* Protects against sensitive information leaks
-* Providing comprehensive logging of all requests and responses
-* Generating observability data through OpenTelemetry
+We will enable and configure the following:
 
-Core
-""""
+1. App Firewall - F5XC Web Application Firewall based on negative security
+2. API discovery and protection based on Arcadia Crypto OpenApi Spec which will allow us to protect the APIs and enforce positive security
+3. Bot protection
+4. DDOS protection
 
-The AI Gateway core handles HTTP(S) requests destined for an LLM backend. It performs the following tasks:
+We have already published the application, now we will finish the security configuration.
 
-* Performs Authn/Authz checks, such as validating JWTs and inspecting request headers.
-* Parses and performs basic validation on client requests.
-* Applies processors to incoming requests, which may modify or reject the request.
-* Selects and routes each request to an appropriate LLM backend, transforming requests/responses to match the LLM/client schema.
-* Applies processors to the response from the LLM backend, which may modify or reject the response.
-* Optionally, stores an auditable record of every request/response and the specific activity of each processor. These records can be exported to AWS S3 or S3-compatible storage.
-* Generates and exports observability data via OpenTelemetry.
-* Provides a configuration interface (via API and a config file).
+1. We will start by configuring our **App Firewall** policy
 
-Processors
-""""""""""
+   Web App & API Protection → App Firewall → Add App Firewall → Fill the bellow data → Save and Exit
 
-A processor runs separately from the core and can perform one or more of the following actions on a request or response:
+   .. table::
+      :widths: auto
 
-* **Modify**: A processor may rewrite a request or response. For example, by redacting credit card numbers.
-* **Reject**: A processor may reject a request or response, causing the core to halt processing of the given request/response.
-* **Annotate**: A processor may add tags or metadata to a request/response, providing additional information to the administrator. The core can also select the LLM backend based on these tags.
+      ==============================    ========================================================================================
+      Object                            Value
+      ==============================    ========================================================================================
+      **Name**                          arcadia-waf
+      
+      **Enforcement Mode**              blocking
+      ==============================    ========================================================================================
 
-Each processor provides specific protection or transformation capabilities to AI Gateway. For example, a processor can detect and remove Personally Identifiable Information (PII) from the input or output of the AI model.
+
+   .. raw:: html   
+
+      <script>c6m3l1a();</script>  
+
+2. Create an **API definition** based on the pre uploaded Arcadia Crypto OpenApi Spec 
+
+   Web App & API Protection → Api Management → Api Definition → Add API Definition → Fill the bellow data → Save and Exit
+
+   .. table::
+      :widths: auto
+
+      ===============================    ========================================================================================
+      Object                             Value
+      ===============================    ========================================================================================
+      **Name**                           arcadia-api-definition
+      
+      **OpenAPI Specification Files**    **Add Item** → shared/arcadia-crypto-oas/v5-24-09-04
+      ===============================    ========================================================================================
+
+
+   .. raw:: html   
+
+      <script>c6m3l1b();</script>        
+
+3. Now we will go to the **Load Balancer** config and do the rest:
+
+   Web App & API Protection → Load Balancers → HTTP Load Balancer → Click the 3 dots under the **arcadia-re-lb** row → Manage Configuration → Edit Configuration
+
+   a) Attach the **Web Application Firewall** policy to the **HTTP Load Balancer**
+
+      .. table::
+        :widths: auto
+
+        ==================================    ========================================================================================
+        Object                                Value
+        ==================================    ========================================================================================
+        **Web Application Firewall (WAF)**    Enable
+    
+        **Enable**                            $$namespace$$/arcadia-waf
+        ==================================    ========================================================================================
+
+   b) Enable **BOT protection**
+
+      .. table::
+        :widths: auto
+
+        ==========================================    ========================================================================================
+        Object                                        Value
+        ==========================================    ========================================================================================
+        **Bot Defense**                               Enable
+    
+        **Bot Defense Region**                        EU
+        ==========================================    ========================================================================================
+
+      On the same place click **Configure** under **Bot Defense Policy** → Configure → Add Item → Fill the bellow data → Apply → Apply → Apply
+
+      .. table::
+          :widths: auto
+
+          ==========================================    ========================================================================================
+          Object                                        Value
+          ==========================================    ========================================================================================
+          **Name**                                      chatbot
+    
+          **HTTP Methods**                              POST
+
+          **Prefix**                                    /v1/ai/chat
+
+          **Select Bot Mitigation action**              Block      
+          ==========================================    ========================================================================================
+
+   c) Enable **API Discovery** and **API Protection**
+
+      .. table::
+        :widths: auto
+
+        ==========================================    ========================================================================================
+        Object                                        Value
+        ==========================================    ========================================================================================
+        **API Discovery**                             Enable
+   
+        **API Definition**                            Enable → Choose **$$namespace$$/arcadia-api-definition**
+
+        **Validation**                                API Inventory
+        ==========================================    ========================================================================================    
+
+      Click **View Configuration** under **API Inventory** → Fill in the bellow config
+
+      .. table::
+        :widths: auto
+
+        ==========================================    ========================================================================================
+        Object                                        Value
+        ==========================================    ========================================================================================
+        **Request Validation Enforcement Type**       Block
+    
+        **Request Validation Properties**             Enable all options
+
+        **Fall Through Mode**                         Custom
+        ==========================================    ========================================================================================            
+
+      Click **Configure** under **Custom Fall Through Rule List** → **Add Item** → Fill in the bellow config → Apply → Apply → Apply → Save and Exit
+
+      .. table::
+        :widths: auto
+
+        ==========================================    ========================================================================================
+        Object                                        Value
+        ==========================================    ========================================================================================
+        **Name**                                      only-apis
+    
+        **Action**                                    Block
+
+        **Type**                                      Base Path
+
+        **Base Path**                                 /v1
+        ==========================================    ========================================================================================            
+
+   .. raw:: html   
+
+      <script>c6m3l1c();</script>                 

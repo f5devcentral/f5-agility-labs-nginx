@@ -1,68 +1,104 @@
-Lab 1 - Expose the application
-##############################
+Accessing the lab
+#################
 
-For this lab, we will use the following configuration
+Lab attendees should have received an invitation email to the lab environment based on the submitted registration email. Please check email and spam folders if it has not been received. If you have not received an email, please contact a member of the lab team.  
 
-1. Create the Origin Pool targeting Arcadia public app
- 
-a) Web App & API Protection → Load Balancers → Origin Pool → Add Origin Pool → Fill the bellow data
+Course/Lab Invitation
+~~~~~~~~~~~~~~~~~~~~~
 
-   .. table:: 
-      :widths: auto
++----------------------------------------------------------------------------------------------+
+| Course/Lab Attendees will receive an email similar to the graphic displayed in this section. |
+| The email will come from courses@notify.udf.f5.com.                                          |
+|                                                                                              |
+| As attendees maybe registered for several lab/courses, ensure the corrcetly identified course|
+| is selected.  Use either the first or second link position (indicated by arrows) based on    |
+| the attendee's F5 UDF (Unified Demo Framework) Account Status.                               |
+|                                                                                              |
+| # **New UDF Users**                                                                          |
+| # **Returning UDF Users going directly to Course**                                           |
+|                                                                                              |
+| .. note::                                                                                    |
+|    *Note The steps for new UDF Users or the steps for resetting UDF User account passwords*  |
+|    *are not shown. Please contact a member of the lab team if further assistance is needed.* |
++----------------------------------------------------------------------------------------------+
+| |intro001|                                                                                   |
++----------------------------------------------------------------------------------------------+
 
-      ==============================    ========================================================================================
-      Object                            Value
-      ==============================    ========================================================================================
-      **Name**                          arcadia-public-endpoint
-      
-      **Port**                          443 
+Accessing UDF (F5 Unified Demo Framework)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-      **TLS**                           Enable
++----------------------------------------------------------------------------------------------+
+| The following will guide attendees through the initial Lab environment access within F5 UDF. |
+| Following the instructions from the Course/Lab invitation above, attendees will be prompted  |
+| to login at  https://udf.f5.com                                                              |
+|                                                                                              |
+| .. note::                                                                                    |
+|    *Note The steps for new UDF Users or the steps for resetting UDF User account passwords*  |
+|    *are not shown. Please contact a member of the lab team if further assistance is needed.* |
++----------------------------------------------------------------------------------------------+
+| |intro002|                                                                                   |
++----------------------------------------------------------------------------------------------+
 
-      **Origin Server Verification**    Skip Verification 
-      ==============================    ========================================================================================
++----------------------------------------------------------------------------------------------+
+| Attendees will be prompted to enter their UDF account, password and complete MFA as shown.   |
+| MFA must be completed by either selecting **Send Push** or **Enter Code**.                   |
+|                                                                                              |
+| .. note::                                                                                    |
+|    *MFA process will very based on the MFA integration selected for the UDF Account. OKTA*   |
+|    *Verify is shown.*                                                                        |
++----------------------------------------------------------------------------------------------+
+| |intro003|                                                                                   |
+|                                                                                              |
+| |intro004|                                                                                   |
+|                                                                                              |
+| |intro005|                                                                                   |
++----------------------------------------------------------------------------------------------+
 
-b) In the same screen → Origin Servers → Add Item → Fill the bellow data → Apply → Save and exit
++----------------------------------------------------------------------------------------------+
+| Attendees will then be presented their scheduled course sessions. Locate the course/lab with |
+| the appropriate **Date**, **Time** and **Name** and then click **Launch**.                   |
++----------------------------------------------------------------------------------------------+
+| |intro006|                                                                                   |
++----------------------------------------------------------------------------------------------+
 
-   .. table:: 
-      :widths: auto
++----------------------------------------------------------------------------------------------+
+| Once redirected to the selected Course/Lab, click the **Join** button.                       |
++----------------------------------------------------------------------------------------------+
+| |intro007|                                                                                   |
++----------------------------------------------------------------------------------------------+
 
-      ====================    ========================================================================================
-      Object                  Value
-      ====================    ========================================================================================
-      **DNS name**            $$hostArcadia$$
-      ====================    ========================================================================================
++----------------------------------------------------------------------------------------------+
+| The Lab environment window will now be displayed.  Click on the **Documentation** tab in the |
+| horizontal navigation links.          |
+|                                                                                              |
+| In approximately 5-7 minutes the associated **yellow gear** starting icon will change to a   |
+| **green arrow** (running) icon and attendees will proceed to the next section of steps.      |
+|                                                                                              |
+| .. note::                                                                                    |
+|    *Your specific lab environment may vary from the graphics shown below.                    |
+|                                                                                              |
++----------------------------------------------------------------------------------------------+
+| |intro008|                                                                                   |
+|                                                                                              |
+| |intro009|                                                                                   |
++----------------------------------------------------------------------------------------------+
 
-   .. raw:: html   
 
-      <script>c6m1l1a();</script>  
-
-2. Create the HTTP LB
-
-a) Web App & API Protection → Load Balancers → HTTP Load Balancer → Add HTTP Load Balancer → Fill the bellow data → Save and exit
-
-   .. table:: 
-      :widths: auto
-
-      ====================================    =================================================================================================
-      Object                                  Value
-      ====================================    =================================================================================================
-      **Name**                                arcadia-re-lb
-                     
-      **Domains**                             arcadia-re-$$makeId$$.workshop.emea.f5se.com
-
-      **Load Balancer Type**                  HTTP
-                                                                                 
-      **Automatically Manage DNS Records**    Enable 
-
-      **Origin Pools**                        Click **Add Item**, for the **Origin Pool** select $$namespace$$/arcadia-public-endpoint → Apply
-      ====================================    =================================================================================================
-
-   .. raw:: html   
-
-      <script>c6m1l1b();</script>  
-
-3. So far, Arcadia is not protected but exposed all over the world on all F5XC RE. 
-Check your Arcadia application is exposed and reachable from the F5XC Global Network by browsing to :ext_link:`http://arcadia-re-$$makeId$$.workshop.emea.f5se.com`
-
-.. warning:: Some Service Providers have a very long recursive cache. It can take several minutes to get a DNS response. You can change your DNS server to 1.1.1.1 or 8.8.8.8 to fix that.
+.. |intro001| image:: ../pictures/intro-01.png
+   :width: 800px
+.. |intro002| image:: ../pictures/intro-02.png
+   :width: 800px
+.. |intro003| image:: ../pictures/intro-03.png
+   :width: 800px
+.. |intro004| image:: ../pictures/intro-04.png
+   :width: 800px
+.. |intro005| image:: ../pictures/intro-05.png
+   :width: 800px
+.. |intro006| image:: ../pictures/intro-06.png
+   :width: 800px
+.. |intro007| image:: ../pictures/intro-07.png
+   :width: 800px
+.. |intro008| image:: ../pictures/intro-08.png
+   :width: 800px
+.. |intro009| image:: ../pictures/intro-09.png
+   :width: 800px

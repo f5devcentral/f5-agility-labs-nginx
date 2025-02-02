@@ -1,47 +1,68 @@
-LLM only
-########
+Lab 1 - Expose the application
+##############################
 
-Let's start by explaining the different functions.
+For this lab, we will use the following configuration
 
-**AI Orchestrator**
+1. Create the Origin Pool targeting Arcadia public app
+ 
+a) Web App & API Protection → Load Balancers → Origin Pool → Add Origin Pool → Fill the bellow data
 
-The AI Orchestrator acts as the central hub of the entire AI system, managing the flow of information between various components. Here's a detailed look at its functions:
+   .. table:: 
+      :widths: auto
 
-* **Request Handling**: It receives and processes user queries, preparing them for further processing.
-* **LLM Interaction**: The Orchestrator sends the constructed prompt to Ollama (the LLM) and receives its responses.
-* **Response Formatting**: It processes the LLM's output, potentially formatting or filtering it before sending it back to the user.
-* **State Management**: The Orchestrator  maintains the state of the conversation, ensuring continuity across multiple user interactions.
-* **Error Handling**: It manages any errors or exceptions that occur during the process, ensuring graceful failure modes.
+      ==============================    ========================================================================================
+      Object                            Value
+      ==============================    ========================================================================================
+      **Name**                          arcadia-public-endpoint
+      
+      **Port**                          443 
 
-**Ollama ( Inference Services )**
+      **TLS**                           Enable
 
-Ollama is an advanced AI tool that facilitates the local execution of large language models (LLMs), such as Llama 2, Mistral, and in our case LLama 3.1 8B.
-The key Features of Ollama:
+      **Origin Server Verification**    Skip Verification 
+      ==============================    ========================================================================================
 
-* **Local Execution**: Users can run powerful language models directly on their machines, enhancing privacy and control over data.
-* **Model Customization**: Ollama supports the creation and customization of models, allowing users to tailor them for specific applications, such as chatbots or summarization tools.
-* **User-Friendly Setup**: The tool provides an intuitive interface for easy installation and configuration, currently supporting macOS and Linux, with Windows support planned for the future.
-* **Diverse Model Support**: Ollama supports various models, including Llama 2, uncensored Llama, Code Llama, and others, making it versatile for different natural language processing tasks.
-* **Open Source**: Ollama is an open-source platform, which means its source code is publicly available, allowing for community contributions and transparency.
+b) In the same screen → Origin Servers → Add Item → Fill the bellow data → Apply → Save and exit
 
+   .. table:: 
+      :widths: auto
 
+      ====================    ========================================================================================
+      Object                  Value
+      ====================    ========================================================================================
+      **DNS name**            $$hostArcadia$$
+      ====================    ========================================================================================
 
-Understading the interactions
------------------------------
+   .. raw:: html   
 
-Go to the **AI Assistant** start a new conversation and ask him the bellow question.
+      <script>c6m1l1a();</script>  
 
-::
+2. Create the HTTP LB
 
-    How should I approch investing in crypto ?
+a) Web App & API Protection → Load Balancers → HTTP Load Balancer → Add HTTP Load Balancer → Fill the bellow data → Save and exit
 
+   .. table:: 
+      :widths: auto
 
-.. image:: ../pictures/Slide1.PNG
-   :align: center
+      ====================================    =================================================================================================
+      Object                                  Value
+      ====================================    =================================================================================================
+      **Name**                                arcadia-re-lb
+                     
+      **Domains**                             arcadia-re-$$makeId$$.workshop.emea.f5se.com
 
-1. **User** sends question to **LLM Orchestrator**
-2. **LLM Orchestrator** forwards the user prompt to the **LLM**
-3. **LLM** returns response to **LLM Orchestrator**
-4. **ALLM Orchestrator** sends the **LLM** response back to the **user**
+      **Load Balancer Type**                  HTTP
+                                                                                 
+      **Automatically Manage DNS Records**    Enable 
 
-This is the most **basic interaction** with the **LLM**. The **LLM** response is generated based only from the **training data**.
+      **Origin Pools**                        Click **Add Item**, for the **Origin Pool** select $$namespace$$/arcadia-public-endpoint → Apply
+      ====================================    =================================================================================================
+
+   .. raw:: html   
+
+      <script>c6m1l1b();</script>  
+
+3. So far, Arcadia is not protected but exposed all over the world on all F5XC RE. 
+Check your Arcadia application is exposed and reachable from the F5XC Global Network by browsing to :ext_link:`http://arcadia-re-$$makeId$$.workshop.emea.f5se.com`
+
+.. warning:: Some Service Providers have a very long recursive cache. It can take several minutes to get a DNS response. You can change your DNS server to 1.1.1.1 or 8.8.8.8 to fix that.

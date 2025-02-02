@@ -1,12 +1,13 @@
-#######################
-Publish the application
-#######################
+##########################
+Acessing the lab resources
+##########################
 
-For our first steps we will expose an existing and public internet facing application through F5 XC Global Network.
-This will first provide us with built in visibility for the application behaviour and the capability in the next steps to add security services.
+During the lab we will access multiple resources. The next step will present the login process and how to access the relevant lab environments.  
 
-.. image:: ./pictures/C6Slide1.png
-   :align: center
+We will need to access:
+
+1. **UDF lab environment** where our application is deployed
+2. **F5 Distributed Cloud** console which will help us to protect our application
 
 
 **Module 1 - All sections**

@@ -1,9 +1,12 @@
-###########################
-Getting to know the ChatBot
-###########################
+#######################
+Publish the application
+#######################
 
-Before we move forward we need to get a better understanding of how the ChatBot in Arcadia is working.  
-In the next sections we will go through the different capabilities of the ChatBot and how they have been implemented.
+For our first steps we will expose an existing and public internet facing application through F5 XC Global Network.
+This will first provide us with built in visibility for the application behaviour and the capability in the next steps to add security services.
+
+.. image:: ./pictures/C6Slide1.png
+   :align: center
 
 
 **Module 2 - All sections**

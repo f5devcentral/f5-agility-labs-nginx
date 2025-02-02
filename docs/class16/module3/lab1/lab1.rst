@@ -1,153 +1,47 @@
-Secure the Application
-######################
+LLM only
+########
 
-Securing the ChatBot is very important but before doing that even more important is securing the full application.
+Let's start by explaining the different functions.
 
-In order to achive this we will do a WAAP config protection on our application which at the same time will actually help us some of the OWASP Top 10 GeniAi attacks.
+**AI Orchestrator**
 
-We will enable and configure the following:
+The AI Orchestrator acts as the central hub of the entire AI system, managing the flow of information between various components. Here's a detailed look at its functions:
 
-1. App Firewall - F5XC Web Application Firewall based on negative security
-2. API discovery and protection based on Arcadia Crypto OpenApi Spec which will allow us to protect the APIs and enforce positive security
-3. Bot protection
-4. DDOS protection
+* **Request Handling**: It receives and processes user queries, preparing them for further processing.
+* **LLM Interaction**: The Orchestrator sends the constructed prompt to Ollama (the LLM) and receives its responses.
+* **Response Formatting**: It processes the LLM's output, potentially formatting or filtering it before sending it back to the user.
+* **State Management**: The Orchestrator  maintains the state of the conversation, ensuring continuity across multiple user interactions.
+* **Error Handling**: It manages any errors or exceptions that occur during the process, ensuring graceful failure modes.
 
-We have already published the application, now we will finish the security configuration.
+**Ollama ( Inference Services )**
 
-1. We will start by configuring our **App Firewall** policy
+Ollama is an advanced AI tool that facilitates the local execution of large language models (LLMs), such as Llama 2, Mistral, and in our case LLama 3.1 8B.
+The key Features of Ollama:
 
-   Web App & API Protection → App Firewall → Add App Firewall → Fill the bellow data → Save and Exit
-
-   .. table::
-      :widths: auto
-
-      ==============================    ========================================================================================
-      Object                            Value
-      ==============================    ========================================================================================
-      **Name**                          arcadia-waf
-      
-      **Enforcement Mode**              blocking
-      ==============================    ========================================================================================
+* **Local Execution**: Users can run powerful language models directly on their machines, enhancing privacy and control over data.
+* **Model Customization**: Ollama supports the creation and customization of models, allowing users to tailor them for specific applications, such as chatbots or summarization tools.
+* **User-Friendly Setup**: The tool provides an intuitive interface for easy installation and configuration, currently supporting macOS and Linux, with Windows support planned for the future.
+* **Diverse Model Support**: Ollama supports various models, including Llama 2, uncensored Llama, Code Llama, and others, making it versatile for different natural language processing tasks.
+* **Open Source**: Ollama is an open-source platform, which means its source code is publicly available, allowing for community contributions and transparency.
 
 
-   .. raw:: html   
 
-      <script>c6m3l1a();</script>  
+Understading the interactions
+-----------------------------
 
-2. Create an **API definition** based on the pre uploaded Arcadia Crypto OpenApi Spec 
+Go to the **AI Assistant** start a new conversation and ask him the bellow question.
 
-   Web App & API Protection → Api Management → Api Definition → Add API Definition → Fill the bellow data → Save and Exit
+::
 
-   .. table::
-      :widths: auto
-
-      ===============================    ========================================================================================
-      Object                             Value
-      ===============================    ========================================================================================
-      **Name**                           arcadia-api-definition
-      
-      **OpenAPI Specification Files**    **Add Item** → shared/arcadia-crypto-oas/v5-24-09-04
-      ===============================    ========================================================================================
+    How should I approch investing in crypto ?
 
 
-   .. raw:: html   
+.. image:: ../pictures/Slide1.PNG
+   :align: center
 
-      <script>c6m3l1b();</script>        
+1. **User** sends question to **LLM Orchestrator**
+2. **LLM Orchestrator** forwards the user prompt to the **LLM**
+3. **LLM** returns response to **LLM Orchestrator**
+4. **ALLM Orchestrator** sends the **LLM** response back to the **user**
 
-3. Now we will go to the **Load Balancer** config and do the rest:
-
-   Web App & API Protection → Load Balancers → HTTP Load Balancer → Click the 3 dots under the **arcadia-re-lb** row → Manage Configuration → Edit Configuration
-
-   a) Attach the **Web Application Firewall** policy to the **HTTP Load Balancer**
-
-      .. table::
-        :widths: auto
-
-        ==================================    ========================================================================================
-        Object                                Value
-        ==================================    ========================================================================================
-        **Web Application Firewall (WAF)**    Enable
-    
-        **Enable**                            $$namespace$$/arcadia-waf
-        ==================================    ========================================================================================
-
-   b) Enable **BOT protection**
-
-      .. table::
-        :widths: auto
-
-        ==========================================    ========================================================================================
-        Object                                        Value
-        ==========================================    ========================================================================================
-        **Bot Defense**                               Enable
-    
-        **Bot Defense Region**                        EU
-        ==========================================    ========================================================================================
-
-      On the same place click **Configure** under **Bot Defense Policy** → Configure → Add Item → Fill the bellow data → Apply → Apply → Apply
-
-      .. table::
-          :widths: auto
-
-          ==========================================    ========================================================================================
-          Object                                        Value
-          ==========================================    ========================================================================================
-          **Name**                                      chatbot
-    
-          **HTTP Methods**                              POST
-
-          **Prefix**                                    /v1/ai/chat
-
-          **Select Bot Mitigation action**              Block      
-          ==========================================    ========================================================================================
-
-   c) Enable **API Discovery** and **API Protection**
-
-      .. table::
-        :widths: auto
-
-        ==========================================    ========================================================================================
-        Object                                        Value
-        ==========================================    ========================================================================================
-        **API Discovery**                             Enable
-   
-        **API Definition**                            Enable → Choose **$$namespace$$/arcadia-api-definition**
-
-        **Validation**                                API Inventory
-        ==========================================    ========================================================================================    
-
-      Click **View Configuration** under **API Inventory** → Fill in the bellow config
-
-      .. table::
-        :widths: auto
-
-        ==========================================    ========================================================================================
-        Object                                        Value
-        ==========================================    ========================================================================================
-        **Request Validation Enforcement Type**       Block
-    
-        **Request Validation Properties**             Enable all options
-
-        **Fall Through Mode**                         Custom
-        ==========================================    ========================================================================================            
-
-      Click **Configure** under **Custom Fall Through Rule List** → **Add Item** → Fill in the bellow config → Apply → Apply → Apply → Save and Exit
-
-      .. table::
-        :widths: auto
-
-        ==========================================    ========================================================================================
-        Object                                        Value
-        ==========================================    ========================================================================================
-        **Name**                                      only-apis
-    
-        **Action**                                    Block
-
-        **Type**                                      Base Path
-
-        **Base Path**                                 /v1
-        ==========================================    ========================================================================================            
-
-   .. raw:: html   
-
-      <script>c6m3l1c();</script>                 
+This is the most **basic interaction** with the **LLM**. The **LLM** response is generated based only from the **training data**.
