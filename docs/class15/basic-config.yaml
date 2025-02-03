@@ -1,0 +1,207 @@
+mode: standalone
+
+## Core port lisetning for requests
+server:
+  address: :4141
+
+## Admin port for configuration
+adminServer:
+  address: ":8080"
+
+## URI paths for incoming requests, mapped to policy
+routes:
+  - path: /language
+    policy: language
+    schema: openai
+    timeoutSeconds: 60
+  
+  - path: /insecure
+    policy: insecure
+    schema: openai
+    timeoutSeconds: 60
+
+  - path: /secure
+    policy: secure
+    schema: openai
+    timeoutSeconds: 60
+
+  - path: /pii
+    policy: pii-redact
+    schema: openai
+    timeoutSeconds: 60
+
+
+## Policies applied to incoming requests
+policies:
+  - name: insecure
+    profiles:
+      - name: insecure
+
+  - name: pii-redact
+    profiles:
+      - name: pii
+
+  - name: pii-insecure
+    profiles:
+      - name: pii-insecure
+
+  - name: secure
+    profiles:
+      - name: secure
+
+  - name: http
+    profiles: 
+      - name: demo
+        selector:
+          type: header
+          key: X-User
+          values:
+            - jason
+
+  - name: language
+    profiles:
+      - name: language-route
+      
+
+## Profiles that policies attach to
+profiles:
+  - name: default
+    services:
+      - name: ollama/llama32
+
+  - name: insecure
+    services:
+      - name: ollama/tiny
+
+  - name: phi3
+    limits: []
+    services:
+      - name: ollama/phi
+
+## simple prompt-injection
+  - name: secure
+    limits: []
+    inputStages:
+      - name: simple
+        steps:
+          - name: prompt-injection
+    services:
+      - name: ollama/ollama3
+
+## PII redaction example
+  - name: pii
+    limits: []
+    inputStages:
+      - name: protect
+        steps:
+          - name: pii-redactor
+    responseStages:
+      - name: remove-pii
+        steps:
+          - name: pii-redactor
+          - name: watermark
+    services:
+      - name: ollama/llama3
+
+  - name: pii-insecure
+    limits: []
+    services:
+      - name: ollama/tiny
+
+## Language ID routing
+  - name: language-route
+    limits: []
+    inputStages:
+      - name: analyze
+        steps:
+          - name: language-id
+
+    services:
+      - name: ollama/phi
+        selector:
+          operand: not
+          tags:
+            - "fr"
+            - "de"
+
+      - name: ollama/llama3
+        selector:
+          tags:
+            - "fr"
+      
+      - name: ollama/tiny
+        selector:
+          tags:
+            - "de"
+
+### Upstream LLM models AIGW core routes requests to
+services:
+  - name: ollama/llama3
+    type: llama3
+    executor: ollama
+    config:
+      endpoint: http://llmmodel01:11434/api/generate
+
+  - name: ollama/phi
+    type: phi3
+    executor: ollama
+    config:
+      endpoint: http://llmmodel01:11434/api/generate
+
+  - name: ollama/tiny
+    type: tinyllama
+    executor: ollama
+    config:
+      endpoint: http://llmmodel01:11434/api/generate
+
+  - name: ollama/qwen
+    type: qwen2.5
+    executor: ollama
+    config:
+      endpoint: http://llmmodel01:11434/api/generate
+
+## Processors used for incoming and response requests
+processors:
+  - name: language-id
+    type: external
+    config:
+      endpoint: "http://aigw-processors-f5:8000"
+      version: 1
+      namespace: f5
+
+  - name: repetition-detect
+    type: external
+    config:
+      endpoint: "http://aigw-processors-f5:8000"
+      version: 1
+      namespace: f5
+    params:
+      max_ratio: 1.2
+
+  - name: watermark
+    type: external
+    config:
+      endpoint: "http://aigw-processors-f5:8000"
+      version: 1
+      namespace: f5
+
+  - name: pii-redactor
+    type: external
+    config:
+      endpoint: "http://aigw-processors-f5:8000"
+      version: 1
+      namespace: f5
+    params:
+      allow_rewrite: true
+ 
+  - name: prompt-injection
+    type: external
+    config:
+      endpoint: "http://aigw-processors-f5:8000"
+      namespace: f5
+      version: 1
+      params:
+        threshold: 0.5 # Default 0.5
+        reject: true # Default True
+        skip_system_messages: true # Default true
+        #allow_rejection: true

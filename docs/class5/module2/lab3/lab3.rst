@@ -1,24 +1,18 @@
-Test a SQL Inject Attack against the Arcadia Finance App
-========================================================
+Test a SQL Injection Attack against the Arcadia Finance App
+===========================================================
 
-1. Before you enable the App Protect service, attempt a SQL injection attack on the Arcadia Finance app. In **Firefox**, open a new tab then click on the **Arcadia Finance (DIY)** bookmark or navigate to **https://diy.arcadia-finance.io/**. 
+1. Before you enable the App Protect service, attempt a SQL injection attack on the Arcadia Finance app. In your Jump Server RDP session, click **Applications** and then **Terminal**.
 
-.. image:: images/arcadia_diy_bookmark.png
+.. image:: images/terminal_click.png
 
-2. Click the **Login** button to load the login screen.
+.. image:: images/terminal_new.png
 
-.. image:: images/arcadia_login_button.png
-
-3. You will see the **Arcadia Finance** application login screen.
-
-.. image:: images/arcadia_login_prompt.png
-
-4. For the username, type or paste the following value:
+2. In the terminal window that opens, enter the command below.
 
 .. code-block:: bash
 
-   ' or 1=1-- '
+   curl -vd POST -kLH "host: diy.arcadia-finance.io" "https://nginx-plus-2.appworld.lab/trading/auth.php" -H 'Sec-Fetch-User: ?1' --data-raw 'username='+or+1=1'--&password='
 
-and click **Log me in**. 
+.. image:: images/terminal_curl_output_block.png
 
-5. You should be immediately returned to the empty login prompt. While your SQL injection was not successful in logging into the system, the attempt was not blocked. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as you progress through the lab.
+While your SQL injection was not successful in logging into the system, the attempt was also not blocked. You were just redirected back to the login page. We'll enable the App Protect WAF policy and re-attempt to ensure protection is enforce as you progress through the lab.

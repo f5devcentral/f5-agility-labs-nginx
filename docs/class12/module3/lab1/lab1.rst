@@ -2,14 +2,14 @@ Kubernetes Troubleshooting
 ==========================
 
 Throughout this class you have used several first step methods in troubleshooting. Using *get* and *describe* help start the process, but what if they do not provide 
-enough detail to lead you to the problem? In this lab we'll show you some additional commands you can use to get information, or configure all the objects in your cluster.
+enough detail to lead you to the problem? In this lab we'll show you some additional commands you can use to get information or configure all the objects in your cluster.
 
 
 Explain
 -------
 
 Let's start with the *explain* command. The Kubernetes explain command provides documentation of the resource or specific field of the resource. In past labs, you used 
-imperative commands to create pods but we only covered the fields used. You can find reference to all object right from the cli.
+imperative commands to create pods but we only covered the fields used. You can find reference to all objects right from the cli.
 
 Example:
 
@@ -38,6 +38,7 @@ As you can see from the output, the *name* field is required when declaring a po
 Get
 ---
 
+
 Kubernetes *get* command will fetch the status and name of an object. In the below example, instead of requesting information on a specific object, we are seeking information
 on all object within the *test* namespace.
 
@@ -46,21 +47,43 @@ on all object within the *test* namespace.
 
    kubectl get all -n test 
 
+An example to review the status of a pod, *testpod* you would can run the below command. While the output is very lenthy, focus on the *status* field.
+
+.. code-block:: bash
+   :caption: Get Pod
+
+   kubectl get pod testpod -n test -o yaml
+
+You can also use *jsonpath* to filter the output. In the below example, we are filtering the output to only show the *status* field. We will also use the *jq*
+command to format the output.
+
+.. code-block:: bash
+   :caption: Get Pod
+
+   kubectl get pod testpod -n test -o jsonpath='{.status}' | jq
+
 Describe
 --------
 
-Kubernetes *describe* shows details of a specific resource or group of resources.This command joins many API calls together to form a detailed description of 
-a given resource or group of resources. This command you have run several times during this class to find detailed information on your deployed resources.
+Kubernetes *describe* shows details of a specific resource or group of resources. This command joins many API calls together to form a detailed description of 
+a given resource or group of resources. This is the command you have run several times during this class to find detailed information on your deployed resources.
 
 .. code-block:: bash 
    :caption: Describe
 
    kubectl describe <resource_type> <resource_name> -n <namespace>
 
+As an example, let's describe the *lab-deploy* deployment.
+
+.. code-block:: bash 
+   :caption: Describe
+
+   kubectl describe deployment lab-deploy -n test
+
 Events
 ------
 
-Kubernetes #events* can provide valuable insights to events from controllers, schedulers, pods and nodes. You can, and should, filter down events.
+Kubernetes *events* can provide valuable insights to events from controllers, schedulers, pods and nodes. You can, and should, filter down events.
 
 .. code-block:: bash 
    :caption: Filter Namespace
@@ -147,17 +170,19 @@ But you don't have to directly run the shell to execute your commands; you can i
 
    kubectl exec -it testpod -n test -- ls -la
 
-Example for multi-container pod:
+
+If your pod has more than one container you must specify the container you want to connect to with the ``-c`` flag as in the example below.
 
 .. code-block:: bash 
-   :caption: Shell Multi-Container
+   :caption: Example Shell Multi-Container
 
    kubectl exec -it <pod_name> -c <container_name> -n <namespace> -- /bin/bash
+
 
 DNS Utils
 ---------
 
-For this next Troubleshooting exercise you'll deploy a special *dnsutils* container image. This container has *dnsutils* installed and will allow to view how services are
+For this next troubleshooting exercise, you'll deploy a special *dnsutils* container image. This container has *dnsutils* installed and will allow you to view how services are
 registered in CoreDNS.
 
 .. code-block:: bash
@@ -165,7 +190,7 @@ registered in CoreDNS.
 
    kubectl run dnsutils --image=registry.k8s.io/e2e-test-images/jessie-dnsutils:1.3 --restart=Always -n test -- /bin/bash -c "sleep infinity"
 
-Once deployed and running, you can execute *dig* commands from inside the cluster using the dnsutils tools.
+Once deployed and running, you can execute dig commands from inside the cluster using the dnsutils tools. If this command fails, wait a few seconds then execute again.
 
 .. code-block:: bash
    :caption: DNS dig

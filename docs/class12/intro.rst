@@ -23,7 +23,7 @@ What Kubernetes **IS**:
  - Ideal for microservices 
  - Enables *cloud native* application design
 
-The evolution off applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
+The evolution of applications from baremetal servers, to virtual servers and now containers. Each one of these technologies serves its purpose and moving to the latest and greatest
 is not always the answer. There are, however, some definite advantages to a container based environment. In the *Container Deployment* image you can see we are no longer
 bound to the operating system, you can set resource limits per container and application dependencies are all built with the container image. Since the container houses
 the application and its dependencies, this allows for easier upgrades and security fixes to your application.
@@ -86,10 +86,15 @@ Lab Inventory
     - Ubuntu 20.04 LTS
     - none
     - SSH
+  * - Jump Server
+    - 10.1.1.12
+    - Ubuntu 20.04 LTS
+    - none
+    - SSH
 
 Accessing the Lab
 -----------------
 
-To access by web shell 
+All of the procedures you'll be asked to accomplish will be done using a web shell. To access the web shell from the Jumphost client:
 
 .. image:: images/jumphost_webshell.png

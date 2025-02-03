@@ -18,7 +18,7 @@ we will enable Rate limiting to our Appster service
    the following lines:
 
    Uncomment the line with
-   the \ `limit_req_zone <https://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req_zone>`__ directive,
+   the \ `limit_req <https://nginx.org/en/docs/http/ngx_http_limit_req_module.html#limit_req>`__ directive,
    found near the top of the file, this is in the \ ``http`` context,
    outside the ``server`` context and change the ``10000`` to ``10``:
 
@@ -26,7 +26,7 @@ we will enable Rate limiting to our Appster service
 
       # Rate limit
       # Uncomment lines below to enable here
-      limit_req_zone $binary_remote_addr zone=limit_me:1m rate=10000r/s;
+      limit_req $binary_remote_addr zone=limit_me:1m rate=10000r/s;
 
    This line defines our rate-limiting rule:
 
@@ -47,13 +47,13 @@ we will enable Rate limiting to our Appster service
 
 3. Now we can enable the rate-limiting URL on the root location (``/``).
    In the same file, ``www.appster.com.conf`` , also uncomment the lines
-   starting with ``limit_req_zone`` and ``limit_req_status``:
+   starting with ``limit_req`` and ``limit_req_status``:
 
    .. code:: ini
 
       # Rate limiting
       # Uncomment below to enable here.
-      limit_req_zone=limit_me;
+      limit_req zone=limit_me;
       limit_req_status 429;
 
    The directives above apply rate-limiting rules in this location context:
@@ -224,7 +224,7 @@ we will enable Rate limiting to our Appster service
 
     .. code:: ini
 
-       limit_req_zone $binary_remote_addr zone=limit_me:1m rate=10000r/s;
+       limit_req $binary_remote_addr zone=limit_me:1m rate=10000r/s;
 
     - Remember to save changes to our file
 
@@ -260,7 +260,7 @@ we will enable Rate limiting to our Appster service
 
        # Rate limit
        # Uncomment lines below to enable here
-       limit_req_zone $binary_remote_addr zone=limit_me:1m rate=10000r/s;
+       limit_req $binary_remote_addr zone=limit_me:1m rate=10000r/s;
 
     .. image:: ../images/image15.png
 

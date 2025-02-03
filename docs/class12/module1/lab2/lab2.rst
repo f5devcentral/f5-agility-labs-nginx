@@ -48,7 +48,7 @@ From the web shell you will ssh into the leader node:
 
 Returned content:
 
-.. code-block:: 
+.. code-block:: bash 
    :caption: Node data basic 
 
     NAME                       STATUS   ROLES                  AGE    VERSION
@@ -66,7 +66,7 @@ That was very basic information on our nodes, but if we want more details we can
 
 Returned content:
 
-.. code-block:: 
+.. code-block:: bash
    :caption: Node data wide 
 
     NAME                       STATUS   ROLES                  AGE    VERSION        INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION    CONTAINER-RUNTIME
@@ -185,7 +185,7 @@ For this part of the lab, we'll just cover two important namespaces:
 - **kube-system** 
 
 
-Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So you always want
+Let's look at the *default* namespace first, because it's just default. Any time you do **not explicitly** declare the namespace it is implied default. So, you always want
 to get into the habit of adding the namespace flag ``-n`` with the corresponding namespace. Having said all that, you will find out that some resources do indeed live in 
 the default namespace. One item that you'll find in the default namespace are CRD's.
 
@@ -317,7 +317,7 @@ and ran the container inside the pod through execution. Without any applications
 .. image:: images/clbo.png
    
 
-If you encouter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
+If you encounter the CrashLoopBackOff status, please wait and then check that your pod completed. A couple of errors you may see during this course are:
 
 - CrashLoopBackOff - pod is unable to start or has run into an error and has been restarted multiple times by the kubelet
 - ImagePullBackOff - kubelet is unable to pull (download) the container image
@@ -330,7 +330,7 @@ Now let's try running our pod again, but this time we'll run a shell function of
    :caption: Sleep BusyBox
 
    kubectl delete pod bbox -n test
-   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep 35'
+   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep infinity'
    watch kubectl get pod -n test
 
 Again, you are asking Kubernetes to run a pod with a container using the BusyBox image inside. You are also passing in the bash command *sleep 35*.
@@ -446,6 +446,13 @@ Two CNIs you'll probably see or hear about most often:
 
 - Calico - BGP
 - Flannel - VXLAN
+
+Some important information on Kubernetes networking:
+
+- Every pod gets its own IP address
+- Containers within a pod share the pod IP address and can communicate freely with each other
+- Pods can communicate with all other pods in the cluster using pod IP addresses (without NAT)
+- Isolation (restricting what each pod can communicate with) is defined using network policies
 
 Additional information:
 

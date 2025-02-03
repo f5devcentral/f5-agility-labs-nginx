@@ -3,7 +3,7 @@ Container Components
 
 A container is a lightweight, executable software package containing all necessary code and its dependencies to run as a process on a host. Traditionally, applications
 were run from bare metal or virtual machines atop an operating system. This meant that multiple applications could compete for resources and any changes to the operating system
-could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS and then test. Then, the the web server language dependencies needed to be upgraded and tested. Finally, the application code could be upgraded and user acceptance testing could begin.
+could break dependencies for web servers and applications running on the host. This also meant that any upgrade was a long process to upgrade the OS and then test. Then, the web server language dependencies needed to be upgraded, and tested. Finally, the application code could be upgraded and user acceptance testing could begin.
 
 Containerization has greatly decreased the time it takes to roll-out new code (enhancements or fixes) to production. In the world of applications and application security, 
 speed is still king. 
@@ -14,7 +14,7 @@ a container runtime, such as Docker, to run on. The runtime engine will validate
 
 Building your container can be compared to making a layered cake. There needs to be a base image (Linux or Windows base images), then you can add on 
 packages/libraries to allow your application to run. Containers can be *built* using a Dockerfile. In this file you'll define the base, packages needed, and important
-necessary commands to be run. In Kubernetes it's **VERY** important to remember, containers run until the default command executes, then they terminate. 
+necessary commands to be run. In Kubernetes it's **VERY** important to remember, containers only run while the default command executes, then they terminate. 
 
 Let's look at some excerpts from our very own Nginx container. 
 
@@ -54,7 +54,7 @@ bottom left of your web shell.
    COPY index.html /usr/share/nginx/html/index.html
    EXPOSE 83/tcp
 
-To close and save the file please press ``ESC`` (escape key) use the command ``:wq``. If you make a mistake and would like to exit vim without saving, press the ``ESC`` key and use this command ``:q!``
+To close and save the file, press the escape (ESC) key to quit interactive mode. Press the : (colon) key to bring up the vim prompt, then issue the write and quite command:  **wq**. You can exit vim without saving changes by pressing : (colon) and issuing the quit forcefully command: **q!**
 
 Copying this text in the blank Dockerfile file, you'll:
 

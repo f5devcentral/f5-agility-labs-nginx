@@ -12,49 +12,55 @@ In this lab, we'll deploy an NGINX App Protect WAF policy to protect the API.
 Lab Tasks
 ---------
 
-1. Click the **Applications** drop-down in the top menu bar and select **Postman**.
+1. Click the **Applications** drop-down in the top menu bar and select **Visual Studio Code**.
 
-.. image:: images/postman_nav.png
+.. image:: images/vscode_nav.png
 
-.. caution:: It may take a moment for Postman to launch the first time.
+.. caution:: It may take a moment for Visual Studio Code to launch the first time.
 
-2. In the **Collections** tab, select the **Arcadia API** and then the **GET Transactions** item. Click **Send** and notice the response data that the API returns in the **Body** section of the window.
+2. Select **Thunder Client** from the bottom of the left menu (it looks like a lightning bolt) and authenticate the keyring with the password ``AppWorld2024!``.
+
+.. image:: images/vscode_thunder_icon.png
+
+.. image:: images/vscode_thunder_auth.png
+
+3. In the **Collections** tab, select the **Arcadia API** and then the **GET Transactions** item. Click **Send** and notice the response data that the API returns in the **Body** section of the window to the right.
 
 .. image:: images/get_transaction_pretest.png 
 
-3. Click the **POST Buy Stocks** item, then click **Send**. Again, notice the API is functioning properly. 
+4. Click the **POST Buy Stocks** item, then click **Send**. Again, notice the API is functioning properly. 
 
 .. image:: images/post_buy_stocks.png
 
-4. Click the drop-down where **POST** is selected, and change to **OPTIONS**. Click **Send**. Notice that the API responded to this request.
+5. Click the drop-down where **POST** is selected, and change to **OPTIONS**. Click **Send**. Notice that the API responded to this request.
 
 .. image:: images/options.png
 
-5. Return to **Firefox**. Click the **NIM** bookmark and log in using **lab** as the username and **AppWorld2024!** as the password. 
+6. Return to **Firefox**. Click the **NIM** bookmark and log in using **lab** as the username and **AppWorld2024!** as the password. 
 
 .. image:: images/nim_navigation_login.png
 
-6. Click on the **Instance Manager** tile.
+7. Click on the **Instance Manager** tile.
 
 .. image:: images/nim_launchpad.png
 
-7. Click **App Protect** in the left menu.
+8. Click **App Protect**, **Policies** in the left menu.
 
 .. image:: images/nim_app_protect_list.png
 
-8. Select the **NginxApiSecurityPolicy** from the policy list.
+9. Select the **NginxApiSecurityPolicy** from the policy list.
 
 .. image:: images/nginx_policy_select.png
 
-9. Click on the **Policy Versions** tab.
+10. Click on the **Versions** tab.
 
 .. image:: images/policy_versions.png
 
-10. Click on the version in the list. 
+11. Click on the version in the list. 
 
 .. image:: images/policy_version_select.png
 
-11. Review the configuration. Notice that this policy:
+12. Review the configuration. Notice that this policy:
 
 - Blocks the DELETE, OPTIONS and PUT HTTP operations, since the API does not utilize them
 - includes a custom response via JSON to provide the support ID for easier troubleshooting
@@ -199,23 +205,23 @@ Lab Tasks
       }
   }
 
-12. You can apply this policy to the Arcadia Finance app, which includes an API. Click on **Instances** in the menu bar.
+13. You can apply this policy to the Arcadia Finance app, which includes an API. Click on **Instances** in the menu bar.
 
 .. image:: images/instances_navigation.png
 
-13. Select **nginx-plus-1** from the instance list.
+14. Select **nginx-plus-1** from the instance list.
 
 .. image:: images/nginx_instance_selection.png
 
-14. Click on **Edit Config** to enter the configuration mode.
+15. Click on **Edit Config** to enter the configuration mode.
 
 .. image:: images/edit_config_nav.png
 
-15. Click the **arcadia-finance.conf** file in the left navigation pane.
+16. Click the **arcadia-finance.conf** file in the left navigation pane.
 
 .. image:: images/select_app.png
 
-16. Modify the **arcadia-finance.conf** configuration file by adding the below code to the *ssl server block* listening on port 443 directly below the line ``status_zone arcadia_server;``.
+17. Modify the **arcadia-finance.conf** configuration file by adding the below code to the *ssl server block* listening on port 443 directly below the line ``status_zone arcadia_server;``.
 
 .. code-block:: text
 
@@ -239,34 +245,34 @@ Your screen should look like the screenshot below:
 
 .. image:: images/post_edit_config.png
 
-17. Click **Publish** to deploy the changes. Click **Publish** again when prompted. You'll see a notification that the changes were published. 
+18. Click **Publish** to deploy the changes. Click **Publish** again when prompted. You'll see a notification that the changes were published. 
 
 .. image:: images/published.png
 
 Test the App Protect Policy
 ---------------------------
 
-18. Return to the  **Postman** app. Click the **GET Transactions** item in the **Arcadia API** collection.
+19. Return to **Visual Studio Code**. Click the **GET Transactions** item in the **Arcadia API** collection.
 
 .. image:: images/get_transaction_nav.png
 
-19. Click **Send**.
+20. Click **Send**.
 
 .. image:: images/get_transaction_send.png
 
-20. Notice from the response that the API is functioning properly. 
+21. Notice from the response that the API is functioning properly. 
 
 .. image:: images/get_transaction_response.png
 
-21. Now select the **POST Buy Stocks XSS Attack**, then select **Send**. The NAP WAF policy will block this attack, as the response shows. 
+22. Now select the **POST Buy Stocks XSS Attack**, then select **Send**. The NAP WAF policy will block this attack, as the response shows. 
 
 .. image:: images/post_buy_stocks_xss_attack.png
 
-22. Run the **POST Buy Stocks** item again with the **OPTIONS** action selected. Notice that this request is now blocked as the policy does not permit OPTIONS operations.
+23. Run the **POST Buy Stocks** item again with the **OPTIONS** action selected. Notice that this request is now blocked as the policy does not permit OPTIONS operations.
 
 .. image:: images/post_buy_stocks_options_blocked.png
 
-23. Now, from the **Arcadia Attacks Collections** select the **Struts2 Jakarta** item and then click **Send**. This attack is blocked, but not by the API WAF policy. Why? Because the URI is not a part of the location where you've added the policy, so this portion of the app is protected by the original NAP WAF policy.
+24. Now, from the **Arcadia Attacks Collections** select the **Struts2 Jakarta** item and then click **Send**. This attack is blocked, but not by the API WAF policy. Why? Because the URI is not a part of the location where you've added the policy, so this portion of the app is protected by the original NAP WAF policy.
 
 .. image:: images/struts2_jakarta.png
 
