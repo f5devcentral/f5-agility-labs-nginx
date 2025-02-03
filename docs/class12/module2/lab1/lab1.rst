@@ -6,8 +6,9 @@ Kubernetes - Operations
 
 
 Now that we've covered the core components of Kubernetes, it's time to put it into operations. In this module you'll create Pods, Deployments, and Services. The image above depicts how 
-we tie all these components together. When Kubernetes gets the run command, it will first look to see if the image is held locally on the cache by Kubelet. If there is not a local image, Kubelet 
+we tie all these components together. When Kubernetes gets the run command, it will first look to see if the image is held locally in the cache by Kubelet. If there is not a local image, Kubelet 
 will *pull* the image from a container registry. You have already created a namespace *test* and this will isolate resources. Kubernetes will create and assign the pods, while 
+
 the Kubelet will get the image and stand up the container. Kubernetes, through the deployment manifest, watches all the pods tagged with labels matching the tags. Then, Kubernetes
 will expose the deployment through the service manifest. This happens the same way, through matching label tags.
 
@@ -16,7 +17,7 @@ Let's jump into the operational items that make Kubernetes run.
 Operations - Container registry
 -------------------------------
 
-We'll briefly talk about *container registries*. A container registry is a storage area for storing container and the most commonly used is Docker Hub which we use for the registry during this class. When you return to your jobs however, your company will most likely use a private container registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
+We'll briefly talk about *container registries*. A container registry is a storage area for storing containers. The most commonly used registry is Docker Hub which we use for the registry during this class. When you return to your jobs however, your company will most likely use a private container registry. Hosted in one of the cloud service providers, Github or Gitlab, and 
 with some access controls. In Kubernetes this is done with a *docker-registry* secret. A secret is another Kubernetes object used for storing sensitive information.
 
 In this class, you'll not have to set any of this up.
@@ -103,7 +104,7 @@ Now, back to creating pods. You can use the *dry-run=client* feature to have Kub
 Notice the *-o* output flag. You can also ask Kubernetes to output *json* format as well. You can also direct the output to a file by using ``>``. An example would be ``kubectl run testpod --image=nginx --dry-run=client -o yaml > testpod.yaml``. Let's
 try it out.
 
-Now that your manifest file is ready, time to apply it to Kubernetes.
+Now that your manifest file is ready, it's time to apply it to Kubernetes.
 
 .. code-block:: bash
    :caption: Pod Dry Run
@@ -116,11 +117,11 @@ Now that your manifest file is ready, time to apply it to Kubernetes.
 
    kubectl apply -f testpod.yaml 
 
-Notice in the cli command we did not specify the namespace, that is because we defined the namespace in the manifest file. This is always a good practice to prevent pods from showing
-up the default namespace.
+Notice in the cli command we did not specify the namespace. That is because we defined the namespace in the manifest file. This is always a good practice to prevent pods from showing
+up in the default namespace.
 
 
-One last step will walk through in this section is the *edit* command. To do this, we will edit the pod we've just created. Currently you are running *testpod* on an older version of 
+The last step we will walk through in this section is the *edit* command. To do this, we will edit the pod we've just created. Currently you are running *testpod* with an older version of 
 Nginx. We will edit the manifest to update the version. 
 
 .. code-block:: bash
@@ -140,7 +141,7 @@ We will focus on this line in the returned data:
        imagePullPolicy: IfNotPresent
 
 Arrow your cursor down to the *image* line and press ``i``. This command allows you to edit the file. You'll be changing the tagged version from **1.21** to **1.25**. Once
-this change is made use the vim write and quit command, press:
+this change is made use the vim write and quit command below:
 
 |  ``ESC`` (escape key)
 |  ``:wq``
@@ -153,14 +154,14 @@ You should see the pod was edited.
 
    pod/testpod edited
 
-Now to verify the updated pod we'll use the describe command.
+Now, to verify the updated pod, we'll use the describe command.
 
 .. code-block:: bash
    :caption: Describe
 
    kubectl describe pod testpod -n test
 
-Output from describe should look like the below. Showing Kubernetes, along with Kubelet, have terminated the existing container version 1.21 and pulled the container image, created and started the container.
+The output from describe should look like the output below. It shows Kubernetes, along with Kubelet, have terminated the existing container version, 1.21, pulled the container image, and created and started the container.
 
 .. code-block:: bash
    :emphasize-lines: 7-10
@@ -199,15 +200,15 @@ You should see the deployment has run from the below sample returned output:
    NAME         READY   UP-TO-DATE   AVAILABLE   AGE
    lab-deploy   3/3     3            3           10s
 
-Let's validate your deployment, your output should match the above.
+Let's validate your deployment. Your output should match the output above.
 
 .. code-block:: bash
    :caption: Get Deployment
 
    kubectl get deploy lab-deploy -n test 
 
-Now you'll describe the deployment, take note of the lines showing **Selector** info (what pods will be in the deployment), **Replicas** how many pods are desired to 
-be up and running.
+Now you'll describe the deployment. Take note of the lines showing **Selector** info (what pods will be in the deployment) and **Replicas** (how many pods are desired to 
+be up and running).
 
 .. code-block:: 
 
@@ -228,7 +229,7 @@ Now you'll delete the deployment
 
    kubectl delete deploy lab-deploy -n test
 
-For this section you'll be doing some of the exact steps we did for Pod's section. We'll cover some important parts of the manifest file that enable the deployment to build 
+For this section you'll be doing some of the exact steps we did for the Pods section. We'll cover some important parts of the manifest file that enable the deployment to build 
 containers for the deployment.
 
 This is an example deployment manifest to explain directives.
@@ -263,7 +264,7 @@ This is an example deployment manifest to explain directives.
 | **spec** specification that contains other manifest resources. Here the spec directive is defining the deployment with pod count and container images
 
 - **replicas** specifies how many pods are expected to be running
-- **selector** looks for matching labels will become part of the deployment
+- **selector** looks for matching labels that will become part of the deployment
 - **template** sets the build for the containers that are to become part of the deployment; sets labels, container image and ports
 
 .. code-block:: bash
@@ -273,8 +274,8 @@ This is an example deployment manifest to explain directives.
 
 .. note:: You can use the command ``cat lab-deploy.yaml`` to view the manifest file
 
-As you've done in previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and again using the *dry-run*
-command to not submit the command to Kubernetes and output it to file. Now that the manifest file has been created, time to let Kubernetes work its magic.
+As you've done in a previous lab, the above command will create a new deployment named *lab-deploy*. The command specifies the image version, replica count, namespace and will again use the *dry-run*
+command to not submit the command to Kubernetes and instead output it to file. Now that the manifest file has been created, it's time to let Kubernetes work its magic.
 
 .. code-block:: bash
    :caption: Deploy
@@ -286,7 +287,7 @@ You should now see you deployment has been created.
 ``deployment.apps/lab-deploy created``
 
 Kubernetes has become so popular because of its many features in how it can run workloads and be customized. One of these impressive features is *scaling*. Scaling allows 
-you to increase or decrease pod counts. You can even set scaling to occur during resource consumption. When configuring scaling to happen based on consumption (or lack of), this
+you to increase or decrease pod counts. You can even set scaling to occur during resource consumption. When configuring scaling happens based on consumption (or lack of), this
 is called *auto-scaling*. In this lab, we will focus on manually scaling resources in the deployment. To do this, we will adjust the number of *replicas* specified in the manifest.
 
 
@@ -407,14 +408,14 @@ Test connectivity by issuing a curl command to a Node IP Address, remember we ar
 
    curl http://10.1.1.6:31612
 
-From inside the cluster, the new service (thanks to CoreDNS) will have an A record entry. The format for the fqdn entry is:
+From inside the cluster, the new service (thanks to CoreDNS) will have an A record entry. The format for the FQDN entry is:
 
 - service name
 - namespace
 - svc (for service)
 - cluster.local
 
-Here is an example of the *lab-deploy-svc* fqdn:
+Here is an example of the *lab-deploy-svc* FQDN:
 
 *lab-deploy-svc.test.svc.cluster.local*
 
