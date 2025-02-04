@@ -1,5 +1,5 @@
-Lab 1 - Expose the application
-##############################
+Expose the application
+######################
 
 For this lab, we will use the following configuration
 
@@ -18,11 +18,9 @@ a) Web App & API Protection → Load Balancers → Origin Pool → Add Origin Po
       **Port**                          443 
 
       **TLS**                           Enable
-
-      **Origin Server Verification**    Skip Verification 
       ==============================    ========================================================================================
 
-b) In the same screen → Origin Servers → Add Item → Fill the bellow data → Apply → Save and exit
+b) In the same screen → Origin Servers → Add Item → Fill the bellow data → Apply 
 
    .. table:: 
       :widths: auto
@@ -30,12 +28,28 @@ b) In the same screen → Origin Servers → Add Item → Fill the bellow data �
       ====================    ========================================================================================
       Object                  Value
       ====================    ========================================================================================
-      **DNS name**            $$hostArcadia$$
+      **DNS name**            The saved dynamic hostname of the application
       ====================    ========================================================================================
 
-   .. raw:: html   
+c) In the same screen → Under TLS click View configuration → Fill the bellow data → Apply → Save and exit
 
-      <script>c6m1l1a();</script>  
+   .. table:: 
+      :widths: auto
+
+      ==============================    ========================================================================================
+      Object                            Value
+      ==============================    ========================================================================================
+      **Origin Server Verification**    Skip Verification
+      ==============================    ========================================================================================      
+
+
+
+
+
+
+   .. image:: ../pictures/01.gif
+      :align: center
+      :class: bordered-gif
 
 2. Create the HTTP LB
 
@@ -49,20 +63,18 @@ a) Web App & API Protection → Load Balancers → HTTP Load Balancer → Add HT
       ====================================    =================================================================================================
       **Name**                                arcadia-re-lb
                      
-      **Domains**                             arcadia-re-$$makeId$$.workshop.emea.f5se.com
+      **Domains**                             arcadia-re-$$makeId$$.lab-sec.f5demos.com
 
       **Load Balancer Type**                  HTTP
                                                                                  
       **Automatically Manage DNS Records**    Enable 
 
-      **Origin Pools**                        Click **Add Item**, for the **Origin Pool** select $$namespace$$/arcadia-public-endpoint → Apply
+      **Origin Pools**                        Click **Add Item**, for the **Origin Pool** select <dynamic namspace>/arcadia-public-endpoint → Apply
       ====================================    =================================================================================================
 
-   .. raw:: html   
-
-      <script>c6m1l1b();</script>  
+   .. image:: ../pictures/02.gif
+      :align: center      
+      :class: bordered-gif
 
 3. So far, Arcadia is not protected but exposed all over the world on all F5XC RE. 
-Check your Arcadia application is exposed and reachable from the F5XC Global Network by browsing to :ext_link:`http://arcadia-re-$$makeId$$.workshop.emea.f5se.com`
-
-.. warning:: Some Service Providers have a very long recursive cache. It can take several minutes to get a DNS response. You can change your DNS server to 1.1.1.1 or 8.8.8.8 to fix that.
+Check your Arcadia application is exposed and reachable from the F5XC Global Network by browsing to the `Arcadia application <http://arcadia-re-$$makeId$$.lab-sec.f5demos.com>`_.

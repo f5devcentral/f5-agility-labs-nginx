@@ -3,30 +3,15 @@ Accessing the UDF resources
 
 Once the lab has started bellow are the resources that we will need to access.
 
-1. Our interaction with the **AI Chatbot** will be done through the **Arcadia Crypto** application. Click **Access** on the **Microk8s** component and choose **ARCADIA ONPREM**.
+1. Within the UDF lab we have our application hosted. In order to be able to follow the lab we must get the **dynamic hostname** off the application that we need to protect.  
+
+   Click **Access** on the **Microk8s** component and choose **Arcadia OnPrem**.
 
    .. image:: ../pictures/02.png
 
-   | Login with the following credentials:
-
-   | **Username:** sorin@nginx.com
-   | **Password:** nginx
+   Copy and save in notepad the **Hostname** of the Arcadia application that we will protect.
 
    .. image:: ../pictures/03.png
-
-   | Once logged in click on **Exchange**.
-
-   .. image:: ../pictures/04.png
-
-   | On the bottom right side of the page you have the **AI Assistant**
-     click on the **+** sign to open the chat.
-
-   .. image:: ../pictures/05.png
-
-   | When you need to reset the current **chat** click you can click the
-     reset button.
-
-   .. image:: ../pictures/06.png
 
 2. For the last part of the lab for the AI Gateway configuration will be done through the **Jumphost**, click **Access** and choose **WEB SHELL**.  
 

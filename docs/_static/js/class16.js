@@ -83,5 +83,3 @@ document.addEventListener("DOMContentLoaded", function() {
     const { makeId } = data;
     replacePlaceholderWithValue('makeId', makeId);    
 });  
-
-//const info = JSON.parse(localStorage.getItem('data'));  

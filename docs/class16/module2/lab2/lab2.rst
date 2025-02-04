@@ -1,9 +1,9 @@
-Lab 2 - Testing and Visibility
+Testing and Visibility
 ##############################
 
 In order to make sure all is working we will need to login into the application and look at the relevant dashboards.
 
-1. Login into the app while using the **arcadia-re-lb** load balancer :ext_link:`http://arcadia-re-$$makeId$$.workshop.emea.f5se.com`
+1. Login into the app while using the **arcadia-re-lb** load balancer `Arcadia application <http://arcadia-re-$$makeId$$.lab-sec.f5demos.com>`_. Go to the **Exchange** window, open the **AI Assistant** chat box and have a discussion.
 
    .. table::
       :widths: auto
@@ -16,14 +16,20 @@ In order to make sure all is working we will need to login into the application 
       **Password**                                  nginx
       ==========================================    ========================================================================================   
 
-2. Go to the **Exchange** window, open the **AI Assistant** chat box and have a discussion.
+   .. image:: ../pictures/03.gif
+      :align: center
+      :class: bordered-gif
 
 
-3. Browse to Web App & API Protection → Dashboards → Performance Dashboard → Under **Load Balancers** click **arcadia-re-lb**
+2. Browse to Web App & API Protection → Dashboards → Performance Dashboard → Under **Load Balancers** click **arcadia-re-lb**
 
-a) Observe the different overall statistics provided by the **Dashboard** dashboard
+   a) Observe the different overall statistics provided by the **Dashboard** dashboard
 
-b) Observe the requests and plethora of information that can be seen for each request provided by the **Requests** dashboard
+   b) Observe the requests and plethora of information that can be seen for each request provided by the **Requests** dashboard
+
+   .. image:: ../pictures/04.gif
+      :align: center
+      :class: bordered-gif
 
 
 

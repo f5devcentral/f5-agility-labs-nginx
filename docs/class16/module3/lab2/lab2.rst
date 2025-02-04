@@ -36,9 +36,9 @@ Now, let's add data to the RAG system.
 
 1. Download `companyinfo`_ file which contains Arcadia Crypto specific information.
 
-.. _companyinfo: ../../../_static/files/company_info.txt
+.. _companyinfo: ../../../_static/company_info.txt
 
-2. Browse to :ext_link:`http://arcadia-re-$$makeId$$.workshop.emea.f5se.com/v1/ai-rag/` and upload the **companyinfo** file
+2. Browse to `Arcadia RAG system <http://arcadia-re-$$makeId$$.lab-sec.f5demos.com/v1/ai-rag/>`_ :ext_link:`http://arcadia-re-$$makeId$$.workshop.emea.f5se.com/v1/ai-rag/` and upload the **companyinfo** file
 
 3. Enter :code:`Who is the Arcadia CEO?` in the **Query** and click **Send**.
    You will see up to 5 different text blocks of relevant information. This is the same information that the **AI Orchestrator** will retrive for this prompt
