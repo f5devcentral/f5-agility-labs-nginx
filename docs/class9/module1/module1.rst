@@ -547,8 +547,7 @@ syntax).
 
 .. code:: shell
 
-	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k 
-request -i <YOURCLIENTID> -s <YOURCLIENTSECRET> -x https://10.1.10.9/f5-oauth2/v1/.well-known/openid-configuration
+	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k request -i <YOURCLIENTID> -s <YOURCLIENTSECRET> -x https://10.1.10.9/f5-oauth2/v1/.well-known/openid-configuration
 
 **screenshot of output**
 
