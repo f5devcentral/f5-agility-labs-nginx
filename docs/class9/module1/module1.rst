@@ -548,8 +548,7 @@ syntax).
 .. code:: shell
 
 	./nginx-openid-connect/configure.sh -h nginxdemo.f5lab.com -k 
-request -i <YOURCLIENTID> -s <YOURCLIENTSECRET> -x 
-https://10.1.10.9/f5-oauth2/v1/.well-known/openid-configuration
+request -i <YOURCLIENTID> -s <YOURCLIENTSECRET> -x https://10.1.10.9/f5-oauth2/v1/.well-known/openid-configuration
 
 **screenshot of output**
 
@@ -591,8 +590,7 @@ openid_connect_configuration.conf
 
 .. code:: shell
 
-	cp frontend.conf openid_connect.js openid_connect.server_conf 
-openid_connect_configuration.conf /etc/nginx/conf.d/
+	cp frontend.conf openid_connect.js openid_connect.server_conf openid_connect_configuration.conf /etc/nginx/conf.d/
 
 4. After copying files change directory to '/etc/nginx/conf.d/'.
 
@@ -780,12 +778,12 @@ instances to Instance Manager.
 
 .. image:: ../images/instance_manager_main-w.jpg
 
-5. Copy and run the below command on the NGINX 1 server to install the 
+5. Change to home directory and copy/run the below command on the NGINX 1 server to install the 
 agent and add the NGINX 1 server to the 'default' instance group.
 
 .. code:: shell
 
-	curl -k -O  https://nim.f5lab.com/install/nginx-agent
+	cd ~ && curl -k -O  https://nim.f5lab.com/install/nginx-agent
         sudo sh nginx-agent --instance-group default
 
 6. Once the installation is complete, start the nginx agent.
@@ -885,7 +883,7 @@ configuation.
    .. image:: ../images/big-ip-6.jpg
 
 11. Go back to Firefox, open a new tab, and navigate to 
-http://nginxdemo.f5lab.com:8010 again.
+https://nginxdemo.f5lab.com:8010 again.
     Log back in as user01 with password: appworld2024, as needed.
 
    .. image:: ../images/test-gslb-1.jpg
@@ -908,7 +906,7 @@ has synchronized.
 
 .. code:: shell
 
-   curl -i http://localhost:8010/api/8/http/keyvals/oidc_access_tokens
+   curl -i -k https://localhost:8010/api/8/http/keyvals/oidc_access_tokens
 
 For example, below we see the access token on nginx-2. Run the same 
 command on nginx-1 and nginx-3 and you should see the same token.
