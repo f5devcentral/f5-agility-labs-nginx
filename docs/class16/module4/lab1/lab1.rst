@@ -10,7 +10,6 @@ We will enable and configure the following:
 1. App Firewall - F5XC Web Application Firewall based on negative security
 2. API discovery and protection based on Arcadia Crypto OpenApi Spec which will allow us to protect the APIs and enforce positive security
 3. Bot protection
-4. DDOS protection
 
 We have already published the application, now we will finish the security configuration.
 
@@ -29,10 +28,9 @@ We have already published the application, now we will finish the security confi
       **Enforcement Mode**              blocking
       ==============================    ========================================================================================
 
-
-   .. raw:: html   
-
-      <script>c6m3l1a();</script>  
+   .. image:: ../pictures/01.gif
+      :align: center
+      :class: bordered-gif
 
 2. Create an **API definition** based on the pre uploaded Arcadia Crypto OpenApi Spec 
 
@@ -46,13 +44,12 @@ We have already published the application, now we will finish the security confi
       ===============================    ========================================================================================
       **Name**                           arcadia-api-definition
       
-      **OpenAPI Specification Files**    **Add Item** → shared/arcadia-crypto-oas/v5-24-09-04
+      **OpenAPI Specification Files**    **Add Item** → shared/api-arcadia-oas/v1-25-02-02
       ===============================    ========================================================================================
 
-
-   .. raw:: html   
-
-      <script>c6m3l1b();</script>        
+   .. image:: ../pictures/02.gif
+      :align: center
+      :class: bordered-gif      
 
 3. Now we will go to the **Load Balancer** config and do the rest:
 
@@ -68,8 +65,12 @@ We have already published the application, now we will finish the security confi
         ==================================    ========================================================================================
         **Web Application Firewall (WAF)**    Enable
     
-        **Enable**                            $$namespace$$/arcadia-waf
+        **Enable**                            <dynamic namespace>/arcadia-waf
         ==================================    ========================================================================================
+
+      .. image:: ../pictures/03.gif
+         :align: center
+         :class: bordered-gif  
 
    b) Enable **BOT protection**
 
@@ -81,7 +82,7 @@ We have already published the application, now we will finish the security confi
         ==========================================    ========================================================================================
         **Bot Defense**                               Enable
     
-        **Bot Defense Region**                        EU
+        **Bot Defense Region**                        US
         ==========================================    ========================================================================================
 
       On the same place click **Configure** under **Bot Defense Policy** → Configure → Add Item → Fill the bellow data → Apply → Apply → Apply
@@ -96,10 +97,16 @@ We have already published the application, now we will finish the security confi
     
           **HTTP Methods**                              POST
 
+          **Endpoint Label**                            Undefined
+
           **Prefix**                                    /v1/ai/chat
 
           **Select Bot Mitigation action**              Block      
           ==========================================    ========================================================================================
+
+      .. image:: ../pictures/04.gif
+         :align: center
+         :class: bordered-gif            
 
    c) Enable **API Discovery** and **API Protection**
 
@@ -111,7 +118,7 @@ We have already published the application, now we will finish the security confi
         ==========================================    ========================================================================================
         **API Discovery**                             Enable
    
-        **API Definition**                            Enable → Choose **$$namespace$$/arcadia-api-definition**
+        **API Definition**                            Enable → Choose **<dynamic namespace>/arcadia-api-definition**
 
         **Validation**                                API Inventory
         ==========================================    ========================================================================================    
@@ -148,6 +155,8 @@ We have already published the application, now we will finish the security confi
         **Base Path**                                 /v1
         ==========================================    ========================================================================================            
 
-   .. raw:: html   
+      .. image:: ../pictures/05.gif
+         :align: center
+         :class: bordered-gif  
 
-      <script>c6m3l1c();</script>                 
+        
