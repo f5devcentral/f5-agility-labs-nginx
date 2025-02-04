@@ -40,8 +40,8 @@ What is Generative AI?
 
 Generative AI (Gen AI) is a class of artificial intelligence systems
 designed to generate new content, such as text, images, audio, video,
-and even code, based on patterns learned from exisiting data. Moving beyond traditional
-AI, which focused primarily on classicification and prediction tasks,
+and even code, based on patterns learned from existing data. Moving beyond traditional
+AI, which focused primarily on classification and prediction tasks,
 generative AI creates original output that mimics human creativity.
 
 What are Large Language Models (LLMs)?
@@ -145,7 +145,7 @@ What are the use cases for AI Gateway?
 AIGW acts as a hub for integration and streamlining of AI applications
 with AI services (OpenAI, Anthropic, Mistral, Ollama, etc.). Now that we
 have an understanding of what AI Gateway is and how it works we will
-need to achive the bellow architecture.
+need to achieve the below architecture.
 
 General use cases:
 
@@ -184,7 +184,7 @@ Where does AI Gateway fit in the data flow?
   NGINX). This proxy can then manage Layer 7 traffic and provide WAF
   protections before traffic reached AIGW. Once traffic reaches AIGW, it
   is handling the AI specific traffic and focuses on analyzing the
-  prompt and taking required action based on AIGW’s configuration.
+  prompt and taking required action based on AIGW's configuration.
 
 Lab Outline
 -----------

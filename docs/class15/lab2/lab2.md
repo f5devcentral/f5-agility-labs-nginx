@@ -26,7 +26,7 @@ Once the lab has completed starting up, we will use two different terminals. One
 
    The **AIGW Core** and **AIGW Processors** are running as containers. You can verify they are running by paste in the console the following command `docker ps`.
 
-   Here we will be able to watch the **AI Gateway** logs and live behaviour. Run `docker logs aigw-aigw-1 -f`, you will be able to see all live logs
+   Here we will be able to watch the **AI Gateway** logs and live behavior. Run `docker logs aigw-aigw-1 -f`, you will be able to see all live logs
 
 3. Our interaction with the **AI Chatbot** will be done through the **Arcadia Crypto** application. Click **Access** on the **Microk8s** component and choose **ARCADIA ONPREM**.
 

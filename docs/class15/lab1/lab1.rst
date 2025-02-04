@@ -13,7 +13,7 @@ There are several key configuration components to understand as well:
 +------------------+------------------------------------------------------+
 | Component        | Description                                          |
 +==================+======================================================+
-| ``routes``       | the applications exposed by AIGW and madeaccssible   |
+| ``routes``       | the applications exposed by AIGW and mad accessible   |
 |                  | to Gen AI apps and users                             |
 +------------------+------------------------------------------------------+
 | ``services``     | the LLM models AIGW will route requests to           |
@@ -25,7 +25,7 @@ There are several key configuration components to understand as well:
 | ``profiles``     | applies processors to incoming and response requests |
 +------------------+------------------------------------------------------+
 | ``processors``   | the AI middleware that provide enhancements,         |
-|                  | protections and peformance improvements for AI       |
+|                  | protections and performance improvements for AI       |
 |                  | applications                                         |
 +------------------+------------------------------------------------------+
 
@@ -131,7 +131,7 @@ Routes
 ~~~~~~
 
 ``Routes`` define the endpoints that F5 AI gateway listens for and the
-policy that applices to each route. ``routes`` have the following
+policy that applies to each route. ``routes`` have the following
 settings:
 
 .. code:: yaml
@@ -161,8 +161,8 @@ The ``routes`` components that can be configured:
 Policies
 ~~~~~~~~
 
-``Policies`` are a set of resuable rules that pick the best processing
-profile for a given request. These are evaulated at runtime and
+``Policies`` are a set of reusable rules that pick the best processing
+profile for a given request. These are evaluated at runtime and
 dynamically apply a processing profile for each request that is received
 by F5 AIGW.
 
@@ -220,7 +220,7 @@ Processors
 ~~~~~~~~~~
 
 ``Processors`` are the available processors that have been enabled to be
-used by AIGW. They are applied to incoming and reponse requests using
+used by AIGW. They are applied to incoming and response requests using
 ``profiles``. Different processors can be used for different use cases.
 For example, a processors can look for **prompt injection** attacks
 while others can inspect requests for **pii** data. You can also apply
@@ -276,7 +276,7 @@ the ``profiles`` section in ``aigw.yaml``.
 processors cannot modify the content of the input or output. They can
 only add metadata and tags to the content.
 
-Processors running in parralel example:
+Processors running in parallel example:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code:: yaml

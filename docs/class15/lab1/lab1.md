@@ -15,11 +15,11 @@ There are several key configuration components to understand as well:
 
 | Component | Description |
 | ----- | -----|
-| `routes` | the applications exposed by AIGW and made accssible to Gen AI apps and users |
+| `routes` | the applications exposed by AIGW and made accessible to Gen AI apps and users |
 | `services` | the LLM models AIGW will route requests to |
 | `policies` | a set of reusable rules that are evaluated at runtime on a per-request basis, picking the best processing profile for the request |
 | `profiles` | applies processors to incoming and response requests |
-| `processors` | the AI middleware that provide enhancements, protections and peformance improvements for AI applications |
+| `processors` | the AI middleware that provide enhancements, protections and performance improvements for AI applications |
 
 ### Component diagram
 
@@ -97,7 +97,7 @@ adminServer:
 ```
 
 ### Routes
-`Routes` define the endpoints that F5 AI gateway listens for and the policy that applices to each route. `routes` have the following settings:
+`Routes` define the endpoints that F5 AI gateway listens for and the policy that applies to each route. `routes` have the following settings:
 
 ```yaml
 routes:
@@ -116,7 +116,7 @@ The `routes` components that can be configured:
 
 ### Policies
 
-`Policies` are a set of resuable rules that pick the best processing profile for a given request. These are evaulated at runtime and dynamically apply a processing profile for each request that is received by F5 AIGW.
+`Policies` are a set of reusable rules that pick the best processing profile for a given request. These are evaluated at runtime and dynamically apply a processing profile for each request that is received by F5 AIGW.
 
 ```yaml
 policies:
@@ -166,7 +166,7 @@ profiles:
 
 ### Processors
 
-`Processors` are the available processors that have been enabled to be used by AIGW. They are applied to incoming and reponse requests using `profiles`. Different processors can be used for different use cases. For example, a processors can look for **prompt injection** attacks while others can inspect requests for **pii** data. You can also apply multiple processors to any given request or response.
+`Processors` are the available processors that have been enabled to be used by AIGW. They are applied to incoming and response requests using `profiles`. Different processors can be used for different use cases. For example, a processors can look for **prompt injection** attacks while others can inspect requests for **pii** data. You can also apply multiple processors to any given request or response.
 
 ```yaml
 processors:
@@ -212,7 +212,7 @@ By default, when you apply multiple processors to a request, they will run seque
 
 **NOTE:** When running `processors` with `concurrency` enabled, the processors cannot modify the content of the input or output. They can only add metadata and tags to the content.
 
-### Processors running in parralel example:
+### Processors running in parallel example:
 
 ```yaml
 profiles:

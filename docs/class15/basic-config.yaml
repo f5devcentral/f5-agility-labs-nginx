@@ -1,6 +1,6 @@
 mode: standalone
 
-## Core port lisetning for requests
+## Core port listening for requests
 server:
   address: :4141
 
