@@ -13,7 +13,7 @@ There are several key configuration components to understand as well:
 +------------------+------------------------------------------------------+
 | Component        | Description                                          |
 +==================+======================================================+
-| ``routes``       | the applications exposed by AIGW and mad accessible   |
+| ``routes``       | the applications exposed by AIGW and made accessible   |
 |                  | to Gen AI apps and users                             |
 +------------------+------------------------------------------------------+
 | ``services``     | the LLM models AIGW will route requests to           |
