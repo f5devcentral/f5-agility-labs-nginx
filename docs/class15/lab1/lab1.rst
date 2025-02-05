@@ -13,8 +13,8 @@ There are several key configuration components to understand as well:
 +------------------+------------------------------------------------------+
 | Component        | Description                                          |
 +==================+======================================================+
-| ``routes``       | the applications exposed by AIGW and made accessible   |
-|                  | to Gen AI apps and users                             |
+| ``routes``       | the applications exposed by AIGW and made            |
+|                  | accessible to Gen AI apps and users                  |
 +------------------+------------------------------------------------------+
 | ``services``     | the LLM models AIGW will route requests to           |
 +------------------+------------------------------------------------------+
@@ -25,7 +25,7 @@ There are several key configuration components to understand as well:
 | ``profiles``     | applies processors to incoming and response requests |
 +------------------+------------------------------------------------------+
 | ``processors``   | the AI middleware that provide enhancements,         |
-|                  | protections and performance improvements for AI       |
+|                  | protections and performance improvements for AI      |
 |                  | applications                                         |
 +------------------+------------------------------------------------------+
 
