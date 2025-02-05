@@ -5,17 +5,17 @@ One of the AIGW capabilities is to use processors to tag prompts and
 make routing decisions to the correct LLM.
 
 We are going to configure our ``language-id`` **processor**. The
-processor will indetify the prompt language and it will tag it so that
+processor will identify the prompt language and it will tag it so that
 the **AIGW Core** will route it to a specialized LLM.
 
 In our application we want to fully support the French language. To
-achive this we have deployed a specialized model ( mistral ) for the
+achieve this we have deployed a specialized model ( mistral ) for the
 French language.
 
 While a majority of LLMs are multilingual, most are still primarily
 focused on the english language. There will be scenarios where certain
 models will the best choice based on a language however when building an
-application, you might enounter the need to only call upon that specific
+application, you might encounter the need to only call upon that specific
 model as needed.
 
 In those cases, you can leverage smart routing and the ``language-id``
@@ -64,7 +64,7 @@ using the F5 built ``prompt-injection`` processor.
 3. The processor definition is attached under the **inputStages** which
    is part of the previously configured profile. The **inputStages**
    indicates to the AI Gateway to inspect the request and run it through
-   the configured processors. When the processor will clasify the prompt
+   the configured processors. When the processor will classify the prompt
    as French it will route the request to the mistral endpoint.
 
    .. code:: yaml

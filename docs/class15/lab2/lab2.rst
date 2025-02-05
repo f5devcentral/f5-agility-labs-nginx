@@ -39,7 +39,7 @@ see the logs.
    command ``docker ps``.
 
    Here we will be able to watch the **AI Gateway** logs and live
-   behaviour. Run ``docker logs aigw-aigw-1 -f``, you will be able to
+   behavior. Run ``docker logs aigw-aigw-1 -f``, you will be able to
    see all live logs
 
 3. Our interaction with the **AI Chatbot** will be done through the

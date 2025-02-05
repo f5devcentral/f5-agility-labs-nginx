@@ -8,7 +8,7 @@ the most relevant parts of the flow.
 
 **Front End Application**
 
-This is the **AI Assistant** chatbot where you are interracting.
+This is the **AI Assistant** chatbot where you are interacting.
 
 **AI Orchestrator**
 
@@ -87,7 +87,7 @@ Understanding the **AI Gateway** initial config
            profiles:
            - name: default
 
-4. Last we combine everything by defiing a **route** which is the entry
+4. Last we combine everything by defining a **route** which is the entry
    point that the AI Gateway is listening with the policy.
 
    .. code:: yaml
