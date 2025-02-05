@@ -8,66 +8,36 @@ Now that we have an understanding of what AI Gateway is and how it works we will
 
 1. First we need to modify the Arcadia Crypto App to point to the **AIGW** instead of the Ollama endpoint
 
-   Go to the **UDF Deployment** →  **Components** → Click **Access** on **MicroK8s** → **Webshell**
+   Go to the **UDF Deployment** →  **Components** → Click **Access** on **Jumphost** → **Webshell**
 
    Copy paste the bellow command.
 
    .. code-block:: console
 
-      sed -i "s/$$ollama_public_ip$$:11434/10.1.1.5:4141/g" /home/ubuntu/arcadia_crypto/arcadia.yaml
-      kubectl --kubeconfig /home/ubuntu/.kube/config apply -f /home/ubuntu/arcadia_crypto/arcadia.yaml
+      sed -E -i 's/([0-9]{1,3}.){3}[0-9]{1,3}:11434/10.1.1.5:4141/g' /home/ubuntu/configs/arcadia.yaml
+      kubectl --kubeconfig /home/ubuntu/.kube/config apply -f /home/ubuntu/configs/arcadia.yaml
 
-2. Next we need to prepare the AIGW configuration. At the moment **AI Gateway** is in early access and the configuration will be done through **yaml** files.
+   .. image:: ../pictures/01.gif
+      :align: center      
+      :class: bordered-gif  
 
-   Go to the **UDF Deployment** →  **Components** → Click **Access** on **AI Gateway** → **Webshell**.
 
-   Once we got the linux bash go to **/home/ubuntu/aigw/** directory, all config will be done here.
-
+   Next we need to push the AIGW configuration. At the moment **AI Gateway** is in early access and the configuration will be done through **yaml** files.
+      
    .. code-block:: console
 
-      cat << EOF > /home/ubuntu/aigw/initial_config.yaml
-      mode: standalone
-      adminServer:
-        address: :8080
-      server:
-        address: :4141
-      
-      # The routes determine on what URL path the AIGW is listening
-      routes:
-        - path: /api/chat
-          policy: arcadia_ai_policy
-          timeoutSeconds: 600
-          schema: openai
-      
-      # What policy is applied to the route
-      policies:
-        - name: arcadia_ai_policy
-          profiles:
-            - name: default      
-      
-      # To what LLM endpoint we forward the request to
-      services:
-        - name: ollama
-          executor: http    
-          config:
-            endpoint: "http://$$ollama_public_ip$$:11434/api/chat"
-            schema: ollama-chat  
-            
-      # What do we do with the request, at the moment we just forward it
-      profiles:
-        - name: default
-          services:
-            - name: ollama
-      EOF
+      curl --data-binary "@/home/ubuntu/configs/aigw_lab2.yaml" http://10.1.1.5:8080/v1/config
 
-3. Now that we got our initial config ready bring up the **AI Gateway** with docker compose.
 
-   .. code-block:: console
 
-      docker compose up -d
+2. Go to the **UDF Deployment** →  **Components** → Click **Access** on **AI Gateway** → **Webshell**
 
-3. Bring up the logs to see the traffic going through the **AI Gateway* with the bellow command and go chat with the **ChatBot**
+   Bring up the logs to see the traffic going through the **AI Gateway** with the bellow command and go chat with the **ChatBot**
 
    .. code-block:: console
 
       docker logs aigw-aigw-1 -f
+
+   .. image:: ../pictures/02.gif
+      :align: center      
+      :class: bordered-gif      
