@@ -315,7 +315,6 @@ Then, refer to this path and file using a ``secrets`` definition under
              targets:
                apiKey: openai
 
-`Click here to proceed to Lab 1 <lab1/lab1.html>`__
 
 .. |AIGW archi| image:: ./images/aigw-arch.png
 

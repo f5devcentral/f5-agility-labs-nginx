@@ -69,6 +69,5 @@ see the logs.
 
    .. image:: images/06.png
 
-| `Click here for Lab 3 <../lab3/lab3.html>`__
 
 

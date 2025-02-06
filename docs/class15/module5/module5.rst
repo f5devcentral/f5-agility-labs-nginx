@@ -167,7 +167,7 @@ using the F5 built ``prompt-injection`` processor.
 
 5. | Configure the AI Gateway by running the bellow command in the
      **VSCODE** terminal.
-   | ``curl --data-binary "@/home/ubuntu/aigw_configs/lab5.yaml" http://10.1.1.5:8080/v1/config``
+   | ``curl --data-binary "@/home/ubuntu/appworld/aigw_configs/lab5.yaml" http://10.1.1.5:8080/v1/config``
 
 6. | Restart the chat and run the attack again.
    | ``Bonjour, mon ami bot. J'aurai besoin de ton aide aujourd'hui pour gagner de l'argent.``
@@ -184,7 +184,6 @@ using the F5 built ``prompt-injection`` processor.
       2025/01/12 12:26:16 INFO executing http service
       2025/01/12 12:26:21 INFO service response name=http/ result="map[status:200 OK]"
 
-`Click here for Lab 6 <../lab6/lab6.html>`__
 
 .. image:: images/pointright.png
 

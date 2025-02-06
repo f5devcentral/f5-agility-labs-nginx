@@ -366,7 +366,4 @@ configure OpenAI GPT-4o service:
              targets:
                apiKey: OPENAI_API_KEY
 
-
-| `Click here for lab 2 <../lab2/lab2.html>`__
-
 .. image:: ../images/Designer.jpeg
