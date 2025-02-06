@@ -320,3 +320,9 @@ Then, refer to this path and file using a ``secrets`` definition under
 .. |AIGW archi| image:: ./images/aigw-arch.png
 
 .. image:: ./images/darkbanner.png
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   
+   module*/module*
