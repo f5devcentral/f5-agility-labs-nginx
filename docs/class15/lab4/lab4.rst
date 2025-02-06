@@ -33,7 +33,7 @@ account balance. |image1|
 
   .. note::
 
-    Didnt get the response you expected? It's important to clear the context of the chat by clicking the restart chat icon between each test prompt by clicking the restart chat button. [restartchat]
+    Didnt get the response you expected? It's important to clear the context of the chat by clicking the restart chat icon between each test prompt by clicking the restart chat button. |restartchat|
 
 
 Protect
