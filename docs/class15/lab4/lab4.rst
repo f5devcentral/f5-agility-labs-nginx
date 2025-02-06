@@ -30,6 +30,12 @@ Attack
 The account information that has been retrieved is different than our
 account balance. |image1|
 
+
+  .. note::
+
+    Didnt get the response you expected? It's important to clear the context of the chat by clicking the restart chat icon between each test prompt by clicking the restart chat button. [restartchat]
+
+
 Protect
 -------
 
@@ -157,3 +163,4 @@ In the above:
 | `Click here for Lab 5 <../lab5/lab5.html>`__
 
 .. |image1| image:: images/00.png
+.. |restartchat| image:: images/restartchat.png
