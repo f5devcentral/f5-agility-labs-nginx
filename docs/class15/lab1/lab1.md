@@ -4,7 +4,7 @@
 
 # Understanding F5 AI Gateway components and preparing the lab
 [AI Gateway solution components](#there-are-two-solution-components-to-aigw)    
-[Starting the ab](#starting-the-lab)
+[Starting the lab](#starting-the-lab)
 
 
 # There are two solution components to AIGW:  
