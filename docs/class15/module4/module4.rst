@@ -1,4 +1,4 @@
-Module 4 - LLM01 Prompt Injection Attack
+Module 4 - LLM01: Prompt Injection Attack
 ========================================
 
 What is a prompt-injection attack?
