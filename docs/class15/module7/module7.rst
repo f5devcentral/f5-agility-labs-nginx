@@ -1,5 +1,5 @@
-LLM07: System Prompt Leakage
-============================
+Module 7 - LLM07: System Prompt Leakage
+=======================================
 
 **Definition**: **LLM06: Excessive Agency** occurs when an LLM-based
 system is granted too much capability to call functions or interface

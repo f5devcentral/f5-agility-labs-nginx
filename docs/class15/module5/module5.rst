@@ -1,5 +1,5 @@
-Smart routing using ``language-id`` processor
-=============================================
+Module 5 - Smart routing using ``language-id`` processor
+========================================================
 
 One of the AIGW capabilities is to use processors to tag prompts and
 make routing decisions to the correct LLM.
@@ -183,8 +183,6 @@ using the F5 built ``prompt-injection`` processor.
       2025/01/12 12:26:16 INFO service selected name=http/
       2025/01/12 12:26:16 INFO executing http service
       2025/01/12 12:26:21 INFO service response name=http/ result="map[status:200 OK]"
-
-`Click here for Lab 6 <../lab6/lab6.html>`__
 
 .. image:: images/pointright.png
 

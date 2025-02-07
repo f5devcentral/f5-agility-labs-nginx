@@ -1,5 +1,5 @@
-# Understanding the **AI Assistant** application flow
-
+Understanding the AI Assistant application flow
+===============================================
 
 ![](/lab3/images/00.png)
 
@@ -116,4 +116,3 @@ The traffic is passing from the **Front End Application** to the **AI Orchestrat
 
    
 You can now proceed to the next part.    
-[Click here for the next lab](../lab4/lab4.md)   
