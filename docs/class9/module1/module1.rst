@@ -50,7 +50,7 @@ and select the main nginx configuration file**
 
 .. code:: shell
     
-   nano /etc/nginx/nginx.conf
+   sudo nano /etc/nginx/nginx.conf
 
 
 **Below is the line of code that needs to be copied into 
@@ -78,13 +78,13 @@ enter to confirm
      
 .. code:: shell
 
-   nginx -t
+   sudo nginx -t
 
 **reload the nginx config**
 
 .. code:: shell
       
-   nginx -s reload
+   sudo nginx -s reload
 
 Create a clone of the nginx-openid-connect GitHub repository
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -105,21 +105,6 @@ Create a clone of the nginx-openid-connect GitHub repository
 	
 .. image:: ../images/OPENID_Connect_verify.jpg
    :width: 400 
-
-Creating self-signed certificates to be used by Nginx Plus
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-7. Use the openssl command below to create the certificate and key
-
-.. code:: shell 
-
-	openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/selfsigned.key -out /etc/nginx/selfsigned.crt -subj "/C=US/ST=WA/L=Seattle/O=F5/OU=Appworld2025/CN=nginxdemo.f5lab.com"
-
-**screenshot of output**
-
-.. image:: ../images/createSelfSigCertKey.jpg
-   :width: 800
-
 
 .. attention::
    
@@ -865,25 +850,21 @@ currently enabled and has 'Preferred' resolutions listed under 'Load
 Balancing'.
 
    .. image:: ../images/big-ip-4.jpg
-   .. image:: ../images/big-ip-4.5.jpg
+   .. image:: ../images/test-gslb-2.jpg
 
 9. Click the 'back' button on your web browser to get back to the 
 'gslbPool.  This time select the 'Members' tab.
 
    .. image:: ../images/big-ip-5.jpg
 
-10. Here we will check the boxes next to 'nginx2' and 'nginx3' and click 
-'Enable' to add them in to the load balancing pool.
-    Refresh the page by clicking the 'Members' tab again and you will see 
-the new members become active (it may take several seconds).
-    Now click the 'Statistics' tab again and we are ready to test the 
-configuation.
+10. Here you can check boxes next to 'nginx2' and 'nginx3' and click 
+'Enable' or 'Disable' to add/remove them from the load balancing pool.
 
    .. image:: ../images/big-ip-6.jpg
 
 11. Go back to Firefox, open a new tab, and navigate to 
 https://nginxdemo.f5lab.com:8010 again.
-    Log back in as user01 with password: appworld2024, as needed.
+    Log back in as user01 with password: appworld2025, as needed.
 
    .. image:: ../images/test-gslb-1.jpg
 
