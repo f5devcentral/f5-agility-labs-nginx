@@ -1,5 +1,5 @@
-Understanding the **AI Assistant** application flow
-===================================================
+Module 3 - Understanding the **AI Assistant** application flow
+==============================================================
 
 .. image:: images/00.png
 
@@ -138,4 +138,3 @@ Understanding the **AI Gateway** initial config
       2025/01/12 13:58:19 INFO executing http service
       2025/01/12 13:58:24 INFO service response name=http/ result="map[status:200 OK]"
 
-| `Click here for Lab 4 <../lab4/lab4.html>`__

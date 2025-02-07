@@ -1,5 +1,5 @@
-Accessing the lab environment
-=============================
+Module 2 - Accessing the lab environment
+========================================
 
 Log into into UDF and start up the lab. Given the resource intensity of
 this lab, it can take a few minutes for the lab VMs to start up to
@@ -69,6 +69,5 @@ see the logs.
 
    .. image:: images/06.png
 
-| `Click here for Lab 3 <../lab3/lab3.html>`__
 
 

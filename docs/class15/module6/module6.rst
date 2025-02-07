@@ -1,5 +1,5 @@
-LLM02: Sensitive Information Disclosure
-=======================================
+Module 6 - LLM02: Sensitive Information Disclosure
+==================================================
 
 **Definition**: LLM applications have the potential to reveal sensitive
 information, proprietary algorithms, or other confidential details
@@ -136,6 +136,5 @@ using the F5 built ``pii-redactor`` processor.
       2025/01/12 12:51:10 INFO running processor name=pii-redactor
       2025/01/12 12:51:11 INFO processor response name=pii-redactor metadata="&{RequestID:b563b1e79782ab7b9baa65a4036a2de6 StepID:01945a91-7046-7501-be13-cc5dd75eefe8 ProcessorID:f5:pii-redactor ProcessorVersion:v1 Result:map[response_predictions:[map[end:44 entity_group:FIRSTNAME score:0.7522637248039246 start:38 word: Sarah] map[end:143 entity_group:PHONE_NUMBER score:0.9938915371894836 start:125 word: +1 (415) 555-0123] map[end:179 entity_group:EMAIL score:0.999950647354126 start:150 word: sarah.chen@arcadiacrypto.com] map[end:205 entity_group:STREETADDRESS score:0.8643882870674133 start:188 word: 123 Tech Street,] map[end:209 entity_group:STATE score:0.771484375 start:205 word: San] map[end:220 entity_group:STATE score:0.8082789182662964 start:209 word: Francisco,] map[end:229 entity_group:ZIPCODE score:0.9972609281539917 start:223 word: 94105]]] Tags:map[]}"
 
-| `Click here for Lab 7 <../lab7/lab7.html>`__
 
 .. |image1| image:: images/00.png

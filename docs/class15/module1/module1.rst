@@ -1,7 +1,7 @@
 .. image:: ../images/darkbanner.png
 
-Lab 1 - F5 AI Gateway configuration walkthrough
-===============================================
+Module 1 - F5 AI Gateway configuration walkthrough
+==================================================
 
 A deeper look into configuring the AI Gateway components
 --------------------------------------------------------
@@ -366,7 +366,5 @@ configure OpenAI GPT-4o service:
              targets:
                apiKey: OPENAI_API_KEY
 
-
-| `Click here for lab 2 <../lab2/lab2.html>`__
 
 .. image:: ../images/Designer.jpeg
