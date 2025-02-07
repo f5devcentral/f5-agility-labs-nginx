@@ -141,7 +141,7 @@ using again ``prompt-injection`` processor.
 
    You will see that this time **AI Gateway** is blocking it.
 
-   .. image:: /lab7/images/01.png
+   .. image:: images/01.png
 
 6. Inspect the AI Gateway logs. You will see similar logs as bellow. The
    processor has blocked the request with a prompt injection confidence
