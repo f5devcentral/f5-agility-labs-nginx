@@ -146,3 +146,4 @@ Where does AI Gateway fit in the data flow?
 F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP, NGINX). This proxy can then manage Layer 7 traffic and provide WAF protections before traffic reached AIGW. Once traffic reaches AIGW, it is handling the AI specific traffic and focuses on analyzing the prompt and taking required action based on AIGW's configuration.
 
 .. |AIGW archi| image:: ./images/aigw-arch.png
+

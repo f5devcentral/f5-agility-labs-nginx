@@ -63,7 +63,7 @@ Using client-controlled values in the **root or alias directives** can expose yo
 #. Observe the response no longer contains the contents of /etc/passwd.
 
 Key Takeaways
-------------
+-------------
 * Using client controlled values in the root or alias directives can result in directory traversal attacks.
 * If you must use client controlled values in the root or alias directives, consider using a map to limit the possible values.
 
@@ -78,7 +78,7 @@ Using client-controlled variables in configuration options used with **sub_filte
 #. Observe the response no longer displays "Welcome to INJECTED=TRUE!".
 
 Key Takeaways
-------------
+-------------
 * Using client controlled values with the sub_filter directives can result in content injection attacks.
 * Consider using a map to limit the possible values or use a static values.
 
@@ -95,7 +95,7 @@ Using client-controlled variables in configuration options with **$ssl_server_na
 #. Observe the response body no longer contains "X-Injected":"TRUE", indicating our upstream server did not recieve the injected header.
 
 Key Takeaways
-------------
+-------------
 * Using client controlled variables in the ssl_server_name directive can result in HTTP request smuggling and HTTP response header injection attacks.
 * Consider using a map to limit the possible values and reject requests with unknown Server Name Indicator values.
 
@@ -113,7 +113,7 @@ Using client-controlled variables in configuration options with **server_tokens*
 #. Observe the response header no longer includes "X-Injected: TRUE" and the response body no longer includes "X-Injected":"FALSE".
 
 Key Takeaways
-------------
+-------------
 * Using client controlled variables in the server_tokens directive can result in HTTP response header injection attacks.
 * Consider using a map to limit the possible values or use static values.
 
@@ -129,7 +129,7 @@ Using client-controlled variables in configuration options with **regex negation
 #. Observe the response no longer includes "X-Injected: TRUE".
 
 Key Takeaways
-------------
+-------------
 * Using client controlled variables in the rewrite directive with regex negation can result in HTTP response header injection attacks.
 * Consider using a stricter regex which negates CRLF characters or avoid regex negation.
 
@@ -146,7 +146,7 @@ Allowing client-controlled variables with **proxy_pass** directive can enable at
 #. Observe the response no longer includes content from "example.com". 
 
 Key Takeaways
-------------
+-------------
 * Using client controlled variables in the proxy_pass directive can result in Server Side Request Forgery attacks.
 * Consider using a map to limit the possible destinations or use static values.
 * Consider using restrictions such as a localhost only listen directive or access control directives (allow and deny).
@@ -166,7 +166,7 @@ A **leading dot in the hostname** can allow an attacker to target specific confi
 #. Observe the part 3 response no longer includes "secret.local SECRET LOCATION".
 
 Key Takeaways
-------------
+-------------
 * Using client controlled variables mixed with access controls can result in unauthoized content access.
 
 Step 9
@@ -180,7 +180,7 @@ The classic **"off by slash"** misconfiguration allows an attacker to traverse d
 #. Observe the response no longer includes "OFF BY SLASH SECRET"
 
 Key Takeaways
-------------
+-------------
 * Forgetting to add a trailing slash to the location directive can result in directory traversal attacks.
 
 
@@ -202,7 +202,7 @@ Config file: /etc/nginx/conf.d/lab10.conf
 #. Observe the part 3, 4, and 5 responses no longer include the contents as before.
 
 Key Takeaways
-------------
+-------------
 * If you allow users to create symbolic links, consider using the disable_symlinks directive to prevent users from creating symbolic links to files outside their own directory.
 
 =========================================

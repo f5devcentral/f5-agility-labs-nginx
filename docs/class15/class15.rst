@@ -1,6 +1,6 @@
 .. image:: ./images/darkbanner.png
 
-Class 15 - F5 AppWorld 2025 - Introduction to F5 AI Gateway
+Class 15 - Introduction to F5 AI Gateway
 ===========================================================
 
 **Lab Outline**

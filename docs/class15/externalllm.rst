@@ -95,3 +95,4 @@ Then, refer to this path and file using a ``secrets`` definition under
                path: /etc/secret
              targets:
                apiKey: openai
+
