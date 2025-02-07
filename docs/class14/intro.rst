@@ -18,5 +18,4 @@ The UDF lab consists of:
    :caption: Content:
    :glob:
 
-   intro
    module*/module*
