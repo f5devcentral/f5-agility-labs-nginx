@@ -2,6 +2,7 @@ Module 4 - LLM01 Prompt Injection Attack
 ========================================
 
 What is a prompt-injection attack?
+----------------------------------
 
 -  **LLM01: Prompt Injection** occurs when user prompts alter the LLM’s
    behavior in unintended ways through direct or indirect inputs,

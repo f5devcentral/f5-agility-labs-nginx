@@ -350,21 +350,10 @@ External LLM services
 
 F5 AIGW also supports other cloud LLM services, including Anthropic,
 OpenAI (public and azure). You will need to provide your own API key in
-order to use the cloud service with AIGW. Here is an example of how to
-configure OpenAI GPT-4o service:
+order to use the cloud service with AIGW.
 
-.. code:: yaml
+Refer to `here`_ for examples of how to set this up.
 
-   services:
-     - name: openai/public
-       type: gpt-4o
-       executor: openai
-       config:
-         endpoint: "https://api.openai.com/v1/chat/completions"
-         secrets:
-           - source: EnvVar
-             targets:
-               apiKey: OPENAI_API_KEY
-
+.. _here: ../externalllm.html
 
 .. image:: ../images/Designer.jpeg
