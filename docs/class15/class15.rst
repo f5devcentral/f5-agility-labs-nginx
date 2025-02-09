@@ -15,12 +15,13 @@ Class 15 - Introduction to F5 AI Gateway
 
 **Allow for lab start up time**
 
-Log into UDF and start up the lab environment. Given the resource intensity of this lab, it can take a few minutes for the lab VMs to start up to
-completion. This will ensure your lab environment is ready for use by the time you reach Module 2.
+Log into UDF and start up the lab environment. Given all of the components of this lab, it can take a few minutes for the
+entire environment to complete startup. Booting up your lab right away will ensure the environment is ready for use by
+the time you reach Module 2.
 
 **Components of lab**
 
-There are three VMs used in this lab.
+There are three VMs used in this lab as well as an AWS environment provisioned with your lab.
 
 =============== ====================================================================================================
 **Jumphost**    Runs VSCode, which provides a web interface to edit the configuration files for AI Gateway
@@ -28,9 +29,11 @@ There are three VMs used in this lab.
 **MicroK8s**    Runs Arcadia Cyrpto, a fictitious finance application with an AI chatbot
 =============== ====================================================================================================
 
-**NOTE** You can expect requests to the ollama LLM could take some time, so be patient on waiting for the responses.
+**AWS Environment**
 
-**NOTE** You can install additional models on that VM using ``ollama CLI tool``.
+This lab also uses Ollama for inference of various models. An Ollama instance is created for your lab instance and
+runs separately in AWS. You will note that your lab configurations have a public IP address when referring to the Ollama
+instance. This is generated when your lab starts and removed when your lab ends. Do not change this IP address.
 
 **OWASP Top 10 for LLM Applications and Generative AI**
 

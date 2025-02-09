@@ -137,7 +137,7 @@ This configuration has already been prepared for you. You should see the ``lab4.
 
 Apply this to the AI Gateway by running the below command in the **VS Code** terminal.
 
-   ``curl --data-binary "@/home/ubuntu/appworld/aigw_configs/lab4.yaml" http://10.1.1.5:8080/v1/config``
+   ``curl --data-binary "@/home/ubuntu/aigw_configs/lab4.yaml" http://10.1.1.5:8080/v1/config``
 
    .. image:: images/03.png
 
