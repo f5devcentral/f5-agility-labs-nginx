@@ -20,9 +20,13 @@ completion. This will ensure your lab environment is ready for use by the time y
 
 **Components of lab**
 
-There are two VMs for the lab running a kubernetes cluster.
-- Primary VM named **aigw.dev.local** will be running a Linux desktop, with ``Docker,`` ``VSCode``, ``Chrome`` and terminal to interact with ``AIGW``
-- A secondary VM named **llm-server01** will be running Ollama (Hostname: **llmodel01**) with different models (ollama, llama3, phi3)
+There are three VMs used in this lab.
+
+=============== ====================================================================================================
+**Jumphost**    Runs VSCode, which provides a web interface to edit the configuration files for AI Gateway
+**AI Gateway**  Runs AI Gateway. You will access logs from this component throughout the lab
+**MicroK8s**    Runs Arcadia Cyrpto, a fictitious finance application with an AI chatbot
+=============== ====================================================================================================
 
 **NOTE** You can expect requests to the ollama LLM could take some time, so be patient on waiting for the responses.
 
