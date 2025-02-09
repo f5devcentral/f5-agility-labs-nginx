@@ -145,7 +145,7 @@ The ``routes`` components that can be configured:
 
 +-------------------+-----------------------------------------------------------------------------------------------------+
 | **Setting**       | **Description**                                                                                     |
-+-------------------+-----------------------------------------------------------------------------------------------------+
++===================+=====================================================================================================+
 | **path**          | The URI of the endpoint where a service is offered. The ``path`` is user-defined and must be unique |
 |                   | from other routes.                                                                                  |
 +-------------------+-----------------------------------------------------------------------------------------------------+
@@ -266,6 +266,8 @@ multiple processors to any given request or response.
        params:
          allow_rejection: true
 
+Processors can run in parallel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, when you apply multiple processors to a request, they will
 run sequentially, one after another. Alternatively, you can configure
@@ -276,8 +278,7 @@ the ``profiles`` section in ``aigw.yaml``.
 processors cannot modify the content of the input or output. They can
 only add metadata and tags to the content.
 
-Processors running in parallel example:
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**Example**
 
 .. code:: yaml
 
@@ -290,8 +291,8 @@ Processors running in parallel example:
              - name: language-id
              - name: system-prompt
 
-Services overview
-~~~~~~~~~~~~~~~~~
+Services
+~~~~~~~~
 
 ``Services`` are configured upstream LLM services that AIGW has been
 configured to route traffic to.
@@ -323,7 +324,7 @@ configured to route traffic to.
 
 +------------------------+-------------------------------------------------------------------------------------------------+
 | **Setting**            | **Description**                                                                                 |
-+------------------------+-------------------------------------------------------------------------------------------------+
++========================+=================================================================================================+
 | **name**               | The name of the service. User-defined and must be unique.                                       |
 +------------------------+-------------------------------------------------------------------------------------------------+
 | **type**               | Indicates the type of model that the service provides. For example, for ``openAI/azure``,       |
@@ -345,8 +346,8 @@ configured to route traffic to.
 +------------------------+-------------------------------------------------------------------------------------------------+
 
 
-External LLM services
-~~~~~~~~~~~~~~~~~~~~~
+Using external LLM services
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 F5 AIGW also supports other cloud LLM services, including Anthropic,
 OpenAI (public and azure). You will need to provide your own API key in

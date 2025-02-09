@@ -1,5 +1,5 @@
 Understanding the NGINX Instance Manager solution
-----
+-------------------------------------------------
 
 **Login to NIM**
 

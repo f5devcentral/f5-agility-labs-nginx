@@ -1,5 +1,5 @@
 Configure NGINX Using a Template
-===============================
+================================
 
 **Application 1 - Basic Proxy for Juice Shop**
 
