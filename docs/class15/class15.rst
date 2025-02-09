@@ -13,6 +13,11 @@ Class 15 - Introduction to F5 AI Gateway
 * LLM02 Sensitive information disclosure
 * LLM07 System prompt leakage
 
+**Allow for lab start up time**
+
+Log into UDF and start up the lab environment. Given the resource intensity of this lab, it can take a few minutes for the lab VMs to start up to
+completion. This will ensure your lab environment is ready for use by the time you reach Module 2.
+
 **Components of lab**
 
 There are two VMs for the lab running a kubernetes cluster.
