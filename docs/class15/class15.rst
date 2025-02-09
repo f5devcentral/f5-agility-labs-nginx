@@ -8,10 +8,10 @@ Class 15 - Introduction to F5 AI Gateway
 * F5 AIGW Configuration walkthrough
 * Accessing the lab environment
 * Understanding the lab AI assistant workflow
-* LLM01 Prompt-injection Attack
+* LLM01: Prompt-injection Attack
 * Smart routing with language-id processor
-* LLM02 Sensitive information disclosure
-* LLM07 System prompt leakage
+* LLM02: Sensitive information disclosure
+* LLM07: System prompt leakage
 
 **Allow for lab start up time**
 
@@ -31,6 +31,17 @@ There are three VMs used in this lab.
 **NOTE** You can expect requests to the ollama LLM could take some time, so be patient on waiting for the responses.
 
 **NOTE** You can install additional models on that VM using ``ollama CLI tool``.
+
+**OWASP Top 10 for LLM Applications and Generative AI**
+
+Open Worldwide Application Security Project is a nonprofit foundation that works to improve the security of software. Their
+programs include a number of projects which include "Top 10" lists that describe areas of concern when it comes to
+application security. LLM Applications and Generative AI has a Top 10 project which can be found `here`_.
+
+.. _here: https://genai.owasp.org/
+
+You will find that AI Gateway, and this lab in particular, will refer to specific items on the LLM and Gen AI Top 10 list.
+This helps practitioners quickly align protections to the top security threats for these types of applications.
 
 
 .. toctree::

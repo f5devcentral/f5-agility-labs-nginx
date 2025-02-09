@@ -152,8 +152,11 @@ You will see that this time **AI Gateway** is blocking it.
 
    .. image:: images/01.png
 
-Inspect the AI Gateway logs. You will see similar logs as bellow. The processor has blocked the request with a prompt 
-injection confidence level of **confidence:0.9920624494552612**
+Then review the **AI Gateway** logs from the **AI Gateway Web Shell** tab you previously opened. Your previously run
+command should continue to show you new log entries. You may need to scroll to the bottom of the screen in order to
+see them. If you are back at the terminal prompt, run the ``docker logs aigw-aigw-1 -f`` command again to view the logs.
+
+The processor has blocked the request with a prompt injection confidence level of **confidence:0.9920624494552612**
 
    .. code:: bash
 
