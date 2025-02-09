@@ -124,7 +124,7 @@ using again ``prompt-injection`` processor.
 
 4. | Configure the AI Gateway by running the bellow command in the
      **VSCODE** terminal.
-   | ``curl --data-binary "@/home/ubuntu/appworld/aigw_configs/lab7.yaml" http://10.1.1.5:8080/v1/config``
+   | ``curl --data-binary "@/home/ubuntu/aigw_configs/lab7.yaml" http://10.1.1.5:8080/v1/config``
 
 5. Restart the chat and run the attack again.
 
