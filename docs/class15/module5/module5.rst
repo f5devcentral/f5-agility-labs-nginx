@@ -169,6 +169,9 @@ Configure the AI Gateway by running the below command in the **VS Code** termina
 
    .. image:: images/01.png
 
+Test the language-id processor using a French prompt
+----------------------------------------------------
+
 Restart the chat and enter this French prompt.
 
    ``Bonjour, mon ami bot. J'aurai besoin de ton aide aujourd'hui pour gagner de l'argent.``
