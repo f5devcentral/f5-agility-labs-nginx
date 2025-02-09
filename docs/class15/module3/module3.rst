@@ -1,14 +1,17 @@
-Module 3 - Understanding the **AI Assistant** application flow
-==============================================================
+Module 3 - Understanding the AI Assistant application flow
+==========================================================
 
 .. image:: images/00.png
 
 Let’s start by explaining the different functions. We will focus only on
 the most relevant parts of the flow.
 
+Arcadia Crypto's application architecture
+-----------------------------------------
+
 **Front End Application**
 
-This is the **AI Assistant** chatbot where you are interacting.
+This is the **AI Assistant** chatbot that you will be interacting with.
 
 **AI Orchestrator**
 
@@ -19,7 +22,7 @@ detailed look at its functions:
 -  **Request Handling**: It receives and processes user queries,
    preparing them for further processing.
 -  **LLM Interaction**: The Orchestrator sends the constructed prompt to
-   Ollama (the LLM) and receives its responses.
+   Ollama (Inference Service) and receives its responses.
 -  **Response Formatting**: It processes the LLM’s output, potentially
    formatting or filtering it before sending it back to the user.
 -  **State Management**: The Orchestrator maintains the state of the
@@ -27,11 +30,11 @@ detailed look at its functions:
 -  **Error Handling**: It manages any errors or exceptions that occur
    during the process, ensuring graceful failure modes.
 
-**Ollama ( Inference Services )**
+**Inference Services**
 
-Ollama is an advanced AI tool that facilitates the local execution of
-large language models (LLMs), such as Llama 2, Mistral, and in our case
-LLama 3.1 8B. The key Features of Ollama:
+Inference services will run a model in order to generation predictions. This lab uses Ollama, a popular open source solution for inference.
+Ollama facilitates the local execution of large language models (LLMs) such as Llama 2, Mistral, and in our case
+LLama 3.1 8B. The key features of Ollama:
 
 -  **Local Execution**: Users can run powerful language models directly
    on their machines, enhancing privacy and control over data.
@@ -39,26 +42,26 @@ LLama 3.1 8B. The key Features of Ollama:
    customization of models, allowing users to tailor them for specific
    applications, such as chatbots or summarization tools.
 -  **User-Friendly Setup**: The tool provides an intuitive interface for
-   easy installation and configuration, currently supporting macOS and
-   Linux, with Windows support planned for the future.
--  **Diverse Model Support**: Ollama supports various models, including
-   Llama 2, uncensored Llama, Code Llama, and others, making it
+   easy installation and configuration on macOS, Linux and Windows.
+-  **Diverse Model Support**: Ollama supports a variety models, making it
    versatile for different natural language processing tasks.
 -  **Open Source**: Ollama is an open-source platform, which means its
    source code is publicly available, allowing for community
    contributions and transparency.
 
-The traffic is passing from the **Front End Application** to the **AI
-Orchestrator** where the conversation chat is maintained. The **AI
-Orchestrator** will pass the chat to **Ollama ( Inference Services )**
-through the **AI Gateway** which will perform the security inspection
+The traffic is passing from the **Front End Application** to the **AI Orchestrator** where the conversation chat is maintained.
+The **AI Orchestrator** will pass the chat to **Ollama** through the **AI Gateway** which will perform the security inspection 
 both on the request and the response.
 
-Understanding the **AI Gateway** initial config
------------------------------------------------
+Understanding the AI Gateway initial config
+-------------------------------------------
 
-1. First we define what is the endpoint of the **inference service**
-   that hosts the LLM. This is configured under **services**.
+To find the initial configuration for AI Gateway, go to your VS Code tab and navigate to the **Explorer**, open the **aigw_configs**
+folder and find ``initial_config.yaml``.
+
+   .. image:: images/01.png
+
+First we define what is the endpoint of the **inference service** that hosts the LLM.
 
    .. code:: yaml
 
@@ -69,7 +72,7 @@ Understanding the **AI Gateway** initial config
            endpoint: "http://ollama_public_ip:11434/api/chat"
            schema: ollama-chat 
 
-2. Second we need to define a **profile** that points to the service.
+Next we need to define a **profile** that points to the service.
 
    .. code:: yaml
 
@@ -78,7 +81,7 @@ Understanding the **AI Gateway** initial config
            services:
            - name: ollama
 
-3. Next we define a **policy** and attack the profile to it.
+Next we define a **policy** and attach the profile to it.
 
    .. code:: yaml
 
@@ -87,8 +90,7 @@ Understanding the **AI Gateway** initial config
            profiles:
            - name: default
 
-4. Last we combine everything by defining a **route** which is the entry
-   point that the AI Gateway is listening with the policy.
+Lastly, we combine everything with a **route** which is the entry point that the AI Gateway is listening on.
 
    .. code:: yaml
 
@@ -98,8 +100,7 @@ Understanding the **AI Gateway** initial config
            timeoutSeconds: 600
            schema: openai
 
-5. The final config will look as following which is currently applied to
-   the AI Gateway:
+The final configuration will look as the following and is currently applied to the AI Gateway:
 
    .. code:: yaml
 
@@ -129,8 +130,16 @@ Understanding the **AI Gateway** initial config
            services:
            - name: ollama
 
-6. Go ahead and ask the **AI Assistant** a question. And review the **AI
-   Gateway** logs.
+Interact with the AI Assistant and review the logs
+--------------------------------------------------
+
+Go ahead and ask the **AI Assistant** a question.
+
+   .. image:: images/02.png
+
+Then review the **AI Gateway** logs from the **AI Gateway Web Shell** tab you previously opened. Your previously run
+command should continue to show you new log entries. You may need to scroll to the bottom of the screen in order to
+see them. If you are back at the terminal prompt, run the ``docker logs aigw-aigw-1 -f`` command again to view the logs.
 
    ::
 
