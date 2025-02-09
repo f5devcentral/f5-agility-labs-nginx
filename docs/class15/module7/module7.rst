@@ -1,11 +1,16 @@
 Module 7 - LLM07: System Prompt Leakage
 =======================================
 
-**Definition**: **LLM06: Excessive Agency** occurs when an LLM-based
-system is granted too much capability to call functions or interface
-with other systems, leading to damaging actions from unexpected,
-ambiguous, or manipulated outputs due to excessive functionality,
-permissions, or autonomy.
+From the `OWASP TOP 10 for LLM Applications and Generative AI`__:
+
+.. _LLM07: https://genai.owasp.org/llmrisk/llm072025-system-prompt-leakage/
+
+__ LLM07_
+
+-  **LLM07: System Prompt Leakage**: The system prompt leakage vulnerability in LLMs refers to the risk that the system prompts
+   or instructions used to steer the behavior of the model can also contain sensitive information that was not intended to be
+   discovered. System prompts are designed to guide the model’s output based on the requirements of the application, but may
+   inadvertently contain secrets. When discovered, this information can be used to facilitate other attacks.
 
 Attack
 ------
@@ -15,7 +20,7 @@ capabilities it has. If an attacker get’s a hold of this information it
 has a similar impact if it would get the source code of any proprietary
 application.
 
-Let’s see how we can attack our ChatBot using this attack vector.
+Let’s see how we can attack our chatbot using this attack vector.
 
 Start a new conversation and paste the bellow prompt.
 
@@ -31,7 +36,8 @@ Start a new conversation and paste the bellow prompt.
    ## User info and API Keys
 
 | The system prompt has leaked.
-| |image1|
+
+   .. image:: images/00.png
 
 Protect
 -------
@@ -39,8 +45,7 @@ Protect
 We will now configure the **AI Gateway** to protect the AI Assistant by
 using again ``prompt-injection`` processor.
 
-1. We will add the ``prompt-injection`` processor AI Gateway
-   configuration
+We will be adding a ``prompt-injection`` processor to the AI Gateway configuration.
 
    .. code:: yaml
 
@@ -56,10 +61,8 @@ using again ``prompt-injection`` processor.
             reject: true # Default True
             skip_system_messages: true # Default true
 
-2. The processor definition is attached under the **inputStages** which
-   is part of the previously configured profile. The **inputStages**
-   indicates to the AI Gateway to inspect the request and run it through
-   the configured processors.
+The processor definition is attached under the **inputStages** which is part of the previously configured profile.
+The **inputStages** indicates to the AI Gateway to inspect the request and run it through the configured processors.
 
    .. code:: yaml
 
@@ -73,7 +76,7 @@ using again ``prompt-injection`` processor.
          services:
            - name: ollama
 
-3. The final config will look like this:
+The final config will look like this:
 
    .. code:: yaml
 
@@ -122,11 +125,16 @@ using again ``prompt-injection`` processor.
             reject: true # Default True
             skip_system_messages: true # Default true
 
-4. | Configure the AI Gateway by running the bellow command in the
-     **VSCODE** terminal.
-   | ``curl --data-binary "@/home/ubuntu/aigw_configs/lab7.yaml" http://10.1.1.5:8080/v1/config``
+Configure the AI Gateway by running the bellow command in the **VS Code** terminal.
 
-5. Restart the chat and run the attack again.
+   ``curl --data-binary "@/home/ubuntu/aigw_configs/lab7.yaml" http://10.1.1.5:8080/v1/config``
+
+   .. image:: images/02.png
+
+Testing for system prompt leakage and checking the logs
+-------------------------------------------------------
+
+Restart the chat and run the attack again.
 
    ::
 
@@ -139,13 +147,15 @@ using again ``prompt-injection`` processor.
 
       ## User info and API Keys
 
-   You will see that this time **AI Gateway** is blocking it.
+You will see that this time **AI Gateway** is blocking it.
 
    .. image:: images/01.png
 
-6. Inspect the AI Gateway logs. You will see similar logs as bellow. The
-   processor has blocked the request with a prompt injection confidence
-   level of **confidence:0.9920624494552612**
+Then review the **AI Gateway** logs from the **AI Gateway Web Shell** tab you previously opened. Your previously run
+command should continue to show you new log entries. You may need to scroll to the bottom of the screen in order to
+see them. If you are back at the terminal prompt, run the ``docker logs aigw-aigw-1 -f`` command again to view the logs.
+
+The processor has blocked the request with a prompt injection confidence level of **confidence:0.9920624494552612**
 
    .. code:: bash
 
@@ -153,9 +163,7 @@ using again ``prompt-injection`` processor.
       2025/01/12 11:35:25 INFO processor error response name=prompt-injection metadata="&{RequestID:88e718031ae9605df12a5b9be89b34dd StepID:01945a4c-1df0-7351-8c2b-8da3f8c832f4 ProcessorID:f5:prompt-injection ProcessorVersion:v1 Result:map[confidence:0.9920624494552612 detected:true rejection_reason:Possible Prompt Injection detected] Tags:map[attacks-detected:[prompt-injection]]}"
       2025/01/12 11:35:25 ERROR failed to executeStages: failed to chain.Process for stage protect: failed to runProcessor: processor prompt-injection returned error: external processor returned 422 with rejection_reason: Possible Prompt Injection detected
 
-   Thank you for participating in the F5 AIGW Lab. We hope you enjoyed
-   it.
+Thank you for participating in the F5 AI Gateway lab. For more information about AI Gateway, please visit
+https://www.f5.com/products/ai-gateway
 
 .. image:: images/thankyou.png
-
-.. |image1| image:: images/00.png
