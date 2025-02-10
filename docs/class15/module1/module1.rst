@@ -346,15 +346,15 @@ configured to route traffic to.
 +------------------------+-------------------------------------------------------------------------------------------------+
 
 
-Using external LLM services
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. Using external LLM services
+.. ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-F5 AIGW also supports other cloud LLM services, including Anthropic,
-OpenAI (public and azure). You will need to provide your own API key in
-order to use the cloud service with AIGW.
+.. F5 AIGW also supports other cloud LLM services, including Anthropic,
+.. OpenAI (public and azure). You will need to provide your own API key in
+.. order to use the cloud service with AIGW.
 
-Refer to `here`_ for examples of how to set this up.
+.. Refer to `here`_ for examples of how to set this up.
 
-.. _here: ../externalllm.html
+.. .. _here: ../externalllm.html
 
 .. image:: ../images/Designer.jpeg
