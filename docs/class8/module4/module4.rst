@@ -11,13 +11,13 @@ In NIM, edit nginx.conf.
 Uncomment the proxy_buffers directive, line 39
 `proxy_buffers 8 1638k;`
 
-.. image:: /class8/images/mod4-line39.png
+.. image:: /class8/images/nim-proxy-buffers.png
 
 Publish changes
 
 2. **Run a test and review performance**
 Scale the number of users down to 100 with a Spawn Rate of 10/s
-   
+
 Number of Users: 100
 
 Spawn rate: 10
@@ -28,26 +28,25 @@ Advanced Options, Run time: 30s
 
 .. note:: Where you do see the performance improvement? Requests per Second or Latency?
 
-Cache is a hardware or software component that is embedded in application or device memory. It is used to temporarily store data needed by the user, reducing the time and effort required for retrieving data that is accessed repeatedly. NGINX can act as a caching servers, storing files from backends on disk.
-
 3. **Turn on file caching in the Nginx proxy**
+A cache is a hardware or software component embedded in application or device memory. It is used to temporarily store data needed by the user, reducing the time and effort required for retrieving data that is accessed frequently. NGINX can act as a caching server, storing files from backends on disk, thus eliminating the need for a sub-request to an upstream.
 
-.. note:: How do you think caching could help the performance of delivering applications?  
+.. note:: How do you think caching could help the performance of delivering applications?
 
 In NIM, edit nginx.conf, and publish changes
 
 Uncomment proxy_cache_path, line 37
 
-.. image:: /class8/images/mod4-line39.png
+.. image:: /class8/images/nim-proxy-cache-path.png
 
-Uncomment proxy_cache, line 73
+Uncomment proxy_cache, line 56
 
 .. image:: /class8/images/nim-proxy-cache.png
 
 Publish changes
 
-4. Confirm cache is operational 
-   
+4. Confirm cache is operational
+
 On NGINX Proxy cli
 
    `ps aux | grep nginx`
@@ -56,10 +55,10 @@ On NGINX Proxy cli
 
 .. image:: /class8/images/cacheprocess.png
 
-Now review the NGINX Dashboard GUI, you should now see a Cache section 
+Now review the NGINX Dashboard GUI, you should now see a Cache section
 
 5. **Run a test and review performance**
-   
+
 Number of Users: 100
 
 Spawn rate: 10
@@ -68,34 +67,30 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class8/images/locus-500-50-30.png  
+.. image:: /class8/images/locus-500-50-30.png
    :width: 200 px
 
 .. note:: Where you do see the performance improvement in the Locust chart?
-	
-.. note:: Review NGINX Dashboard cache section.  How much bandwidth was saved from going to upstream server?
 
-(For a hint, refer to the HINTS section at the bottom of this page.)
+.. note:: Review NGINX Dashboard cache section.  How much bandwidth was saved from going to upstream server? (For a hint, refer to the HINTS section at the bottom of this page.)
 
 6. **Improve reading from disk performance**
 
-Turn on the sendfile linux system call
+Turn on sendfile to take advantage of the linux system call with the same name.
 
-.. note:: What does sendfile do?
-
-(For a hint, refer to the HINTS section at the bottom of this page.)
-
-In NIM, edit nginx.conf
+In NGINX Instance Manager, edit nginx.conf
 
 Uncomment "sendfile on", line 30
 
 Publish the changes.
 
+.. note:: What does sendfile do? (For a hint, refer to the HINTS section at the bottom of this page.)
+
 .. image:: /class8/images/nim-sendfile.png
-	
+
 Run the same test again.
 
-.. note:: Were there any performance gains seen?
+.. note:: Did you notice any performance?
 
 7. **Improve network packet packaging**
 
@@ -107,21 +102,17 @@ This will cause NGINX to send the first part of the file in the same packet as t
 
 Publish the changes and re-run the test.
 
-.. note:: Were there any performance gains seen?
+.. note:: Did you notice any performance gains?
 
 8. **Turn on open file cache**
 
-.. image:: /class8/images/nim-open-file-cache.png  
+In NIM, edit nginx.conf
 
-In NIM, edit nginx.conf and publish
+Uncomment open_file_cache (line 38). Doing so enables NGINX to track open file descriptors, which can have a positive impact on performance.
 
-Uncomment open_file_cache, line 36
+.. image:: /class8/images/nim-open-file-cache.png
 
-   `open_file_cache max=4096`
-
-Doing so enables NGINX to track open file descriptors, which can have a positive impact on performance.
-
-.. note:: Did you notice any improvements?  
+.. note:: Did you notice any improvements?
 
 .. hint::
    Step 3. Review NGINX Dashboard cache section. How much bandwidth was saved from going to upstream server?_
@@ -138,5 +129,3 @@ Doing so enables NGINX to track open file descriptors, which can have a positive
    :maxdepth: 2
    :hidden:
    :glob:
-
-   
