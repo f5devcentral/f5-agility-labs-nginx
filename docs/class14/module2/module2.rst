@@ -1,8 +1,8 @@
 Introduction to NIM Templates
-===============================
+=============================
 
 Config Templates Benefits
--------------------
+-------------------------
 
 **Simplify Configurations**
 
@@ -22,7 +22,7 @@ Customize existing templates or build your own to suit your needs.
 
 
 Config Templates Design
---------------------
+-----------------------
 
 **Types of Templates**
 

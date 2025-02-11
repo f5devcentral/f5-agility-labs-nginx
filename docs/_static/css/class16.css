@@ -1,0 +1,6 @@
+.bordered-gif {
+    border: 2px solid black;
+    display: block;
+    margin: 20px auto; /* Adds vertical spacing and centers the image */
+    padding: 5px; /* Optional: adds spacing inside the border */
+}
