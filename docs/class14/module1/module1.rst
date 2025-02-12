@@ -39,7 +39,7 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
     To add another instance of NGINX Plus or Open Source, click **Add**. 
 
-    We don't be adding any more instances in this lab, we can do everything we need to with one instance.
+    We won't be adding any more instances in this lab, we can do everything we need to with one instance.
 
 4. Browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
 
