@@ -40,7 +40,7 @@ Acting as Paul, you will first install the base template he developed. Then, you
 
    .. image:: ../images/image-welcome-nginx.png
 
-   NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by default.
+   NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by default. We will configure port **8080** on the nginx.f5demos.com host to do this. 
 
 2. Back in the NIM tab, click **Templates** in the left navigation.
 
