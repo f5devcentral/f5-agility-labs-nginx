@@ -51,9 +51,15 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 17. Click **Save**. You will see a **Permission Update Staged** message.
 
-18. Click **Save** once again to save the staged role changes. You will see a **Role Updated** message indicating success.
+18. Click **Add Additional Access** one more time.
 
-19. Close the developer role details by clicking the **x** button in the top right of the dialog.
+19. Select **Read** for *Access*.
+
+20. Select **Templates** for *Applies to*, and leave **Select Values** blank so that the user gets read-only access to all Templates, as we will be adding more later.
+
+21. Click **Save** once again to save the staged role changes. You will see a **Role Updated** message indicating success.
+
+22. Close the developer role details by clicking the **x** button in the top right of the dialog.
 
 **Login to NIM as Jane Developer**
 
