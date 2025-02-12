@@ -7,7 +7,7 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 **Use RBAC to Grant Access to the Template Submission**
 
-1. In NIM, click the top left module menu, and select **Settings**.
+1. In NIM, select **Settings** on top right of the NIM page. 
 
 2. Click **Users**. Note that Jane Developer already has an account, and that her account is mapped to the **developer** role.
 
