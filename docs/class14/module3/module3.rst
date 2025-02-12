@@ -84,7 +84,7 @@ Acting as Paul, you will first install the base template he developed. Then, you
    * - Upstream Name
      - workloads.f5demos.com:9000
 
-12. Click **Next**. We won't configure an Upstream for this example.
+12. Click **Next**. We won't configure a HTTP Upstream for this example.
 
 13. Click **Next**. This will show you a preview of the config generated from the templates. 
 
