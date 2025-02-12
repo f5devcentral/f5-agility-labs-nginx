@@ -173,7 +173,7 @@ As Jane Developer, we will attach the custom 404 handler to the NGINX configurat
 
     Notice there are 2 new files in the generated configuration:
 
-      - /etc/nginx/augments/http-server/base_http-server1_*&lt;unique identifier&gt;*.conf
+      - /etc/nginx/augments/http-server/base_http-server1-<<UNIQUE-ID>>.conf
       - /usr/share/nginx/html/custom_404.html
 
 12. Click on the first file. This is the file that will be included in the main `nginx.conf` file. It contains the config to intercept 404 errors from the upstream, and will serve up the contents of a static file included in the template bundle.
