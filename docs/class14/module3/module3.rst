@@ -42,7 +42,7 @@ Acting as Paul, you will first install the base template he developed. Then, you
 
    NGINX (**nginx.f5demos.com**) has not been configured to proxy traffic to any of our applications, and it is configured as a basic web server by default.
 
-2. In the left navigation, click **Templates**.
+2. Back in the NIM tab, click **Templates** in the left navigation.
 
 3. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
@@ -92,7 +92,9 @@ Acting as Paul, you will first install the base template he developed. Then, you
 
     .. image:: ../images/image-18.png
 
-15. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
+15. Close the Templates window.
+
+16. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
 
     - Creates a new HTTP Server 
     - Listens on port 80 
