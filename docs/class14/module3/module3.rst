@@ -99,7 +99,7 @@ Acting as Paul, you will first install the base template he developed. Then, you
 17. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
 
     - Creates a new HTTP Server 
-    - Listens on port 80 
+    - Listens on port 8080 
     - Will be the default HTTP server
     - Creates a single location using the `/` path prefix
     - Ensure requests made to this location will pass traffic to a **Juice Shop** application running on the workloads.f5demos.com server
