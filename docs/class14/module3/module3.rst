@@ -84,17 +84,19 @@ Acting as Paul, you will first install the base template he developed. Then, you
    * - Upstream Name
      - workloads.f5demos.com:9000
 
-12. Click **Next**. This will show you a preview of the config generated from the templates. 
+12. Click **Next**. We won't configure an Upstream for this example.
 
-13. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
+13. Click **Next**. This will show you a preview of the config generated from the templates. 
 
-14. Click the **Publish** button. If successful, you should see a message indicating so.
+14. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
+
+15. Click the **Publish** button. If successful, you should see a message indicating so.
 
     .. image:: ../images/image-18.png
 
-15. Close the Templates window.
+16. Close the Templates window.
 
-16. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
+17. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
 
     - Creates a new HTTP Server 
     - Listens on port 80 
