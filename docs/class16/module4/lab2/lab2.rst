@@ -3,13 +3,15 @@ Testing the App Security
 
 We will go through testing steps to verify that our application has been successfully protected.
 
-1. Let's test the **Web Application Firewall**, browse to `Arcadia XSS Attack <http://arcadia-re-$$makeId$$.lab-sec.f5demos.com/?a=script>`_.  
+.. _Arcadia XSS Attack: http://arcadia-re-.lab-sec.f5demos.com/?a=<script>
+
+1. Let's test the **Web Application Firewall**, browse to `Arcadia XSS Attack`_.  
 
    The request will be blocked due to the XSS attack by the **Web Application Firewall**.
 
 2. Test the **API protection**:
 
-   a) Browse to `Arcadia non existing endpoint <http://arcadia-re-$$makeId$$.lab-sec.f5demos.com/v1/api>`_.
+   a) Browse to `Arcadia non existing endpoint <http://arcadia-re-$$makeId$$.lab-sec.f5demos.com/v1/api>`_.      
 
       The request will be blocked because the **Path** is not defined in the enforced OpenAPI schema.  
 
