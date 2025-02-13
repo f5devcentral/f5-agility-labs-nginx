@@ -13,9 +13,9 @@ Class 15 - Introduction to F5 AI Gateway
 * LLM02: Sensitive information disclosure
 * LLM07: System prompt leakage
 
-**Allow for lab start up time**
+**This Lab may take 5-10 minutes to boot up. Allow for start up time**
 
-Log into UDF and start up the lab environment. Given all of the components of this lab, it can take a few minutes for the
+Log into UDF and start up the lab environment. Given all of the components of this lab, it can take 5-10 minutes for the
 entire environment to complete startup. Booting up your lab right away will ensure the environment is ready for use by
 the time you reach Module 2.
 
