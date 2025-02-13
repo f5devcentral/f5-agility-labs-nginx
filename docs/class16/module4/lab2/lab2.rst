@@ -3,7 +3,7 @@ Testing the App Security
 
 We will go through testing steps to verify that our application has been successfully protected.
 
-.. _Arcadia XSS Attack: http://arcadia-re-.lab-sec.f5demos.com/?a=<script>
+.. _Arcadia XSS Attack: http://arcadia-re-$$makeId$$.lab-sec.f5demos.com/?a=<script>
 
 1. Let's test the **Web Application Firewall**, browse to `Arcadia XSS Attack`_.  
 
