@@ -1,12 +1,12 @@
-Class 9: Access on NGINX Plus - Authentication for Web Access
+Class 9: Zero Trust at Scale with F5 NGINX
 =============================================================
 
-.. note:: **Last Updated: 1/22/2024**
+.. note:: **Last Updated: 1/22/2025**
 
-Instructors at F5 AppWorld 2024:
+Instructors at F5 AppWorld 2025:
 
--  Sam Park <s.park@f5.com>
--  Scott Huddy <s.huddy@f5.com>
+-  Amir Rawdat <a.rawdat@f5.com>
+-  Jay Pena <j.pena@f5.com>
 
 UDF Lab Maintainers:
 
@@ -15,7 +15,7 @@ UDF Lab Maintainers:
 
 This lab will show how to enable single sign-on (SSO) for applications being proxied by 
 NGINX Plus. The solution uses OpenID Connect as the authentication mechanism, with 
-Keycloak as the identity provider (IdP), and NGINX Plus as the relying party. 
+BIG-IP APM as the identity provider (IdP), and NGINX Plus as the relying party. 
 The lab will also cover the creation of an Instance Group of NGINX Plus servers, which will be load balanced using F5 BIG-IP DNS (GSLB), and introduce NGINX Instance Manager.
 
 Expected time to complete: **1.5 hours**
@@ -38,6 +38,6 @@ Expected time to complete: **1.5 hours**
 
 .. attention::
    * For anyone wishing to take this lab at a later date, the lab is hosted on
-     the F5 UDF Environment, and is called **"AppWorld 2024 - F5 NGINX Plus Access: Authentication for Web Access"**
+     the F5 UDF Environment, and is called **"AppWorld 2025 - Zero Trust at Scale with F5 NGINX"**
 
 Please work with your F5 account team for access. 

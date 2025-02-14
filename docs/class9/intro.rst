@@ -27,10 +27,9 @@ The following components have been included in your lab environment:
 
 - 1x Infa Server running the below Docker Containers (Ubuntu 22.04)
    - firefox
-   - keycloak
    - nginxhello (origin server)
 - 1x Linux Server (Ubuntu 22.04) running Nginx Instance Manager (2.15.0)
-- 3x Linux Servers (Ubuntu 22.04) running NGINX Plus (nginx-plus-r30-p1)
+- 3x Linux Servers (Ubuntu 22.04) running NGINX Plus (nginx-plus-r33)
 - 1x F5 BIG-IP DNS virtual appliance (v17.1.0.1)
 
 Lab Components
@@ -50,9 +49,6 @@ Lab Setup
    * - idp.f5lab.com (infra)
      - 10.1.1.4
      - 
-   * - container/keycloak
-     - 10.1.1.4:8080
-     - admin/admin
    * - container/nginxhello
      - 10.1.1.4:8081
      - 
