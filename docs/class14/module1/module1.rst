@@ -54,7 +54,10 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
     We won't be adding any more instances in this lab, we can do everything we need to with one instance.
 
-    If you needed to add another instance of NGINX Plus or Open Source, click **Add**. 
+    If you needed to add another instance of NGINX Plus or Open Source, click **Add** on the top right of the page.
+
+    .. image:: ../images/nim-instances-add.png
+      :width: 481
 
 3. Click on **nginx.f5demos.com** and browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
 
@@ -62,9 +65,14 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
 4. Go back to the **Instances** page.
 
-    Select **nginx.f5demos.com**. Note that it is online, and ready to receive management commands from NIM.
+    Click **nginx.f5demos.com**. Note that the instance Status is online, and ready to receive management commands from NIM.
+
+    .. image:: ../images/nim-instances-details.png
 
 5. Click **Edit Config** near the top right of the window.
+
+    .. image:: ../images/nim-instances-edit.png
+      :width: 400
 
 You will see the NIM config editor, displaying the existing state of the NGINX configuration files in the instance. As a reminder, the configuration has not been customized for the application we will be hosting in this lab.
 
