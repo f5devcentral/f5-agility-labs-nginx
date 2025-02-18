@@ -76,10 +76,36 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
 You will see the NIM config editor, displaying the existing state of the NGINX configuration files in the instance. As a reminder, the configuration has not been customized for the application we will be hosting in this lab.
 
+    .. image:: ../images/nim-instances-edit-detail.png
+
 6. Feel free to check out other tabs. There are many other options in NIM such as Certificate Management and NGINX App Protect WAF management. 
 
     Today we are focusing on Templates.
 
 7. Click the **Templates** tab. Note there is one base template listed, **F5 Global Default Base**
 
+    .. image:: ../images/nim-templates.png
+
     > Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
+
+8. Click the **Create** button on the top right.
+
+    .. image:: ../images/nim-templates-create.png
+
+The Create Template form appears. The default option is to create a **New** template.  For this lab, we are going to import an existing template, so click the **Import** radio button.
+
+    .. image:: ../images/nim-instances-edit.png
+
+9. Click **Browse** in the middle of the dialog to select the template file to import.
+
+10. Select **basic_revrse_proxy_base.tar.gz from the file browser then click **Open** at the bottom right of the dialog
+
+    .. image:: ../images/nim-templates-import-file.png
+
+11. Click **Parse** at the bottom right
+
+    .. image:: ../images/nim-templates-import-file.png
+
+You will see a warning about template not being signed.  Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
+
+    .. image:: ../images/nim-signature-bypass.png
