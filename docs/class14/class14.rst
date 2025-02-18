@@ -1,4 +1,4 @@
-Class 14 - F5 AppWorld 2025 – Operationalize NGINX One Configuration and Enable Self-Service through Templates
+Class 14 – Operationalize NGINX One Configuration and Enable Self-Service through Templates
 ==========================================================================
 
 Learn how to use Templates in NGINX Instance Manager (NIM) and NGINX One SaaS console! 
