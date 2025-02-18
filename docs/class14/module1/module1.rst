@@ -42,35 +42,36 @@ Here we will examine the default configuration of the NGINX server, and afterwar
 
     .. image:: ../images/nim-lab-links2.png
 
-    Since NGINX has not yet been configured to proxy requests to the upstream server hosting the PyGoat application, you will see an **"Unable to connect"** page. To make this work, we need to generate NGINX configuration that meets our requirements.
+    Since NGINX has not yet been configured to proxy requests to the upstream server hosting the PyGoat application, you will see an **"Unable to connect"** page. To make this work, we need to generate NGINX configuration that meets our requirements
+
+    .. image:: ../images/pygoat-no-connect.png
 
 **Examine Default Configuration**
 
-2. Back in the NIM tab, click the **Instances** link in the left navigation.
+2. Back in the NIM tab, click the **Instances** link in the left navigation.  You will see that NIM is currently only managing one single NGINX Instance - **nginx.f5demos.com**.
 
-    .. image:: ../images/image-17.png
+    .. image:: ../images/nim-instances-general.png
 
-3. You can see that NIM is currently only managing one single NGINX Instance.
+    We won't be adding any more instances in this lab, we can do everything we need to with one instance.
 
-    To add another instance of NGINX Plus or Open Source, click **Add**. 
+    If you needed to add another instance of NGINX Plus or Open Source, click **Add**. 
 
-    We don't be adding any more instances in this lab, we can do everything we need to with one instance.
+3. Click on **nginx.f5demos.com** and browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
 
-4. Browse through some of the tabs, especially **Metrics**. Here you can see system level metrics or metrics specific to NGINX.
+    .. image:: ../images/nim-instances-tabs.png
 
-5. Go back to the **Instances** page.
+4. Go back to the **Instances** page.
 
     Select **nginx.f5demos.com**. Note that it is online, and ready to receive management commands from NIM.
 
-
-6. Click **Edit Config** near the top right of the window.
+5. Click **Edit Config** near the top right of the window.
 
 You will see the NIM config editor, displaying the existing state of the NGINX configuration files in the instance. As a reminder, the configuration has not been customized for the application we will be hosting in this lab.
 
-7. Feel free to check out other tabs. There are many other options in NIM such as Certificate Management and NGINX App Protect WAF management. 
+6. Feel free to check out other tabs. There are many other options in NIM such as Certificate Management and NGINX App Protect WAF management. 
 
     Today we are focusing on Templates.
 
-8. Click the **Templates** tab. Note there is one base template listed, **F5 Global Default Base**
+7. Click the **Templates** tab. Note there is one base template listed, **F5 Global Default Base**
 
     > Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
