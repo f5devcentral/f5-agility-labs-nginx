@@ -14,8 +14,20 @@ Begin by logging into NIM as Paul in the following steps. Paul has the NIM admin
 2. Under Lab Links, click the **NGINX Instance Manager** link to open NIM in a new tab.
 
     .. image:: ../images/image-26.png
+   
+3. Click **Sign In**. 
 
-3. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter `paulplatops` as the user, `NIM123!@#` as the password.
+    .. image:: ../images/image-26.png
+
+4. You will be redirected to KeyCloak. When prompted for credentials, enter the following:
+   
+   | User: `paulplatops`
+   | Password: `NIM123!@#`
+   |
+
+    .. image:: ../images/image-28.png
+
+   After Sign-In, you will see the NIM Dashboard.
 
     .. image:: ../images/image-28.png
 
@@ -23,7 +35,7 @@ Begin by logging into NIM as Paul in the following steps. Paul has the NIM admin
 
 Here we will examine the default configuration of the NGINX server, and afterward generate a new one for the PyGoat application.
 
-1. In FireFox, click the **PyGoat Web Application** link. This link uses a hostname record that references the NGINX instance.
+1. In FireFox, select the **Lab Links** tab then click **PyGoat Web Application**. This link uses a hostname record that references the NGINX instance.
 
     .. image:: ../images/image-27.png
 
