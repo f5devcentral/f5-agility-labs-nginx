@@ -11,7 +11,7 @@ it so that AI Gateway **Core** will route it to a specific LLM.
 
 In our application we want to support the French language by using the Mistral model.
 
-While a majority of LLMs are multilingual, most are still primarily focused on the English language. There may be
+While a majority of LLMs will state they are multilingual, it's often the case that their language capabilities beyond English are lacking. There may be
 scenarios where you will want to leverage different models that perform better for other languages.
 
 In this lab module, you will use the ``language-id`` processor to detect the prompt landuage and configure a corresponding
@@ -109,13 +109,13 @@ The final config will look like this:
         - name: ollama
           executor: http
           config:
-            endpoint: "http://$$ollama_public_ip$$:11434/api/chat"
+            endpoint: "http://ollama_public_ip:11434/api/chat"
             schema: ollama-chat
 
         - name: ollama-mistral
           executor: http
           config:
-            endpoint: "http://$$ollama_public_ip$$:11434/api/chat"
+            endpoint: "http://ollama_public_ip:11434/api/chat"
             schema: ollama-mistral
 
           - name: ollama-<new_model>
