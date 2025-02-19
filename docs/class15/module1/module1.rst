@@ -45,11 +45,11 @@ Component diagram
       Profiles@{shape: procs}
       -->Services@{shape: procs}
     end
-    subgraph Processors[AIGW Processors]
+    subgraph AIGWProcessors[AIGW Processors]
       direction LR
       Processors@{shape: procs}
     end
-    Profiles --> Processors
+    Profiles --> AIGWProcessors
     Services --> OpenAI
     Services --> Anthropic
     Services --> Ollama
