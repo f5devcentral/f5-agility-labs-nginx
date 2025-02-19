@@ -1,4 +1,4 @@
-.. image:: images/AW-2024-red.jpg
+.. image:: images/AW-2025-red.png
      :align: left
 
 
