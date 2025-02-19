@@ -55,3 +55,5 @@ We will go through testing steps to verify that our application has been success
    .. image:: ../pictures/07.gif
       :align: center
       :class: bordered-gif  
+
+5. **IMPORTANT NOTE** Because we enabled Bot protection when you browse the next time to the Arcadia application you need to either disable the browser cache or clear it in order to make sure the browser is loading the Bot protection JavaScripts.      
