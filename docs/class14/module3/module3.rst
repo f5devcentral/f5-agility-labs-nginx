@@ -55,28 +55,28 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 10. Scroll down to **Server Locations** and click **Add Server Locations**.
 
-   .. image:: ../images/nim-instance-add-locations.png
-     :width: 518
+    .. image:: ../images/nim-templates-add-location.png
+      :width: 1000
 
 11. Enter the following data in this section (**workloads.f5demos.com:9000** is the host that contains one of our applications):
 
-   .. list-table:: 
-     :header-rows: 1
+    .. list-table:: 
+      :header-rows: 1
 
-     * - **Item**
-       - **Value**
-     * - Location Match Strategy
-       - Prefix
-     * - URI   
-       - /
-     * - Upstream Name
-       - workloads.f5demos.com:9000
+      * - **Item**
+        - **Value**
+      * - Location Match Strategy
+        - Prefix
+      * - URI   
+        - /
+      * - Upstream Name
+        - workloads.f5demos.com:9000
 
 12. Click **Next**. We won't configure an HTTP Upstream for this example.
 
 13. Click **Next**. This will show you a preview of the config generated from the templates.
 
-    .. image:: ../images/nim-instances-preview.png
+    .. image:: ../images/nim-templates-config-preview.png
 
 14. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
 
@@ -238,7 +238,7 @@ Note: Do not enter any information into the **Zone** portion of the template for
 
 21. Click the **Publish** button. If successful, you should see a message indicating so.
 
-    .. image:: ../images/image-18.png
+    .. image:: ../images/nim-templates-pub-success.png
 
 22. Click the **Close and Exit** button.
 
