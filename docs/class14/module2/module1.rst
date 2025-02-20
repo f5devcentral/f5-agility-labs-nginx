@@ -1,7 +1,9 @@
 Importing NIM Templates
 =============================
 
-1. Click **Templates** from the left-side menu. There is one base template already installed - **F5 Global Default Base**
+In this section, we will import a pre-made template that will later be used to configure the PyGoat application.
+
+1. Click **Templates** from the left-side menu. There is one base template already installed - **F5 Global Default Base**.
 
     .. image:: ../images/nim-templates.png
 
@@ -18,7 +20,7 @@ Importing NIM Templates
 
 3. Click **Browse** in the middle of the dialog to select the template file to import.
 
-4. Select **basic_reverse_proxy_base.tar.gz** from the file browser then click **Open** at the bottom right of the dialog
+4. Select **basic_reverse_proxy_base.tar.gz** from the file browser then click **Open** at the bottom right of the dialog.
 
     .. image:: ../images/nim-templates-import-file.png
 
@@ -26,6 +28,11 @@ Importing NIM Templates
 
     .. image:: ../images/nim-templates-create-parse.png
 
-   You will see a warning about template not being signed.  Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
+   You will see a warning message similar to "archive is either unsigned or missing its signature file". This is a precautionary message, cautioning the user against importing templates that may have originated from an unofficial source. Since this is a custom template, it is not signed by F5. Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
 
     .. image:: ../images/nim-signature-bypass.png
+
+   You should see a box at the bottom right showing that the template was successfully created.
+
+    .. image:: ../images/nim-templates-created.png
+      :width: 260
