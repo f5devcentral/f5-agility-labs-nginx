@@ -78,7 +78,7 @@ In this section, let's configure NGINX with some additional parameters for the *
       * - Upstream Name
         - pygoat-upstream
 
-Note: Do not enter any information into the **Proxy Headers** portion of the template form.
+    Note: Do not enter any information into the **Proxy Headers** portion of the template form.
 
     That was a lot of data entry! But what did we just do? Based on the data we entered into the **HTTP Servers** template, we intend to:
 
@@ -128,7 +128,7 @@ Note: Do not enter any information into the **Proxy Headers** portion of the tem
       * - Backup
         - False
 
-Note: Do not enter any information into the **Zone** portion of the template form.
+    Note: Do not enter any information into the **Zone** portion of the template form.
 
     What did we configure in the **HTTP Upstreams** portion of the template?
 
