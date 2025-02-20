@@ -24,7 +24,7 @@ Importing NIM Templates
 
 5. Click **Parse** at the bottom right
 
-    .. image:: ../images/nim-templates-import-file.png
+    .. image:: ../images/nim-templates-create-parse.png
 
    You will see a warning about template not being signed.  Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
 
