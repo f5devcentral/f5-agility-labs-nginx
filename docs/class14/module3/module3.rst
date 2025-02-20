@@ -5,12 +5,6 @@ Paul has been interested in ways to make his job easier while enabling others in
 
 Acting as Paul, you will test the template imported in the previous section by actually deploying it to provide an HTTP proxy for the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
 
-
-   You will see the Config Template Created message, and see the newly imported base template on the Templates page.
-
-   Note: The newly imported base template will show a State of Draft. This simply means that the template can be edited in NIM's template editor. As the template author, you can mark a         template as Ready for Use to prevent it from being unintentionally modified.
-
-
 **Application 1 - Basic Proxy for Juice Shop**
 
 1. In a new Firefox tab, enter **nginx.f5demos.com**, which is the hostname of the NGINX server. 
@@ -25,6 +19,8 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 3. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
+   .. image:: ../images/nim-templates-actions.png
+
 4. Select the **Publish to an instance** radio button.
 
 5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that we accessed earlier and is already managed by NIM.
@@ -37,31 +33,31 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 9. Enter the following data in this section:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Listen Port
-     - 8080
-   * - Default Server
-     - true
+     * - **Item**
+       - **Value**
+     * - Listen Port
+       - 8080
+     * - Default Server
+       - true
 
 10. Scroll down to **Server Locations**
 
 11. Enter the following data in this section (**workloads.f5demos.com:9000** is the host that contains one of our applications):
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Location Match Strategy
-     - Prefix
-   * - URI   
-     - /
-   * - Upstream Name
-     - workloads.f5demos.com:9000
+     * - **Item**
+       - **Value**
+     * - Location Match Strategy
+       - Prefix
+     * - URI   
+       - /
+     * - Upstream Name
+       - workloads.f5demos.com:9000
 
 12. Click **Next**. We won't configure a HTTP Upstream for this example.
 
@@ -103,61 +99,61 @@ Let's configure NGINX with some additional parameters for the **PyGoat** applica
 
 8. Enter the following data in this section:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Server Label
-     - pygoat
-   * - Listen Port
-     - 443
-   * - Default Server
-     - true
+     * - **Item**
+       - **Value**
+     * - Server Label
+       - pygoat
+     * - Listen Port
+       - 443
+     * - Default Server
+       - true
 
 9. Under **Server name**, click **+ Add item**.
 
 10. Enter the following data:
 
-.. list-table:: 
-   :header-rows: 1
+    .. list-table:: 
+      :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Server name -> ITEM 1 -> Server name
-     - pygoat.f5demos.com
+      * - **Item**
+        - **Value**
+      * - Server name -> ITEM 1 -> Server name
+        - pygoat.f5demos.com
 
 11. In the **TLS Settings** section, enter the following data:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Enable TLS  
-     - TRUE
-   * - TLS Certificate Path   
-     - /etc/ssl/certs/wildcard.f5demos.com.crt.pem
-   * - TLS Keyfile Path
-     - /etc/ssl/private/wildcard.f5demos.com.key.pem
-   * - Redirect Port  
-     - 80
+     * - **Item**
+       - **Value**
+     * - Enable TLS  
+       - TRUE
+     * - TLS Certificate Path   
+       - /etc/ssl/certs/wildcard.f5demos.com.crt.pem
+     * - TLS Keyfile Path
+       - /etc/ssl/private/wildcard.f5demos.com.key.pem
+     * - Redirect Port  
+       - 80
 
 12. In the **Server Locations** section, click the **Add Server Locations** link.
 
 13. Enter the following data in this section:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Location Match Strategy
-     - Prefix
-   * - URI   
-     - /
-   * - Upstream Name
-     - pygoat-upstream
+     * - **Item**
+       - **Value**
+     * - Location Match Strategy
+       - Prefix
+     * - URI   
+       - /
+     * - Upstream Name
+       - pygoat-upstream
 
 Note: Do not enter any information into the **Proxy Headers** portion of the template form.
 
@@ -181,33 +177,33 @@ Note: Do not enter any information into the **Proxy Headers** portion of the tem
 
 16. Enter the following data in this section:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Upstream Name
-     - pygoat-upstream
-   * - Load balancing strategy   
-     - Round Robin
+     * - **Item**
+       - **Value**
+     * - Upstream Name
+       - pygoat-upstream
+     * - Load balancing strategy   
+       - Round Robin
 
 17. In the **Servers** section, click **+Add item**.
 
 18. Enter the following data in this section:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+     :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Host
-     - workloads.f5demos.com
-   * - Port 
-     - 8000
-   * - Down
-     - False
-   * - Backup
-     - False
+     * - **Item**
+       - **Value**
+     * - Host
+       - workloads.f5demos.com
+     * - Port 
+       - 8000
+     * - Down
+       - False
+     * - Backup
+       - False
 
 Note: Do not enter any information into the **Zone** portion of the template form.
 
@@ -241,7 +237,7 @@ Note: Do not enter any information into the **Zone** portion of the template for
 
 25. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
-    .. image:: ../images/image-20.png
+   .. image:: ../images/image-20.png
 
     If we wanted to make changes to the submission, we could simply edit the values here, and publish configuration as we did before.
 
@@ -249,5 +245,5 @@ Note: Do not enter any information into the **Zone** portion of the template for
 
 1. Back in the FireFox **Lab Links** tab, click on the **PyGoat Web Application** link once again. The application should load now:
 
-    .. image:: ../images/image-21.png
+   .. image:: ../images/image-21.png
 
