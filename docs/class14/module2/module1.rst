@@ -1,7 +1,7 @@
 Importing NIM Templates
 =============================
 
-1. Click the **Templates** tab. Note there is one base template listed, **F5 Global Default Base**
+1. Click **Templates** from the left-side menu. There is one base template already installed - **F5 Global Default Base**
 
     .. image:: ../images/nim-templates.png
 
@@ -9,15 +9,16 @@ Importing NIM Templates
 
 2. Click the **Create** button on the top right.
 
-    .. image:: ../images/nim-templates-create.png
+    .. image:: ../images/nim-templates-create-button.png
+      :width: 576
 
    The Create Template form appears. The default option is to create a **New** template.  For this lab, we are going to import an existing template, so click the **Import** radio button.
 
-    .. image:: ../images/nim-instances-edit.png
+    .. image:: ../images/nim-templates-create.png
 
 3. Click **Browse** in the middle of the dialog to select the template file to import.
 
-4. Select **basic_reverse_proxy_base.tar.gz from the file browser then click **Open** at the bottom right of the dialog
+4. Select **basic_reverse_proxy_base.tar.gz** from the file browser then click **Open** at the bottom right of the dialog
 
     .. image:: ../images/nim-templates-import-file.png
 
