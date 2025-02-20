@@ -11,13 +11,13 @@ Importing NIM Templates
 
     .. image:: ../images/nim-templates-create.png
 
- The Create Template form appears. The default option is to create a **New** template.  For this lab, we are going to import an existing template, so click the **Import** radio button.
+   The Create Template form appears. The default option is to create a **New** template.  For this lab, we are going to import an existing template, so click the **Import** radio button.
 
     .. image:: ../images/nim-instances-edit.png
 
 3. Click **Browse** in the middle of the dialog to select the template file to import.
 
-4. Select **basic_revrse_proxy_base.tar.gz from the file browser then click **Open** at the bottom right of the dialog
+4. Select **basic_reverse_proxy_base.tar.gz from the file browser then click **Open** at the bottom right of the dialog
 
     .. image:: ../images/nim-templates-import-file.png
 
@@ -25,6 +25,6 @@ Importing NIM Templates
 
     .. image:: ../images/nim-templates-import-file.png
 
- You will see a warning about template not being signed.  Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
+   You will see a warning about template not being signed.  Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
 
     .. image:: ../images/nim-signature-bypass.png
