@@ -29,6 +29,7 @@ Introduction to NIM Templates
 
 •	Background and Overview of NIM Templates
 •	Examine Default Configuration
+•	Import a Pre-Configured Template
 
 **Module 3**: 
 
