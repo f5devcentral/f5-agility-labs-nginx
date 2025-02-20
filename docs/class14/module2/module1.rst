@@ -32,7 +32,11 @@ In this section, we will import a pre-made template that will later be used to c
 
     .. image:: ../images/nim-signature-bypass.png
 
-   You should see a box at the bottom right showing that the template was successfully created.
+   You should see a box at the bottom right showing that the template was successfully created. The newly imported base template appears on the **Templates** page.
 
     .. image:: ../images/nim-templates-created.png
       :width: 260
+
+   Note: The newly imported base template will show a State of Draft. This simply means that the template can be edited in the NIM template editor. As the template author, you can mark a template as **Ready for Use** to prevent it from being unintentionally modified.
+
+
