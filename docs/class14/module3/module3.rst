@@ -3,29 +3,8 @@ Configure NGINX Using a Template
 
 Paul has been interested in ways to make his job easier while enabling others in his organization to be self-sufficient. To this end, Paul has developed a base template for NIM to deploy proxy services for applications using his organizations preferred configuration practices. Paul is one of a few in his organization that is comfortable with NGINX configuration, so he wants to make it easy for others to be able to deploy their applications on NGINX.
 
-Acting as Paul, you will first install the base template he developed. Then, you will test this template by actually deploying it to provide an HTTP proxy for the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
+Acting as Paul, you will test the template imported in the previous section by actually deploying it to provide an HTTP proxy for the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
 
-**Import a Custom Base Template**
-
-1. In the left navigation, click Templates.
-
-2. Click the green + Create button in the upper right corner.
-
-   At this point we have the choice to create a new base template from scratch, or to import an existing one. A template bundle has been created for you, so select Import.
-
-3. Click Browse to browse the JumpHost's file system for the template we wish to import.
-
-4. Select the basic_reverse_proxy_base.tar.gz file, and click Open.
-
-5. Click the green Parse button in the lower right to scan and analyze the contents of this template bundle.
-
-   Note: You will see a message similar to "archive is either unsigned or missing its signature file". This is a precautionary message, cautioning the user against importing templates that     may have originated from an unofficial source. Since this is a custom template, it is not signed by F5.
-
-6. Check the Allow Signature Bypass checkbox to override the import dialog.
-
-7. Below the checkbox, you should note that there was one template detected in a bundle, named Basic Reverse Proxy. While a template bundle can contain more then one template, we will be importing them one at a time in this lab.
-
-8. Click the Import button.
 
    You will see the Config Template Created message, and see the newly imported base template on the Templates page.
 
