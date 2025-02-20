@@ -82,7 +82,8 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 15. Click the **Publish** button. If successful, you should see a message indicating so.
 
-    .. image:: ../images/nim-instances-success.png
+    .. image:: ../images/nim-templates-pub-success.png
+      :width: 600
 
 16. Close the Templates window.
 
@@ -140,35 +141,35 @@ Let's configure NGINX with some additional parameters for the **PyGoat** applica
 
 11. In the **TLS Settings** section, enter the following data:
 
-   .. list-table:: 
-     :header-rows: 1
+    .. list-table:: 
+      :header-rows: 1
 
-     * - **Item**
-       - **Value**
-     * - Enable TLS  
-       - TRUE
-     * - TLS Certificate Path   
-       - /etc/ssl/certs/wildcard.f5demos.com.crt.pem
-     * - TLS Keyfile Path
-       - /etc/ssl/private/wildcard.f5demos.com.key.pem
-     * - Redirect Port  
-       - 80
+      * - **Item**
+        - **Value**
+      * - Enable TLS  
+        - TRUE
+      * - TLS Certificate Path   
+        - /etc/ssl/certs/wildcard.f5demos.com.crt.pem
+      * - TLS Keyfile Path
+        - /etc/ssl/private/wildcard.f5demos.com.key.pem
+      * - Redirect Port  
+        - 80
 
 12. In the **Server Locations** section, click the **Add Server Locations** link.
 
 13. Enter the following data in this section:
 
-   .. list-table:: 
-     :header-rows: 1
+    .. list-table:: 
+      :header-rows: 1
 
-     * - **Item**
-       - **Value**
-     * - Location Match Strategy
-       - Prefix
-     * - URI   
-       - /
-     * - Upstream Name
-       - pygoat-upstream
+      * - **Item**
+        - **Value**
+      * - Location Match Strategy
+        - Prefix
+      * - URI   
+        - /
+      * - Upstream Name
+        - pygoat-upstream
 
 Note: Do not enter any information into the **Proxy Headers** portion of the template form.
 
@@ -192,33 +193,33 @@ Note: Do not enter any information into the **Proxy Headers** portion of the tem
 
 16. Enter the following data in this section:
 
-   .. list-table:: 
-     :header-rows: 1
+    .. list-table:: 
+      :header-rows: 1
 
-     * - **Item**
-       - **Value**
-     * - Upstream Name
-       - pygoat-upstream
-     * - Load balancing strategy   
-       - Round Robin
+      * - **Item**
+        - **Value**
+      * - Upstream Name
+        - pygoat-upstream
+      * - Load balancing strategy   
+        - Round Robin
 
 17. In the **Servers** section, click **+Add item**.
 
 18. Enter the following data in this section:
 
-   .. list-table:: 
-     :header-rows: 1
+    .. list-table:: 
+      :header-rows: 1
 
-     * - **Item**
-       - **Value**
-     * - Host
-       - workloads.f5demos.com
-     * - Port 
-       - 8000
-     * - Down
-       - False
-     * - Backup
-       - False
+      * - **Item**
+        - **Value**
+      * - Host
+        - workloads.f5demos.com
+      * - Port 
+        - 8000
+      * - Down
+        - False
+      * - Backup
+        - False
 
 Note: Do not enter any information into the **Zone** portion of the template form.
 
@@ -239,6 +240,7 @@ Note: Do not enter any information into the **Zone** portion of the template for
 21. Click the **Publish** button. If successful, you should see a message indicating so.
 
     .. image:: ../images/nim-templates-pub-success.png
+      :width: 600
 
 22. Click the **Close and Exit** button.
 
@@ -246,7 +248,7 @@ Note: Do not enter any information into the **Zone** portion of the template for
 
     You should see that the **Basic Reverse Proxy** has been deployed to 1 instance:
 
-    .. image:: ../images/image-19.png
+    .. image:: ../images/nim-templates-submission.png
 
 24. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
 
