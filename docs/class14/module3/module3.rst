@@ -24,13 +24,13 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 4. Select the **Publish to an instance** radio button.
 
-   .. image:: ../images/nim-instance-pub.png
+   .. image:: ../images/nim-templates-pub.png
      :width: 518
 
 5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that we accessed earlier and is already managed by NIM.
 
-   .. image:: ../images/nim-instance-select.png
-     :width: 518
+   .. image:: ../images/nim-templates-select.png
+     :width: 700
 
 6. Click **Next** at the bottom right of the page.
 
@@ -38,8 +38,8 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 8. In the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
-   .. image:: ../images/nim-instance-add-http.png
-     :width: 518
+   .. image:: ../images/nim-templates-add-http.png
+     :width: 900
 
 9. Enter the following data in the **Listen** section:
 
