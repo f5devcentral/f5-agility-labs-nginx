@@ -1,7 +1,7 @@
 Intro - UDF pattern deployment
 ================================
 
-In order to begin you will need to go to F5's Unified Development Framework (UDF) site and launch the apropriate course. The following will walk you through that process.
+In order to begin you will need to go to F5's Unified Development Framework (UDF) site and launch the appropriate course. The following will walk you through that process.
 
 UDF Pattern deployment steps
 ----------------------------
