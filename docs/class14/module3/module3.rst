@@ -20,18 +20,28 @@ Acting as Paul, you will test the template imported in the previous section by a
 3. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
    .. image:: ../images/nim-templates-actions.png
+     :width: 518
 
 4. Select the **Publish to an instance** radio button.
 
+   .. image:: ../images/nim-instance-pub.png
+     :width: 518
+
 5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that we accessed earlier and is already managed by NIM.
 
-6. Click **Next**.
+   .. image:: ../images/nim-instance-select.png
+     :width: 518
+
+6. Click **Next** at the bottom right of the page.
 
 7. In the **Choose Augments** view, click **Next**.
 
-8. On the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
+8. In the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
-9. Enter the following data in this section:
+   .. image:: ../images/nim-instance-add-http.png
+     :width: 518
+
+9. Enter the following data in the **Listen** section:
 
    .. list-table:: 
      :header-rows: 1
@@ -43,7 +53,10 @@ Acting as Paul, you will test the template imported in the previous section by a
      * - Default Server
        - true
 
-10. Scroll down to **Server Locations**
+10. Scroll down to **Server Locations** and click **Add Server Locations**.
+
+   .. image:: ../images/nim-instance-add-locations.png
+     :width: 518
 
 11. Enter the following data in this section (**workloads.f5demos.com:9000** is the host that contains one of our applications):
 
@@ -59,15 +72,17 @@ Acting as Paul, you will test the template imported in the previous section by a
      * - Upstream Name
        - workloads.f5demos.com:9000
 
-12. Click **Next**. We won't configure a HTTP Upstream for this example.
+12. Click **Next**. We won't configure an HTTP Upstream for this example.
 
-13. Click **Next**. This will show you a preview of the config generated from the templates. 
+13. Click **Next**. This will show you a preview of the config generated from the templates.
+
+    .. image:: ../images/nim-instances-preview.png
 
 14. Click the filename dropdown (currently displaying `/etc/nginx/nginx.conf`) at the top of the screen. Click `/etc/nginx.mime.types` file. As a convenience, this base template also creates this file for you, and will publish it to the instance in addition to the main `nginx.conf` file.
 
 15. Click the **Publish** button. If successful, you should see a message indicating so.
 
-    .. image:: ../images/image-18.png
+    .. image:: ../images/nim-instances-success.png
 
 16. Close the Templates window.
 
