@@ -70,6 +70,10 @@ Which should produce the following output:
       registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
       registry.gitlab.f5.local/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
+  .. note:: If you receive an error of "dial tcp: lookup gitlab.f5demolab.com on 10.1.255.254:53: no such host",
+     try the command again. Sometimes, it resolves on its own. If you still get the error after multiple tries,
+     ask a lab assistant for help.
+
 4. Run a container using the downloaded docker image from the previous
    step. We will also map ports ``9000`` and ``9080`` on the docker host
    to ports ``80`` and ``8080`` on the container, and also mount the
@@ -77,8 +81,7 @@ Which should produce the following output:
 
    .. code:: bash
 
-      docker run --name test -d -p 9000:80 -p 9080:8080 -v $PWD/etc/nginx:/etc/nginx 
-      registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
+      docker run --name test -d -p 9000:80 -p 9080:8080 -v $PWD/etc/nginx:/etc/nginx registry.gitlab.f5demolab.com/f5-demo-lab/nginx-plus-dockerfiles:alpine3.10
 
 
 5. You can see the container is running on the mapped ports. When

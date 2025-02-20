@@ -27,5 +27,4 @@ After using Module 2 above, we will dive deeper into some DoS attacks against NG
    :caption: Content:
    :glob:
 
-   intro
    module*/module*

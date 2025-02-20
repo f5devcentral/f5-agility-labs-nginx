@@ -1,5 +1,5 @@
 Create more advanced configuration
-===============================
+==================================
 
 **Provision Access to a Template Submission**
 
@@ -7,7 +7,7 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 **Use RBAC to Grant Access to the Template Submission**
 
-1. In NIM, click the top left module menu, and select **Settings**.
+1. In NIM, select **Settings** on top right of the NIM page. 
 
 2. Click **Users**. Note that Jane Developer already has an account, and that her account is mapped to the **developer** role.
 
@@ -173,7 +173,7 @@ As Jane Developer, we will attach the custom 404 handler to the NGINX configurat
 
     Notice there are 2 new files in the generated configuration:
 
-      - /etc/nginx/augments/http-server/base_http-server1_*&lt;unique identifier&gt;*.conf
+      - /etc/nginx/augments/http-server/base_http-server1-<<UNIQUE-ID>>.conf
       - /usr/share/nginx/html/custom_404.html
 
 12. Click on the first file. This is the file that will be included in the main `nginx.conf` file. It contains the config to intercept 404 errors from the upstream, and will serve up the contents of a static file included in the template bundle.
@@ -319,6 +319,36 @@ This will execute a total of `10` requests using `1` concurrent worker at a rate
     .. image:: ../images/image-13.png
 
 Notice that the first requests were successful with a status code of 200 observed. Then, they started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
+
+
+**Examine additional Custom Templatese**
+
+Finally, to conclude this lab, we will log in as Paul Platops and import additional template examples developed by the NGINX community. Some are simple, such as a basic location block, while others are more advanced, like health checks and OIDC. These examples will demonstrate the flexibility of this feature and the wide variety of use cases it supports. Many of these templates can be customized to suit your needs, depending on your specific NGINX use cases.
+
+1. Click the person icon in the top right corner, then click the **Logout** link.
+
+2. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter `paulplatops` as the user, `NIM123!@#` as the password.
+
+3. Click the **Instance Manager** tile.
+
+4. In the left navigation, click **Templates**.
+
+5. Click the green **+ Create** button in the upper right corner.
+
+6. Click **Browse** to browse the JumpHost's file system for the template we wish to import.
+
+7. Select the `n1_templates_http_examples.tar.gz` file, and click **Open**.
+
+    There is a wide selection of templates here for common NGINX use-cases.
+
+8. Click the green **Parse** button in the lower right to scan and analyze the contents of this template bundle.
+
+9. As you did earlier in the lab, check the **Allow Signature Bypass** checkbox to override the import dialog.
+
+10. Below the checkbox, you should note that there are multiple Templates detected in the bundle.
+
+11. Click the **Import** button.
+
 
 **Conclusion**
 

@@ -1,14 +1,6 @@
-Security Hardening Techniques and Best Practices
+Security Hardening
 ################################################
-
-This section guides you in identifying and patching common security vulnerabilities. You are encouraged to modify configurations from an insecure state to a secure state.
-
-===================================
-General goals and learning outcomes
-===================================
-
-* Identify mis-configurations which may expose security issues.
-* Identify and apply resolution for mis-configurations where applicable.
+This section guides you in identifying and resolving common security mis-configurations. The goal is to identify mis-configurations that may expose security issues and apply appropriate resolutions where applicable. By following this guide, you will strengthen your understanding of secure configurations and enhance the overall security posture of your deployment.
 
 ========
 Overview
@@ -16,165 +8,202 @@ Overview
 
 You will use the following systems, already deployed in previous sections of the lab:
 
-* Client System ("Locust Worker") - Contains the "~/appworld2025/client.py" script, which will run the tests for you. All it does is make the request and return the response. It takes number of the step in this guide as an argument. For example, Step 7 is "/appworld2025/client.py 7".
-* NGINX Proxy - Each step in this guide is designed to help you identify mis-configurations that may result in undesired security implications for your deployment. Given that, configurations will start off in an insecure state. Each step will be available to the client instance on a different port. For example, step 7 is listening on TCP port 87 and 4437.
-* Upstream Server ("App Server") - Contains a python application written in Flask that reflects the headers as observed after the request has proxied through NGINX to the upstream. This will allow you to monitor headers that may have been smuggled past the proxy.
+* Client System ("Locust Worker"): Runs client tests using the Web Shell. Usage: client <step_number>.
+* NGINX Instance Manager or NGINX One: Used for editing NGINX configuration files located in /etc/nginx/conf.d/.
+* NGINX Proxy: Data plane instance.
+* Upstream Server: A Flask application which reflects headers after requests are proxied through NGINX.
 
-In each step, you will run the client requests for the lab, observe results, modify the NGINX configuration and repeat the process. Configuration changes are done on the NGINX Instance Manager system. Each step has its number as the filename, preceeded by "lab". For example, the step 7 configuration file is /etc/nginx/conf.d/lab07.conf.
+In each step, you will run the client requests, observe results, modify the NGINX configuration and repeat the process. 
+Configuration changes are recommended to be done on the NGINX Instance Manager system or NGINX One console.
 
 * Insecure settings will have a comment above them starting with the UNSAFE keyword.
-* Secure settings will have a comment above them starting with SAFE keyword. There are also map configuration directives which can be used to secure the configuration. These are located in /etc/nginx/nginx.conf
+* Secure settings will have a comment above them starting with SAFE keyword. 
 
 =========
 Lab Steps
 =========
-
-0. **Connectivity Test**
-
-This step tests for basic connectivity to the NGINX Proxy. Estimated time: under 5 minutes.
-Configuration file: /etc/nginx/conf.d/lab00.conf
-
-* From locust worker (client) run the command: ./client.py 0.
-* Success will show as below. If this is not the case troubleshoot why or ask a lab helper.
-
-|
-|
-
-1. **$uri vs $document_uri vs $request_uri vs ?**
-
-This step will show you the differences between commonly used variables and how misuse can result in security impact. Estimated time: 10 minutes.
-
-$uri and $document_uri represent the normalized form of the request uri. This sounds positive, however normalized means it will interpret special characters instead of representing them only as a string. When used in certain configurations, security issues can be exposed. One of those is http response injection, sometimes used in cache poisoning attacks.
-
-Config file: /etc/nginx/conf.d/lab01.conf
-
-* Overall procedures
-
-From locust worker (client) run the command and observe the results.
-
-Modify the configuration to use the different variables and observe the results.
-
-* $uri and $document_uri
-
-From locust worker (client) run the command: './client.py 1'
-
-Observe the response includes "INJECTED: TRUE" as an HTTP response header.
-
-* $request_uri
-
-From locust worker (client) run the command: './client.py 1'
-
-Observe the response no longer includes the injected header.
-
-|
-|
-
-2. **client controlled variables directory traversal**
-
-This lab will show you how client controlled HTTP headers can result in Path Traversal. Estimated time: 5 minutes.
-
-Config file: /etc/nginx/conf.d/lab02.conf
-
-From locust worker (client) run the command: './client.py 2'
-
-Observe the results. You should see the contents of /etc/passwd file. Due to the use of a client controlled variable, the attacker can basically request any file nginx worker processes can read. Luckily, the worker processes don't run as root normally.
-
-Bonus question: Can you think of a way that /etc/shadow (only readable by root) could be exposed with this configuration ?
-
-Bonus answer: Run 'master_process off;' or 'user root' make this issue worse.
-
-|
-|
-
-3. **client controlled variables with sub_filter**
-
-This lab shows sub_filter replacement with client controlled variables. Estimated time: 5 minutes. Config file: /etc/nginx/conf.d/lab03.conf
-
-From locust worker (client) run the command: './client.py 3'
-
-Observe the results. You should observe "INJECTED=TRUE" in places on the page. There really is no safe way to change this other than using pre-defined, static variables for sub_filter. One can write a map that only allows alphanum characters.
-
-|
-|
-
-4. **client controlled variables with Server Name Indicator**
-
-This lab will show you how ssl_server_name misuse can result in HTTP Request Smuggling. ssl_server_name is a variable that contains the value passed in Server Name Indicator. This value is most likely to be a hostname, however the purpose of it is to locate a certificate to use for the client, so hostnames are not always gaurenteed. If one uses the hostname is an upstream request, http request smuggling can occur. Estimated time: 5 minutes. Config file: /etc/nginx/conf.d/lab04.conf
-
-From locust worker (client) run the command: './client.py 4'
-
-Observe the response includes "INJECTED: TRUE", even though the HTTP request header set this to FALSE..... this is b/c the ssl_server_name can contain many different characters in their raw form.
-
-Modify the configuration on the mangment device to take action if the '$contains_ctrl_chars' variable is true. You can do this be uncommenting one of the desired "return" lines in the configuration just below this check.
-
-Bonus: Observe the contains_ctrl_chars map in /etc/nginx/nginx.conf.
-
-|
-|
-
-5. **client controlled variables with server_tokens**
-
-Content injection when using server_tokens variable. Normally, this is not client controlled but it's possible to configure nginx to use a client controlled variable in the response. Estimated time: < 5 minutes. Config file: /etc/nginx/conf.d/lab05.conf
-
-From locust worker (client) run the command: './client.py 9'
-
-Observe the results. You should observe an HTTP response header injected. This will be due to unsafe use of server_tokens.
-
-Modify configuration to SAFE option and re-test.
-
-|
-|
-
-6. **client controlled variables and regex negation**
-
-This lab will show you how regex negation can expose HTTP response injection, useful for cache poisoning. Config file: /etc/nginx/conf.d/lab06.conf
-
-From locust worker (client) run the command: './client.py 2'
-
-Observe the response includes "INJECTED: TRUE" as an HTTP response header.
-
-Review the configuration on the management system (NIM)
-
-Modify the configuration to use a SAFE directive and retest. The results will be different. The response should be 404 not found.
-
-|
-|
-
-7. **Client controlled variables with an Open Proxy**
-
-This lab shows how configuration can allow for a basic open proxy. Config file: /etc/nginx/conf.d/lab07.conf
-
-From locust worker (client) run the command: './client.py 6'
-
-Observe the results. You should see content from "example.com". Why did this work ?
-
-TODO: make a map for checking hostnames that are valid.
-
-TODO: make a directive that restricts the listener to 127.x network only.
-
-|
-|
-
-8. **Client controlled variables and leading dot hostname**
-
-This lab shows how client controlled variables and a leading dot hostname can lead to un-authorized access. Config file: /etc/nginx/conf.d/lab08.conf
-
-|
-|
-
-9. **Off by slash**
-
-Directory traversal is possible when a classic mis-configuration called 'off by slash' is present. When locations are defined, the trailing slash missing can create situations where an attacker can traversal one directory up from the alias/root. This doesn't require any use of client controlled variables in the configuration and < TODO CHECK > when "merge_slashes on" (default) is set in the configuration context, only one directory traverse up is possible. When "merge_slashes off" (non-default), it's possible to access other files. Config file: /etc/nginx/conf.d/lab09.conf
-
-|
-|
-
-10. **Using disable_symlinks**
-
-When setups are supporting multi-tenancy use case, file system symlink creation may allow nginx to access files outside a tenant webroot. This lab shows how to mitigate this from occuring. Config file: /etc/nginx/conf.d/lab10.conf
-
-|
-|
+Each step has its number as the filename, preceeded by "lab". For example, the step 7 configuration file is /etc/nginx/conf.d/lab07.conf.
+
+From within the UDF console:
+* Open a browser and authenticate to the NGINX Instance Manager system or NGINX One console.
+* Open a Web Shell to the Locust (Worker) system. This will login automatically as the root user.
+
+Step 0
+************
+This step will test the connection the NGINX proxy and the upstream server.
+
+#. From the Web Shell run the command: 'client 0'.
+#. Observe the response includes "HTTP/1.1 200 OK".
+#. If you do not see this, check the NGINX proxy and upstream server are running. If they are not, work with the lab proctors to resolve the issue.
+
+Step 1
+************
+Using client-controlled values in the **return directive** can expose your system to HTTP response header injection attacks.
+
+#. From the Web Shell run the command: 'client 1'
+#. Observe the request includes an encoded request line.
+#. Observe the response includes "INJECTED: TRUE" as an HTTP response header. The response code will be 301.
+#. Modify the conf.d/lab01.conf configuration file to use the different variables and observe the results.
+#. From Web Shell run the command: 'client 1'
+#. Observe the response no longer includes the injected header.
+
+Key Takeaways
+------------
+* Using $uri and $document_uri can result in HTTP response header injection attacks.
+* Using $request_uri is safe in most situations, however downstream/upstream interpretation of the request line can make it unsafe.
+
+Step 2
+************
+Using client-controlled values in the **root or alias directives** can expose your system to directory traversal attacks.
+
+#. From the Web Shell run the command: 'client 2'
+#. Observe the response includes the contents of /etc/passwd.
+#. Modify the conf.d/lab02.conf configuration file to use the different variables and observe the results.
+#. From the Web Shell re-run the command: 'client 2'
+#. Observe the response no longer contains the contents of /etc/passwd.
+
+Key Takeaways
+-------------
+* Using client controlled values in the root or alias directives can result in directory traversal attacks.
+* If you must use client controlled values in the root or alias directives, consider using a map to limit the possible values.
+
+Step 3
+************
+Using client-controlled variables in configuration options used with **sub_filter** can expose your system to HTTP response content injection attacks.
+
+#. From the Web Shell run the command: 'client 3'
+#. Observe the response includes the content "Welcome to INJECTED=TRUE!". 
+#. Modify the conf.d/lab03.conf configuration file to prevent this attack.
+#. From the Web Shell re-run the command: 'client 3'
+#. Observe the response no longer displays "Welcome to INJECTED=TRUE!".
+
+Key Takeaways
+-------------
+* Using client controlled values with the sub_filter directives can result in content injection attacks.
+* Consider using a map to limit the possible values or use a static values.
+
+
+Step 4
+************
+Using client-controlled variables in configuration options with **$ssl_server_name** can expose your system to HTTP request smuggling and HTTP response header injection attacks.
+
+#. From the Web Shell run the command: 'client 4'
+#. Observe the request includes "X-Injected: FALSE" HTTP request header.
+#. Observe the response body includes "X-Injected":"TRUE", which is the http header our upstream server received.
+#. Modify the conf.d/lab04.conf configuration file to prevent this attack.
+#. From the Web Shell re-run the command: 'client 4'
+#. Observe the response body no longer contains "X-Injected":"TRUE", indicating our upstream server did not recieve the injected header.
+
+Key Takeaways
+-------------
+* Using client controlled variables in the ssl_server_name directive can result in HTTP request smuggling and HTTP response header injection attacks.
+* Consider using a map to limit the possible values and reject requests with unknown Server Name Indicator values.
+
+
+Step 5
+************
+Using client-controlled variables in configuration options with **server_tokens** can expose your system to HTTP response header injection attacks.
+
+#. From the Web Shell run the command: 'client 5'
+#. Observe the Server Name Indicator includes 'X-Injected: TRUE'
+#. Observe the request header includes "X-Injected: FALSE".
+#. Observe the response headers includes "X-Injected: TRUE" and the response body includes "X-Injected":"FALSE".
+#. Modify the conf.d/lab05.conf configuration file to prevent this attack.
+#. From the Web Shell re-run the command: 'client 5'
+#. Observe the response header no longer includes "X-Injected: TRUE" and the response body no longer includes "X-Injected":"FALSE".
+
+Key Takeaways
+-------------
+* Using client controlled variables in the server_tokens directive can result in HTTP response header injection attacks.
+* Consider using a map to limit the possible values or use static values.
+
+
+Step 6
+************
+Using client-controlled variables in configuration options with **regex negation** can expose your system to HTTP response header injection attacks.
+
+#. From the Web Shell run the command: 'client 6'
+#. Observe the response includes "X-Injected: TRUE".
+#. Modify the conf.d/lab06.conf configuration file to prevent this attack.
+#. From the Web Shell re-run the command: 'client 6'
+#. Observe the response no longer includes "X-Injected: TRUE".
+
+Key Takeaways
+-------------
+* Using client controlled variables in the rewrite directive with regex negation can result in HTTP response header injection attacks.
+* Consider using a stricter regex which negates CRLF characters or avoid regex negation.
+
+
+Step 7
+************
+**Open Proxy**
+Allowing client-controlled variables with **proxy_pass** directive can enable attackers to utilize your system as an open proxy.
+
+#. From the Web Shell run the command: 'client 7'
+#. Observe the response includes content from "example.com".
+#. Modify the conf.d/lab07.conf configuration file to prevent this attack.
+#. From the Web Shell re-run the command: 'client 7'
+#. Observe the response no longer includes content from "example.com". 
+
+Key Takeaways
+-------------
+* Using client controlled variables in the proxy_pass directive can result in Server Side Request Forgery attacks.
+* Consider using a map to limit the possible destinations or use static values.
+* Consider using restrictions such as a localhost only listen directive or access control directives (allow and deny).
+
+
+Step 8
+************
+A **leading dot in the hostname** can allow an attacker to target specific configurations and access files directly.
+
+#. From the Web Shell run the command: 'client 8'
+#. Observe there are multiple requests and responses made in this step. 
+#. Observe the part 1 response includes "401 Authorization Required" as the client did not send the correct credentials.
+#. Observe the part 2 response includes "secret.local SECRET LOCATION" as the client did send the correct credentials.
+#. Observe the part 3 response includes "secret.local SECRET LOCATION" but the client did not send the correct credentials. Review the Host header in the part 3 request.
+#. Modify the conf.d/lab08.conf configuration file to prevent this attack. You can add a "stub" default virtual server or check for valid hostnames.
+#. From the Web Shell re-run the command: 'client 8'
+#. Observe the part 3 response no longer includes "secret.local SECRET LOCATION".
+
+Key Takeaways
+-------------
+* Using client controlled variables mixed with access controls can result in unauthoized content access.
+
+Step 9
+************
+The classic **"off by slash"** misconfiguration allows an attacker to traverse directories upward by one level due to path normalization rules.
+
+#. From the Web Shell run the command: 'client 9'
+#. Observe the response includes "OFF BY SLASH SECRET"
+#. Modify the conf.d/lab09.conf configuration file to prevent this attack.
+#. From the Web Shell re-run the command: 'client 9'
+#. Observe the response no longer includes "OFF BY SLASH SECRET"
+
+Key Takeaways
+-------------
+* Forgetting to add a trailing slash to the location directive can result in directory traversal attacks.
+
+
+Step 10
+************
+In multi-tenant environments, **allowing symlinks** can enable users to create symbolic links to files outside their own directory, potentially exposing sensitive data to unauthorized parties.
+
+Config file: /etc/nginx/conf.d/lab10.conf
+
+#. From the Web Shell run the command: 'client 10'
+#. Observe there are multiple requests and responses made in this step. 
+#. Observe the part 1 response includes "401 Authorization Required" as the client did not send the correct credentials.
+#. Observe the part 2 response includes "tenant01.local SECRET LOCATION" as the client did send the correct credentials.
+#. Observe the part 3 response includes "tenant01.local SECRET LOCATION" but the client did not send the correct credentials.
+#. Observe the part 4 response includes "tenant02.local PUBLIC LOCATION" but the client did not send the correct credentials.
+#. Observe the part 5 response includes the contents of /etc/passwd.
+#. Modify the conf.d/lab10.conf configuration file to prevent this attack. Also experiment with different settings and observe the results.
+#. From the Web Shell re-run the command: 'client 10'
+#. Observe the part 3, 4, and 5 responses no longer include the contents as before.
+
+Key Takeaways
+-------------
+* If you allow users to create symbolic links, consider using the disable_symlinks directive to prevent users from creating symbolic links to files outside their own directory.
 
 =========================================
 Congratulation, you've completed the lab!
@@ -186,4 +215,3 @@ We hope you enjoyed it and would love to hear your feedback. The lab proctors wi
    :maxdepth: 2
    :hidden:
    :glob:
-

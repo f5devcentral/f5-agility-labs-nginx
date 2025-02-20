@@ -1,7 +1,7 @@
 Introduction
 ============
 
-The goal of this lab is to provide an introduction to the NIM templating system by walking through a few use cases that personas in a typical organization might want to implement. The lab will provide pre-built templates for your use. Authoring templates is out of scope for this lab.
+The goal of this lab is to provide an introduction to the NGINX Instance Manager (NIM) templating system by walking through a few use cases that personas in a typical organization might want to implement. The lab will provide pre-built templates for your use. Authoring templates is out of scope for this lab.
 
 The UDF lab consists of:
 
@@ -18,5 +18,4 @@ The UDF lab consists of:
    :caption: Content:
    :glob:
 
-   intro
    module*/module*

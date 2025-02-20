@@ -1,0 +1,51 @@
+mode: standalone
+adminServer:
+  address: :8080
+server:
+  address: :4141
+
+# The routes determine on what URL path the AIGW is listening
+routes:
+  - path: /api/chat
+    policy: arcadia_ai_policy
+    timeoutSeconds: 600
+    schema: openai
+
+# What policy is applied to the route
+policies:
+  - name: arcadia_ai_policy
+    profiles:
+      - name: default
+
+# To what LLM endpoint we forward the request to
+services:
+  - name: ollama
+    executor: http
+    config:
+      endpoint: "http://ollama_public_ip:11434/api/chat"
+      schema: ollama-chat
+
+# What do we do with the request, at the moment we just forward it
+profiles:
+  - name: default
+    inputStages:
+      - name: protect
+        steps:
+          - name: prompt-injection
+
+    services:
+      - name: ollama
+
+
+# Here we will find all our processor configuration
+processors:
+  - name: prompt-injection
+    type: external
+    config:
+      endpoint: "http://aigw-processors-f5:8000"
+      version: 1
+      namespace: f5
+    params:
+      threshold: 0.5 # Default 0.5
+      reject: true # Default True
+      skip_system_messages: true # Default true
