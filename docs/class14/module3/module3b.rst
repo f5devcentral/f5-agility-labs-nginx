@@ -156,7 +156,7 @@ In this section, let's configure NGINX with some additional parameters for the *
 21. Click the **Publish** button. If successful, you should see a message indicating so.
 
     .. image:: ../images/nim-templates-pub-success.png
-      :width: 600
+      :width: 360
 
 22. Click the **Close and Exit** button.
 
