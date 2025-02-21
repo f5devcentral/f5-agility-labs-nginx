@@ -30,6 +30,7 @@ Key aspects of function calling:
 Use Cases for Function Calling in Arcadia Crypto:
 
 **Real-time Account Information:**
+
 * Function: get_user_data
 * Use Case: When a user asks about their account balance or portfolio, the AI can call this function to fetch up-to-date information from the Users microservice.
 * Example: "What's my current account balance?"

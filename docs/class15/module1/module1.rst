@@ -45,11 +45,11 @@ Component diagram
       Profiles@{shape: procs}
       -->Services@{shape: procs}
     end
-    subgraph Processors[AIGW Processors]
+    subgraph AIGWProcessors[AIGW Processors]
       direction LR
-      Processes@{shape: procs}
+      Processors@{shape: procs}
     end
-    Profiles --> Processors
+    Profiles --> AIGWProcessors
     Services --> OpenAI
     Services --> Anthropic
     Services --> Ollama
@@ -77,8 +77,7 @@ to the LLMs using the ``services`` that AIGW has been configured with.
 Breaking down a sample AIGW configuration file
 ----------------------------------------------
 
-AI Gateway’s configuration can be found in ``aigw.yaml``. It consists of
-a number of sections described below.
+AI Gateway’s configuration is written in YAML and consists of a number of sections which are described below.
 
 General
 ~~~~~~~
