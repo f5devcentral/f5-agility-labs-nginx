@@ -1,5 +1,5 @@
 Importing NIM Templates
-=============================
+=======================
 
 In this section, we will import a pre-made template that will later be used to configure the PyGoat application.  Acting as Paul, you will install the base template he developed.
 
