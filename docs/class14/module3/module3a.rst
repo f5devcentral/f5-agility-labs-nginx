@@ -20,17 +20,17 @@ Acting as Paul, you will test the template imported in the previous section by a
 3. At the right side of the **Basic Reverse Proxy** template there will be a `...` menu in the **Actions** column. Click that, then select **Preview and Generate**. This will present a series of input forms to collect information for the new NGINX HTTP proxy configuration deployment.
 
    .. image:: ../images/nim-templates-actions.png
-     :width: 518
+     :width: 259
 
 4. Select the **Publish to an instance** radio button.
 
    .. image:: ../images/nim-templates-pub.png
-     :width: 518
+     :width: 620
 
 5. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that we accessed earlier and is already managed by NIM.
 
    .. image:: ../images/nim-templates-select.png
-     :width: 700
+     :width: 800
 
 6. Click **Next** at the bottom right of the page.
 
@@ -39,7 +39,7 @@ Acting as Paul, you will test the template imported in the previous section by a
 8. In the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
    .. image:: ../images/nim-templates-add-http.png
-     :width: 900
+     :width: 838
 
 9. Enter the following data in the **Listen** section:
 
