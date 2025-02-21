@@ -1,25 +1,15 @@
-Class 5 - NGINX App Protect WAF & DoS
-#####################################
+Class 5 - Application Security and Observability with NAP
+======================================================================================================
 
-Welcome to the NGINX App Protect Web Application Firewall & Denial-of-Service prevention hands-on lab!
+.. note:: **Last Updated: 02/12/2025**
+
+UDF Lab Maintainers:
+
+-  Josh Chambers <`j.chambers@f5.com <mailto:%3j.chambers@f5.com>`__>
 
 .. toctree::
    :maxdepth: 1
-   :caption: Content:
    :glob:
 
-   intro-waf
-   module1/module1
-   module2/module2
-   module3/module3
-   module4/module4
-   module5/module5
-   intro-dos
-   module6/module6
-   module7/module7
-   module8/module8
-   module9/module9
-   module10/module10
-   conclusion
-
-Click **Next** to begin the lab.
+   intro
+   module*/module*
