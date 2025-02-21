@@ -27,12 +27,15 @@ Since the initial deployment of the PyGoat application using templates worked we
     .. image:: ../images/nim-settings-dev.png
       :width: 567
 
-5. Click the **Edit Role** button and the top left of the **developer** view, then click **Add Permission**.
+5. Click **Edit Role** at the top left of the **developer** view, then click **Add Permission**.
 
     .. image:: ../images/nim-settings-edit-button.png
       :width: 215
 
-6. Click the **Edit** button under **INSTANCE-MANAGEMENT**
+    .. image:: ../images/nim-settings-edit.png
+      :width: 493
+
+6. Click **Edit** under **INSTANCE-MANAGEMENT**
 
     .. image:: ../images/nim-settings-edit-role.png
       :width: 570
@@ -54,17 +57,18 @@ Since the initial deployment of the PyGoat application using templates worked we
 
     Next we will add the ability for the developer role to update the Template Submission object of the NGINX instance that proxies the PyGoat application.
 
-10. Click **Add Permission**.
+10. You will be returned to the **Edit Role** view.  Click **Add Permission**.
 
-11. Select **Instance Manager** for the *Module*.
+11. Select **Instance Manager** for the *Module* and **Template Submissions** for the *Feature*.
 
-12. Select **Template Submissions** for the *Feature*.
+12. Click **Add Additional Access**.
 
-13. Click **Add Additional Access**.
+13. Select **Create**, **Read** and **Update** from the *Access* drop-down list.
 
-14. Select **Create**, **Read** and **Update** for *Access*.
+    .. image:: ../images/nim-role-temp-sub.png
+      :width: 797
 
-15. Select **Systems** for *Applies to*.
+15. Select **Systems** from the *Applies to* drop-down.
 
 16. Select **nginx.f5demos.com** for the system selection to the right.
 
