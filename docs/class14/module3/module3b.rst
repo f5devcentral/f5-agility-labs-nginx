@@ -1,5 +1,5 @@
 Configure PyGoat Application Using a Template
-================================
+=============================================
 
 
 **Application 2 - PyGoat**
