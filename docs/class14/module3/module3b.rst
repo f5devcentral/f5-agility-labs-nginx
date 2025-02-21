@@ -37,7 +37,7 @@ In this section, let's configure NGINX with some additional parameters for the *
 9. Under **Server name**, click **+ Add item**.
 
    .. image:: ../images/nim-templates-add-item.png
-     :width: 400
+     :width: 857
 
 10. Enter the following data:
 
@@ -50,7 +50,7 @@ In this section, let's configure NGINX with some additional parameters for the *
         - pygoat.f5demos.com
 
     .. image:: ../images/nim-templates-servername.png
-     :width: 400  
+     :width: 818
 
 11. In the **TLS Settings** section, enter the following data:
 
@@ -69,7 +69,7 @@ In this section, let's configure NGINX with some additional parameters for the *
         - 80
 
     .. image:: ../images/nim-templates-tls.png
-      :width: 400
+      :width: 858
 
 12. In the **Server Locations** section, click the **Add Server Locations** link.
 
