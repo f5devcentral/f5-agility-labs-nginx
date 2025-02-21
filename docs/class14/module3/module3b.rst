@@ -36,6 +36,9 @@ In this section, let's configure NGINX with some additional parameters for the *
 
 9. Under **Server name**, click **+ Add item**.
 
+   .. image:: ../images/nim-templates-add-item.png
+     :width: 400
+
 10. Enter the following data:
 
     .. list-table:: 
@@ -45,6 +48,9 @@ In this section, let's configure NGINX with some additional parameters for the *
         - **Value**
       * - Server name -> ITEM 1 -> Server name
         - pygoat.f5demos.com
+
+    .. image:: ../images/nim-templates-servername.png
+     :width: 400  
 
 11. In the **TLS Settings** section, enter the following data:
 
@@ -61,6 +67,9 @@ In this section, let's configure NGINX with some additional parameters for the *
         - /etc/ssl/private/wildcard.f5demos.com.key.pem
       * - Redirect Port  
         - 80
+
+    .. image:: ../images/nim-templates-tls.png
+      :width: 400
 
 12. In the **Server Locations** section, click the **Add Server Locations** link.
 
