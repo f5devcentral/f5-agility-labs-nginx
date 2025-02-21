@@ -7,19 +7,40 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 **Use RBAC to Grant Access to the Template Submission**
 
-1. In NIM, select **Settings** on top right of the NIM page. 
+1. In NIM, select **Settings** on top right of the NIM page.
+
+    .. image:: ../images/nim-settings-icon.png
+      :width: 275
 
 2. Click **Users**. Note that Jane Developer already has an account, and that her account is mapped to the **developer** role.
 
+    .. image:: ../images/nim-settings-users.png
+      :width: 939
+
 3. Click **Roles**. Note that the developer role is listed, and already has some permissions associated with it.
+
+    .. image:: ../images/nim-settings-roles.png
+      :width: 906
 
 4. Click the **developer** row to list additional details. Note at present developers only have READ access to the configuration of the nginx.f5demos.com system, which isn't very useful. Let's grant a couple more permissions to make NIM more useful for the developers.
 
-5. Click the **Edit Role** button, then click **Add Permission**.
+    .. image:: ../images/nim-settings-dev.png
+      :width: 567
 
-6. Select **Instance Manager** for the *Module*.
+5. Click the **Edit Role** button and the top left of the **developer** view, then click **Add Permission**.
 
-7. Select **Analytics** for the *Feature*.
+    .. image:: ../images/nim-settings-edit-button.png
+      :width: 215
+
+6. Click the **Edit** button under **INSTANCE-MANAGEMENT**
+
+    .. image:: ../images/nim-settings-edit-role.png
+      :width: 570
+
+7. Select **Instance Manager** for the *Module* and **Analytics** for the *Feature*.
+
+    .. image:: ../images/nim-roles-access.png
+      :width: 680
 
 8. Click **Add Additional Access**.
 
