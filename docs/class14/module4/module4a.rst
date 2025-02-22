@@ -31,9 +31,9 @@ Since the initial deployment of the PyGoat application using templates worked we
 
    .. image:: ../images/nim-settings-edit-button.png
      :width: 215
+   |
 
-   
-|   .. image:: ../images/nim-settings-edit.png
+   .. image:: ../images/nim-settings-edit.png
      :width: 493
 
 6. Click **Edit** under **INSTANCE-MANAGEMENT**
