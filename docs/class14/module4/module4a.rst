@@ -85,3 +85,5 @@ Since the initial deployment of the PyGoat application using templates worked we
 18. Click **Save** once again to save the staged role changes. You will see a **Role Updated** message indicating success.
 
 19. Close the developer role details by clicking the **x** button in the top right of the dialog.
+
+
