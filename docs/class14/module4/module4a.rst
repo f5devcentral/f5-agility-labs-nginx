@@ -81,29 +81,6 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 19. Close the developer role details by clicking the **x** button in the top right of the dialog.
 
-**Update Template Submission as Jane Developer**
-
-1. Click **Template Submissions** in the left navigation.
-
-    Notice the **Templates** menu item does not appear, as we have not granted the developer role access to the Templates themselves.
-
-2. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
-
-3. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
-
-    You should see the familiar template filled with values similar to what you saw earlier.
-
-4. On the **HTTP Servers** view, click the edit icon on the **pygoat** row.
-
-5. Change the *HTTP Server Inputs -> Listen -> Default Server* value to **FALSE**.
-
-6. Click the **Next** button until you see the preview of the config generated from the templates. Note the diff view shows that the `default_server` is being removed from the listen directive.
-
-7. Click the **Publish** button. If successful, you should see a message indicating so.
-
-8. On the PyGoat FireFox tab, refresh the browser to ensure the application is still working.
-
-You did it! What if Jane would like to control aspects of the configuration that have not been exposed in the base template? As you read about in the lab introduction, this this is where Augment Templates can be used.
 
 **Import a Custom 404 Augment Template**
 
@@ -329,13 +306,16 @@ This will execute a total of `10` requests using `1` concurrent worker at a rate
 Notice that the first requests were successful with a status code of 200 observed. Then, they started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
 
 
-**Examine additional Custom Templatese**
+**Examine additional Custom Templates**
 
 Finally, to conclude this lab, we will log in as Paul Platops and import additional template examples developed by the NGINX community. Some are simple, such as a basic location block, while others are more advanced, like health checks and OIDC. These examples will demonstrate the flexibility of this feature and the wide variety of use cases it supports. Many of these templates can be customized to suit your needs, depending on your specific NGINX use cases.
 
 1. Click the person icon in the top right corner, then click the **Logout** link.
 
-2. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter `paulplatops` as the user, `NIM123!@#` as the password.
+2. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter the following: 
+
+   | User: `paulplatops`
+   | Password: `NIM123!@#`
 
 3. Click the **Instance Manager** tile.
 
