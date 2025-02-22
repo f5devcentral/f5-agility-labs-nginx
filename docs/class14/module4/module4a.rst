@@ -75,7 +75,7 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 14. Select **Systems** from the *Applies to* drop-down.
 
-15. Select **nginx.f5demos.com** for the system selection to the right.  The page should look like this:
+15. Select **nginx.f5demos.com** for the system selection to the right.  The page should look like this when done:
 
     .. image:: ../images/nim-role-temp-sub.png
       :width: 797
