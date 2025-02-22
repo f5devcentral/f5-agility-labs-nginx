@@ -52,11 +52,12 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 9. Click **Save**. **Permission Update Staged** will be displayed. Once applied, this will permit the developers to have access to the analytics data on the NIM dashboard.
 
-    At this point, the staged permissions look like this:
+   At this point, the staged permissions look like this:
 
    .. image:: ../images/image-22.png
+     :width: 700
 
-    Next we will add the ability for the developer role to update the Template Submission object of the NGINX instance that proxies the PyGoat application.
+   Next we will add the ability for the developer role to update the Template Submission object of the NGINX instance that proxies the PyGoat application.
 
 10. You will be returned to the **Edit Role** view.  Click **Add Permission**.
 
@@ -66,16 +67,14 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 13. Select **Create**, **Read** and **Update** from the *Access* drop-down list.
 
+14. Select **Systems** from the *Applies to* drop-down.
+
+15. Select **nginx.f5demos.com** for the system selection to the right.  The page should look like this:
+
     .. image:: ../images/nim-role-temp-sub.png
       :width: 797
 
-15. Select **Systems** from the *Applies to* drop-down.
-
-16. Select **nginx.f5demos.com** for the system selection to the right.
-
-    .. image:: ../images/image-23.png
-
-17. Click **Save**. You will see a **Permission Update Staged** message.
+16. Click **Save** on the bottom right. You will see a **Permission Update Staged** message.
 
 18. Click **Save** once again to save the staged role changes. You will see a **Role Updated** message indicating success.
 
