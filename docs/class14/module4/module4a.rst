@@ -61,9 +61,15 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 10. You will be returned to the **Edit Role** view.  Click **Add Permission**.
 
+    .. image:: ../images/nim-settings-edit.png
+      :width: 493
+
 11. Select **Instance Manager** for the *Module* and **Template Submissions** for the *Feature*.
 
 12. Click **Add Additional Access**.
+
+    .. image:: ../images/nim-roles-add-access.png
+      :width: 726
 
 13. Select **Create**, **Read** and **Update** from the *Access* drop-down list.
 
