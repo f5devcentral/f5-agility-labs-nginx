@@ -323,7 +323,7 @@ Finally, to conclude this lab, we will log in as Paul Platops and import additio
 
 5. Click the green **+ Create** button in the upper right corner.
 
-6. Click **Browse** to browse the JumpHost's file system for the template we wish to import.
+6. Click **Browse** to select a template to import from the JumpHost's file system.
 
 7. Select the `n1_templates_http_examples.tar.gz` file, and click **Open**.
 
@@ -335,7 +335,10 @@ Finally, to conclude this lab, we will log in as Paul Platops and import additio
 
 10. Below the checkbox, you should note that there are multiple Templates detected in the bundle.
 
-11. Click the **Import** button.
+    .. image:: ../images/nim-templates-bundle.png
+     :width: 683
+
+11. Click the **Import** button at the bottom right.
 
 
 **Conclusion**
