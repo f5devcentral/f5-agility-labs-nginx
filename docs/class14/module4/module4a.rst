@@ -1,4 +1,4 @@
-Create More Advanced Configuration
+Advanced Configuration
 ==================================
 
 **Provision Access to a Template Submission**

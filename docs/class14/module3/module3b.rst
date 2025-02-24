@@ -145,7 +145,7 @@ In this section, let's configure NGINX with some additional parameters for the *
 
     What did we configure in the **HTTP Upstreams** portion of the template?
 
-    - An upstream that is configured with a Round Robin loan balancing strategy (unused now, but would be relevant if we had multiple upstream servers configured)
+    - An upstream that is configured with a Round Robin load balancing strategy (unused now, but would be relevant if we had multiple upstream servers configured)
     - A single upstream server, located at `workloads.f5demos.com` on port `8000` was configured
     - This server was not set to **Down**
     - This server was not set as a **Backup** server

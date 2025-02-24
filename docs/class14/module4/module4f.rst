@@ -1,97 +1,33 @@
-Apply the Custom 404 Augment Template
-======================
-
-As Jane Developer, we will attach the custom 404 handler to the NGINX configuration that she has been granted access to. We (as Jane Developer) will use the augment template that Paul just imported to accomplish this.
-
-1. Click the person icon in the top right corner, then click the **Logout** link.
-
-2. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter `janedev` as the user, `NIM123!@#` as the password.
-
-3. Click the **Instance Manager** tile.
-
-4. Click **Template Submissions** in the left navigation.
-
-5. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
-
-6. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
-
-   You should see the familiar template filled with values similar to what you saw earlier.
-
-7. Click **Next** to transition to the **Choose Augments** view. Note the augment template Paul Platops imported earlier is ready for use.
-
-   .. image:: ../images/image.png
-
-8. Click the checkbox on the **Custom 404 Response** row. When you do, the template form builder will add a new step indicating there is an additional form needed to capture inputs for this new augment template.
-
-   .. image:: ../images/image-1.png
-     :width: 700
-
-9. Click the **Next** button until you reach the **Custom 404 Response** input step.
-
-    This step only has one option - to enable it or not.
-
-10. Choose **TRUE** in the *Use Custom 404 Response* input.
-
-    .. image:: ../images/image-4.png
-
-11. Click **Next**. You will be presented with the diff view showing the changes that would happen to the nginx.conf file if the changes were to be published.
-
-    It is important to understand that Augment templates are applied to configuration files within `include` directives. To see the details of what the augment template adds, click the file selector dropdown at the top of the editor.
-
-    .. image:: ../images/image-2.png
-
-    Notice there are 2 new files in the generated configuration:
-
-    - /etc/nginx/augments/http-server/base_http-server1-<<UNIQUE-ID>>.conf
-    - /usr/share/nginx/html/custom_404.html
-
-12. Click on the first file. This is the file that will be included in the main `nginx.conf` file. It contains the config to intercept 404 errors from the upstream, and will serve up the contents of a static file included in the template bundle.
-
-13. Click on the second file. This is the static HTML page that will be displayed by the configuration in the previous file.
-
-14. Click the **Publish** button. If successful, you should see a message indicating so.
-
-**Test the Augment Template**
-
-1. In FireFox, click the tab for the PyGoat app.
-
-2. Modify the URL to a reference a page that does not exist, such as: `https://pygoat.f5demos.com/login/non-existent-page.html` and hit enter.
-
-3. You will see the custom 404 page. You were previously warned there would be cats.
-
-    .. image:: ../images/image-3.png
-
-**Import another Augment Template**
+Import Rate Limiting Augment Template
+===================
 
 We are now going to log in as Paul Platops so that we can import and grant persons in the **secops** role access to rate limiting augment template.
 
-4. Click the person icon in the top right corner, then click the **Logout** link.
+#. Click the person icon in the top right corner, then click the **Logout** link.
 
-5. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter `paulplatops` as the user, `NIM123!@#` as the password.
+#. Click **Sign In**. You will be redirected to KeyCloak. When prompted for credentials, enter `paulplatops` as the user, `NIM123!@#` as the password.
 
-6. Click the **Instance Manager** tile.
+#. In the left navigation, click **Templates**.
 
-7. In the left navigation, click **Templates**.
+#. Click the green **+ Create** button in the upper right corner.
 
-8. Click the green **+ Create** button in the upper right corner.
+#. Select **Import**.
 
-9. Select **Import**.
+#. Click **Browse** to browse the JumpHost's file system for the template we wish to import.
 
-10. Click **Browse** to browse the JumpHost's file system for the template we wish to import.
+#. Select the `rate_limit_augment.tar.gz` file, and click **Open**.
 
-11. Select the `rate_limit_augment.tar.gz` file, and click **Open**.
+   This augment template was designed to be used with the base template we used earlier in the lab. It adds the capability to attach a rate limiting policy to an HTTP Server.
 
-    This augment template was designed to be used with the base template we used earlier in the lab. It adds the capability to attach a rate limiting policy to an HTTP Server.
+#. Click the green **Parse** button in the lower right to scan and analyze the contents of this template bundle.
 
-12. Click the green **Parse** button in the lower right to scan and analyze the contents of this template bundle.
+#. As you did earlier in the lab, check the **Allow Signature Bypass** checkbox to override the import dialog.
 
-13. As you did earlier in the lab, check the **Allow Signature Bypass** checkbox to override the import dialog.
+#. Below the checkbox, you should note that there was one template detected in a bundle, named **Rate Limiting**.
 
-14. Below the checkbox, you should note that there was one template detected in a bundle, named **Rate Limiting**.
+#. Click the **Import** button.
 
-15. Click the **Import** button.
-
-16. You will see the **Config Template Created** message, and see the newly imported augment template on the **Templates** page.
+#. You will see the **Config Template Created** message, and see the newly imported augment template on the **Templates** page.
 
     .. image:: ../images/image-6.png
 
@@ -228,4 +164,5 @@ Finally, to conclude this lab, we will log in as Paul Platops and import additio
 **Conclusion**
 
 As you have witnessed, NIM's Templating framework gives organizations the control they need to empower users of their NGINX platform. Via templates, these users can apply use cases to their application delivery tier without requiring they be NGINX configuration experts. Additionally, the framework allows organizations to provide this capability to users in a "least-privileged" manner - only granting them permissions to execute templates on the instances they have been assigned. This ensures compliance, and significantly narrows the "blast radius" in the event an outage occurs due to human error while configuring.
+
 
