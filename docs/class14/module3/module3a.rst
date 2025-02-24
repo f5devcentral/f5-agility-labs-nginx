@@ -34,7 +34,7 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 6. Click **Next** at the bottom right of the page.
 
-7. In the **Choose Augments** view, click **Next**.
+7. We are not using *Augment Templates* in this serction of the lab so click **Next** for **Choose Augments**.
 
 8. In the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
@@ -56,7 +56,7 @@ Acting as Paul, you will test the template imported in the previous section by a
 10. Scroll down to **Server Locations** and click **Add Server Locations**.
 
     .. image:: ../images/nim-templates-add-location.png
-      :width: 1000
+      :width: 900
 
 11. Enter the following data in this section (**workloads.f5demos.com:9000** is the host that contains one of our applications):
 
@@ -83,7 +83,7 @@ Acting as Paul, you will test the template imported in the previous section by a
 15. Click the **Publish** button. If successful, you should see a message indicating so.
 
     .. image:: ../images/nim-templates-pub-success.png
-      :width: 600
+      :width: 500
 
 16. Close the Templates window.
 
