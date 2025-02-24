@@ -1,4 +1,4 @@
-Create more advanced configuration
+Create More Advanced Configuration
 ==================================
 
 **Provision Access to a Template Submission**
@@ -12,17 +12,17 @@ Since the initial deployment of the PyGoat application using templates worked we
    .. image:: ../images/nim-settings-icon.png
      :width: 275
 
-2. Click **Users**. Note that Jane Developer already has an account, and that her account is mapped to the **developer** role.
+2. Click **Users** from the left panel. Note that Jane Developer already has an account, and that her account is mapped to the **developer** role.
 
    .. image:: ../images/nim-settings-users.png
      :width: 939
 
-3. Click **Roles**. Note that the developer role is listed, and already has some permissions associated with it.
+3. Click **Roles** from the left panel. Note that the developer role is listed, and already has some permissions associated with it.
 
    .. image:: ../images/nim-settings-roles.png
      :width: 906
 
-4. Click the **developer** row to list additional details. Note at present developers only have READ access to the configuration of the nginx.f5demos.com system, which isn't very useful. Let's grant a couple more permissions to make NIM more useful for the developers.
+4. Click the **developer** role to list additional details. Note that developers only have READ access to the configuration of the nginx.f5demos.com system, which isn't very useful. Let's grant a couple more permissions to make NIM more useful for the developers.
 
    .. image:: ../images/nim-settings-dev.png
      :width: 567
@@ -48,7 +48,7 @@ Since the initial deployment of the PyGoat application using templates worked we
 
 8. Click **Add Additional Access**.
 
-    Note that *Access* is already preset to **READ**, which is sufficient.
+   Note that *Access* is already preset to **READ**, which is sufficient.
 
 9. Click **Save**. **Permission Update Staged** will be displayed. Once applied, this will permit the developers to have access to the analytics data on the NIM dashboard.
 
