@@ -32,7 +32,7 @@ We are now going to log in as Paul Platops so that we can import and grant devel
 
 12. You will see the **Config Template Created** message, and see the newly imported augment template on the **Templates** page.
 
-  .. image:: ../images/image-5.png
+    .. image:: ../images/image-5.png
 
 **Apply the Custom 404 Augment Template**
 
@@ -50,15 +50,16 @@ As Jane Developer, we will attach the custom 404 handler to the NGINX configurat
 
 6. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
-    You should see the familiar template filled with values similar to what you saw earlier.
+   You should see the familiar template filled with values similar to what you saw earlier.
 
 7. Click **Next** to transition to the **Choose Augments** view. Note the augment template Paul Platops imported earlier is ready for use.
 
-    .. image:: ../images/image.png
+   .. image:: ../images/image.png
 
 8. Click the checkbox on the **Custom 404 Response** row. When you do, the template form builder will add a new step indicating there is an additional form needed to capture inputs for this new augment template.
 
-    .. image:: ../images/image-1.png
+   .. image:: ../images/image-1.png
+     :width: 700
 
 9. Click the **Next** button until you reach the **Custom 404 Response** input step.
 
@@ -76,8 +77,8 @@ As Jane Developer, we will attach the custom 404 handler to the NGINX configurat
 
     Notice there are 2 new files in the generated configuration:
 
-      - /etc/nginx/augments/http-server/base_http-server1-<<UNIQUE-ID>>.conf
-      - /usr/share/nginx/html/custom_404.html
+    - /etc/nginx/augments/http-server/base_http-server1-<<UNIQUE-ID>>.conf
+    - /usr/share/nginx/html/custom_404.html
 
 12. Click on the first file. This is the file that will be included in the main `nginx.conf` file. It contains the config to intercept 404 errors from the upstream, and will serve up the contents of a static file included in the template bundle.
 
@@ -145,36 +146,36 @@ Sally Secops has noticed that the PyGoat application's login API has been overus
 
 6. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
-    You should see the familiar template filled with values similar to what you saw earlier.
+   You should see the familiar template filled with values similar to what you saw earlier.
 
 7. Click **Next** to transition to the **Choose Augments** view. Note the **Custom 404 Response** augment template that Jane used on this template submission is still selected.
 
-    .. image:: ../images/image-7.png
+   .. image:: ../images/image-7.png
 
 8. Click the checkbox on the **Rate Limiting** row. When you do, the template form builder will add a new step indicating there is an additional form needed to capture inputs for this new augment template.
 
-    .. image:: ../images/image-8.png
+   .. image:: ../images/image-8.png
 
 9. Click the **Next** button until you reach the **Rate Limiting** input step.
 
     This step has 3 options. Enter the values from the following table:
 
-.. list-table:: 
-   :header-rows: 1
+   .. list-table:: 
+      :header-rows: 1
 
-   * - **Item**
-     - **Value**
-   * - Apply Rate Limiting
-     - TRUE
-   * - Rate Limit Method
-     - Binary Remote Address
-   * - Requests Per Second 
-     - 5
+      * - **Item**
+        - **Value**
+      * - Apply Rate Limiting
+        - TRUE
+      * - Rate Limit Method
+        - Binary Remote Address
+      * - Requests Per Second 
+        - 5
 
 
-Note: Realistically, 5 requests per second per client is extremely low. We are just using this value for illustrative purposes.
+   Note: Realistically, 5 requests per second per client is extremely low. We are just using this value for illustrative purposes.
 
-    .. image:: ../images/image-9.png
+   .. image:: ../images/image-9.png
 
 10. Click **Next**. You will be presented with the diff view showing the changes that would happen to the nginx.conf file if the changes were to be published.
 
@@ -184,8 +185,8 @@ Note: Realistically, 5 requests per second per client is extremely low. We are j
 
     In addition to the changes to `nginx.conf`, there are 2 new files in the generated configuration:
 
-      - /etc/nginx/augments/http-server/base_http-server1_*&lt;unique identifier&gt;*.conf
-      - /etc/nginx/augments/http/*&lt;unique identifier&gt;*.conf
+    - /etc/nginx/augments/http-server/base_http-server1_*&lt;unique identifier&gt;*.conf
+    - /etc/nginx/augments/http/*&lt;unique identifier&gt;*.conf
 
 11. Click on each of these new files. They are files that will be included in the main `nginx.conf` file at the `http` and `server` contexts.
 
@@ -205,11 +206,11 @@ In this final section of the lab, we will use the hey utility to test the effica
     hey -n 10 -c 1 -q 2 https://pygoat.f5demos.com/login/
     
 
-This will execute a total of `10` requests using `1` concurrent worker at a rate of `2` requests per second against the `https://pygoat.f5demos.com/login/` URL. You should see output similar to the following:
+   This will execute a total of `10` requests using `1` concurrent worker at a rate of `2` requests per second against the `https://pygoat.f5demos.com/login/` URL. You should see output similar to the following:
 
-    .. image:: ../images/image-12.png
+   .. image:: ../images/image-12.png
 
-Notice that all 10 requests were successful with a status code of 200 observed. Let's try increasing the rate to see what happens...
+   Notice that all 10 requests were successful with a status code of 200 observed. Let's try increasing the rate to see what happens...
 
 3. In the Web Shell, run the following:
 
@@ -217,11 +218,11 @@ Notice that all 10 requests were successful with a status code of 200 observed. 
     hey -n 10 -c 1 -q 6 https://pygoat.f5demos.com/login/
     
 
-This will execute a total of `10` requests using `1` concurrent worker at a rate of `6` requests per second against the `https://pygoat.f5demos.com/login/` URL. If you recall, this rate is above the rate limiting threshold you set in the augment template. You should see output similar to the following:
+   This will execute a total of `10` requests using `1` concurrent worker at a rate of `6` requests per second against the `https://pygoat.f5demos.com/login/` URL. If you recall, this rate is above the rate limiting threshold you set in the augment template. You should see output similar to the following:
 
-    .. image:: ../images/image-13.png
+   .. image:: ../images/image-13.png
 
-Notice that the first requests were successful with a status code of 200 observed. Then, they started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
+   Notice that the first requests were successful with a status code of 200 observed. Then, they started to receive status code 503 (Service Unavailable), indicating that this client has been rate limited for exceeding the threshold you set.
 
 
 **Examine additional Custom Templates**
