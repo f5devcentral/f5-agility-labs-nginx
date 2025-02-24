@@ -1,14 +1,17 @@
-**Update Template Submission as Jane Developer**
+Update Template Submission
+================
+
+As Jane Developer, we are going to edit an application that was deployed using a Template
 
 1. Click **Template Submissions** in the left navigation.
 
-    Notice the **Templates** menu item does not appear, as we have not granted the developer role access to the Templates themselves.
+   Notice the **Templates** menu item does not appear, as we have not granted the developer role access to the Templates themselves.
 
 2. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
 
 3. At the right side of the **nginx.f5demos.com** row, there will be a `...` menu in the **Actions** column. Click that, then select **Edit Submission**.
 
-    You should see the familiar template filled with values similar to what you saw earlier.
+   You should see the familiar template filled with values similar to what you saw earlier.
 
 4. On the **HTTP Servers** view, click the edit icon on the **pygoat** row.
 
