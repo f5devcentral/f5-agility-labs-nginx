@@ -107,6 +107,10 @@ In this section, let's configure NGINX with some additional parameters for the *
 
 15. In the **HTTP Upstreams** section, click the **Add HTTP Upstream Servers** link.
 
+    .. image:: ../images/nim-templates-upstream.png
+      :width: 890
+
+
 16. Enter the following data in this section:
 
     .. list-table:: 
