@@ -46,7 +46,7 @@ In this section, let's configure NGINX with some additional parameters for the *
 
       * - **Item**
         - **Value**
-      * - Server name -> ITEM 1 -> Server name
+      * - Server name
         - pygoat.f5demos.com
 
     .. image:: ../images/nim-templates-servername.png
@@ -92,7 +92,7 @@ In this section, let's configure NGINX with some additional parameters for the *
     That was a lot of data entry! But what did we just do? Based on the data we entered into the **HTTP Servers** template, we intend to:
 
     - Create a new HTTP Server called **pygoat.f5demos.com**
-    - THis server should listen on port 443
+    - This server should listen on port 443
     - Will be the default HTTP server
     - Will encrypt communications using TLS
     - Reference an existing certificate and key for TLS
