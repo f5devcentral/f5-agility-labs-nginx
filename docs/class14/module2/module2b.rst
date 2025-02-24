@@ -17,6 +17,7 @@ In this section, we will import a pre-made template that will later be used to c
    The Create Template form appears. The default option is to create a **New** template.  For this lab, we are going to import an existing template, so click the **Import** radio button.
 
    .. image:: ../images/nim-templates-create.png
+     :width: 700
 
 3. Click **Browse** in the middle of the dialog to select the template file to import.
 
@@ -27,10 +28,12 @@ In this section, we will import a pre-made template that will later be used to c
 5. Click **Parse** at the bottom right
 
    .. image:: ../images/nim-templates-create-parse.png
+     :width: 600
 
    You will see a warning message similar to "archive is either unsigned or missing its signature file". This is a precautionary message, cautioning the user against importing templates that may have originated from an unofficial source. Since this is a custom template, it is not signed by F5. Check the box for **Allow Signature Bypass**, then click **Import** at the bottom of the page
 
    .. image:: ../images/nim-signature-bypass.png
+     :width: 700
 
    You should see a box at the bottom right showing that the template was successfully created. The newly imported base template appears on the **Templates** page.
 
