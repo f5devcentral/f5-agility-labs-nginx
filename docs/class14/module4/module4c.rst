@@ -5,7 +5,7 @@ As Jane Developer, we are going to edit an application that was deployed using a
 
 1. Click **Template Submissions** in the left navigation.
 
-   Notice the **Templates** menu item does not appear, as we have not granted the developer role access to the Templates themselves.
+   Notice the **Templates** menu item exists, the developer role will need READ access to the Templates themselves in order to pull the latest submission.
 
 2. Click on the **Basic Reverse Proxy** row. Details of the template submission appear.
 
