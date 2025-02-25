@@ -7,7 +7,7 @@ In this section, we will import a pre-made template that will later be used to c
 
    .. image:: ../images/nim-templates.png
 
-    > Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
+   Note: While **F5 Global Default Base** ships with NIM, it does not provide a complete configuration when executed. To accomplish this, we will be installing a custom base template of our own.
 
 2. Click the **Create** button on the top right.
 
