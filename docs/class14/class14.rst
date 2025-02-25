@@ -42,7 +42,7 @@ Create a Reverse Proxy Configuration using a Template:
 
 **Module 4**: 
 
-Create more advanced configuration
+Advanced Configuration
 
 •	Provision Access to a Template Submission
 •	Create a custom 404 page
