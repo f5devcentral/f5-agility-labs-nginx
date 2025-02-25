@@ -1,5 +1,5 @@
 Apply the Custom 404 Augment Template
-======================
+=====================================
 
 As Jane Developer, we will attach the custom 404 handler to the NGINX configuration that she has been granted access to. We (as Jane Developer) will use the augment template that Paul just imported to accomplish this.
 
