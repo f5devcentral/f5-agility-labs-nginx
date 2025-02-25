@@ -40,6 +40,6 @@ In this section, we will import a pre-made template that will later be used to c
    .. image:: ../images/nim-templates-created.png
      :width: 260
 
-   Note: The newly imported base template will show a State of Draft. This simply means that the template can be edited in the NIM template editor. As the template author, you can mark a template as **Ready for Use** to prevent it from being unintentionally modified.
+   Note: The newly imported base template will show a State of Draft. This simply means that the template can be edited in the NIM template editor. As the template author, you can mark a template as **Ready for Use** to prevent it from being unintentionally modified.  We are not going to do that step in this lab.
 
 
