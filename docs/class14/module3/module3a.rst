@@ -90,12 +90,12 @@ Acting as Paul, you will test the template imported in the previous section by a
     .. image:: ../images/nim-close-exit.png
       :width: 175
 
-17. In a new Firefox tab, enter **http://nginx.f5demos.com:8080**, which is the hostname and port of the applciation we just published.  You should see the Juice Shop application
+17. In a new Firefox tab, enter **http://nginx.f5demos.com:8080**, which is the hostname and port of the applciation we just published.  You should see the Juice Shop application.
 
     .. image:: ../images/nim-templates-juice.png
       :width: 1099
 
-18. You can close the Juice Shop tab in Firefox
+18. You can close the Juice Shop tab in Firefox.
 
 19. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
 
