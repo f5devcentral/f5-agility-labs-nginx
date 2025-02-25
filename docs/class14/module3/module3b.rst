@@ -181,7 +181,7 @@ In this section, let's configure NGINX with some additional parameters for the *
 
    .. image:: ../images/image-20.png
 
-    If we wanted to make changes to the submission, we could simply edit the values here, and publish configuration as we did before.
+   If we wanted to make changes to the submission, we could simply edit the values here, and publish configuration as we did before.
 
 **Test the Deployed Configuration**
 
