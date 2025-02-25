@@ -14,6 +14,11 @@ In this section, let's configure NGINX with some additional parameters for the *
 
 4. In the instance dropdown menu, select **nginx.f5demos.com**. This is an NGINX Plus instance that is already managed by NIM.
 
+   You will see a message stating the **Existing config will be replaced**.  This is expected in our lab since we just used the template to publish Juice Shop
+
+   .. image:: ../images/nim-templates-replace.png
+     :width: 881
+
 5. Click **Next**.
 
 6. In the **Choose Augments** view, click **Next**.
