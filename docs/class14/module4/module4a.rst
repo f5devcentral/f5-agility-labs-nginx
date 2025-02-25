@@ -1,5 +1,5 @@
 Advanced Configuration
-==================================
+======================
 
 **Provision Access to a Template Submission**
 
