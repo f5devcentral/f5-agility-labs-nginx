@@ -85,7 +85,10 @@ Acting as Paul, you will test the template imported in the previous section by a
     .. image:: ../images/nim-templates-pub-success.png
       :width: 500
 
-16. Close the Templates window.
+16. Click **Close and Exit** at the bottom middle of the page to close the Templates window.
+
+    .. image:: ../images/nim-close-exit.png
+      :width: 175
 
 17. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
 
