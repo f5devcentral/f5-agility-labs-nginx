@@ -1,5 +1,5 @@
 Apply the Rate Limiting Augment Template
-===================
+========================================
 
 Sally Secops has noticed that the PyGoat application's login API has been overused by actors with questionable intent, also resulting in degraded application performance. Sally would like to attach rate limiting to the NGINX configuration or the PyGoat application's NGINX HTTP Server. We (as Sally Secops) will use the augment template that Paul just imported to accomplish this.
 
@@ -51,10 +51,10 @@ Sally Secops has noticed that the PyGoat application's login API has been overus
 
    .. image:: ../images/image-10.png
 
-    In addition to the changes to `nginx.conf`, there are 2 new files in the generated configuration:
+   In addition to the changes to `nginx.conf`, there are 2 new files in the generated configuration:
 
-    - /etc/nginx/augments/http-server/base_http-server1_*&lt;unique identifier&gt;*.conf
-    - /etc/nginx/augments/http/*&lt;unique identifier&gt;*.conf
+   - /etc/nginx/augments/http-server/base_http-server1_*&lt;unique identifier&gt;*.conf
+   - /etc/nginx/augments/http/*&lt;unique identifier&gt;*.conf
 
 #. Click on each of these new files. They are files that will be included in the main `nginx.conf` file at the `http` and `server` contexts.
 

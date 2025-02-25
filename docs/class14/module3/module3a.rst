@@ -3,7 +3,7 @@ Configure NGINX Using a Template
 
 Paul has been interested in ways to make his job easier while enabling others in his organization to be self-sufficient. To this end, Paul has developed a base template for NIM to deploy proxy services for applications using his organizations preferred configuration practices. Paul is one of a few in his organization that is comfortable with NGINX configuration, so he wants to make it easy for others to be able to deploy their applications on NGINX.
 
-Acting as Paul, you will test the template imported in the previous section by actually deploying it to provide an HTTP proxy for the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
+Acting as Paul, you will test the template imported in the previous section by actually deploying it to provide an HTTP proxy for the Juice Shop application.  We will then use the template to configure and deploy the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
 
 **Application 1 - Basic Proxy for Juice Shop**
 
@@ -34,7 +34,7 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 6. Click **Next** at the bottom right of the page.
 
-7. We are not using *Augment Templates* in this serction of the lab so click **Next** for **Choose Augments**.
+7. We are not using *Augment Templates* in this section of the lab so click **Next** for **Choose Augments**.
 
 8. In the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
@@ -85,9 +85,19 @@ Acting as Paul, you will test the template imported in the previous section by a
     .. image:: ../images/nim-templates-pub-success.png
       :width: 500
 
-16. Close the Templates window.
+16. Click **Close and Exit** at the bottom middle of the page to close the Templates window.
 
-17. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
+    .. image:: ../images/nim-close-exit.png
+      :width: 175
+
+17. In a new Firefox tab, enter **http://nginx.f5demos.com:8080**, which is the hostname and port of the applciation we just published.  You should see the Juice Shop application.
+
+    .. image:: ../images/nim-templates-juice.png
+      :width: 1099
+
+18. You can close the Juice Shop tab in Firefox.
+
+19. What did we just do? Based on the data we entered, we intend to configure an NGINX configuration file that:
 
     - Creates a new HTTP Server 
     - Listens on port 8080 

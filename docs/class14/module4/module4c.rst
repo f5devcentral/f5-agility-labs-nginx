@@ -1,5 +1,5 @@
 Update Template Submission
-================
+==========================
 
 As Jane Developer, we are going to edit an application that was deployed using a Template
 

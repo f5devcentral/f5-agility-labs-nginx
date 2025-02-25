@@ -1,5 +1,5 @@
 Test the Rate Limiting Augment Template
-=================
+=======================================
 
 In this section of the lab, we will use the *hey* utility to test the efficacy of the rate limiting augment template that you just deployed.
 

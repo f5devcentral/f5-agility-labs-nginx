@@ -1,5 +1,5 @@
 Permissions Validation
-==================================
+======================
 
 We are now going to log in as Jane Developer so that we can verify she has access to update the template submission.
 
