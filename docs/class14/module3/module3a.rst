@@ -3,7 +3,7 @@ Configure NGINX Using a Template
 
 Paul has been interested in ways to make his job easier while enabling others in his organization to be self-sufficient. To this end, Paul has developed a base template for NIM to deploy proxy services for applications using his organizations preferred configuration practices. Paul is one of a few in his organization that is comfortable with NGINX configuration, so he wants to make it easy for others to be able to deploy their applications on NGINX.
 
-Acting as Paul, you will test the template imported in the previous section by actually deploying it to provide an HTTP proxy for the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
+Acting as Paul, you will test the template imported in the previous section by actually deploying it to provide an HTTP proxy for the Juice Shop application.  We will then use the template to configure and deploy the PyGoat application. The PyGoat application has already been installed on the workloads server for you.
 
 **Application 1 - Basic Proxy for Juice Shop**
 
@@ -34,7 +34,7 @@ Acting as Paul, you will test the template imported in the previous section by a
 
 6. Click **Next** at the bottom right of the page.
 
-7. We are not using *Augment Templates* in this serction of the lab so click **Next** for **Choose Augments**.
+7. We are not using *Augment Templates* in this section of the lab so click **Next** for **Choose Augments**.
 
 8. In the **HTTP Servers** view, click the **Add HTTP Servers** link. This will reveal a new form to collect server information.
 
