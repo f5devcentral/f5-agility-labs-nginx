@@ -67,9 +67,6 @@ Host: http://10.1.1.9/
 
 Advanced Options, Run time: 30s
 
-.. image:: /class8/images/locus-500-50-30.png
-   :width: 200 px
-
 .. note:: Where you do see the performance improvement in the Locust chart?
 
 .. note:: Review NGINX Dashboard cache section.  How much bandwidth was saved from going to upstream server? (For a hint, refer to the HINTS section at the bottom of this page.)
