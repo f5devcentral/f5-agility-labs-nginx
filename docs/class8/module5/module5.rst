@@ -64,7 +64,9 @@ Review the following lines in the nginx.conf file. Uncommenting these directives
 * `limit_conn_zone $binary_remote_addr zone=addr:10m;`
 * `limit_conn addr 400;`
 
-.. note:: Both connection and rate limits are advised as best-practices for any service running in production. These parameters can help defend against some Denial-of-Service attacks, as well as, prevent back-end application servers from being overwhelmed with rouge traffic.
+Both connection and rate limits are advised as best-practices for any service running in production. These parameters can help defend against some Denial-of-Service attacks, as well as, prevent back-end application servers from being overwhelmed with rouge traffic.
+
+.. note:: If you attempted to enable both connection and request limiting did you notice any errors when publishing the update? What could be a good solution to this? Ask for help if you need any assistance.
 
 6. **Review upstream keepalive parameters**
 
