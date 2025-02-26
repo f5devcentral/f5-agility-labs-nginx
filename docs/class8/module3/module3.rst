@@ -39,6 +39,10 @@ Increase rlimit to 4096, by uncommenting line 4
 
 * worker_rlimit_nofile 4096;
 
+Increase worker_connections from 1024 to 4096
+
+* worker_connections 4096; (line 11 or 12)
+
 Publish the new configuration.
 
 .. image:: /class8/images/nim-rlimit-4096.png
