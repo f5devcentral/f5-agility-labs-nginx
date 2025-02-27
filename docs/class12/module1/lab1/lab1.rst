@@ -54,6 +54,8 @@ bottom left of your web shell.
    COPY index.html /usr/share/nginx/html/index.html
    EXPOSE 83/tcp
 
+.. note:: To copy paste in windows Cntrl+Shift+V
+
 To close and save the file, press the escape (ESC) key to quit interactive mode. Press the : (colon) key to bring up the vim prompt, then issue the write and quite command:  **wq**. You can exit vim without saving changes by pressing : (colon) and issuing the quit forcefully command: **q!**
 
 Copying this text in the blank Dockerfile file, you'll:
