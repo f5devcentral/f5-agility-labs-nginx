@@ -77,7 +77,7 @@ to the LLMs using the ``services`` that AIGW has been configured with.
 Breaking down a sample AIGW configuration file
 ----------------------------------------------
 
-AI Gateway’s configuration is written in YAML and consists of a number of sections which are described below.
+AI Gateway's configuration is written in YAML and consists of a number of sections which are described below.
 
 General
 ~~~~~~~
@@ -219,7 +219,7 @@ Processors
 ~~~~~~~~~~
 
 ``Processors`` are the available processors that have been enabled to be
-used by AIGW. They are applied to incoming and response requests using
+used by AIGW. They are applied to incoming requests and responses using
 ``profiles``. Different processors can be used for different use cases.
 For example, a processors can look for **prompt injection** attacks
 while others can inspect requests for **pii** data. You can also apply

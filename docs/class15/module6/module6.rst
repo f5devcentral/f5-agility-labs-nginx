@@ -21,7 +21,7 @@ Attack
 The **AI Assistant** might have access to personal information which could have been provided to it ever by mistake or
 with malicious intent. This attack vector can expose **PII** data which is not allowed.
 
-Let’s see how we can attack our chatbot using this attack vector.
+Let's see how we can attack our chatbot using this attack vector.
 
 Start a new conversation and paste the bellow prompt.
 

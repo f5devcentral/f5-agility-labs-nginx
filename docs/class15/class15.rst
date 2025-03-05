@@ -26,7 +26,7 @@ There are three VMs used in this lab as well as an AWS environment provisioned w
 =============== ====================================================================================================
 **Jumphost**    Runs VSCode, which provides a web interface to edit the configuration files for AI Gateway
 **AI Gateway**  Runs AI Gateway. You will access logs from this component throughout the lab
-**MicroK8s**    Runs Arcadia Cyrpto, a fictitious finance application with an AI chatbot
+**MicroK8s**    Runs Arcadia Crypto, a fictitious finance application with an AI chatbot
 =============== ====================================================================================================
 
 **AWS Environment**
@@ -37,7 +37,7 @@ instance. This is generated when your lab starts and removed when your lab ends.
 
 **OWASP Top 10 for LLM Applications and Generative AI**
 
-Open Worldwide Application Security Project is a nonprofit foundation that works to improve the security of software. Their
+Open Worldwide Application Security Project (OWASP) is a nonprofit foundation that works to improve the security of software. Their
 programs include a number of projects which include "Top 10" lists that describe areas of concern when it comes to
 application security. LLM Applications and Generative AI has a Top 10 project which can be found `here`_.
 

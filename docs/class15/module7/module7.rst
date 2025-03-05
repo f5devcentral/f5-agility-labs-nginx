@@ -9,20 +9,20 @@ __ LLM07_
 
 -  **LLM07: System Prompt Leakage**: The system prompt leakage vulnerability in LLMs refers to the risk that the system prompts
    or instructions used to steer the behavior of the model can also contain sensitive information that was not intended to be
-   discovered. System prompts are designed to guide the model’s output based on the requirements of the application, but may
+   discovered. System prompts are designed to guide the model's output based on the requirements of the application, but may
    inadvertently contain secrets. When discovered, this information can be used to facilitate other attacks.
 
 Attack
 ------
 
 The **system prompt** is defining to the LLM how to behave and what
-capabilities it has. If an attacker get’s a hold of this information it
-has a similar impact if it would get the source code of any proprietary
+capabilities it has. If an attacker gets hold of this information, it
+would have a similar impact to disclosing the sensitive source code of a proprietary
 application.
 
-Let’s see how we can attack our chatbot using this attack vector.
+Let's see how we can attack our chatbot using this attack vector.
 
-Start a new conversation and paste the bellow prompt.
+Start a new conversation and paste the below prompt.
 
 ::
 

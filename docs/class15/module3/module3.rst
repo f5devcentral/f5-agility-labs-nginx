@@ -3,7 +3,7 @@ Module 3 - Understanding the AI Assistant application flow
 
 .. image:: images/00.png
 
-Let’s start by explaining the different functions. We will focus only on
+Let's start by explaining the different functions. We will focus only on
 the most relevant parts of the flow.
 
 Arcadia Crypto's application architecture
@@ -16,14 +16,14 @@ This is the **AI Assistant** chatbot that you will be interacting with.
 **AI Orchestrator**
 
 The AI Orchestrator acts as the central hub of the entire AI system,
-managing the flow of information between various components. Here’s a
+managing the flow of information between various components. Here's a
 detailed look at its functions:
 
 -  **Request Handling**: It receives and processes user queries,
    preparing them for further processing.
 -  **LLM Interaction**: The Orchestrator sends the constructed prompt to
    Ollama (Inference Service) and receives its responses.
--  **Response Formatting**: It processes the LLM’s output, potentially
+-  **Response Formatting**: It processes the LLM's output, potentially
    formatting or filtering it before sending it back to the user.
 -  **State Management**: The Orchestrator maintains the state of the
    conversation, ensuring continuity across multiple user interactions.
