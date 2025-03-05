@@ -1,7 +1,7 @@
 Class 2 - NGINX Plus CI/CD Lab
 ==============================
 
-.. note:: **Last Updated: May 18, 2022**
+.. note:: **Last Updated: February 24, 2025**
 
 .. toctree::
    :maxdepth: 1

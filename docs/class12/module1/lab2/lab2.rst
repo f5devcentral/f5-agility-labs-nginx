@@ -323,19 +323,19 @@ If you encounter the CrashLoopBackOff status, please wait and then check that yo
 - ImagePullBackOff - kubelet is unable to pull (download) the container image
 
 
-Now let's try running our pod again, but this time we'll run a shell function of sleep for 35 seconds. **Please run each command one at a time**.
+Now let's try running our pod again, but this time we'll run a shell function of sleep for 45 seconds. **Please run each command one at a time**.
 
 
 .. code-block:: bash
    :caption: Sleep BusyBox
 
    kubectl delete pod bbox -n test
-   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep infinity'
+   kubectl run bbox -n test --image=docker.io/busybox -- /bin/sh -c 'sleep 45'
    watch kubectl get pod -n test
 
-Again, you are asking Kubernetes to run a pod with a container using the BusyBox image inside. You are also passing in the bash command *sleep 35*.
+Again, you are asking Kubernetes to run a pod with a container using the BusyBox image inside. You are also passing in the bash command *sleep 45*.
 
-*Watch* will re-run the ``kubectl get pod -n test`` command every 2 seconds by default. Now you can watch the new pod run. What will happen after 35 seconds?
+*Watch* will re-run the ``kubectl get pod -n test`` command every 2 seconds by default. Now you can watch the new pod run. What will happen after 45 seconds?
 
 To exit the *watch* command, use the shell escape **Control + C** 
 

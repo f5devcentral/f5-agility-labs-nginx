@@ -403,8 +403,12 @@ Describe service output:
 
 Test connectivity by issuing a curl command to a Node IP Address, remember we are using **type: NodePort**, on the port listed in the *describe* command output.
 
+
+.. note:: You'll have to add your NodePort port number to the curl command
+
+
 .. code-block:: bash
-   :caption: Curl
+   :caption: Curl Example
 
    curl http://10.1.1.6:31612
 
