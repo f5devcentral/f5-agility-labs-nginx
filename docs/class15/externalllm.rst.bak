@@ -2,7 +2,7 @@ Using external LLMs with this lab
 =================================
 
 This lab uses Ollama which is free and provides different LLMs for basic
-testing and PoC’ing.
+testing and PoC'ing.
 
 If you would like to use an external LLM service such as OpenAI or
 Anthropic, you will need to obtain your own API key and follow the

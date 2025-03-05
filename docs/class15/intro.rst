@@ -22,16 +22,16 @@ to improve their performance on specific tasks without being explicitly
 programmed. Deep learning is a subset of ML that uses neural networks
 with many layers (hence “deep”) to model complex patterns in data.
 
-**Architecture** – The backbone of LLMs is the transformer architecture,
+**Architecture** - The backbone of LLMs is the transformer architecture,
 which uses attention mechanisms to focus on relevant parts of the input
 text.
 
-**Training** – LLMs are trained on enormous corpora of text data (e.g.,
+**Training** - LLMs are trained on enormous corpora of text data (e.g.,
 books, websites, and documents) using techniques like unsupervised
 learning (predicting missing words or sequences) and fine-tuning
 (training on specific tasks with labeled data).
 
-**Inference** – Once trained, LLMs can generate predictions or responses
+**Inference** - Once trained, LLMs can generate predictions or responses
 by continuing a sequence of text based on their learned knowledge.
 
 As AI continues to grow at a very fast rate, the need for AI in business
@@ -60,7 +60,7 @@ The **Core** performs the following tasks:
 -  Performs Authn/Authz checks, such as validating JWTs and inspecting
    request headers.
 -  Parses and performs basic validation on client requests.
--  Applies processors to incoming requests, which may modify or reject
+-  Applies **Processors** to incoming requests, which may modify or reject
    the request.
 -  Selects and routes each request to an appropriate LLM backend,
    transforming requests/responses to match the LLM/client schema.
@@ -131,7 +131,7 @@ General use cases:
 -  AuthN/AuthZ
 -  Centrally manage credentials (such as API keys to AI services)
 -  PII Leakage / Data leakage: Accidental leakage of personal
-   information from LLM (i.e. financial, health care information)
+   information from LLM (i.e. financial, health care information)
 
    -  Email address
    -  Social Security Number (SSN)
@@ -143,7 +143,7 @@ Where does AI Gateway fit in the data flow?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 |AIGW archi|
-F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP, NGINX). This proxy can then manage Layer 7 traffic and provide WAF protections before traffic reached AIGW. Once traffic reaches AIGW, it is handling the AI specific traffic and focuses on analyzing the prompt and taking required action based on AIGW's configuration.
+F5 AI Gateway should be architected behind a proxy (i.e. BIG-IP, NGINX). This proxy can then manage Layer 7 traffic and provide WAF protections before traffic reaches AIGW. Once traffic reaches AIGW, it is handling the AI specific traffic and focuses on analyzing the prompt and taking required action based on AIGW's configuration.
 
 .. |AIGW archi| image:: ./images/aigw-arch.png
 

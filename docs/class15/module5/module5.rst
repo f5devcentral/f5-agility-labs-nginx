@@ -14,7 +14,7 @@ In our application we want to support the French language by using the Mistral m
 While a majority of LLMs will state they are multilingual, it's often the case that their language capabilities beyond English are lacking. There may be
 scenarios where you will want to leverage different models that perform better for other languages.
 
-In this lab module, you will use the ``language-id`` processor to detect the prompt landuage and configure a corresponding
+In this lab module, you will use the ``language-id`` processor to detect the prompt language and configure a corresponding
 **policy** and **profile** in order to route the prompt to the desired model.
 
 Configuring the language-id processor
