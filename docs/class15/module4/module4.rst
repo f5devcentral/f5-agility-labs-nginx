@@ -10,7 +10,7 @@ From the `OWASP TOP 10 for LLM Applications and Generative AI`__:
 
 __ LLM01_
 
--  **LLM01: Prompt Injection**: A Prompt Injection Vulnerability occurs when user prompts alter the LLM’s
+-  **LLM01: Prompt Injection**: A Prompt Injection Vulnerability occurs when user prompts alter the LLM's
    behavior or output in unintended ways. These inputs can affect the model even if they are imperceptible to humans,
    therefore prompt injections do not need to be human-visible/readable, as long as the content is parsed by the model.
 
@@ -24,7 +24,7 @@ for Generative AI applications and the LLMs being used.
 Attack
 ------
 
-First let’s see the attack in action. Click the **Restart Chat** button to clear any previous chats with the **AI Assistant**.
+First let's see the attack in action. Click the **Restart Chat** button to clear any previous chats with the **AI Assistant**.
 
 Paste the following message in the chat.
 
