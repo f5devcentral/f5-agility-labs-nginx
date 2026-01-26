@@ -151,30 +151,3 @@ The ``nginx`` ingressclass should be available:
 
    NAME    CONTROLLER                     PARAMETERS   AGE
    nginx   nginx.org/ingress-controller   <none>       6m14s
-
-Uninstalling
-------------
-
-Uninstall NGINX Ingress Controller
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Uninstall NGINX Ingress Controller through its Helm chart:
-
-.. code-block:: bash
-
-   helm uninstall nic -n nginx-ingress
-
-Delete the namespace
-~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   kubectl delete namespace nginx-ingress
-
-Delete custom resources
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   kubectl delete -f https://raw.githubusercontent.com/nginx/kubernetes-ingress/v5.3.1/deploy/crds.yaml
-   kubectl delete -f https://raw.githubusercontent.com/nginx/kubernetes-ingress/v5.3.1/deploy/crds-nap-waf.yaml
