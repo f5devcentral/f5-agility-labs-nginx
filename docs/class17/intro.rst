@@ -1,12 +1,8 @@
 Introduction
 ============
 
-The purpose of this lab is to provide hands-on experience with `NGINX Ingress Controller <https://docs.nginx.com/nginx-ingress-controller>`__ 
-and several common use cases within a Kubernetes environment.
-
-NGINX Ingress Controller is a powerful, cloud-native solution that brings enterprise-grade capabilities to Kubernetes ingress traffic management. 
-Whether you're a beginner looking to learn or an experienced developer seeking to deepen your understanding of NGINX Ingress Controller in Kubernetes, 
-this lab equips you with the necessary resources and insights to publish and secure efficient and scalable applications.
+This lab provides hands-on experience integrating `NGINX Ingress Controller <https://docs.nginx.com/nginx-ingress-controller>`__ 
+with F5 BIG-IP in a Kubernetes environment using `F5 IngressLink <https://clouddocs.f5.com/containers/latest/userguide/ingresslink/>`__.
 
 Background
 ----------
@@ -18,7 +14,7 @@ resource definitions (CRDs) such as VirtualServer to configure routing rules and
 Key features include:
 
 - **Traffic Management**: Sophisticated routing based on HTTP methods, headers, cookies, and URIs
-- **Security**: JWT authentication, access control policies, and WAF protection with NGINX App Protect
+- **Security**: JWT authentication, access control policies, and WAF protection with `F5 WAF for NGINX <https://docs.nginx.com/waf/>`__
 - **Performance**: Rate limiting, traffic splitting, and advanced load balancing
 - **Observability**: Detailed logging and monitoring capabilities
 - **Native Kubernetes Integration**: Uses standard Kubernetes resources and CRDs
@@ -26,30 +22,20 @@ Key features include:
 Getting Started
 ---------------
 
-Prerequisites
-~~~~~~~~~~~~~
-
-To complete this lab, you will need:
-
-* Running Kubernetes cluster
-* kubectl command-line tool
-* `jq <https://github.com/jqlang/jq>`__ for JSON parsing
-* Valid NGINX Plus license (you can request a trial license `here <https://www.f5.com/trials/nginx-one>`__)
-  
-  * Three files are needed (sample names from a trial license): ``nginx-one-eval.crt``, ``nginx-one-eval.key``, and ``nginx-one-eval.jwt``
+The lab environment is pre-configured with a BIG-IP and Kubernetes cluster running NGINX Ingress Controller.
+F5 IngressLink has also been installed and configured.
 
 Lab Structure
 -------------
 
 The lab is organized into modules covering different aspects of NGINX Ingress Controller:
 
-1. **Deployment** - Installing and configuring NGINX Ingress Controller
+1. **Lab Review** - Review and understand the IngressLink configuration.
 2. **Basic Ingress** - URI-based routing and TLS offload
 3. **Advanced Routing** - Layer 7 routing based on HTTP methods and cookies
 4. **Authentication** - JWT token validation
 5. **Traffic Splitting** - Canary deployments and A/B testing
 6. **Access Control** - IP-based allow/deny policies
 7. **Rate Limiting** - Protecting applications from excessive requests
-8. **WAF Protection** - Securing applications with NGINX App Protect
 
 Each module includes step-by-step instructions, configuration examples, and testing procedures to validate the implementation.

@@ -1,8 +1,7 @@
-Module 6 - Rate Limiting
-=========================
+Module 6 - Access Control
+==========================
 
-This module demonstrates how to apply rate limiting for an application exposed through NGINX Ingress Controller. 
-Rate limiting helps protect your applications from excessive requests and potential abuse.
+This module demonstrates how to apply access control policies to deny and allow traffic from specific subnets.
 
 Setup Environment Variables
 ----------------------------
@@ -26,7 +25,7 @@ Change to Lab Directory
 
 .. code-block:: bash
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/6.rate-limiting
+   cd ~/NGINX-Ingress-Controller-Lab/labs/5.access-control
 
 Deploy Sample Application
 --------------------------
@@ -37,19 +36,19 @@ Deploy the sample web application:
 
    kubectl apply -f 0.webapp.yaml
 
-Deploy Rate Limit Policy
--------------------------
+Deploy Access Control Policy - Deny
+------------------------------------
 
-Deploy a rate limit policy that allows only 1 request per second from a single IP address:
+Deploy an access control policy that denies requests from clients with an IP that belongs to the subnet ``10.0.0.0/8``:
 
 .. code-block:: bash
 
-   kubectl apply -f 1.rate-limit.yaml
+   kubectl apply -f 1.access-control-policy-deny.yaml
 
-Publish Application with Rate Limiting
----------------------------------------
+Publish Application with Access Control
+----------------------------------------
 
-Publish the application through NGINX Ingress Controller applying the rate limit policy:
+Publish the application through NGINX Ingress Controller applying the access control policy:
 
 .. code-block:: bash
 
@@ -85,14 +84,14 @@ Output should be similar to:
    API Version:  k8s.nginx.org/v1
    Kind:         VirtualServer
    Metadata:
-     Creation Timestamp:  2025-04-03T20:47:29Z
+     Creation Timestamp:  2025-04-03T20:44:26Z
      Generation:          1
-     Resource Version:    248921
-     UID:                 e5ed98c5-10f0-4a0f-8a2b-cfe8e020d401
+     Resource Version:    248472
+     UID:                 06882d7b-5ec7-4fe8-b272-7052868aa9d6
    Spec:
      Host:  webapp.example.com
      Policies:
-       Name:  rate-limit-policy
+       Name:  webapp-policy
      Routes:
        Action:
          Pass:  webapp
@@ -108,13 +107,10 @@ Output should be similar to:
    Events:
      Type    Reason          Age   From                      Message
      ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  22s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+     Normal  AddedOrUpdated  23s   nginx-ingress-controller  Configuration for default/webapp was added or updated
 
-Test Application Access
-------------------------
-
-Single Request - Success
-~~~~~~~~~~~~~~~~~~~~~~~~
+Test Access - Denied
+---------------------
 
 Access the application:
 
@@ -122,68 +118,61 @@ Access the application:
 
    curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
 
-Output should be similar to:
+NGINX Ingress Controller blocks the request if the client IP belongs to subnet ``10.0.0.0/8``:
 
 .. code-block:: console
 
-   HTTP/1.1 200 OK
+   HTTP/1.1 403 Forbidden
    Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 20:48:16 GMT
-   Content-Type: text/plain
-   Content-Length: 158
-   Connection: keep-alive
-   Expires: Thu, 03 Apr 2025 20:48:15 GMT
-   Cache-Control: no-cache
-
-   Server address: 192.168.36.102:8080
-   Server name: webapp-6db59b8dcc-pkfp8
-   Date: 03/Apr/2025:20:48:16 +0000
-   URI: /
-   Request ID: 73dfb52a3cd42b4a6953ea4f3ac55e94
-
-Rapid Requests - Rate Limited
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Access the application twice in rapid sequence:
-
-.. code-block:: bash
-
-   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT; curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
-
-The first request is served and the second is rate limited with HTTP code 429.
-
-Output should be similar to:
-
-.. code-block:: console
-
-   HTTP/1.1 200 OK
-   Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 20:49:03 GMT
-   Content-Type: text/plain
-   Content-Length: 158
-   Connection: keep-alive
-   Expires: Thu, 03 Apr 2025 20:49:02 GMT
-   Cache-Control: no-cache
-
-   Server address: 192.168.36.102:8080
-   Server name: webapp-6db59b8dcc-pkfp8
-   Date: 03/Apr/2025:20:49:03 +0000
-   URI: /
-   Request ID: 7b431f3052bbdcfd6905c6875469bee3
-   HTTP/1.1 429 Too Many Requests
-   Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 20:49:03 GMT
+   Date: Thu, 03 Apr 2025 20:45:33 GMT
    Content-Type: text/html
-   Content-Length: 169
+   Content-Length: 153
    Connection: keep-alive
 
    <html>
-   <head><title>429 Too Many Requests</title></head>
+   <head><title>403 Forbidden</title></head>
    <body>
-   <center><h1>429 Too Many Requests</h1></center>
+   <center><h1>403 Forbidden</h1></center>
    <hr><center>nginx/1.27.2</center>
    </body>
    </html>
+
+Update Access Control Policy - Allow
+-------------------------------------
+
+Update the access control policy to allow traffic:
+
+.. code-block:: bash
+
+   kubectl apply -f 3.access-control-policy-allow.yaml
+
+Test Access - Allowed
+----------------------
+
+Access the application:
+
+.. code-block:: bash
+
+   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
+
+NGINX Ingress Controller allows traffic from subnet ``10.0.0.0/8``:
+
+.. code-block:: console
+
+   HTTP/1.1 200 OK
+   Server: nginx/1.27.2
+   Date: Thu, 03 Apr 2025 20:46:29 GMT
+   Content-Type: text/plain
+   Content-Length: 157
+   Connection: keep-alive
+   Expires: Thu, 03 Apr 2025 20:46:28 GMT
+   Cache-Control: no-cache
+
+   Server address: 192.168.36.99:8080
+   Server name: webapp-6db59b8dcc-nchgr
+   Date: 03/Apr/2025:20:46:29 +0000
+   URI: /
+   Request ID: db6e3caf0b45c7e364f01961b40a3dd9
 
 Cleanup
 -------

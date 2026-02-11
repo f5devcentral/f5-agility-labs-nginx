@@ -1,12 +1,10 @@
-Module 2 - Advanced Layer 7 Routing
+Module 2 - Basic Ingress Controller
 ====================================
 
-This module demonstrates advanced layer 7 routing based on HTTP Cookies and HTTP methods for an application with four services:
+This module demonstrates how to publish two sample applications using:
 
-- POST requests for ``/tea`` are routed to ``tea-post-svc``
-- Non-POST requests for ``/tea`` are routed to ``tea-svc``
-- Requests for ``/coffee`` that include the cookie ``version`` set to ``v2`` are routed to ``coffee-v2-svc``
-- Requests for ``/coffee`` with no ``version`` cookie are routed to ``coffee-v1-svc``
+- URI-based routing
+- TLS offload
 
 Setup Environment Variables
 ----------------------------
@@ -30,18 +28,18 @@ Change to Lab Directory
 
 .. code-block:: bash
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/2.advanced-routing
+   cd ~/NGINX-Ingress-Controller-Lab/labs/1.basic-ingress
 
 Deploy Sample Applications
 ---------------------------
 
-Deploy the sample web applications:
+Deploy two sample web applications (coffee and tea):
 
 .. code-block:: bash
 
    kubectl apply -f 0.cafe.yaml
 
-Check all application pods deployed:
+Verify that all pods are in the ``Running`` state:
 
 .. code-block:: bash
 
@@ -51,30 +49,25 @@ Output should be similar to:
 
 .. code-block:: console
 
-   NAME                             READY   STATUS    RESTARTS   AGE
-   pod/coffee-v1-c48b96b65-pkvlw    1/1     Running   0          33s
-   pod/coffee-v2-685fd9bb65-m6zgv   1/1     Running   0          33s
-   pod/tea-596697966f-26swq         1/1     Running   0          33s
-   pod/tea-post-5647b8d885-9zq6f    1/1     Running   0          33s
+   NAME                          READY   STATUS    RESTARTS   AGE
+   pod/coffee-56b44d4c55-4v6jp   1/1     Running   0          32s
+   pod/coffee-56b44d4c55-gdgdw   1/1     Running   0          32s
+   pod/tea-596697966f-cc4zj      1/1     Running   0          28m
+   pod/tea-596697966f-hbt7x      1/1     Running   0          28m
+   pod/tea-596697966f-mhd9k      1/1     Running   0          28m
 
-   NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
-   service/coffee-v1-svc   ClusterIP   172.20.122.65    <none>        80/TCP    33s
-   service/coffee-v2-svc   ClusterIP   172.20.195.88    <none>        80/TCP    33s
-   service/kubernetes      ClusterIP   172.20.0.1       <none>        443/TCP   22h
-   service/tea-post-svc    ClusterIP   172.20.194.126   <none>        80/TCP    33s
-   service/tea-svc         ClusterIP   172.20.188.11    <none>        80/TCP    33s
+   NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
+   service/coffee-svc   ClusterIP   172.20.10.229   <none>        80/TCP    28m
+   service/kubernetes   ClusterIP   172.20.0.1      <none>        443/TCP   2d23h
+   service/tea-svc      ClusterIP   172.20.169.88   <none>        80/TCP    28m
 
-   NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
-   deployment.apps/coffee-v1   1/1     1            1           33s
-   deployment.apps/coffee-v2   1/1     1            1           33s
-   deployment.apps/tea         1/1     1            1           33s
-   deployment.apps/tea-post    1/1     1            1           33s
+   NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
+   deployment.apps/coffee   2/2     2            2           32s
+   deployment.apps/tea      3/3     3            3           28m
 
-   NAME                                   DESIRED   CURRENT   READY   AGE
-   replicaset.apps/coffee-v1-c48b96b65    1         1         1       33s
-   replicaset.apps/coffee-v2-685fd9bb65   1         1         1       33s
-   replicaset.apps/tea-596697966f         1         1         1       33s
-   replicaset.apps/tea-post-5647b8d885    1         1         1       33s
+   NAME                                DESIRED   CURRENT   READY   AGE
+   replicaset.apps/coffee-56b44d4c55   2         2         2       32s
+   replicaset.apps/tea-596697966f      3         3         3       28m
 
 Configure TLS
 -------------
@@ -85,14 +78,44 @@ Create TLS certificate and key to be used for TLS offload:
 
    kubectl apply -f 1.cafe-secret.yaml
 
-Publish Application with Advanced Routing
-------------------------------------------
+Publish Using Ingress Resource
+-------------------------------
+
+Publish ``coffee`` and ``tea`` through NGINX Ingress Controller using the ``Ingress`` resource:
+
+.. code-block:: bash
+
+   kubectl apply -f 2.cafe-ingress.yaml
+
+Check the newly created ``Ingress`` resource:
+
+.. code-block:: bash
+
+   kubectl get ingress
+
+Output should be similar to:
+
+.. code-block:: console
+
+   NAME           CLASS   HOSTS              ADDRESS   PORTS     AGE
+   cafe-ingress   nginx   cafe.example.com             80, 443   13s
+
+Test application access (see `Test Applications Access`_ below).
+
+Delete the ``Ingress`` resource:
+
+.. code-block:: bash
+
+   kubectl delete -f 2.cafe-ingress.yaml
+
+Publish Using VirtualServer Custom Resource
+--------------------------------------------
 
 Publish ``coffee`` and ``tea`` through NGINX Ingress Controller using the ``VirtualServer`` Custom Resource Definition:
 
 .. code-block:: bash
 
-   kubectl apply -f 2.advanced-routing.yaml
+   kubectl apply -f 3.cafe-virtualserver.yaml
 
 Check the newly created ``VirtualServer`` resource:
 
@@ -105,78 +128,49 @@ Output should be similar to:
 .. code-block:: console
 
    NAME   STATE   HOST               IP    EXTERNALHOSTNAME   PORTS   AGE
-   cafe   Valid   cafe.example.com                                    3s
+   cafe   Valid   cafe.example.com                                    52s
 
-Test Application Access
-------------------------
+Test application access (see `Test Applications Access`_ below).
 
-Access Tea Service with GET Request
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Test Applications Access
+-------------------------
 
-.. code-block:: bash
+We will use ``curl`` with the ``--insecure`` option to turn off certificate verification of our self-signed 
+certificate and the ``--connect-to`` option to set the Host header and SNI of the request with ``cafe.example.com``.
 
-   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea
-
-The ``tea`` service replies:
-
-.. code-block:: console
-
-   Server address: 192.168.36.91:8080
-   Server name: tea-596697966f-7rvb7
-   Date: 03/Apr/2025:17:58:12 +0000
-   URI: /tea
-   Request ID: cf2cb6b008113c356eb76c6cf6d35a79
-
-Access Tea-Post Service with POST Request
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea -X POST
-
-The ``tea-post`` service replies:
-
-.. code-block:: console
-
-   Server address: 192.168.169.157:8080
-   Server name: tea-post-5647b8d885-qthpp
-   Date: 03/Apr/2025:17:58:40 +0000
-   URI: /tea
-   Request ID: f40e6d860b0714412e18976ecd702c38
-
-Access Coffee v2 Service with Cookie
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee --cookie "version=v2"
-
-The ``coffee-v2`` service replies:
-
-.. code-block:: console
-
-   Server address: 192.168.36.90:8080
-   Server name: coffee-v2-685fd9bb65-wrkvt
-   Date: 03/Apr/2025:17:59:14 +0000
-   URI: /coffee
-   Request ID: 03009ab419bb3dd24a5e23698f6c5f76
-
-Access Coffee v1 Service without Cookie
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Access Coffee Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
    curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee
 
-The ``coffee-v1`` service replies:
+Output should be similar to:
 
 .. code-block:: console
 
-   Server address: 192.168.36.93:8080
-   Server name: coffee-v1-c48b96b65-tnj4g
-   Date: 03/Apr/2025:17:59:42 +0000
+   Server address: 192.168.36.95:8080
+   Server name: coffee-56b44d4c55-57mll
+   Date: 03/Apr/2025:17:52:49 +0000
    URI: /coffee
-   Request ID: c58a357c6633990bc3a64b76a2a11dc7
+   Request ID: 955d316d90c3204040b07e00fe497bc8
+
+Access Tea Application
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea
+
+Output should be similar to:
+
+.. code-block:: console
+
+   Server address: 192.168.169.147:8080
+   Server name: tea-596697966f-pnkqk
+   Date: 03/Apr/2025:17:53:24 +0000
+   URI: /tea
+   Request ID: e4ffa71cff7fbf8d8dd3e36ce8e99085
 
 Cleanup
 -------
