@@ -1,10 +1,7 @@
-Module 4 - Traffic Splitting
-=============================
+Module 4 - JWT Token Authentication
+====================================
 
-This module configures traffic splitting for a sample application with two services: ``coffee-v1-svc`` and ``coffee-v2-svc``.
-90% of the ``coffee`` application traffic is sent to ``coffee-v1-svc`` and the remaining 10% to ``coffee-v2-svc``.
-
-This feature is useful for canary deployments and A/B testing scenarios.
+This module demonstrates how to enforce JWT authentication at the NGINX Ingress Controller level.
 
 Setup Environment Variables
 ----------------------------
@@ -28,25 +25,42 @@ Change to Lab Directory
 
 .. code-block:: bash
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/4.traffic-splitting
+   cd ~/NGINX-Ingress-Controller-Lab/labs/3.authentication
 
-Deploy Sample Applications
----------------------------
+Deploy Sample Application
+--------------------------
 
-Deploy the sample web applications:
-
-.. code-block:: bash
-
-   kubectl apply -f 0.cafe.yaml
-
-Publish Application with Traffic Splitting
--------------------------------------------
-
-Publish the application through NGINX Ingress Controller applying the traffic splitting rule:
+Deploy the sample web application:
 
 .. code-block:: bash
 
-   kubectl apply -f 1.virtual-server.yaml
+   kubectl apply -f 0.webapp.yaml
+
+Deploy JWT Configuration
+-------------------------
+
+Deploy the JWK Secret
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   kubectl apply -f 1.jwk-secret.yaml
+
+Deploy the JWT Policy
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   kubectl apply -f 2.jwt-policy.yaml
+
+Publish Application with JWT Policy
+------------------------------------
+
+Publish the application through NGINX Ingress Controller applying the JWT policy:
+
+.. code-block:: bash
+
+   kubectl apply -f 3.virtual-server.yaml
 
 Check the newly created ``VirtualServer`` resource:
 
@@ -58,103 +72,106 @@ Output should be similar to:
 
 .. code-block:: console
 
-   NAME   STATE   HOST               IP    EXTERNALHOSTNAME   PORTS   AGE
-   cafe   Valid   cafe.example.com                                    3s
+   NAME     STATE   HOST                 IP    EXTERNALHOSTNAME   PORTS   AGE
+   webapp   Valid   webapp.example.com                                    33s
 
-Describe the ``cafe`` VirtualServer:
+Describe the ``webapp`` VirtualServer:
 
 .. code-block:: bash
 
-   kubectl describe vs cafe
+   kubectl describe vs webapp
 
 Output should be similar to:
 
 .. code-block:: console
 
-   Name:         cafe
+   Name:         webapp
    Namespace:    default
    Labels:       <none>
    Annotations:  <none>
    API Version:  k8s.nginx.org/v1
    Kind:         VirtualServer
    Metadata:
-     Creation Timestamp:  2025-04-03T20:41:07Z
+     Creation Timestamp:  2025-04-03T18:01:01Z
      Generation:          1
-     Resource Version:    247959
-     UID:                 861ef737-ef95-4a9e-875b-e83a8f9c7f3a
+     Resource Version:    227335
+     UID:                 af70fa4f-2dbc-4412-a311-88b861deb52d
    Spec:
-     Host:  cafe.example.com
+     Host:  webapp.example.com
+     Policies:
+       Name:  jwt-policy
      Routes:
-       Path:  /coffee
-       Splits:
-         Action:
-           Pass:  coffee-v1
-         Weight:  90
-         Action:
-           Pass:  coffee-v2
-         Weight:  10
+       Action:
+         Pass:  webapp
+       Path:    /
      Upstreams:
-       Name:     coffee-v1
+       Name:     webapp
        Port:     80
-       Service:  coffee-v1-svc
-       Name:     coffee-v2
-       Port:     80
-       Service:  coffee-v2-svc
+       Service:  webapp-svc
    Status:
-     Message:  Configuration for default/cafe was added or updated 
+     Message:  Configuration for default/webapp was added or updated 
      Reason:   AddedOrUpdated
      State:    Valid
    Events:
      Type    Reason          Age   From                      Message
      ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  24s   nginx-ingress-controller  Configuration for default/cafe was added or updated
+     Normal  AddedOrUpdated  11s   nginx-ingress-controller  Configuration for default/webapp was added or updated
 
 Test Application Access
 ------------------------
 
-Access the Application
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   curl -H "Host: cafe.example.com" http://$NIC_IP:$HTTP_PORT/coffee
-
-90% of responses will come from ``coffee-v1-svc`` and be similar to:
-
-.. code-block:: console
-
-   Server address: 192.168.36.105:8080
-   Server name: coffee-v1-c48b96b65-6rlgx
-   Date: 03/Apr/2025:20:42:14 +0000
-   URI: /coffee
-   Request ID: 7e5a8e7143f9f5341b9c19ee60e47b8b
-
-10% of responses will come from ``coffee-v2-svc`` and be similar to:
-
-.. code-block:: console
-
-   Server address: 192.168.36.104:8080
-   Server name: coffee-v2-685fd9bb65-xpgfl
-   Date: 03/Apr/2025:20:42:48 +0000
-   URI: /coffee
-   Request ID: 77d52bf9dc70bd6df6ee099553835615
-
-Test Traffic Split Ratio
+Access Without JWT Token
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Test access using the script provided. It sends 100 requests and shows the traffic split ratio:
-
 .. code-block:: bash
 
-   . ./test.sh
+   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
 
-Output should be similar to:
+The reply should be similar to:
 
 .. code-block:: console
 
-   Summary of responses:
-   Coffee v1: 90 times
-   Coffee v2: 10 times
+   HTTP/1.1 401 Unauthorized
+   Server: nginx/1.27.2
+   Date: Thu, 03 Apr 2025 18:02:15 GMT
+   Content-Type: text/html
+   Content-Length: 179
+   Connection: keep-alive
+   WWW-Authenticate: Bearer realm="MyProductAPI"
+
+   <html>
+   <head><title>401 Authorization Required</title></head>
+   <body>
+   <center><h1>401 Authorization Required</h1></center>
+   <hr><center>nginx/1.27.2</center>
+   </body>
+   </html>
+
+Access With Valid JWT Token
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT -H "token: `cat token.jwt`"
+
+The reply should be similar to:
+
+.. code-block:: console
+
+   HTTP/1.1 200 OK
+   Server: nginx/1.27.2
+   Date: Thu, 03 Apr 2025 18:03:47 GMT
+   Content-Type: text/plain
+   Content-Length: 158
+   Connection: keep-alive
+   Expires: Thu, 03 Apr 2025 18:03:46 GMT
+   Cache-Control: no-cache
+
+   Server address: 192.168.36.101:8080
+   Server name: webapp-6db59b8dcc-ltt6p
+   Date: 03/Apr/2025:18:03:47 +0000
+   URI: /
+   Request ID: 647bb23b4b46630207ec55267584d403
 
 Cleanup
 -------

@@ -1,8 +1,8 @@
-Module 7 - NGINX App Protect WAF
-=================================
+Module 7 - Rate Limiting
+=========================
 
-This module demonstrates how to apply WAF (Web Application Firewall) protection to a sample application exposed through 
-NGINX Ingress Controller using NGINX App Protect.
+This module demonstrates how to apply rate limiting for an application exposed through NGINX Ingress Controller. 
+Rate limiting helps protect your applications from excessive requests and potential abuse.
 
 Setup Environment Variables
 ----------------------------
@@ -26,7 +26,7 @@ Change to Lab Directory
 
 .. code-block:: bash
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/7.app-protect-waf
+   cd ~/NGINX-Ingress-Controller-Lab/labs/6.rate-limiting
 
 Deploy Sample Application
 --------------------------
@@ -37,54 +37,23 @@ Deploy the sample web application:
 
    kubectl apply -f 0.webapp.yaml
 
-Deploy Syslog Service
-----------------------
+Deploy Rate Limit Policy
+-------------------------
 
-Deploy the syslog service to receive NGINX App Protect security violations logs:
-
-.. code-block:: bash
-
-   kubectl apply -f 1.syslog.yaml
-
-Deploy NGINX App Protect Policy Resources
-------------------------------------------
-
-Deploy User Defined Signatures
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Deploy a rate limit policy that allows only 1 request per second from a single IP address:
 
 .. code-block:: bash
 
-   kubectl apply -f 2.ap-apple-uds.yaml
+   kubectl apply -f 1.rate-limit.yaml
 
-Deploy Data Guard Policy
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Publish Application with Rate Limiting
+---------------------------------------
 
-.. code-block:: bash
-
-   kubectl apply -f 3.ap-dataguard-alarm-policy.yaml
-
-Deploy Log Configuration
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Publish the application through NGINX Ingress Controller applying the rate limit policy:
 
 .. code-block:: bash
 
-   kubectl apply -f 4.ap-logconf.yaml
-
-Deploy WAF Policy
-~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   kubectl apply -f 5.waf.yaml
-
-Publish Application with WAF Protection
-----------------------------------------
-
-Publish the application through NGINX Ingress Controller applying the WAF policy:
-
-.. code-block:: bash
-
-   kubectl apply -f 6.virtual-server.yaml
+   kubectl apply -f 2.virtual-server.yaml
 
 Check the newly created ``VirtualServer`` resource:
 
@@ -97,7 +66,7 @@ Output should be similar to:
 .. code-block:: console
 
    NAME     STATE   HOST                 IP    EXTERNALHOSTNAME   PORTS   AGE
-   webapp   Valid   webapp.example.com                                    9m49s
+   webapp   Valid   webapp.example.com                                    4s
 
 Describe the ``webapp`` VirtualServer:
 
@@ -116,14 +85,14 @@ Output should be similar to:
    API Version:  k8s.nginx.org/v1
    Kind:         VirtualServer
    Metadata:
-     Creation Timestamp:  2025-04-03T21:03:22Z
+     Creation Timestamp:  2025-04-03T20:47:29Z
      Generation:          1
-     Resource Version:    251235
-     UID:                 5e08b717-01b0-482d-8e20-10de3374a8f7
+     Resource Version:    248921
+     UID:                 e5ed98c5-10f0-4a0f-8a2b-cfe8e020d401
    Spec:
      Host:  webapp.example.com
      Policies:
-       Name:  waf-policy
+       Name:  rate-limit-policy
      Routes:
        Action:
          Pass:  webapp
@@ -139,15 +108,15 @@ Output should be similar to:
    Events:
      Type    Reason          Age   From                      Message
      ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  1s    nginx-ingress-controller  Configuration for default/webapp was added or updated
+     Normal  AddedOrUpdated  22s   nginx-ingress-controller  Configuration for default/webapp was added or updated
 
 Test Application Access
 ------------------------
 
-Legitimate Request - Success
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Single Request - Success
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Access the application using a legitimate request:
+Access the application:
 
 .. code-block:: bash
 
@@ -158,74 +127,63 @@ Output should be similar to:
 .. code-block:: console
 
    HTTP/1.1 200 OK
-   Date: Thu, 03 Apr 2025 21:03:43 GMT
+   Server: nginx/1.27.2
+   Date: Thu, 03 Apr 2025 20:48:16 GMT
    Content-Type: text/plain
    Content-Length: 158
    Connection: keep-alive
-   Expires: Thu, 03 Apr 2025 21:03:42 GMT
+   Expires: Thu, 03 Apr 2025 20:48:15 GMT
    Cache-Control: no-cache
 
-   Server address: 192.168.36.103:8080
-   Server name: webapp-6db59b8dcc-l5dsk
-   Date: 03/Apr/2025:21:03:43 +0000
+   Server address: 192.168.36.102:8080
+   Server name: webapp-6db59b8dcc-pkfp8
+   Date: 03/Apr/2025:20:48:16 +0000
    URI: /
-   Request ID: 204ea07975ae1618b29728b25f129498
+   Request ID: 73dfb52a3cd42b4a6953ea4f3ac55e94
 
-XSS Attack - Blocked
-~~~~~~~~~~~~~~~~~~~~
+Rapid Requests - Rate Limited
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Access the application using a suspicious URL containing a cross-site scripting (XSS) attempt:
+Access the application twice in rapid sequence:
 
 .. code-block:: bash
 
-   curl -i -H "Host: webapp.example.com" "http://$NIC_IP:$HTTP_PORT/<script>alert();</script>"
+   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT; curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
+
+The first request is served and the second is rate limited with HTTP code 429.
 
 Output should be similar to:
 
 .. code-block:: console
 
    HTTP/1.1 200 OK
-   Content-Type: text/html; charset=utf-8
-   Connection: close
+   Server: nginx/1.27.2
+   Date: Thu, 03 Apr 2025 20:49:03 GMT
+   Content-Type: text/plain
+   Content-Length: 158
+   Connection: keep-alive
+   Expires: Thu, 03 Apr 2025 20:49:02 GMT
    Cache-Control: no-cache
-   Pragma: no-cache
-   Content-Length: 247
 
-   <html><head><title>Request Rejected</title></head><body>The requested URL was rejected. Please consult with your administrator.<br><br>Your support ID is: 15024425679859283163<br><br><a href='javascript:history.back();'>[Go Back]</a></body></html>
+   Server address: 192.168.36.102:8080
+   Server name: webapp-6db59b8dcc-pkfp8
+   Date: 03/Apr/2025:20:49:03 +0000
+   URI: /
+   Request ID: 7b431f3052bbdcfd6905c6875469bee3
+   HTTP/1.1 429 Too Many Requests
+   Server: nginx/1.27.2
+   Date: Thu, 03 Apr 2025 20:49:03 GMT
+   Content-Type: text/html
+   Content-Length: 169
+   Connection: keep-alive
 
-User Defined Signature Match - Blocked
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Access the application sending data that matches the user defined signature:
-
-.. code-block:: bash
-
-   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT -X POST -d "apple"
-
-Output should be similar to:
-
-.. code-block:: console
-
-   HTTP/1.1 200 OK
-   Content-Type: text/html; charset=utf-8
-   Connection: close
-   Cache-Control: no-cache
-   Pragma: no-cache
-   Content-Length: 246
-
-   <html><head><title>Request Rejected</title></head><body>The requested URL was rejected. Please consult with your administrator.<br><br>Your support ID is: 9074180338395228252<br><br><a href='javascript:history.back();'>[Go Back]</a></body></html>
-
-Check Security Violation Logs
-------------------------------
-
-Check the security violation logs in the ``syslog`` pod:
-
-.. code-block:: bash
-
-   export SYSLOG_POD_NAME=`kubectl get pods -l app=syslog -o jsonpath='{.items[0].metadata.name}'`
-   kubectl exec -it $SYSLOG_POD_NAME -- cat /var/log/messages
-
-This will display detailed security logs showing the violations that were blocked by NGINX App Protect.
+   <html>
+   <head><title>429 Too Many Requests</title></head>
+   <body>
+   <center><h1>429 Too Many Requests</h1></center>
+   <hr><center>nginx/1.27.2</center>
+   </body>
+   </html>
 
 Cleanup
 -------

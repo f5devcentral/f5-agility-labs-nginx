@@ -1,182 +1,227 @@
-Module 1 - Basic Ingress Controller
-====================================
+Module 1 - Review IngressLink and NGINX Ingress Controller Configuration
+========================================================================
 
-This module demonstrates how to publish two sample applications using:
+In this module you will review the `F5 IngressLink <https://clouddocs.f5.com/containers/latest/userguide/ingresslink/>`__ configuration.
+IngressLink is a special mode of `BIG-IP Container Ingress Services <https://clouddocs.f5.com/containers/latest/>`__ that automatically populates BIG-IP pool members with the endpoints for NGINX Ingress Controller.
 
-- URI-based routing
-- TLS offload
+Review Kubernetes BGP Configuration
+-----------------------------------
 
-Setup Environment Variables
-----------------------------
+1. Access the shell for the Ubuntu box by clicking **Web Shell** in the **Access** dropdown for the Ubuntu server.
 
-Get NGINX Ingress Controller Node IP, HTTP and HTTPS NodePorts:
+2. Change to the **ubuntu** user and confirm the Kubernetes cluster is running and ``calicoctl`` is configured:
 
-.. code-block:: bash
+.. code-block:: sh
 
-   export NIC_IP=`kubectl get pod -l app.kubernetes.io/instance=nic -n nginx-ingress -o json|jq '.items[0].status.hostIP' -r`
-   export HTTP_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[0].nodePort}'`
-   export HTTPS_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[1].nodePort}'`
+    sudo -u ubuntu -i
+    kubectl get nodes
+    calicoctl get nodes
 
-Check NGINX Ingress Controller IP address, HTTP and HTTPS ports:
+**Output**
 
-.. code-block:: bash
+.. code-block:: sh
 
-   echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+    root@ubuntu:/# sudo -u ubuntu -i
+    ubuntu@ubuntu:~$ kubectl get nodes
+    NAME         STATUS   ROLES           AGE    VERSION
+    k8s-master   Ready    control-plane   362d   v1.30.10
+    k8s-node1    Ready    <none>          362d   v1.30.10
+    k8s-node2    Ready    <none>          362d   v1.30.10
+    ubuntu@ubuntu:~$ calicoctl get nodes
+    NAME
+    k8s-master
+    k8s-node1
+    k8s-node2
 
-Change to Lab Directory
-------------------------
+3. Review Calico's BGP configuration using ``calicoctl``:
 
-.. code-block:: bash
+.. code-block:: sh
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/1.basic-ingress
+    calicoctl get bgppeer
 
-Deploy Sample Applications
----------------------------
+**Output**
 
-Deploy two sample web applications (coffee and tea):
+.. code-block::
 
-.. code-block:: bash
+    ubuntu@ubuntu:~$ calicoctl get bgppeer
+    NAME                    PEERIP     NODE       ASN
+    bgppeer-global-bigip1   10.1.1.9   (global)   64512
 
-   kubectl apply -f 0.cafe.yaml
+Note the peer IP which is set to the self IP of the BIG-IP and the ASN which is set to a private value (64512).
 
-Verify that all pods are in the ``Running`` state:
+Review IngressLink Configuration
+--------------------------------
 
-.. code-block:: bash
+1. Review the IngressLink configuration using ``kubectl``:
 
-   kubectl get all
+.. code-block:: sh
 
-Output should be similar to:
+    kubectl get ingresslink -n nginx-ingress -o yaml
 
-.. code-block:: console
+**Output**
 
-   NAME                          READY   STATUS    RESTARTS   AGE
-   pod/coffee-56b44d4c55-4v6jp   1/1     Running   0          32s
-   pod/coffee-56b44d4c55-gdgdw   1/1     Running   0          32s
-   pod/tea-596697966f-cc4zj      1/1     Running   0          28m
-   pod/tea-596697966f-hbt7x      1/1     Running   0          28m
-   pod/tea-596697966f-mhd9k      1/1     Running   0          28m
+.. code-block:: sh
 
-   NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)   AGE
-   service/coffee-svc   ClusterIP   172.20.10.229   <none>        80/TCP    28m
-   service/kubernetes   ClusterIP   172.20.0.1      <none>        443/TCP   2d23h
-   service/tea-svc      ClusterIP   172.20.169.88   <none>        80/TCP    28m
+    ubuntu@ubuntu:~$ kubectl get ingresslink -n nginx-ingress -o yaml
+    apiVersion: v1
+    items:
+    - apiVersion: cis.f5.com/v1
+    kind: IngressLink
+    metadata:
+        annotations:
+        kubectl.kubernetes.io/last-applied-configuration: |
+            {"apiVersion":"cis.f5.com/v1","kind":"IngressLink","metadata":{"annotations":{},"name":"nginx-ingress","namespace":"nginx-ingress"},"spec":{"iRules":["/Common/proxy-protocol"],"selector":{"matchLabels":{"app":"ingresslink"}},"virtualServerAddress":"10.1.1.9"}}
+        creationTimestamp: "2026-01-21T23:41:57Z"
+        generation: 2
+        name: nginx-ingress
+        namespace: nginx-ingress
+        resourceVersion: "572369"
+        uid: 08f989ec-342d-4ae6-b9fd-7ffc855178a3
+    spec:
+        bigipRouteDomain: 0
+        iRules:
+        - /Common/proxy-protocol
+        selector:
+        matchLabels:
+            app: ingresslink
+        virtualServerAddress: 10.1.1.9
+    status:
+        lastUpdated: "2026-02-11T16:22:19Z"
+        status: OK
+        vsAddress: 10.1.1.9
+    kind: List
+    metadata:
+    resourceVersion: ""
 
-   NAME                     READY   UP-TO-DATE   AVAILABLE   AGE
-   deployment.apps/coffee   2/2     2            2           32s
-   deployment.apps/tea      3/3     3            3           28m
+Note the ``spec`` section. IngressLink has been configured to build a virtual server on the BIG-IP that:
 
-   NAME                                DESIRED   CURRENT   READY   AGE
-   replicaset.apps/coffee-56b44d4c55   2         2         2       32s
-   replicaset.apps/tea-596697966f      3         3         3       28m
+* listens on ``10.1.1.9`` (ports 80 and 443)
+* adds an iRule to insert a `PROXY Protocol <https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt>`__ header
+* configure pool members to match the endpoints of a service with an ``app: ingresslink`` label (this is the NGINX Ingress Controller service)
 
-Configure TLS
--------------
+Review NGINX Ingress Controller Configuration
+---------------------------------------------
 
-Create TLS certificate and key to be used for TLS offload:
+1. Review the NGINX Ingress Controller configuration using ``kubectl``:
 
-.. code-block:: bash
+.. code-block:: sh
+    
+    kubectl get daemonset nginx-ingress-controller -n nginx-ingress -o yaml
 
-   kubectl apply -f 1.cafe-secret.yaml
+Review the container arguments and note the ``ingresslink`` reference to the IngressLink object reviewed in the previous section.
+Also note the reference to the ``nginx-config`` configMap:
 
-Publish Using Ingress Resource
+.. code-block:: yaml
+
+   - -nginx-configmaps=$(POD_NAMESPACE)/nginx-config
+   - -ingresslink=nginx-ingress
+
+Review the ``nginx-config`` configMap:
+
+.. code-block:: sh
+    
+    kubectl get configmap nginx-config -n nginx-ingress -o yaml
+
+PROXY Protocol support is enabled in the configMap:
+
+.. code-block:: yaml
+
+    proxy-protocol: "True"
+    real-ip-header: proxy_protocol
+
+Review BIG-IP BGP Configuration
 -------------------------------
 
-Publish ``coffee`` and ``tea`` through NGINX Ingress Controller using the ``Ingress`` resource:
+1. Access the BIG-IP TMUI by clicking **TMUI** in the **Access** dropdown for the F5 BIG-IP.
 
-.. code-block:: bash
+2. Login using *admin* and *!appworld* for the username and password, respectively.
 
-   kubectl apply -f 2.cafe-ingress.yaml
+3. Navigate to **Network >> Route Domains**, click on **0**, and confirm that BGP has been added to the dynamic routing protocols.
 
-Check the newly created ``Ingress`` resource:
+.. image:: rd0.png
 
-.. code-block:: bash
+4. Access the BIG-IP TMSH by clicking **Web Shell** in the **Access** dropdown for the F5 BIG-IP.
 
-   kubectl get ingress
+5. Run ``imish`` to drop into the imish shell, then run ``enable`` and ``show running-config`` to review the BGP configuration.
 
-Output should be similar to:
+.. code-block:: sh
 
-.. code-block:: console
+    imish
+    enable
+    show running-config
 
-   NAME           CLASS   HOSTS              ADDRESS   PORTS     AGE
-   cafe-ingress   nginx   cafe.example.com             80, 443   13s
+**Output**
 
-Test application access (see `Test Applications Access`_ below).
+.. code-block:: sh
 
-Delete the ``Ingress`` resource:
+    [root@ip-10-1-1-9:Active:Standalone] config # imish
+    ip-10-1-1-9.us-west-2.compute.internal[0]>enable
+    ip-10-1-1-9.us-west-2.compute.internal[0]#show running-config
+    !
+    no service password-encryption
+    !
+    log syslog
+    !
+    router bgp 64512
+    bgp graceful-restart restart-time 120
+    neighbor calico-k8s peer-group
+    neighbor calico-k8s remote-as 64512
+    neighbor 10.1.1.4 peer-group calico-k8s
+    neighbor 10.1.1.5 peer-group calico-k8s
+    neighbor 10.1.1.6 peer-group calico-k8s
+    !
+    line con 0
+    login
+    line vty 0 39
+    login
+    !
+    end
 
-.. code-block:: bash
+Note that the ASN (64512) matches the value retrieved from ``calicoctl`` in the previous section, and that the IP addresses of the Kubernetes nodes are configured as neighbors.
 
-   kubectl delete -f 2.cafe-ingress.yaml
+1. For each Kubernetes node, run ``show ip bgp neighbor <node-ip> routes`` to review the node's advertised pod CIDR.
 
-Publish Using VirtualServer Custom Resource
---------------------------------------------
+.. code-block:: sh
 
-Publish ``coffee`` and ``tea`` through NGINX Ingress Controller using the ``VirtualServer`` Custom Resource Definition:
+    show ip bgp neighbor 10.1.1.4 routes
+    show ip bgp neighbor 10.1.1.5 routes
+    show ip bgp neighbor 10.1.1.6 routes
 
-.. code-block:: bash
+**Output**
 
-   kubectl apply -f 3.cafe-virtualserver.yaml
+.. code-block:: sh
 
-Check the newly created ``VirtualServer`` resource:
+    ip-10-1-1-9.us-west-2.compute.internal[0]>show ip bgp neighbor 10.1.1.4 routes 
+    BGP table version is 4, local router ID is 10.1.1.9
+    Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, l - labeled
+                S Stale
+    Origin codes: i - IGP, e - EGP, ? - incomplete
 
-.. code-block:: bash
+    Network          Next Hop            Metric     LocPrf     Weight Path
+    *>i192.168.235.192/26
+                        10.1.1.4                 0        100          0 i
 
-   kubectl get vs -o wide
+    Total number of prefixes 1
+    ip-10-1-1-9.us-west-2.compute.internal[0]>show ip bgp neighbor 10.1.1.5 routes 
+    BGP table version is 4, local router ID is 10.1.1.9
+    Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, l - labeled
+                S Stale
+    Origin codes: i - IGP, e - EGP, ? - incomplete
 
-Output should be similar to:
+    Network          Next Hop            Metric     LocPrf     Weight Path
+    *>i192.168.36.64/26 10.1.1.5                 0        100          0 i
 
-.. code-block:: console
+    Total number of prefixes 1
+    ip-10-1-1-9.us-west-2.compute.internal[0]>show ip bgp neighbor 10.1.1.6 routes 
+    BGP table version is 4, local router ID is 10.1.1.9
+    Status codes: s suppressed, d damped, h history, * valid, > best, i - internal, l - labeled
+                S Stale
+    Origin codes: i - IGP, e - EGP, ? - incomplete
 
-   NAME   STATE   HOST               IP    EXTERNALHOSTNAME   PORTS   AGE
-   cafe   Valid   cafe.example.com                                    52s
+    Network          Next Hop            Metric     LocPrf     Weight Path
+    *>i192.168.169.128/26
+                        10.1.1.6                 0        100          0 i
 
-Test application access (see `Test Applications Access`_ below).
+    Total number of prefixes 1
 
-Test Applications Access
--------------------------
-
-We will use ``curl`` with the ``--insecure`` option to turn off certificate verification of our self-signed 
-certificate and the ``--connect-to`` option to set the Host header and SNI of the request with ``cafe.example.com``.
-
-Access Coffee Application
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee
-
-Output should be similar to:
-
-.. code-block:: console
-
-   Server address: 192.168.36.95:8080
-   Server name: coffee-56b44d4c55-57mll
-   Date: 03/Apr/2025:17:52:49 +0000
-   URI: /coffee
-   Request ID: 955d316d90c3204040b07e00fe497bc8
-
-Access Tea Application
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea
-
-Output should be similar to:
-
-.. code-block:: console
-
-   Server address: 192.168.169.147:8080
-   Server name: tea-596697966f-pnkqk
-   Date: 03/Apr/2025:17:53:24 +0000
-   URI: /tea
-   Request ID: e4ffa71cff7fbf8d8dd3e36ce8e99085
-
-Cleanup
--------
-
-Delete the lab resources:
-
-.. code-block:: bash
-
-   kubectl delete -f .
+2. Type **exit** and push Enter to return to bash. Feel free to close the web shell.

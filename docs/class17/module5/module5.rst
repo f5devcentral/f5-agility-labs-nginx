@@ -1,7 +1,10 @@
-Module 5 - Access Control
-==========================
+Module 5 - Traffic Splitting
+=============================
 
-This module demonstrates how to apply access control policies to deny and allow traffic from specific subnets.
+This module configures traffic splitting for a sample application with two services: ``coffee-v1-svc`` and ``coffee-v2-svc``.
+90% of the ``coffee`` application traffic is sent to ``coffee-v1-svc`` and the remaining 10% to ``coffee-v2-svc``.
+
+This feature is useful for canary deployments and A/B testing scenarios.
 
 Setup Environment Variables
 ----------------------------
@@ -25,34 +28,25 @@ Change to Lab Directory
 
 .. code-block:: bash
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/5.access-control
+   cd ~/NGINX-Ingress-Controller-Lab/labs/4.traffic-splitting
 
-Deploy Sample Application
---------------------------
+Deploy Sample Applications
+---------------------------
 
-Deploy the sample web application:
-
-.. code-block:: bash
-
-   kubectl apply -f 0.webapp.yaml
-
-Deploy Access Control Policy - Deny
-------------------------------------
-
-Deploy an access control policy that denies requests from clients with an IP that belongs to the subnet ``10.0.0.0/8``:
+Deploy the sample web applications:
 
 .. code-block:: bash
 
-   kubectl apply -f 1.access-control-policy-deny.yaml
+   kubectl apply -f 0.cafe.yaml
 
-Publish Application with Access Control
-----------------------------------------
+Publish Application with Traffic Splitting
+-------------------------------------------
 
-Publish the application through NGINX Ingress Controller applying the access control policy:
+Publish the application through NGINX Ingress Controller applying the traffic splitting rule:
 
 .. code-block:: bash
 
-   kubectl apply -f 2.virtual-server.yaml
+   kubectl apply -f 1.virtual-server.yaml
 
 Check the newly created ``VirtualServer`` resource:
 
@@ -64,115 +58,103 @@ Output should be similar to:
 
 .. code-block:: console
 
-   NAME     STATE   HOST                 IP    EXTERNALHOSTNAME   PORTS   AGE
-   webapp   Valid   webapp.example.com                                    4s
+   NAME   STATE   HOST               IP    EXTERNALHOSTNAME   PORTS   AGE
+   cafe   Valid   cafe.example.com                                    3s
 
-Describe the ``webapp`` VirtualServer:
+Describe the ``cafe`` VirtualServer:
 
 .. code-block:: bash
 
-   kubectl describe vs webapp
+   kubectl describe vs cafe
 
 Output should be similar to:
 
 .. code-block:: console
 
-   Name:         webapp
+   Name:         cafe
    Namespace:    default
    Labels:       <none>
    Annotations:  <none>
    API Version:  k8s.nginx.org/v1
    Kind:         VirtualServer
    Metadata:
-     Creation Timestamp:  2025-04-03T20:44:26Z
+     Creation Timestamp:  2025-04-03T20:41:07Z
      Generation:          1
-     Resource Version:    248472
-     UID:                 06882d7b-5ec7-4fe8-b272-7052868aa9d6
+     Resource Version:    247959
+     UID:                 861ef737-ef95-4a9e-875b-e83a8f9c7f3a
    Spec:
-     Host:  webapp.example.com
-     Policies:
-       Name:  webapp-policy
+     Host:  cafe.example.com
      Routes:
-       Action:
-         Pass:  webapp
-       Path:    /
+       Path:  /coffee
+       Splits:
+         Action:
+           Pass:  coffee-v1
+         Weight:  90
+         Action:
+           Pass:  coffee-v2
+         Weight:  10
      Upstreams:
-       Name:     webapp
+       Name:     coffee-v1
        Port:     80
-       Service:  webapp-svc
+       Service:  coffee-v1-svc
+       Name:     coffee-v2
+       Port:     80
+       Service:  coffee-v2-svc
    Status:
-     Message:  Configuration for default/webapp was added or updated 
+     Message:  Configuration for default/cafe was added or updated 
      Reason:   AddedOrUpdated
      State:    Valid
    Events:
      Type    Reason          Age   From                      Message
      ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  23s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+     Normal  AddedOrUpdated  24s   nginx-ingress-controller  Configuration for default/cafe was added or updated
 
-Test Access - Denied
----------------------
+Test Application Access
+------------------------
 
-Access the application:
+Access the Application
+~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
+   curl -H "Host: cafe.example.com" http://$NIC_IP:$HTTP_PORT/coffee
 
-NGINX Ingress Controller blocks the request if the client IP belongs to subnet ``10.0.0.0/8``:
+90% of responses will come from ``coffee-v1-svc`` and be similar to:
 
 .. code-block:: console
 
-   HTTP/1.1 403 Forbidden
-   Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 20:45:33 GMT
-   Content-Type: text/html
-   Content-Length: 153
-   Connection: keep-alive
+   Server address: 192.168.36.105:8080
+   Server name: coffee-v1-c48b96b65-6rlgx
+   Date: 03/Apr/2025:20:42:14 +0000
+   URI: /coffee
+   Request ID: 7e5a8e7143f9f5341b9c19ee60e47b8b
 
-   <html>
-   <head><title>403 Forbidden</title></head>
-   <body>
-   <center><h1>403 Forbidden</h1></center>
-   <hr><center>nginx/1.27.2</center>
-   </body>
-   </html>
-
-Update Access Control Policy - Allow
--------------------------------------
-
-Update the access control policy to allow traffic:
-
-.. code-block:: bash
-
-   kubectl apply -f 3.access-control-policy-allow.yaml
-
-Test Access - Allowed
-----------------------
-
-Access the application:
-
-.. code-block:: bash
-
-   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
-
-NGINX Ingress Controller allows traffic from subnet ``10.0.0.0/8``:
+10% of responses will come from ``coffee-v2-svc`` and be similar to:
 
 .. code-block:: console
 
-   HTTP/1.1 200 OK
-   Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 20:46:29 GMT
-   Content-Type: text/plain
-   Content-Length: 157
-   Connection: keep-alive
-   Expires: Thu, 03 Apr 2025 20:46:28 GMT
-   Cache-Control: no-cache
+   Server address: 192.168.36.104:8080
+   Server name: coffee-v2-685fd9bb65-xpgfl
+   Date: 03/Apr/2025:20:42:48 +0000
+   URI: /coffee
+   Request ID: 77d52bf9dc70bd6df6ee099553835615
 
-   Server address: 192.168.36.99:8080
-   Server name: webapp-6db59b8dcc-nchgr
-   Date: 03/Apr/2025:20:46:29 +0000
-   URI: /
-   Request ID: db6e3caf0b45c7e364f01961b40a3dd9
+Test Traffic Split Ratio
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Test access using the script provided. It sends 100 requests and shows the traffic split ratio:
+
+.. code-block:: bash
+
+   . ./test.sh
+
+Output should be similar to:
+
+.. code-block:: console
+
+   Summary of responses:
+   Coffee v1: 90 times
+   Coffee v2: 10 times
 
 Cleanup
 -------

@@ -1,7 +1,12 @@
-Module 3 - JWT Token Authentication
+Module 3 - Advanced Layer 7 Routing
 ====================================
 
-This module demonstrates how to enforce JWT authentication at the NGINX Ingress Controller level.
+This module demonstrates advanced layer 7 routing based on HTTP Cookies and HTTP methods for an application with four services:
+
+- POST requests for ``/tea`` are routed to ``tea-post-svc``
+- Non-POST requests for ``/tea`` are routed to ``tea-svc``
+- Requests for ``/coffee`` that include the cookie ``version`` set to ``v2`` are routed to ``coffee-v2-svc``
+- Requests for ``/coffee`` with no ``version`` cookie are routed to ``coffee-v1-svc``
 
 Setup Environment Variables
 ----------------------------
@@ -25,42 +30,69 @@ Change to Lab Directory
 
 .. code-block:: bash
 
-   cd ~/NGINX-Ingress-Controller-Lab/labs/3.authentication
+   cd ~/NGINX-Ingress-Controller-Lab/labs/2.advanced-routing
 
-Deploy Sample Application
---------------------------
+Deploy Sample Applications
+---------------------------
 
-Deploy the sample web application:
-
-.. code-block:: bash
-
-   kubectl apply -f 0.webapp.yaml
-
-Deploy JWT Configuration
--------------------------
-
-Deploy the JWK Secret
-~~~~~~~~~~~~~~~~~~~~~
+Deploy the sample web applications:
 
 .. code-block:: bash
 
-   kubectl apply -f 1.jwk-secret.yaml
+   kubectl apply -f 0.cafe.yaml
 
-Deploy the JWT Policy
-~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
-   kubectl apply -f 2.jwt-policy.yaml
-
-Publish Application with JWT Policy
-------------------------------------
-
-Publish the application through NGINX Ingress Controller applying the JWT policy:
+Check all application pods deployed:
 
 .. code-block:: bash
 
-   kubectl apply -f 3.virtual-server.yaml
+   kubectl get all
+
+Output should be similar to:
+
+.. code-block:: console
+
+   NAME                             READY   STATUS    RESTARTS   AGE
+   pod/coffee-v1-c48b96b65-pkvlw    1/1     Running   0          33s
+   pod/coffee-v2-685fd9bb65-m6zgv   1/1     Running   0          33s
+   pod/tea-596697966f-26swq         1/1     Running   0          33s
+   pod/tea-post-5647b8d885-9zq6f    1/1     Running   0          33s
+
+   NAME                    TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)   AGE
+   service/coffee-v1-svc   ClusterIP   172.20.122.65    <none>        80/TCP    33s
+   service/coffee-v2-svc   ClusterIP   172.20.195.88    <none>        80/TCP    33s
+   service/kubernetes      ClusterIP   172.20.0.1       <none>        443/TCP   22h
+   service/tea-post-svc    ClusterIP   172.20.194.126   <none>        80/TCP    33s
+   service/tea-svc         ClusterIP   172.20.188.11    <none>        80/TCP    33s
+
+   NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+   deployment.apps/coffee-v1   1/1     1            1           33s
+   deployment.apps/coffee-v2   1/1     1            1           33s
+   deployment.apps/tea         1/1     1            1           33s
+   deployment.apps/tea-post    1/1     1            1           33s
+
+   NAME                                   DESIRED   CURRENT   READY   AGE
+   replicaset.apps/coffee-v1-c48b96b65    1         1         1       33s
+   replicaset.apps/coffee-v2-685fd9bb65   1         1         1       33s
+   replicaset.apps/tea-596697966f         1         1         1       33s
+   replicaset.apps/tea-post-5647b8d885    1         1         1       33s
+
+Configure TLS
+-------------
+
+Create TLS certificate and key to be used for TLS offload:
+
+.. code-block:: bash
+
+   kubectl apply -f 1.cafe-secret.yaml
+
+Publish Application with Advanced Routing
+------------------------------------------
+
+Publish ``coffee`` and ``tea`` through NGINX Ingress Controller using the ``VirtualServer`` Custom Resource Definition:
+
+.. code-block:: bash
+
+   kubectl apply -f 2.advanced-routing.yaml
 
 Check the newly created ``VirtualServer`` resource:
 
@@ -72,106 +104,79 @@ Output should be similar to:
 
 .. code-block:: console
 
-   NAME     STATE   HOST                 IP    EXTERNALHOSTNAME   PORTS   AGE
-   webapp   Valid   webapp.example.com                                    33s
-
-Describe the ``webapp`` VirtualServer:
-
-.. code-block:: bash
-
-   kubectl describe vs webapp
-
-Output should be similar to:
-
-.. code-block:: console
-
-   Name:         webapp
-   Namespace:    default
-   Labels:       <none>
-   Annotations:  <none>
-   API Version:  k8s.nginx.org/v1
-   Kind:         VirtualServer
-   Metadata:
-     Creation Timestamp:  2025-04-03T18:01:01Z
-     Generation:          1
-     Resource Version:    227335
-     UID:                 af70fa4f-2dbc-4412-a311-88b861deb52d
-   Spec:
-     Host:  webapp.example.com
-     Policies:
-       Name:  jwt-policy
-     Routes:
-       Action:
-         Pass:  webapp
-       Path:    /
-     Upstreams:
-       Name:     webapp
-       Port:     80
-       Service:  webapp-svc
-   Status:
-     Message:  Configuration for default/webapp was added or updated 
-     Reason:   AddedOrUpdated
-     State:    Valid
-   Events:
-     Type    Reason          Age   From                      Message
-     ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  11s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+   NAME   STATE   HOST               IP    EXTERNALHOSTNAME   PORTS   AGE
+   cafe   Valid   cafe.example.com                                    3s
 
 Test Application Access
 ------------------------
 
-Access Without JWT Token
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Access Tea Service with GET Request
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea
 
-The reply should be similar to:
+The ``tea`` service replies:
 
 .. code-block:: console
 
-   HTTP/1.1 401 Unauthorized
-   Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 18:02:15 GMT
-   Content-Type: text/html
-   Content-Length: 179
-   Connection: keep-alive
-   WWW-Authenticate: Bearer realm="MyProductAPI"
+   Server address: 192.168.36.91:8080
+   Server name: tea-596697966f-7rvb7
+   Date: 03/Apr/2025:17:58:12 +0000
+   URI: /tea
+   Request ID: cf2cb6b008113c356eb76c6cf6d35a79
 
-   <html>
-   <head><title>401 Authorization Required</title></head>
-   <body>
-   <center><h1>401 Authorization Required</h1></center>
-   <hr><center>nginx/1.27.2</center>
-   </body>
-   </html>
-
-Access With Valid JWT Token
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Access Tea-Post Service with POST Request
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: bash
 
-   curl -i -H "Host: webapp.example.com" http://$NIC_IP:$HTTP_PORT -H "token: `cat token.jwt`"
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea -X POST
 
-The reply should be similar to:
+The ``tea-post`` service replies:
 
 .. code-block:: console
 
-   HTTP/1.1 200 OK
-   Server: nginx/1.27.2
-   Date: Thu, 03 Apr 2025 18:03:47 GMT
-   Content-Type: text/plain
-   Content-Length: 158
-   Connection: keep-alive
-   Expires: Thu, 03 Apr 2025 18:03:46 GMT
-   Cache-Control: no-cache
+   Server address: 192.168.169.157:8080
+   Server name: tea-post-5647b8d885-qthpp
+   Date: 03/Apr/2025:17:58:40 +0000
+   URI: /tea
+   Request ID: f40e6d860b0714412e18976ecd702c38
 
-   Server address: 192.168.36.101:8080
-   Server name: webapp-6db59b8dcc-ltt6p
-   Date: 03/Apr/2025:18:03:47 +0000
-   URI: /
-   Request ID: 647bb23b4b46630207ec55267584d403
+Access Coffee v2 Service with Cookie
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee --cookie "version=v2"
+
+The ``coffee-v2`` service replies:
+
+.. code-block:: console
+
+   Server address: 192.168.36.90:8080
+   Server name: coffee-v2-685fd9bb65-wrkvt
+   Date: 03/Apr/2025:17:59:14 +0000
+   URI: /coffee
+   Request ID: 03009ab419bb3dd24a5e23698f6c5f76
+
+Access Coffee v1 Service without Cookie
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee
+
+The ``coffee-v1`` service replies:
+
+.. code-block:: console
+
+   Server address: 192.168.36.93:8080
+   Server name: coffee-v1-c48b96b65-tnj4g
+   Date: 03/Apr/2025:17:59:42 +0000
+   URI: /coffee
+   Request ID: c58a357c6633990bc3a64b76a2a11dc7
 
 Cleanup
 -------
