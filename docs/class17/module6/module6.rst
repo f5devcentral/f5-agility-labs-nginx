@@ -6,19 +6,21 @@ This module demonstrates how to apply access control policies to deny and allow 
 Setup Environment Variables
 ----------------------------
 
-Get NGINX Ingress Controller Node IP, HTTP and HTTPS NodePorts:
-
-.. code-block:: bash
-
-   export NIC_IP=`kubectl get pod -l app.kubernetes.io/instance=nic -n nginx-ingress -o json|jq '.items[0].status.hostIP' -r`
-   export HTTP_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[0].nodePort}'`
-   export HTTPS_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[1].nodePort}'`
-
-Check NGINX Ingress Controller IP address, HTTP and HTTPS ports:
+Confirm environment variables are still set to point to the IngressLink virtual server and define HTTP and HTTPS ports:
 
 .. code-block:: bash
 
    echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+
+**Output**
+
+.. code-block:: console
+
+   ubuntu@ubuntu:~$ echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+   NIC address: 10.1.1.9
+   HTTP port  : 80
+   HTTPS port : 443
+
 
 Change to Lab Directory
 ------------------------
@@ -58,20 +60,20 @@ Check the newly created ``VirtualServer`` resource:
 
 .. code-block:: bash
 
-   kubectl get vs -o wide
+   kubectl get virtualservers.k8s.nginx.org -o wide
 
 Output should be similar to:
 
 .. code-block:: console
 
-   NAME     STATE   HOST                 IP    EXTERNALHOSTNAME   PORTS   AGE
-   webapp   Valid   webapp.example.com                                    4s
+   NAME     STATE   HOST                 IP         EXTERNALHOSTNAME   PORTS      AGE
+   webapp   Valid   webapp.example.com   10.1.1.9                      [80,443]   11s
 
 Describe the ``webapp`` VirtualServer:
 
 .. code-block:: bash
 
-   kubectl describe vs webapp
+   kubectl describe virtualservers.k8s.nginx.org webapp
 
 Output should be similar to:
 
@@ -84,30 +86,34 @@ Output should be similar to:
    API Version:  k8s.nginx.org/v1
    Kind:         VirtualServer
    Metadata:
-     Creation Timestamp:  2025-04-03T20:44:26Z
-     Generation:          1
-     Resource Version:    248472
-     UID:                 06882d7b-5ec7-4fe8-b272-7052868aa9d6
+   Creation Timestamp:  2026-02-23T04:24:01Z
+   Generation:          1
+   Resource Version:    704652
+   UID:                 b218593d-eab5-4da3-804e-4e3821c747f4
    Spec:
-     Host:  webapp.example.com
-     Policies:
-       Name:  webapp-policy
-     Routes:
-       Action:
+   Host:  webapp.example.com
+   Policies:
+      Name:  webapp-policy
+   Routes:
+      Action:
          Pass:  webapp
-       Path:    /
-     Upstreams:
-       Name:     webapp
-       Port:     80
-       Service:  webapp-svc
+      Path:    /
+   Upstreams:
+      Name:     webapp
+      Port:     80
+      Service:  webapp-svc
    Status:
-     Message:  Configuration for default/webapp was added or updated 
-     Reason:   AddedOrUpdated
-     State:    Valid
+   External Endpoints:
+      Ip:     10.1.1.9
+      Ports:  [80,443]
+   Message:  Configuration for default/webapp was added or updated 
+   Reason:   AddedOrUpdated
+   State:    Valid
    Events:
-     Type    Reason          Age   From                      Message
-     ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  23s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+   Type    Reason          Age   From                      Message
+   ----    ------          ----  ----                      -------
+   Normal  AddedOrUpdated  76s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+   Normal  AddedOrUpdated  76s   nginx-ingress-controller  Configuration for default/webapp was added or updated   
 
 Test Access - Denied
 ---------------------
@@ -144,6 +150,7 @@ Update the access control policy to allow traffic:
 
 .. code-block:: bash
 
+   kubectl delete -f 1.access-control-policy-deny.yaml
    kubectl apply -f 3.access-control-policy-allow.yaml
 
 Test Access - Allowed
@@ -182,3 +189,7 @@ Delete the lab resources:
 .. code-block:: bash
 
    kubectl delete -f .
+
+.. note::
+   
+   You should get one expected error when trying to delete ``3.access-control-policy-allow.yaml``.

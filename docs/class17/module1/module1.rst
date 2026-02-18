@@ -19,7 +19,7 @@ Review Kubernetes BGP Configuration
 
 **Output**
 
-.. code-block:: sh
+.. code-block:: console
 
     root@ubuntu:/# sudo -u ubuntu -i
     ubuntu@ubuntu:~$ kubectl get nodes
@@ -41,7 +41,7 @@ Review Kubernetes BGP Configuration
 
 **Output**
 
-.. code-block::
+.. code-block:: console
 
     ubuntu@ubuntu:~$ calicoctl get bgppeer
     NAME                    PEERIP     NODE       ASN
@@ -60,7 +60,7 @@ Review IngressLink Configuration
 
 **Output**
 
-.. code-block:: sh
+.. code-block:: console
 
     ubuntu@ubuntu:~$ kubectl get ingresslink -n nginx-ingress -o yaml
     apiVersion: v1
@@ -167,7 +167,7 @@ Review BIG-IP BGP Configuration
 
 **Output**
 
-.. code-block:: sh
+.. code-block:: console
 
     [root@ip-10-1-1-9:Active:Standalone] config # imish
     ip-10-1-1-9.us-west-2.compute.internal[0]>enable
@@ -204,7 +204,7 @@ Note that the ASN (64512) matches the value retrieved from ``calicoctl`` in the 
 
 **Output**
 
-.. code-block:: sh
+.. code-block:: console
 
     ip-10-1-1-9.us-west-2.compute.internal[0]>show ip bgp neighbor 10.1.1.4 routes 
     BGP table version is 4, local router ID is 10.1.1.9

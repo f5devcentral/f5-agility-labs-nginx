@@ -6,22 +6,39 @@ This module demonstrates how to publish two sample applications using:
 - URI-based routing
 - TLS offload
 
-Setup Environment Variables
-----------------------------
+Connect to Ubuntu Server and set Environment Variables
+------------------------------------------------------
 
-Get NGINX Ingress Controller Node IP, HTTP and HTTPS NodePorts:
+Access the shell for the Ubuntu box by clicking **Web Shell** in the **Access** dropdown for the Ubuntu server. Then change to the **ubuntu** user.
+
+.. code-block:: sh
+
+   sudo -u ubuntu -i
+
+
+Now set variables to point to the IngressLink virtual server:
 
 .. code-block:: bash
 
-   export NIC_IP=`kubectl get pod -l app.kubernetes.io/instance=nic -n nginx-ingress -o json|jq '.items[0].status.hostIP' -r`
-   export HTTP_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[0].nodePort}'`
-   export HTTPS_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[1].nodePort}'`
+   export NIC_IP=10.1.1.9
+   export HTTP_PORT=80
+   export HTTPS_PORT=443
 
 Check NGINX Ingress Controller IP address, HTTP and HTTPS ports:
 
 .. code-block:: bash
 
    echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+
+**Output**
+
+.. code-block:: console
+
+   ubuntu@ubuntu:~$ echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+   NIC address: 10.1.1.9
+   HTTP port  : 80
+   HTTPS port : 443
+
 
 Change to Lab Directory
 ------------------------
@@ -123,23 +140,68 @@ Check the newly created ``VirtualServer`` resource:
 
    kubectl get vs -o wide
 
+You may get a warning like the following:
+
+.. code-block:: console
+
+   Warning: short name "vs" could also match lower priority resource virtualservers.k8s.nginx.org
+   No resources found in default namespace.
+
+This is because both NGINX Ingress Controller and Container Ingress Services define a ``VirtualServer`` Custom Resource that registers ``vs`` as a short name.
+You can confirm this with ``kubectl``:
+
+.. code-block:: bash
+
+   kubectl api-resources | grep vs
+
+You can see ``VirtualServer`` custom resources exist in both the ``cis.f5.com/v1`` and ``k8s.nginx.org/v1`` API groups.
+
+.. code-block:: console
+
+   ubuntu@ubuntu:~/NGINX-Ingress-Controller-Lab/labs/1.basic-ingress$ kubectl api-resources | grep vs
+   virtualservers                      vs           cis.f5.com/v1                     true         VirtualServer
+   virtualserverroutes                 vsr          k8s.nginx.org/v1                  true         VirtualServerRoute
+   virtualservers                      vs           k8s.nginx.org/v1                  true         VirtualServer
+
+We can avoid this warning by using the full resource name with the group:
+
+.. code-block:: bash
+
+   kubectl get virtualservers.k8s.nginx.org -o wide
+
 Output should be similar to:
 
 .. code-block:: console
 
-   NAME   STATE   HOST               IP    EXTERNALHOSTNAME   PORTS   AGE
-   cafe   Valid   cafe.example.com                                    52s
+   NAME   STATE   HOST               IP         EXTERNALHOSTNAME   PORTS      AGE
+   cafe   Valid   cafe.example.com   10.1.1.9                      [80,443]   10m
 
 Test application access (see `Test Applications Access`_ below).
 
 Test Applications Access
 -------------------------
 
-We will use ``curl`` with the ``--insecure`` option to turn off certificate verification of our self-signed 
-certificate and the ``--connect-to`` option to set the Host header and SNI of the request with ``cafe.example.com``.
+Open BIG-IP Virtual Server Statistics
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Access the BIG-IP TMUI by clicking **TMUI** in the **Access** dropdown for the F5 BIG-IP (login using *admin* and *!appworld*).
+Navigate to **Local Traffic >> Virtual Servers >> Statistics >> Virtual Server**. Change to the **kubernetes** partition using the dropdown in the upper-right corner.
+
+.. image:: partition.png
+
+Then set the Auto Refresh to 10 seconds.
+
+.. image:: statistics.png
+
+Use the statistics to help confirm requests are processed by the BIG-IP.
+
 
 Access Coffee Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We will use ``curl`` with the ``--insecure`` option to turn off certificate verification of our self-signed 
+certificate and the ``--connect-to`` option to set the Host header and SNI of the request to ``cafe.example.com``.
+
 
 .. code-block:: bash
 
@@ -172,6 +234,15 @@ Output should be similar to:
    URI: /tea
    Request ID: e4ffa71cff7fbf8d8dd3e36ce8e99085
 
+Review BIG-IP Statistics
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+In TMUI, confirm the virtual server has processed requests and that statistics have increased:
+
+.. image:: stats-nonzero.png
+
+Optionally, click the checkboxes next to the virtual servers and click the **Reset** button to reset the statistics.
+
 Cleanup
 -------
 
@@ -180,3 +251,7 @@ Delete the lab resources:
 .. code-block:: bash
 
    kubectl delete -f .
+
+.. note::
+   
+   You should get one expected error when trying to delete ``2.cafe-ingress.yaml``.
