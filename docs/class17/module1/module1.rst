@@ -102,7 +102,22 @@ Note the ``spec`` section. IngressLink has been configured to build a virtual se
 Review NGINX Ingress Controller Configuration
 ---------------------------------------------
 
-1. Review the NGINX Ingress Controller configuration using ``kubectl``:
+1. Review the NGINX Ingress Controller service using ``kubectl``:
+
+.. code-block:: sh
+
+    kubectl get service nginx-ingress-controller -n nginx-ingress -o yaml
+
+Notice an ``app: ingresslink`` label has been applied to service. The ``IngressLink`` object reviewed in the previous section
+looks for this label when selecting endpoints to add to the BIG-IP pool.
+
+.. code-block:: yaml
+
+  labels:
+    app: ingresslink
+
+
+2. Review the NGINX Ingress Controller DaemonSet configuration using ``kubectl``:
 
 .. code-block:: sh
     
