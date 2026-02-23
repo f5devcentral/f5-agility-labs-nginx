@@ -7,19 +7,20 @@ Rate limiting helps protect your applications from excessive requests and potent
 Setup Environment Variables
 ----------------------------
 
-Get NGINX Ingress Controller Node IP, HTTP and HTTPS NodePorts:
-
-.. code-block:: bash
-
-   export NIC_IP=`kubectl get pod -l app.kubernetes.io/instance=nic -n nginx-ingress -o json|jq '.items[0].status.hostIP' -r`
-   export HTTP_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[0].nodePort}'`
-   export HTTPS_PORT=`kubectl get svc nic-nginx-ingress-controller -n nginx-ingress -o jsonpath='{.spec.ports[1].nodePort}'`
-
-Check NGINX Ingress Controller IP address, HTTP and HTTPS ports:
+Confirm environment variables are still set to point to the IngressLink virtual server and define HTTP and HTTPS ports:
 
 .. code-block:: bash
 
    echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+
+**Output**
+
+.. code-block:: console
+
+   ubuntu@ubuntu:~$ echo -e "NIC address: $NIC_IP\nHTTP port  : $HTTP_PORT\nHTTPS port : $HTTPS_PORT"
+   NIC address: 10.1.1.9
+   HTTP port  : 80
+   HTTPS port : 443
 
 Change to Lab Directory
 ------------------------
@@ -59,20 +60,20 @@ Check the newly created ``VirtualServer`` resource:
 
 .. code-block:: bash
 
-   kubectl get vs -o wide
+   kubectl get virtualservers.k8s.nginx.org -o wide
 
 Output should be similar to:
 
 .. code-block:: console
 
-   NAME     STATE   HOST                 IP    EXTERNALHOSTNAME   PORTS   AGE
-   webapp   Valid   webapp.example.com                                    4s
+   NAME     STATE   HOST                 IP         EXTERNALHOSTNAME   PORTS      AGE
+   webapp   Valid   webapp.example.com   10.1.1.9                      [80,443]   1s
 
 Describe the ``webapp`` VirtualServer:
 
 .. code-block:: bash
 
-   kubectl describe vs webapp
+   kubectl describe virtualservers.k8s.nginx.org webapp
 
 Output should be similar to:
 
@@ -85,30 +86,34 @@ Output should be similar to:
    API Version:  k8s.nginx.org/v1
    Kind:         VirtualServer
    Metadata:
-     Creation Timestamp:  2025-04-03T20:47:29Z
-     Generation:          1
-     Resource Version:    248921
-     UID:                 e5ed98c5-10f0-4a0f-8a2b-cfe8e020d401
+   Creation Timestamp:  2026-02-23T04:47:58Z
+   Generation:          1
+   Resource Version:    708028
+   UID:                 9c5a35dd-ebc9-4e8c-968a-390dd71e07c5
    Spec:
-     Host:  webapp.example.com
-     Policies:
-       Name:  rate-limit-policy
-     Routes:
-       Action:
+   Host:  webapp.example.com
+   Policies:
+      Name:  rate-limit-policy
+   Routes:
+      Action:
          Pass:  webapp
-       Path:    /
-     Upstreams:
-       Name:     webapp
-       Port:     80
-       Service:  webapp-svc
+      Path:    /
+   Upstreams:
+      Name:     webapp
+      Port:     80
+      Service:  webapp-svc
    Status:
-     Message:  Configuration for default/webapp was added or updated 
-     Reason:   AddedOrUpdated
-     State:    Valid
+   External Endpoints:
+      Ip:     10.1.1.9
+      Ports:  [80,443]
+   Message:  Configuration for default/webapp was added or updated 
+   Reason:   AddedOrUpdated
+   State:    Valid
    Events:
-     Type    Reason          Age   From                      Message
-     ----    ------          ----  ----                      -------
-     Normal  AddedOrUpdated  22s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+   Type    Reason          Age   From                      Message
+   ----    ------          ----  ----                      -------
+   Normal  AddedOrUpdated  40s   nginx-ingress-controller  Configuration for default/webapp was added or updated
+   Normal  AddedOrUpdated  40s   nginx-ingress-controller  Configuration for default/webapp was added or updated
 
 Test Application Access
 ------------------------
