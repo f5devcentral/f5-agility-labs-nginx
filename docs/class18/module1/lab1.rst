@@ -1,4 +1,4 @@
-Lab 1: Deploying and Exploring NGINX for Azure
+Module 1: Deploying and Exploring NGINX for Azure
 ==============================================
 
 Overview
@@ -224,7 +224,7 @@ created within Azure portal.
 
 **This completes Lab1.**
 
-`Continue to Lab2 <../lab2/readme.md>`__
+`Continue to Lab2 <../module2/lab2.rst>`__
 
 .. |lab1 diagram| image:: images/lab1_diagram.png
 .. |Networking| image:: images/lab1_networking.png

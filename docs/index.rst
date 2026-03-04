@@ -26,3 +26,4 @@ Welcome to the |classbold| labs at AppWorld |year|
    class14/class*
    class16/class*
    class17/class*
+   class18/class*

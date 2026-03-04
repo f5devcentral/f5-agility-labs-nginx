@@ -1,4 +1,4 @@
-Lab 5: Protecting Applications with the NGINXaaS Web Application Firewall (WAF)
+Module 5: Protecting Applications with the NGINXaaS Web Application Firewall (WAF)
 ===============================================================================
 
 Overview
@@ -242,4 +242,4 @@ page that indicates the URL was rejected.
 **Congratulations!** You have now completed the NGINXaaS for Azure
 workshop!
 
-.. |NGINX aaS| image:: WAF%20-%20URL%20block%20page.png
+.. |NGINX aaS| image:: images/lab5_waf-url_block_page.png
