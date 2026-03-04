@@ -1,4 +1,4 @@
-Lab 4: Protecting Applications with Rate Limiting
+Module 4: Protecting Applications with Rate Limiting
 =================================================
 
 Overview
