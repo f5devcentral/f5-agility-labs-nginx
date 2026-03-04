@@ -1,6 +1,6 @@
 .. _azure-montoring--logging-analytics:
 
-Azure Montoring / Logging Analytics
+Lab 3:Azure Montoring / Logging Analytics
 ===================================
 
 Introduction
