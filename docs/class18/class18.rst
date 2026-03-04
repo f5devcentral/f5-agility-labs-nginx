@@ -19,4 +19,4 @@ This lab covers the following topics:
    :glob:
 
    intro
-   module*/module*
+   module*/lab*
