@@ -224,7 +224,6 @@ created within Azure portal.
 
 **This completes Lab1.**
 
-`Continue to Lab2 <../module2/lab2.rst>`__
 
 .. |lab1 diagram| image:: images/lab1_diagram.png
 .. |Networking| image:: images/lab1_networking.png

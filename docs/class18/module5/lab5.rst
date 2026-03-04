@@ -20,8 +20,6 @@ The following resources are prepared for this lab:
 
 - **Ubuntu VM:** Running OWASP Juice Shop in a Docker container on
   **Port 3000**.
-- **Internal IP:** Your instructor will provide the private IP of the
-  Juice Shop VM.
 - You must have your Nginx for Azure instance running.
 - Your Nginx for Azure instance must be running with the
   "plan:standardv3" SKU.
