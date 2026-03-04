@@ -1,4 +1,4 @@
-Lab 1: Deploying and Exploring NGINX for Azure
+Module 1: Deploying and Exploring NGINX for Azure
 ==============================================
 
 Overview
