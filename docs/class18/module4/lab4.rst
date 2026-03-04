@@ -283,8 +283,6 @@ Task 4: Verify via Log Analytics
 
 Congratulations on completing Lab 4!
 
-`Continue to Lab5 <../module5/lab5.rst>`__
-
 .. |Chrome Headers| image:: images/lab4_chrome-add-headers.png
 .. |image1| image:: images/lab4_chrome-manage-headers.png
 .. |Chrome new columns| image:: images/lab4_chrome-new-columns.png

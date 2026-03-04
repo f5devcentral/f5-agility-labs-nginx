@@ -351,8 +351,6 @@ application with Nginx for Azure, running on the Internet, with just a
 VM, Docker, and 2 config files for Nginx for Azure. That pretty easy,
 not so hard now, was it?
 
-`Continue to Lab3 <../module3/lab3.rst>`__
-
 .. |NGINX aaS| image:: images/nginx-azure-icon.png
 .. |Docker| image:: images/docker-icon.png
 .. |Nginx Cafe| image:: images/cafe-icon.png
