@@ -325,8 +325,6 @@ Explore Azure Monitoring for NGINX for Azure
 
 **This completes Lab3.**
 
-`Continue to Lab4 <../module4/lab4.rst>`__
-
 References:
 -----------
 
