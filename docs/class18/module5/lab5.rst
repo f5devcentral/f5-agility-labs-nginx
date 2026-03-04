@@ -1,4 +1,4 @@
-Lab 5: Protecting Applications with the NGINXaaS Web Application Firewall (WAF)
+Module 5: Protecting Applications with the NGINXaaS Web Application Firewall (WAF)
 ===============================================================================
 
 Overview
