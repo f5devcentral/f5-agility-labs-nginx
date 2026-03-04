@@ -1,4 +1,4 @@
-Lab 2: Advanced Traffic Management with NGINX for Azure
+Module 2: Advanced Traffic Management with NGINX for Azure
 =======================================================
 
 Overview
