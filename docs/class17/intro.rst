@@ -28,9 +28,9 @@ F5 IngressLink has also been installed and configured.
 Lab Structure
 -------------
 
-The lab is organized into modules covering different aspects of NGINX Ingress Controller:
+The lab is organized into modules covering different aspects of NGINX Ingress Controller and F5 IngressLink:
 
-1. **Lab Review** - Review and understand the IngressLink configuration.
+1. **IngressLink Review** - Review and understand the IngressLink configuration
 2. **Basic Ingress** - URI-based routing and TLS offload
 3. **Advanced Routing** - Layer 7 routing based on HTTP methods and cookies
 4. **Authentication** - JWT token validation

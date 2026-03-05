@@ -52,17 +52,20 @@ Note the peer IP which is set to the self IP of the BIG-IP and the ASN which is 
 Review IngressLink Configuration
 --------------------------------
 
-1. Review the IngressLink configuration using ``kubectl``:
+1. Change to the ``nginx-ingress`` namespace and review the IngressLink configuration:
 
 .. code-block:: sh
 
-    kubectl get ingresslink -n nginx-ingress -o yaml
+    kubectl config set-context --current --namespace nginx-ingress
+    kubectl get ingresslink -o yaml
 
 **Output**
 
 .. code-block:: console
 
-    ubuntu@ubuntu:~$ kubectl get ingresslink -n nginx-ingress -o yaml
+    ubuntu@ubuntu:~$ kubectl config set-context --current --namespace nginx-ingress
+    Context "kubernetes-admin@kubernetes" modified.
+    ubuntu@ubuntu:~$ kubectl get ingresslink -o yaml
     apiVersion: v1
     items:
     - apiVersion: cis.f5.com/v1
@@ -97,7 +100,7 @@ Note the ``spec`` section. IngressLink has been configured to build a virtual se
 
 * listens on ``10.1.1.9`` (ports 80 and 443)
 * adds an iRule to insert a `PROXY Protocol <https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt>`__ header
-* configure pool members to match the endpoints of a service with an ``app: ingresslink`` label (this is the NGINX Ingress Controller service)
+* configures pool members to match the endpoints of a service with an ``app: ingresslink`` label (this is the NGINX Ingress Controller service)
 
 Review NGINX Ingress Controller Configuration
 ---------------------------------------------
@@ -106,7 +109,7 @@ Review NGINX Ingress Controller Configuration
 
 .. code-block:: sh
 
-    kubectl get service nginx-ingress-controller -n nginx-ingress -o yaml
+    kubectl get service nginx-ingress-controller -o yaml
 
 Notice an ``app: ingresslink`` label has been applied to service. The ``IngressLink`` object reviewed in the previous section
 looks for this label when selecting endpoints to add to the BIG-IP pool.
@@ -117,11 +120,11 @@ looks for this label when selecting endpoints to add to the BIG-IP pool.
     app: ingresslink
 
 
-2. Review the NGINX Ingress Controller DaemonSet configuration using ``kubectl``:
+2. Review the NGINX Ingress Controller Deployment configuration using ``kubectl``:
 
 .. code-block:: sh
     
-    kubectl get daemonset nginx-ingress-controller -n nginx-ingress -o yaml
+    kubectl get deployment nginx-ingress-controller -o yaml
 
 Review the container arguments and note the ``ingresslink`` reference to the IngressLink object reviewed in the previous section.
 Also note the reference to the ``nginx-config`` configMap:
@@ -135,7 +138,7 @@ Review the ``nginx-config`` configMap:
 
 .. code-block:: sh
     
-    kubectl get configmap nginx-config -n nginx-ingress -o yaml
+    kubectl get configmap nginx-config -o yaml
 
 PROXY Protocol support is enabled in the configMap:
 
@@ -144,6 +147,8 @@ PROXY Protocol support is enabled in the configMap:
     proxy-protocol: "True"
     real-ip-header: proxy_protocol
 
+Leave the web shell open. It will be used in the next lab.
+
 Review BIG-IP BGP Configuration
 -------------------------------
 
@@ -151,9 +156,9 @@ Review BIG-IP BGP Configuration
 
 2. Login using *admin* and *!appworld* for the username and password, respectively.
 
-3. Navigate to **Network >> Route Domains**, click on **0**, and confirm that BGP has been added to the dynamic routing protocols.
+3. Navigate to **Network >> Route Domains**, click on **0**, and confirm that BGP has been added to the dynamic routing protocols. Leave TMUI open for future exercises.
 
-.. image:: rd0.png
+.. image:: ../images/rd0.png
 
 4. Access the BIG-IP TMSH by clicking **Web Shell** in the **Access** dropdown for the F5 BIG-IP.
 
@@ -239,4 +244,12 @@ Note that the ASN (64512) matches the value retrieved from ``calicoctl`` in the 
 
     Total number of prefixes 1
 
-2. Type **exit** and push Enter to return to bash. Feel free to close the web shell.
+2. Type **exit** and push Enter to return to bash. Feel free to close the web shell. Leave TMUI open. It will be used in the next lab.
+
+In the next lab you will see F5 IngressLink in action as you scale the NGINX Ingress Controller deployment.
+
+.. toctree::
+   :maxdepth: 1
+   :glob:
+
+   lab*
