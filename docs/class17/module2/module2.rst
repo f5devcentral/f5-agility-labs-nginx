@@ -117,7 +117,46 @@ Output should be similar to:
    NAME           CLASS   HOSTS              ADDRESS   PORTS     AGE
    cafe-ingress   nginx   cafe.example.com             80, 443   13s
 
-Test application access (see `Test Applications Access`_ below).
+Test Applications Access
+-------------------------
+
+We will use ``curl`` with the ``--insecure`` option to turn off certificate verification of our self-signed 
+certificate and the ``--connect-to`` option to set the Host header and SNI of the request to ``cafe.example.com``.
+
+Test the Coffee application:
+
+.. code-block:: bash
+
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee
+
+The output should be similar to:
+
+.. code-block:: console
+
+   Server address: 192.168.36.95:8080
+   Server name: coffee-56b44d4c55-57mll
+   Date: 03/Apr/2025:17:52:49 +0000
+   URI: /coffee
+   Request ID: 955d316d90c3204040b07e00fe497bc8
+
+Then test the Tea application.
+
+.. code-block:: bash
+
+   curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea
+
+The output should be similar to:
+
+.. code-block:: console
+
+   Server address: 192.168.169.147:8080
+   Server name: tea-596697966f-pnkqk
+   Date: 03/Apr/2025:17:53:24 +0000
+   URI: /tea
+   Request ID: e4ffa71cff7fbf8d8dd3e36ce8e99085
+
+Cleanup Ingress Resource
+------------------------
 
 Delete the ``Ingress`` resource:
 
@@ -176,72 +215,29 @@ Output should be similar to:
    NAME   STATE   HOST               IP         EXTERNALHOSTNAME   PORTS      AGE
    cafe   Valid   cafe.example.com   10.1.1.9                      [80,443]   10m
 
-Test application access (see `Test Applications Access`_ below).
 
-Test Applications Access
--------------------------
+Test Application Access
+-----------------------
 
-Open BIG-IP Virtual Server Statistics
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Access the BIG-IP TMUI by clicking **TMUI** in the **Access** dropdown for the F5 BIG-IP (login using *admin* and *!appworld*).
-Navigate to **Local Traffic >> Virtual Servers >> Statistics >> Virtual Server**. Change to the **kubernetes** partition using the dropdown in the upper-right corner.
-
-.. image:: partition.png
-
-Then set the Auto Refresh to 10 seconds.
-
-.. image:: statistics.png
-
-Use the statistics to help confirm requests are processed by the BIG-IP.
-
-
-Access Coffee Application
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-We will use ``curl`` with the ``--insecure`` option to turn off certificate verification of our self-signed 
-certificate and the ``--connect-to`` option to set the Host header and SNI of the request to ``cafe.example.com``.
-
+Test that the application is available again using the ``curl`` commands.
 
 .. code-block:: bash
 
    curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/coffee
-
-Output should be similar to:
-
-.. code-block:: console
-
-   Server address: 192.168.36.95:8080
-   Server name: coffee-56b44d4c55-57mll
-   Date: 03/Apr/2025:17:52:49 +0000
-   URI: /coffee
-   Request ID: 955d316d90c3204040b07e00fe497bc8
-
-Access Tea Application
-~~~~~~~~~~~~~~~~~~~~~~~
-
-.. code-block:: bash
-
    curl --insecure --connect-to cafe.example.com:$HTTPS_PORT:$NIC_IP https://cafe.example.com:$HTTPS_PORT/tea
 
-Output should be similar to:
-
-.. code-block:: console
-
-   Server address: 192.168.169.147:8080
-   Server name: tea-596697966f-pnkqk
-   Date: 03/Apr/2025:17:53:24 +0000
-   URI: /tea
-   Request ID: e4ffa71cff7fbf8d8dd3e36ce8e99085
+This verifies the application has been deployed using CRDs in a way equivalent to the Ingress resources.
 
 Review BIG-IP Statistics
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
-In TMUI, confirm the virtual server has processed requests and that statistics have increased:
+Access the BIG-IP TMUI by clicking **TMUI** in the **Access** dropdown for the F5 BIG-IP (login using *admin* and *!appworld*).
+Navigate to **Local Traffic >> Virtual Servers >> Statistics >> Virtual Server**. Change to the **kubernetes** partition using the dropdown in the upper-right corner.
+Use the statistics to confirm the virtual server has processed requests and that statistics have increased:
 
-.. image:: stats-nonzero.png
+.. image:: ../images/stats-nonzero.png
 
-Optionally, click the checkboxes next to the virtual servers and click the **Reset** button to reset the statistics.
+Close TMUI.
 
 Cleanup
 -------
