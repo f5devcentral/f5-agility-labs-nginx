@@ -197,7 +197,7 @@ Test the access logs within log analytics workspace
    below query in the query editor pane. Click on the ``Run`` button to
    execute the query.
 
-   .. code:: kql
+   .. code:: nginx
 
       // Show NGINXaaS access logs 
       // A list of access logs sorted by time. 
@@ -245,7 +245,7 @@ Explore Azure Monitoring for NGINX for Azure
     |default chart|
 
 3.  For the first chart, within **Metric Namespace** drop-down, select
-    ``NGINXaaS standard metrics``. For the **mMtric** drop-down, select
+    ``NGINXaaS standard metrics``. For the **Metric** drop-down, select
     ``Server zone HTTP requests``. For the **Aggregation** , select
     ``Sum``.
 
@@ -281,8 +281,8 @@ Explore Azure Monitoring for NGINX for Azure
     left pane click on ``Monitoring > Metrics``.
 
 7.  Within the chart pane, click on **Metric Namespace** drop-down and
-    select ``nginx upstream statistics``. For the **metrics** drop-down,
-    select ``plus.http.upstream.peers.response.time``. For the
+    select ``NGINXaaS standard metrics``. For the **Metrics** drop-down,
+    select ``upstream server response``. For the
     **Aggregation** drop-down, select ``Avg``.
 
     Click on the **Add filter** button. Within the **Property**
